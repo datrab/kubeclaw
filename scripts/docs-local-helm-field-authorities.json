@@ -5503,18 +5503,18 @@
         },
         "$.busterNamespaceBroker.controller.productDecisions.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker / controller / product decisions is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls product-decision handling in the Buster namespace controller after the parent broker and Buster-role gates select that controller.",
+          "acceptedValues": "`true` renders the product-decision settings on the active Buster broker path. `false` omits them. Outside that parent and role path, either value has no rendered effect.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact buster-namespace-controller, demo-ready-service feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes product-decision validation and controller settings only for an active Buster broker release.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, missing readiness or product-decision trust prerequisites can stop rendering or startup. With `false`, that decision path is unavailable. Outside the active Buster broker path this setting is a no-op.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, missing readiness or product-decision trust prerequisites can stop rendering or startup. With `false`, that decision path is unavailable. Outside the active Buster broker path this setting is a no-op."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -5980,18 +5980,18 @@
         },
         "$.busterNamespaceBroker.controller.readiness.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker / controller / readiness is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls readiness probes and the readiness Service for the Buster namespace controller after the parent broker and Buster-role gates select that controller.",
+          "acceptedValues": "`true` renders the controller readiness endpoint, probes, and Service on the active Buster broker path. `false` omits them. Outside that parent and role path, either value has no rendered effect.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact buster-namespace-controller, demo-ready-service feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes how Kubernetes and clients detect namespace-controller readiness only for an active Buster broker release.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the active controller has no readiness Service or Kubelet readiness/startup probe. With `true`, missing TLS or endpoint prerequisites can stop rendering or keep readiness unavailable; outside the active Buster broker path this setting is a no-op.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the active controller has no readiness Service or Kubelet readiness/startup probe. With `true`, missing TLS or endpoint prerequisites can stop rendering or keep readiness unavailable; outside the active Buster broker path this setting is a no-op."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -6791,18 +6791,18 @@
         },
         "$.busterNamespaceBroker.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Provides the parent gate for Buster namespace-broker resources and optional lease-client RBAC; the exact result also depends on `agentRole` and the nested lease settings.",
+          "acceptedValues": "`true` lets a Buster release render the broker controller, fence, lease CRD, and service, and lets an eligible Nova release render lease-client RBAC. `false` omits all broker and lease-client branches.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact buster-namespace-controller, buster-namespace-fence, buster-namespace-lease-crd, demo-ready-service, rbac feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes broker resources for `agentRole=buster`; for another role, it changes output only when a nested lease-client path is also enabled.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, namespace leasing and its optional verification permissions are unavailable. With `true`, a non-Buster release can still render no broker resource unless the nested lease client is enabled; missing broker prerequisites can stop rendering or leave the integration unusable.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, namespace leasing and its optional verification permissions are unavailable. With `true`, a non-Buster release can still render no broker resource unless the nested lease client is enabled; missing broker prerequisites can stop rendering or leave the integration unusable."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -7418,18 +7418,18 @@
         },
         "$.busterNamespaceBroker.leaseClient.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker / lease client is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls lease-client RBAC for a non-Buster role; a Buster release force-enables the lease-client path while the parent broker is enabled.",
+          "acceptedValues": "For a non-Buster role, `true` enables lease-client RBAC and `false` disables it. For `agentRole=buster`, this value cannot disable lease-client RBAC because the role condition enables it.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact rbac feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes lease-client permissions for eligible non-Buster releases; it does not change the enabled Buster broker path.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. A non-Buster release with `false` cannot use namespace leases through chart-managed RBAC. A Buster release ignores `false` for this gate and still renders lease-client RBAC when the parent broker and ServiceAccount gates allow it.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "A non-Buster release with `false` cannot use namespace leases through chart-managed RBAC. A Buster release ignores `false` for this gate and still renders lease-client RBAC when the parent broker and ServiceAccount gates allow it."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -7486,18 +7486,18 @@
         },
         "$.busterNamespaceBroker.leaseClient.verificationRead.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker / lease client / verification read is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls the verification-read runtime flag and, when the broker, lease client, and release ServiceAccount gates also pass, the matching read-only RBAC.",
+          "acceptedValues": "`true` enables the Deployment setting and conditionally renders verification-read RBAC. `false` disables the Deployment setting and omits that RBAC.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact deployment, rbac feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes the runtime verification mode directly; permission resources change only when the parent broker, effective lease client, and chart-created ServiceAccount are also active.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `true` but without the matching parent gates or RBAC, verification requests can fail authorization. With `false`, the runtime verification-read path and its chart-managed permissions are disabled.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true` but without the matching parent gates or RBAC, verification requests can fail authorization. With `false`, the runtime verification-read path and its chart-managed permissions are disabled."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -8970,18 +8970,18 @@
         },
         "$.codeBundle.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether code bundle is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered `CODE_BUNDLE_ENABLED` environment value that the runtime init logic parses to decide whether to install a verified code bundle.",
+          "acceptedValues": "`true` tells the runtime init path to verify and install the configured code bundle. `false` tells it to skip that work. The Deployment and environment entry are rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes runtime initialization behavior without adding or removing a Deployment resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, a missing archive URL, digest, manifest, or matching contract stops initialization. With `false`, the bundle is skipped and the workload uses code already present in the selected image or mounts.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, a missing archive URL, digest, manifest, or matching contract stops initialization. With `false`, the bundle is skipped and the workload uses code already present in the selected image or mounts."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -12767,18 +12767,18 @@
         },
         "$.persistence.config.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether persistence / config is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Selects persistent storage or an ephemeral `emptyDir` for runtime configuration.",
+          "acceptedValues": "`true` renders and mounts the configuration PersistentVolumeClaim. `false` omits that claim and mounts an `emptyDir` at the same runtime location.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact deployment, pvc feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether configuration survives Pod replacement; both branches render a usable volume.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, configuration stored only in the volume is lost when the Pod is replaced. With `true`, a missing or Pending claim prevents volume attachment and Pod startup.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, configuration stored only in the volume is lost when the Pod is replaced. With `true`, a missing or Pending claim prevents volume attachment and Pod startup."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -13088,18 +13088,18 @@
         },
         "$.persistence.workspace.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether persistence / workspace is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Selects persistent storage or an ephemeral `emptyDir` for the agent workspace.",
+          "acceptedValues": "`true` renders and mounts the workspace PersistentVolumeClaim. `false` omits that claim and mounts an `emptyDir` at the same workspace location.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact deployment, pvc feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether workspace data survives Pod replacement; both branches render a workspace volume.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, workspace changes are lost when the Pod is replaced. With `true`, a missing or Pending claim prevents volume attachment and Pod startup.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, workspace changes are lost when the Pod is replaced. With `true`, a missing or Pending claim prevents volume attachment and Pod startup."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -13490,18 +13490,18 @@
         },
         "$.probes.dependencies.gateway.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / dependencies / gateway is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered runtime switch that decides whether health checks verify the gateway.",
+          "acceptedValues": "`true` makes the health script verify the gateway. `false` skips that check. The Deployment environment entry is rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes readiness and startup health evaluation for the gateway without adding or removing a Kubernetes resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, an unavailable or invalid the gateway dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, an unavailable or invalid the gateway dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -13542,18 +13542,18 @@
         },
         "$.probes.dependencies.litellm.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / dependencies / litellm is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered runtime switch that decides whether health checks verify LiteLLM.",
+          "acceptedValues": "`true` makes the health script verify LiteLLM. `false` skips that check. The Deployment environment entry is rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes readiness and startup health evaluation for LiteLLM without adding or removing a Kubernetes resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, an unavailable or invalid LiteLLM dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, an unavailable or invalid LiteLLM dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -13603,18 +13603,18 @@
         },
         "$.probes.dependencies.redis.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / dependencies / redis is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered runtime switch that decides whether health checks verify Redis.",
+          "acceptedValues": "`true` makes the health script verify Redis. `false` skips that check. The Deployment environment entry is rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes readiness and startup health evaluation for Redis without adding or removing a Kubernetes resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, an unavailable or invalid Redis dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, an unavailable or invalid Redis dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -13655,18 +13655,18 @@
         },
         "$.probes.dependencies.redisStream.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / dependencies / redis stream is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered runtime switch that decides whether health checks verify the Redis Stream.",
+          "acceptedValues": "`true` makes the health script verify the Redis Stream. `false` skips that check. The Deployment environment entry is rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes readiness and startup health evaluation for the Redis Stream without adding or removing a Kubernetes resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, an unavailable or invalid the Redis Stream dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, an unavailable or invalid the Redis Stream dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -13848,18 +13848,18 @@
         },
         "$.probes.dependencies.registries.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / dependencies / registries is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered runtime switch that decides whether health checks verify the configured registries.",
+          "acceptedValues": "`true` makes the health script verify the configured registries. `false` skips that check. The Deployment environment entry is rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes readiness and startup health evaluation for the configured registries without adding or removing a Kubernetes resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, an unavailable or invalid the configured registries dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, an unavailable or invalid the configured registries dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -14017,18 +14017,18 @@
         },
         "$.probes.liveness.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / liveness is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls whether the Deployment gives the container a Kubelet liveness probe.",
+          "acceptedValues": "`true` renders the liveness probe. `false` omits it.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether repeated health failures can make Kubelet restart the container.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, Kubelet does not restart the container because this liveness endpoint fails. With `true`, a wrong path, timing value, or unhealthy process can cause repeated restarts.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, Kubelet does not restart the container because this liveness endpoint fails. With `true`, a wrong path, timing value, or unhealthy process can cause repeated restarts."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -14294,18 +14294,18 @@
         },
         "$.probes.readiness.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / readiness is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls whether the Deployment gives the container a Kubelet readiness probe.",
+          "acceptedValues": "`true` renders the readiness probe. `false` omits it.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether Kubelet gates Pod readiness and Service endpoints on the configured health result.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the container can become Ready without this application and dependency check. With `true`, a wrong path, timing value, or unavailable checked dependency keeps the Pod unready.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the container can become Ready without this application and dependency check. With `true`, a wrong path, timing value, or unavailable checked dependency keeps the Pod unready."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -14624,18 +14624,18 @@
         },
         "$.probes.startup.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / startup is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls whether the Deployment gives the container a Kubelet startup probe.",
+          "acceptedValues": "`true` renders the startup probe and delays liveness/readiness enforcement until it succeeds. `false` omits that startup gate.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes how long slow initialization is protected before liveness and readiness checks take effect.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, slow startup is exposed directly to liveness and readiness timing. With `true`, a wrong path or insufficient failure threshold can prevent startup from completing.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, slow startup is exposed directly to liveness and readiness timing. With `true`, a wrong path or insufficient failure threshold can prevent startup from completing."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -18921,18 +18921,18 @@
         },
         "$.serviceAccount.automount": {
           "group": "service-account-token-automount",
-          "purpose": "Controls automatic ServiceAccount token mounting for service account.",
-          "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
+          "purpose": "Controls automatic API-token mounting only when the chart creates the release-specific ServiceAccount.",
+          "acceptedValues": "When `serviceAccount.create=true`, `true` permits the default ServiceAccount token mount and `false` omits it. When `serviceAccount.create=false`, this value is ignored and the Pod forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "impact": "Changes ambient Kubernetes API credentials only on the release-specific ServiceAccount path; it has no effect on the namespace-default-ServiceAccount path.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+            "operationalFailure": "With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -19047,18 +19047,18 @@
         },
         "$.serviceAccount.create": {
           "group": "service-account-creation",
-          "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
-          "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
+          "purpose": "Controls whether the chart creates and selects a release-specific ServiceAccount for the workload.",
+          "acceptedValues": "`true` creates and selects the release-specific ServiceAccount. `false` creates no ServiceAccount, omits `serviceAccountName`, uses the namespace default ServiceAccount, and forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
+          "impact": "Changes the workload identity from the release-specific ServiceAccount and its chart-managed RBAC to the namespace default ServiceAccount without an automatically mounted API token.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+            "operationalFailure": "With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -21230,18 +21230,18 @@
         },
         "$.workspace.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether workspace is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls chart-managed workspace seed documents and their startup copy step; it does not remove the `/workspace` volume or mount.",
+          "acceptedValues": "`true` renders the seed ConfigMap and makes init-workspace copy its managed documents. `false` omits the seed ConfigMap and copy input while the workspace volume, mount, and runtime directories remain.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether checked-in workspace documents are seeded at startup, not whether the workspace path exists.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -21636,18 +21636,18 @@
         },
         "$.workspace.overrideOnRestart": {
           "group": "restart-content-overwrite",
-          "purpose": "Controls whether startup replaces existing workspace content with the checked-in chart content.",
-          "acceptedValues": "`true` overwrites the managed file during restart. `false` preserves existing persisted content.",
+          "purpose": "Controls whether startup replaces existing managed workspace files, but only when `workspace.enabled=true` supplies chart-managed seed documents.",
+          "acceptedValues": "With `workspace.enabled=true`, `true` overwrites managed files and `false` preserves existing files. With `workspace.enabled=false`, this setting has no managed seed files to act on.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether operator or runtime edits survive the next Pod restart.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it can discard local edits; disabling it can retain stale or incompatible content.",
+          "impact": "Changes whether edits to managed seed files survive restart; it has no effect when workspace seeding is disabled.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With workspace seeding enabled, `true` can discard local edits and `false` can retain stale or incompatible content. With workspace seeding disabled, this setting is a no-op.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Enabling it can discard local edits; disabling it can retain stale or incompatible content."
+            "operationalFailure": "With workspace seeding enabled, `true` can discard local edits and `false` can retain stale or incompatible content. With workspace seeding disabled, this setting is a no-op."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -22689,18 +22689,18 @@
         },
         "$.networkPolicy.cilium": {
           "group": "cilium-policy-mode",
-          "purpose": "Controls whether network policy uses Cilium-specific policy features.",
-          "acceptedValues": "`true` selects the Cilium policy branch. `false` keeps the portable Kubernetes NetworkPolicy branch.",
+          "purpose": "Controls whether the Ops chart adds its Cilium-specific policy in addition to the portable Kubernetes NetworkPolicy.",
+          "acceptedValues": "`true` renders both the portable NetworkPolicy and an additional CiliumNetworkPolicy. `false` renders only the portable NetworkPolicy.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes the policy API and features used to enforce network isolation.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it without Cilium leaves policy resources unsupported; disabling it removes Cilium-only enforcement.",
+          "impact": "Adds or removes Cilium-specific enforcement without replacing the portable policy.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `true` on a cluster without the Cilium CRD, API admission rejects the additional policy. With `false`, Cilium-only controls are absent but the portable NetworkPolicy remains.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Enabling it without Cilium leaves policy resources unsupported; disabling it removes Cilium-only enforcement."
+            "operationalFailure": "With `true` on a cluster without the Cilium CRD, API admission rejects the additional policy. With `false`, Cilium-only controls are absent but the portable NetworkPolicy remains."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -22758,18 +22758,18 @@
         },
         "$.networkPolicy.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether network policy is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls whether the Ops chart renders network-isolation policy around its StatefulSet.",
+          "acceptedValues": "`true` renders the chart NetworkPolicy resources. `false` omits those policies but keeps the workload and Service.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact network feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes network isolation, not workload creation or startup.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the workload remains present but loses the chart's intended ingress and egress restrictions. With `true`, an incompatible policy implementation or incorrect selectors can block required traffic.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the workload remains present but loses the chart's intended ingress and egress restrictions. With `true`, an incompatible policy implementation or incorrect selectors can block required traffic."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -38796,18 +38796,18 @@
         },
         "$.busterNamespaceBroker.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Provides the parent gate for Buster namespace-broker resources and optional lease-client RBAC; the exact result also depends on `agentRole` and the nested lease settings.",
+          "acceptedValues": "`true` lets a Buster release render the broker controller, fence, lease CRD, and service, and lets an eligible Nova release render lease-client RBAC. `false` omits all broker and lease-client branches.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact buster-namespace-controller, buster-namespace-fence, buster-namespace-lease-crd, demo-ready-service, rbac feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes broker resources for `agentRole=buster`; for another role, it changes output only when a nested lease-client path is also enabled.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, namespace leasing and its optional verification permissions are unavailable. With `true`, a non-Buster release can still render no broker resource unless the nested lease client is enabled; missing broker prerequisites can stop rendering or leave the integration unusable.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, namespace leasing and its optional verification permissions are unavailable. With `true`, a non-Buster release can still render no broker resource unless the nested lease client is enabled; missing broker prerequisites can stop rendering or leave the integration unusable."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -40619,18 +40619,18 @@
         },
         "$.serviceAccount.automount": {
           "group": "service-account-token-automount",
-          "purpose": "Controls automatic ServiceAccount token mounting for service account.",
-          "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
+          "purpose": "Controls automatic API-token mounting only when the chart creates the release-specific ServiceAccount.",
+          "acceptedValues": "When `serviceAccount.create=true`, `true` permits the default ServiceAccount token mount and `false` omits it. When `serviceAccount.create=false`, this value is ignored and the Pod forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "impact": "Changes ambient Kubernetes API credentials only on the release-specific ServiceAccount path; it has no effect on the namespace-default-ServiceAccount path.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+            "operationalFailure": "With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -40745,18 +40745,18 @@
         },
         "$.serviceAccount.create": {
           "group": "service-account-creation",
-          "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
-          "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
+          "purpose": "Controls whether the chart creates and selects a release-specific ServiceAccount for the workload.",
+          "acceptedValues": "`true` creates and selects the release-specific ServiceAccount. `false` creates no ServiceAccount, omits `serviceAccountName`, uses the namespace default ServiceAccount, and forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
+          "impact": "Changes the workload identity from the release-specific ServiceAccount and its chart-managed RBAC to the namespace default ServiceAccount without an automatically mounted API token.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+            "operationalFailure": "With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -41041,18 +41041,18 @@
         },
         "$.workspace.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether workspace is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls chart-managed workspace seed documents and their startup copy step; it does not remove the `/workspace` volume or mount.",
+          "acceptedValues": "`true` renders the seed ConfigMap and makes init-workspace copy its managed documents. `false` omits the seed ConfigMap and copy input while the workspace volume, mount, and runtime directories remain.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether checked-in workspace documents are seeded at startup, not whether the workspace path exists.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -46743,18 +46743,18 @@
         },
         "$.workspace.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether workspace is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls chart-managed workspace seed documents and their startup copy step; it does not remove the `/workspace` volume or mount.",
+          "acceptedValues": "`true` renders the seed ConfigMap and makes init-workspace copy its managed documents. `false` omits the seed ConfigMap and copy input while the workspace volume, mount, and runtime directories remain.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether checked-in workspace documents are seeded at startup, not whether the workspace path exists.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -52276,18 +52276,18 @@
         },
         "$.busterNamespaceBroker.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Provides the parent gate for Buster namespace-broker resources and optional lease-client RBAC; the exact result also depends on `agentRole` and the nested lease settings.",
+          "acceptedValues": "`true` lets a Buster release render the broker controller, fence, lease CRD, and service, and lets an eligible Nova release render lease-client RBAC. `false` omits all broker and lease-client branches.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact buster-namespace-controller, buster-namespace-fence, buster-namespace-lease-crd, demo-ready-service, rbac feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes broker resources for `agentRole=buster`; for another role, it changes output only when a nested lease-client path is also enabled.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, namespace leasing and its optional verification permissions are unavailable. With `true`, a non-Buster release can still render no broker resource unless the nested lease client is enabled; missing broker prerequisites can stop rendering or leave the integration unusable.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, namespace leasing and its optional verification permissions are unavailable. With `true`, a non-Buster release can still render no broker resource unless the nested lease client is enabled; missing broker prerequisites can stop rendering or leave the integration unusable."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -53085,18 +53085,18 @@
         },
         "$.codeBundle.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether code bundle is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered `CODE_BUNDLE_ENABLED` environment value that the runtime init logic parses to decide whether to install a verified code bundle.",
+          "acceptedValues": "`true` tells the runtime init path to verify and install the configured code bundle. `false` tells it to skip that work. The Deployment and environment entry are rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes runtime initialization behavior without adding or removing a Deployment resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, a missing archive URL, digest, manifest, or matching contract stops initialization. With `false`, the bundle is skipped and the workload uses code already present in the selected image or mounts.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, a missing archive URL, digest, manifest, or matching contract stops initialization. With `false`, the bundle is skipped and the workload uses code already present in the selected image or mounts."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -63417,18 +63417,18 @@
         },
         "$.serviceAccount.automount": {
           "group": "service-account-token-automount",
-          "purpose": "Controls automatic ServiceAccount token mounting for service account.",
-          "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
+          "purpose": "Controls automatic API-token mounting only when the chart creates the release-specific ServiceAccount.",
+          "acceptedValues": "When `serviceAccount.create=true`, `true` permits the default ServiceAccount token mount and `false` omits it. When `serviceAccount.create=false`, this value is ignored and the Pod forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "impact": "Changes ambient Kubernetes API credentials only on the release-specific ServiceAccount path; it has no effect on the namespace-default-ServiceAccount path.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+            "operationalFailure": "With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -63543,18 +63543,18 @@
         },
         "$.serviceAccount.create": {
           "group": "service-account-creation",
-          "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
-          "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
+          "purpose": "Controls whether the chart creates and selects a release-specific ServiceAccount for the workload.",
+          "acceptedValues": "`true` creates and selects the release-specific ServiceAccount. `false` creates no ServiceAccount, omits `serviceAccountName`, uses the namespace default ServiceAccount, and forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
+          "impact": "Changes the workload identity from the release-specific ServiceAccount and its chart-managed RBAC to the namespace default ServiceAccount without an automatically mounted API token.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+            "operationalFailure": "With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -64326,18 +64326,18 @@
         },
         "$.workspace.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether workspace is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls chart-managed workspace seed documents and their startup copy step; it does not remove the `/workspace` volume or mount.",
+          "acceptedValues": "`true` renders the seed ConfigMap and makes init-workspace copy its managed documents. `false` omits the seed ConfigMap and copy input while the workspace volume, mount, and runtime directories remain.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether checked-in workspace documents are seeded at startup, not whether the workspace path exists.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -68546,18 +68546,18 @@
         },
         "$.busterNamespaceBroker.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Provides the parent gate for Buster namespace-broker resources and optional lease-client RBAC; the exact result also depends on `agentRole` and the nested lease settings.",
+          "acceptedValues": "`true` lets a Buster release render the broker controller, fence, lease CRD, and service, and lets an eligible Nova release render lease-client RBAC. `false` omits all broker and lease-client branches.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact buster-namespace-controller, buster-namespace-fence, buster-namespace-lease-crd, demo-ready-service, rbac feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes broker resources for `agentRole=buster`; for another role, it changes output only when a nested lease-client path is also enabled.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, namespace leasing and its optional verification permissions are unavailable. With `true`, a non-Buster release can still render no broker resource unless the nested lease client is enabled; missing broker prerequisites can stop rendering or leave the integration unusable.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, namespace leasing and its optional verification permissions are unavailable. With `true`, a non-Buster release can still render no broker resource unless the nested lease client is enabled; missing broker prerequisites can stop rendering or leave the integration unusable."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -68778,18 +68778,18 @@
         },
         "$.busterNamespaceBroker.leaseClient.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker / lease client is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls lease-client RBAC for a non-Buster role; a Buster release force-enables the lease-client path while the parent broker is enabled.",
+          "acceptedValues": "For a non-Buster role, `true` enables lease-client RBAC and `false` disables it. For `agentRole=buster`, this value cannot disable lease-client RBAC because the role condition enables it.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact rbac feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes lease-client permissions for eligible non-Buster releases; it does not change the enabled Buster broker path.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. A non-Buster release with `false` cannot use namespace leases through chart-managed RBAC. A Buster release ignores `false` for this gate and still renders lease-client RBAC when the parent broker and ServiceAccount gates allow it.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "A non-Buster release with `false` cannot use namespace leases through chart-managed RBAC. A Buster release ignores `false` for this gate and still renders lease-client RBAC when the parent broker and ServiceAccount gates allow it."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -68846,18 +68846,18 @@
         },
         "$.busterNamespaceBroker.leaseClient.verificationRead.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether buster namespace broker / lease client / verification read is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls the verification-read runtime flag and, when the broker, lease client, and release ServiceAccount gates also pass, the matching read-only RBAC.",
+          "acceptedValues": "`true` enables the Deployment setting and conditionally renders verification-read RBAC. `false` disables the Deployment setting and omits that RBAC.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact deployment, rbac feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes the runtime verification mode directly; permission resources change only when the parent broker, effective lease client, and chart-created ServiceAccount are also active.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `true` but without the matching parent gates or RBAC, verification requests can fail authorization. With `false`, the runtime verification-read path and its chart-managed permissions are disabled.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true` but without the matching parent gates or RBAC, verification requests can fail authorization. With `false`, the runtime verification-read path and its chart-managed permissions are disabled."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -71294,18 +71294,18 @@
         },
         "$.codeBundle.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether code bundle is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered `CODE_BUNDLE_ENABLED` environment value that the runtime init logic parses to decide whether to install a verified code bundle.",
+          "acceptedValues": "`true` tells the runtime init path to verify and install the configured code bundle. `false` tells it to skip that work. The Deployment and environment entry are rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes runtime initialization behavior without adding or removing a Deployment resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, a missing archive URL, digest, manifest, or matching contract stops initialization. With `false`, the bundle is skipped and the workload uses code already present in the selected image or mounts.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, a missing archive URL, digest, manifest, or matching contract stops initialization. With `false`, the bundle is skipped and the workload uses code already present in the selected image or mounts."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -77133,18 +77133,18 @@
         },
         "$.serviceAccount.automount": {
           "group": "service-account-token-automount",
-          "purpose": "Controls automatic ServiceAccount token mounting for service account.",
-          "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
+          "purpose": "Controls automatic API-token mounting only when the chart creates the release-specific ServiceAccount.",
+          "acceptedValues": "When `serviceAccount.create=true`, `true` permits the default ServiceAccount token mount and `false` omits it. When `serviceAccount.create=false`, this value is ignored and the Pod forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "impact": "Changes ambient Kubernetes API credentials only on the release-specific ServiceAccount path; it has no effect on the namespace-default-ServiceAccount path.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+            "operationalFailure": "With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -77259,18 +77259,18 @@
         },
         "$.serviceAccount.create": {
           "group": "service-account-creation",
-          "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
-          "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
+          "purpose": "Controls whether the chart creates and selects a release-specific ServiceAccount for the workload.",
+          "acceptedValues": "`true` creates and selects the release-specific ServiceAccount. `false` creates no ServiceAccount, omits `serviceAccountName`, uses the namespace default ServiceAccount, and forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
+          "impact": "Changes the workload identity from the release-specific ServiceAccount and its chart-managed RBAC to the namespace default ServiceAccount without an automatically mounted API token.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+            "operationalFailure": "With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -78495,18 +78495,18 @@
         },
         "$.workspace.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether workspace is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls chart-managed workspace seed documents and their startup copy step; it does not remove the `/workspace` volume or mount.",
+          "acceptedValues": "`true` renders the seed ConfigMap and makes init-workspace copy its managed documents. `false` omits the seed ConfigMap and copy input while the workspace volume, mount, and runtime directories remain.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether checked-in workspace documents are seeded at startup, not whether the workspace path exists.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -83159,18 +83159,18 @@
         },
         "$.codeBundle.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether code bundle is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered `CODE_BUNDLE_ENABLED` environment value that the runtime init logic parses to decide whether to install a verified code bundle.",
+          "acceptedValues": "`true` tells the runtime init path to verify and install the configured code bundle. `false` tells it to skip that work. The Deployment and environment entry are rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes runtime initialization behavior without adding or removing a Deployment resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, a missing archive URL, digest, manifest, or matching contract stops initialization. With `false`, the bundle is skipped and the workload uses code already present in the selected image or mounts.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, a missing archive URL, digest, manifest, or matching contract stops initialization. With `false`, the bundle is skipped and the workload uses code already present in the selected image or mounts."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -88007,18 +88007,18 @@
         },
         "$.probes.dependencies.redis.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / dependencies / redis is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered runtime switch that decides whether health checks verify Redis.",
+          "acceptedValues": "`true` makes the health script verify Redis. `false` skips that check. The Deployment environment entry is rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes readiness and startup health evaluation for Redis without adding or removing a Kubernetes resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, an unavailable or invalid Redis dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, an unavailable or invalid Redis dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -88059,18 +88059,18 @@
         },
         "$.probes.dependencies.registries.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether probes / dependencies / registries is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Supplies the always-rendered runtime switch that decides whether health checks verify the configured registries.",
+          "acceptedValues": "`true` makes the health script verify the configured registries. `false` skips that check. The Deployment environment entry is rendered in both cases.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes readiness and startup health evaluation for the configured registries without adding or removing a Kubernetes resource branch.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With `true`, an unavailable or invalid the configured registries dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `true`, an unavailable or invalid the configured registries dependency makes the health check fail. With `false`, the health check can succeed without proving that dependency, so dependent runtime work can fail later."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -88761,18 +88761,18 @@
         },
         "$.serviceAccount.automount": {
           "group": "service-account-token-automount",
-          "purpose": "Controls automatic ServiceAccount token mounting for service account.",
-          "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
+          "purpose": "Controls automatic API-token mounting only when the chart creates the release-specific ServiceAccount.",
+          "acceptedValues": "When `serviceAccount.create=true`, `true` permits the default ServiceAccount token mount and `false` omits it. When `serviceAccount.create=false`, this value is ignored and the Pod forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "impact": "Changes ambient Kubernetes API credentials only on the release-specific ServiceAccount path; it has no effect on the namespace-default-ServiceAccount path.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+            "operationalFailure": "With `serviceAccount.create=true`, `false` breaks clients that require an ambient token and `true` adds credentials that the process might not need. With `serviceAccount.create=false`, this setting has no effect."
           },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
@@ -88887,18 +88887,18 @@
         },
         "$.serviceAccount.create": {
           "group": "service-account-creation",
-          "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
-          "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
+          "purpose": "Controls whether the chart creates and selects a release-specific ServiceAccount for the workload.",
+          "acceptedValues": "`true` creates and selects the release-specific ServiceAccount. `false` creates no ServiceAccount, omits `serviceAccountName`, uses the namespace default ServiceAccount, and forces automatic token mounting off.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
+          "impact": "Changes the workload identity from the release-specific ServiceAccount and its chart-managed RBAC to the namespace default ServiceAccount without an automatically mounted API token.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+            "operationalFailure": "With `false`, an ordinary workload can start under the namespace default ServiceAccount, but the chart omits lease-client and verification RBAC. Helm stops rendering if SPIFFE worker trust or the Nova readiness client is enabled because those paths require the release-specific ServiceAccount."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -89670,18 +89670,18 @@
         },
         "$.workspace.enabled": {
           "group": "feature-enable-control",
-          "purpose": "Controls whether workspace is active and rendered.",
-          "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
+          "purpose": "Controls chart-managed workspace seed documents and their startup copy step; it does not remove the `/workspace` volume or mount.",
+          "acceptedValues": "`true` renders the seed ConfigMap and makes init-workspace copy its managed documents. `false` omits the seed ConfigMap and copy input while the workspace volume, mount, and runtime directories remain.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
-          "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "impact": "Changes whether checked-in workspace documents are seeded at startup, not whether the workspace path exists.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "helm-truthiness"
             ],
-            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+            "operationalFailure": "With `false`, the agent starts without chart-managed seed documents and must obtain required workspace content another way. With `true`, a missing seed mount or failed copy prevents initialization; incompatible seed content can change agent behavior."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
@@ -89854,18 +89854,18 @@
         },
         "$.workspace.overrideOnRestart": {
           "group": "restart-content-overwrite",
-          "purpose": "Controls whether startup replaces existing workspace content with the checked-in chart content.",
-          "acceptedValues": "`true` overwrites the managed file during restart. `false` preserves existing persisted content.",
+          "purpose": "Controls whether startup replaces existing managed workspace files, but only when `workspace.enabled=true` supplies chart-managed seed documents.",
+          "acceptedValues": "With `workspace.enabled=true`, `true` overwrites managed files and `false` preserves existing files. With `workspace.enabled=false`, this setting has no managed seed files to act on.",
           "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
-          "impact": "Changes whether operator or runtime edits survive the next Pod restart.",
-          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it can discard local edits; disabling it can retain stale or incompatible content.",
+          "impact": "Changes whether edits to managed seed files survive restart; it has no effect when workspace seeding is disabled.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. With workspace seeding enabled, `true` can discard local edits and `false` can retain stale or incompatible content. With workspace seeding disabled, this setting is a no-op.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
             "receivers": [
               "quoted-runtime-string"
             ],
-            "operationalFailure": "Enabling it can discard local edits; disabling it can retain stale or incompatible content."
+            "operationalFailure": "With workspace seeding enabled, `true` can discard local edits and `false` can retain stale or incompatible content. With workspace seeding disabled, this setting is a no-op."
           },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
