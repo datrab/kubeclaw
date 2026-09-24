@@ -2719,6 +2719,7 @@ function schemaEmptyBehavior(field) {
     if (Number(constraints.get('minLength') ?? 0) > 0) return 'An empty string is invalid.';
     if (constraints.has('const') && constraints.get('const') !== '') return 'An empty string does not match the required constant.';
     if (constraints.has('enum') && !constraints.get('enum').includes('')) return 'An empty string is not one of the allowed values.';
+    if (constraints.has('format')) return `An empty string does not match the required ${constraints.get('format')} format.`;
     if (constraints.has('pattern')) {
       try {
         if (!new RegExp(constraints.get('pattern'), 'u').test('')) return 'An empty string does not match the required pattern.';
@@ -3097,7 +3098,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     terminationGraceMs: `Sets the time between SIGTERM and SIGKILL when ${context} stops an external process.`,
     testAgentEnabled: `Controls whether ${context} dispatches the optional agent evaluator after native Buster evidence passes.`,
     timeoutMinutes: `Limits how long ${context} waits for an external approval decision.`,
-    timeoutMs: `Limits the complete ${context} operation before it is stopped or reported as timed out.`,
+    timeoutMs: `Limits how long ${context} can run before it is stopped or reported as timed out.`,
     tokenPath: `Selects the private bearer-token file read by ${context}.`,
     tokenSecret: `Names the confidential bearer token resolved by ${context}.`,
     trustedBuiltinRoots: `Lists package roots treated as built-in trust anchors by ${context}.`,

@@ -183,7 +183,18 @@ try {
   const baseline = runGenerator('--check');
   assert.equal(baseline.status, 0, `temporary baseline is stale\n${baseline.stdout}\n${baseline.stderr}`);
   const baselineValues = JSON.parse(fs.readFileSync(path.join(outputDirectory, 'configuration-values.json'), 'utf8'));
+  const baselineSchemaInventory = JSON.parse(fs.readFileSync(path.join(outputDirectory, 'configuration-schemas.json'), 'utf8'));
   const baselineRuntime = JSON.parse(fs.readFileSync(path.join(outputDirectory, 'configuration-runtime-inputs.json'), 'utf8'));
+  const schemaFields = baselineSchemaInventory.files.flatMap((file) => file.fields);
+  for (const field of schemaFields.filter((candidate) => candidate.type.includes('string')
+    && candidate.constraints.some((constraint) => constraint.name === 'format'))) {
+    assert.doesNotMatch(field.meaning.emptyBehavior, /accepts an empty string/iu,
+      `${field.meaning.authorityKey}: formatted string incorrectly accepts an empty value`);
+  }
+  for (const field of schemaFields) {
+    assert.doesNotMatch(field.meaning.text, /Limits the complete the /u,
+      `${field.meaning.authorityKey}: generated purpose contains duplicated grammar`);
+  }
   for (const testOnlyName of ['KUBECLAW_DEMO_AUTH_TEST_OUTPUT', 'PRODUCT_TS_EXPORTER']) {
     assert.equal(baselineRuntime.environment.some((item) => item.name === testOnlyName), false,
       `${testOnlyName}: Go test-only environment input leaked into the runtime inventory`);
