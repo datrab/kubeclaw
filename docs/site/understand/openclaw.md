@@ -4,7 +4,7 @@ Status: implemented with separate host-plugin and pipeline-adapter boundaries
 Audience: OpenClaw operator, integration maintainer, plugin author, security reviewer
 Owner: OpenClaw integration maintainers
 Evidence: skills/prism/openclaw-plugin; skills/common/plugins/openclaw-agent-observer; skills/common/plugins/openclaw-agent-events; skills/common/plugins/runtime-dispatch
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: OpenClaw plugin API 2026.9.1 or later and current runtime-dispatch targets
 Last verified: source, manifest, schema, package, and focused test inspection on 2026-09-20
 
@@ -48,11 +48,11 @@ returns the recorded result; a conflicting payload fails. If the job is
 
 > **Source evidence — Prism tool effect and uncertainty**
 >
-> [The host tool selects `controlUrl` and performs an unbounded, non-retrying fetch](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/openclaw-plugin/index.mjs#L10-L19).
+> [The host tool selects `controlUrl` and performs an unbounded, non-retrying fetch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/openclaw-plugin/index.mjs#L10-L19).
 >
-> [Prism Control authenticates the peer and validates both effect requests before storage](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/server/control-server.ts#L243-L278).
+> [Prism Control authenticates the peer and validates both effect requests before storage](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/control-server.ts#L243-L278).
 >
-> [The job result lock returns an identical committed result and rejects conflicting or unresolved work](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/control/agent-jobs.ts#L84-L100).
+> [The job result lock returns an identical committed result and rejects conflicting or unresolved work](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/control/agent-jobs.ts#L84-L100).
 
 ### Agent observer
 
@@ -81,13 +81,13 @@ explicit pressure boundary, not durable storage.
 
 > **Source evidence — package declarations**
 >
-> [The Prism host manifest declares both tools and its only configuration field](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
+> [The Prism host manifest declares both tools and its only configuration field](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
 >
-> [The observer package declares source/runtime entries, compatibility, and its complete test command](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/package.json#L1-L32).
+> [The observer package declares source/runtime entries, compatibility, and its complete test command](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/package.json#L1-L32).
 >
-> [The event adapter schema defines the hook allowlist and queue limits](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json#L1-L49).
+> [The event adapter schema defines the hook allowlist and queue limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json#L1-L49).
 >
-> [The observer merges registration, service, and hook configuration before resolving environment fallbacks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/index.ts#L176-L199).
+> [The observer merges registration, service, and hook configuration before resolving environment fallbacks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L176-L199).
 
 ## Discovery, Installation, And Activation
 
@@ -137,15 +137,15 @@ Gateway bearer token used by the general adapter.
 
 > **Source evidence — persisted launch before OpenClaw execution**
 >
-> [Prism admission persists request identity and changes expired running work to `needs_nova`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/control/agent-jobs.ts#L15-L52).
+> [Prism admission persists request identity and changes expired running work to `needs_nova`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/control/agent-jobs.ts#L15-L52).
 >
-> [The bridge applies request and Control-call timeouts and exposes only job-bound routes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/server/agent-bridge.mjs#L4-L30).
+> [The bridge applies request and Control-call timeouts and exposes only job-bound routes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/agent-bridge.mjs#L4-L30).
 >
-> [The runner launches one claimed OpenClaw job and reports all failures to Control](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/server/agent-job-runner.mjs#L16-L46).
+> [The runner launches one claimed OpenClaw job and reports all failures to Control](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/agent-job-runner.mjs#L16-L46).
 >
-> [Nova selects the Prism runtime capability provider and its authenticated dispatch port](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/nova-values.yaml#L105-L112).
+> [Nova selects the Prism runtime capability provider and its authenticated dispatch port](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/nova-values.yaml#L105-L112).
 >
-> [The Prism Envoy listener requires a client certificate and exact SPIFFE identities](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
+> [The Prism Envoy listener requires a client certificate and exact SPIFFE identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
 
 ## Runtime Dispatch Target
 
@@ -171,11 +171,11 @@ budgets must fit inside the context budget.
 
 > **Source evidence — target admission**
 >
-> [The target parser defines accepted fields, URL rules, and timing validity](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L1-L48).
+> [The target parser defines accepted fields, URL rules, and timing validity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L1-L48).
 >
-> [It applies defaults and rejects an invalid target as one complete unit](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L51-L82).
+> [It applies defaults and rejects an invalid target as one complete unit](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L51-L82).
 >
-> [The adapter rejects every operation outside the exact runtime-dispatch shape](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L1-L24).
+> [The adapter rejects every operation outside the exact runtime-dispatch shape](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L1-L24).
 
 ## Session Lifecycle
 

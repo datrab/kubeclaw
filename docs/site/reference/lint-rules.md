@@ -4,7 +4,7 @@ Status: implemented
 Audience: developer, lint-policy maintainer, operator
 Owner: lint
 Evidence: charts/kubeclaw/files/config/eslint.config.mjs; charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs; charts/kubeclaw/files/config/.semgrep.yml; charts/kubeclaw/files/config/kubernetes-policy-pack-default.json; skills/nova/plugins/lint/src/engine
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: the repository-owned rules and normalized findings in `pipeline_lint_policy.v7`
 Last verified: source, configuration, and focused lint tests on 2026-09-20; no target-image execution
 
@@ -32,8 +32,8 @@ First correct the reported condition. Use a waiver only when correction is
 unsafe now and an owner accepts expiring debt. Do not change a message only to
 change its fingerprint.
 
-> **Finding evidence:** [The engine normalizes and fingerprints findings](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/finding-fingerprints.ts#L4-L53).
-> [The report contract validates their shape and counts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/report-contract.ts#L76-L119).
+> **Finding evidence:** [The engine normalizes and fingerprints findings](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/finding-fingerprints.ts#L4-L53).
+> [The report contract validates their shape and counts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report-contract.ts#L76-L119).
 
 ## Blocking ESLint Rules
 
@@ -86,8 +86,8 @@ The exemptions prevent broad rules from rejecting the components that own the
 controlled boundary. Add an exemption only when the file owns that boundary.
 Do not add an exemption only because a finding is inconvenient.
 
-> **ESLint evidence:** [The local implementations define their exact syntax checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint.config.mjs#L65-L253).
-> [The configuration defines limits, file groups, and exemptions](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint.config.mjs#L255-L338).
+> **ESLint evidence:** [The local implementations define their exact syntax checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L65-L253).
+> [The configuration defines limits, file groups, and exemptions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L255-L338).
 
 ## Experimental Type-Evidence Rules
 
@@ -119,9 +119,9 @@ Production, tests, and generated or untracked files use separate adapters. This
 partition prevents one file from appearing in several experimental result sets.
 A Git enumeration failure stops classification instead of silently omitting files.
 
-> **Type-evidence evidence:** [The local plugin implements seven syntax rules](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L226-L307).
-> [The production configuration adds the typed assertion rule](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs#L42-L84).
-> [The engine creates disjoint evidence partitions](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts#L8-L57).
+> **Type-evidence evidence:** [The local plugin implements seven syntax rules](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L226-L307).
+> [The production configuration adds the typed assertion rule](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs#L42-L84).
+> [The engine creates disjoint evidence partitions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts#L8-L57).
 
 ## Curated Semgrep Rules
 
@@ -161,7 +161,7 @@ still match when the pattern cannot observe validation elsewhere. Prefer a
 clear local safe form. Propose an exclusion only for a stable owned boundary.
 
 > **Semgrep evidence:** [The configuration owns all patterns, messages,
-> languages, severities, and path exclusions](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/.semgrep.yml#L21-L445).
+> languages, severities, and path exclusions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/.semgrep.yml#L21-L445).
 
 ## Engine-Owned Finding Codes
 
@@ -196,9 +196,9 @@ execution failure.
 | `openapi-contract` | `openapi-responses` | An operation has no response object. | Declare its response contract. |
 | `kubernetes-policy` | `kubernetes-policy/<rule-id>` | One admitted pack rule rejects a manifest object. | Use the reported rule ID and the Kubernetes section below. |
 
-> **Internal finding evidence:** [Architecture, Knip, and duplication normalization](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/architecture-tools.ts#L96-L189),
-> [Go normalization](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/go-tools.ts#L128-L216),
-> and [OpenAPI checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/openapi-tool.ts#L6-L76) define these codes.
+> **Internal finding evidence:** [Architecture, Knip, and duplication normalization](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/architecture-tools.ts#L96-L189),
+> [Go normalization](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/go-tools.ts#L128-L216),
+> and [OpenAPI checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/openapi-tool.ts#L6-L76) define these codes.
 
 ## Kubernetes Policy Rules
 
@@ -218,8 +218,8 @@ DaemonSet, ReplicaSet, Job, and CronJob workload shapes.
 The pack describes values. Engine code owns rule meaning. This separation lets
 an operator select approved values without allowing a policy file to execute code.
 
-> **Kubernetes evidence:** [Pack admission verifies immutable identity](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L67-L115).
-> [The evaluator implements workload and lookup behavior](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L45-L159).
+> **Kubernetes evidence:** [Pack admission verifies immutable identity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L67-L115).
+> [The evaluator implements workload and lookup behavior](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L45-L159).
 
 ## External Rule Families
 
@@ -327,8 +327,8 @@ The four `LINT_PROCESS_GROUP_*` strings originate in process inspection. They
 do not always survive as the final tool-result code. The normalizer can expose
 `lint-tool-execution-failed` while retaining the process message as error text.
 
-> **Failure evidence:** [Tool errors are normalized without turning failure into success](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/report.ts#L104-L163).
-> [Process execution distinguishes timeout, start failure, and cleanup failure](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/execution.ts#L8-L95).
+> **Failure evidence:** [Tool errors are normalized without turning failure into success](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L104-L163).
+> [Process execution distinguishes timeout, start failure, and cleanup failure](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/execution.ts#L8-L95).
 
 ## Verification Boundary
 
@@ -342,14 +342,14 @@ The tests prove the cases they execute. They do not prove every future finding
 from an external analyser. Preserve external codes and investigate them against
 the installed version.
 
-> **Test evidence:** [The package test script lists the focused suites](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/package.json).
-> [The remediation suite covers process and policy boundaries](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/tests/remediation.test.mjs).
+> **Test evidence:** [The package test script lists the focused suites](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/package.json).
+> [The remediation suite covers process and policy boundaries](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/remediation.test.mjs).
 
 ## Rule Verification Record
 
 | Claim | Implementation | Contract or setting | Test evidence and status on 2026-09-20 | Revision | Limit |
 | --- | --- | --- | --- | --- | --- |
-| The blocking ESLint groups and local discipline rules use the documented thresholds and exceptions. | [ESLint configuration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint.config.mjs#L65-L337) | [ESLint policy entry](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/lint-policy.json#L457-L484) | The discipline-rule suite passed. The generated-reference check also matched every configured rule ID. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | The focused suite tests repository-owned rules. It does not exhaust every upstream ESLint rule case. |
-| The three type-evidence partitions use the documented local rules and production-only typed assertion rule. | [Local type-evidence plugin](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L1-L307) | [Production configuration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs#L18-L84) | The type-evidence suite passed for production, test, and generated partitions. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | These tools remain experimental and do not block the shipped run. |
-| The Semgrep inventory contains all 25 shipped repository rules. | [Semgrep configuration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/.semgrep.yml#L1-L445) | [Semgrep policy entry](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/lint-policy.json#L878-L901) | The generated-reference and specialist-guide checks matched all 25 IDs. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | The recorded local checks did not execute Semgrep. |
-| Engine-owned finding and operational code inventories match the scanned implementation families. | [Request errors](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/request.ts#L1-L28), [candidate errors](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/candidate.ts#L1-L27), and [tool normalization](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/report.ts#L104-L163) | [Generated code inventory](lint-policy-generated.md#generated-rule-and-code-inventory) | The generator and specialist-guide checks passed. The remediation suite passed all eight selected failure tests. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | External analyser codes are open sets. Some process errors become normalized tool errors while the original text remains evidence. |
+| The blocking ESLint groups and local discipline rules use the documented thresholds and exceptions. | [ESLint configuration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L65-L337) | [ESLint policy entry](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L457-L484) | The discipline-rule suite passed. The generated-reference check also matched every configured rule ID. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | The focused suite tests repository-owned rules. It does not exhaust every upstream ESLint rule case. |
+| The three type-evidence partitions use the documented local rules and production-only typed assertion rule. | [Local type-evidence plugin](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L1-L307) | [Production configuration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs#L18-L84) | The type-evidence suite passed for production, test, and generated partitions. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | These tools remain experimental and do not block the shipped run. |
+| The Semgrep inventory contains all 25 shipped repository rules. | [Semgrep configuration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/.semgrep.yml#L1-L445) | [Semgrep policy entry](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L878-L901) | The generated-reference and specialist-guide checks matched all 25 IDs. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | The recorded local checks did not execute Semgrep. |
+| Engine-owned finding and operational code inventories match the scanned implementation families. | [Request errors](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/request.ts#L1-L28), [candidate errors](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/candidate.ts#L1-L27), and [tool normalization](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L104-L163) | [Generated code inventory](lint-policy-generated.md#generated-rule-and-code-inventory) | The generator and specialist-guide checks passed. The remediation suite passed all eight selected failure tests. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | External analyser codes are open sets. Some process errors become normalized tool errors while the original text remains evidence. |

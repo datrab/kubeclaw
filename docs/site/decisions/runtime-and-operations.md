@@ -169,7 +169,7 @@ Physical resource binding continues throughout fixture lifetime. Moving a proces
 
 **Implementation scope, not a new product setting.** Completion requires implemented code and sufficient real local tests. Live checks remain separate under D12. Elapsed work time is not evidence of completion.
 
-**Decision:** completion requires the defined scope and evidence. Neither an elapsed-time target nor a historical item count is a product setting or a measure of completion. The accepted local-proof rule continues through D12. No individual D15 confirmation date is recorded.
+**Decision:** completion requires the defined scope and evidence. Neither an elapsed-time target nor a historical item count is a product setting or a measure of completion. The accepted local-proof rule continues through D12. The decision record names no individual D15 confirmation date.
 
 ## D16
 
@@ -203,7 +203,7 @@ Sources: [snapshot authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c
 
 Restore PostgreSQL, reconnect/restore artifacts, verify required digests, enter recovery mode, rebuild derived data, and only then enable writes and resume workers. A completed backup job is not a successful restore. Deployment policy must explicitly set accepted data loss, recovery time, retention and the trigger for stronger WAL/replication protection; no exact RPO/RTO is invented. Authoritative publication stops if required storage, approval or observability is incomplete.
 
-**Rationale/actual alternatives:** avoid a separate Prism backup or telemetry platform. Daily backups are the v1 baseline; continuous WAL is added when the accepted loss limit becomes shorter than a day. Point-in-time recovery is therefore conditional, not an unconditional capability. **Approval:** the architecture contract is accepted; actor and date are not recorded. **Implementation:** full deployed recovery remains unverified. **Verification:** no backup or restore exercise has completed. **Supersession:** the detailed v1 operations contract selects the supported backup mechanism without removing the need for tested recovery.
+**Rationale/actual alternatives:** avoid a separate Prism backup or telemetry platform. Daily backups are the v1 baseline; continuous WAL is added when the accepted loss limit becomes shorter than a day. Point-in-time recovery is therefore conditional, not an unconditional capability. **Approval:** the architecture contract carries accepted status; its record names neither actor nor date. **Implementation:** full deployed recovery remains unverified. **Verification:** no backup or restore exercise has completed. **Supersession:** the detailed v1 operations contract selects the supported backup mechanism without removing the need for tested recovery.
 
 Source: accepted recovery contract.
 

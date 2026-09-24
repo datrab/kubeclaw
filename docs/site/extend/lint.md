@@ -4,7 +4,7 @@ Status: implemented
 Audience: lint rule author, policy maintainer, Nova maintainer
 Owner: lint
 Evidence: skills/nova/plugins/lint/plugin.json; skills/nova/plugins/lint/src; skills/nova/plugins/lint/tests; charts/kubeclaw/files/config
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: `kubeclaw.lint` and the shipped lint policy
 Last verified: source and focused package checks on 2026-09-20
 
@@ -53,9 +53,9 @@ costs are measured to dominate lint execution and a replacement still keeps
 process authority out of stages and acceptance authority out of tools.
 
 > **Implementation evidence:** [The manifest registers two stages and one
-> adapter](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/plugin.json#L1-L48).
-> [The stage maps reports to lifecycle meaning](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/stage.ts#L24-L100).
-> [The adapter owns admission, candidate isolation, cancellation, and shutdown](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/adapter.ts#L28-L63).
+> adapter](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/plugin.json#L1-L48).
+> [The stage maps reports to lifecycle meaning](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/stage.ts#L24-L100).
+> [The adapter owns admission, candidate isolation, cancellation, and shutdown](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/adapter.ts#L28-L63).
 
 ## Pre-Check And Full
 
@@ -77,7 +77,7 @@ Both stages use the same schemas. Their only fixed difference is the tier. Test
 both paths after a shared policy, discovery, normalization, or reporting change.
 
 > **Tier evidence:** [Selection applies cumulative tier, experimental, and
-> detection filters](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/report.ts#L166-L190).
+> detection filters](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L166-L190).
 
 ## Choose The Smallest Change
 
@@ -152,7 +152,7 @@ read the runner's JSON error: engine validation can have failed, or validation
 can have succeeded before directory creation or atomic output writing failed.
 
 > **Runner evidence:** [The maintained runner validates, writes atomically, and
-> assigns exit status](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/run-lint-report.mjs#L92-L145).
+> assigns exit status](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/run-lint-report.mjs#L92-L145).
 
 The explicit `--helm-chart` replaces the canonical Kubernetes input list for
 this source-checkout run. The policy also names
@@ -258,8 +258,8 @@ or another installed tool already owns the rule language.
 Do not use a permanent baseline entry. Put a real boundary exemption in the
 canonical native configuration, where readers can see it.
 
-> **Rule evidence:** [ESLint keeps rules and exact boundary exemptions together](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint.config.mjs#L255-L338),
-> and [admission validation requires a principle and remediation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/lint-governance.ts#L45-L65).
+> **Rule evidence:** [ESLint keeps rules and exact boundary exemptions together](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L255-L338),
+> and [admission validation requires a principle and remediation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/lint-governance.ts#L45-L65).
 
 ## Change Or Remove A Rule
 
@@ -302,8 +302,8 @@ clearly by a standard rule.
 The type-evidence rules are experimental. Moving one into the blocking gate is
 an admission decision, not only a severity edit.
 
-> **Examples:** [The discipline plugin implements blocking local rules](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint.config.mjs#L65-L253),
-> while [the type-evidence plugin implements audit rules separately](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L226-L307).
+> **Examples:** [The discipline plugin implements blocking local rules](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L65-L253),
+> while [the type-evidence plugin implements audit rules separately](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs#L226-L307).
 
 ## Add A Tool
 
@@ -333,9 +333,9 @@ decide the stage outcome.
 The two-sided registry check prevents dormant code and policy that claims a
 check which no implementation runs.
 
-> **Tool evidence:** [The registry requires an exact adapter-policy match](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/tool-registry-core.ts#L105-L129).
-> [Native execution applies timeout and environment controls](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/execution.ts#L8-L95).
-> [The report engine normalizes tool success and failure](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/report.ts#L104-L163).
+> **Tool evidence:** [The registry requires an exact adapter-policy match](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-core.ts#L105-L129).
+> [Native execution applies timeout and environment controls](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/execution.ts#L8-L95).
+> [The report engine normalizes tool success and failure](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report.ts#L104-L163).
 
 ## Remove A Tool
 
@@ -411,9 +411,9 @@ baseline records. Run discovery, path escape, symlink, affected-scope, and full
 report checks. Keep historical reports and Git history; delete generated or
 runtime copies only after deployment no longer selects them.
 
-> **Target evidence:** [Policy closes the language vocabulary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/policy.ts#L12-L16),
-> [discovery uses declared evidence](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/discovery.ts#L138-L159),
-> and [target checks cover native traversal](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/policy-paths.ts#L43-L55).
+> **Target evidence:** [Policy closes the language vocabulary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L12-L16),
+> [discovery uses declared evidence](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/discovery.ts#L138-L159),
+> and [target checks cover native traversal](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy-paths.ts#L43-L55).
 
 ## Add A Policy Pack
 
@@ -466,8 +466,8 @@ only after the rollback window. Roll back by restoring the old selection and
 exact old bytes and digest; never attach old bytes to the new version or rewrite
 an issued report.
 
-> **Pack evidence:** [Admission binds path, bytes, digest, ID, version, and rules](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L67-L115),
-> and [execution preserves manifest and pack evidence](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L135-L155).
+> **Pack evidence:** [Admission binds path, bytes, digest, ID, version, and rules](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L67-L115),
+> and [execution preserves manifest and pack evidence](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts#L135-L155).
 
 ## Add A Policy-Pack Rule Type
 
@@ -501,7 +501,7 @@ an owner accepts time-bounded debt.
 Experimental findings cannot be baselined. Avoid casual message changes when the
 default fingerprint includes the message. Supply a stable seed when necessary.
 
-> **Fingerprint evidence:** [The engine derives and applies fingerprints here](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/finding-fingerprints.ts#L4-L53).
+> **Fingerprint evidence:** [The engine derives and applies fingerprints here](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/finding-fingerprints.ts#L4-L53).
 
 ### Add Approved Debt With The Maintained Helper
 
@@ -587,8 +587,8 @@ full lint again because the baseline digest changed, and delete the temporary
 review copy after the reviewer accepts the change.
 
 > **Baseline-helper evidence:** [The update helper validates report identity,
-> approval fields, and active fingerprints](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/lint-baseline-update.mjs#L1-L78).
-> [The prune helper requires a complete debt-visible report](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/lint-baseline-prune.mjs#L1-L58).
+> approval fields, and active fingerprints](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/lint-baseline-update.mjs#L1-L78).
+> [The prune helper requires a complete debt-visible report](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/lint-baseline-prune.mjs#L1-L58).
 
 ## Version, Migration, And Rollback
 
@@ -678,7 +678,7 @@ its temporary stored-report fixture; no cleanup file may remain under `src/`.
 Recomputation prevents an analyser from deciding acceptance by reporting false totals.
 
 > **Contract evidence:** [The validator checks findings, evidence, policy
-> identity, scope, inventory, and recomputed summary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/report-contract.ts#L38-L231).
+> identity, scope, inventory, and recomputed summary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report-contract.ts#L38-L231).
 
 ## Failure And Cleanup Rules
 
@@ -805,8 +805,8 @@ does not expose a standalone lint-stage CLI, so do not invent a command that
 claims to invoke `kubeclaw.lint:pre-check` or `kubeclaw.lint:full` directly.
 
 > **Activation evidence:** [The live-function fixture creates the adapter,
-> grants, stages, artifact store, and candidate runs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/tests/live-function.test.ts#L13-L230).
-> [The plugin manifest owns the three registrations](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/plugin.json#L1-L48).
+> grants, stages, artifact store, and candidate runs](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/live-function.test.ts#L13-L230).
+> [The plugin manifest owns the three registrations](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/plugin.json#L1-L48).
 
 ### Deliver New Native Configuration
 
@@ -865,8 +865,8 @@ Set the chart's supported override behavior deliberately: an old persistent
 the rollout if the deployed imports and module bytes do not belong to the same
 reviewed change.
 
-> **Delivery evidence:** [The ConfigMap enumerates each delivered lint file](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-swarm-config.yaml#L16-L49).
-> [The init container owns both explicit copy stages](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L634-L695).
+> **Delivery evidence:** [The ConfigMap enumerates each delivered lint file](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-swarm-config.yaml#L16-L49).
+> [The init container owns both explicit copy stages](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L634-L695).
 
 The adapter also accepts separate invocations concurrently. Until discovery
 diagnostics and native caches have tested per-invocation isolation, schedule one
@@ -957,9 +957,9 @@ suite. Remove temporary source fixtures in the test's `finally` block. Do not
 commit `artifacts/lint-*.json` unless a change record explicitly owns them.
 
 > **Maintained rule example:** [The implementation defines matching and exception
-> forms](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint.config.mjs#L153-L173),
+> forms](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L153-L173),
 > and [the focused test covers a finding, handled error, and intentional
-> exception](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/tests/eslint-discipline.test.mjs).
+> exception](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/eslint-discipline.test.mjs).
 
 ### Tool Walkthrough
 
@@ -1004,9 +1004,9 @@ focused suite after removal; its closed-registry cases prove that a one-sided
 rollback cannot pass.
 
 > **Maintained tool examples:** [The OpenAPI analyser shows internal finding
-> construction](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/openapi-tool.ts#L6-L77).
+> construction](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/openapi-tool.ts#L6-L77).
 > [The remediation suite shows native exit, timeout, abort, and cleanup
-> behavior](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/tests/remediation.test.mjs).
+> behavior](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/remediation.test.mjs).
 
 ### Target Or Language Walkthrough
 
@@ -1045,9 +1045,9 @@ Rollback restores the old paths and authority together. Delete a runtime binary
 only after the full report and repository search show no remaining consumer.
 
 > **Maintained target examples:** [Policy validation binds Go and Terraform
-> authority](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/policy.ts#L93-L123),
-> [discovery tests cover configured evidence and scope](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/tests/discovery.test.mjs),
-> and [remediation tests cover native path boundaries](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/tests/remediation.test.mjs).
+> authority](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L93-L123),
+> [discovery tests cover configured evidence and scope](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/discovery.test.mjs),
+> and [remediation tests cover native path boundaries](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/remediation.test.mjs).
 
 ### Policy-Pack Walkthrough
 
@@ -1102,8 +1102,8 @@ acceptance until the delivery blocker in “Add A Policy Pack” is fixed and th
 runtime copy has the same digest.
 
 > **Maintained pack example:** [The shipped pack supplies all supported rule
-> shapes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L50),
-> and [the implementation fixture covers admission, lifecycle, and evaluation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts#L139-L360).
+> shapes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L50),
+> and [the implementation fixture covers admission, lifecycle, and evaluation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts#L139-L360).
 
 ## Proof Ladder
 
@@ -1153,9 +1153,9 @@ new native tool also needs a run in the image built from `docker/Dockerfile.nova
 | Pack type | Parameters, workload shapes, non-applicable objects, finding identity. |
 | Report | Builder, hostile validator, recomputed summary, stage mapping, artifact. |
 
-> **Test evidence:** [The package declares the exact focused suite](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/package.json),
+> **Test evidence:** [The package declares the exact focused suite](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/package.json),
 > and [the remediation suite uses real process, Git, path, cancellation, and
-> cleanup behavior](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/tests/remediation.test.mjs).
+> cleanup behavior](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/remediation.test.mjs).
 
 ## Completion Criteria
 
@@ -1169,8 +1169,8 @@ validated report, and target-runtime checks pass or state an exact prerequisite.
 
 | Claim | Implementation | Contract or setting | Test evidence and status on 2026-09-20 | Revision | Limit |
 | --- | --- | --- | --- | --- | --- |
-| A local rule can add exact trigger and exception behavior without adding process authority. | [Maintained local rule](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint.config.mjs#L153-L173) | [Rule registration and file groups](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/eslint.config.mjs#L255-L337) | The discipline-rule suite passed. It includes matching and accepted exception cases. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | A new blocking rule still needs admission evidence and a full target-image run. |
-| A tool needs one registry adapter and one exact policy entry. | [Closed registry](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/tool-registry-core.ts#L109-L129) | [Policy tool validation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/policy.ts#L185-L215) | Package-boundary and adapter-boundary suites passed. Generated parity also passed for all 31 shipped tools. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | Local verification used the maintained OpenAPI tool model; it did not insert a temporary shipped tool. |
-| A language or target extension cannot escape declared repository authority. | [Target validation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/policy-paths.ts#L1-L75) | [Project and discovery policy](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/lint-policy.json#L2-L105) | Discovery and remediation suites passed, including scope, escape, and excluded-source cases. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | New native binaries still need installation and target-image acceptance. |
-| A policy-pack change is bound to exact bytes and a closed rule vocabulary. | [Pack admission](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L1-L118) | [Canonical pack source](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L50) | Generated-reference and specialist-guide checks matched the source pack identity, digest, rule IDs, and rule types. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | The current chart omits the pack from the ConfigMap and both copy paths. Stop deployment acceptance until delivery tests prove the same bytes beside the runtime policy. |
-| The complete live function activates stages, adapter, grants, reports, and immutable artifacts. | [Live fixture](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/tests/live-function.test.ts#L13-L230) | [Plugin manifest](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/lint/plugin.json#L1-L48) | Not reached. BusyBox `flock` stopped journal initialization before lint execution. | `32b02816cc19cc8865a45b221b8b6ca28e99e8fb` | Repeat in the target image with `shellcheck`, `shfmt`, and GNU `flock`. |
+| A local rule can add exact trigger and exception behavior without adding process authority. | [Maintained local rule](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L153-L173) | [Rule registration and file groups](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/eslint.config.mjs#L255-L337) | The discipline-rule suite passed. It includes matching and accepted exception cases. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | A new blocking rule still needs admission evidence and a full target-image run. |
+| A tool needs one registry adapter and one exact policy entry. | [Closed registry](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/tool-registry-core.ts#L109-L129) | [Policy tool validation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy.ts#L185-L215) | Package-boundary and adapter-boundary suites passed. Generated parity also passed for all 31 shipped tools. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | Local verification used the maintained OpenAPI tool model; it did not insert a temporary shipped tool. |
+| A language or target extension cannot escape declared repository authority. | [Target validation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/policy-paths.ts#L1-L75) | [Project and discovery policy](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/lint-policy.json#L2-L105) | Discovery and remediation suites passed, including scope, escape, and excluded-source cases. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | New native binaries still need installation and target-image acceptance. |
+| A policy-pack change is bound to exact bytes and a closed rule vocabulary. | [Pack admission](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L1-L118) | [Canonical pack source](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L50) | Generated-reference and specialist-guide checks matched the source pack identity, digest, rule IDs, and rule types. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | The current chart omits the pack from the ConfigMap and both copy paths. Stop deployment acceptance until delivery tests prove the same bytes beside the runtime policy. |
+| The complete live function activates stages, adapter, grants, reports, and immutable artifacts. | [Live fixture](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/live-function.test.ts#L13-L230) | [Plugin manifest](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/plugin.json#L1-L48) | Not reached. BusyBox `flock` stopped journal initialization before lint execution. | `569f7b4933d4859cc67c80ddf40d5154ffd95ce5` | Repeat in the target image with `shellcheck`, `shfmt`, and GNU `flock`. |

@@ -522,7 +522,7 @@ Incorrect namespace assumptions, missed DaemonSets or cluster-dependent admin ac
 - Paperless
 - Host/CRI rollback
 
-Cilium files are present in the current checkout. Their presence does not prove that a cluster migration or live policy enforcement occurred.
+The repository contains checked-in Cilium configuration. This does not prove that a cluster migration or live policy enforcement occurred.
 
 ### Remaining work
 
@@ -911,7 +911,7 @@ Both current implementation files and the accepted no-decay statements were insp
 
 ### Reproduction and verification procedure
 
-- Inspect docs/architecture/prism-preference-learning-v1.md. V1 excludes automatic time decay in the opening scope and time-handling section. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.
+- Inspect docs/site/decisions/prism.md#retrieval-and-preferences. The accepted contract excludes automatic time decay. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.
 - Use one valid selected event with a single trait and evaluate the original projector at its last evidence time and 180 days later. Current arithmetic yields score1/effectiveScore1, then score1/effectiveScore0.5. Preserve user and project context with all required event fields. No executed probe is available in this evidence set.
 - Existing regression entry points: skills/prism/tests/quality.test.mts (preference projections decay and remain retractable) and skills/prism/tests/control-generation-http.test.mts (persisted decay policy identity).
 

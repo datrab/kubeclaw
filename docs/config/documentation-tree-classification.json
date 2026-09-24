@@ -227,11 +227,11 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-observability-foundation.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-observability-foundation.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-observability-foundation.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-observability-foundation.md",
+      "expectedPath": "docs/architecture/pipeline-observability-foundation.md",
       "introducedAfterBaseline": false
     },
     {
@@ -355,11 +355,11 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-runtime-packaging.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-runtime-packaging.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-runtime-packaging.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging.md",
+      "expectedPath": "docs/architecture/pipeline-runtime-packaging.md",
       "introducedAfterBaseline": false
     },
     {
@@ -859,43 +859,43 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-phase-2-audit.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-2-audit.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-phase-3-audit.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-3-audit.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-phase-4-audit.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-4-audit.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-phase-5-audit.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-5-audit.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
       "introducedAfterBaseline": false
     },
     {
@@ -1035,11 +1035,11 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-roadmap.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-roadmap.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-roadmap.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-roadmap.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-roadmap.md",
       "introducedAfterBaseline": false
     },
     {
@@ -1251,11 +1251,11 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
       "introducedAfterBaseline": false
     },
     {
@@ -1275,19 +1275,19 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-unit-operator-guide.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-unit-operator-guide.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-unit-user-guide.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-unit-user-guide.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
       "introducedAfterBaseline": false
     },
     {
@@ -1347,19 +1347,19 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-test-gate-visual-user-guide.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-visual-user-guide.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
+      "expectedPath": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
       "introducedAfterBaseline": false
     },
     {
@@ -1371,11 +1371,11 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
-      "class": "legacy-extraction-source",
-      "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
+      "path": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
       "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
-      "expectedPath": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
+      "expectedPath": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
       "introducedAfterBaseline": false
     },
     {
@@ -2140,8 +2140,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-a11y-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-a11y-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2172,8 +2172,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-api-flow-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-api-flow-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-api-flow-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2196,16 +2196,16 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-container-build-cutover-inventory.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable cutover inventory reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-cutover-inventory.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-container-build-cutover-inventory.json",
       "introducedAfterBaseline": false
     },
     {
       "path": "docs/architecture/pipeline-test-gate-container-build-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-container-build-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2252,8 +2252,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-e2e-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-e2e-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2284,8 +2284,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-http-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-http-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-http-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2324,8 +2324,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-kubernetes-fixture-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2356,8 +2356,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-lighthouse-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-lighthouse-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2540,8 +2540,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-security-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-security-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-security-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2564,16 +2564,16 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable cutover inventory reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json",
       "introducedAfterBaseline": false
     },
     {
       "path": "docs/architecture/pipeline-test-gate-size-budget-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-size-budget-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2636,8 +2636,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-tailscale-exposure-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-documentation-manifest.json",
       "introducedAfterBaseline": false
@@ -2692,8 +2692,8 @@
     },
     {
       "path": "docs/architecture/pipeline-test-gate-visual-documentation-manifest.json",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "class": "internal-documentation-input",
+      "purpose": "Executable documentation manifest reached through the suite migration contract.",
       "originalPath": "docs/architecture/pipeline-test-gate-visual-documentation-manifest.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-visual-documentation-manifest.json",
       "introducedAfterBaseline": false

@@ -4,7 +4,7 @@ Status: implemented for the Nova implementation stage
 Audience: pipeline operator, Forge maintainer, plugin author, security reviewer
 Owner: Forge maintainers
 Evidence: skills/nova/plugins/implementation-agent; skills/common/plugins/runtime-dispatch; skills/common/plugins/git-workspace; tests/verification/reliability/forge-workspace.test.mts; tests/verification/reliability/forge-lock-wait.test.mts
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: `kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path
 Last verified: source, schema, manifest, and focused test inspection on 2026-09-20
 
@@ -27,13 +27,13 @@ reconciliation.
 
 > **Source evidence — authority is split by capability**
 >
-> [The implementation manifest declares the stage and its seven required capabilities](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/plugin.json#L1-L23).
+> [The implementation manifest declares the stage and its seven required capabilities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/plugin.json#L1-L23).
 >
-> [The stage creates and integrates the workspace through separate capability calls](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L13-L71).
+> [The stage creates and integrates the workspace through separate capability calls](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L13-L71).
 >
-> [The stage binds the active attempt, dispatches, and cleans up after integration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L81-L115).
+> [The stage binds the active attempt, dispatches, and cleans up after integration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L81-L115).
 >
-> [It stores completion and cleanup evidence and returns only Nova stage outcomes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L118-L150).
+> [It stores completion and cleanup evidence and returns only Nova stage outcomes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L118-L150).
 
 ## Input And Dispatch Contract
 
@@ -55,11 +55,11 @@ not invent that evidence.
 
 > **Source evidence — exact wire shapes**
 >
-> [The first half of the input schema defines identity, task, source, and workspace fields](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L1-L55).
+> [The first half of the input schema defines identity, task, source, and workspace fields](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L1-L55).
 >
-> [The second half defines workspace bounds and rejects unknown input fields](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L56-L106).
+> [The second half defines workspace bounds and rejects unknown input fields](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L56-L106).
 >
-> [The request builder fixes the wire protocol and agent-owned output](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/protocol.ts#L40-L76).
+> [The request builder fixes the wire protocol and agent-owned output](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/protocol.ts#L40-L76).
 
 ## Workspace And Git Flow
 
@@ -86,11 +86,11 @@ necessary because a path string alone does not prove who owns a directory.
 
 > **Source evidence — workspace fencing**
 >
-> [Attempt generation changes both workspace path and branch](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/workspace.ts#L1-L11).
+> [Attempt generation changes both workspace path and branch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/workspace.ts#L1-L11).
 >
-> [Creation, commit, merge, and removal validate returned revisions and references](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L13-L66).
+> [Creation, commit, merge, and removal validate returned revisions and references](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L13-L66).
 >
-> [Runtime dispatch verifies the real path and workspace owner file](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/workspace-target.ts#L1-L30).
+> [Runtime dispatch verifies the real path and workspace owner file](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/workspace-target.ts#L1-L30).
 
 ## Completion, Commit Selection, And Merge
 
@@ -146,11 +146,11 @@ diagnostic evidence; it is not implicit input to the new attempt.
 
 > **Source evidence — repair and cancellation do not reuse authority**
 >
-> [Only a Core-issued repair request can select repair evidence](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/repair-evidence.ts#L1-L30).
+> [Only a Core-issued repair request can select repair evidence](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/repair-evidence.ts#L1-L30).
 >
-> [OpenClaw cancellation first resolves the accepted session identity](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L25-L47).
+> [OpenClaw cancellation first resolves the accepted session identity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L25-L47).
 >
-> [Cleanup cancels and polls to terminal state or returns an unresolved result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L49-L72).
+> [Cleanup cancels and polls to terminal state or returns an unresolved result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L49-L72).
 
 ## Configuration And Extension
 
@@ -166,9 +166,9 @@ is no Forge environment-variable fallback and no Forge default for `agent`.
 
 > **Source evidence — configuration and precedence**
 >
-> [The configuration schema requires `agent` and allows only `agentRole` beside it](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/schemas/config.schema.json#L1).
+> [The configuration schema requires `agent` and allows only `agentRole` beside it](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/schemas/config.schema.json#L1).
 >
-> [The active lease replaces input identity before workspace creation and dispatch](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L81-L101).
+> [The active lease replaces input identity before workspace creation and dispatch](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/implementation-agent/src/stage.ts#L81-L101).
 
 To add a Forge backend, implement a `runtime.dispatch` target that preserves the
 implementation request and completion contract. Do not add Git commit, merge,

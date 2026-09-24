@@ -4,7 +4,7 @@ Status: implemented in parts; host automation and live acceptance remain open
 Audience: architecture reader, platform operator, maintainer, security reviewer
 Owner: platform architecture and operations
 Evidence: scripts/deploy.sh; scripts/platform-services.mjs; charts/ops-pod; gitops/platform; my-values/infra
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: current Kubernetes platform and its supported deployment paths
 Last verified: 2026-09-21
 
@@ -116,7 +116,7 @@ network, identity, and data services before application reconciliation.
 
 > **Source evidence — present bootstrap boundary**
 >
-> [The deployment command defines the selected cluster inputs and explicit component switches](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1-L60).
+> [The deployment command defines the selected cluster inputs and explicit component switches](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/deploy.sh#L1-L60).
 >
 > [The host-automation roadmap states the required planned result](../status/roadmap.md#automated-host-bootstrap-and-recovery).
 
@@ -155,11 +155,11 @@ configuration fault.
 
 > **Source evidence — storage and scheduling inputs**
 >
-> [Argo CD adopts the SMB CSI driver as a separate storage project](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/platform-services.mjs#L3-L40).
+> [Argo CD adopts the SMB CSI driver as a separate storage project](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/platform-services.mjs#L3-L40).
 >
-> [The local registry requires an explicit StorageClass, capacity, and `ReadWriteOncePod`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-local.yaml#L1-L14).
+> [The local registry requires an explicit StorageClass, capacity, and `ReadWriteOncePod`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/registry-local.yaml#L1-L14).
 >
-> [Buster declares CPU, memory, ephemeral-storage, retained runtime state, and a dedicated cgroup subtree](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/buster-values.yaml#L5-L19).
+> [Buster declares CPU, memory, ephemeral-storage, retained runtime state, and a dedicated cgroup subtree](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/buster-values.yaml#L5-L19).
 
 ## One Network Owner: Flannel or Cilium
 
@@ -209,11 +209,11 @@ allowed and denied connections before returning a node to service.
 
 > **Source evidence — guarded CNI ownership**
 >
-> [The installer separates first cutover from later Cilium updates](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy-cilium.sh#L7-L32).
+> [The installer separates first cutover from later Cilium updates](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/deploy-cilium.sh#L7-L32).
 >
-> [The selected values explicitly disable the normal K3s CNI ownership](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/cilium-values.yaml#L24-L31).
+> [The selected values explicitly disable the normal K3s CNI ownership](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/cilium-values.yaml#L24-L31).
 >
-> [The active platform policy uses Cilium identities and a Cilium API resource](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/network-policies.yaml#L1-L55).
+> [The active platform policy uses Cilium identities and a Cilium API resource](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/network-policies.yaml#L1-L55).
 
 ## Argo CD and Exclusive Resource Ownership
 
@@ -248,11 +248,11 @@ bootstrap, recover, and reconcile every resource without a shared-owner window.
 
 > **Source evidence — Git deployment boundary**
 >
-> [Platform projects restrict source repositories, destinations, and resource kinds](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/argocd-self-management.mjs#L15-L29).
+> [Platform projects restrict source repositories, destinations, and resource kinds](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/argocd-self-management.mjs#L15-L29).
 >
-> [The platform tree assigns separate Tailscale, Ops, Redis, and registry applications](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/argocd-self-management.mjs#L55-L105).
+> [The platform tree assigns separate Tailscale, Ops, Redis, and registry applications](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/argocd-self-management.mjs#L55-L105).
 >
-> [Adopted SPIRE and storage applications reject shared resource ownership](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/platform-services.mjs#L24-L57).
+> [Adopted SPIRE and storage applications reject shared resource ownership](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/platform-services.mjs#L24-L57).
 
 ## Runtime Dependency Contracts
 
@@ -295,18 +295,18 @@ supplies a credential value after the non-secret endpoint has been selected.
 
 > **Source evidence — dependency configuration and precedence inputs**
 >
-> [Role defaults define Git, Redis, LiteLLM, and worker-trust inputs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/values.yaml#L132-L173) and [the adjacent Git and Redis defaults](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/values.yaml#L204-L232).
+> [Role defaults define Git, Redis, LiteLLM, and worker-trust inputs](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/values.yaml#L132-L173) and [the adjacent Git and Redis defaults](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/values.yaml#L204-L232).
 >
-> [The registry contract rejects implicit transport and unsafe credential combinations](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L23-L54) and [generates distinct BuildKit, runtime, and node projections](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L57-L104).
+> [The registry contract rejects implicit transport and unsafe credential combinations](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/registry-client-config.mjs#L23-L54) and [generates distinct BuildKit, runtime, and node projections](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/registry-client-config.mjs#L57-L104).
 >
-> [Prism assigns database URLs, ingestion, worker, and exact trusted identities to Control and Worker](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L90-L138).
+> [Prism assigns database URLs, ingestion, worker, and exact trusted identities to Control and Worker](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L90-L138).
 >
-> [Role defaults make Redis, LiteLLM, and both registry endpoints readiness inputs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/values.yaml#L320-L352).
-> [The infrastructure command leaves both anonymous lab registries unselected by default](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1186-L1221).
+> [Role defaults make Redis, LiteLLM, and both registry endpoints readiness inputs](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/values.yaml#L320-L352).
+> [The infrastructure command leaves both anonymous lab registries unselected by default](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/deploy.sh#L1186-L1221).
 >
-> [The gateway configuration separates managed OpenAI reasoning from the LiteLLM memory route](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75) and [limits the allowed reasoning models](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L77-L108).
+> [The gateway configuration separates managed OpenAI reasoning from the LiteLLM memory route](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75) and [limits the allowed reasoning models](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-gateway.yaml#L77-L108).
 >
-> [Nova enables its Discord channel and token source](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/nova-values.yaml#L38-L58), and [Buster enables its distinct channel and execution approver](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/buster-values.yaml#L41-L65).
+> [Nova enables its Discord channel and token source](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/nova-values.yaml#L38-L58), and [Buster enables its distinct channel and execution approver](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/buster-values.yaml#L41-L65).
 
 ## Rootless BuildKit
 
@@ -343,11 +343,11 @@ features. It deletes the probe afterward and reports a cleanup failure.
 
 > **Source evidence — builder lifecycle**
 >
-> [The Buster entrypoint creates registry configuration, starts rootless BuildKit, waits for its worker, and owns shutdown](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/buster-runtime-entrypoint.sh#L4-L61).
+> [The Buster entrypoint creates registry configuration, starts rootless BuildKit, waits for its worker, and owns shutdown](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/buster-runtime-entrypoint.sh#L4-L61).
 >
-> [The worker image pins BuildKit and rootless tools](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/Dockerfile.buster-runtime#L1-L44) and [defines the runtime user mappings and paths](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/Dockerfile.buster-runtime#L45-L78).
+> [The worker image pins BuildKit and rootless tools](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.buster-runtime#L1-L44) and [defines the runtime user mappings and paths](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.buster-runtime#L45-L78).
 >
-> [The host preflight creates the bounded rootless probe](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L745-L804) and [checks its worker, result, and cleanup](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L816-L875).
+> [The host preflight creates the bounded rootless probe](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/deploy.sh#L745-L804) and [checks its worker, result, and cleanup](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/deploy.sh#L816-L875).
 
 ## Writable Local OCI Registry
 
@@ -373,11 +373,11 @@ directly.
 
 > **Source evidence — explicit laboratory limits**
 >
-> [The manifest declares anonymous HTTP and one retained writer](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-local.yaml#L1-L55).
+> [The manifest declares anonymous HTTP and one retained writer](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/registry-local.yaml#L1-L55).
 >
-> [It sets resource bounds, `/v2/` probes, and Service port 5001](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-local.yaml#L56-L106).
+> [It sets resource bounds, `/v2/` probes, and Service port 5001](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/registry-local.yaml#L56-L106).
 >
-> [Deployment requires explicit storage input and never enables the lab registry by default](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1187-L1219).
+> [Deployment requires explicit storage input and never enables the lab registry by default](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/deploy.sh#L1187-L1219).
 >
 > [The production-grade registry roadmap gives the required acceptance boundary](../status/roadmap.md#production-grade-local-oci-registry).
 
@@ -414,9 +414,9 @@ operation does not need a backup because upstream content and digests are author
 
 > **Source evidence — cache boundary and client routing**
 >
-> [The mirror manifest names Docker Hub and its retained cache](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-mirror.yaml#L1-L55), with [resource bounds, probes, and Service port 5000](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-mirror.yaml#L56-L94).
+> [The mirror manifest names Docker Hub and its retained cache](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/registry-mirror.yaml#L1-L55), with [resource bounds, probes, and Service port 5000](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/registry-mirror.yaml#L56-L94).
 >
-> [The client generator keeps writable registry and mirror routes separate and creates BuildKit and node configuration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L57-L104).
+> [The client generator keeps writable registry and mirror routes separate and creates BuildKit and node configuration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/registry-client-config.mjs#L57-L104).
 
 ## Git Source and the Absent Git Mirror
 
@@ -454,11 +454,11 @@ releases a bounded test route.
 
 > **Source evidence — service ownership**
 >
-> [Redis values declare authentication, standalone topology, persistence, and resource bounds](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/redis.yaml#L1-L21).
+> [Redis values declare authentication, standalone topology, persistence, and resource bounds](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/redis.yaml#L1-L21).
 >
-> [Platform PostgreSQL declares the LiteLLM database, existing Secret keys, persistence, and resources](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/postgresql.yaml#L1-L25).
+> [Platform PostgreSQL declares the LiteLLM database, existing Secret keys, persistence, and resources](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/postgresql.yaml#L1-L25).
 >
-> [Tailscale values declare the ingress class, tags, and bounded resources](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/tailscale-operator.yaml#L1-L21).
+> [Tailscale values declare the ingress class, tags, and bounded resources](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/tailscale-operator.yaml#L1-L21).
 
 ## LiteLLM Model Gateway
 
@@ -526,19 +526,19 @@ base URL, authentication, model identity, vector validation, and recovery proof.
 
 > **Source evidence — gateway configuration and rollout**
 >
-> [The current model list, provider location, master-key source, and parameter behavior](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-config.yaml#L1-L14).
+> [The current model list, provider location, master-key source, and parameter behavior](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/litellm-config.yaml#L1-L14).
 >
-> [The direct Deployment declares the image, database mode, provider mount, and startup/readiness checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-deployment.yaml#L23-L81).
+> [The direct Deployment declares the image, database mode, provider mount, and startup/readiness checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/litellm-deployment.yaml#L23-L81).
 >
-> [The renderer binds the mounted configuration to a rollout checksum](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/render-litellm-deployment.mjs#L1-L22).
+> [The renderer binds the mounted configuration to a rollout checksum](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/render-litellm-deployment.mjs#L1-L22).
 >
-> [The direct deployment validates the NodePort, applies the rendered resources, and waits 120 seconds for rollout](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1166-L1184).
+> [The direct deployment validates the NodePort, applies the rendered resources, and waits 120 seconds for rollout](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/deploy.sh#L1166-L1184).
 >
-> [The GitOps profile declares its separate image, external configuration, and Service](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/litellm/resources.yaml#L1-L60) and [the fixed NodePort](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/litellm/resources.yaml#L64-L80).
+> [The GitOps profile declares its separate image, external configuration, and Service](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/litellm/resources.yaml#L1-L60) and [the fixed NodePort](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/litellm/resources.yaml#L64-L80).
 >
-> [The role renders the embedding URL, Secret reference, and model](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75).
+> [The role renders the embedding URL, Secret reference, and model](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75).
 >
-> [Its dependency check calls only authenticated `/health`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L842-L847).
+> [Its dependency check calls only authenticated `/health`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L842-L847).
 
 ## Managed Reasoning, Vertex Embeddings, and Discord
 
@@ -589,19 +589,19 @@ and grants its secret and network capabilities.
 
 > **Source evidence — distinct external paths**
 >
-> [The generated gateway keeps OpenAI auth and the LiteLLM memory endpoint in separate configuration blocks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75).
+> [The generated gateway keeps OpenAI auth and the LiteLLM memory endpoint in separate configuration blocks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75).
 >
-> [Prism selects the managed reasoning models while retaining the separate LiteLLM key and endpoint](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/prism-agent-values.yaml#L24-L52).
+> [Prism selects the managed reasoning models while retaining the separate LiteLLM key and endpoint](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/prism-agent-values.yaml#L24-L52).
 >
-> [LiteLLM fixes the one Vertex model, project, location, and master-key source](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-config.yaml#L1-L14).
-> [Its direct Deployment mounts the Google identity and external gateway Secret](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-deployment.yaml#L23-L75).
+> [LiteLLM fixes the one Vertex model, project, location, and master-key source](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/litellm-config.yaml#L1-L14).
+> [Its direct Deployment mounts the Google identity and external gateway Secret](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/litellm-deployment.yaml#L23-L75).
 >
-> [The gateway applies Discord enablement, token indirection, allowlists, mention rules, session binding, and execution approvers](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L180-L232).
+> [The gateway applies Discord enablement, token indirection, allowlists, mention rules, session binding, and execution approvers](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-gateway.yaml#L180-L232).
 >
-> [The workload injects bot and webhook secrets only into the runtime container](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L1342-L1356).
+> [The workload injects bot and webhook secrets only into the runtime container](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L1342-L1356).
 >
-> [The notification adapter requires an explicit target, endpoint mode, secret name, payload limit, and format](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/operator-messaging/src/config.ts#L59-L80).
-> [It uses granted secret and network capabilities only after durable reservation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/operator-messaging/src/adapter.ts#L35-L63).
+> [The notification adapter requires an explicit target, endpoint mode, secret name, payload limit, and format](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/operator-messaging/src/config.ts#L59-L80).
+> [It uses granted secret and network capabilities only after durable reservation](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/operator-messaging/src/adapter.ts#L35-L63).
 
 ## Monitoring Is Optional and Non-Authoritative
 
@@ -627,11 +627,11 @@ dashboard.
 
 > **Source evidence — retention and collector boundary**
 >
-> [Prometheus and Grafana values declare retained storage, credentials, and metric retention](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/prometheus.yaml#L1-L50).
+> [Prometheus and Grafana values declare retained storage, credentials, and metric retention](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/prometheus.yaml#L1-L50).
 >
-> [Loki values declare retained filesystem storage and log retention](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/loki.yaml#L1-L33).
+> [Loki values declare retained filesystem storage and log retention](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/loki.yaml#L1-L33).
 >
-> [Alloy values declare CRI discovery and processing](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L30-L79) and [the Loki delivery and collector resource boundary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L80-L130).
+> [Alloy values declare CRI discovery and processing](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L30-L79) and [the Loki delivery and collector resource boundary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L80-L130).
 
 ## Ops Pod: Tool Policy Is Not Kubernetes Authority
 
@@ -661,11 +661,11 @@ Pod cannot repair the cluster that must schedule it.
 
 > **Source evidence — effective operations authority**
 >
-> [Chart defaults enable namespace-scoped Codex execution in `kubeclaw`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/values.yaml#L21-L28).
+> [Chart defaults enable namespace-scoped Codex execution in `kubeclaw`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L21-L28).
 >
-> [RBAC declares the read surface](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L1-L50) and [separates namespace-scoped Pod execution](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L51-L92).
+> [RBAC declares the read surface](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L1-L50) and [separates namespace-scoped Pod execution](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L51-L92).
 >
-> [The workload mounts the Codex credential boundary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L34-L77) and [a separate token into the MCP container](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L85-L103).
+> [The workload mounts the Codex credential boundary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L34-L77) and [a separate token into the MCP container](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L85-L103).
 
 ## Dependency and Recovery Order
 

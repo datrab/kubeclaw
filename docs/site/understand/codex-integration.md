@@ -4,7 +4,7 @@ Status: implemented as a local plugin package and an optional Ops Pod
 Audience: Codex operator, plugin maintainer, platform operator, security specialist
 Owner: Codex integration maintainers
 Evidence: plugins/kubeclaw-ops; .agents/plugins/marketplace.json; charts/ops-pod; tools/ops-mcp
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: `kubeclaw-ops@0.2.0` and the current local marketplace entry
 Last verified: manifest, skill, chart, service, and test inspection on 2026-09-21
 
@@ -46,11 +46,11 @@ claim; removing the plugin does not remove any of these stores.
 
 > **Source evidence — package and marketplace boundary**
 >
-> [The plugin manifest declares one skill directory and the `Read` interface capability](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
+> [The plugin manifest declares one skill directory and the `Read` interface capability](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
 >
-> [The local marketplace makes installation available and requests authentication on install](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/.agents/plugins/marketplace.json#L1-L20).
+> [The local marketplace makes installation available and requests authentication on install](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/.agents/plugins/marketplace.json#L1-L20).
 >
-> [The skill defines the evidence order and forbids mutation claims](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md#L1-L33).
+> [The skill defines the evidence order and forbids mutation claims](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md#L1-L33).
 
 ## Installation And Activation
 
@@ -95,21 +95,21 @@ is wider.
 
 > **Source evidence — process and credential layout**
 >
-> [The chart requires immutable digests for the Codex and MCP images and fixes one writer](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L1-L45).
+> [The chart requires immutable digests for the Codex and MCP images and fixes one writer](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L1-L45).
 >
-> [Codex receives its own environment, persistent mounts, and readiness boundary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L49-L84).
+> [Codex receives its own environment, persistent mounts, and readiness boundary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L49-L84).
 >
-> [MCP receives the loopback, namespace, bearer, Kubernetes, and probe settings](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L85-L112).
+> [MCP receives the loopback, namespace, bearer, Kubernetes, and probe settings](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L85-L112).
 >
-> [The same projected token volume is always mounted into MCP and conditionally mounted into Codex](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L69-L101).
+> [The same projected token volume is always mounted into MCP and conditionally mounted into Codex](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L69-L101).
 >
-> [The shared volume projects one rotating token, pod namespace, and cluster CA](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L137-L158).
+> [The shared volume projects one rotating token, pod namespace, and cluster CA](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L137-L158).
 >
-> [The optional Tailscale container uses its separately configured image and state](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L113-L164).
+> [The optional Tailscale container uses its separately configured image and state](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L113-L164).
 >
-> [RBAC grants cluster reads and creates namespace-scoped bindings separately](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L1-L58).
+> [RBAC grants cluster reads and creates namespace-scoped bindings separately](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L1-L58).
 >
-> [Optional pod-exec access is confined to the explicitly listed namespaces](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L60-L91).
+> [Optional pod-exec access is confined to the explicitly listed namespaces](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L60-L91).
 
 ## Workspace And Network Boundaries
 
@@ -148,7 +148,7 @@ Tailscale without replacing that tag weakens release reproducibility.
 
 > **Source evidence — deployment defaults and the image exception**
 >
-> [Values define storage, namespace, network, and disabled Tailscale defaults](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/values.yaml#L1-L46).
+> [Values define storage, namespace, network, and disabled Tailscale defaults](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L1-L46).
 
 ## Connection Failure And Recovery
 

@@ -300,8 +300,10 @@ definition; do not disable the check.
 
 > **Source evidence — unsupported project shapes fail at discovery**
 >
-> **Implementation:** [accessibility and performance guards](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L269-L403) ·
-> [visual, end-to-end, and security guards](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L403-L413).
+> **Implementation:** [accessibility and performance guards](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L269-L403) ·
+> [visual, end-to-end, and security guards](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L403-L413).
+>
+> **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 
 > **Source evidence — compiler contract**
 >

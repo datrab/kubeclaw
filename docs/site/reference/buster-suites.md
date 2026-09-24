@@ -500,7 +500,7 @@ does not use `test-provider.e2e.v1`, or fails the closed E2E-result schema. This
 is a result-contract failure, not a failed browser assertion. Preserve the raw
 result and compare the provider and Nova contract versions before retrying.
 
-> [E2E detail validation](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/contracts/pipeline-test-gate/v1/src/validation.ts#L55-L69)
+> [E2E detail validation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/validation.ts#L55-L69)
 
 > [E2E suite](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/e2e.v1.json) ·
 > [complete Playwright schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/playwright/schemas/config.schema.json)

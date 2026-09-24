@@ -4,7 +4,7 @@ Status: implemented; optional to pipeline execution
 Audience: operator, Codex integrator, Ops MCP maintainer, security specialist
 Owner: Ops MCP maintainers
 Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; scripts/deploy-ops-pod.sh
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: `kubeclaw-ops` MCP service version 0.2.0
 Last verified: service, chart, policy, and focused test inspection on 2026-09-21
 
@@ -84,13 +84,13 @@ must keep these values if it wants to continue an investigation.
 
 > **Source evidence — fail-closed HTTP boundary**
 >
-> [Configuration validates port, local binding, namespaces, token sources, and origin allowlist](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/config.mjs#L1-L23).
+> [Configuration validates port, local binding, namespaces, token sources, and origin allowlist](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/config.mjs#L1-L23).
 >
-> [Authentication validates and rereads the bearer credential for every request](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/authentication.mjs#L1-L38).
+> [Authentication validates and rereads the bearer credential for every request](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/authentication.mjs#L1-L38).
 >
-> [The router constructs the MCP handler and applies bearer and origin checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L491-L543).
+> [The router constructs the MCP handler and applies bearer and origin checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L491-L543).
 >
-> [It maps handler failures, starts the listener, and closes on termination](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L545-L564).
+> [It maps handler failures, starts the listener, and closes on termination](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L545-L564).
 
 ## Configuration And Precedence
 
@@ -119,14 +119,14 @@ registration, input schema, defaults, limits, annotations, and returned fields.
 
 | Tool | Input | Output and limit | Source |
 | --- | --- | --- | --- |
-| `platform_cluster_state` | `nodes` or `ciliumclusterwidenetworkpolicies`; optional continuation token. | One page of at most 50 summaries. Registered only in local-only mode. | [Registration, schema, annotations, page bound, and result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L204-L218). |
-| `platform_network_state` | Allowed namespace; daemonsets, NetworkPolicies, or CiliumNetworkPolicies; optional continuation token. | One page of at most 50 objects. Registered only in local-only mode. | [Registration, schema, annotations, page bound, and result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L219-L235). |
-| `list_argocd_applications` | Limit 1–200, default 50; optional continuation token. | Sync, health, revision, destination, operation state, partial flag, and next token. | [Registration, schema, defaults, annotations, and list bound](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L238-L258); [mapped fields and result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L259-L279). |
-| `namespace_overview` | Allowed namespace. | Deployments, StatefulSets, pods, jobs, Services, and Ingresses. All six lists follow every continuation page. There is no page, duration, item-count, or encoded-output ceiling for the complete operation. | [Registration, schema, and annotations](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L282-L301); [six list scans and result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L300-L348). |
-| `get_pod` | Allowed namespace and non-empty pod name. | Pod and container state, conditions, and init-container state. | [Registration, schema, annotations, request, and result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L351-L376). |
-| `get_events` | Allowed namespace, optional object name, limit 1–100, default 40. | The newest matching events after every continuation page is scanned. Each request asks for 500 items. The retained result count is bounded, but total pages, total duration, and encoded result bytes are not. | [All-page scan and bounded retained count](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L107-L132); [registration, schema, defaults, annotations, and result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L379-L405). |
-| `get_pod_logs` | Namespace, pod, optional container, 1–500 tail lines, absolute `sinceTime`, and `previous`. | At most 64 KiB of log text plus observation metadata. Default is 200 recent lines when no time is given. | [Registration, schema, defaults, annotations, byte request, and result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L408-L460). |
-| `get_hubble_flows` | Namespace, exact pod, verdict, absolute time window, node, and limit 1–50, default 20. | Normalized flows, warnings, partial reasons, returned window, and continuation advice. | [Registration, schema, defaults, annotations, and result call](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L464-L489); [process and output limits](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L25-L75); [partial markers and returned fields](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L95-L118). |
+| `platform_cluster_state` | `nodes` or `ciliumclusterwidenetworkpolicies`; optional continuation token. | One page of at most 50 summaries. Registered only in local-only mode. | [Registration, schema, annotations, page bound, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L204-L218). |
+| `platform_network_state` | Allowed namespace; daemonsets, NetworkPolicies, or CiliumNetworkPolicies; optional continuation token. | One page of at most 50 objects. Registered only in local-only mode. | [Registration, schema, annotations, page bound, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L219-L235). |
+| `list_argocd_applications` | Limit 1–200, default 50; optional continuation token. | Sync, health, revision, destination, operation state, partial flag, and next token. | [Registration, schema, defaults, annotations, and list bound](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L238-L258); [mapped fields and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L259-L279). |
+| `namespace_overview` | Allowed namespace. | Deployments, StatefulSets, pods, jobs, Services, and Ingresses. All six lists follow every continuation page. There is no page, duration, item-count, or encoded-output ceiling for the complete operation. | [Registration, schema, and annotations](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L282-L301); [six list scans and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L300-L348). |
+| `get_pod` | Allowed namespace and non-empty pod name. | Pod and container state, conditions, and init-container state. | [Registration, schema, annotations, request, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L351-L376). |
+| `get_events` | Allowed namespace, optional object name, limit 1–100, default 40. | The newest matching events after every continuation page is scanned. Each request asks for 500 items. The retained result count is bounded, but total pages, total duration, and encoded result bytes are not. | [All-page scan and bounded retained count](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L107-L132); [registration, schema, defaults, annotations, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L379-L405). |
+| `get_pod_logs` | Namespace, pod, optional container, 1–500 tail lines, absolute `sinceTime`, and `previous`. | At most 64 KiB of log text plus observation metadata. Default is 200 recent lines when no time is given. | [Registration, schema, defaults, annotations, byte request, and result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L408-L460). |
+| `get_hubble_flows` | Namespace, exact pod, verdict, absolute time window, node, and limit 1–50, default 20. | Normalized flows, warnings, partial reasons, returned window, and continuation advice. | [Registration, schema, defaults, annotations, and result call](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L464-L489); [process and output limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L25-L75); [partial markers and returned fields](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L95-L118). |
 
 All namespace inputs use an enum built from `OPS_ALLOWED_NAMESPACES`. The list
 must contain `OPS_DEFAULT_NAMESPACE`; names must be valid Kubernetes namespace
@@ -186,9 +186,9 @@ slightly different times, but it makes load and incompleteness visible.
 
 > **Source evidence — per-request bounds do not bound a complete scan**
 >
-> [`createKubeList` defaults to unlimited pages and applies a deadline only when `maxPages` is finite](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/kubernetes.mjs#L64-L97).
+> [`createKubeList` defaults to unlimited pages and applies a deadline only when `maxPages` is finite](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L64-L97).
 >
-> [The event loop follows each continuation token and retains only the requested number of newest events](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L107-L132).
+> [The event loop follows each continuation token and retains only the requested number of newest events](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L107-L132).
 
 ## Hubble Transport And Evidence Limits
 
@@ -205,15 +205,15 @@ lossless cursor. An empty or partial result does not prove that no drop occurred
 
 > **Source evidence — bounded downstream calls**
 >
-> [Kubernetes transport fixes HTTPS, CA, token rotation, 10-second timeout, and an 8 MiB ceiling](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/kubernetes.mjs#L1-L60).
+> [Kubernetes transport fixes HTTPS, CA, token rotation, 10-second timeout, and an 8 MiB ceiling](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L1-L60).
 >
-> [List transport retries only oversized pages and retains a continuation token](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/kubernetes.mjs#L64-L98).
+> [List transport retries only oversized pages and retains a continuation token](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L64-L98).
 >
-> [Hubble fixes concurrency, query window, binary, relay, and timeout defaults](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L1-L50).
+> [Hubble fixes concurrency, query window, binary, relay, and timeout defaults](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L1-L50).
 >
-> [It bounds bytes and applies exact post-query filtering](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L51-L100).
+> [It bounds bytes and applies exact post-query filtering](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L51-L100).
 >
-> [The result records process failures, partial reasons, continuation advice, and retention limits](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L101-L118).
+> [The result records process failures, partial reasons, continuation advice, and retention limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/hubble.mjs#L101-L118).
 
 ## Authorization And Data Exposure
 
@@ -237,13 +237,13 @@ network policy, and an independent lifecycle.
 
 > **Source evidence — method authority and process authority differ**
 >
-> [The Kubernetes transport always sends GET and reads the mounted token for each request](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/kubernetes.mjs#L20-L59).
+> [The Kubernetes transport always sends GET and reads the mounted token for each request](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/kubernetes.mjs#L20-L59).
 >
-> [The default execution namespace enables the wider credential path](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/values.yaml#L21-L29).
+> [The default execution namespace enables the wider credential path](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/values.yaml#L21-L29).
 >
-> [One projected token volume is mounted into MCP and conditionally into Codex](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L69-L101).
+> [One projected token volume is mounted into MCP and conditionally into Codex](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L69-L101).
 >
-> [The execution Role grants the same ServiceAccount `pods/exec` `create`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L63-L92).
+> [The execution Role grants the same ServiceAccount `pods/exec` `create`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L63-L92).
 
 Pod logs and Hubble summaries are not content-redacted. They can contain
 application or network identifiers. Treat returned text as observation, never
@@ -292,9 +292,9 @@ a field only in a versioned tool or service protocol.
 
 > **Source evidence — tools are compiled service registrations**
 >
-> [Each tool declares its schema and read-only behavior directly in `buildServer`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L189-L235).
+> [Each tool declares its schema and read-only behavior directly in `buildServer`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tools/ops-mcp/src/server.mjs#L189-L235).
 >
-> [The deployment grants namespaced reads through explicit RoleBindings rather than tool annotations](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L34-L72).
+> [The deployment grants namespaced reads through explicit RoleBindings rather than tool annotations](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L34-L72).
 
 Run the Ops MCP local, HTTP, authentication, Kubernetes, Hubble, diagnostics,
 bootstrap, and policy-contract tests after a change. These checks simulate and

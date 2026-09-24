@@ -4,7 +4,7 @@ Status: implemented design; live acceptance remains separate
 Audience: operator, architecture reader, security reviewer, maintainer
 Owner: platform architecture and operations
 Evidence: packaging/runtime/roles; charts/kubeclaw; charts/prism
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: current Helm charts and runtime-role declarations
 Last verified: 2026-09-21
 
@@ -62,11 +62,11 @@ none of them owns pipeline or Prism state.
 
 > **Source evidence — deployed Prism path**
 >
-> [The selected Prism agent values colocate OpenClaw, the loopback bridge, and the Control egress listener](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/prism-agent-values.yaml#L45-L85).
+> [The selected Prism agent values colocate OpenClaw, the loopback bridge, and the Control egress listener](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/prism-agent-values.yaml#L45-L85).
 >
-> [The role proxy accepts Nova, Control, and test-runner identities at 18082 and forwards only to the loopback bridge](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
+> [The role proxy accepts Nova, Control, and test-runner identities at 18082 and forwards only to the loopback bridge](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
 >
-> [Control receives its database, Ingestion, Worker, agent, and exact SPIFFE settings from the rendered chart](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L90-L138).
+> [Control receives its database, Ingestion, Worker, agent, and exact SPIFFE settings from the rendered chart](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L90-L138).
 
 ## Runtime Roles and Workloads
 
@@ -95,7 +95,7 @@ Their actual process location depends on that runtime configuration.
 
 > **Source evidence — package boundaries**
 >
-> [Nova role declaration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/packaging/runtime/roles/nova.json#L1-L60), [Buster role declaration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/packaging/runtime/roles/buster.json#L1-L60), and [Prism role declaration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/packaging/runtime/roles/prism.json#L1-L28).
+> [Nova role declaration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/nova.json#L1-L60), [Buster role declaration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/buster.json#L1-L60), and [Prism role declaration](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/packaging/runtime/roles/prism.json#L1-L28).
 >
 > **Decision record:** [ADR-012 explains role-specific immutable bundles](../decisions/core-and-plugins.md#adr-012-assemble-exact-role-specific-runtime-bundles).
 
@@ -144,9 +144,9 @@ positive and negative route behavior without trusting a caller-supplied header.
 
 > **Source evidence — application identity check**
 >
-> [Worker Core parses and authorizes proxied SPIFFE identities](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/trust.ts#L1-L52).
+> [Worker Core parses and authorizes proxied SPIFFE identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/trust.ts#L1-L52).
 >
-> [Prism workloads receive separate trusted caller identities](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L127-L138).
+> [Prism workloads receive separate trusted caller identities](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L127-L138).
 >
 > [Worker Trust gives the complete certificate and proxy path](worker-trust.md).
 
@@ -175,7 +175,7 @@ path described by the selected application procedure.
 
 > **Source evidence — separate service accounts**
 >
-> [The Prism chart creates Control, Studio, Worker, Ingestion, Backup, and test-runner accounts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/serviceaccounts.yaml#L1-L7).
+> [The Prism chart creates Control, Studio, Worker, Ingestion, Backup, and test-runner accounts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/serviceaccounts.yaml#L1-L7).
 
 ## Network Boundaries
 
@@ -224,15 +224,15 @@ as “secured Flannel profile available.”
 
 > **Source evidence — default deny and allowed paths**
 >
-> [The Prism default-deny and DNS policies](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/networkpolicy.yaml#L1-L22).
+> [The Prism default-deny and DNS policies](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L1-L22).
 >
-> [The Prism application paths name allowed callers, destinations, and ports](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/networkpolicy.yaml#L24-L59).
+> [The Prism application paths name allowed callers, destinations, and ports](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L24-L59).
 >
-> [Internal Prism services target the mTLS sidecar port](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/services.yaml#L8-L29).
+> [Internal Prism services target the mTLS sidecar port](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/services.yaml#L8-L29).
 >
-> [The Prism agent policy permits dispatch, Control, LiteLLM, and managed-provider paths](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/networkpolicy.yaml#L95-L121).
+> [The Prism agent policy permits dispatch, Control, LiteLLM, and managed-provider paths](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L95-L121).
 >
-> [Optional Ingestion permits only Control ingress and public HTTPS egress](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/networkpolicy.yaml#L150-L165).
+> [Optional Ingestion permits only Control ingress and public HTTPS egress](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L150-L165).
 
 **Decision status:** A CNI-neutral application boundary is an architecture
 direction; Cilium is the implemented and currently supported secured deployment.
@@ -261,9 +261,9 @@ This work is intentional security review, not incidental wiring.
 
 > **Source evidence — least authority**
 >
-> [`createPluginInvocationContext()` creates the grant map and denies missing grants](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/context.ts#L34-L58).
+> [`createPluginInvocationContext()` creates the grant map and denies missing grants](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/context.ts#L34-L58).
 >
-> [Capability authorization checks paths, namespaces, names, targets, and sources](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/authorization.ts#L39-L93) and [checks origins, commands, and signals](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/authorization.ts#L94-L130).
+> [Capability authorization checks paths, namespaces, names, targets, and sources](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/authorization.ts#L39-L93) and [checks origins, commands, and signals](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/authorization.ts#L94-L130).
 
 ## Process Isolation
 
@@ -285,9 +285,9 @@ The runtime must also constrain how untrusted code reaches the host.
 
 > **Source evidence — trust-dependent activation**
 >
-> [`load()` selects direct import or isolated invocation from the package trust scope](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
+> [`load()` selects direct import or isolated invocation from the package trust scope](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
 >
-> [The isolation runner grants only selected file reads and disables add-ons](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/isolation/runner.ts#L33-L52).
+> [The isolation runner grants only selected file reads and disables add-ons](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/isolation/runner.ts#L33-L52).
 
 ## Storage Boundaries
 
@@ -333,11 +333,11 @@ Database-only restore can create references to missing artifacts.
 
 > **Source evidence — Prism persistence**
 >
-> [The chart enforces one Control replica and mounts the artifact PVC only there](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L1-L6).
+> [The chart enforces one Control replica and mounts the artifact PVC only there](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L1-L6).
 >
-> [The retained artifact PVC uses `ReadWriteOnce`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L217-L230).
+> [The retained artifact PVC uses `ReadWriteOnce`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/workloads.yaml#L217-L230).
 >
-> [The backup script defines one database-and-artifact group](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/files/prism-backup.sh#L54-L105).
+> [The backup script defines one database-and-artifact group](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/files/prism-backup.sh#L54-L105).
 
 ## Observability Boundary
 
@@ -354,7 +354,7 @@ Use the ordered event, effect receipt, artifact digest, or remote result record 
 
 > **Source evidence — committed events before delivery**
 >
-> [`executePrepared()` creates a serialized observer drainer around the pipeline runner](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/engine-run.ts#L21-L34).
+> [`executePrepared()` creates a serialized observer drainer around the pipeline runner](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-run.ts#L21-L34).
 >
 > [ADR-011 explains immutable observer input and independent delivery](../decisions/core-and-plugins.md#adr-011-observers-consume-immutable-events-without-lifecycle-mutation).
 

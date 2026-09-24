@@ -4,7 +4,7 @@ Status: implemented as an optional Nova sidecar
 Audience: platform operator, documentation publisher, Nova maintainer, security reviewer
 Owner: Archviewer maintainers
 Evidence: docker/Dockerfile.archviewer; docker/archviewer.nginx.conf; charts/kubeclaw/templates/archviewer.yaml; tests/verification/reliability/archviewer-native.test.mjs
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: Nova Helm release with `archviewer.enabled=true`
 Last verified: image, chart, web-server configuration, and native-test inspection on 2026-09-20
 
@@ -27,9 +27,9 @@ product needs a supported publisher, revision selection, or independent scaling.
 
 > **Source evidence — a static, Nova-only surface**
 >
-> [The image contains only Nginx configuration and an initially empty `/designs` directory](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/Dockerfile.archviewer#L1-L22).
+> [The image contains only Nginx configuration and an initially empty `/designs` directory](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.archviewer#L1-L22).
 >
-> [The chart refuses non-Nova roles and legacy duplicate port ownership](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/archviewer.yaml#L1-L10).
+> [The chart refuses non-Nova roles and legacy duplicate port ownership](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/archviewer.yaml#L1-L10).
 
 ## Request Path
 
@@ -67,11 +67,11 @@ dedicated private publication route or auth volume.
 
 > **Source evidence — three access checks**
 >
-> [Nginx requires Basic auth, disables indexes, and exempts only health](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/archviewer.nginx.conf#L1-L19).
+> [Nginx requires Basic auth, disables indexes, and exempts only health](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/archviewer.nginx.conf#L1-L19).
 >
-> [Service, Tailscale Ingress, and Cilium policy bind the same private endpoint](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/archviewer.yaml#L11-L53).
+> [Service, Tailscale Ingress, and Cilium policy bind the same private endpoint](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/archviewer.yaml#L11-L53).
 >
-> [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L1644-L1652).
+> [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L1644-L1652).
 
 ## Publication And Lifecycle
 
@@ -112,11 +112,11 @@ release receipt before deployment.
 
 > **Source evidence — current lab wiring**
 >
-> [The Nova values enable the private access resources](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/nova-values.yaml#L87-L92).
+> [The Nova values enable the private access resources](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/nova-values.yaml#L87-L92).
 >
-> [They separately define the actual sidecar and read-only workspace mount](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/nova-values.yaml#L147-L182).
+> [They separately define the actual sidecar and read-only workspace mount](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/nova-values.yaml#L147-L182).
 >
-> [Nova startup creates the directory but does not publish a document](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L417-L430).
+> [Nova startup creates the directory but does not publish a document](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/deployment.yaml#L417-L430).
 
 ## Failure And Recovery
 

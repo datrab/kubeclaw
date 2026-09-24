@@ -4,7 +4,7 @@ Status: implemented with stated retention and disaster-recovery limits
 Audience: platform operator, runtime developer, data owner, incident responder
 Owner: state-owning component maintainers
 Evidence: skills/nova/core; skills/worker/core; skills/buster/engine; skills/prism; charts/prism; gitops/platform; scripts/postgresql-recovery.sh; scripts/redis-prepare-migration.sh
-Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
+Evidence revision: `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`
 Applies to: current file stores, Prism PostgreSQL, LiteLLM PostgreSQL, Redis, and content-addressed artifacts
 Last verified: code, schema, chart, values, recovery-script, and focused-test inspection on 2026-09-20
 
@@ -196,26 +196,26 @@ in the identity table.
 > **Source evidence — temporary and inactive identities**
 >
 > [Playwright creates its report and related temporary paths, consumes the report,
-> and removes them in `finally`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/browser-playwright-runtime.ts#L102-L120).
+> and removes them in `finally`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/browser-playwright-runtime.ts#L102-L120).
 > [Container build creates temporary metadata and registry credentials and removes
-> their directory in `finally`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/container-build-runtime.ts#L226-L278).
+> their directory in `finally`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/container-build-runtime.ts#L226-L278).
 > [Security scan creates and removes a private temporary registry credential
-> directory](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/security-scan-runtime.ts#L220-L262).
+> directory](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/security-scan-runtime.ts#L220-L262).
 > [Terminal workspace cleanup removes only reproducible input copies and keeps
-> scratch, evidence, artifacts, observability, records, and logs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/terminal-workspace.ts#L1-L19).
+> scratch, evidence, artifacts, observability, records, and logs](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/terminal-workspace.ts#L1-L19).
 > [Attempt cleanup removes its copied repository unless a successful fixture must
-> remain active](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/runner.ts#L1727-L1739).
+> remain active](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/runner.ts#L1727-L1739).
 > [The producer-outbox class implements append, acknowledgement, and compaction,
-> but does not establish an active composition](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L333-L392).
+> but does not establish an active composition](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L333-L392).
 > [Current snapshot publication rejects the unsupported split filenames and writes
-> only the combined run snapshot](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/engine-snapshots.ts#L100-L120).
+> only the combined run snapshot](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-snapshots.ts#L100-L120).
 
 > **Source evidence — the common file-store guarantees**
 >
-> [The file journal validates and hash-chains records under its file lock](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/state/journal.ts#L21-L80).
-> [Its append and refresh paths synchronize writes and truncate only an incomplete final line](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/state/journal.ts#L136-L195).
+> [The file journal validates and hash-chains records under its file lock](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/state/journal.ts#L21-L80).
+> [Its append and refresh paths synchronize writes and truncate only an incomplete final line](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/state/journal.ts#L136-L195).
 >
-> [The durable-record store enforces per-record, record-count, and total-byte limits and uses idempotency plus payload digests](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L56-L115).
+> [The durable-record store enforces per-record, record-count, and total-byte limits and uses idempotency plus payload digests](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L56-L115).
 >
 > **Reason:** These stores favor an explicit stop over silent state loss. A full
 > store reduces availability, but it does not evict the proof needed for replay.
@@ -241,25 +241,25 @@ workspaces. They still need an explicit loss and retirement rule.
 > **Source evidence — deployment store contracts**
 >
 > [The agent chart creates retained config and workspace claims with configured
-> access modes and sizes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/pvc.yaml#L1-L48).
-> [The Buster state claim enforces one writer and `ReadWriteOnce`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/buster-runtime-pvc.yaml#L1-L21).
-> [The runtime starts rootless BuildKit with an explicit state root](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/buster-runtime-entrypoint.sh#L7-L34).
-> [The image sets that root below the builder home directory](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/Dockerfile.buster-runtime#L127-L148),
+> access modes and sizes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/pvc.yaml#L1-L48).
+> [The Buster state claim enforces one writer and `ReadWriteOnce`](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/buster-runtime-pvc.yaml#L1-L21).
+> [The runtime starts rootless BuildKit with an explicit state root](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/buster-runtime-entrypoint.sh#L7-L34).
+> [The image sets that root below the builder home directory](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.buster-runtime#L127-L148),
 > while [the deployment mounts only the workspace, Buster state, credentials,
-> and cgroup subtree and declares its shared ephemeral-storage budget](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/buster-values.yaml#L145-L174).
+> and cgroup subtree and declares its shared ephemeral-storage budget](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/buster-values.yaml#L145-L174).
 >
 > [The direct registry requires an explicit `ReadWriteOncePod` claim and disables
-> deletion and upload purging](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-local.yaml#L1-L34).
-> [The GitOps registry profile is explicitly ephemeral](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/registry-local/resources.yaml#L1-L36).
-> [The mirror has a 5 GiB claim and Docker Hub proxy endpoint](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-mirror.yaml#L14-L55).
+> deletion and upload purging](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/registry-local.yaml#L1-L34).
+> [The GitOps registry profile is explicitly ephemeral](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/registry-local/resources.yaml#L1-L36).
+> [The mirror has a 5 GiB claim and Docker Hub proxy endpoint](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/registry-mirror.yaml#L14-L55).
 >
 > [Prometheus retains 15 days on 20 GiB, while Grafana uses 5 GiB and an external
-> administrator Secret](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/prometheus.yaml#L3-L50).
-> [Loki uses one filesystem-backed 20 GiB replica with 720-hour retention](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/loki.yaml#L1-L33).
+> administrator Secret](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/prometheus.yaml#L3-L50).
+> [Loki uses one filesystem-backed 20 GiB replica with 720-hour retention](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/loki.yaml#L1-L33).
 > [Alloy stores positions on the node and imports the legacy Promtail position
-> file](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L8-L29).
+> file](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/alloy.yaml#L8-L29).
 > [The Ops workload defines its two claim templates and optional Tailscale state
-> claim](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L137-L176).
+> claim](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L137-L176).
 
 ### Why these stores remain separate
 
@@ -291,9 +291,9 @@ replace a package or graph because a newer copy is installed.
 
 > **Source evidence — run identity and snapshots**
 >
-> [Run-root selection validates the ID, uses a SHA-256 path, and verifies a legacy directory through its journal](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/run-root.ts#L62-L76).
+> [Run-root selection validates the ID, uses a SHA-256 path, and verifies a legacy directory through its journal](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/run-root.ts#L62-L76).
 >
-> [Snapshot publication writes a private temporary file, synchronizes it, links it without replacement, and synchronizes the directory](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/engine-snapshots.ts#L75-L121).
+> [Snapshot publication writes a private temporary file, synchronizes it, links it without replacement, and synchronizes the directory](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-snapshots.ts#L75-L121).
 
 ### Journal commit boundary
 
@@ -319,9 +319,9 @@ never restore `effects.jsonl` without its referenced `effect-results` tree.
 
 > **Source evidence — effect persistence**
 >
-> [The effect journal stores request, acceptance, receipt, and content-addressed large-result references](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/effects/journal.ts#L13-L25).
+> [The effect journal stores request, acceptance, receipt, and content-addressed large-result references](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/effects/journal.ts#L13-L25).
 >
-> [Large results use private temporary files, immutable publication, directory synchronization, size checks, and digest checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/effects/journal.ts#L146-L205).
+> [Large results use private temporary files, immutable publication, directory synchronization, size checks, and digest checks](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/effects/journal.ts#L146-L205).
 
 ### Signals, administrative decisions, and remote gates
 
@@ -347,19 +347,19 @@ this directory with optional Prometheus or Loki data.
 > **Source evidence — Nova control stores**
 >
 > [Run entry points open separate decision, event, and signal journals and reject
-> a signal after the event journal records wait resolution](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/engine-run.ts#L58-L117).
+> a signal after the event journal records wait resolution](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-run.ts#L58-L117).
 > [Administrative apply checks the expected journal head and decision identity
-> before it appends a causal lifecycle event](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/engine-admin.ts#L35-L82).
+> before it appends a causal lifecycle event](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/execution/engine-admin.ts#L35-L82).
 >
 > [Remote production composition gives dispatch and import distinct roots and
-> bounded record/blob stores](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/test-gates/production.ts#L87-L121).
+> bounded record/blob stores](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/test-gates/production.ts#L87-L121).
 > [Dispatch persists the validated job before its archive and verifies that blob
-> on every load](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/test-gates/remote-dispatch-store.ts#L27-L71).
+> on every load](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/test-gates/remote-dispatch-store.ts#L27-L71).
 > [Import reserves pending state before blobs and makes a digest-guarded terminal
-> transition only after all evidence is stored](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/test-gates/remote-result-import.ts#L154-L199).
+> transition only after all evidence is stored](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/test-gates/remote-result-import.ts#L154-L199).
 >
 > [Nova persists the reconciliation plan and constructs bounded attempt,
-> admission, and journal stores during recovery](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/observability/reconciler.ts#L338-L395).
+> admission, and journal stores during recovery](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/observability/reconciler.ts#L338-L395).
 
 ### Wait and operator-message projections
 
@@ -372,16 +372,16 @@ lookup leaves delivery uncertain, so retry stops instead of sending another
 unbound message.
 
 > [The wait adapter validates identity and issuer, applies bounded store defaults,
-> and uses idempotent append](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/wait-store/src/adapter.ts#L141-L200).
+> and uses idempotent append](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/wait-store/src/adapter.ts#L141-L200).
 > [Wait create and read use the `waits/all` stream and preserve the original
-> idempotency key](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/wait-store/src/adapter.ts#L202-L240).
+> idempotency key](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/wait-store/src/adapter.ts#L202-L240).
 >
 > [Operator-message configuration bounds target payloads, records, and total
-> delivery bytes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/operator-messaging/src/config.ts#L45-L104).
+> delivery bytes](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/operator-messaging/src/config.ts#L45-L104).
 > [The delivery store reserves before transport and blocks an uncertain retry
-> when receiver receipt lookup is absent](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/operator-messaging/src/delivery-records.ts#L31-L57).
+> when receiver receipt lookup is absent](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/operator-messaging/src/delivery-records.ts#L31-L57).
 > [A terminal receipt uses a digest-guarded transition and resolves a concurrent
-> accepted result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/operator-messaging/src/delivery-records.ts#L60-L88).
+> accepted result](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/operator-messaging/src/delivery-records.ts#L60-L88).
 
 ## Worker State
 
@@ -401,15 +401,15 @@ bytes. The sealed result is immutable for the accepted identity.
 > **Source evidence — Worker durability and capacity**
 >
 > [The attempt journal binds accepted envelopes and retained state to exact claim
-> and attempt identity](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/native-attempt-journal.ts#L18-L77).
-> [It validates process completion and sealed-result transitions](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/native-attempt-journal.ts#L78-L131).
+> and attempt identity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/native-attempt-journal.ts#L18-L77).
+> [It validates process completion and sealed-result transitions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/native-attempt-journal.ts#L78-L131).
 >
-> [Admission counts retained bytes and outstanding reservations before it writes the accepted envelope](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/native-attempt-journal.ts#L162-L183).
+> [Admission counts retained bytes and outstanding reservations before it writes the accepted envelope](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/native-attempt-journal.ts#L162-L183).
 >
-> [The ownership store validates host, boot, owner, and generation identity](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/ownership-store.ts#L50-L109).
-> [Its transitions apply revision checks and configured record and byte limits](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/ownership-store.ts#L110-L169).
+> [The ownership store validates host, boot, owner, and generation identity](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/ownership-store.ts#L50-L109).
+> [Its transitions apply revision checks and configured record and byte limits](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/ownership-store.ts#L110-L169).
 >
-> [The output spool uses private files, exclusive no-follow creation, bounded append, and per-write synchronization](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/native-output-spool.ts#L13-L68).
+> [The output spool uses private files, exclusive no-follow creation, bounded append, and per-write synchronization](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/worker/core/worker/native-output-spool.ts#L13-L68).
 
 For lifecycle transitions, corruption cases, and restart decisions, read
 [Worker Core](worker-core.md#attempt-journal-and-commit-boundaries).
@@ -437,16 +437,16 @@ artifacts. It keeps a receipt of that decision.
 > **Source evidence — Buster stores**
 >
 > [The remote job store configures bounded records and content-addressed result
-> blobs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/remote-plan-service.ts#L52-L111).
-> [Admission validates and reserves the accepted job before execution](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/remote-plan-service.ts#L112-L164).
+> blobs](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/remote-plan-service.ts#L52-L111).
+> [Admission validates and reserves the accepted job before execution](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/remote-plan-service.ts#L112-L164).
 >
-> [Execution derives one SHA-256 job directory under `runtimeRoot` and separates its workspace, artifacts, and observability roots](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/remote-plan-service.ts#L337-L370).
+> [Execution derives one SHA-256 job directory under `runtimeRoot` and separates its workspace, artifacts, and observability roots](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/remote-plan-service.ts#L337-L370).
 >
-> [Runner construction separates artifact, observability, attempt, admission, and report-adapter roots and rejects overlapping trust roots](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/runner.ts#L667-L726).
+> [Runner construction separates artifact, observability, attempt, admission, and report-adapter roots and rejects overlapping trust roots](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/runner.ts#L667-L726).
 >
-> [Evidence staging enforces containment, duplicate-file rejection, count, and byte limits before immutable storage](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/artifacts.ts#L24-L83).
+> [Evidence staging enforces containment, duplicate-file rejection, count, and byte limits before immutable storage](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/artifacts.ts#L24-L83).
 >
-> [Remote compaction verifies the completed job, source identity, archive digest, and retained result artifacts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/remote-plan-compaction.ts#L90-L149).
+> [Remote compaction verifies the completed job, source identity, archive digest, and retained result artifacts](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/buster/engine/test-gates/remote-plan-compaction.ts#L90-L149).
 
 The full record and failure flow is in [Buster architecture](buster.md#4-durable-admission-and-state).
 
@@ -482,11 +482,11 @@ operator-owned retention decision.
 
 > **Source evidence — Prism ownership and backup**
 >
-> [Prism migration uses one reserved connection, a transaction, an advisory lock, ownership checks, and a filename journal](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/storage/index.ts#L21-L74).
+> [Prism migration uses one reserved connection, a transaction, an advisory lock, ownership checks, and a filename journal](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/storage/index.ts#L21-L74).
 >
-> [The artifact store publishes digest-addressed files without replacement and verifies every read](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/storage/artifacts.ts#L8-L67).
+> [The artifact store publishes digest-addressed files without replacement and verifies every read](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/storage/artifacts.ts#L8-L67).
 >
-> [The backup program dumps the database, copies immutable artifacts, writes checksums and metadata, and publishes the complete group atomically](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/files/prism-backup.sh#L58-L117).
+> [The backup program dumps the database, copies immutable artifacts, writes checksums and metadata, and publishes the complete group atomically](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/files/prism-backup.sh#L58-L117).
 
 ### Prism acquisition quarantine
 
@@ -504,10 +504,10 @@ bounded acquisition, not file restore. Reconsider `emptyDir` only if the product
 requires recovery of in-flight acquisitions; that change also needs ownership,
 encryption, capacity, and cleanup rules for hostile input.
 
-> [Ingestion clamps the TTL and reaps digest-named files](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/server/ingestion.ts#L12-L20).
-> [It writes an acquired object before returning its digest](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/prism/server/ingestion.ts#L21-L79).
+> [Ingestion clamps the TTL and reaps digest-named files](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/ingestion.ts#L12-L20).
+> [It writes an acquired object before returning its digest](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/server/ingestion.ts#L21-L79).
 > [The chart mounts a 4 GiB quarantine-only `emptyDir` and passes the configured
-> TTL](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/ingestion.yaml#L22-L39).
+> TTL](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/ingestion.yaml#L22-L39).
 
 ### LiteLLM PostgreSQL
 
@@ -530,16 +530,16 @@ upload.
 
 > **Source evidence — LiteLLM persistence**
 >
-> [The deployment enables database-backed model storage and obtains database and encryption settings from Secrets](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-deployment.yaml#L21-L50).
+> [The deployment enables database-backed model storage and obtains database and encryption settings from Secrets](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/litellm-deployment.yaml#L21-L50).
 >
-> [The production PostgreSQL values select the LiteLLM database, external Secret, standalone mode, and 20 GiB persistent volume](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/postgresql-values.yaml#L1-L19).
+> [The production PostgreSQL values select the LiteLLM database, external Secret, standalone mode, and 20 GiB persistent volume](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/postgresql-values.yaml#L1-L19).
 >
 > [The recovery script validates the source and publishes a custom-format dump
-> with checksums and metadata](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/postgresql-recovery.sh#L56-L95).
+> with checksums and metadata](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/postgresql-recovery.sh#L56-L95).
 > [Verification checks the file set, checksums, selected application and
-> credential binding, version, age, and archive](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/postgresql-recovery.sh#L101-L129).
+> credential binding, version, age, and archive](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/postgresql-recovery.sh#L101-L129).
 > [Restore rejects the source server and a nonempty target, then uses one
-> error-stopping transaction](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/postgresql-recovery.sh#L141-L156).
+> error-stopping transaction](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/scripts/postgresql-recovery.sh#L141-L156).
 
 ### Deployment profiles are not the same capacity contract
 
@@ -559,11 +559,11 @@ claim the same durability as the direct profile.
 
 > **Source evidence — profile differences**
 >
-> [The Argo CD PostgreSQL values request 1 GiB](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/postgresql.yaml#L1-L23), while [the direct production values request 20 GiB](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/postgresql-values.yaml#L1-L19).
+> [The Argo CD PostgreSQL values request 1 GiB](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/postgresql.yaml#L1-L23), while [the direct production values request 20 GiB](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/postgresql-values.yaml#L1-L19).
 >
-> [The Argo CD Redis values request 2 GiB and omit an explicit persistence-policy block](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/redis.yaml#L1-L19).
+> [The Argo CD Redis values request 2 GiB and omit an explicit persistence-policy block](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/redis.yaml#L1-L19).
 >
-> [The direct profile declares strict AOF, no eviction, and 20 GiB](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/redis-values.yaml#L1-L27).
+> [The direct profile declares strict AOF, no eviction, and 20 GiB](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/redis-values.yaml#L1-L27).
 
 ## Redis: Durable Delivery, Not Product Authority
 
@@ -589,9 +589,9 @@ consume memory. Monitor measured stream and key growth.
 
 > **Source evidence — Redis data behavior**
 >
-> [The adapter validates endpoints and bounds, limits payloads to 1 MiB, and performs stream append plus deduplication in Lua](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/adapter.ts#L28-L87).
+> [The adapter validates endpoints and bounds, limits payloads to 1 MiB, and performs stream append plus deduplication in Lua](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/redis-transport/src/adapter.ts#L28-L87).
 >
-> [The selected production values enable strict AOF, disable eviction, set 1 GiB Redis memory, and request a 20 GiB PVC](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/redis-values.yaml#L1-L27).
+> [The selected production values enable strict AOF, disable eviction, set 1 GiB Redis memory, and request a 20 GiB PVC](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/redis-values.yaml#L1-L27).
 
 ## Artifact Lifecycle
 

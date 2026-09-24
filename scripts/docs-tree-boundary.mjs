@@ -73,7 +73,7 @@ function sourceConsumers(documentPaths) {
     }
   }
   const consumers = new Map(documentPaths.map((value) => [value, []]));
-  const sourceFiles = git(['ls-files', '-z']).split('\0').filter(Boolean)
+  const sourceFiles = git(['ls-files', '-z', '--cached', '--others', '--exclude-standard']).split('\0').filter(Boolean)
     .filter((value) => !value.startsWith('docs/_legacy-source/')
       && value !== outputPath
       && !value.startsWith('docs/blueprint/generated/'));
@@ -110,6 +110,76 @@ function executableConsumers(values) {
     && !sourcePath.endsWith('.yaml') && !sourcePath.endsWith('.yml'));
 }
 
+function provenanceOnlyDocument(pathname) {
+  return pathname === baselinePath
+    || pathname === classificationPath
+    || pathname === outputPath
+    || pathname.startsWith('docs/site/')
+    || pathname.startsWith('docs/blueprint/')
+    || pathname.startsWith('docs/review/')
+    || pathname.startsWith('docs/generated/')
+    || pathname.startsWith('docs/config/')
+    || pathname.startsWith('docs/status/');
+}
+
+function structuredDependencyDocument(pathname) {
+  return ['.json', '.jsonl', '.yaml', '.yml', '.tsv', '.csv']
+    .includes(path.extname(pathname).toLowerCase());
+}
+
+function executableDocumentDependencies(documentPaths, consumers) {
+  const direct = new Map();
+  const indirect = new Map(documentPaths.map((pathname) => [pathname, []]));
+  const targetsByDocument = new Map();
+
+  for (const pathname of documentPaths) {
+    const roots = executableConsumers(consumers.get(pathname) ?? []).map(({ sourcePath }) => sourcePath);
+    direct.set(pathname, [...new Set(roots)].sort());
+    for (const { sourcePath } of consumers.get(pathname) ?? []) {
+      if (!sourcePath.startsWith('docs/')) continue;
+      const targets = targetsByDocument.get(sourcePath) ?? new Set();
+      targets.add(pathname);
+      targetsByDocument.set(sourcePath, targets);
+    }
+  }
+
+  const queue = [];
+  const visited = new Set();
+  for (const [pathname, roots] of direct) {
+    for (const rootSource of roots) queue.push({ pathname, rootSource, chain: [pathname], direct: true });
+  }
+
+  while (queue.length) {
+    const current = queue.shift();
+    const visitKey = `${current.pathname}\0${current.rootSource}`;
+    if (visited.has(visitKey)) continue;
+    visited.add(visitKey);
+    if (provenanceOnlyDocument(current.pathname)) continue;
+    if (!current.direct && !structuredDependencyDocument(current.pathname)) continue;
+
+    for (const target of targetsByDocument.get(current.pathname) ?? []) {
+      if (target === current.pathname) continue;
+      const evidence = {
+        executableSource: current.rootSource,
+        via: current.chain,
+      };
+      const evidenceKey = JSON.stringify(evidence);
+      const existing = indirect.get(target);
+      if (!existing.some((item) => JSON.stringify(item) === evidenceKey)) existing.push(evidence);
+      queue.push({
+        pathname: target,
+        rootSource: current.rootSource,
+        chain: [...current.chain, target],
+        direct: false,
+      });
+    }
+  }
+
+  for (const values of indirect.values()) values.sort((a, b) => a.executableSource.localeCompare(b.executableSource)
+    || a.via.join('\0').localeCompare(b.via.join('\0')));
+  return { direct, indirect };
+}
+
 function historicalReferenceConsumer(sourcePath) {
   return sourcePath === baselinePath
     || sourcePath === classificationPath
@@ -135,7 +205,7 @@ function internalRoot(pathname) {
   return null;
 }
 
-function classify(pathname, consumers) {
+function classify(pathname, consumers, dependencies) {
   if (pathname.startsWith('docs/site/')) return {
     class: 'canonical-reader-documentation',
     purpose: 'Published, user-facing KubeClaw documentation.',
@@ -145,7 +215,8 @@ function classify(pathname, consumers) {
   if (pathname.startsWith('docs/_legacy-source/')) {
     const originalPath = `docs/${pathname.slice('docs/_legacy-source/'.length)}`;
     const executable = executableConsumers(consumers.get(pathname) ?? []);
-    if (executable.length) return {
+    const indirectExecutable = dependencies.indirect.get(pathname) ?? [];
+    if (executable.length || indirectExecutable.length) return {
       class: 'internal-documentation-input',
       purpose: 'Executable contract, fixture, or evidence input used outside the documentation tree.',
       originalPath,
@@ -166,7 +237,8 @@ function classify(pathname, consumers) {
     expectedPath: pathname,
   };
   const executable = executableConsumers(consumers.get(pathname) ?? []);
-  if (executable.length) return {
+  const indirectExecutable = dependencies.indirect.get(pathname) ?? [];
+  if (executable.length || indirectExecutable.length) return {
     class: 'internal-documentation-input',
     purpose: 'Executable contract, fixture, or evidence input used outside the documentation tree.',
     originalPath: pathname,
@@ -241,9 +313,10 @@ function baselineRegistry() {
 function writeInitialClassification() {
   const paths = trackedAndUntrackedDocs();
   const consumers = sourceConsumers(paths);
+  const dependencies = executableDocumentDependencies(paths, consumers);
   const baseline = baselineRegistry();
   const files = paths.map((pathname) => {
-    const value = classify(pathname, consumers);
+    const value = classify(pathname, consumers, dependencies);
     return {
       path: pathname,
       class: value.class,
@@ -265,6 +338,7 @@ function writeInitialClassification() {
 function build() {
   const paths = trackedAndUntrackedDocs();
   const consumers = sourceConsumers(paths);
+  const dependencies = executableDocumentDependencies(paths, consumers);
   const classification = classificationRegistry();
   const baseline = baselineRegistry();
   assert.equal(classification.value.baselineRevision, baseline.value.baselineRevision,
@@ -278,6 +352,8 @@ function build() {
     `classification records have no current file: ${absentClassifications.slice(0, 30).join(', ')}`);
   const files = paths.map((pathname) => {
     const declared = classification.records.get(pathname);
+    const directExecutable = executableConsumers(consumers.get(pathname) ?? []);
+    const indirectExecutable = dependencies.indirect.get(pathname) ?? [];
     assert(allowedClasses.has(declared.class), `${pathname}: invalid documentation class`);
     if (pathname.startsWith('docs/site/')) assert.equal(declared.class, 'canonical-reader-documentation',
       `${pathname}: every site file must be canonical reader documentation`);
@@ -285,8 +361,14 @@ function build() {
       `${pathname}: canonical reader documentation must be under docs/site/`);
     if (declared.class === 'legacy-extraction-source') {
       assert(pathname.startsWith('docs/_legacy-source/'), `${pathname}: legacy source is outside the legacy root`);
-      assert.equal(executableConsumers(consumers.get(pathname) ?? []).length, 0,
+      assert.equal(directExecutable.length, 0,
         `${pathname}: an executable source consumes this file, so it cannot be a legacy reader source`);
+      assert.equal(indirectExecutable.length, 0,
+        `${pathname}: an executable source consumes this file through a documentation dependency, so it cannot be a legacy reader source: ${JSON.stringify(indirectExecutable.slice(0, 5))}`);
+    }
+    if (!pathname.startsWith('docs/site/') && (directExecutable.length || indirectExecutable.length)) {
+      assert.equal(declared.class, 'internal-documentation-input',
+        `${pathname}: executable-reachable documentation must be classified as internal-documentation-input`);
     }
     if (declared.class !== 'legacy-extraction-source') assert(!pathname.startsWith('docs/_legacy-source/'),
       `${pathname}: non-legacy input was placed in the legacy root`);
@@ -299,7 +381,8 @@ function build() {
       introducedAfterBaseline: declared.introducedAfterBaseline,
       locationValid: pathname === declared.expectedPath,
       consumers: consumers.get(pathname) ?? [],
-      executableConsumers: executableConsumers(consumers.get(pathname) ?? []).map((item) => item.sourcePath),
+      executableConsumers: directExecutable.map((item) => item.sourcePath),
+      indirectExecutableConsumers: indirectExecutable,
       sha256: sha256(pathname),
     };
   });
