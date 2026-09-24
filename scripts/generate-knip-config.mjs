@@ -181,6 +181,7 @@ const config = {
     'eslint',
     'gofmt',
     'flock',
+    'setpriv',
     'systemd-analyze',
     'uv',
     'go',
