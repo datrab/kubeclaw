@@ -19,6 +19,7 @@ const option = (name, fallback) => {
 const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
+const allowDetachedSourceRoot = argv.includes('--allow-detached-source-root');
 const sourceRevisionLockPath = path.join(root, 'docs/generated/inventory/documentation-source-revision.json');
 const lockedSourceRevision = fs.existsSync(sourceRevisionLockPath)
   ? JSON.parse(fs.readFileSync(sourceRevisionLockPath, 'utf8')).revision
@@ -31,6 +32,30 @@ try {
   execFileSync('git', ['cat-file', '-e', `${sourceRevision}^{commit}`], { cwd: invocationRoot, stdio: 'ignore' });
 } catch {
   throw new Error(`documentation source revision does not exist locally: ${sourceRevision}`);
+}
+const gitRoot = path.resolve(execFileSync('git', ['rev-parse', '--show-toplevel'], {
+  cwd: invocationRoot,
+  encoding: 'utf8',
+}).trim());
+if (root !== gitRoot && (!allowDetachedSourceRoot || process.env.KUBECLAW_DOCS_ISOLATED_MUTATION !== '1')) {
+  throw new Error('documentation source root is outside the checked Git worktree; a detached mutation fixture must opt in explicitly');
+}
+if (root === gitRoot) {
+  const generatedPrefixes = ['docs/generated/', 'docs/site/'];
+  const changed = execFileSync('git', ['diff', '--name-only', sourceRevision, '--', '.'], {
+    cwd: gitRoot,
+    encoding: 'utf8',
+  }).trim().split('\n').filter(Boolean)
+    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)));
+  const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard'], {
+    cwd: gitRoot,
+    encoding: 'utf8',
+  }).trim().split('\n').filter(Boolean)
+    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)));
+  const mismatches = [...new Set([...changed, ...untracked])].sort();
+  if (mismatches.length) {
+    throw new Error(`documentation source revision does not match the current source tree: ${mismatches.slice(0, 20).join(', ')}`);
+  }
 }
 const maximumSourceLinkLines = 60;
 

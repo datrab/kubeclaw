@@ -215,6 +215,245 @@ for (const [name, contract] of Object.entries(busterControllerContracts)) {
   addEnvironmentConsumerContract(name, busterControllerSource, contract);
 }
 
+const busterReadinessSource = 'cmd/buster-namespace-controller/demo-readiness-lifecycle.go';
+const busterReadinessContracts = {
+  BUSTER_READY_LISTEN: environmentContract({
+    purpose: 'Enables the demo-readiness HTTPS server and selects the TCP address on which it listens.',
+    acceptedForm: 'A non-empty host-and-port or colon-and-port string accepted by `net.SplitHostPort`; the chart supplies `:8443`. The address must also be available to `tls.Listen` at startup.',
+    defaultBehavior: 'No address default. An absent value disables the complete readiness server.',
+    emptyBehavior: 'An empty value disables readiness, skips the four companion-input checks, and makes readiness server startup a no-op.',
+    invalidBehavior: 'An invalid address returns `invalid Ready listen address`. A valid but unavailable address returns the listener error when the server starts.',
+    precedence: 'The exact process value is the only runtime source. No trimming or fallback occurs.',
+    impact: 'Changing it enables, disables, or moves the readiness API. Product decisions cannot be enabled unless readiness is enabled.',
+    failure: 'Controller startup stops before reconciliation when configuration or listener creation fails.',
+  }),
+  BUSTER_READY_AUDIENCE: environmentContract({
+    purpose: 'Sets the Kubernetes TokenReview audience required from callers of the readiness API.',
+    acceptedForm: 'From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.',
+    defaultBehavior: 'No default; required only when `BUSTER_READY_LISTEN` is non-empty.',
+    emptyBehavior: 'Rejected when readiness is enabled; ignored when readiness is disabled.',
+    invalidBehavior: 'Invalid text stops startup. A valid value that is absent from a caller TokenReview result makes the request return HTTP 401 with `DEMO_READY_UNAUTHORIZED`.',
+    precedence: 'The exact process value is the only source and is checked only after the listen gate enables readiness.',
+    impact: 'Changing it changes which audience a caller token must prove.',
+    failure: 'Enabled startup fails for invalid configuration, or callers with a different audience are denied.',
+    required: 'required when `BUSTER_READY_LISTEN` is non-empty',
+  }),
+  BUSTER_READY_PRODUCER: environmentContract({
+    purpose: 'Selects the one Kubernetes ServiceAccount identity allowed to call the readiness API.',
+    acceptedForm: 'Exactly `system:serviceaccount:<namespace>:<name>`. Namespace and name must match `^[a-z0-9][a-z0-9.-]{0,252}$`; this is the implemented check, not full Kubernetes DNS validation.',
+    defaultBehavior: 'No default; required only when `BUSTER_READY_LISTEN` is non-empty.',
+    emptyBehavior: 'Rejected when readiness is enabled; ignored when readiness is disabled.',
+    invalidBehavior: 'A malformed identity stops startup. A well-formed identity that differs from TokenReview `status.user.username` makes the request return HTTP 401.',
+    precedence: 'The exact process value is the only source and is checked only after the listen gate enables readiness.',
+    impact: 'Changing it transfers readiness-call authority to another ServiceAccount and also changes the identity that the product producer must differ from.',
+    failure: 'Enabled startup fails for malformed configuration, or a different caller identity is denied.',
+    required: 'required when `BUSTER_READY_LISTEN` is non-empty',
+  }),
+  BUSTER_READY_TLS_CERT: environmentContract({
+    purpose: 'Selects the PEM certificate chain presented by the readiness HTTPS listener.',
+    acceptedForm: 'A non-empty file path whose PEM certificate can be loaded with the selected private key. The chart supplies `/var/run/kubeclaw/ready-server/tls.crt`.',
+    defaultBehavior: 'No default; required only when `BUSTER_READY_LISTEN` is non-empty.',
+    emptyBehavior: 'Rejected when readiness is enabled; ignored when readiness is disabled.',
+    invalidBehavior: 'An unreadable or malformed certificate, or one that does not match the key, stops startup with `Ready TLS certificate unavailable`.',
+    precedence: 'The exact process path is the only source. The file is opened when the readiness server starts.',
+    impact: 'Changing it changes the certificate chain that readiness clients authenticate.',
+    failure: 'The readiness listener does not start and controller startup stops.',
+    required: 'required when `BUSTER_READY_LISTEN` is non-empty',
+  }),
+  BUSTER_READY_TLS_KEY: environmentContract({
+    purpose: 'Selects the private-key PEM file used by the readiness HTTPS listener.',
+    acceptedForm: 'A non-empty file path containing a private key that matches the selected certificate. The chart supplies `/var/run/kubeclaw/ready-server/tls.key`.',
+    defaultBehavior: 'No default; required only when `BUSTER_READY_LISTEN` is non-empty.',
+    emptyBehavior: 'Rejected when readiness is enabled; ignored when readiness is disabled.',
+    invalidBehavior: 'An unreadable, malformed, or nonmatching key stops startup with `Ready TLS certificate unavailable`.',
+    precedence: 'The exact process path is the only source. The file is opened when the readiness server starts.',
+    impact: 'Changing it changes the private key used for the readiness TLS identity.',
+    failure: 'The readiness listener does not start and controller startup stops.',
+    required: 'required when `BUSTER_READY_LISTEN` is non-empty',
+  }),
+};
+for (const [name, contract] of Object.entries(busterReadinessContracts)) {
+  addEnvironmentConsumerContract(name, busterReadinessSource, contract);
+}
+
+const busterProductSource = 'cmd/buster-namespace-controller/demo-product.go';
+const busterProductContracts = {
+  BUSTER_PRODUCT_ENABLED: environmentContract({
+    purpose: 'Enables validation and use of signed product decisions after the readiness authority is configured.',
+    acceptedForm: 'Only exact `true`, exact `false`, or an empty value. Exact `true` enables the feature; exact `false` and empty disable it.',
+    defaultBehavior: 'Disabled when the variable is absent.',
+    emptyBehavior: 'Disables product decisions and ignores all five companion inputs.',
+    invalidBehavior: 'Any other value, including case changes, whitespace, `0`, or `1`, returns `DEMO_PRODUCT_CONFIG_INVALID`.',
+    precedence: 'The exact process value is the only source. No trimming or Boolean coercion occurs.',
+    impact: 'Enabling it makes the five companion inputs mandatory and activates the signed product-decision routes; readiness must already be enabled.',
+    failure: 'Controller startup stops for an invalid value, missing readiness, or an invalid companion input. Disabled product routes return HTTP 404 with `DEMO_PRODUCT_DISABLED_OR_ROUTE_INVALID`.',
+  }),
+  BUSTER_PRODUCT_AUDIENCE: environmentContract({
+    purpose: 'Sets the Kubernetes TokenReview audience required from callers of the product-decision API.',
+    acceptedForm: 'From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.',
+    invalidBehavior: 'Invalid text returns `DEMO_PRODUCT_CONFIG_INVALID`. A valid audience not proved by TokenReview makes requests return HTTP 401 with `DEMO_PRODUCT_UNAUTHORIZED`.',
+    precedence: 'The exact process value is the only source and is read only after exact `true` enables the feature.',
+    impact: 'Changing it changes which audience a product-decision caller token must prove.',
+    failure: 'Enabled controller startup stops, or callers with a different audience are denied.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+  BUSTER_PRODUCT_PRODUCER: environmentContract({
+    purpose: 'Selects the Kubernetes ServiceAccount identity allowed to submit signed product decisions.',
+    acceptedForm: 'Exactly `system:serviceaccount:<namespace>:<name>`, with both final parts matching `^[a-z0-9][a-z0-9.-]{0,252}$`, and different from `BUSTER_READY_PRODUCER`.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.',
+    invalidBehavior: 'Malformed input or reuse of the readiness producer returns `DEMO_PRODUCT_CONFIG_INVALID`; another valid caller identity receives HTTP 401.',
+    precedence: 'The exact process value is the only source and is read only after exact `true` enables the feature.',
+    impact: 'Changing it transfers product-decision submission authority while keeping that authority separate from readiness publication.',
+    failure: 'Enabled controller startup stops, or an unauthorized caller is denied.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+  BUSTER_PRODUCT_ISSUER: environmentContract({
+    purpose: 'Sets the issuer text that every verified signed product decision must contain.',
+    acceptedForm: 'From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.',
+    invalidBehavior: 'Invalid text returns `DEMO_PRODUCT_CONFIG_INVALID`; a signed decision with another issuer returns HTTP 409 with `DEMO_PRODUCT_REQUEST_INVALID`.',
+    precedence: 'The exact process value is the only source and is read only after exact `true` enables the feature.',
+    impact: 'Changing it invalidates otherwise valid decisions that name the previous issuer.',
+    failure: 'Enabled controller startup stops, or a decision from a different issuer is rejected.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+  BUSTER_PRODUCT_VERIFY_KEY: environmentContract({
+    purpose: 'Supplies the Ed25519 public key used to verify signed product-decision payloads.',
+    acceptedForm: 'Strict standard Base64 that decodes to exactly 32 bytes, the Ed25519 public-key size.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.',
+    invalidBehavior: 'Malformed Base64 or the wrong decoded length returns `DEMO_PRODUCT_CONFIG_INVALID`. A different valid key starts successfully but rejects signatures from the old signer with `DEMO_PRODUCT_SIGNATURE_INVALID`.',
+    precedence: 'The exact process value is the only source and is read only after exact `true` enables the feature.',
+    impact: 'Changing it rotates the public signature authority for product decisions; it is verification material, not a signing secret.',
+    failure: 'Enabled controller startup stops, or decisions signed by a nonmatching key return HTTP 409.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+  BUSTER_PRODUCT_ACTORS_JSON: environmentContract({
+    purpose: 'Defines the actor identifiers that signed product decisions may name.',
+    acceptedForm: 'A JSON array with at least one unique string. Every string must contain 1 through 1024 bytes and no NUL, carriage-return, or line-feed byte.',
+    defaultBehavior: 'No default; ignored while product decisions are disabled.',
+    emptyBehavior: 'An absent or empty value is invalid JSON and is rejected when enabled; it is ignored when disabled.',
+    invalidBehavior: 'Malformed JSON, `null`, an empty array, a non-string member, invalid actor text, or a duplicate actor returns `DEMO_PRODUCT_CONFIG_INVALID`. An unlisted signed actor later returns `DEMO_PRODUCT_REQUEST_INVALID`.',
+    precedence: 'The exact process value is the only source and is decoded only after exact `true` enables the feature.',
+    impact: 'Changing it changes the actor allowlist applied after signature verification.',
+    failure: 'Enabled controller startup stops, or a validly signed decision from an unlisted actor returns HTTP 409.',
+    required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
+  }),
+};
+for (const [name, contract] of Object.entries(busterProductContracts)) {
+  addEnvironmentConsumerContract(name, busterProductSource, contract);
+}
+
+const busterRuntimeSource = 'docker/buster-runtime-entrypoint.sh';
+const busterRuntimeContracts = {
+  BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT: environmentContract({
+    purpose: 'Selects the delegated cgroup-v2 subtree that enforces process, memory, and CPU limits for Playwright browser work.',
+    acceptedForm: 'The non-empty path must exist, resolve exactly to `/var/run/kubeclaw-browser-cgroup`, expose `pids`, `memory`, and `cpu` controllers, contain no host processes, and permit those controllers to be delegated.',
+    defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint before the Buster runtime starts.',
+    invalidBehavior: 'Missing files stop the strict shell. An unsafe path, missing controller, existing host process, or failed delegation produces the matching explicit cgroup error.',
+    precedence: 'The environment path is the only source; the checked canonical path is copied into the generated runtime configuration.',
+    impact: 'Changing it changes the kernel resource-control boundary for browser processes.',
+    failure: 'The container stops before serving work, or runtime policy construction rejects an unusable cgroup root.', required: 'required',
+  }),
+  BUSTER_PLAN_PORT: environmentContract({
+    purpose: 'Selects the TCP port for the Buster remote-plan HTTP server on fixed host `0.0.0.0`.',
+    acceptedForm: 'A string converted by JavaScript `Number` to a safe integer from 0 through 65535. Zero requests an operating-system-selected port; whitespace converts to zero.',
+    defaultBehavior: 'Uses `18891` when absent.', emptyBehavior: 'An exact empty string selects `18891`.',
+    invalidBehavior: 'Negative, fractional, nonnumeric, infinite, or unsafe values fail configuration; values above 65535 fail port validation; a busy valid port returns the listener error.',
+    precedence: 'A non-empty process value wins; otherwise `18891` applies.',
+    impact: 'Changing it moves the plan, health, bootstrap, and readiness endpoints and must agree with container and Service routing.',
+    failure: 'The remote-plan server does not start.',
+  }),
+  BUSTER_PLAN_STATE_DIR: environmentContract({
+    purpose: 'Selects durable plan-job state, stored results, recovery records, and the admission lock.',
+    acceptedForm: 'A non-empty writable directory path. Use an absolute path because the shell and runtime resolve relative paths from different directories.',
+    defaultBehavior: 'Uses `/var/lib/buster-v2/plan-jobs`.', emptyBehavior: 'An empty value selects `/var/lib/buster-v2/plan-jobs`.',
+    invalidBehavior: 'Directory creation or ownership failure stops the entrypoint; later permission, filesystem, or recovery errors stop runtime startup or state operations.',
+    precedence: 'A non-empty process value wins; otherwise the fixed state directory applies.',
+    impact: 'Changing it moves durable job state; an ephemeral or wrong location can lose recovery data or prevent admission.',
+    failure: 'The container or state operation fails at the first inaccessible or inconsistent path.',
+  }),
+  BUSTER_PLAN_RUN_DIR: environmentContract({
+    purpose: 'Selects the working root for repository extraction, suite workspaces, artifacts, and observability files of remote-plan jobs.',
+    acceptedForm: 'A non-empty writable directory path. Use an absolute path because the shell and runtime resolve relative paths from different directories.',
+    defaultBehavior: 'Uses `/var/lib/buster-v2/runs`.', emptyBehavior: 'An empty value selects `/var/lib/buster-v2/runs`.',
+    invalidBehavior: 'Directory creation or ownership failure stops the entrypoint; later permission or filesystem errors fail affected jobs.',
+    precedence: 'A non-empty process value wins; otherwise the fixed run directory applies.',
+    impact: 'Changing it moves the area in which untrusted snapshots are extracted and suites create working data.',
+    failure: 'The container fails at setup or a job fails when it cannot create or use its working directory.',
+  }),
+  BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY: environmentContract({
+    purpose: 'Supplies the Ed25519 public trust anchor used to verify Nova-signed repository snapshots.',
+    acceptedForm: 'A non-empty Node-readable Ed25519 public key; this environment path normally carries PEM text.',
+    defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.',
+    invalidBehavior: 'Missing material reports the required or missing-key error. Unparseable or non-Ed25519 material reports `BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID`; a nonmatching valid key causes `BUSTER_SOURCE_ATTESTATION_INVALID`.',
+    precedence: 'The generated configuration fixes this environment-variable name; its process value is the only key source.',
+    impact: 'Changing it rotates the source-signature authority and requires the matching Nova signing key.',
+    failure: 'Runtime startup stops for bad key material, or new jobs are rejected when signature verification fails.', required: 'required',
+  }),
+  BUSTER_TRUSTED_PEER_SPIFFE_ID: environmentContract({
+    purpose: 'Selects SPIFFE/XFCC authentication and names the one Nova SPIFFE identity allowed to submit remote-plan requests.',
+    acceptedForm: 'A non-empty SPIFFE ID matching `spiffe://[a-z0-9.-]+/<path>` for successful authorization.',
+    defaultBehavior: 'An absent value selects bearer-token authentication.', emptyBehavior: 'An empty value selects bearer-token authentication.',
+    invalidBehavior: 'Malformed non-empty text reaches the allow policy; request authorization catches the policy error and returns HTTP 401.',
+    precedence: 'A non-empty value selects SPIFFE instead of token use. The current entrypoint still requires `BUSTER_V2_TOKEN` at startup even when SPIFFE is selected.',
+    impact: 'Changing it switches the remote-plan authentication boundary and the only accepted workload identity.',
+    failure: 'Requests that do not arrive through the trusted loopback proxy with the exact valid identity return HTTP 401.',
+  }),
+  BUSTER_V2_MAX_ARCHIVE_BYTES: environmentContract({
+    purpose: 'Caps the compressed repository archive accepted in one remote-plan request.',
+    acceptedForm: 'A non-empty string converted by JavaScript `Number` to a positive safe integer in bytes.',
+    defaultBehavior: 'Uses `67108864` bytes (64 MiB).', emptyBehavior: 'An empty value selects 64 MiB.',
+    invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe values fail startup; an oversized request reports `BUSTER_REMOTE_ARCHIVE_SIZE_EXCEEDED`.',
+    precedence: 'A non-empty process value wins; otherwise 64 MiB applies.',
+    impact: 'Changing it changes the largest compressed source snapshot admitted into storage.',
+    failure: 'Invalid configuration stops startup; an oversized job is rejected before extraction.',
+  }),
+  BUSTER_V2_MAX_EXTRACTED_BYTES: environmentContract({
+    purpose: 'Caps the accumulated declared uncompressed size of regular files and directories in a submitted source archive.',
+    acceptedForm: 'A non-empty string converted by JavaScript `Number` to a positive safe integer in bytes.',
+    defaultBehavior: 'Uses `536870912` bytes (512 MiB).', emptyBehavior: 'An empty value selects 512 MiB.',
+    invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe values fail startup; an oversized archive reports `BUSTER_REMOTE_ARCHIVE_EXPANDED_SIZE_EXCEEDED`.',
+    precedence: 'A non-empty process value wins; otherwise 512 MiB applies.',
+    impact: 'Changing it changes the expansion limit applied during archive inspection before extraction.',
+    failure: 'Invalid configuration stops startup; an oversized job is rejected before extraction.',
+  }),
+  BUSTER_ALLOWED_SOURCE_SECRETS: environmentContract({
+    purpose: 'Defines the source Secret names that a `kubernetes.fixture` request may ask the namespace controller to copy.',
+    acceptedForm: 'A comma-separated list with at most 32 non-empty items. This reader does not trim items; each retained name must contain only letters, digits, dot, underscore, or hyphen. Duplicate names collapse in the downstream set.',
+    defaultBehavior: 'Uses an empty list, which denies every source-Secret request.', emptyBehavior: 'An absent or empty value becomes an empty list.',
+    invalidBehavior: 'More than 32 items fails runtime configuration. Invalid names fail invoker construction. A valid but unapproved request reports `KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED`.',
+    precedence: 'The process value wholly replaces the empty runtime default. Copy succeeds only when this runtime list and the controller list both allow the name.',
+    impact: 'Changing it changes which named Secrets a fixture request may ask the controller to copy.',
+    failure: 'Startup or first invoker construction fails for invalid policy, or the individual request is denied.',
+  }),
+  BUSTER_LEASE_API_GROUP: environmentContract({
+    purpose: 'Selects the lease CRD API group used by fixture, Tailscale exposure, and Kubernetes runtime-security capabilities.',
+    acceptedForm: 'With the shipped capabilities enabled, lowercase alphanumeric at both ends, with lowercase alphanumeric, dot, or hyphen internally.',
+    defaultBehavior: 'Uses `kubeclaw.forgestack.ai`.', emptyBehavior: 'An empty value selects `kubeclaw.forgestack.ai`.',
+    invalidBehavior: 'The generator does not validate syntax; the first applicable job fails with `KUBERNETES_FIXTURE_API_GROUP_INVALID` or `TAILSCALE_EXPOSURE_API_INVALID`.',
+    precedence: 'A truthy process string wins; otherwise the built-in group applies.',
+    impact: 'Changing it changes CRD API versions, kubectl resource names, and runtime-security lookups.',
+    failure: 'Capability construction or later Kubernetes requests fail against an invalid or unavailable group.',
+  }),
+  BUSTER_LEASE_API_VERSION: environmentContract({
+    purpose: 'Selects the lease CRD version used by fixture and Tailscale exposure operations.',
+    acceptedForm: 'With the shipped capabilities enabled, a value matching `^v[0-9]+(?:alpha|beta)?[0-9]*$`.',
+    defaultBehavior: 'Uses `v1alpha1`.', emptyBehavior: 'An empty value selects `v1alpha1`.',
+    invalidBehavior: 'The generator does not validate syntax; the first applicable job fails with `KUBERNETES_FIXTURE_API_VERSION_INVALID` or `TAILSCALE_EXPOSURE_API_INVALID`.',
+    precedence: 'A truthy process string wins; otherwise `v1alpha1` applies.',
+    impact: 'Changing it changes generated lease `apiVersion` values and the selected Kubernetes API endpoint.',
+    failure: 'Capability construction or later Kubernetes requests fail against an invalid or unavailable version.',
+  }),
+};
+for (const [name, contract] of Object.entries(busterRuntimeContracts)) {
+  addEnvironmentConsumerContract(name, busterRuntimeSource, contract);
+}
+
 for (const [name, contract] of Object.entries({
   KUBERNETES_SERVICE_PORT: environmentContract({ purpose: 'Selects the Kubernetes API TCP port used by the Buster namespace controller.', acceptedForm: 'A non-empty port string; this reader trims whitespace but does not validate numeric syntax or range.', defaultBehavior: 'Uses `443`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects `443`.', invalidBehavior: 'A malformed non-empty value is concatenated into the API URL and later fails URL parsing, connection setup, or reconciliation.', precedence: 'A trimmed non-empty process value wins; otherwise `443` applies.', impact: 'Changing it redirects every controller request to another port on `KUBERNETES_SERVICE_HOST`.', failure: 'The controller cannot complete Kubernetes API requests.' }),
   BUSTER_LEASE_API_GROUP: environmentContract({ purpose: 'Selects the API group used in Buster lease request paths and the controller finalizer.', acceptedForm: 'A non-empty API-group string; this reader trims whitespace but does not validate syntax at startup.', defaultBehavior: 'Uses `kubeclaw.forgestack.ai`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default group.', invalidBehavior: 'A malformed non-empty value survives startup and later causes malformed or not-found API requests or an invalid finalizer.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in group applies.', impact: 'Changing it redirects lease discovery and changes the finalizer identity.', failure: 'Lease reconciliation or Kubernetes admission fails.' }),
@@ -1923,8 +2162,11 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
     effectiveValueProof: semantics.effectiveValueProof,
     changeImpact: semantics.changeImpact,
     failureMeaning: semantics.failureMeaning,
-    blockerOwner: semantics.blockerOwner,
-    closureCondition: semantics.closureCondition,
+    // Publish blocker metadata from the final meaning. An exact authority can
+    // replace a discovered blocker, so the pre-authority metadata is stale at
+    // this point.
+    blockerOwner: meaning.blockerOwner,
+    closureCondition: meaning.closureCondition,
     sourceLine: fieldLine,
     sourceLineSha256: sha256(read(context.sourcePath).split('\n')[fieldLine - 1] ?? ''),
     meaning,
@@ -2135,6 +2377,13 @@ function buildYamlInventory() {
     'quality gate: every YAML leaf needs a semantic authority or an explicit owned documentation blocker');
   assert.equal(leafFields.filter((field) => /blocker/u.test(field.meaning.status) && (!field.meaning.blockerOwner || !field.meaning.closureCondition)).length, 0,
     'quality gate: every unresolved YAML meaning needs an owner and concrete closure condition');
+  assert.equal(allFields.filter((field) => field.blockerOwner !== field.meaning.blockerOwner
+    || field.closureCondition !== field.meaning.closureCondition).length, 0,
+  'quality gate: top-level YAML blocker metadata must match the final field meaning');
+  assert.equal(allFields.filter((field) => !/blocker/u.test(field.meaning.status)
+    && field.meaning.status !== 'inactive-profile'
+    && (field.blockerOwner !== null || field.closureCondition !== null)).length, 0,
+  'quality gate: resolved YAML meanings must not retain stale blocker metadata');
   return {
     generatedBy: 'scripts/docs-configuration-inventory.mjs',
     discovery: {
@@ -3613,7 +3862,8 @@ function buildSchemaInventory() {
 function runtimeTextSources() {
   const files = new Set();
   for (const sourceRoot of RUNTIME_SCAN_ROOTS) {
-    for (const file of walk(sourceRoot, (absolutePath) => TEXT_EXTENSIONS.has(path.extname(absolutePath)))) files.add(file);
+    for (const file of walk(sourceRoot, (absolutePath) => TEXT_EXTENSIONS.has(path.extname(absolutePath))
+      && !(path.extname(absolutePath) === '.go' && absolutePath.endsWith('_test.go')))) files.add(file);
   }
   return [...files].sort();
 }
@@ -5330,6 +5580,43 @@ function buildRuntimeInputInventory(yamlInventory) {
     assert.equal(entry.meaningStatus, 'authored-source-backed-contract', `quality gate: ${name} lacks its exact controller contract`);
     assert.doesNotMatch(`${entry.direction} ${entry.meaning}`, /external or unproved|external authority/iu,
       `quality gate: ${name} regressed to an unproved external boundary`);
+  }
+  for (const [sourcePath, names] of [
+    [busterReadinessSource, Object.keys(busterReadinessContracts)],
+    [busterProductSource, Object.keys(busterProductContracts)],
+  ]) {
+    for (const name of names) {
+      const entry = groupedEnvironment.get(name);
+      assert(entry, `quality gate: ${name} is missing from the runtime inventory`);
+      assert.equal(entry.surface, 'checked-in-injected-transport',
+        `quality gate: ${name} is not bound to its checked-in chart producer`);
+      assert(entry.readers.some((reader) => reader.path === sourcePath),
+        `quality gate: ${name} lost its exact runtime reader`);
+      const contract = entry.consumerContracts.find((candidate) => candidate.path === sourcePath);
+      assert(contract, `quality gate: ${name} lacks its exact consumer contract`);
+      for (const field of ['purpose', 'acceptedForm', 'defaultBehavior', 'emptyBehavior', 'invalidBehavior', 'precedence', 'impact', 'failure']) {
+        assert.equal(typeof contract[field], 'string', `quality gate: ${name} contract lacks ${field}`);
+        assert(contract[field].trim(), `quality gate: ${name} contract has an empty ${field}`);
+      }
+      assert.equal(entry.meaningStatus, 'authored-consumer-specific-contract',
+        `quality gate: ${name} still publishes a generic transport description`);
+      assert.doesNotMatch(`${entry.meaning} ${entry.defaultBehavior} ${entry.failureMeaning}`,
+        /owning producer or runtime|external authority/iu,
+        `quality gate: ${name} regressed to generic external-authority wording`);
+    }
+  }
+  for (const name of Object.keys(busterRuntimeContracts)) {
+    const entry = groupedEnvironment.get(name);
+    assert(entry?.readers.some((reader) => reader.path === busterRuntimeSource),
+      `quality gate: ${name} lost its Buster runtime entrypoint reader`);
+    const contract = entry.consumerContracts.find((candidate) => candidate.path === busterRuntimeSource);
+    assert(contract, `quality gate: ${name} lacks its Buster runtime entrypoint contract`);
+    for (const field of ['purpose', 'acceptedForm', 'defaultBehavior', 'emptyBehavior', 'invalidBehavior', 'precedence', 'impact', 'failure']) {
+      assert.equal(typeof contract[field], 'string', `quality gate: ${name} runtime contract lacks ${field}`);
+      assert(contract[field].trim(), `quality gate: ${name} runtime contract has an empty ${field}`);
+    }
+    assert.match(entry.meaningStatus, /^authored-consumer-specific-contracts?$/u,
+      `quality gate: ${name} still publishes a generic Buster runtime description`);
   }
   const requireSensitivity = (name, expectedClass) => {
     const entry = groupedEnvironment.get(name);

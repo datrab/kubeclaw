@@ -584,7 +584,11 @@ function networkExposuresFrom(rendered) {
     }
     if (value.kind === 'Ingress') {
       const paths = (value.spec?.rules ?? []).flatMap((rule) => (rule.http?.paths ?? []).map((route) => ({ rule, route })));
-      const records = paths.length ? paths : [{ rule: {}, route: { backend: value.spec?.defaultBackend } }];
+      const records = [
+        ...paths,
+        ...(value.spec?.defaultBackend ? [{ rule: {}, route: { backend: value.spec.defaultBackend } }] : []),
+      ];
+      if (!records.length) records.push({ rule: {}, route: {} });
       return records.map(({ rule, route }) => ({
         value: `Ingress/${namespace}/${value.metadata.name}:${rule.host ?? '*'}${route.path ?? '/'}`,
         kind: 'Ingress',

@@ -27,9 +27,10 @@ function runGenerator(...args) {
 }
 
 function runPublisher(...args) {
-  return spawnSync(process.execPath, [publisher, '--root', temporaryRoot, '--revision', sourceRevision, ...args], {
+  return spawnSync(process.execPath, [publisher, '--root', temporaryRoot, '--revision', sourceRevision, '--allow-detached-source-root', ...args], {
     cwd: repositoryRoot,
     encoding: 'utf8',
+    env: { ...process.env, KUBECLAW_DOCS_ISOLATED_MUTATION: '1' },
   });
 }
 
@@ -183,6 +184,36 @@ try {
   assert.equal(baseline.status, 0, `temporary baseline is stale\n${baseline.stdout}\n${baseline.stderr}`);
   const baselineValues = JSON.parse(fs.readFileSync(path.join(outputDirectory, 'configuration-values.json'), 'utf8'));
   const baselineRuntime = JSON.parse(fs.readFileSync(path.join(outputDirectory, 'configuration-runtime-inputs.json'), 'utf8'));
+  for (const testOnlyName of ['KUBECLAW_DEMO_AUTH_TEST_OUTPUT', 'PRODUCT_TS_EXPORTER']) {
+    assert.equal(baselineRuntime.environment.some((item) => item.name === testOnlyName), false,
+      `${testOnlyName}: Go test-only environment input leaked into the runtime inventory`);
+  }
+  for (const [sourcePath, names] of [
+    ['cmd/buster-namespace-controller/demo-readiness-lifecycle.go', [
+      'BUSTER_READY_LISTEN', 'BUSTER_READY_AUDIENCE', 'BUSTER_READY_PRODUCER', 'BUSTER_READY_TLS_CERT', 'BUSTER_READY_TLS_KEY',
+    ]],
+    ['cmd/buster-namespace-controller/demo-product.go', [
+      'BUSTER_PRODUCT_ENABLED', 'BUSTER_PRODUCT_AUDIENCE', 'BUSTER_PRODUCT_PRODUCER', 'BUSTER_PRODUCT_ISSUER',
+      'BUSTER_PRODUCT_VERIFY_KEY', 'BUSTER_PRODUCT_ACTORS_JSON',
+    ]],
+  ]) {
+    for (const name of names) {
+      const item = baselineRuntime.environment.find((candidate) => candidate.name === name);
+      assert.equal(item?.meaningStatus, 'authored-consumer-specific-contract', `${name}: exact runtime contract is missing`);
+      assert(item?.consumerContracts.some((contract) => contract.path === sourcePath), `${name}: exact runtime consumer is missing`);
+    }
+  }
+  for (const name of [
+    'BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT', 'BUSTER_PLAN_PORT', 'BUSTER_PLAN_RUN_DIR', 'BUSTER_PLAN_STATE_DIR',
+    'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY', 'BUSTER_TRUSTED_PEER_SPIFFE_ID', 'BUSTER_V2_MAX_ARCHIVE_BYTES',
+    'BUSTER_V2_MAX_EXTRACTED_BYTES', 'BUSTER_ALLOWED_SOURCE_SECRETS', 'BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION',
+  ]) {
+    const item = baselineRuntime.environment.find((candidate) => candidate.name === name);
+    assert.match(item?.meaningStatus ?? '', /^authored-consumer-specific-contracts?$/u,
+      `${name}: Buster runtime contract is missing`);
+    assert(item?.consumerContracts.some((contract) => contract.path === 'docker/buster-runtime-entrypoint.sh'),
+      `${name}: Buster runtime entrypoint consumer is missing`);
+  }
   const operatorEnvironment = baselineRuntime.environment.filter((item) => item.surface === 'operator-authored-input');
   assert.ok(operatorEnvironment.length > 150, 'operator environment inventory unexpectedly lost its main surface');
   assert.equal(operatorEnvironment.filter((item) => /blocker/u.test(item.meaningStatus)).length, 0, 'operator environment contract blockers remain');
@@ -263,6 +294,13 @@ try {
     assert.ok(item, `${name}: nested compatibility environment input was not inventoried`);
     assert.match(item.precedenceExplanation, /wins, then/u, `${name}: compatibility precedence is incomplete`);
   }
+  const detachedPublish = spawnSync(process.execPath, [publisher, '--root', temporaryRoot, '--revision', sourceRevision], {
+    cwd: repositoryRoot,
+    encoding: 'utf8',
+  });
+  assert.notEqual(detachedPublish.status, 0, 'detached mutated source root published without an explicit fixture opt-in');
+  assert.match(`${detachedPublish.stdout}\n${detachedPublish.stderr}`, /source root is outside the checked Git worktree/u,
+    'detached source-root rejection did not explain the provenance boundary');
   const baselinePublish = runPublisher();
   assert.equal(baselinePublish.status, 0, `could not publish baseline environment and Secret contracts\n${baselinePublish.stdout}\n${baselinePublish.stderr}`);
   const environmentPage = published('docs/site/reference/environment-variables.md');
@@ -313,6 +351,13 @@ try {
   assert.ok(baselineValues.totals.embeddedPayloadAuthorities > 0, 'embedded payload authority gate did not classify any checked-in payload');
   const yamlLeaves = baselineValues.files.flatMap((file) => file.documents.flatMap((document) => document.fields))
     .filter((field) => !['object', 'array'].includes(field.type));
+  const bootstrapCilium = baselineValues.files.find((file) => file.path === 'gitops/platform/bootstrap/codex-ops.yaml')
+    ?.documents.flatMap((document) => document.fields)
+    .find((field) => field.path === '$.spec.source.helm.valuesObject.networkPolicy.cilium');
+  assert.equal(bootstrapCilium?.meaning.status, 'embedded-payload-authority',
+    'bootstrap Cilium field lost its exact embedded-payload authority');
+  assert.equal(bootstrapCilium?.blockerOwner, null, 'resolved bootstrap Cilium field retained a stale blocker owner');
+  assert.equal(bootstrapCilium?.closureCondition, null, 'resolved bootstrap Cilium field retained a stale closure condition');
   const dottedKeyLeaves = yamlLeaves.filter((field) => /\["(?:\\.|[^"])*\.(?:\\.|[^"])*"\]/u.test(field.path));
   assert.equal(dottedKeyLeaves.length, 112, 'literal dotted YAML key coverage changed');
   for (const [sourcePath, fieldPath] of [

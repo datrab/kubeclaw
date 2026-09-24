@@ -311,6 +311,38 @@ try {
     'Ingress defaultBackend extraction changed or lost a published route');
   copyWorkspace();
 
+  // An Ingress can declare rule paths and a default backend at the same time.
+  // Both routes are effective and therefore both must remain in the inventory.
+  const ingressFixturePath = path.join(isolatedSourceRoot, 'my-values/infra/argocd-tailscale-ingress.yaml');
+  const ingressFixtureBefore = fs.readFileSync(ingressFixturePath, 'utf8');
+  const ingressFixture = replaceOnce(ingressFixtureBefore, '  defaultBackend:\n', [
+    '  rules:',
+    '    - host: argocd.example.test',
+    '      http:',
+    '        paths:',
+    '          - path: /api',
+    '            pathType: Prefix',
+    '            backend:',
+    '              service:',
+    '                name: argocd-api',
+    '                port:',
+    '                  number: 8080',
+    '  defaultBackend:',
+    '',
+  ].join('\n'));
+  fs.writeFileSync(ingressFixturePath, ingressFixture);
+  const combinedIngressResult = runInventory(isolatedSourceRoot, true, ['--print-inventory']);
+  assert.equal(combinedIngressResult.status, 0,
+    `could not inspect the combined Ingress fixture:\n${combinedIngressResult.stderr}`);
+  const combinedIngressInventory = JSON.parse(combinedIngressResult.stdout);
+  assert.deepEqual(combinedIngressInventory.networkExposures
+    .filter(({ kind, namespace, name }) => kind === 'Ingress' && namespace === 'argocd' && name === 'argocd')
+    .map(({ host, path: routePath, backendService, backendPort }) => [host, routePath, backendService, backendPort]), [
+    ['*', '/', 'argocd-server', 80],
+    ['argocd.example.test', '/api', 'argocd-api', 8080],
+  ], 'Ingress with rules and defaultBackend did not publish both effective routes');
+  fs.writeFileSync(ingressFixturePath, ingressFixtureBefore);
+
   const unsafeSync = runInventory(isolatedSourceRoot, true, ['--sync-map-identities']);
   assert.notEqual(unsafeSync.status, 0, 'the unsafe bulk identity synchronization option unexpectedly succeeded');
   assert.match(`${unsafeSync.stdout}\n${unsafeSync.stderr}`, /DOC_DRIFT_MAP_REVIEW/u,
