@@ -369,8 +369,13 @@ try {
     assert.ok(field.meaning.semanticGroup && !forbiddenLocalGroups.has(field.meaning.semanticGroup), `${field.path}: local Helm field uses a generic or conflated semantic group`);
     assert.ok(field.meaning.acceptedValues?.length >= 20 && field.meaning.emptyBehavior?.length >= 20, `${field.path}: local Helm accepted/empty contract is incomplete`);
     assert.ok(field.changeImpact?.length >= 20 && field.failureMeaning?.length >= 20, `${field.path}: local Helm impact/failure contract is incomplete`);
-    assert.ok(field.consumers.length > 0 && field.consumers.every((consumer) => consumer.kind?.startsWith('helm-template')),
+    const helmConsumers = field.consumers.filter((consumer) => consumer.kind?.startsWith('helm-template'));
+    const runtimeConsumers = field.consumers.filter((consumer) => !consumer.kind?.startsWith('helm-template'));
+    assert.ok(helmConsumers.length > 0,
       `${field.path}: local Helm field lacks an exact template consumer`);
+    assert.ok(runtimeConsumers.every((consumer) => consumer.direction === 'read'
+      && /^(?:checked-in-runtime-reader|generated-json-consumer|runtime-|selected-image-runtime-boundary)/u.test(consumer.kind ?? '')),
+    `${field.path}: non-template consumer is not an explicit runtime proof`);
   }
   const localAuthorityRegistry = JSON.parse(fs.readFileSync(path.join(temporaryRoot, 'scripts/docs-local-helm-field-authorities.json'), 'utf8'));
   const novaAuthorityFields = localAuthorityRegistry.files['my-values/nova-values.yaml']?.fields ?? {};
