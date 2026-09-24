@@ -74,6 +74,10 @@ const forbiddenText = [
 const findViolations = text => forbiddenText.flatMap(([pattern, description]) =>
   [...text.matchAll(pattern)].map(match => ({ index: match.index, description })));
 
+function withoutExternalUrls(text) {
+  return text.replace(/https?:\/\/[^\s)>]+/gu, value => ' '.repeat(value.length));
+}
+
 function h1Errors(documents) {
   const result = [];
   const titleOwners = new Map();
@@ -107,6 +111,9 @@ function assertNegativeFixtures() {
       throw new Error(`Reader-boundary negative fixture was not detected: ${name}`);
     }
   }
+  if (findViolations(withoutExternalUrls('See https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/.')).length) {
+    throw new Error('Reader-boundary check mistook an external API URL for a superseded repository path');
+  }
   const duplicates = h1Errors([
     { file: path.join(siteRoot, '__fixture-one.md'), text: '# Duplicate fixture\n' },
     { file: path.join(siteRoot, '__fixture-two.md'), text: '# Duplicate fixture\n' },
@@ -125,7 +132,7 @@ for (const file of siteFiles) {
   const markdown = file.endsWith('.md');
   const prose = markdown ? proseOutsideFences(text) : text;
 
-  for (const violation of findViolations(text)) report(file, text, violation.index, violation.description);
+  for (const violation of findViolations(withoutExternalUrls(text))) report(file, text, violation.index, violation.description);
 
   if (!markdown) continue;
   markdownDocuments.push({ file, text: prose });
