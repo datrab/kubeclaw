@@ -94,13 +94,14 @@ function meaningExcerpt(sourcePath, token, { requireSemanticLanguage = false } =
   return { path: sourcePath, line, excerpt };
 }
 
-const environmentContract = ({ purpose, acceptedForm, defaultBehavior, emptyBehavior, invalidBehavior, precedence, impact, failure, required = 'conditional' }) => ({
+const environmentContract = ({ purpose, acceptedForm, defaultBehavior, emptyBehavior, invalidBehavior, precedence, precedenceSteps, impact, failure, required = 'conditional' }) => ({
   purpose,
   acceptedForm,
   defaultBehavior,
   emptyBehavior,
   invalidBehavior,
   precedence,
+  ...(precedenceSteps ? { precedenceSteps } : {}),
   impact,
   failure,
   required,
@@ -145,6 +146,81 @@ const ENVIRONMENT_CONSUMER_CONTRACTS = new Map();
 const addEnvironmentConsumerContract = (name, sourcePath, contract) => {
   ENVIRONMENT_CONSUMER_CONTRACTS.set(`${name}:${sourcePath}`, contract);
 };
+
+const busterControllerSource = 'cmd/buster-namespace-controller/main.go';
+const busterControllerContracts = {
+  KUBECLAW_NAMESPACE: environmentContract({
+    purpose: 'Selects the namespace in which the Buster namespace controller reads leases and creates its namespace-scoped bindings.',
+    acceptedForm: 'A non-empty namespace name. This reader trims whitespace but does not validate Kubernetes name syntax at startup.',
+    defaultBehavior: 'Uses the trimmed ServiceAccount namespace file; if that file is unreadable or blank, uses `kubeclaw`.',
+    emptyBehavior: 'An absent, empty, or whitespace-only environment value selects the ServiceAccount namespace file and then `kubeclaw`.',
+    invalidBehavior: 'A non-empty invalid value survives startup and later makes API paths, subjects, or admitted objects fail.',
+    precedence: 'Trimmed non-empty process value, then trimmed non-empty ServiceAccount namespace file, then `kubeclaw`.',
+    precedenceSteps: [
+      { order: 1, source: 'process environment', condition: 'trimmed value is non-empty', evidence: `${busterControllerSource}:133` },
+      { order: 2, source: 'ServiceAccount namespace file', condition: 'environment value is blank and file content is readable and non-empty', value: '/var/run/secrets/kubernetes.io/serviceaccount/namespace', evidence: `${busterControllerSource}:133` },
+      { order: 3, source: 'controller fallback', condition: 'environment and namespace file do not supply a value', value: 'kubeclaw', evidence: `${busterControllerSource}:133` },
+    ],
+    impact: 'Changing it moves lease discovery and generated namespace bindings to another namespace authority.',
+    failure: 'The controller starts with a malformed non-empty value, but reconciliation or Kubernetes admission fails.',
+  }),
+  BUSTER_ALLOWED_ACCESS_JSON: environmentContract({
+    purpose: 'Defines which ServiceAccounts can request Buster tester or deployer access.',
+    acceptedForm: 'A JSON array of objects. Each `subject` is one canonical DNS label or `namespace/name`; each mode is exactly `tester` or `deployer`. At least one subject is required. An empty modes list is valid and grants nothing.',
+    defaultBehavior: 'Uses one `kubeclaw/agent-buster` subject with `tester` mode.',
+    emptyBehavior: 'An absent, empty, or whitespace-only value selects the default JSON array.',
+    invalidBehavior: 'Invalid JSON, an invalid subject, an unsupported mode, or no subjects returns a configuration error.',
+    precedence: 'A trimmed non-empty process value wins; otherwise the checked-in JSON fallback applies.',
+    impact: 'Changing it changes the identities and access modes that the controller places into leased namespaces.',
+    failure: 'The controller returns an error before it starts its reconciliation loop.',
+  }),
+  BUSTER_ALLOWED_NAMESPACE_PREFIXES: environmentContract({
+    purpose: 'Selects the namespace prefixes that Buster lease requests can use.',
+    acceptedForm: 'A comma-separated list. The reader trims entries and drops empty entries but does not validate prefix syntax or length at startup.',
+    defaultBehavior: 'Uses `test`.',
+    emptyBehavior: 'A blank value, or a list that contains only blank entries, selects `test`.',
+    invalidBehavior: 'A malformed non-empty prefix can survive startup and later produce an unusable namespace name or failed Kubernetes request.',
+    precedence: 'A trimmed non-empty process value is split first; an empty result then falls back to `test`.',
+    impact: 'Changing the list changes which requested names are admitted and which prefix is used for generated names.',
+    failure: 'Lease validation, namespace creation, or Kubernetes admission fails when the effective prefix cannot produce a usable name.',
+  }),
+  BUSTER_DEFAULT_TTL_SECONDS: environmentContract({
+    purpose: 'Sets the lease lifetime used when a request does not supply a positive `ttlSeconds` value.',
+    acceptedForm: 'A base-10 integer that fits the platform Go `int`. The startup parser does not require a positive value and does not guard duration multiplication overflow.',
+    defaultBehavior: 'Uses `7200` when the value is blank, non-numeric, or outside the Go `int` range.',
+    emptyBehavior: 'An absent, empty, or whitespace-only value selects `7200`.',
+    invalidBehavior: 'Non-numeric and integer-overflow input silently selects `7200`. A parsed value below 60, above the effective maximum, or affected by duration overflow makes later lease validation or expiry behavior fail.',
+    precedence: 'A trimmed parseable process integer wins; otherwise `7200` applies.',
+    impact: 'Changing it changes the default expiry time for leases without a positive request-specific TTL.',
+    failure: 'The controller can start, but a defaulted lease is rejected or receives an unsafe expiry when the parsed value is unsuitable.',
+  }),
+  BUSTER_MAX_TTL_SECONDS: environmentContract({
+    purpose: 'Sets the maximum lease lifetime accepted by the Buster namespace controller.',
+    acceptedForm: 'A base-10 integer that fits the platform Go `int`. The startup parser does not require a positive value and does not guard duration multiplication overflow.',
+    defaultBehavior: 'Uses `86400` when the value is blank, non-numeric, or outside the Go `int` range.',
+    emptyBehavior: 'An absent, empty, or whitespace-only value selects `86400`.',
+    invalidBehavior: 'Non-numeric and integer-overflow input silently selects `86400`. A zero, negative, too-small, or duration-overflowing parsed value causes later lease validation or expiry behavior to reject otherwise valid leases.',
+    precedence: 'A trimmed parseable process integer wins; otherwise `86400` applies.',
+    impact: 'Changing it changes the upper lifetime bound and the clamp applied during expiry calculation.',
+    failure: 'The controller can start, but leases are rejected or receive an unsafe expiry when the effective maximum is unsuitable.',
+  }),
+  BUSTER_CONTROLLER_SERVICE_ACCOUNT: environmentContract({ purpose: 'Selects the ServiceAccount subject placed into generated Buster RoleBindings.', acceptedForm: 'A non-empty Kubernetes ServiceAccount name; this reader trims whitespace but does not validate name syntax at startup.', defaultBehavior: 'Uses `agent-buster-namespace-controller`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default.', invalidBehavior: 'A malformed non-empty name survives startup and later fails Kubernetes admission or binds the wrong valid identity.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in name applies.', impact: 'Changing it changes which controller identity receives permissions in leased namespaces.', failure: 'RoleBinding reconciliation fails, or a wrong valid ServiceAccount receives the binding.' }),
+  BUSTER_SECRET_ROLE_NAME: environmentContract({ purpose: 'Selects the Role referenced by generated Secret-access RoleBindings.', acceptedForm: 'A non-empty Kubernetes Role name; this reader trims whitespace but does not validate name syntax at startup.', defaultBehavior: 'Uses `buster-controller-secrets`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default.', invalidBehavior: 'A malformed non-empty name survives startup and later fails admission; a wrong valid name leaves Secret access ineffective.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in name applies.', impact: 'Changing it redirects the Secret permission reference in leased namespaces.', failure: 'RoleBinding reconciliation or later Secret access fails.' }),
+  BUSTER_DEPLOYER_ROLE_NAME: environmentContract({ purpose: 'Selects the ClusterRole or Role reference granted for requested deployer access.', acceptedForm: 'A non-empty Kubernetes role name; this reader trims whitespace but does not validate name syntax at startup.', defaultBehavior: 'Uses `buster-namespace-deployer`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default.', invalidBehavior: 'A malformed non-empty name survives startup and later fails admission; a wrong valid name grants no intended deployer authority.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in name applies.', impact: 'Changing it changes the permission set bound to approved deployer subjects.', failure: 'Access-binding reconciliation fails or approved deployers remain unauthorized.' }),
+  BUSTER_TESTER_ROLE_NAME: environmentContract({ purpose: 'Selects the ClusterRole or Role reference granted for requested tester access.', acceptedForm: 'A non-empty Kubernetes role name; this reader trims whitespace but does not validate name syntax at startup.', defaultBehavior: 'Uses `buster-namespace-tester`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default.', invalidBehavior: 'A malformed non-empty name survives startup and later fails admission; a wrong valid name grants no intended tester authority.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in name applies.', impact: 'Changing it changes the permission set bound to approved tester subjects.', failure: 'Access-binding reconciliation fails or approved testers remain unauthorized.' }),
+  BUSTER_CONTROLLER_POLL_MS: environmentContract({ purpose: 'Sets the delay between complete Buster lease reconciliation passes.', acceptedForm: 'A base-10 integer from 1 through the largest millisecond count that fits `time.Duration`.', defaultBehavior: 'Uses `3000` milliseconds.', emptyBehavior: 'An absent, empty, or whitespace-only value selects `3000`.', invalidBehavior: 'Non-numeric, zero, negative, or multiplication-overflow input returns `BUSTER_CONTROLLER_POLL_MS must be positive`.', precedence: 'A trimmed non-empty process value wins; otherwise `3000` applies.', impact: 'Changing it changes reconciliation latency and Kubernetes API request frequency.', failure: 'The controller returns an error before it starts its reconciliation loop.' }),
+};
+for (const [name, contract] of Object.entries(busterControllerContracts)) {
+  ENVIRONMENT_CONTRACTS.set(name, contract);
+  addEnvironmentConsumerContract(name, busterControllerSource, contract);
+}
+
+for (const [name, contract] of Object.entries({
+  KUBERNETES_SERVICE_PORT: environmentContract({ purpose: 'Selects the Kubernetes API TCP port used by the Buster namespace controller.', acceptedForm: 'A non-empty port string; this reader trims whitespace but does not validate numeric syntax or range.', defaultBehavior: 'Uses `443`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects `443`.', invalidBehavior: 'A malformed non-empty value is concatenated into the API URL and later fails URL parsing, connection setup, or reconciliation.', precedence: 'A trimmed non-empty process value wins; otherwise `443` applies.', impact: 'Changing it redirects every controller request to another port on `KUBERNETES_SERVICE_HOST`.', failure: 'The controller cannot complete Kubernetes API requests.' }),
+  BUSTER_LEASE_API_GROUP: environmentContract({ purpose: 'Selects the API group used in Buster lease request paths and the controller finalizer.', acceptedForm: 'A non-empty API-group string; this reader trims whitespace but does not validate syntax at startup.', defaultBehavior: 'Uses `kubeclaw.forgestack.ai`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default group.', invalidBehavior: 'A malformed non-empty value survives startup and later causes malformed or not-found API requests or an invalid finalizer.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in group applies.', impact: 'Changing it redirects lease discovery and changes the finalizer identity.', failure: 'Lease reconciliation or Kubernetes admission fails.' }),
+  BUSTER_LEASE_API_VERSION: environmentContract({ purpose: 'Selects the API version used in Buster lease request paths.', acceptedForm: 'A non-empty API-version string; this reader trims whitespace but does not validate syntax at startup.', defaultBehavior: 'Uses `v1alpha1`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default version.', invalidBehavior: 'A malformed or unavailable non-empty value survives startup and later causes malformed or not-found API requests.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in version applies.', impact: 'Changing it redirects lease discovery to another served API version.', failure: 'Lease reconciliation fails because the selected resource endpoint is invalid or unavailable.' }),
+  BUSTER_ALLOWED_SOURCE_SECRETS: environmentContract({ purpose: 'Lists the Secret object names that a Buster lease may copy from its approved source namespace.', acceptedForm: 'A comma-separated list whose trimmed non-empty entries contain only letters, digits, dot, underscore, or hyphen.', defaultBehavior: 'Uses an empty allowlist.', emptyBehavior: 'An absent, empty, or whitespace-only value permits no source Secret names.', invalidBehavior: 'Any entry outside `^[A-Za-z0-9._-]+$` returns `invalid BUSTER_ALLOWED_SOURCE_SECRETS entry`.', precedence: 'The process value is split, trimmed, and validated; no other controller source adds names.', impact: 'Changing it changes which named Secret references can be admitted into leased namespaces.', failure: 'The controller returns an error before it starts when any entry is invalid.' }),
+})) addEnvironmentConsumerContract(name, busterControllerSource, contract);
 
 for (const [sourcePath, purpose, failure] of [
   ['skills/prism/server/control-config.ts', 'Authenticates Control dispatch to the Prism worker when SPIFFE workload identity is disabled.', 'Control startup stops with `PRISM_WORKER_SECRET is required`.'],
@@ -641,7 +717,7 @@ function helmHelperDefinitions() {
       const aliases = new Map();
       const accesses = [];
       for (const item of body) {
-        const assignment = /^(\$[A-Za-z_][A-Za-z0-9_]*)\s*:?=\s*\.([A-Za-z_][A-Za-z0-9_.-]*)/u.exec(item.expression);
+        const assignment = /^(\$[A-Za-z_][A-Za-z0-9_]*)\s*:?=\s*(?:deepCopy\s+)?\.([A-Za-z_][A-Za-z0-9_.-]*)/u.exec(item.expression);
         if (assignment) aliases.set(assignment[1], assignment[2]);
         for (const relative of item.expression.matchAll(/(?:^|[\s(|,])\.([A-Za-z_][A-Za-z0-9_.-]*)/gu)) {
           if (/^(?:Values|Release|Chart|Capabilities|Template)(?:\.|$)/u.test(relative[1])) continue;
@@ -651,6 +727,9 @@ function helmHelperDefinitions() {
           const escaped = variable.replace(/\$/gu, '\\$');
           for (const relative of item.expression.matchAll(new RegExp(`${escaped}\\.([A-Za-z_][A-Za-z0-9_.-]*)`, 'gu'))) {
             accesses.push({ suffix: `${base}.${relative[1]}`, path: sourcePath, line: item.line, expression: item.expression });
+          }
+          if (new RegExp(`\\b(?:toYaml|toJson)\\s+${variable.replace(/\$/gu, '\\$')}\\b`, 'u').test(item.expression)) {
+            accesses.push({ suffix: base, path: sourcePath, line: item.line, expression: item.expression, serialized: true });
           }
         }
       }
@@ -763,6 +842,29 @@ function chartConsumers() {
       const itemBase = action.command === 'range' ? `${base}[]` : base;
       let provedLeaf = false;
       for (const bodyAction of body) {
+        for (const call of bodyAction.expression.matchAll(/(?:include|template)\s+"([^"]+)"\s+\(dict[\s\S]*?"([A-Za-z_][A-Za-z0-9_]*)"\s+\./gu)) {
+          const helper = helperDefinitions.get(call[1]);
+          if (!helper) continue;
+          const argumentName = call[2];
+          for (const access of helper.accesses) {
+            if (access.suffix !== argumentName && !access.suffix.startsWith(`${argumentName}.`)) continue;
+            const relative = access.suffix === argumentName ? '' : access.suffix.slice(argumentName.length + 1);
+            const candidates = access.serialized && !relative
+              ? [...chartLeaves].filter((leafPath) => leafPath.startsWith(`${itemBase}.`) || leafPath.startsWith(`${itemBase}[]`))
+              : [`${itemBase}${relative ? `.${relative}` : ''}`];
+            for (const exact of candidates) {
+              if (!chartLeaves.has(exact)) continue;
+              provedLeaf = true;
+              add(exact, bodyAction, {
+                consumerPath: access.path,
+                consumerLine: access.line,
+                bindingKind: `${action.command}-dict-helper-${access.serialized ? 'serialized-item-leaf' : 'item-leaf-access'}`,
+                bindingProof: `${action.command} at ${file}:${action.line} binds . to ${itemBase}; ${file}:${bodyAction.line} passes it as dict key ${argumentName} to ${helper.name}; ${access.path}:${access.line} ${access.serialized ? 'serializes that exact item subtree' : `reads .${access.suffix}`}`,
+                helperCallProof: { path: file, line: bodyAction.line, helper: helper.name, argumentPath: itemBase, sourceLineSha256: sha256(lines[bodyAction.line - 1] ?? '') },
+              });
+            }
+          }
+        }
         if (action.command === 'range' && /(?:^|[\s(,|])\.(?=$|[\s),|}])/u.test(bodyAction.expression)) {
           provedLeaf = true;
           add(itemBase, bodyAction, {
@@ -1364,9 +1466,19 @@ function yamlSemantics(context, exactPath, valueType) {
       closureCondition: inactive ? 'Bind this profile to a versioned Helm invocation/Application, or remove the inactive profile.' : null,
     };
   }
-  const linkedHelmConsumers = context.chartRoot && exactPath
+  let linkedHelmConsumers = context.chartRoot && exactPath
     ? [...(context.consumerMap.get(`${context.chartRoot}:${canonicalHelmPath(exactPath)}`) ?? [])]
     : [];
+  const extraContainerIndex = /^extraContainers\[([0-9]+)\](?:\.|$)/u.exec(exactPath)?.[1];
+  if (extraContainerIndex !== undefined) {
+    const selectedName = context.documentValue?.extraContainers?.[Number(extraContainerIndex)]?.name;
+    if (selectedName === 'buster-v2-runtime') {
+      linkedHelmConsumers = linkedHelmConsumers.filter((consumer) => !(consumer.path === 'charts/kubeclaw/templates/deployment.yaml'
+        && consumer.line === 1527));
+    } else if (selectedName) {
+      linkedHelmConsumers = linkedHelmConsumers.filter((consumer) => consumer.path !== 'charts/kubeclaw/templates/_registry-clients.tpl');
+    }
+  }
   if (context.runtimeBindings.length) {
     const readers = context.runtimeBindings.filter((item) => item.direction === 'read');
     const sourceWriters = context.runtimeBindings.filter((item) => item.direction === 'write');
@@ -1938,6 +2050,23 @@ function buildYamlInventory() {
   assert.match(`${opsCilium.meaning.text} ${opsCilium.meaning.emptyBehavior ?? ''}`,
     /networkPolicy\.enabled=true[\s\S]*parent false[\s\S]*neither policy/iu,
   'CONFIG_GITOPS_OPS_CILIUM_PARENT_GATE: the parent-child truth table is missing');
+  const busterFields = files.find((file) => file.path === 'my-values/buster-values.yaml')
+    ?.documents.flatMap((document) => document.fields) ?? [];
+  for (const fieldPath of [
+    '$.extraContainers[0].securityContext.allowPrivilegeEscalation',
+    '$.extraContainers[0].securityContext.privileged',
+    '$.extraContainers[0].securityContext.runAsNonRoot',
+    '$.extraContainers[0].volumeMounts[2].readOnly',
+  ]) {
+    const field = busterFields.find((item) => item.path === fieldPath);
+    assert(field?.consumers.some((consumer) => consumer.path === 'charts/kubeclaw/templates/_registry-clients.tpl'
+      && consumer.line === 51 && consumer.helperCallProof?.path === 'charts/kubeclaw/templates/deployment.yaml'
+      && consumer.helperCallProof?.line === 1525),
+    `CONFIG_BUSTER_REGISTRY_HELPER_CONSUMER: ${fieldPath} lacks its exact helper serialization path`);
+    assert(!field.consumers.some((consumer) => consumer.path === 'charts/kubeclaw/templates/deployment.yaml'
+      && consumer.line === 1527),
+    `CONFIG_BUSTER_REGISTRY_HELPER_BRANCH: ${fieldPath} incorrectly cites the non-Buster else branch`);
+  }
   const apiLeafFields = leafFields.filter((field) => field.meaning.status.startsWith('deployment-'));
   const forbiddenApiPhrases = /where defined|states whether|uses pinned default|controller behavior|commonly/iu;
   for (const file of files) {
@@ -3707,6 +3836,75 @@ function environmentOccurrences(file, text) {
   const goSource = extension === '.go';
   const cSource = extension === '.c' || extension === '.h';
   const scanText = shellSource ? maskQuotedShellHeredocs(text) : text;
+  if (goSource) {
+    const splitGoArguments = (value) => {
+      const result = [];
+      let start = 0;
+      let quote = null;
+      let escaped = false;
+      for (let index = 0; index < value.length; index += 1) {
+        const character = value[index];
+        if (escaped) { escaped = false; continue; }
+        if (quote && character === '\\' && quote !== '`') { escaped = true; continue; }
+        if (quote) { if (character === quote) quote = null; continue; }
+        if (character === '"' || character === "'" || character === '`') { quote = character; continue; }
+        if (character === ',') { result.push(value.slice(start, index).trim()); start = index + 1; }
+      }
+      result.push(value.slice(start).trim());
+      return result;
+    };
+    const goLiteral = (value) => {
+      if (/^-?[0-9]+$/u.test(value)) return value;
+      if (value.startsWith('`') && value.endsWith('`')) return value.slice(1, -1);
+      if (value.startsWith('"') && value.endsWith('"')) {
+        try { return JSON.parse(value); } catch { return null; }
+      }
+      return null;
+    };
+    const wrappers = [];
+    for (const declaration of text.matchAll(/\bfunc\s+([a-z][A-Za-z0-9_]*)\s*\(([^)]*)\)[^{]*\{/gu)) {
+      const parameters = declaration[2].split(',').map((item) => item.trim().split(/\s+/u)[0]).filter(Boolean);
+      const bodyStart = (declaration.index ?? 0) + declaration[0].length;
+      let depth = 1;
+      let bodyEnd = bodyStart;
+      for (; bodyEnd < text.length && depth > 0; bodyEnd += 1) {
+        if (text[bodyEnd] === '{') depth += 1;
+        else if (text[bodyEnd] === '}') depth -= 1;
+      }
+      const body = text.slice(bodyStart, bodyEnd - 1);
+      const reader = /os\.(?:Getenv|LookupEnv)\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)/u.exec(body)?.[1];
+      const environmentIndex = reader ? parameters.indexOf(reader) : -1;
+      if (environmentIndex < 0) continue;
+      wrappers.push({
+        name: declaration[1],
+        environmentIndex,
+        fallbackIndex: parameters.indexOf('fallback'),
+      });
+    }
+    for (const direct of text.matchAll(/os\.(?:Getenv|LookupEnv)\(\s*["']([A-Z][A-Z0-9_]*)["']\s*\)/gu)) {
+      found.push({ name: direct[1], kind: 'go-process-env', path: file, line: lineAt(text, direct.index), defaultOperator: null, sourceValueRole: 'none', default: '<none>', secretProvenance: false, filePathProvenance: false });
+    }
+    for (const wrapper of wrappers) {
+      const callPattern = new RegExp(`\\b${wrapper.name}\\(([^)\\n]*)\\)`, 'gu');
+      for (const call of text.matchAll(callPattern)) {
+        const argumentsList = splitGoArguments(call[1]);
+        const name = goLiteral(argumentsList[wrapper.environmentIndex] ?? '');
+        if (!/^[A-Z][A-Z0-9_]*$/u.test(name ?? '')) continue;
+        const fallback = wrapper.fallbackIndex >= 0 ? goLiteral(argumentsList[wrapper.fallbackIndex] ?? '') : null;
+        found.push({
+          name,
+          kind: 'go-process-env-helper',
+          path: file,
+          line: lineAt(text, call.index),
+          defaultOperator: fallback === null ? null : 'trimmed-empty-fallback',
+          sourceValueRole: fallback === null ? 'none' : 'default',
+          default: fallback ?? '<none>',
+          secretProvenance: false,
+          filePathProvenance: false,
+        });
+      }
+    }
+  }
   if (nodeSource) {
     for (const readFact of nodeEnvironmentReads(file, text)) {
       found.push({
@@ -3785,7 +3983,6 @@ function environmentOccurrences(file, text) {
   // Do not also scan arbitrary YAML text with language regexes: that duplicates
   // real readers and can turn documentation strings into runtime inputs.
   if (pythonSource) patterns.push({ kind: 'python-process-env', regex: /(?:os\.getenv\(|os\.environ(?:\.get\(|\[))['"]([A-Z][A-Z0-9_]*)['"]/g });
-  if (goSource) patterns.push({ kind: 'go-process-env', regex: /os\.(?:Getenv|LookupEnv)\(['"]([A-Z][A-Z0-9_]*)['"]\)/g });
   if (cSource) patterns.push({ kind: 'c-getenv', regex: /(?:secure_)?getenv\(\s*"([A-Z][A-Z0-9_]*)"\s*\)/g });
   if (yamlSource) patterns.push({ kind: 'kubernetes-env', regex: /^\s*-?\s*name:\s*([A-Z][A-Z0-9_]*)\s*(?:#.*)?$/gm });
   if (yamlSource) patterns.push({ kind: 'kubernetes-env', regex: /^\s*-\s*\{\s*name\s*:\s*["']?([A-Z][A-Z0-9_]*)["']?\s*,\s*(?:value|valueFrom)\s*:/gm });
@@ -4967,6 +5164,22 @@ function buildRuntimeInputInventory(yamlInventory) {
       } else if (occurrence.sourceValueRole === 'alternate') {
         entry.precedence.push({ order: 2, source: 'alternate expansion value', condition: `parameter operator ${occurrence.defaultOperator}`, value: occurrence.default, evidence: `${occurrence.path}:${occurrence.line}` });
       }
+    } else if (occurrence.kind === 'go-process-env' || occurrence.kind === 'go-process-env-helper') {
+      entry.precedence.push({
+        order: 1,
+        source: 'process environment',
+        condition: occurrence.kind === 'go-process-env-helper' ? 'trimmed value is non-empty' : 'reader is called',
+        evidence: `${occurrence.path}:${occurrence.line}`,
+      });
+      if (occurrence.sourceValueRole === 'default') {
+        entry.precedence.push({
+          order: 2,
+          source: 'Go helper fallback',
+          condition: 'environment value is absent, empty, or whitespace',
+          value: occurrence.default,
+          evidence: `${occurrence.path}:${occurrence.line}`,
+        });
+      }
     }
     groupedEnvironment.set(occurrence.name, entry);
   }
@@ -5028,6 +5241,7 @@ function buildRuntimeInputInventory(yamlInventory) {
       entry.precedenceExplanation = meaning.contract.precedence;
       entry.changeImpact = meaning.contract.impact;
       entry.failureMeaning = meaning.contract.failure;
+      if (meaning.contract.precedenceSteps) entry.precedence = meaning.contract.precedenceSteps;
     } else {
       entry.defaultBehavior = 'Use the producer or external authority named by the surface classification.';
       entry.emptyBehavior = 'The owning producer or runtime defines empty-value behavior.';
@@ -5075,6 +5289,7 @@ function buildRuntimeInputInventory(yamlInventory) {
       entry.precedenceExplanation = contract.precedence;
       entry.changeImpact = contract.impact;
       entry.failureMeaning = contract.failure;
+      if (contract.precedenceSteps) entry.precedence = contract.precedenceSteps;
       entry.blockerOwner = null;
       entry.closureCondition = null;
     }
@@ -5093,6 +5308,28 @@ function buildRuntimeInputInventory(yamlInventory) {
   const environmentContractGaps = [...groupedEnvironment.values()].filter((entry) => entry.surface === 'operator-authored-input' && /blocker/u.test(entry.meaningStatus));
   if (!allowSemanticGaps && environmentContractGaps.length) {
     throw new Error(`CONFIG_SEMANTIC_GAP: operator environment inputs lack qualified semantic authority: ${environmentContractGaps.slice(0, 20).map((entry) => entry.name).join(', ')}. Expected authority: owning reader plus purpose, accepted form, default and empty behavior, precedence, impact, and failure symptom.`);
+  }
+  const controllerWrapperInputs = [
+    'KUBECLAW_NAMESPACE', 'KUBERNETES_SERVICE_PORT', 'BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION',
+    'BUSTER_ALLOWED_NAMESPACE_PREFIXES', 'BUSTER_DEFAULT_TTL_SECONDS', 'BUSTER_MAX_TTL_SECONDS',
+    'BUSTER_CONTROLLER_SERVICE_ACCOUNT', 'BUSTER_SECRET_ROLE_NAME', 'BUSTER_DEPLOYER_ROLE_NAME',
+    'BUSTER_TESTER_ROLE_NAME', 'BUSTER_ALLOWED_ACCESS_JSON',
+  ];
+  for (const name of controllerWrapperInputs) {
+    const entry = groupedEnvironment.get(name);
+    assert(entry?.readers.some((reader) => reader.path === busterControllerSource && reader.access === 'go-process-env-helper'),
+      `quality gate: ${name} lost its Buster controller helper-call reader`);
+  }
+  for (const name of [
+    'KUBECLAW_NAMESPACE', 'BUSTER_ALLOWED_NAMESPACE_PREFIXES', 'BUSTER_DEFAULT_TTL_SECONDS',
+    'BUSTER_MAX_TTL_SECONDS', 'BUSTER_CONTROLLER_SERVICE_ACCOUNT', 'BUSTER_SECRET_ROLE_NAME',
+    'BUSTER_DEPLOYER_ROLE_NAME', 'BUSTER_TESTER_ROLE_NAME', 'BUSTER_ALLOWED_ACCESS_JSON',
+  ]) {
+    const entry = groupedEnvironment.get(name);
+    assert.equal(entry.surface, 'checked-in-injected-transport', `quality gate: ${name} is not a proved injected runtime input`);
+    assert.equal(entry.meaningStatus, 'authored-source-backed-contract', `quality gate: ${name} lacks its exact controller contract`);
+    assert.doesNotMatch(`${entry.direction} ${entry.meaning}`, /external or unproved|external authority/iu,
+      `quality gate: ${name} regressed to an unproved external boundary`);
   }
   const requireSensitivity = (name, expectedClass) => {
     const entry = groupedEnvironment.get(name);

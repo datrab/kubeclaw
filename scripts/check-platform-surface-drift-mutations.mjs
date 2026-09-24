@@ -297,6 +297,18 @@ try {
   const baseline = runInventory(root);
   assert.equal(baseline.status, 0,
     `platform inventory baseline failed:\n${baseline.stderr || baseline.stdout}`);
+  const baselineInventory = JSON.parse(fs.readFileSync(
+    path.join(root, 'docs/generated/inventory/platform-surfaces.json'), 'utf8'));
+  assert.deepEqual(
+    baselineInventory.networkExposures
+      .filter(({ kind }) => kind === 'Ingress')
+      .map(({ namespace, name, backendService, backendPort }) => [`${namespace}/${name}`, backendService, backendPort]),
+    [
+      ['argocd/argocd', 'argocd-server', 80],
+      ['kubeclaw/agent-nova-archviewer', 'agent-nova-archviewer', 3456],
+      ['kubeclaw/prism-studio', 'prism-studio', 80],
+    ],
+    'Ingress defaultBackend extraction changed or lost a published route');
   copyWorkspace();
 
   const unsafeSync = runInventory(isolatedSourceRoot, true, ['--sync-map-identities']);

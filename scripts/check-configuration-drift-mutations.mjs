@@ -878,6 +878,13 @@ AP98_HELP`),
 }`),
     () => createFile('skills/worker/core/worker/ap98-environment-reader-fixture.c', `#include <stdlib.h>
 const char *fixture(void) { return getenv("AP98_C_GETENV"); }`),
+    () => createFile('cmd/ap98-environment-reader-fixture/main.go', `package main
+import "os"
+func env(name string, fallback string) string { if value := os.Getenv(name); value != "" { return value }; return fallback }
+func envInt(name string, fallback int) int { _ = os.Getenv(name); return fallback }
+func unrelated(name string) string { return name }
+func main() { _, _, _, _ = os.Getenv("AP98_GO_DIRECT"), env("AP98_GO_HELPER", "fallback"), envInt("AP98_GO_INT_HELPER", 42), unrelated("AP98_GO_NOT_ENV") }
+`),
     () => createFile('charts/ops-pod/templates/ap98-inline-environment-fixture.yaml', `apiVersion: v1
 kind: Pod
 metadata: {name: ap98-inline-environment}
@@ -930,6 +937,14 @@ PY`),
     requiredReader('AP98_HELPER_ENV', 'skills/prism/config/ap98-environment-reader-fixture.ts', 'node-process-env-computed-helper');
     requiredReader('AP98_ARGUMENT_HELPER_ENV', 'skills/prism/config/ap98-environment-reader-fixture.ts', 'node-process-env-computed-helper');
     requiredReader('AP98_C_GETENV', 'skills/worker/core/worker/ap98-environment-reader-fixture.c', 'c-getenv');
+    requiredReader('AP98_GO_DIRECT', 'cmd/ap98-environment-reader-fixture/main.go', 'go-process-env');
+    requiredReader('AP98_GO_HELPER', 'cmd/ap98-environment-reader-fixture/main.go', 'go-process-env-helper');
+    requiredReader('AP98_GO_INT_HELPER', 'cmd/ap98-environment-reader-fixture/main.go', 'go-process-env-helper');
+    assert.equal(runtimeInventory.environment.some((item) => item.name === 'AP98_GO_NOT_ENV'), false,
+      'unrelated Go helper call became an environment reader');
+    assert.equal(runtimeInventory.environment.find((item) => item.name === 'AP98_GO_HELPER')?.precedence
+      .find((step) => step.source === 'Go helper fallback')?.value, 'fallback',
+    'Go helper fallback was not preserved in precedence evidence');
     requiredReader('AP98_INLINE_YAML_ENV', 'charts/ops-pod/templates/ap98-inline-environment-fixture.yaml', 'kubernetes-env');
     requiredReader('AP98_EMBEDDED_YAML_HELPER', 'charts/ops-pod/templates/ap98-embedded-javascript-fixture.yaml', 'embedded-node-process-env-computed-helper');
     for (const name of ['AP98_CHILD_PREFIX_ONE', 'AP98_CHILD_PREFIX_TWO']) requiredReader(name, 'docker/ap98-embedded-program-fixture.sh', 'embedded-node-process-env-alias');
