@@ -429,7 +429,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "openclaw-plugin; package 0.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
         "skills/common/plugins/openclaw-agent-observer/README.md"
@@ -448,7 +448,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "codex-plugin; package 0.2.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
         "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
@@ -467,7 +467,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "openclaw-plugin; package 0.1.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/prism/openclaw-plugin/openclaw.plugin.json",
         "skills/prism/openclaw-plugin/README.md"
@@ -486,7 +486,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/agent-observability/plugin.json",
         "skills/common/plugins/agent-observability/README.md"
@@ -505,7 +505,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/api-flow/plugin.json",
         "skills/buster/plugins/api-flow/README.md"
@@ -524,7 +524,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/architecture-validator/plugin.json",
         "skills/nova/plugins/architecture-validator/README.md"
@@ -543,7 +543,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/artifact-store/plugin.json",
         "skills/common/plugins/artifact-store/README.md"
@@ -562,7 +562,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/axe/plugin.json",
         "skills/buster/plugins/axe/README.md"
@@ -581,7 +581,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/blueprint-sync/plugin.json",
         "skills/nova/plugins/blueprint-sync/README.md"
@@ -600,7 +600,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/buster-quality-gate/plugin.json",
         "skills/nova/plugins/buster-quality-gate/README.md"
@@ -619,7 +619,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/case-study/plugin.json",
         "skills/nova/plugins/case-study/README.md"
@@ -638,7 +638,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/command-runner/plugin.json",
         "skills/common/plugins/command-runner/README.md"
@@ -657,7 +657,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/container-build/plugin.json",
         "skills/buster/plugins/container-build/README.md"
@@ -676,7 +676,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/coverage-budget/plugin.json",
         "skills/buster/plugins/coverage-budget/README.md"
@@ -695,7 +695,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/delivery-lint/plugin.json",
         "skills/nova/plugins/delivery-lint/README.md"
@@ -714,7 +714,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/demo-auth-smoke/plugin.json",
         "skills/buster/plugins/demo-auth-smoke/README.md"
@@ -733,7 +733,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/demo-handoff/plugin.json",
         "skills/nova/plugins/demo-handoff/README.md"
@@ -752,7 +752,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/direct-command/plugin.json",
         "skills/buster/plugins/direct-command/README.md"
@@ -771,7 +771,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/git-workspace/plugin.json",
         "skills/common/plugins/git-workspace/README.md"
@@ -790,7 +790,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/http/plugin.json",
         "skills/buster/plugins/http/README.md"
@@ -809,7 +809,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/human-approval/plugin.json",
         "skills/nova/plugins/human-approval/README.md"
@@ -828,7 +828,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/implementation-agent/plugin.json",
         "skills/nova/plugins/implementation-agent/README.md"
@@ -847,7 +847,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/junit-report-adapter/plugin.json",
         "skills/buster/plugins/junit-report-adapter/README.md"
@@ -866,7 +866,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/kubernetes-fixture/plugin.json",
         "skills/buster/plugins/kubernetes-fixture/README.md"
@@ -885,7 +885,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/lighthouse/plugin.json",
         "skills/buster/plugins/lighthouse/README.md"
@@ -904,7 +904,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/lint/plugin.json",
         "skills/nova/plugins/lint/README.md"
@@ -923,7 +923,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/network-http/plugin.json",
         "skills/common/plugins/network-http/README.md"
@@ -942,7 +942,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.1.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/notification-observer/plugin.json",
         "skills/common/plugins/notification-observer/README.md"
@@ -961,7 +961,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/openapi/plugin.json",
         "skills/buster/plugins/openapi/README.md"
@@ -980,7 +980,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/openclaw-agent-events/plugin.json",
         "skills/common/plugins/openclaw-agent-events/README.md"
@@ -999,7 +999,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/operator-messaging/plugin.json",
         "skills/common/plugins/operator-messaging/README.md"
@@ -1018,7 +1018,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/pipeline-review/plugin.json",
         "skills/nova/plugins/pipeline-review/README.md"
@@ -1037,7 +1037,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/playwright/plugin.json",
         "skills/buster/plugins/playwright/README.md"
@@ -1056,7 +1056,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/preflight-contract/plugin.json",
         "skills/nova/plugins/preflight-contract/README.md"
@@ -1075,7 +1075,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/prism-design/plugin.json",
         "skills/nova/plugins/prism-design/README.md"
@@ -1094,7 +1094,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/project-summary/plugin.json",
         "skills/nova/plugins/project-summary/README.md"
@@ -1113,7 +1113,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/redis-transport/plugin.json",
         "skills/common/plugins/redis-transport/README.md"
@@ -1132,7 +1132,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/remote-test-gate/plugin.json",
         "skills/nova/plugins/remote-test-gate/README.md"
@@ -1151,7 +1151,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/repository-adapter/plugin.json",
         "skills/nova/plugins/repository-adapter/README.md"
@@ -1170,7 +1170,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/nova/plugins/review/plugin.json",
         "skills/nova/plugins/review/README.md"
@@ -1189,7 +1189,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/runtime-dispatch/plugin.json",
         "skills/common/plugins/runtime-dispatch/README.md"
@@ -1208,7 +1208,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/secret-resolver/plugin.json",
         "skills/common/plugins/secret-resolver/README.md"
@@ -1227,7 +1227,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/security-providers/plugin.json",
         "skills/buster/plugins/security-providers/README.md"
@@ -1246,7 +1246,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/size-budget/plugin.json",
         "skills/buster/plugins/size-budget/README.md"
@@ -1265,7 +1265,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/state-store/plugin.json",
         "skills/common/plugins/state-store/README.md"
@@ -1284,7 +1284,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/tailscale-exposure/plugin.json",
         "skills/buster/plugins/tailscale-exposure/README.md"
@@ -1303,7 +1303,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/telemetry-observer/plugin.json",
         "skills/common/plugins/telemetry-observer/README.md"
@@ -1322,7 +1322,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/telemetry-store/plugin.json",
         "skills/common/plugins/telemetry-store/README.md"
@@ -1341,7 +1341,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/transport-publisher/plugin.json",
         "skills/common/plugins/transport-publisher/README.md"
@@ -1360,7 +1360,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/buster/plugins/visual/plugin.json",
         "skills/buster/plugins/visual/README.md"
@@ -1379,7 +1379,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; source evidence revision 569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "lastVerified": "see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "sourceDependencies": [
         "skills/common/plugins/wait-store/plugin.json",
         "skills/common/plugins/wait-store/README.md"
@@ -1712,7 +1712,7 @@
       "audience": "operator, security operator, developer",
       "owner": "the source component listed for each route or connection",
       "appliesTo": "discovered inbound routes and outbound network calls in shipped runtime sources",
-      "lastVerified": "generated from revision `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`",
+      "lastVerified": "generated from revision `517f57ad7af131541e13474a2da362e7f39954db`",
       "sourceDependencies": [
         "docs/generated/inventory/platform-surfaces.json",
         "scripts/docs-platform-surface-inventory.mjs"

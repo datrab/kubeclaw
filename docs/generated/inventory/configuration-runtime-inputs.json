@@ -691,6 +691,44 @@
       "consumers": [
         {
           "kind": "argument-parser",
+          "line": 15,
+          "path": "scripts/docs-tree-boundary.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 15,
+      "name": "--bootstrap-classification",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-tree-boundary.mjs",
+      "ownerEvidence": "scripts/docs-tree-boundary.mjs",
+      "path": "scripts/docs-tree-boundary.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-tree-boundary.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
           "line": 7,
           "path": "scripts/ap08-extension-inventory.mjs"
         }
@@ -1135,6 +1173,44 @@
       "required": "conditional",
       "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
       "runtimeOwner": "operator script scripts/docs-status.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
+          "line": 14,
+          "path": "scripts/docs-tree-boundary.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 14,
+      "name": "--check",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-tree-boundary.mjs",
+      "ownerEvidence": "scripts/docs-tree-boundary.mjs",
+      "path": "scripts/docs-tree-boundary.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-tree-boundary.mjs",
       "surface": "documentation-internal",
       "type": "boolean switch or command selector",
       "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
@@ -52258,10 +52334,10 @@
     }
   ],
   "totals": {
-    "cliDefinitions": 108,
-    "cliFlags": 108,
+    "cliDefinitions": 110,
+    "cliFlags": 110,
     "cliInvocations": 0,
-    "cliOccurrences": 125,
+    "cliOccurrences": 127,
     "configurationConsumerSources": 274,
     "derivedValues": 47,
     "environmentConsumers": 856,
