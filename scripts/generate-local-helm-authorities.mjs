@@ -659,18 +659,28 @@ for (const field of local) {
   } = approved;
   if (field.type === 'boolean') {
     const inputContract = booleanInputContract(field);
-    const operationalFailure = approvedSemantics.booleanInputSemantics?.operationalFailure
+    const authoredOperationalFailure = approvedSemantics.failure.startsWith(`${inputContract.invalidBehavior} `)
+      ? approvedSemantics.failure.slice(inputContract.invalidBehavior.length + 1)
+      : null;
+    const operationalFailure = authoredOperationalFailure
+      ?? approvedSemantics.booleanInputSemantics?.operationalFailure
       ?? approvedSemantics.failure.replace(/^A non-Boolean value [^.]+\.\s*/u, '');
+    const authoredEmptyBehavior = approvedSemantics.emptyBehavior;
+    const operationalEmptyBehavior = approvedSemantics.booleanInputSemantics?.operationalEmptyBehavior
+      ?? (authoredEmptyBehavior !== inputContract.emptyBehavior
+        && !authoredEmptyBehavior.includes('can preserve, replace, reject, or reinterpret')
+        ? authoredEmptyBehavior : null);
     assert.notEqual(operationalFailure, approvedSemantics.failure,
       `${field.sourcePath}#${field.path}: first Boolean maintenance pass must identify the old invalid-type sentence`);
     assert.ok(operationalFailure.length >= 20,
       `${field.sourcePath}#${field.path}: Boolean contract lacks its operational failure consequence`);
     approvedSemantics.failure = `${inputContract.invalidBehavior} ${operationalFailure}`;
-    approvedSemantics.emptyBehavior = inputContract.emptyBehavior;
+    approvedSemantics.emptyBehavior = operationalEmptyBehavior ?? inputContract.emptyBehavior;
     approvedSemantics.booleanInputSemantics = {
       validation: inputContract.validation,
       receivers: inputContract.receiverSemantics,
       operationalFailure,
+      ...(operationalEmptyBehavior ? { operationalEmptyBehavior } : {}),
     };
   }
   const literalCapabilityKey = /\.capabilities\["([^"]+)"\]/u.exec(field.path)?.[1] ?? null;

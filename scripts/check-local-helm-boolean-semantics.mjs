@@ -11,6 +11,15 @@ const booleanAuthorities = Object.entries(registry.files).flatMap(([sourcePath, 
     .map(([fieldPath, field]) => ({ sourcePath, fieldPath, ...field })));
 
 assert.equal(booleanAuthorities.length, 93, 'local Helm Boolean authority coverage changed');
+const registryText = JSON.stringify(booleanAuthorities);
+for (const forbidden of [
+  'Disabling a required dependency makes its consumers unready',
+  'can preserve, replace, reject, or reinterpret',
+  'active and rendered',
+]) {
+  assert.doesNotMatch(registryText, new RegExp(forbidden, 'u'),
+    `generic Boolean contract text returned: ${forbidden}`);
+}
 for (const field of booleanAuthorities) {
   const label = `${field.sourcePath}#${field.fieldPath}`;
   assert.match(field.failure, /YAML Boolean|schema validation|template comparison|type guard/u,
@@ -102,25 +111,25 @@ assert.match(`${requiredReleaseServiceAccount.stdout}\n${requiredReleaseServiceA
   'SPIFFE failure did not prove the conditional release-ServiceAccount requirement');
 
 const behavioralContracts = [
-  ['$.serviceAccount.automount', 5, /ignored.*forces automatic token mounting off|has no effect/iu],
+  ['$.serviceAccount.automount', 5, /renders `automountServiceAccountToken: false` on both.*Pod independently forces/isu],
   ['$.busterNamespaceBroker.enabled', 4, /agentRole=buster|non-Buster release/iu],
   ['$.busterNamespaceBroker.controller.readiness.enabled', 1, /Outside that parent and role path.*no rendered effect/iu],
   ['$.busterNamespaceBroker.controller.productDecisions.enabled', 1, /Outside that parent and role path.*no rendered effect/iu],
   ['$.busterNamespaceBroker.leaseClient.enabled', 2, /cannot disable lease-client RBAC|ignores `false`/iu],
   ['$.busterNamespaceBroker.leaseClient.verificationRead.enabled', 2, /parent broker.*effective lease client.*ServiceAccount/iu],
   ['$.codeBundle.enabled', 4, /environment entry.*rendered in both cases|without adding or removing a Deployment resource branch/iu],
-  ['$.probes.dependencies.gateway.enabled', 1, /skips that check|without proving that dependency/iu],
-  ['$.probes.dependencies.litellm.enabled', 1, /skips that check|without proving that dependency/iu],
-  ['$.probes.dependencies.redis.enabled', 2, /skips that check|without proving that dependency/iu],
-  ['$.probes.dependencies.redisStream.enabled', 1, /skips that check|without proving that dependency/iu],
-  ['$.probes.dependencies.registries.enabled', 2, /skips that check|without proving that dependency/iu],
+  ['$.probes.dependencies.gateway.enabled', 1, /startup, readiness, and liveness.*gateway `\/health`/isu],
+  ['$.probes.dependencies.litellm.enabled', 1, /startup probe.*LiteLLM `\/health`/isu],
+  ['$.probes.dependencies.redis.enabled', 2, /startup and readiness.*`PING`.*`PONG`/isu],
+  ['$.probes.dependencies.redisStream.enabled', 1, /startup probe.*mutating.*`XADD`/isu],
+  ['$.probes.dependencies.registries.enabled', 2, /startup probe.*`\/v2\/`.*HTTP 401/isu],
   ['$.probes.liveness.enabled', 1, /does not restart the container/iu],
   ['$.probes.readiness.enabled', 1, /become Ready without/iu],
   ['$.probes.startup.enabled', 1, /slow startup is exposed/iu],
   ['$.persistence.config.enabled', 1, /emptyDir.*lost when the Pod is replaced/isu],
   ['$.persistence.workspace.enabled', 1, /emptyDir.*lost when the Pod is replaced/isu],
   ['$.networkPolicy.enabled', 1, /workload remains present.*loses.*restrictions/isu],
-  ['$.networkPolicy.cilium', 1, /both the portable NetworkPolicy and an additional CiliumNetworkPolicy/iu],
+  ['$.networkPolicy.cilium', 1, /networkPolicy\.enabled=false.*neither policy renders/isu],
   ['$.workspace.enabled', 6, /does not remove the `\/workspace` volume|volume, mount, and runtime directories remain/iu],
   ['$.workspace.overrideOnRestart', 2, /workspace\.enabled=false.*no managed seed files|no effect when workspace seeding is disabled/iu],
 ];
@@ -133,6 +142,84 @@ for (const [fieldPath, count, proof] of behavioralContracts) {
     assert.doesNotMatch(prose, /Disabling a required dependency makes its consumers unready/iu,
       `${field.sourcePath}#${fieldPath}: generic enabled-field failure text returned`);
   }
+}
+
+const sourceSpecificContracts = [
+  ['$.agent.git.enabled', 6, /SSH Secret.*clones or reconciles.*workspace and `REPO_ROOT`/isu],
+  ['$.archviewer.enabled', 2, /sidecar itself is supplied separately.*Kubernetes rejects the Pod/isu],
+  ['$.busterNamespaceBroker.readyClient.enabled', 1, /not gated by `busterNamespaceBroker.enabled`/iu],
+  ['$.busterRuntimePersistence.enabled', 2, /creates no claim.*pre-existing claim/isu],
+  ['$.discord.enabled', 6, /raw JSON value blank.*`openclaw\.json` invalid/isu],
+  ['$.gateway.startupDoctor.enabled', 3, /doctor --fix --non-interactive.*legacy state remains unmigrated/isu],
+  ['$.workerTrust.spiffe.enabled', 4, /capabilities with `proxyPort`.*SPIFFE/isu],
+];
+for (const [fieldPath, count, proof] of sourceSpecificContracts) {
+  const allAuthorities = booleanAuthorities.filter((field) => field.fieldPath === fieldPath
+    && (field.sourcePath === 'charts/kubeclaw/values.yaml'
+      || (field.sourcePath.startsWith('my-values/') && field.sourcePath !== 'my-values/prism-values.yaml')));
+  const selected = fieldPath === '$.workerTrust.spiffe.enabled' ? allAuthorities :
+    booleanAuthorities.filter((field) => field.fieldPath === fieldPath);
+  assert.equal(selected.length, count, `${fieldPath}: source-specific authority coverage changed`);
+  for (const field of selected) {
+    assert.match(`${field.purpose} ${field.acceptedValues} ${field.emptyBehavior} ${field.impact} ${field.failure}`,
+      proof, `${field.sourcePath}#${fieldPath}: exact operational contract is missing`);
+  }
+}
+
+for (const [sourcePath, fieldPath, proof] of [
+  ['charts/ops-pod/values.yaml', '$.tailscale.enabled', /main Ops workload present.*Kubernetes-local|non-Tailscale paths/isu],
+  ['charts/prism/values.yaml', '$.control.productDecisions.enabled', /separate signing Secret.*operator allowlist/isu],
+  ['charts/prism/values.yaml', '$.ingestion.enabled', /Deployment, Service, and dedicated NetworkPolicy.*still receives the ingestion URL/isu],
+  ['my-values/prism-values.yaml', '$.ingestion.enabled', /Deployment, Service, and dedicated NetworkPolicy.*still receives the ingestion URL/isu],
+  ['charts/prism/values.yaml', '$.postgresql.enabled', /migration, backup, and verification stack.*externally managed/isu],
+  ['my-values/prism-values.yaml', '$.postgresql.enabled', /migration, backup, and verification stack.*externally managed/isu],
+  ['charts/prism/values.yaml', '$.tailscale.enabled', /Studio cluster-internal.*Product decisions require/isu],
+  ['my-values/prism-values.yaml', '$.tailscale.enabled', /Studio cluster-internal.*Product decisions require/isu],
+  ['charts/prism/values.yaml', '$.workerTrust.spiffe.enabled', /control and worker Envoy sidecars.*direct port 8080/isu],
+  ['my-values/prism-values.yaml', '$.workerTrust.spiffe.enabled', /control and worker Envoy sidecars.*direct port 8080/isu],
+]) {
+  const field = registry.files[sourcePath]?.fields[fieldPath];
+  assert(field, `${sourcePath}#${fieldPath}: authority is missing`);
+  assert.match(`${field.purpose} ${field.acceptedValues} ${field.impact} ${field.failure}`, proof,
+    `${sourcePath}#${fieldPath}: exact platform contract is missing`);
+}
+
+for (const [fieldPath, count, emptyProof] of [
+  ['$.codeBundle.enabled', 4, /`default false`.*both bundle environment variables/isu],
+  ['$.discord.enabled', 6, /raw JSON value blank.*invalid/isu],
+  ['$.probes.dependencies.gateway.enabled', 1, /call-site default of `true`/iu],
+  ['$.probes.dependencies.redis.enabled', 2, /call-site default of `true`/iu],
+  ['$.probes.dependencies.redisStream.enabled', 1, /call-site default of `true`/iu],
+  ['$.probes.dependencies.litellm.enabled', 1, /call-site default of `false`/iu],
+  ['$.probes.dependencies.registries.enabled', 2, /call-site default of `false`/iu],
+  ['$.runAsRoot', 2, /strict `ternary` receivers reject.*agent\.git\.enabled=true/isu],
+  ['$.serviceAccount.automount', 5, /`default false`.*Boolean value `false`/isu],
+  ['$.swarmConfig.overrideOnRestart', 1, /`default false`.*runtime value `"false"`/isu],
+  ['$.workspace.overrideOnRestart', 2, /`default false`.*runtime value `"false"`/isu],
+]) {
+  const fields = booleanAuthorities.filter((field) => field.fieldPath === fieldPath);
+  assert.equal(fields.length, count, `${fieldPath}: empty-value authority coverage changed`);
+  for (const field of fields) {
+    assert.match(field.emptyBehavior, emptyProof,
+      `${field.sourcePath}#${fieldPath}: exact empty-value behavior is missing`);
+  }
+}
+
+for (const [sourcePath, fieldPath, emptyProof, behaviorProof] of [
+  ['my-values/buster-values.yaml', '$.extraContainers[0].securityContext.allowPrivilegeEscalation', /absent or null.*runtime or admission default.*empty string is invalid/isu, /root supervisor.*privilege/isu],
+  ['my-values/prism-agent-values.yaml', '$.extraContainers[0].securityContext.allowPrivilegeEscalation', /absent or null.*control unset.*empty string is invalid/isu, /UID 1000.*no added Linux capabilities/isu],
+  ['my-values/buster-values.yaml', '$.extraContainers[0].securityContext.privileged', /absent or null.*non-privileged.*empty string is invalid/isu, /broad host-level device and kernel access/isu],
+  ['my-values/buster-values.yaml', '$.extraContainers[0].securityContext.runAsNonRoot', /absent or null.*removes the kubelet.*empty string is invalid/isu, /conflicts.*`runAsUser: 0`/isu],
+  ['my-values/prism-agent-values.yaml', '$.extraContainers[0].securityContext.readOnlyRootFilesystem', /absent or null.*writable root filesystem.*empty string is invalid/isu, /explicit writable volumes/isu],
+  ['my-values/nova-values.yaml', '$.extraContainers[0].volumeMounts[0].readOnly', /absent or null.*default `false`.*empty string is invalid/isu, /Archviewer authentication Secret.*intrinsically read-only/isu],
+  ['my-values/nova-values.yaml', '$.extraContainers[0].volumeMounts[1].readOnly', /absent or null.*default `false`.*empty string is invalid/isu, /workspace PVC `prism\/designs`/isu],
+  ['my-values/buster-values.yaml', '$.extraContainers[0].volumeMounts[2].readOnly', /absent or null.*default `false`.*empty string is invalid/isu, /projected ServiceAccount token.*intrinsically read-only/isu],
+]) {
+  const field = registry.files[sourcePath]?.fields[fieldPath];
+  assert(field, `${sourcePath}#${fieldPath}: structural Boolean authority is missing`);
+  assert.match(field.emptyBehavior, emptyProof, `${sourcePath}#${fieldPath}: structural empty behavior is incomplete`);
+  assert.match(`${field.purpose} ${field.acceptedValues} ${field.impact} ${field.failure}`, behaviorProof,
+    `${sourcePath}#${fieldPath}: structural operational behavior is incomplete`);
 }
 
 const automountIgnoredTrue = render('--set', 'serviceAccount.create=false', '--set', 'serviceAccount.automount=true');
@@ -151,5 +238,49 @@ const busterLeaseFalse = spawnSync('helm', [
 assert.equal(busterLeaseFalse.status, 0, busterLeaseFalse.stderr);
 assert.match(busterLeaseFalse.stdout, /name: agent-buster-namespace-lease-client/u,
   'Buster role no longer force-enables lease-client RBAC');
+
+const deploymentTemplate = fs.readFileSync('charts/kubeclaw/templates/deployment.yaml', 'utf8');
+for (const [sourceExpression, documentedPaths] of [
+  ["if (mode === 'liveness')", ['$.probes.dependencies.gateway.enabled']],
+  ["enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)", ['$.probes.dependencies.gateway.enabled']],
+  ["enabled('KUBECLAW_HEALTH_CHECK_REDIS', true)", ['$.probes.dependencies.redis.enabled']],
+  ["enabled('KUBECLAW_HEALTH_CHECK_REDIS_STREAM', true)", ['$.probes.dependencies.redisStream.enabled']],
+  ["enabled('KUBECLAW_HEALTH_CHECK_LITELLM', false)", ['$.probes.dependencies.litellm.enabled']],
+  ["enabled('KUBECLAW_HEALTH_CHECK_REGISTRIES', false)", ['$.probes.dependencies.registries.enabled']],
+]) {
+  assert.match(deploymentTemplate, new RegExp(sourceExpression.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&'), 'u'),
+    `health implementation no longer contains ${sourceExpression}`);
+  for (const fieldPath of documentedPaths) {
+    assert(booleanAuthorities.some((field) => field.fieldPath === fieldPath),
+      `${fieldPath}: dependency-switch documentation is missing`);
+  }
+}
+assert.match(deploymentTemplate, /return \/\^\(1\|true\|yes\|on\)\$\/i\.test\(raw\)/u,
+  'health Boolean parser no longer recognizes the documented true tokens');
+assert.match(deploymentTemplate, /if \(raw === undefined \|\| raw === ''\) return defaultValue/u,
+  'health Boolean parser no longer applies the documented empty-value default');
+
+const renderOpsPolicy = (parent, child) => spawnSync('helm', [
+  'template', 'acceptance', 'charts/ops-pod',
+  '--set', 'codexImage=example.invalid/codex@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+  '--set', 'mcpImage=example.invalid/mcp@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+  '--set', 'networkPolicy.apiServerCIDRs[0]=10.0.0.1/32',
+  '--set', `networkPolicy.enabled=${parent}`,
+  '--set', `networkPolicy.cilium=${child}`,
+], { cwd: root, encoding: 'utf8' });
+
+for (const [parent, child, portable, cilium] of [
+  [false, false, false, false],
+  [false, true, false, false],
+  [true, false, true, false],
+  [true, true, true, true],
+]) {
+  const result = renderOpsPolicy(parent, child);
+  assert.equal(result.status, 0, `Ops policy truth-table render failed\n${result.stderr}`);
+  assert.equal(/^kind: NetworkPolicy$/mu.test(result.stdout), portable,
+    `networkPolicy.enabled=${parent}, cilium=${child}: portable policy result changed`);
+  assert.equal(/^kind: CiliumNetworkPolicy$/mu.test(result.stdout), cilium,
+    `networkPolicy.enabled=${parent}, cilium=${child}: Cilium policy result changed`);
+}
 
 console.log(`local Helm Boolean semantics verified (${booleanAuthorities.length} authorities; truthiness and strict-function render controls passed)`);
