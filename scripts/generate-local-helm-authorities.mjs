@@ -32,7 +32,16 @@ const sourceDigest = (relative) => digest(fs.readFileSync(path.join(root, relati
 const local = inventory.files.flatMap((file) => file.documents.flatMap((document) => document.fields
   .filter((field) => !['object', 'array'].includes(field.type)
     && ['template-render-authority', 'template-render-meaning-blocker', 'local-helm-field-authority'].includes(field.meaning?.status))
-  .map((field) => ({ sourcePath: file.path, sourceClass: file.sourceClass, ...field }))));
+  .map((field) => ({
+    sourcePath: file.path,
+    sourceClass: file.sourceClass,
+    ...field,
+    // Runtime proofs are published as additional readers of an already known
+    // value. They are not Helm binding evidence and must not enter the
+    // template-proof registry on a maintenance regeneration.
+    consumers: field.consumers.filter((consumer) => consumer.path.includes('/templates/')
+      && /^helm-/u.test(consumer.kind ?? '')),
+  }))));
 
 const chartRootFor = (sourcePath) => {
   if (sourcePath.startsWith('charts/')) return sourcePath.split('/').slice(0, 2).join('/');
@@ -137,6 +146,64 @@ const booleanInputContract = (field) => {
     emptyBehavior: emptyParts.join(' '),
     invalidBehavior: invalidParts.join(' '),
   };
+};
+const booleanRuntimeProof = (field) => {
+  const proofByPath = {
+    '$.codeBundle.enabled': [
+      ['charts/kubeclaw/templates/deployment.yaml', 878, 'runtime-boolean-parser', 'The health script applies the false default and validates the bundle manifest in startup and readiness modes.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 937, 'runtime-shell-consumer', 'The init script installs the bundle only when the quoted environment value is exactly `true`.'],
+    ],
+    '$.discord.enabled': [
+      ['charts/kubeclaw/templates/configmap-gateway.yaml', 201, 'generated-json-consumer', 'The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.'],
+      ['charts/kubeclaw/templates/configmap-gateway.yaml', 277, 'generated-json-consumer', 'The same unquoted scalar becomes the Discord plugin-entry Boolean.'],
+    ],
+    '$.probes.dependencies.gateway.enabled': [
+      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 897, 'runtime-probe-consumer', 'Liveness consumes the gateway switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 904, 'runtime-probe-consumer', 'Startup consumes the gateway switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 912, 'runtime-probe-consumer', 'Readiness consumes the gateway switch with default true.'],
+    ],
+    '$.probes.dependencies.redis.enabled': [
+      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 905, 'runtime-probe-consumer', 'Startup consumes the Redis switch with default true.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 913, 'runtime-probe-consumer', 'Readiness consumes the Redis switch with default true.'],
+    ],
+    '$.probes.dependencies.redisStream.enabled': [
+      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 906, 'runtime-probe-consumer', 'Startup alone consumes the Redis Stream switch with default true.'],
+    ],
+    '$.probes.dependencies.litellm.enabled': [
+      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 907, 'runtime-probe-consumer', 'Startup alone consumes the LiteLLM switch with default false.'],
+    ],
+    '$.probes.dependencies.registries.enabled': [
+      ['charts/kubeclaw/templates/deployment.yaml', 712, 'runtime-boolean-parser', 'The health script defines empty-value defaults and the accepted true tokens.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 908, 'runtime-probe-consumer', 'Startup alone consumes the registry switch with default false.'],
+    ],
+    '$.swarmConfig.overrideOnRestart': [
+      ['charts/kubeclaw/templates/deployment.yaml', 635, 'runtime-shell-consumer', 'The restart script applies the override only to `.semgrep.yml`.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 643, 'runtime-shell-consumer', 'The restart script applies the same override to `eslint.config.mjs`.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 650, 'runtime-shell-consumer', 'The following `.yamllint.yml` copy is unconditional and proves the override boundary.'],
+    ],
+    '$.workspace.overrideOnRestart': [
+      ['charts/kubeclaw/templates/deployment.yaml', 421, 'runtime-shell-consumer', 'The restart script enumerates the seven managed workspace documents.'],
+      ['charts/kubeclaw/templates/deployment.yaml', 423, 'runtime-shell-consumer', 'The restart script overwrites an existing document only when the value is exactly `true`.'],
+    ],
+  };
+  return (proofByPath[field.path] ?? []).map(([proofPath, line, kind, authority]) => {
+    const sourceLine = fs.readFileSync(proofPath, 'utf8').split('\n')[line - 1] ?? '';
+    return { path: proofPath, line, kind, authority, sourceLineSha256: digest(sourceLine) };
+  });
+};
+const kubernetesBooleanAuthority = (field) => {
+  if (!field.path.startsWith('$.extraContainers[0].')) return null;
+  if (/\.securityContext\.(?:allowPrivilegeEscalation|privileged|runAsNonRoot|readOnlyRootFilesystem)$/u.test(field.path)) {
+    return '[Kubernetes 1.35 SecurityContext API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#securitycontext-v1-core) is the final type and runtime authority for this field.';
+  }
+  if (/\.volumeMounts\[[0-9]+\]\.readOnly$/u.test(field.path)) {
+    return '[Kubernetes 1.35 VolumeMount API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#volumemount-v1-core) is the final type and runtime authority for this field.';
+  }
+  return null;
 };
 const environmentEntry = (field) => {
   const exactPath = field.path.replace(/^\$\.?/u, '');
@@ -325,6 +392,8 @@ const defaultClauses = (expression) => {
 const templateEvidence = (consumer) => {
   const text = fs.readFileSync(path.join(root, consumer.path), 'utf8');
   const lines = text.split('\n');
+  assert(consumer.line <= lines.length,
+    `LOCAL_HELM_CONSUMER_LINE_DRIFT: ${consumer.sourcePath}#${consumer.fieldPath} points to ${consumer.path}:${consumer.line}, but the template has ${lines.length} lines`);
   const sourceLine = lines[consumer.line - 1] ?? '';
   const start = Math.max(0, consumer.line - 4);
   const end = Math.min(lines.length, consumer.line + 3);
@@ -682,6 +751,10 @@ for (const field of local) {
       operationalFailure,
       ...(operationalEmptyBehavior ? { operationalEmptyBehavior } : {}),
     };
+    const externalAuthority = kubernetesBooleanAuthority(field);
+    if (externalAuthority && !approvedSemantics.acceptedValues.includes(externalAuthority)) {
+      approvedSemantics.acceptedValues = `${approvedSemantics.acceptedValues} ${externalAuthority}`;
+    }
   }
   const literalCapabilityKey = /\.capabilities\["([^"]+)"\]/u.exec(field.path)?.[1] ?? null;
   if (literalCapabilityKey) {
@@ -697,7 +770,8 @@ for (const field of local) {
     ...approvedSemantics,
     semanticAuthority: 'explicit-field-contract',
     selectedBaseline: field.value,
-    runtimeConsumerProof: environment ? (environment.runtimeReaders.length > 0
+    runtimeConsumerProof: booleanRuntimeProof(field).length > 0 ? booleanRuntimeProof(field)
+      : environment ? (environment.runtimeReaders.length > 0
       ? environment.runtimeReaders.map((reader) => ({
         path: reader.path,
         line: reader.line,

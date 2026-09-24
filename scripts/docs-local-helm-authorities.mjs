@@ -204,6 +204,19 @@ export function assertLocalHelmAuthorityRegistry(repositoryRoot = process.cwd(),
       }
       assert.doesNotMatch(authority.purpose, /^Sets .+ in the rendered .+ resources\.$/u, `${sourcePath}#${fieldPath}: tautological render-only purpose`);
       assert(!/-unresolved$/u.test(authority.group), `${sourcePath}#${fieldPath}: unresolved semantic proposal was accepted`);
+      assert(Array.isArray(authority.runtimeConsumerProof), `${sourcePath}#${fieldPath}: runtime proof list is missing`);
+      for (const proof of authority.runtimeConsumerProof) {
+        assert(typeof proof.path === 'string' && Number.isSafeInteger(proof.line) && proof.line > 0,
+          `${sourcePath}#${fieldPath}: runtime proof location is invalid`);
+        assert((typeof proof.authority === 'string' && proof.authority.length >= 20)
+          || (typeof proof.access === 'string' && typeof proof.environment === 'string'),
+          `${sourcePath}#${fieldPath}: runtime proof relationship is not explained`);
+        if (proof.sourceLineSha256) {
+          const proofLines = fs.readFileSync(path.join(repositoryRoot, proof.path), 'utf8').split('\n');
+          assert.equal(sha256(proofLines[proof.line - 1] ?? ''), proof.sourceLineSha256,
+            `${sourcePath}#${fieldPath}: runtime consumer line changed`);
+        }
+      }
       if (authority.group === 'environment-runtime-contract') {
         assert(Array.isArray(authority.runtimeConsumerProof) && authority.runtimeConsumerProof.length > 0,
           `${sourcePath}#${fieldPath}: environment delivery has no runtime-boundary proof`);

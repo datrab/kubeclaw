@@ -8985,7 +8985,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. The template's `default false` expression converts an explicit empty or null value to the quoted runtime value `\"false\"` in both bundle environment variables."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 878,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script applies the false default and validates the bundle manifest in startup and readiness modes.",
+              "sourceLineSha256": "06df25044cf7b0da08bdd7351c0906b55b465f2b84e387641a58d862f5583e10"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 937,
+              "kind": "runtime-shell-consumer",
+              "authority": "The init script installs the bundle only when the quoted environment value is exactly `true`.",
+              "sourceLineSha256": "dc8b642083b95cb9fbf181f3f4df7f474c2decddba24e73ccea5f4870a63ddcf"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -9352,7 +9367,7 @@
           "acceptedValues": "`true` renders Discord bindings, JSON enablement, token references, and eligible inline-token Secret data. `false` renders JSON disablement, omits bindings and main token wiring, and supplies an empty init token where required.",
           "emptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean.",
           "impact": "Changes Discord command ingress and credential delivery while leaving unrelated webhook configuration independent.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
@@ -9360,11 +9375,26 @@
               "helm-truthiness",
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
             "operationalEmptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 201,
+              "kind": "generated-json-consumer",
+              "authority": "The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.",
+              "sourceLineSha256": "cf94942dc5f96f6c4f78185324740296d6df2b1c2109a2726c65bfce7a46648c"
+            },
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 277,
+              "kind": "generated-json-consumer",
+              "authority": "The same unquoted scalar becomes the Discord plugin-entry Boolean.",
+              "sourceLineSha256": "54f93c9efd6add8975d46d0e5821ce70bb7cf928837360fbf34af0e66efd53f9"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
@@ -13507,7 +13537,36 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value renders as an empty environment value. The runtime parser applies its call-site default of `true` to that empty value."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 712,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script defines empty-value defaults and the accepted true tokens.",
+              "sourceLineSha256": "4ac9ed2f1abbac219b29d41528f3f3847a2cf6a0f417f1a080c3a3f88ac7a772"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 897,
+              "kind": "runtime-probe-consumer",
+              "authority": "Liveness consumes the gateway switch with default true.",
+              "sourceLineSha256": "b0c3ce6e5edb8c6438597575d4c390904784a6afbe4d6a990a9611382751fc36"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 904,
+              "kind": "runtime-probe-consumer",
+              "authority": "Startup consumes the gateway switch with default true.",
+              "sourceLineSha256": "9e010127181f65310b6cbcf0c0b538d7669998eae41b98ad416413a845cbe073"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 912,
+              "kind": "runtime-probe-consumer",
+              "authority": "Readiness consumes the gateway switch with default true.",
+              "sourceLineSha256": "9e010127181f65310b6cbcf0c0b538d7669998eae41b98ad416413a845cbe073"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -13560,7 +13619,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value renders as an empty environment value. The runtime parser applies its call-site default of `false` to that empty value."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 712,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script defines empty-value defaults and the accepted true tokens.",
+              "sourceLineSha256": "4ac9ed2f1abbac219b29d41528f3f3847a2cf6a0f417f1a080c3a3f88ac7a772"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 907,
+              "kind": "runtime-probe-consumer",
+              "authority": "Startup alone consumes the LiteLLM switch with default false.",
+              "sourceLineSha256": "03d3bd8b800dd9d9fe1e3a5a54c18449102407db168fdcf3ba237dd4d61133f2"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -13622,7 +13696,29 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value renders as an empty environment value. The runtime parser applies its call-site default of `true` to that empty value."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 712,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script defines empty-value defaults and the accepted true tokens.",
+              "sourceLineSha256": "4ac9ed2f1abbac219b29d41528f3f3847a2cf6a0f417f1a080c3a3f88ac7a772"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 905,
+              "kind": "runtime-probe-consumer",
+              "authority": "Startup consumes the Redis switch with default true.",
+              "sourceLineSha256": "b78ff61ef6a78bdd438fb216e98a2a1178708dcbb0269bac5cd17c6c4f36f193"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 913,
+              "kind": "runtime-probe-consumer",
+              "authority": "Readiness consumes the Redis switch with default true.",
+              "sourceLineSha256": "b78ff61ef6a78bdd438fb216e98a2a1178708dcbb0269bac5cd17c6c4f36f193"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -13675,7 +13771,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value renders as an empty environment value. The runtime parser applies its call-site default of `true` to that empty value."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 712,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script defines empty-value defaults and the accepted true tokens.",
+              "sourceLineSha256": "4ac9ed2f1abbac219b29d41528f3f3847a2cf6a0f417f1a080c3a3f88ac7a772"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 906,
+              "kind": "runtime-probe-consumer",
+              "authority": "Startup alone consumes the Redis Stream switch with default true.",
+              "sourceLineSha256": "c7a7faccac1dee844d471f307aa5660462f8bba182ba04f18c8d11308dcd4a58"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -13869,7 +13980,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value renders as an empty environment value. The runtime parser applies its call-site default of `false` to that empty value."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 712,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script defines empty-value defaults and the accepted true tokens.",
+              "sourceLineSha256": "4ac9ed2f1abbac219b29d41528f3f3847a2cf6a0f417f1a080c3a3f88ac7a772"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 908,
+              "kind": "runtime-probe-consumer",
+              "authority": "Startup alone consumes the registry switch with default false.",
+              "sourceLineSha256": "539c5e18cabd7c8b65e82a871f276b1f8a3e4061ed078743d94ec489301d9c95"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -19796,7 +19922,29 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. The template's `default false` expression converts an explicit empty or null value to the quoted runtime value `\"false\"`."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 635,
+              "kind": "runtime-shell-consumer",
+              "authority": "The restart script applies the override only to `.semgrep.yml`.",
+              "sourceLineSha256": "49ceba867e7bd6915fae06d352297852aeacda21bb40ac673330a4fa01517fdd"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 643,
+              "kind": "runtime-shell-consumer",
+              "authority": "The restart script applies the same override to `eslint.config.mjs`.",
+              "sourceLineSha256": "db6e8c0b543c5995e1a25171dda903f84af11910eae127fe4d7b74a431bfe8cd"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 650,
+              "kind": "runtime-shell-consumer",
+              "authority": "The following `.yamllint.yml` copy is unconditional and proves the override boundary.",
+              "sourceLineSha256": "09cccac7c94c6e331aef4979043f18841b84fa5007a3d68bd0948ead7c10338b"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -21661,7 +21809,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. The template's `default false` expression converts an explicit empty or null value to the quoted runtime value `\"false\"`."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 421,
+              "kind": "runtime-shell-consumer",
+              "authority": "The restart script enumerates the seven managed workspace documents.",
+              "sourceLineSha256": "08107cc6b2729a25d0176ce99b559064d5ad7c506353604b9fb62202d7e9f252"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 423,
+              "kind": "runtime-shell-consumer",
+              "authority": "The restart script overwrites an existing document only when the value is exactly `true`.",
+              "sourceLineSha256": "21fe2042fe210c75d5bd922bcc07e7fd0944db8ed5df34d522adf49c5c7c138a"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -39109,7 +39272,7 @@
           "acceptedValues": "`true` renders Discord bindings, JSON enablement, token references, and eligible inline-token Secret data. `false` renders JSON disablement, omits bindings and main token wiring, and supplies an empty init token where required.",
           "emptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean.",
           "impact": "Changes Discord command ingress and credential delivery while leaving unrelated webhook configuration independent.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
@@ -39117,11 +39280,26 @@
               "helm-truthiness",
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
             "operationalEmptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 201,
+              "kind": "generated-json-consumer",
+              "authority": "The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.",
+              "sourceLineSha256": "cf94942dc5f96f6c4f78185324740296d6df2b1c2109a2726c65bfce7a46648c"
+            },
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 277,
+              "kind": "generated-json-consumer",
+              "authority": "The same unquoted scalar becomes the Discord plugin-entry Boolean.",
+              "sourceLineSha256": "54f93c9efd6add8975d46d0e5821ce70bb7cf928837360fbf34af0e66efd53f9"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
@@ -44858,7 +45036,7 @@
           "acceptedValues": "`true` renders Discord bindings, JSON enablement, token references, and eligible inline-token Secret data. `false` renders JSON disablement, omits bindings and main token wiring, and supplies an empty init token where required.",
           "emptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean.",
           "impact": "Changes Discord command ingress and credential delivery while leaving unrelated webhook configuration independent.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
@@ -44866,11 +45044,26 @@
               "helm-truthiness",
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
             "operationalEmptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 201,
+              "kind": "generated-json-consumer",
+              "authority": "The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.",
+              "sourceLineSha256": "cf94942dc5f96f6c4f78185324740296d6df2b1c2109a2726c65bfce7a46648c"
+            },
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 277,
+              "kind": "generated-json-consumer",
+              "authority": "The same unquoted scalar becomes the Discord plugin-entry Boolean.",
+              "sourceLineSha256": "54f93c9efd6add8975d46d0e5821ce70bb7cf928837360fbf34af0e66efd53f9"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
@@ -53114,7 +53307,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. The template's `default false` expression converts an explicit empty or null value to the quoted runtime value `\"false\"` in both bundle environment variables."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 878,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script applies the false default and validates the bundle manifest in startup and readiness modes.",
+              "sourceLineSha256": "06df25044cf7b0da08bdd7351c0906b55b465f2b84e387641a58d862f5583e10"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 937,
+              "kind": "runtime-shell-consumer",
+              "authority": "The init script installs the bundle only when the quoted environment value is exactly `true`.",
+              "sourceLineSha256": "dc8b642083b95cb9fbf181f3f4df7f474c2decddba24e73ccea5f4870a63ddcf"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -53837,7 +54045,7 @@
           "acceptedValues": "`true` renders Discord bindings, JSON enablement, token references, and eligible inline-token Secret data. `false` renders JSON disablement, omits bindings and main token wiring, and supplies an empty init token where required.",
           "emptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean.",
           "impact": "Changes Discord command ingress and credential delivery while leaving unrelated webhook configuration independent.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
@@ -53845,11 +54053,26 @@
               "helm-truthiness",
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
             "operationalEmptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 201,
+              "kind": "generated-json-consumer",
+              "authority": "The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.",
+              "sourceLineSha256": "cf94942dc5f96f6c4f78185324740296d6df2b1c2109a2726c65bfce7a46648c"
+            },
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 277,
+              "kind": "generated-json-consumer",
+              "authority": "The same unquoted scalar becomes the Discord plugin-entry Boolean.",
+              "sourceLineSha256": "54f93c9efd6add8975d46d0e5821ce70bb7cf928837360fbf34af0e66efd53f9"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
@@ -58572,7 +58795,7 @@
         "$.extraContainers[0].securityContext.allowPrivilegeEscalation": {
           "group": "privilege-escalation-control",
           "purpose": "Controls whether the Buster root supervisor can gain more Linux privileges than its parent.",
-          "acceptedValues": "`true` leaves the narrowly capable root supervisor able to use its configured privilege and capability workflow. `false` applies no-new-privileges semantics.",
+          "acceptedValues": "`true` leaves the narrowly capable root supervisor able to use its configured privilege and capability workflow. `false` applies no-new-privileges semantics. [Kubernetes 1.35 SecurityContext API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#securitycontext-v1-core) is the final type and runtime authority for this field.",
           "emptyBehavior": "An omitted override keeps the selected profile value `true`. A genuinely absent or null optional field leaves the runtime or admission default in effect. An empty string is invalid for this Kubernetes Boolean field.",
           "impact": "Changes the no-new-privileges boundary for the Buster supervisor.",
           "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. `true` weakens containment; `false` can prevent the supervisor's intended privilege transition. A string value fails Kubernetes API type validation.",
@@ -59014,7 +59237,7 @@
         "$.extraContainers[0].securityContext.privileged": {
           "group": "privileged-container-control",
           "purpose": "Controls privileged execution for extra containers / security context.",
-          "acceptedValues": "`false` keeps the normal container isolation boundary. `true` grants broad host-level device and kernel access.",
+          "acceptedValues": "`false` keeps the normal container isolation boundary. `true` grants broad host-level device and kernel access. [Kubernetes 1.35 SecurityContext API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#securitycontext-v1-core) is the final type and runtime authority for this field.",
           "emptyBehavior": "An omitted override keeps the selected profile value `false`. An absent or null optional field leaves the control unset and the container non-privileged by runtime default. An empty string is invalid for this Kubernetes Boolean field.",
           "impact": "Changes the container from restricted isolation to broad host authority.",
           "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. `true` defeats the intended capability boundary; `false` is required by the checked-in design. A string value fails Kubernetes API type validation.",
@@ -59146,7 +59369,7 @@
         "$.extraContainers[0].securityContext.runAsNonRoot": {
           "group": "non-root-enforcement",
           "purpose": "Requires Kubernetes to verify a non-root user for extra containers / security context.",
-          "acceptedValues": "`false` permits the explicitly configured UID 0 Buster supervisor. `true` requires non-root execution and conflicts with the checked-in `runAsUser: 0` value.",
+          "acceptedValues": "`false` permits the explicitly configured UID 0 Buster supervisor. `true` requires non-root execution and conflicts with the checked-in `runAsUser: 0` value. [Kubernetes 1.35 SecurityContext API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#securitycontext-v1-core) is the final type and runtime authority for this field.",
           "emptyBehavior": "An omitted override keeps the selected profile value `false`. An absent or null optional field removes the kubelet non-root assertion. An empty string is invalid for this Kubernetes Boolean field.",
           "impact": "Changes startup enforcement of the non-root identity boundary.",
           "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. `true` causes kubelet startup rejection with the checked-in UID 0. `false` is intentional for this root supervisor but permits root execution. A string value fails Kubernetes API type validation.",
@@ -60084,7 +60307,7 @@
         "$.extraContainers[0].volumeMounts[2].readOnly": {
           "group": "read-only-volume-mount",
           "purpose": "Controls whether extra containers / volume mounts can write through this volume mount.",
-          "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem.",
+          "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem. [Kubernetes 1.35 VolumeMount API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#volumemount-v1-core) is the final type and runtime authority for this field.",
           "emptyBehavior": "An omitted override keeps the selected profile value `true`. An absent or null optional field decodes to the VolumeMount default `false`; an empty string is invalid for this Kubernetes Boolean field.",
           "impact": "States read-only intent for the projected ServiceAccount token, CA, and namespace mount. The projected volume source is intrinsically read-only even when this field is false or absent.",
           "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. A string value fails Kubernetes API type validation. Setting false does not make the projected source writable, but it hides the intended credential-protection contract.",
@@ -71330,7 +71553,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. The template's `default false` expression converts an explicit empty or null value to the quoted runtime value `\"false\"` in both bundle environment variables."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 878,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script applies the false default and validates the bundle manifest in startup and readiness modes.",
+              "sourceLineSha256": "06df25044cf7b0da08bdd7351c0906b55b465f2b84e387641a58d862f5583e10"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 937,
+              "kind": "runtime-shell-consumer",
+              "authority": "The init script installs the bundle only when the quoted environment value is exactly `true`.",
+              "sourceLineSha256": "dc8b642083b95cb9fbf181f3f4df7f474c2decddba24e73ccea5f4870a63ddcf"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -72053,7 +72291,7 @@
           "acceptedValues": "`true` renders Discord bindings, JSON enablement, token references, and eligible inline-token Secret data. `false` renders JSON disablement, omits bindings and main token wiring, and supplies an empty init token where required.",
           "emptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean.",
           "impact": "Changes Discord command ingress and credential delivery while leaving unrelated webhook configuration independent.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
@@ -72061,11 +72299,26 @@
               "helm-truthiness",
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
             "operationalEmptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 201,
+              "kind": "generated-json-consumer",
+              "authority": "The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.",
+              "sourceLineSha256": "cf94942dc5f96f6c4f78185324740296d6df2b1c2109a2726c65bfce7a46648c"
+            },
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 277,
+              "kind": "generated-json-consumer",
+              "authority": "The same unquoted scalar becomes the Discord plugin-entry Boolean.",
+              "sourceLineSha256": "54f93c9efd6add8975d46d0e5821ce70bb7cf928837360fbf34af0e66efd53f9"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
@@ -74546,7 +74799,7 @@
         "$.extraContainers[0].volumeMounts[0].readOnly": {
           "group": "read-only-volume-mount",
           "purpose": "Controls whether extra containers / volume mounts can write through this volume mount.",
-          "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem.",
+          "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem. [Kubernetes 1.35 VolumeMount API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#volumemount-v1-core) is the final type and runtime authority for this field.",
           "emptyBehavior": "An omitted override keeps the selected profile value `true`. An absent or null optional field decodes to the VolumeMount default `false`; an empty string is invalid for this Kubernetes Boolean field.",
           "impact": "States read-only intent for the Nova Archviewer authentication Secret mount. The Secret volume source is intrinsically read-only even when this field is false or absent.",
           "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. A string value fails Kubernetes API type validation. Setting false does not make the Secret source writable, but it hides the intended credential-protection contract.",
@@ -74740,7 +74993,7 @@
         "$.extraContainers[0].volumeMounts[1].readOnly": {
           "group": "read-only-volume-mount",
           "purpose": "Controls whether extra containers / volume mounts can write through this volume mount.",
-          "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem.",
+          "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem. [Kubernetes 1.35 VolumeMount API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#volumemount-v1-core) is the final type and runtime authority for this field.",
           "emptyBehavior": "An omitted override keeps the selected profile value `true`. An absent or null optional field decodes to the VolumeMount default `false`; an empty string is invalid for this Kubernetes Boolean field.",
           "impact": "Controls write access to the Nova workspace PVC `prism/designs` subpath mounted in the Archviewer sidecar.",
           "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. `true` protects design content from sidecar writes. `false` or an absent field permits writes subject to filesystem permissions. A string value fails Kubernetes API type validation.",
@@ -83200,7 +83453,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. The template's `default false` expression converts an explicit empty or null value to the quoted runtime value `\"false\"` in both bundle environment variables."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 878,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script applies the false default and validates the bundle manifest in startup and readiness modes.",
+              "sourceLineSha256": "06df25044cf7b0da08bdd7351c0906b55b465f2b84e387641a58d862f5583e10"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 937,
+              "kind": "runtime-shell-consumer",
+              "authority": "The init script installs the bundle only when the quoted environment value is exactly `true`.",
+              "sourceLineSha256": "dc8b642083b95cb9fbf181f3f4df7f474c2decddba24e73ccea5f4870a63ddcf"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -83923,7 +84191,7 @@
           "acceptedValues": "`true` renders Discord bindings, JSON enablement, token references, and eligible inline-token Secret data. `false` renders JSON disablement, omits bindings and main token wiring, and supplies an empty init token where required.",
           "emptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean.",
           "impact": "Changes Discord command ingress and credential delivery while leaving unrelated webhook configuration independent.",
-          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
           "semanticAuthority": "explicit-field-contract",
           "booleanInputSemantics": {
             "validation": "receiver-specific-without-schema",
@@ -83931,11 +84199,26 @@
               "helm-truthiness",
               "raw-scalar-pass-through"
             ],
-            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior because Helm treats it as true while JSON receives a string.",
+            "operationalFailure": "A missing Secret or key, or malformed generated JSON, prevents startup. With Boolean `false`, Discord command ingress is disabled. A quoted `\"false\"` splits receiver behavior: Helm branches enable bindings and token wiring, while unquoted JSON interpolation still emits the JSON Boolean `false`.",
             "operationalEmptyBehavior": "An omitted override keeps the selected value. Explicit empty or null is false in Helm conditions but leaves the raw JSON value blank, which makes generated `openclaw.json` invalid. The value must be a YAML Boolean."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 201,
+              "kind": "generated-json-consumer",
+              "authority": "The unquoted scalar becomes the Discord channel Boolean in generated OpenClaw JSON.",
+              "sourceLineSha256": "cf94942dc5f96f6c4f78185324740296d6df2b1c2109a2726c65bfce7a46648c"
+            },
+            {
+              "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+              "line": 277,
+              "kind": "generated-json-consumer",
+              "authority": "The same unquoted scalar becomes the Discord plugin-entry Boolean.",
+              "sourceLineSha256": "54f93c9efd6add8975d46d0e5821ce70bb7cf928837360fbf34af0e66efd53f9"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
@@ -86373,7 +86656,7 @@
         "$.extraContainers[0].securityContext.allowPrivilegeEscalation": {
           "group": "privilege-escalation-control",
           "purpose": "Controls the no-new-privileges boundary for the Prism agent bridge sidecar.",
-          "acceptedValues": "`false` prevents privilege escalation for the bridge. `true` permits escalation subject to the runtime and other security controls.",
+          "acceptedValues": "`false` prevents privilege escalation for the bridge. `true` permits escalation subject to the runtime and other security controls. [Kubernetes 1.35 SecurityContext API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#securitycontext-v1-core) is the final type and runtime authority for this field.",
           "emptyBehavior": "An omitted override keeps the selected profile value `false`. An absent or null optional field leaves this control unset. An empty string is invalid for this Kubernetes Boolean field.",
           "impact": "Changes privilege isolation for a UID 1000 bridge with no added Linux capabilities.",
           "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. `true` weakens bridge isolation; `false` is compatible with the checked-in UID 1000 and no-capability design. A string value fails Kubernetes API type validation.",
@@ -86505,7 +86788,7 @@
         "$.extraContainers[0].securityContext.readOnlyRootFilesystem": {
           "group": "read-only-root-filesystem",
           "purpose": "Controls whether extra containers / security context can write to the container image filesystem.",
-          "acceptedValues": "`true` makes the image root filesystem read-only. `false` permits writes.",
+          "acceptedValues": "`true` makes the image root filesystem read-only. `false` permits writes. [Kubernetes 1.35 SecurityContext API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/#securitycontext-v1-core) is the final type and runtime authority for this field.",
           "emptyBehavior": "An omitted override keeps the selected profile value `true`. An absent or null optional field leaves the runtime default writable root filesystem in effect. An empty string is invalid for this Kubernetes Boolean field.",
           "impact": "Changes whether runtime writes must use explicit writable volumes.",
           "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. `true` fails if the bridge writes outside its explicit writable mounts; `false` weakens immutability. A string value fails Kubernetes API type validation.",
@@ -88052,7 +88335,29 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value renders as an empty environment value. The runtime parser applies its call-site default of `true` to that empty value."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 712,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script defines empty-value defaults and the accepted true tokens.",
+              "sourceLineSha256": "4ac9ed2f1abbac219b29d41528f3f3847a2cf6a0f417f1a080c3a3f88ac7a772"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 905,
+              "kind": "runtime-probe-consumer",
+              "authority": "Startup consumes the Redis switch with default true.",
+              "sourceLineSha256": "b78ff61ef6a78bdd438fb216e98a2a1178708dcbb0269bac5cd17c6c4f36f193"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 913,
+              "kind": "runtime-probe-consumer",
+              "authority": "Readiness consumes the Redis switch with default true.",
+              "sourceLineSha256": "b78ff61ef6a78bdd438fb216e98a2a1178708dcbb0269bac5cd17c6c4f36f193"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -88105,7 +88410,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value renders as an empty environment value. The runtime parser applies its call-site default of `false` to that empty value."
           },
           "selectedBaseline": false,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 712,
+              "kind": "runtime-boolean-parser",
+              "authority": "The health script defines empty-value defaults and the accepted true tokens.",
+              "sourceLineSha256": "4ac9ed2f1abbac219b29d41528f3f3847a2cf6a0f417f1a080c3a3f88ac7a772"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 908,
+              "kind": "runtime-probe-consumer",
+              "authority": "Startup alone consumes the registry switch with default false.",
+              "sourceLineSha256": "539c5e18cabd7c8b65e82a871f276b1f8a3e4061ed078743d94ec489301d9c95"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",
@@ -89903,7 +90223,22 @@
             "operationalEmptyBehavior": "An omitted override keeps the selected values file or chart default. The template's `default false` expression converts an explicit empty or null value to the quoted runtime value `\"false\"`."
           },
           "selectedBaseline": true,
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 421,
+              "kind": "runtime-shell-consumer",
+              "authority": "The restart script enumerates the seven managed workspace documents.",
+              "sourceLineSha256": "08107cc6b2729a25d0176ce99b559064d5ad7c506353604b9fb62202d7e9f252"
+            },
+            {
+              "path": "charts/kubeclaw/templates/deployment.yaml",
+              "line": 423,
+              "kind": "runtime-shell-consumer",
+              "authority": "The restart script overwrites an existing document only when the value is exactly `true`.",
+              "sourceLineSha256": "21fe2042fe210c75d5bd922bcc07e7fd0944db8ed5df34d522adf49c5c7c138a"
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/deployment.yaml",

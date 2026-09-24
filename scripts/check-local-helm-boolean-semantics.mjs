@@ -16,6 +16,7 @@ for (const forbidden of [
   'Disabling a required dependency makes its consumers unready',
   'can preserve, replace, reject, or reinterpret',
   'active and rendered',
+  'JSON receives a string',
 ]) {
   assert.doesNotMatch(registryText, new RegExp(forbidden, 'u'),
     `generic Boolean contract text returned: ${forbidden}`);
@@ -56,6 +57,18 @@ const stringFalse = render('--set-string', 'archviewer.enabled=false');
 assert.equal(stringFalse.status, 0, `string false render failed\n${stringFalse.stderr}`);
 assert.match(stringFalse.stdout, /agent-nova-archviewer/u,
   'quoted false no longer demonstrates the documented Helm truthiness hazard');
+
+const discordStringFalse = render(
+  '--set', 'archviewer.enabled=false',
+  '--set-string', 'discord.enabled=false',
+);
+assert.equal(discordStringFalse.status, 0, `Discord string false render failed\n${discordStringFalse.stderr}`);
+assert.match(discordStringFalse.stdout, /"discord": \{\s*"enabled": false,/su,
+  'Discord string false no longer renders a JSON Boolean false');
+assert.match(discordStringFalse.stdout, /"channel": "discord"/u,
+  'Discord string false no longer proves Helm-truthy binding enablement');
+assert.match(discordStringFalse.stdout, /name: DISCORD_TOKEN/u,
+  'Discord string false no longer proves Helm-truthy token wiring');
 
 const strictStringFalse = spawnSync('helm', [
   'template', 'acceptance', 'charts/kubeclaw',
@@ -220,6 +233,32 @@ for (const [sourcePath, fieldPath, emptyProof, behaviorProof] of [
   assert.match(field.emptyBehavior, emptyProof, `${sourcePath}#${fieldPath}: structural empty behavior is incomplete`);
   assert.match(`${field.purpose} ${field.acceptedValues} ${field.impact} ${field.failure}`, behaviorProof,
     `${sourcePath}#${fieldPath}: structural operational behavior is incomplete`);
+  const externalAuthority = fieldPath.includes('.securityContext.')
+    ? /\[Kubernetes 1\.35 SecurityContext API\]\(https:\/\/kubernetes\.io\/docs\/reference\/generated\/kubernetes-api\/v1\.35\/#securitycontext-v1-core\)/u
+    : /\[Kubernetes 1\.35 VolumeMount API\]\(https:\/\/kubernetes\.io\/docs\/reference\/generated\/kubernetes-api\/v1\.35\/#volumemount-v1-core\)/u;
+  assert.match(field.acceptedValues, externalAuthority,
+    `${sourcePath}#${fieldPath}: versioned Kubernetes runtime authority is missing`);
+}
+
+for (const [fieldPath, expectedLines] of [
+  ['$.codeBundle.enabled', [878, 937]],
+  ['$.discord.enabled', [201, 277]],
+  ['$.probes.dependencies.gateway.enabled', [712, 897, 904, 912]],
+  ['$.probes.dependencies.redis.enabled', [712, 905, 913]],
+  ['$.probes.dependencies.redisStream.enabled', [712, 906]],
+  ['$.probes.dependencies.litellm.enabled', [712, 907]],
+  ['$.probes.dependencies.registries.enabled', [712, 908]],
+  ['$.swarmConfig.overrideOnRestart', [635, 643, 650]],
+  ['$.workspace.overrideOnRestart', [421, 423]],
+]) {
+  const matching = booleanAuthorities.filter((field) => field.fieldPath === fieldPath);
+  assert(matching.length > 0, `${fieldPath}: runtime-proof family is missing`);
+  for (const field of matching) {
+    assert.deepEqual(field.runtimeConsumerProof.map((proof) => proof.line), expectedLines,
+      `${field.sourcePath}#${fieldPath}: runtime-proof lines changed or are incomplete`);
+    assert(field.runtimeConsumerProof.every((proof) => /^[a-f0-9]{64}$/u.test(proof.sourceLineSha256 ?? '')),
+      `${field.sourcePath}#${fieldPath}: runtime proof is not pinned to source content`);
+  }
 }
 
 const automountIgnoredTrue = render('--set', 'serviceAccount.create=false', '--set', 'serviceAccount.automount=true');

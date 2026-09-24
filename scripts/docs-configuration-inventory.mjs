@@ -1128,6 +1128,12 @@ function discoveredRenderProfiles() {
 
 function localHelmBinding(sourcePath) {
   if (sourcePath.startsWith('charts/')) return { chartRoot: sourcePath.split('/').slice(0, 2).join('/'), evidence: sourcePath };
+  if (sourcePath === 'gitops/platform/values/codex-ops.yaml') {
+    return {
+      chartRoot: 'charts/ops-pod',
+      evidence: 'scripts/argocd-self-management.mjs:79-82 valuesObject forwarding to the local Ops chart',
+    };
+  }
   if (['examples/nova-values.yaml', 'examples/buster-values.yaml'].includes(sourcePath)) {
     return { chartRoot: 'charts/kubeclaw', evidence: `${sourcePath}: deploy command in the file header` };
   }
@@ -1358,6 +1364,9 @@ function yamlSemantics(context, exactPath, valueType) {
       closureCondition: inactive ? 'Bind this profile to a versioned Helm invocation/Application, or remove the inactive profile.' : null,
     };
   }
+  const linkedHelmConsumers = context.chartRoot && exactPath
+    ? [...(context.consumerMap.get(`${context.chartRoot}:${canonicalHelmPath(exactPath)}`) ?? [])]
+    : [];
   if (context.runtimeBindings.length) {
     const readers = context.runtimeBindings.filter((item) => item.direction === 'read');
     const sourceWriters = context.runtimeBindings.filter((item) => item.direction === 'write');
@@ -1365,29 +1374,40 @@ function yamlSemantics(context, exactPath, valueType) {
     const binding = readers[0] ?? context.runtimeBindings[0];
     return {
       required: 'source-loader-contract',
-      requiredReason: `${binding.path} owns parsing and validation for this runtime input.`,
+      requiredReason: linkedHelmConsumers.length
+        ? `${binding.path} preserves this runtime input in the generated values object; the linked chart template owns its final interpretation.`
+        : `${binding.path} owns parsing and validation for this runtime input.`,
       defaultKind: sourceWriters.length ? 'generated-runtime-input' : 'authored-runtime-input',
-      constraints: [`loader contract in ${binding.path}`],
-      runtimeOwner: sourceOwner(binding.path).component,
-      consumers: context.runtimeBindings,
+      constraints: [
+        `loader contract in ${binding.path}`,
+        ...linkedHelmConsumers.flatMap((item) => item.constraints ?? []),
+      ],
+      runtimeOwner: linkedHelmConsumers.length
+        ? `Helm release rendered from ${context.chartRoot}`
+        : sourceOwner(binding.path).component,
+      consumers: [...context.runtimeBindings, ...linkedHelmConsumers],
       precedence: [
         ...sourceWriters.map((item) => `${item.path} generated-file write`),
         `${context.sourcePath} selected file value`,
         ...readers.map((item) => `${item.path} read/validation`),
         ...derivedWriters.map((item) => `${item.path} derived runtime output`),
+        ...(linkedHelmConsumers.length ? [`${context.chartRoot}/values.yaml chart defaults merged by Helm`, 'linked chart template rendering'] : []),
         'generated or live runtime state',
       ],
-      effectiveValueProof: `${context.sourcePath} -> ${binding.path}:${binding.line}`,
-      changeImpact: 'Changes the generated runtime policy or operational action produced by the linked loader.',
-      failureMeaning: 'Invalid input fails the linked loader/preflight before runtime activation; accepted changes can alter generated runtime state.',
+      effectiveValueProof: linkedHelmConsumers.length
+        ? `${context.sourcePath} -> ${binding.path}:${binding.line} -> ${linkedHelmConsumers[0].path}:${linkedHelmConsumers[0].line}`
+        : `${context.sourcePath} -> ${binding.path}:${binding.line}`,
+      changeImpact: linkedHelmConsumers.length
+        ? 'Changes the generated values object and the linked chart output when this source wins Helm precedence.'
+        : 'Changes the generated runtime policy or operational action produced by the linked loader.',
+      failureMeaning: linkedHelmConsumers.length
+        ? 'Invalid input can fail Helm rendering or API admission; an accepted change can alter workload behavior or readiness.'
+        : 'Invalid input fails the linked loader/preflight before runtime activation; accepted changes can alter generated runtime state.',
       blockerOwner: null,
       closureCondition: null,
     };
   }
-  const matches = [];
-  if (context.chartRoot && exactPath) {
-    matches.push(...(context.consumerMap.get(`${context.chartRoot}:${canonicalHelmPath(exactPath)}`) ?? []));
-  }
+  const matches = linkedHelmConsumers;
   if (matches.length) {
     const requiredSignal = matches.some((item) => item.requiredSignal);
     const conditionalSignal = matches.some((item) => item.conditionalSignal);
@@ -1729,13 +1749,32 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
     assert.deepEqual(actualConsumers, expectedConsumers,
       `CONFIG_YAML_AUTHORITY_DRIFT: exact Helm consumer changed for ${context.sourcePath}#${fieldPath}`);
   }
+  const runtimeProofConsumers = authority?.runtimeConsumerProof?.map((proof) => ({
+    path: proof.path,
+    line: proof.line,
+    kind: proof.kind,
+    direction: 'read',
+    authority: proof.authority ?? `The checked-in runtime reads ${proof.environment} through ${proof.access}.`,
+  })) ?? [];
   let semantics = authority ? {
     ...discoveredSemantics,
-    consumers: authority.chartRoot ? discoveredSemantics.consumers.map((consumer) => ({
-      ...consumer,
-      exactValuePath: fieldPath.replace(/^\$\.?/u, ''),
-    })) : discoveredSemantics.consumers,
+    consumers: [
+      ...(authority.chartRoot ? discoveredSemantics.consumers.map((consumer) => ({
+        ...consumer,
+        exactValuePath: fieldPath.replace(/^\$\.?/u, ''),
+      })) : discoveredSemantics.consumers),
+      ...runtimeProofConsumers,
+    ],
     constraints: [...new Set([...discoveredSemantics.constraints, authority.acceptedValues, `empty/omitted: ${authority.emptyBehavior}`])],
+    runtimeOwner: runtimeProofConsumers.length
+      ? `${discoveredSemantics.runtimeOwner}; checked-in runtime consumers linked below`
+      : discoveredSemantics.runtimeOwner,
+    precedence: runtimeProofConsumers.length
+      ? [...discoveredSemantics.precedence, 'checked-in runtime parsing or effect']
+      : discoveredSemantics.precedence,
+    effectiveValueProof: runtimeProofConsumers.length
+      ? `${discoveredSemantics.effectiveValueProof} -> ${runtimeProofConsumers[0].path}:${runtimeProofConsumers[0].line}`
+      : discoveredSemantics.effectiveValueProof,
     changeImpact: authority.impact,
     failureMeaning: authority.failure,
   } : discoveredSemantics;
@@ -1885,6 +1924,20 @@ function buildYamlInventory() {
     assert(files.find((file) => file.path === sourcePath)?.documents.some((document) => document.fields.some((field) => field.path === exactPath)),
       `CONFIG_YAML_DOTTED_KEY_NAMED_REGRESSION: ${sourcePath}#${exactPath} is missing`);
   }
+  const opsCilium = files.find((file) => file.path === 'gitops/platform/values/codex-ops.yaml')
+    ?.documents.flatMap((document) => document.fields)
+    .find((field) => field.path === '$.networkPolicy.cilium');
+  assert(opsCilium, 'CONFIG_GITOPS_OPS_CILIUM_MISSING: exact GitOps Cilium field is missing');
+  assert.equal(opsCilium.runtimeOwner, 'Helm release rendered from charts/ops-pod',
+    'CONFIG_GITOPS_OPS_CILIUM_OWNER: the forwarding script was mistaken for the final runtime owner');
+  assert(opsCilium.consumers.some((consumer) => consumer.path === 'charts/ops-pod/templates/network.yaml'
+    && consumer.line === 37),
+  'CONFIG_GITOPS_OPS_CILIUM_CONSUMER: the final chart template consumer is missing');
+  assert(opsCilium.precedence.includes('charts/ops-pod/values.yaml chart defaults merged by Helm'),
+    'CONFIG_GITOPS_OPS_CILIUM_PRECEDENCE: chart-default merge is missing');
+  assert.match(`${opsCilium.meaning.text} ${opsCilium.meaning.emptyBehavior ?? ''}`,
+    /networkPolicy\.enabled=true[\s\S]*parent false[\s\S]*neither policy/iu,
+  'CONFIG_GITOPS_OPS_CILIUM_PARENT_GATE: the parent-child truth table is missing');
   const apiLeafFields = leafFields.filter((field) => field.meaning.status.startsWith('deployment-'));
   const forbiddenApiPhrases = /where defined|states whether|uses pinned default|controller behavior|commonly/iu;
   for (const file of files) {
