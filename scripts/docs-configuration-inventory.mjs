@@ -524,7 +524,17 @@ const busterRuntimeEvidence = {
   BUSTER_V2_RUN_DIR: [entrypointEvidence(108, 117), entrypointEvidence(171, 180), productionEvidence(231, 237)],
 };
 for (const [name, contract] of Object.entries(busterRuntimeContracts)) {
-  addEnvironmentConsumerContract(name, busterRuntimeSource, { ...contract, evidence: busterRuntimeEvidence[name] ?? [] });
+  const evidence = busterRuntimeEvidence[name] ?? [];
+  addEnvironmentConsumerContract(name, busterRuntimeSource, {
+    ...contract,
+    evidence,
+    precedenceSteps: contract.precedenceSteps ?? [{
+      order: 1,
+      source: 'Buster runtime input resolution',
+      condition: contract.precedence,
+      evidence: `${evidence[0]?.path ?? busterRuntimeSource}:${evidence[0]?.line ?? 1}`,
+    }],
+  });
 }
 
 for (const [name, contract] of Object.entries({
