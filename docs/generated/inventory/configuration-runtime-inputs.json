@@ -1755,7 +1755,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 5930,
+          "line": 5949,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1766,7 +1766,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 5930,
+      "line": 5949,
       "name": "--check-payload-delivery-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -10152,6 +10152,31 @@
               "endLine": 292,
               "line": 247,
               "path": "docker/buster-runtime-entrypoint.sh"
+            },
+            {
+              "endLine": 357,
+              "line": 325,
+              "path": "skills/buster/engine/test-gates/production.ts"
+            },
+            {
+              "endLine": 128,
+              "line": 124,
+              "path": "skills/buster/engine/test-gates/browser-axe-runtime.ts"
+            },
+            {
+              "endLine": 168,
+              "line": 163,
+              "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts"
+            },
+            {
+              "endLine": 114,
+              "line": 110,
+              "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts"
+            },
+            {
+              "endLine": 101,
+              "line": 101,
+              "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts"
             }
           ],
           "failure": "The runtime fails capability construction or denies a target outside the policy.",
@@ -10237,7 +10262,7 @@
       "consumerContracts": [
         {
           "acceptedForm": "The non-empty path must exist, resolve exactly to `/var/run/kubeclaw-browser-cgroup`, expose `pids`, `memory`, and `cpu` controllers, contain no host processes, and permit those controllers to be delegated.",
-          "access": "embedded-node-process-env",
+          "access": "shell-parameter",
           "defaultBehavior": "No default.",
           "emptyBehavior": "An absent or empty value stops the entrypoint before the Buster runtime starts.",
           "evidence": [
@@ -10260,7 +10285,7 @@
           "failure": "The container stops before serving work, or runtime policy construction rejects an unusable cgroup root.",
           "impact": "Changing it changes the kernel resource-control boundary for browser processes.",
           "invalidBehavior": "Missing files stop the strict shell. An unsafe path, missing controller, existing host process, or failed delegation produces the matching explicit cgroup error.",
-          "line": 292,
+          "line": 41,
           "path": "docker/buster-runtime-entrypoint.sh",
           "precedence": "The environment path is the only source; the checked canonical path is copied into the generated runtime configuration.",
           "precedenceSteps": [
@@ -10276,6 +10301,11 @@
         }
       ],
       "consumers": [
+        {
+          "access": "shell-parameter",
+          "line": 41,
+          "path": "docker/buster-runtime-entrypoint.sh"
+        },
         {
           "access": "embedded-node-process-env",
           "line": 292,
@@ -10293,7 +10323,7 @@
       "failureMeaning": "The container stops before serving work, or runtime policy construction rejects an unusable cgroup root.",
       "invalidBehavior": "Missing files stop the strict shell. An unsafe path, missing controller, existing host process, or failed delegation produces the matching explicit cgroup error.",
       "meaning": "Selects the delegated cgroup-v2 subtree that enforces process, memory, and CPU limits for Playwright browser work.",
-      "meaningEvidence": "docker/buster-runtime-entrypoint.sh:292",
+      "meaningEvidence": "docker/buster-runtime-entrypoint.sh:41",
       "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
       "precedence": [
@@ -10313,6 +10343,11 @@
         }
       ],
       "readers": [
+        {
+          "access": "shell-parameter",
+          "line": 41,
+          "path": "docker/buster-runtime-entrypoint.sh"
+        },
         {
           "access": "embedded-node-process-env",
           "line": 292,
@@ -11899,6 +11934,16 @@
               "endLine": 245,
               "line": 239,
               "path": "docker/buster-runtime-entrypoint.sh"
+            },
+            {
+              "endLine": 324,
+              "line": 305,
+              "path": "skills/buster/engine/test-gates/production.ts"
+            },
+            {
+              "endLine": 221,
+              "line": 208,
+              "path": "skills/buster/engine/test-gates/network-http-runtime.ts"
             }
           ],
           "failure": "WebSocket requests are denied when the effective value is false.",
@@ -11997,6 +12042,21 @@
               "endLine": 245,
               "line": 239,
               "path": "docker/buster-runtime-entrypoint.sh"
+            },
+            {
+              "endLine": 324,
+              "line": 305,
+              "path": "skills/buster/engine/test-gates/production.ts"
+            },
+            {
+              "endLine": 180,
+              "line": 162,
+              "path": "skills/buster/engine/test-gates/network-http-runtime.ts"
+            },
+            {
+              "endLine": 198,
+              "line": 185,
+              "path": "skills/buster/engine/test-gates/network-http-runtime.ts"
             }
           ],
           "failure": "The runtime fails capability construction or denies the request.",
@@ -13998,7 +14058,7 @@
       "consumerContracts": [
         {
           "acceptedForm": "A non-empty SPIFFE ID matching `spiffe://[a-z0-9.-]+/<path>` for successful authorization.",
-          "access": "embedded-node-process-env",
+          "access": "shell-parameter",
           "defaultBehavior": "An absent value selects bearer-token authentication.",
           "emptyBehavior": "An empty value selects bearer-token authentication.",
           "evidence": [
@@ -14026,7 +14086,7 @@
           "failure": "Requests that do not arrive through the trusted loopback proxy with the exact valid identity return HTTP 401.",
           "impact": "Changing it switches the remote-plan authentication boundary and the only accepted workload identity.",
           "invalidBehavior": "Malformed non-empty text reaches the allow policy; request authorization catches the policy error and returns HTTP 401.",
-          "line": 174,
+          "line": 5,
           "path": "docker/buster-runtime-entrypoint.sh",
           "precedence": "A non-empty value selects SPIFFE instead of token use. The current entrypoint still requires `BUSTER_V2_TOKEN` at startup even when SPIFFE is selected.",
           "precedenceSteps": [
@@ -14042,6 +14102,11 @@
         }
       ],
       "consumers": [
+        {
+          "access": "shell-parameter",
+          "line": 5,
+          "path": "docker/buster-runtime-entrypoint.sh"
+        },
         {
           "access": "embedded-node-process-env",
           "line": 174,
@@ -14064,7 +14129,7 @@
       "failureMeaning": "Requests that do not arrive through the trusted loopback proxy with the exact valid identity return HTTP 401.",
       "invalidBehavior": "Malformed non-empty text reaches the allow policy; request authorization catches the policy error and returns HTTP 401.",
       "meaning": "Selects SPIFFE/XFCC authentication and names the one Nova SPIFFE identity allowed to submit remote-plan requests.",
-      "meaningEvidence": "docker/buster-runtime-entrypoint.sh:174",
+      "meaningEvidence": "docker/buster-runtime-entrypoint.sh:5",
       "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
       "precedence": [
@@ -14084,6 +14149,11 @@
         }
       ],
       "readers": [
+        {
+          "access": "shell-parameter",
+          "line": 5,
+          "path": "docker/buster-runtime-entrypoint.sh"
+        },
         {
           "access": "embedded-node-process-env",
           "line": 174,
@@ -14921,12 +14991,72 @@
       "surface": "runtime-process-boundary"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty string at entrypoint startup. Bearer-token mode additionally requires at least 32 characters.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it rotates Nova-to-Buster bearer authentication in token mode. It has no request-authentication effect in SPIFFE mode, although the current startup guard still requires it.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty string at entrypoint startup. Bearer-token mode additionally requires at least 32 characters.",
+          "access": "shell-parameter",
+          "defaultBehavior": "No default. The current entrypoint requires the value even when `BUSTER_TRUSTED_PEER_SPIFFE_ID` later selects SPIFFE authentication.",
+          "emptyBehavior": "An absent or empty value stops the entrypoint before BuildKit or Buster starts.",
+          "evidence": [
+            {
+              "endLine": 6,
+              "line": 4,
+              "path": "docker/buster-runtime-entrypoint.sh"
+            },
+            {
+              "endLine": 176,
+              "line": 171,
+              "path": "docker/buster-runtime-entrypoint.sh"
+            },
+            {
+              "endLine": 336,
+              "line": 325,
+              "path": "docker/buster-runtime-entrypoint.sh"
+            },
+            {
+              "endLine": 144,
+              "line": 133,
+              "path": "skills/buster/engine/test-gates/production.ts"
+            },
+            {
+              "endLine": 29,
+              "line": 8,
+              "path": "skills/buster/engine/test-gates/remote-plan-http.ts"
+            },
+            {
+              "endLine": 120,
+              "line": 105,
+              "path": "skills/buster/engine/test-gates/remote-plan-http.ts"
+            }
+          ],
+          "failure": "The container stops for a missing or empty value, the Buster server stops for a short bearer token, or requests with nonmatching credentials receive HTTP 401.",
+          "impact": "Changing it rotates Nova-to-Buster bearer authentication in token mode. It has no request-authentication effect in SPIFFE mode, although the current startup guard still requires it.",
+          "invalidBehavior": "In bearer-token mode, a value shorter than 32 characters stops server creation with `BUSTER_REMOTE_TOKEN_INVALID`; requests with a missing or different bearer value receive HTTP 401. In SPIFFE mode, the entrypoint requires the value but does not pass it to the Buster child process.",
+          "line": 4,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "The entrypoint captures and removes the process value. A non-empty `BUSTER_TRUSTED_PEER_SPIFFE_ID` selects SPIFFE and suppresses token forwarding; otherwise the captured value is passed to Buster as `BUSTER_V2_TOKEN` and is the sole bearer credential.",
+          "precedenceSteps": [
+            {
+              "condition": "The entrypoint captures and removes the process value. A non-empty `BUSTER_TRUSTED_PEER_SPIFFE_ID` selects SPIFFE and suppresses token forwarding; otherwise the captured value is passed to Buster as `BUSTER_V2_TOKEN` and is the sole bearer credential.",
+              "evidence": "docker/buster-runtime-entrypoint.sh:4",
+              "order": 1,
+              "source": "Buster runtime input resolution"
+            }
+          ],
+          "purpose": "Supplies the bearer credential used to authenticate remote-plan requests when SPIFFE/XFCC authentication is not selected.",
+          "required": "required at entrypoint startup; used for request authentication only when SPIFFE is not selected"
+        }
+      ],
       "consumers": [
+        {
+          "access": "shell-parameter",
+          "line": 4,
+          "path": "docker/buster-runtime-entrypoint.sh"
+        },
         {
           "access": "kubernetes-env",
           "line": 91,
@@ -14938,24 +15068,24 @@
           "path": "my-values/nova-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_V2_TOKEN. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "my-values/buster-values.yaml:91",
-      "meaningStatus": "classified-non-operator-boundary",
+      "defaultBehavior": "No default. The current entrypoint requires the value even when `BUSTER_TRUSTED_PEER_SPIFFE_ID` later selects SPIFFE authentication.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent or empty value stops the entrypoint before BuildKit or Buster starts.",
+      "failureMeaning": "The container stops for a missing or empty value, the Buster server stops for a short bearer token, or requests with nonmatching credentials receive HTTP 401.",
+      "invalidBehavior": "In bearer-token mode, a value shorter than 32 characters stops server creation with `BUSTER_REMOTE_TOKEN_INVALID`; requests with a missing or different bearer value receive HTTP 401. In SPIFFE mode, the entrypoint requires the value but does not pass it to the Buster child process.",
+      "meaning": "Supplies the bearer credential used to authenticate remote-plan requests when SPIFFE/XFCC authentication is not selected.",
+      "meaningEvidence": "docker/buster-runtime-entrypoint.sh:4",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_V2_TOKEN",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "The entrypoint captures and removes the process value. A non-empty `BUSTER_TRUSTED_PEER_SPIFFE_ID` selects SPIFFE and suppresses token forwarding; otherwise the captured value is passed to Buster as `BUSTER_V2_TOKEN` and is the sole bearer credential.",
+          "evidence": "docker/buster-runtime-entrypoint.sh:4",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "Buster runtime input resolution"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The entrypoint captures and removes the process value. A non-empty `BUSTER_TRUSTED_PEER_SPIFFE_ID` selects SPIFFE and suppresses token forwarding; otherwise the captured value is passed to Buster as `BUSTER_V2_TOKEN` and is the sole bearer credential.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -14968,16 +15098,27 @@
           "path": "my-values/nova-values.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "shell-parameter",
+          "line": 4,
+          "path": "docker/buster-runtime-entrypoint.sh"
+        }
+      ],
+      "required": "required at entrypoint startup; used for request authentication only when SPIFFE is not selected",
+      "runtimeOwner": "kubeclaw; maintained deployment profile",
       "sensitive": true,
       "sensitivityClass": "secret-value",
       "sensitivityReasons": [
-        "Kubernetes valueFrom/secretKeyRef provenance"
+        "Kubernetes valueFrom/secretKeyRef provenance",
+        "sensitive environment-variable name"
       ],
       "setDirectly": false,
       "sourceOwners": [
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
+        },
         {
           "component": "maintained deployment profile",
           "evidence": "my-values/buster-values.yaml"
@@ -14987,7 +15128,7 @@
           "evidence": "my-values/nova-values.yaml"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
       "acceptedForm": "A readable YAML file path.",
@@ -19391,6 +19532,181 @@
       "surface": "operator-authored-input"
     },
     {
+      "acceptedForm": "Only exact `1` enables render-only behavior.",
+      "blockerOwner": null,
+      "changeImpact": "When set to `1`, selected render paths emit or validate manifests and skip their corresponding kubectl or Helm mutation and readiness steps.",
+      "closureCondition": null,
+      "consumerContracts": [],
+      "consumers": [
+        {
+          "access": "shell-parameter",
+          "line": 580,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1391,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1423,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1687,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1722,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1750,
+          "path": "scripts/deploy.sh"
+        }
+      ],
+      "defaultBehavior": "Uses `0` in ordinary deployment paths.",
+      "direction": "read as process input; producer is the operator, CI host, or external runtime",
+      "emptyBehavior": "An absent or empty value selects normal apply behavior.",
+      "failureMeaning": "Using `1` for an intended deployment produces no live rollout; leaving it disabled in a verification path can mutate the selected cluster.",
+      "invalidBehavior": "Every value other than exact `1` is treated as normal apply behavior.",
+      "meaning": "Selects manifest rendering without cluster mutation for internal deployment verification paths.",
+      "meaningEvidence": "scripts/deploy.sh:580",
+      "meaningStatus": "authored-source-backed-contract",
+      "name": "KUBECLAW_DEPLOY_RENDER_ONLY",
+      "precedence": [
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:580",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:580",
+          "order": 2,
+          "source": "source default",
+          "value": "0"
+        },
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:1391",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:1391",
+          "order": 2,
+          "source": "source default",
+          "value": "0"
+        },
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:1423",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:1423",
+          "order": 2,
+          "source": "source default",
+          "value": "0"
+        },
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:1687",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:1687",
+          "order": 2,
+          "source": "source default",
+          "value": "0"
+        },
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:1722",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:1722",
+          "order": 2,
+          "source": "source default",
+          "value": "0"
+        },
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:1750",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:1750",
+          "order": 2,
+          "source": "source default",
+          "value": "0"
+        }
+      ],
+      "precedenceExplanation": "A value exported by the script for its verification subshells wins there; otherwise an inherited process value controls each read.",
+      "producers": [],
+      "readers": [
+        {
+          "access": "shell-parameter",
+          "line": 580,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1391,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1423,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1687,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1722,
+          "path": "scripts/deploy.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1750,
+          "path": "scripts/deploy.sh"
+        }
+      ],
+      "required": "internal verification control; direct operator use is unsafe",
+      "runtimeOwner": "operator script scripts/deploy.sh",
+      "sensitive": false,
+      "sensitivityClass": "ordinary-value",
+      "sensitivityReasons": [],
+      "setDirectly": true,
+      "sourceOwners": [
+        {
+          "component": "operator script scripts/deploy.sh",
+          "evidence": "scripts/deploy.sh"
+        }
+      ],
+      "surface": "operator-authored-input"
+    },
+    {
       "acceptedForm": "A boolean-like value accepted by `component_enabled`: `1`, `true`, `yes`, `on`, or `enabled` enables it; `0`, `false`, `no`, `off`, or `disabled` disables it.",
       "blockerOwner": null,
       "changeImpact": "Disabling the switch skips SPIRE installation; dependent features can remain unavailable.",
@@ -23743,36 +24059,6 @@
         },
         {
           "access": "shell-parameter",
-          "line": 779,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 987,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 994,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1730,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1744,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1842,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
           "line": 6,
           "path": "scripts/migrate-kubeclaw-network-policies-to-cilium.sh"
         }
@@ -24235,42 +24521,6 @@
           "value": "kubeclaw"
         },
         {
-          "condition": "set",
-          "evidence": "scripts/deploy.sh:779",
-          "order": 1,
-          "source": "process environment"
-        },
-        {
-          "condition": "set",
-          "evidence": "scripts/deploy.sh:987",
-          "order": 1,
-          "source": "process environment"
-        },
-        {
-          "condition": "set",
-          "evidence": "scripts/deploy.sh:994",
-          "order": 1,
-          "source": "process environment"
-        },
-        {
-          "condition": "set",
-          "evidence": "scripts/deploy.sh:1730",
-          "order": 1,
-          "source": "process environment"
-        },
-        {
-          "condition": "set",
-          "evidence": "scripts/deploy.sh:1744",
-          "order": 1,
-          "source": "process environment"
-        },
-        {
-          "condition": "set",
-          "evidence": "scripts/deploy.sh:1842",
-          "order": 1,
-          "source": "process environment"
-        },
-        {
           "condition": "set and non-empty",
           "evidence": "scripts/migrate-kubeclaw-network-policies-to-cilium.sh:6",
           "order": 1,
@@ -24640,36 +24890,6 @@
         {
           "access": "shell-parameter",
           "line": 82,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 779,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 987,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 994,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1730,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1744,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1842,
           "path": "scripts/deploy.sh"
         },
         {
@@ -28292,6 +28512,11 @@
           "access": "python-process-env",
           "line": 12,
           "path": "ops/pod/bootstrap.py"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 5,
+          "path": "scripts/deploy-ops-pod.sh"
         }
       ],
       "defaultBehavior": "Uses `kubeclaw-ops`.",
@@ -28305,10 +28530,17 @@
       "name": "OPS_NAMESPACE",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy-ops-pod.sh:5",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy-ops-pod.sh:5",
+          "order": 2,
+          "source": "source default",
+          "value": "kubeclaw-ops"
         }
       ],
       "precedenceExplanation": "A non-empty process value wins and is exported to the bootstrap helper.",
@@ -28318,21 +28550,30 @@
           "access": "python-process-env",
           "line": 12,
           "path": "ops/pod/bootstrap.py"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 5,
+          "path": "scripts/deploy-ops-pod.sh"
         }
       ],
       "required": "conditional",
-      "runtimeOwner": "@kubeclaw/codex-ops-pod",
+      "runtimeOwner": "@kubeclaw/codex-ops-pod; operator script scripts/deploy-ops-pod.sh",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
-      "setDirectly": false,
+      "setDirectly": true,
       "sourceOwners": [
         {
           "component": "@kubeclaw/codex-ops-pod",
           "evidence": "ops/pod/package.json"
+        },
+        {
+          "component": "operator script scripts/deploy-ops-pod.sh",
+          "evidence": "scripts/deploy-ops-pod.sh"
         }
       ],
-      "surface": "runtime-process-boundary"
+      "surface": "operator-authored-input"
     },
     {
       "acceptedForm": "A readable YAML values file.",
@@ -30623,6 +30864,66 @@
       "surface": "kubernetes-injected-transport"
     },
     {
+      "acceptedForm": "A readable YAML values file compatible with the KubeClaw agent chart.",
+      "blockerOwner": null,
+      "changeImpact": "Changing it can override the Prism agent release without replacing the selected release baseline.",
+      "closureCondition": null,
+      "consumerContracts": [],
+      "consumers": [
+        {
+          "access": "shell-parameter",
+          "line": 102,
+          "path": "scripts/deploy.sh"
+        }
+      ],
+      "defaultBehavior": "Empty; deployment uses `releases/values/prism-agent.yaml` without an extra operator overlay.",
+      "direction": "read as process input; producer is the operator, CI host, or external runtime",
+      "emptyBehavior": "An empty value adds no overlay.",
+      "failureMeaning": "Bundle preflight, render, or the atomic Helm release fails before a successful rollout is claimed.",
+      "invalidBehavior": "A missing, unreadable, or invalid overlay makes bundle inspection, rendering, or Helm fail.",
+      "meaning": "Adds an operator-owned Prism-agent Helm values overlay while keeping the selected release values as the immutable base.",
+      "meaningEvidence": "scripts/deploy.sh:102",
+      "meaningStatus": "authored-source-backed-contract",
+      "name": "PRISM_AGENT_VALUES_FILE",
+      "precedence": [
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:102",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:102",
+          "order": 2,
+          "source": "source default",
+          "value": ""
+        }
+      ],
+      "precedenceExplanation": "The deploy script captures this process value as `PRISM_AGENT_VALUES_OVERLAY`, then resets `PRISM_AGENT_VALUES_FILE` to the selected release file. The non-empty overlay is appended after the selected file and before explicit command-line overrides.",
+      "producers": [],
+      "readers": [
+        {
+          "access": "shell-parameter",
+          "line": 102,
+          "path": "scripts/deploy.sh"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "operator script scripts/deploy.sh",
+      "sensitive": false,
+      "sensitivityClass": "ordinary-value",
+      "sensitivityReasons": [],
+      "setDirectly": true,
+      "sourceOwners": [
+        {
+          "component": "operator script scripts/deploy.sh",
+          "evidence": "scripts/deploy.sh"
+        }
+      ],
+      "surface": "operator-authored-input"
+    },
+    {
       "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
       "blockerOwner": null,
       "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
@@ -32140,11 +32441,6 @@
           "access": "shell-parameter",
           "line": 1737,
           "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1916,
-          "path": "scripts/deploy.sh"
         }
       ],
       "defaultBehavior": "Uses `ghcr-secret`.",
@@ -32181,12 +32477,6 @@
           "evidence": "scripts/deploy.sh:1737",
           "order": 1,
           "source": "process environment"
-        },
-        {
-          "condition": "set",
-          "evidence": "scripts/deploy.sh:1916",
-          "order": 1,
-          "source": "process environment"
         }
       ],
       "precedenceExplanation": "A non-empty process value wins and is written into the rendered imagePullSecrets list.",
@@ -32205,11 +32495,6 @@
         {
           "access": "shell-parameter",
           "line": 1737,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1916,
           "path": "scripts/deploy.sh"
         }
       ],
@@ -35108,11 +35393,6 @@
           "access": "shell-parameter",
           "line": 1734,
           "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1946,
-          "path": "scripts/deploy.sh"
         }
       ],
       "defaultBehavior": "Uses `prism-runtime`.",
@@ -35149,12 +35429,6 @@
           "evidence": "scripts/deploy.sh:1734",
           "order": 1,
           "source": "process environment"
-        },
-        {
-          "condition": "set",
-          "evidence": "scripts/deploy.sh:1946",
-          "order": 1,
-          "source": "process environment"
         }
       ],
       "precedenceExplanation": "A non-empty process value wins and is passed to the Prism chart.",
@@ -35173,11 +35447,6 @@
         {
           "access": "shell-parameter",
           "line": 1734,
-          "path": "scripts/deploy.sh"
-        },
-        {
-          "access": "shell-parameter",
-          "line": 1946,
           "path": "scripts/deploy.sh"
         }
       ],
@@ -35963,6 +36232,66 @@
         }
       ],
       "surface": "checked-in-injected-transport"
+    },
+    {
+      "acceptedForm": "A readable YAML values file compatible with the Prism chart.",
+      "blockerOwner": null,
+      "changeImpact": "Changing it can override Prism release settings without replacing the selected release baseline.",
+      "closureCondition": null,
+      "consumerContracts": [],
+      "consumers": [
+        {
+          "access": "shell-parameter",
+          "line": 100,
+          "path": "scripts/deploy.sh"
+        }
+      ],
+      "defaultBehavior": "Empty; deployment uses `releases/values/prism.yaml` without an extra operator overlay.",
+      "direction": "read as process input; producer is the operator, CI host, or external runtime",
+      "emptyBehavior": "An empty value adds no overlay.",
+      "failureMeaning": "Preflight, render, or the atomic Helm release fails before a successful rollout is claimed.",
+      "invalidBehavior": "A missing, unreadable, or invalid overlay makes value inspection, rendering, or Helm fail.",
+      "meaning": "Adds an operator-owned Prism Helm values overlay while keeping the selected release values as the immutable base.",
+      "meaningEvidence": "scripts/deploy.sh:100",
+      "meaningStatus": "authored-source-backed-contract",
+      "name": "PRISM_VALUES_FILE",
+      "precedence": [
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:100",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:100",
+          "order": 2,
+          "source": "source default",
+          "value": ""
+        }
+      ],
+      "precedenceExplanation": "The deploy script captures this process value as `PRISM_VALUES_OVERLAY`, then resets `PRISM_VALUES_FILE` to the selected release file. The non-empty overlay is appended after the selected file and before explicit command-line image overrides.",
+      "producers": [],
+      "readers": [
+        {
+          "access": "shell-parameter",
+          "line": 100,
+          "path": "scripts/deploy.sh"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "operator script scripts/deploy.sh",
+      "sensitive": false,
+      "sensitivityClass": "ordinary-value",
+      "sensitivityReasons": [],
+      "setDirectly": true,
+      "sourceOwners": [
+        {
+          "component": "operator script scripts/deploy.sh",
+          "evidence": "scripts/deploy.sh"
+        }
+      ],
+      "surface": "operator-authored-input"
     },
     {
       "acceptedForm": "A lowercase `sha256:` digest with 64 hexadecimal digits.",
@@ -39748,6 +40077,11 @@
           "access": "shell-parameter",
           "line": 38,
           "path": "my-values/setup-secrets.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1007,
+          "path": "scripts/deploy.sh"
         }
       ],
       "defaultBehavior": "Uses `true`.",
@@ -39772,6 +40106,19 @@
           "order": 2,
           "source": "source default",
           "value": "true"
+        },
+        {
+          "condition": "set and non-empty",
+          "evidence": "scripts/deploy.sh:1007",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "parameter operator :-",
+          "evidence": "scripts/deploy.sh:1007",
+          "order": 2,
+          "source": "source default",
+          "value": "true"
         }
       ],
       "precedenceExplanation": "A non-empty process value wins; otherwise Tailscale integration remains enabled.",
@@ -39781,10 +40128,15 @@
           "access": "shell-parameter",
           "line": 38,
           "path": "my-values/setup-secrets.sh"
+        },
+        {
+          "access": "shell-parameter",
+          "line": 1007,
+          "path": "scripts/deploy.sh"
         }
       ],
       "required": "conditional",
-      "runtimeOwner": "maintained deployment profile",
+      "runtimeOwner": "maintained deployment profile; operator script scripts/deploy.sh",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
@@ -39793,6 +40145,10 @@
         {
           "component": "maintained deployment profile",
           "evidence": "my-values/setup-secrets.sh"
+        },
+        {
+          "component": "operator script scripts/deploy.sh",
+          "evidence": "scripts/deploy.sh"
         }
       ],
       "surface": "operator-authored-input"
@@ -51908,11 +52264,11 @@
     "cliOccurrences": 125,
     "configurationConsumerSources": 274,
     "derivedValues": 47,
-    "environmentConsumers": 851,
+    "environmentConsumers": 856,
     "environmentMeaningBlockers": 0,
-    "environmentVariables": 432,
-    "injectionOnlyEnvironmentVariables": 41,
-    "operatorAuthoredEnvironmentInputs": 157,
+    "environmentVariables": 435,
+    "injectionOnlyEnvironmentVariables": 40,
+    "operatorAuthoredEnvironmentInputs": 161,
     "operatorAuthoredMeaningBlockers": 0,
     "secretAuthorityBlockers": 0,
     "secretFacts": 123,
