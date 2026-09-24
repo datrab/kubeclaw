@@ -21,7 +21,10 @@ const root = path.resolve(sourceRootOverride ?? scriptRoot);
 assert(!isolatedMutation || (sourceRootOverride && root !== scriptRoot),
   'KUBECLAW_DOCS_ISOLATED_MUTATION requires an isolated KUBECLAW_DOCS_SOURCE_ROOT');
 const check = process.argv.includes('--check');
-const sourceRevision = 'ef14b4239925502204e8db1ff2a1c14ff48cb8c4';
+const sourceRevisionLockPath = path.join(root, 'docs/generated/inventory/documentation-source-revision.json');
+assert(fs.existsSync(sourceRevisionLockPath), 'documentation source revision lock is missing');
+const sourceRevision = JSON.parse(fs.readFileSync(sourceRevisionLockPath, 'utf8')).revision;
+assert.match(sourceRevision, /^[0-9a-f]{40}$/u, 'documentation source revision lock is invalid');
 const busterReadyActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true; selected my-values/buster-values.yaml inherits the chart default false';
 const busterProductActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true and busterNamespaceBroker.controller.productDecisions.enabled=true (BUSTER_PRODUCT_ENABLED=true); selected my-values/buster-values.yaml inherits the chart default false for both';
 const jsonTarget = path.join(root, 'docs/generated/inventory/platform-surfaces.json');
