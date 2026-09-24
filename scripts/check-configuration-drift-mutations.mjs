@@ -194,6 +194,19 @@ try {
   for (const field of schemaFields) {
     assert.doesNotMatch(field.meaning.text, /Limits the complete the /u,
       `${field.meaning.authorityKey}: generated purpose contains duplicated grammar`);
+    if (field.meaning.runtimeDefault !== null && field.meaning.runtimeDefault !== undefined) {
+      const declaredTypes = field.type.split('|');
+      const value = field.meaning.runtimeDefault;
+      const typeMatches = declaredTypes.some((type) => (type === 'any' || type === 'unspecified')
+        || (type === 'integer' && Number.isInteger(value))
+        || (type === 'number' && typeof value === 'number' && Number.isFinite(value))
+        || (type === 'string' && typeof value === 'string')
+        || (type === 'boolean' && typeof value === 'boolean')
+        || (type === 'array' && Array.isArray(value))
+        || (type === 'object' && value !== null && typeof value === 'object' && !Array.isArray(value)));
+      assert(typeMatches,
+        `${field.meaning.authorityKey}: runtime default type does not match ${field.type}`);
+    }
   }
   for (const testOnlyName of ['KUBECLAW_DEMO_AUTH_TEST_OUTPUT', 'PRODUCT_TS_EXPORTER']) {
     assert.equal(baselineRuntime.environment.some((item) => item.name === testOnlyName), false,

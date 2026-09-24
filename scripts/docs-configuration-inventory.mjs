@@ -2680,23 +2680,38 @@ function schemaAcceptedValues(field) {
 }
 
 const SCHEMA_RUNTIME_FALLBACK_AUTHORITIES = new Map(Object.entries({
-  'skills/buster/plugins/openapi/schemas/config.schema.json::$.requestTimeoutMs': ['10000', 'skills/buster/plugins/openapi/src/provider.js', 'config.requestTimeoutMs ?? 10_000'],
-  'skills/buster/plugins/openapi/schemas/config.schema.json::$.maximumResponseBytes': ['1048576', 'skills/buster/plugins/openapi/src/provider.js', 'config.maximumResponseBytes ?? 1_048_576'],
-  'skills/buster/plugins/security-providers/schemas/dependency.schema.json::$.timeoutMs': ['300000', 'skills/buster/plugins/security-providers/src/dependency.js', 'integer(value.timeoutMs, 300_000'],
-  'skills/buster/plugins/security-providers/schemas/image.schema.json::$.timeoutMs': ['300000', 'skills/buster/plugins/security-providers/src/image.js', 'integer(value.timeoutMs, 300_000'],
-  'skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json::$.timeoutMs': ['120000', 'skills/buster/plugins/security-providers/src/kubernetes-policy.js', 'integer(value.timeoutMs, 120_000'],
-  'skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json::$.timeoutMs': ['120000', 'skills/buster/plugins/security-providers/src/kubernetes-runtime.js', 'integer(value.timeoutMs, 120_000'],
-  'skills/buster/plugins/security-providers/schemas/headers.schema.json::$.requestTimeoutMs': ['10000', 'skills/buster/plugins/security-providers/src/headers.js', 'integer(value.requestTimeoutMs, 10_000'],
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.requestTimeoutMs': [10000, 'skills/buster/plugins/openapi/src/provider.js', 'config.requestTimeoutMs ?? 10_000'],
+  'skills/buster/plugins/openapi/schemas/config.schema.json::$.maximumResponseBytes': [1048576, 'skills/buster/plugins/openapi/src/provider.js', 'config.maximumResponseBytes ?? 1_048_576'],
+  'skills/buster/plugins/security-providers/schemas/dependency.schema.json::$.timeoutMs': [300000, 'skills/buster/plugins/security-providers/src/dependency.js', 'integer(value.timeoutMs, 300_000'],
+  'skills/buster/plugins/security-providers/schemas/image.schema.json::$.timeoutMs': [300000, 'skills/buster/plugins/security-providers/src/image.js', 'integer(value.timeoutMs, 300_000'],
+  'skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json::$.timeoutMs': [120000, 'skills/buster/plugins/security-providers/src/kubernetes-policy.js', 'integer(value.timeoutMs, 120_000'],
+  'skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json::$.timeoutMs': [120000, 'skills/buster/plugins/security-providers/src/kubernetes-runtime.js', 'integer(value.timeoutMs, 120_000'],
+  'skills/buster/plugins/security-providers/schemas/headers.schema.json::$.requestTimeoutMs': [10000, 'skills/buster/plugins/security-providers/src/headers.js', 'integer(value.requestTimeoutMs, 10_000'],
   'skills/buster/plugins/size-budget/schemas/config.schema.json::$.format': ['auto', 'skills/buster/plugins/size-budget/src/provider.js', "value.format ?? 'auto'"],
 }));
 
-function schemaRuntimeFallback(authorityPath, fieldPath) {
-  const authority = SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.get(`${authorityPath}::${fieldPath}`);
+function schemaRuntimeValueMatchesType(value, declaredType) {
+  return declaredType.split('|').some((type) => {
+    if (type === 'any' || type === 'unspecified') return true;
+    if (type === 'integer') return Number.isInteger(value);
+    if (type === 'number') return typeof value === 'number' && Number.isFinite(value);
+    if (type === 'string' || type === 'boolean') return typeof value === type;
+    if (type === 'array') return Array.isArray(value);
+    if (type === 'object') return value !== null && typeof value === 'object' && !Array.isArray(value);
+    return false;
+  });
+}
+
+function schemaRuntimeFallback(authorityPath, field) {
+  const authorityKey = `${authorityPath}::${field.path}`;
+  const authority = SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.get(authorityKey);
   if (!authority) return null;
   const [value, sourcePath, anchor] = authority;
+  assert(schemaRuntimeValueMatchesType(value, field.type),
+    `${authorityKey}: runtime fallback ${JSON.stringify(value)} does not match schema type ${field.type}`);
   const text = read(sourcePath);
   const index = text.indexOf(anchor);
-  assert(index >= 0, `${authorityPath}::${fieldPath}: runtime fallback anchor not found in ${sourcePath}`);
+  assert(index >= 0, `${authorityKey}: runtime fallback anchor not found in ${sourcePath}`);
   return { value, evidence: `${sourcePath}:${lineAt(text, index)}` };
 }
 
@@ -3362,7 +3377,7 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
   const permitsInferredAuthority = previouslyInventoried || inheritedThroughLocalReference || Boolean(authoredDescription);
   const purpose = context && permitsInferredAuthority ? schemaSpecificPurpose(authorityPath, field.path, context) : null;
   const implementation = permitsInferredAuthority ? schemaImplementationEvidence(authorityPath, field.path) : null;
-  const runtimeFallback = schemaRuntimeFallback(authorityPath, field.path, implementation);
+  const runtimeFallback = schemaRuntimeFallback(authorityPath, field);
   const describedPurpose = authoredDescription || purpose;
   const acceptedValues = schemaAcceptedValues(field);
   const defaultBehavior = schemaDefaultBehavior(authorityPath, field, runtimeFallback);
