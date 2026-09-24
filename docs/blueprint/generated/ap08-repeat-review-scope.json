@@ -81,30 +81,6 @@
   "evidenceObjects": [
     {
       "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "charts/kubeclaw/templates/configmap-gateway.yaml"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "charts/ops-pod/templates/workload.yaml"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "charts/ops-pod/values.yaml"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "contracts/pipeline-worker-core/v1/src/types.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "docker/Dockerfile.prism-agent"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "packaging/runtime/package-ownership.json"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json"
     },
     {
@@ -114,26 +90,6 @@
     {
       "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "path": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "scripts/build-runtime-role-bundle.mjs"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "scripts/check-runtime-role-manifests.mjs"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/buster/engine/src/index.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/buster/engine/test-gates/provider-loader.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/buster/engine/test-gates/runner.ts"
     },
     {
       "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
@@ -502,22 +458,6 @@
     {
       "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "path": "skills/buster/plugins/visual/tests/live-function.test.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/common/plugin-runtime/foundation/registry/build.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts"
     },
     {
       "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
@@ -994,18 +934,6 @@
     {
       "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/nova/core/effects/durable-invocation.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/nova/core/execution/stage-executor.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/nova/core/telemetry/observer-delivery.ts"
     },
     {
       "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
@@ -1877,30 +1805,6 @@
     },
     {
       "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/prism/control/native-operation-store.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/prism/control/native-operation.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/prism/control/worker-evidence.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/prism/control/worker-operation-transport.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/prism/control/worker-results.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
-      "path": "skills/prism/engine/worker-binding.ts"
-    },
-    {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
       "path": "skills/prism/openclaw-plugin/index.mjs"
     },
     {
@@ -1916,15 +1820,139 @@
       "path": "skills/prism/openclaw-plugin/README.md"
     },
     {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/ops-pod/templates/workload.yaml"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "charts/ops-pod/values.yaml"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "contracts/pipeline-worker-core/v1/src/types.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "docker/Dockerfile.prism-agent"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "packaging/runtime/package-ownership.json"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "scripts/build-runtime-role-bundle.mjs"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "scripts/check-runtime-role-manifests.mjs"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/buster/engine/src/index.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/buster/engine/test-gates/runner.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/core/effects/durable-invocation.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/core/execution/stage-executor.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/nova/core/telemetry/observer-delivery.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/control/native-operation-store.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/control/native-operation.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/control/worker-evidence.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/control/worker-operation-transport.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/control/worker-results.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/engine/worker-binding.ts"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/openclaw-plugin/index.mjs"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/openclaw-plugin/index.test.mjs"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
+      "path": "skills/prism/openclaw-plugin/openclaw.plugin.json"
+    },
+    {
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
       "path": "skills/prism/server/worker-operation.ts"
     },
     {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
       "path": "skills/prism/server/worker-service.ts"
     },
     {
-      "revision": "32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "revision": "569f7b4933d4859cc67c80ddf40d5154ffd95ce5",
       "path": "skills/worker/core/worker/attempt-executor.ts"
     },
     {
