@@ -929,6 +929,9 @@ fixture:
     () => createFile(environmentFixturePath, `#!/usr/bin/env bash
 set -euo pipefail
 effective="\${AP98_OUTER_INPUT:-\${AP98_INNER_INPUT:-fallback}}"
+captured="\${AP98_CAPTURED_THEN_UNSET:?required}"
+unset AP98_CAPTURED_THEN_UNSET
+AP98_CAPTURED_THEN_UNSET="$captured" node -e 'process.stdout.write(process.env.AP98_CAPTURED_THEN_UNSET || "")'
 printf '%s\\n' "$effective"
 cat <<'AP98_HELP'
 This is documentation only: \${AP98_DOCUMENTATION_ONLY:-do-not-inventory}
@@ -988,6 +991,7 @@ PY`),
     const fixtureNames = new Set(runtimeInventory.environment.filter((item) => item.consumers.some((consumer) => consumer.path === environmentFixturePath)).map((item) => item.name));
     assert.ok(fixtureNames.has('AP98_OUTER_INPUT'), 'outer shell parameter expansion was not inventoried');
     assert.ok(fixtureNames.has('AP98_INNER_INPUT'), 'nested shell parameter expansion was not inventoried');
+    assert.ok(fixtureNames.has('AP98_CAPTURED_THEN_UNSET'), 'captured-then-unset shell input was hidden by its later child-process assignment');
     assert.equal(fixtureNames.has('AP98_DOCUMENTATION_ONLY'), false, 'quoted help heredoc became a runtime environment input');
     const outer = runtimeInventory.environment.find((item) => item.name === 'AP98_OUTER_INPUT');
     assert.equal(outer?.precedence.find((step) => step.order === 2)?.value, '<nested parameter expansion; see source>', 'nested fallback was published as a truncated shell expression');
