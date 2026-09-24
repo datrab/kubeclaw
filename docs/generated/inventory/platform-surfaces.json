@@ -1,6 +1,6 @@
 {
   "schemaVersion": "kubeclaw-platform-surfaces.v1",
-  "sourceRevision": "1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de",
+  "sourceRevision": "cc0ec1bb254c8d644ed87c3542980d609c42dd56",
   "acceptanceContract": {
     "source": "docs/blueprint/AP09-acceptance-contract.md",
     "acceptanceIds": [
@@ -8510,13 +8510,14 @@
   ],
   "networkExposures": [
     {
-      "value": "Ingress/argocd/argocd:*/",
+      "value": "Ingress/argocd/argocd:default-backend",
       "kind": "Ingress",
       "namespace": "argocd",
       "name": "argocd",
+      "routeKind": "default-backend",
       "ingressClassName": "tailscale",
-      "host": "*",
-      "path": "/",
+      "host": null,
+      "path": null,
       "pathType": null,
       "backendService": "argocd-server",
       "backendPort": 80,
@@ -8525,16 +8526,17 @@
       ],
       "activationState": "active",
       "source": "my-values/infra/argocd-tailscale-ingress.yaml",
-      "line": 4
+      "line": 8
     },
     {
-      "value": "Ingress/kubeclaw/agent-nova-archviewer:*/",
+      "value": "Ingress/kubeclaw/agent-nova-archviewer:default-backend",
       "kind": "Ingress",
       "namespace": "kubeclaw",
       "name": "agent-nova-archviewer",
+      "routeKind": "default-backend",
       "ingressClassName": "tailscale",
-      "host": "*",
-      "path": "/",
+      "host": null,
+      "path": null,
       "pathType": null,
       "backendService": "agent-nova-archviewer",
       "backendPort": 3456,
@@ -8543,16 +8545,17 @@
       ],
       "activationState": "active",
       "source": "charts/kubeclaw/templates/archviewer.yaml",
-      "line": 25
+      "line": 28
     },
     {
-      "value": "Ingress/kubeclaw/prism-studio:*/",
+      "value": "Ingress/kubeclaw/prism-studio:default-backend",
       "kind": "Ingress",
       "namespace": "kubeclaw",
       "name": "prism-studio",
+      "routeKind": "default-backend",
       "ingressClassName": "tailscale",
-      "host": "*",
-      "path": "/",
+      "host": null,
+      "path": null,
       "pathType": null,
       "backendService": "prism-studio",
       "backendPort": 80,
@@ -8561,7 +8564,7 @@
       ],
       "activationState": "active",
       "source": "charts/prism/templates/services.yaml",
-      "line": 42
+      "line": 45
     },
     {
       "value": "Service/kubeclaw-ops/codex-ops:health",
