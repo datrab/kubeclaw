@@ -1717,7 +1717,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 5297,
+          "line": 5534,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1728,7 +1728,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 5297,
+      "line": 5534,
       "name": "--check-payload-delivery-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -9653,36 +9653,63 @@
       "surface": "runtime-process-boundary"
     },
     {
-      "acceptedForm": "valid JSON with the shape enforced by the linked consumer",
+      "acceptedForm": "A JSON array of objects. Each `subject` is one canonical DNS label or `namespace/name`; each mode is exactly `tester` or `deployer`. At least one subject is required. An empty modes list is valid and grants nothing.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the identities and access modes that the controller places into leased namespaces.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A JSON array of objects. Each `subject` is one canonical DNS label or `namespace/name`; each mode is exactly `tester` or `deployer`. At least one subject is required. An empty modes list is valid and grants nothing.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses one `kubeclaw/agent-buster` subject with `tester` mode.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects the default JSON array.",
+          "failure": "The controller returns an error before it starts its reconciliation loop.",
+          "impact": "Changing it changes the identities and access modes that the controller places into leased namespaces.",
+          "invalidBehavior": "Invalid JSON, an invalid subject, an unsupported mode, or no subjects returns a configuration error.",
+          "line": 172,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise the checked-in JSON fallback applies.",
+          "purpose": "Defines which ServiceAccounts can request Buster tester or deployer access.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 199,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 172,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_ALLOWED_ACCESS_JSON. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses one `kubeclaw/agent-buster` subject with `tester` mode.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent, empty, or whitespace-only value selects the default JSON array.",
+      "failureMeaning": "The controller returns an error before it starts its reconciliation loop.",
+      "invalidBehavior": "Invalid JSON, an invalid subject, an unsupported mode, or no subjects returns a configuration error.",
+      "meaning": "Defines which ServiceAccounts can request Buster tester or deployer access.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:199",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_ALLOWED_ACCESS_JSON",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:172",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:172",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "[{\"subject\":\"kubeclaw/agent-buster\",\"modes\":[\"tester\"]}]"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed non-empty process value wins; otherwise the checked-in JSON fallback applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -9690,9 +9717,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 172,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
@@ -9701,41 +9734,72 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A comma-separated list. The reader trims entries and drops empty entries but does not validate prefix syntax or length at startup.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing the list changes which requested names are admitted and which prefix is used for generated names.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A comma-separated list. The reader trims entries and drops empty entries but does not validate prefix syntax or length at startup.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `test`.",
+          "emptyBehavior": "A blank value, or a list that contains only blank entries, selects `test`.",
+          "failure": "Lease validation, namespace creation, or Kubernetes admission fails when the effective prefix cannot produce a usable name.",
+          "impact": "Changing the list changes which requested names are admitted and which prefix is used for generated names.",
+          "invalidBehavior": "A malformed non-empty prefix can survive startup and later produce an unusable namespace name or failed Kubernetes request.",
+          "line": 143,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value is split first; an empty result then falls back to `test`.",
+          "purpose": "Selects the namespace prefixes that Buster lease requests can use.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 215,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 143,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_ALLOWED_NAMESPACE_PREFIXES. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses `test`.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "A blank value, or a list that contains only blank entries, selects `test`.",
+      "failureMeaning": "Lease validation, namespace creation, or Kubernetes admission fails when the effective prefix cannot produce a usable name.",
+      "invalidBehavior": "A malformed non-empty prefix can survive startup and later produce an unusable namespace name or failed Kubernetes request.",
+      "meaning": "Selects the namespace prefixes that Buster lease requests can use.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:215",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_ALLOWED_NAMESPACE_PREFIXES",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:143",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:143",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "test"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed non-empty process value is split first; an empty result then falls back to `test`.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -9743,9 +9807,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 143,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
@@ -9754,16 +9824,35 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
       "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
       "blockerOwner": null,
       "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A comma-separated list whose trimmed non-empty entries contain only letters, digits, dot, underscore, or hyphen.",
+          "access": "go-process-env",
+          "defaultBehavior": "Uses an empty allowlist.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value permits no source Secret names.",
+          "failure": "The controller returns an error before it starts when any entry is invalid.",
+          "impact": "Changing it changes which named Secret references can be admitted into leased namespaces.",
+          "invalidBehavior": "Any entry outside `^[A-Za-z0-9._-]+$` returns `invalid BUSTER_ALLOWED_SOURCE_SECRETS entry`.",
+          "line": 184,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "The process value is split, trimmed, and validated; no other controller source adds names.",
+          "purpose": "Lists the Secret object names that a Buster lease may copy from its approved source namespace.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -9801,6 +9890,12 @@
       "meaningStatus": "classified-non-operator-boundary",
       "name": "BUSTER_ALLOWED_SOURCE_SECRETS",
       "precedence": [
+        {
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/main.go:184",
+          "order": 1,
+          "source": "process environment"
+        },
         {
           "condition": "set and non-empty",
           "evidence": "docker/buster-runtime-entrypoint.sh:148",
@@ -10478,11 +10573,26 @@
       "surface": "operator-authored-input"
     },
     {
-      "acceptedForm": "non-negative duration or count in the unit named by the variable",
+      "acceptedForm": "A base-10 integer from 1 through the largest millisecond count that fits `time.Duration`.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes reconciliation latency and Kubernetes API request frequency.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A base-10 integer from 1 through the largest millisecond count that fits `time.Duration`.",
+          "access": "go-process-env",
+          "defaultBehavior": "Uses `3000` milliseconds.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects `3000`.",
+          "failure": "The controller returns an error before it starts its reconciliation loop.",
+          "impact": "Changing it changes reconciliation latency and Kubernetes API request frequency.",
+          "invalidBehavior": "Non-numeric, zero, negative, or multiplication-overflow input returns `BUSTER_CONTROLLER_POLL_MS must be positive`.",
+          "line": 1885,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise `3000` applies.",
+          "purpose": "Sets the delay between complete Buster lease reconciliation passes.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -10495,24 +10605,24 @@
           "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Uses `3000` milliseconds.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_CONTROLLER_POLL_MS. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An absent, empty, or whitespace-only value selects `3000`.",
+      "failureMeaning": "The controller returns an error before it starts its reconciliation loop.",
+      "invalidBehavior": "Non-numeric, zero, negative, or multiplication-overflow input returns `BUSTER_CONTROLLER_POLL_MS must be positive`.",
+      "meaning": "Sets the delay between complete Buster lease reconciliation passes.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:221",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_CONTROLLER_POLL_MS",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/main.go:1885",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed non-empty process value wins; otherwise `3000` applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -10527,7 +10637,7 @@
           "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -10546,36 +10656,63 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty Kubernetes ServiceAccount name; this reader trims whitespace but does not validate name syntax at startup.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes which controller identity receives permissions in leased namespaces.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty Kubernetes ServiceAccount name; this reader trims whitespace but does not validate name syntax at startup.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `agent-buster-namespace-controller`.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects the default.",
+          "failure": "RoleBinding reconciliation fails, or a wrong valid ServiceAccount receives the binding.",
+          "impact": "Changing it changes which controller identity receives permissions in leased namespaces.",
+          "invalidBehavior": "A malformed non-empty name survives startup and later fails Kubernetes admission or binds the wrong valid identity.",
+          "line": 166,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise the checked-in name applies.",
+          "purpose": "Selects the ServiceAccount subject placed into generated Buster RoleBindings.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 191,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 166,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_CONTROLLER_SERVICE_ACCOUNT. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses `agent-buster-namespace-controller`.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent, empty, or whitespace-only value selects the default.",
+      "failureMeaning": "RoleBinding reconciliation fails, or a wrong valid ServiceAccount receives the binding.",
+      "invalidBehavior": "A malformed non-empty name survives startup and later fails Kubernetes admission or binds the wrong valid identity.",
+      "meaning": "Selects the ServiceAccount subject placed into generated Buster RoleBindings.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:191",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_CONTROLLER_SERVICE_ACCOUNT",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:166",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:166",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "agent-buster-namespace-controller"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed non-empty process value wins; otherwise the checked-in name applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -10583,9 +10720,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 166,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "identity-reference",
       "sensitivityReasons": [
@@ -10596,41 +10739,72 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "non-negative duration or count in the unit named by the variable",
+      "acceptedForm": "A base-10 integer that fits the platform Go `int`. The startup parser does not require a positive value and does not guard duration multiplication overflow.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the default expiry time for leases without a positive request-specific TTL.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A base-10 integer that fits the platform Go `int`. The startup parser does not require a positive value and does not guard duration multiplication overflow.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `7200` when the value is blank, non-numeric, or outside the Go `int` range.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects `7200`.",
+          "failure": "The controller can start, but a defaulted lease is rejected or receives an unsafe expiry when the parsed value is unsuitable.",
+          "impact": "Changing it changes the default expiry time for leases without a positive request-specific TTL.",
+          "invalidBehavior": "Non-numeric and integer-overflow input silently selects `7200`. A parsed value below 60, above the effective maximum, or affected by duration overflow makes later lease validation or expiry behavior fail.",
+          "line": 148,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed parseable process integer wins; otherwise `7200` applies.",
+          "purpose": "Sets the lease lifetime used when a request does not supply a positive `ttlSeconds` value.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 217,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 148,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_DEFAULT_TTL_SECONDS. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses `7200` when the value is blank, non-numeric, or outside the Go `int` range.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent, empty, or whitespace-only value selects `7200`.",
+      "failureMeaning": "The controller can start, but a defaulted lease is rejected or receives an unsafe expiry when the parsed value is unsuitable.",
+      "invalidBehavior": "Non-numeric and integer-overflow input silently selects `7200`. A parsed value below 60, above the effective maximum, or affected by duration overflow makes later lease validation or expiry behavior fail.",
+      "meaning": "Sets the lease lifetime used when a request does not supply a positive `ttlSeconds` value.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:217",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_DEFAULT_TTL_SECONDS",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:148",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:148",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "7200"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed parseable process integer wins; otherwise `7200` applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -10638,9 +10812,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 148,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
@@ -10649,41 +10829,72 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty Kubernetes role name; this reader trims whitespace but does not validate name syntax at startup.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the permission set bound to approved deployer subjects.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty Kubernetes role name; this reader trims whitespace but does not validate name syntax at startup.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `buster-namespace-deployer`.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects the default.",
+          "failure": "Access-binding reconciliation fails or approved deployers remain unauthorized.",
+          "impact": "Changing it changes the permission set bound to approved deployer subjects.",
+          "invalidBehavior": "A malformed non-empty name survives startup and later fails admission; a wrong valid name grants no intended deployer authority.",
+          "line": 168,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise the checked-in name applies.",
+          "purpose": "Selects the ClusterRole or Role reference granted for requested deployer access.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 195,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 168,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_DEPLOYER_ROLE_NAME. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses `buster-namespace-deployer`.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent, empty, or whitespace-only value selects the default.",
+      "failureMeaning": "Access-binding reconciliation fails or approved deployers remain unauthorized.",
+      "invalidBehavior": "A malformed non-empty name survives startup and later fails admission; a wrong valid name grants no intended deployer authority.",
+      "meaning": "Selects the ClusterRole or Role reference granted for requested deployer access.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:195",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_DEPLOYER_ROLE_NAME",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:168",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:168",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "buster-namespace-deployer"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed non-empty process value wins; otherwise the checked-in name applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -10691,9 +10902,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 168,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
@@ -10702,9 +10919,13 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
       "acceptedForm": "An OCI repository without an embedded credential.",
@@ -10999,12 +11220,32 @@
       "blockerOwner": null,
       "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty API-group string; this reader trims whitespace but does not validate syntax at startup.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `kubeclaw.forgestack.ai`.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects the default group.",
+          "failure": "Lease reconciliation or Kubernetes admission fails.",
+          "impact": "Changing it redirects lease discovery and changes the finalizer identity.",
+          "invalidBehavior": "A malformed non-empty value survives startup and later causes malformed or not-found API requests or an invalid finalizer.",
+          "line": 141,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise the checked-in group applies.",
+          "purpose": "Selects the API group used in Buster lease request paths and the controller finalizer.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 211,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 141,
+          "path": "cmd/buster-namespace-controller/main.go"
         },
         {
           "access": "embedded-node-process-env",
@@ -11033,10 +11274,17 @@
       "name": "BUSTER_LEASE_API_GROUP",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:141",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:141",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "kubeclaw.forgestack.ai"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -11048,6 +11296,11 @@
         }
       ],
       "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 141,
+          "path": "cmd/buster-namespace-controller/main.go"
+        },
         {
           "access": "embedded-node-process-env",
           "line": 223,
@@ -11087,12 +11340,32 @@
       "blockerOwner": null,
       "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty API-version string; this reader trims whitespace but does not validate syntax at startup.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `v1alpha1`.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects the default version.",
+          "failure": "Lease reconciliation fails because the selected resource endpoint is invalid or unavailable.",
+          "impact": "Changing it redirects lease discovery to another served API version.",
+          "invalidBehavior": "A malformed or unavailable non-empty value survives startup and later causes malformed or not-found API requests.",
+          "line": 142,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise the checked-in version applies.",
+          "purpose": "Selects the API version used in Buster lease request paths.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 213,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 142,
+          "path": "cmd/buster-namespace-controller/main.go"
         },
         {
           "access": "embedded-node-process-env",
@@ -11116,10 +11389,17 @@
       "name": "BUSTER_LEASE_API_VERSION",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:142",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:142",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "v1alpha1"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -11131,6 +11411,11 @@
         }
       ],
       "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 142,
+          "path": "cmd/buster-namespace-controller/main.go"
+        },
         {
           "access": "embedded-node-process-env",
           "line": 224,
@@ -11161,36 +11446,63 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "non-negative duration or count in the unit named by the variable",
+      "acceptedForm": "A base-10 integer that fits the platform Go `int`. The startup parser does not require a positive value and does not guard duration multiplication overflow.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the upper lifetime bound and the clamp applied during expiry calculation.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A base-10 integer that fits the platform Go `int`. The startup parser does not require a positive value and does not guard duration multiplication overflow.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `86400` when the value is blank, non-numeric, or outside the Go `int` range.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects `86400`.",
+          "failure": "The controller can start, but leases are rejected or receive an unsafe expiry when the effective maximum is unsuitable.",
+          "impact": "Changing it changes the upper lifetime bound and the clamp applied during expiry calculation.",
+          "invalidBehavior": "Non-numeric and integer-overflow input silently selects `86400`. A zero, negative, too-small, or duration-overflowing parsed value causes later lease validation or expiry behavior to reject otherwise valid leases.",
+          "line": 149,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed parseable process integer wins; otherwise `86400` applies.",
+          "purpose": "Sets the maximum lease lifetime accepted by the Buster namespace controller.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 219,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 149,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_MAX_TTL_SECONDS. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses `86400` when the value is blank, non-numeric, or outside the Go `int` range.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent, empty, or whitespace-only value selects `86400`.",
+      "failureMeaning": "The controller can start, but leases are rejected or receive an unsafe expiry when the effective maximum is unsuitable.",
+      "invalidBehavior": "Non-numeric and integer-overflow input silently selects `86400`. A zero, negative, too-small, or duration-overflowing parsed value causes later lease validation or expiry behavior to reject otherwise valid leases.",
+      "meaning": "Sets the maximum lease lifetime accepted by the Buster namespace controller.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:219",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_MAX_TTL_SECONDS",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:149",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:149",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "86400"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed parseable process integer wins; otherwise `86400` applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -11198,9 +11510,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 149,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
@@ -11209,9 +11527,13 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
       "acceptedForm": "`true` or `false` unless the linked consumer states a narrower form",
@@ -11713,10 +12035,10 @@
       "name": "BUSTER_PRODUCT_ACTORS_JSON",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-product.go:70",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -11781,10 +12103,10 @@
       "name": "BUSTER_PRODUCT_AUDIENCE",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-product.go:68",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -11851,10 +12173,10 @@
       "name": "BUSTER_PRODUCT_ENABLED",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-product.go:59",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -11919,10 +12241,10 @@
       "name": "BUSTER_PRODUCT_ISSUER",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-product.go:68",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -11989,10 +12311,10 @@
       "name": "BUSTER_PRODUCT_PRODUCER",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-product.go:68",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -12059,10 +12381,10 @@
       "name": "BUSTER_PRODUCT_VERIFY_KEY",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-product.go:66",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -12129,10 +12451,10 @@
       "name": "BUSTER_READY_AUDIENCE",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -12204,10 +12526,16 @@
       "name": "BUSTER_READY_LISTEN",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:18",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
+          "order": 1,
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -12277,10 +12605,10 @@
       "name": "BUSTER_READY_PRODUCER",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -12347,10 +12675,10 @@
       "name": "BUSTER_READY_TLS_CERT",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -12417,10 +12745,10 @@
       "name": "BUSTER_READY_TLS_KEY",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -12459,36 +12787,63 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty Kubernetes Role name; this reader trims whitespace but does not validate name syntax at startup.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it redirects the Secret permission reference in leased namespaces.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty Kubernetes Role name; this reader trims whitespace but does not validate name syntax at startup.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `buster-controller-secrets`.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects the default.",
+          "failure": "RoleBinding reconciliation or later Secret access fails.",
+          "impact": "Changing it redirects the Secret permission reference in leased namespaces.",
+          "invalidBehavior": "A malformed non-empty name survives startup and later fails admission; a wrong valid name leaves Secret access ineffective.",
+          "line": 167,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise the checked-in name applies.",
+          "purpose": "Selects the Role referenced by generated Secret-access RoleBindings.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 193,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 167,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_SECRET_ROLE_NAME. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses `buster-controller-secrets`.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent, empty, or whitespace-only value selects the default.",
+      "failureMeaning": "RoleBinding reconciliation or later Secret access fails.",
+      "invalidBehavior": "A malformed non-empty name survives startup and later fails admission; a wrong valid name leaves Secret access ineffective.",
+      "meaning": "Selects the Role referenced by generated Secret-access RoleBindings.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:193",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_SECRET_ROLE_NAME",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:167",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:167",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "buster-controller-secrets"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed non-empty process value wins; otherwise the checked-in name applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12496,9 +12851,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 167,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "rbac-role-reference",
       "sensitivityReasons": [
@@ -12509,9 +12870,13 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
       "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
@@ -12646,36 +13011,63 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty Kubernetes role name; this reader trims whitespace but does not validate name syntax at startup.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the permission set bound to approved tester subjects.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty Kubernetes role name; this reader trims whitespace but does not validate name syntax at startup.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `buster-namespace-tester`.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects the default.",
+          "failure": "Access-binding reconciliation fails or approved testers remain unauthorized.",
+          "impact": "Changing it changes the permission set bound to approved tester subjects.",
+          "invalidBehavior": "A malformed non-empty name survives startup and later fails admission; a wrong valid name grants no intended tester authority.",
+          "line": 169,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise the checked-in name applies.",
+          "purpose": "Selects the ClusterRole or Role reference granted for requested tester access.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 197,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 169,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_TESTER_ROLE_NAME. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses `buster-namespace-tester`.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent, empty, or whitespace-only value selects the default.",
+      "failureMeaning": "Access-binding reconciliation fails or approved testers remain unauthorized.",
+      "invalidBehavior": "A malformed non-empty name survives startup and later fails admission; a wrong valid name grants no intended tester authority.",
+      "meaning": "Selects the ClusterRole or Role reference granted for requested tester access.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:197",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "BUSTER_TESTER_ROLE_NAME",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:169",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:169",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "buster-namespace-tester"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A trimmed non-empty process value wins; otherwise the checked-in name applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12683,9 +13075,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 169,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
@@ -12694,9 +13092,13 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
       "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
@@ -17384,10 +17786,10 @@
       "name": "KUBECLAW_DEMO_AUTH_TEST_OUTPUT",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-auth-credentials_test.go:78",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -17437,10 +17839,10 @@
       "name": "KUBECLAW_DEMO_HANDOFF_INTEROP_INPUT",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-producer-interop_test.go:19",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -17490,10 +17892,10 @@
       "name": "KUBECLAW_DEMO_HANDOFF_INTEROP_OUTPUT",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-producer-interop_test.go:90",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -19387,36 +19789,92 @@
       "surface": "operator-authored-input"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty namespace name. This reader trims whitespace but does not validate Kubernetes name syntax at startup.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it moves lease discovery and generated namespace bindings to another namespace authority.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty namespace name. This reader trims whitespace but does not validate Kubernetes name syntax at startup.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses the trimmed ServiceAccount namespace file; if that file is unreadable or blank, uses `kubeclaw`.",
+          "emptyBehavior": "An absent, empty, or whitespace-only environment value selects the ServiceAccount namespace file and then `kubeclaw`.",
+          "failure": "The controller starts with a malformed non-empty value, but reconciliation or Kubernetes admission fails.",
+          "impact": "Changing it moves lease discovery and generated namespace bindings to another namespace authority.",
+          "invalidBehavior": "A non-empty invalid value survives startup and later makes API paths, subjects, or admitted objects fail.",
+          "line": 133,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "Trimmed non-empty process value, then trimmed non-empty ServiceAccount namespace file, then `kubeclaw`.",
+          "precedenceSteps": [
+            {
+              "condition": "trimmed value is non-empty",
+              "evidence": "cmd/buster-namespace-controller/main.go:133",
+              "order": 1,
+              "source": "process environment"
+            },
+            {
+              "condition": "environment value is blank and file content is readable and non-empty",
+              "evidence": "cmd/buster-namespace-controller/main.go:133",
+              "order": 2,
+              "source": "ServiceAccount namespace file",
+              "value": "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+            },
+            {
+              "condition": "environment and namespace file do not supply a value",
+              "evidence": "cmd/buster-namespace-controller/main.go:133",
+              "order": 3,
+              "source": "controller fallback",
+              "value": "kubeclaw"
+            }
+          ],
+          "purpose": "Selects the namespace in which the Buster namespace controller reads leases and creates its namespace-scoped bindings.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
           "line": 189,
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
+        },
+        {
+          "access": "go-process-env-helper",
+          "line": 133,
+          "path": "cmd/buster-namespace-controller/main.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "injection-only; receiving runtime reader is external or unproved",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject KUBECLAW_NAMESPACE. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "defaultBehavior": "Uses the trimmed ServiceAccount namespace file; if that file is unreadable or blank, uses `kubeclaw`.",
+      "direction": "injected by checked-in manifest and read by checked-in runtime source",
+      "emptyBehavior": "An absent, empty, or whitespace-only environment value selects the ServiceAccount namespace file and then `kubeclaw`.",
+      "failureMeaning": "The controller starts with a malformed non-empty value, but reconciliation or Kubernetes admission fails.",
+      "invalidBehavior": "A non-empty invalid value survives startup and later makes API paths, subjects, or admitted objects fail.",
+      "meaning": "Selects the namespace in which the Buster namespace controller reads leases and creates its namespace-scoped bindings.",
       "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:189",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-source-backed-contract",
       "name": "KUBECLAW_NAMESPACE",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:133",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is blank and file content is readable and non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:133",
+          "order": 2,
+          "source": "ServiceAccount namespace file",
+          "value": "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+        },
+        {
+          "condition": "environment and namespace file do not supply a value",
+          "evidence": "cmd/buster-namespace-controller/main.go:133",
+          "order": 3,
+          "source": "controller fallback",
+          "value": "kubeclaw"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "Trimmed non-empty process value, then trimmed non-empty ServiceAccount namespace file, then `kubeclaw`.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -19424,9 +19882,15 @@
           "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml"
         }
       ],
-      "readers": [],
-      "required": "conditional-or-external",
-      "runtimeOwner": "external receiving image/runtime; no checked-in reader proved",
+      "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 133,
+          "path": "cmd/buster-namespace-controller/main.go"
+        }
+      ],
+      "required": "conditional",
+      "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
@@ -19435,9 +19899,13 @@
         {
           "component": "Helm chart charts/kubeclaw",
           "evidence": "charts/kubeclaw/Chart.yaml"
+        },
+        {
+          "component": "kubeclaw",
+          "evidence": "package.json"
         }
       ],
-      "surface": "kubernetes-injected-transport"
+      "surface": "checked-in-injected-transport"
     },
     {
       "acceptedForm": "A non-empty scope path supplied by the native supervisor.",
@@ -19599,10 +20067,10 @@
       "name": "KUBECLAW_NATIVE_TEST_CONFIG",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-product-native_test.go:30",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -20856,6 +21324,12 @@
       "name": "KUBERNETES_SERVICE_HOST",
       "precedence": [
         {
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/main.go:135",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
           "condition": "set and non-empty",
           "evidence": "docker/buster-runtime-entrypoint.sh:133",
           "order": 1,
@@ -20921,8 +21395,28 @@
       "blockerOwner": null,
       "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty port string; this reader trims whitespace but does not validate numeric syntax or range.",
+          "access": "go-process-env-helper",
+          "defaultBehavior": "Uses `443`.",
+          "emptyBehavior": "An absent, empty, or whitespace-only value selects `443`.",
+          "failure": "The controller cannot complete Kubernetes API requests.",
+          "impact": "Changing it redirects every controller request to another port on `KUBERNETES_SERVICE_HOST`.",
+          "invalidBehavior": "A malformed non-empty value is concatenated into the API URL and later fails URL parsing, connection setup, or reconciliation.",
+          "line": 136,
+          "path": "cmd/buster-namespace-controller/main.go",
+          "precedence": "A trimmed non-empty process value wins; otherwise `443` applies.",
+          "purpose": "Selects the Kubernetes API TCP port used by the Buster namespace controller.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 136,
+          "path": "cmd/buster-namespace-controller/main.go"
+        },
         {
           "access": "shell-parameter",
           "line": 133,
@@ -20950,10 +21444,23 @@
       "failureMeaning": "The consumer stops with its source-defined missing-value error.",
       "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
       "meaning": "A checked-in process reads KUBERNETES_SERVICE_PORT, but this surface is runtime-process-boundary and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.",
-      "meaningEvidence": "docker/buster-runtime-entrypoint.sh:133",
+      "meaningEvidence": "cmd/buster-namespace-controller/main.go:136",
       "meaningStatus": "classified-non-operator-boundary",
       "name": "KUBERNETES_SERVICE_PORT",
       "precedence": [
+        {
+          "condition": "trimmed value is non-empty",
+          "evidence": "cmd/buster-namespace-controller/main.go:136",
+          "order": 1,
+          "source": "process environment"
+        },
+        {
+          "condition": "environment value is absent, empty, or whitespace",
+          "evidence": "cmd/buster-namespace-controller/main.go:136",
+          "order": 2,
+          "source": "Go helper fallback",
+          "value": "443"
+        },
         {
           "condition": "set and non-empty",
           "evidence": "docker/buster-runtime-entrypoint.sh:133",
@@ -20971,6 +21478,11 @@
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
       "producers": [],
       "readers": [
+        {
+          "access": "go-process-env-helper",
+          "line": 136,
+          "path": "cmd/buster-namespace-controller/main.go"
+        },
         {
           "access": "shell-parameter",
           "line": 133,
@@ -34792,10 +35304,10 @@
       "name": "PRODUCT_TS_EXPORTER",
       "precedence": [
         {
-          "condition": "no source default was found",
-          "evidence": "see consumers",
+          "condition": "reader is called",
+          "evidence": "cmd/buster-namespace-controller/demo-product_test.go:202",
           "order": 1,
-          "source": "process environment or injected Kubernetes env"
+          "source": "process environment"
         }
       ],
       "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
@@ -49952,10 +50464,10 @@
     "cliOccurrences": 124,
     "configurationConsumerSources": 274,
     "derivedValues": 47,
-    "environmentConsumers": 843,
+    "environmentConsumers": 855,
     "environmentMeaningBlockers": 0,
     "environmentVariables": 437,
-    "injectionOnlyEnvironmentVariables": 50,
+    "injectionOnlyEnvironmentVariables": 41,
     "operatorAuthoredEnvironmentInputs": 157,
     "operatorAuthoredMeaningBlockers": 0,
     "secretAuthorityBlockers": 0,
