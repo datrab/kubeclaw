@@ -214,6 +214,20 @@ try {
     assert(item?.consumerContracts.some((contract) => contract.path === 'docker/buster-runtime-entrypoint.sh'),
       `${name}: Buster runtime entrypoint consumer is missing`);
   }
+  const busterEntrypointReaders = baselineRuntime.environment.filter((item) => item.readers
+    .some((reader) => reader.path === 'docker/buster-runtime-entrypoint.sh'));
+  for (const item of busterEntrypointReaders.filter((candidate) => !['HOME', 'XDG_RUNTIME_DIR'].includes(candidate.name))) {
+    assert(item.consumerContracts.some((contract) => contract.path === 'docker/buster-runtime-entrypoint.sh'),
+      `${item.name}: checked-in Buster entrypoint input has only generic runtime wording`);
+  }
+  for (const [name, expectedDefault] of [
+    ['BUSTER_V2_MAX_ACTIVE_JOBS', '2'], ['BUSTER_V2_MAX_QUEUED_JOBS', '16'],
+    ['BUSTER_V2_MAX_CONCURRENT_ATTEMPTS', '64'], ['BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY', 'nova:production'],
+  ]) {
+    const item = baselineRuntime.environment.find((candidate) => candidate.name === name);
+    assert.match(item?.defaultBehavior ?? '', new RegExp(`\\b${expectedDefault.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}\\b`, 'u'),
+      `${name}: exact default ${expectedDefault} is not published`);
+  }
   const operatorEnvironment = baselineRuntime.environment.filter((item) => item.surface === 'operator-authored-input');
   assert.ok(operatorEnvironment.length > 150, 'operator environment inventory unexpectedly lost its main surface');
   assert.equal(operatorEnvironment.filter((item) => /blocker/u.test(item.meaningStatus)).length, 0, 'operator environment contract blockers remain');

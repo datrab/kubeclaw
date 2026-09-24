@@ -94,7 +94,7 @@ function meaningExcerpt(sourcePath, token, { requireSemanticLanguage = false } =
   return { path: sourcePath, line, excerpt };
 }
 
-const environmentContract = ({ purpose, acceptedForm, defaultBehavior, emptyBehavior, invalidBehavior, precedence, precedenceSteps, impact, failure, required = 'conditional' }) => ({
+const environmentContract = ({ purpose, acceptedForm, defaultBehavior, emptyBehavior, invalidBehavior, precedence, precedenceSteps, impact, failure, required = 'conditional', evidence = [] }) => ({
   purpose,
   acceptedForm,
   defaultBehavior,
@@ -105,6 +105,7 @@ const environmentContract = ({ purpose, acceptedForm, defaultBehavior, emptyBeha
   impact,
   failure,
   required,
+  evidence,
 });
 
 const ENVIRONMENT_CONTRACTS = new Map(Object.entries({
@@ -272,8 +273,15 @@ const busterReadinessContracts = {
     required: 'required when `BUSTER_READY_LISTEN` is non-empty',
   }),
 };
+const busterReadinessEvidence = {
+  BUSTER_READY_LISTEN: [{ path: busterReadinessSource, line: 18, endLine: 27 }, { path: busterReadinessSource, line: 32, endLine: 43 }],
+  BUSTER_READY_AUDIENCE: [{ path: busterReadinessSource, line: 18, endLine: 27 }, { path: 'cmd/buster-namespace-controller/demo-readiness.go', line: 116, endLine: 141 }],
+  BUSTER_READY_PRODUCER: [{ path: busterReadinessSource, line: 18, endLine: 27 }, { path: 'cmd/buster-namespace-controller/demo-readiness.go', line: 116, endLine: 141 }],
+  BUSTER_READY_TLS_CERT: [{ path: busterReadinessSource, line: 18, endLine: 39 }],
+  BUSTER_READY_TLS_KEY: [{ path: busterReadinessSource, line: 18, endLine: 39 }],
+};
 for (const [name, contract] of Object.entries(busterReadinessContracts)) {
-  addEnvironmentConsumerContract(name, busterReadinessSource, contract);
+  addEnvironmentConsumerContract(name, busterReadinessSource, { ...contract, evidence: busterReadinessEvidence[name] });
 }
 
 const busterProductSource = 'cmd/buster-namespace-controller/demo-product.go';
@@ -344,8 +352,15 @@ const busterProductContracts = {
     required: 'required when `BUSTER_PRODUCT_ENABLED=true`',
   }),
 };
+const busterProductEvidence = Object.fromEntries(Object.keys(busterProductContracts).map((name) => [name, [
+  { path: busterProductSource, line: 58, endLine: 80 },
+  ...(name === 'BUSTER_PRODUCT_ENABLED' ? [{ path: busterProductSource, line: 331, endLine: 343 }] : []),
+  ...(name === 'BUSTER_PRODUCT_ACTORS_JSON' || name === 'BUSTER_PRODUCT_ISSUER'
+    ? [{ path: busterProductSource, line: 169, endLine: 178 }] : []),
+  ...(name === 'BUSTER_PRODUCT_VERIFY_KEY' ? [{ path: busterProductSource, line: 162, endLine: 172 }] : []),
+]]));
 for (const [name, contract] of Object.entries(busterProductContracts)) {
-  addEnvironmentConsumerContract(name, busterProductSource, contract);
+  addEnvironmentConsumerContract(name, busterProductSource, { ...contract, evidence: busterProductEvidence[name] });
 }
 
 const busterRuntimeSource = 'docker/buster-runtime-entrypoint.sh';
@@ -449,17 +464,86 @@ const busterRuntimeContracts = {
     impact: 'Changing it changes generated lease `apiVersion` values and the selected Kubernetes API endpoint.',
     failure: 'Capability construction or later Kubernetes requests fail against an invalid or unavailable version.',
   }),
+  BUILDKIT_HOST: environmentContract({ purpose: 'Selects the Unix socket on which the bundled rootless BuildKit daemon listens and the generated container-build capability connects.', acceptedForm: 'A non-empty BuildKit address; the shipped path uses `unix:///run/user/1000/buildkit/buildkitd.sock`.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'An invalid address prevents directory setup, daemon readiness, or later `buildctl` connections.', precedence: 'The exact process value is the only source and is copied into the generated runtime configuration.', impact: 'Changing it moves both the daemon listener and build client to another socket.', failure: 'The container stops after the bounded readiness loop or builds cannot connect.', required: 'required' }),
+  BUILDKIT_STATE_DIR: environmentContract({ purpose: 'Selects the persistent root directory used by the bundled BuildKit daemon.', acceptedForm: 'A non-empty writable directory path.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'Directory creation, ownership, or daemon startup fails for an unusable path.', precedence: 'The exact process value is the only source.', impact: 'Changing it moves BuildKit cache and worker state.', failure: 'The BuildKit daemon fails before the Buster worker starts.', required: 'required' }),
+  BUILDKIT_OTEL_SOCKET_PATH: environmentContract({ purpose: 'Selects the Unix socket on which BuildKit emits OTLP telemetry.', acceptedForm: 'A writable Unix-socket path.', defaultBehavior: 'Uses `$XDG_RUNTIME_DIR/buildkit/otel-grpc.sock`.', emptyBehavior: 'An empty value selects the XDG-based default.', invalidBehavior: 'A bad path prevents parent-directory creation or BuildKit startup.', precedence: 'A non-empty process value wins; otherwise the XDG runtime directory supplies the socket path.', impact: 'Changing it moves the BuildKit telemetry endpoint.', failure: 'The entrypoint or BuildKit daemon stops before the worker starts.' }),
+  BUSTER_PLAN_CONFIG_ROOT: environmentContract({ purpose: 'Selects the private directory in which the entrypoint writes generated Buster platform, runtime, and Kubernetes client configuration.', acceptedForm: 'A writable directory path.', defaultBehavior: 'Uses `/tmp/buster-plan-config`.', emptyBehavior: 'An empty value selects `/tmp/buster-plan-config`.', invalidBehavior: 'Creation, permission, file-write, or ownership failure stops the entrypoint.', precedence: 'A non-empty process value wins; otherwise the fixed temporary directory applies.', impact: 'Changing it moves generated configuration and changes the base directory for relative runtime paths.', failure: 'The Buster worker does not start.' }),
+  BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT: environmentContract({ purpose: 'Selects the projected Kubernetes credential directory used to build the worker kubeconfig.', acceptedForm: 'A directory containing readable `token`, `ca.crt`, and `namespace` files; the namespace must contain only lowercase letters, digits, and hyphen.', defaultBehavior: 'Uses `/var/run/buster-worker/kubernetes`.', emptyBehavior: 'An empty value selects the default mount path.', invalidBehavior: 'Missing files stop the strict shell; an invalid namespace reports `projected Kubernetes namespace is invalid`.', precedence: 'A non-empty process value wins; otherwise the fixed projected-volume path applies.', impact: 'Changing it selects a different Kubernetes credential projection and namespace authority.', failure: 'The entrypoint stops before it writes kubeconfig or starts the worker.' }),
+  BUSTER_NETWORK_HTTP_EXACT_ORIGINS: environmentContract({ purpose: 'Defines exact HTTP origins that the Buster `network.http` capability may contact in addition to its fixed suffix policy.', acceptedForm: 'A comma-separated list of origins; items are trimmed and empty items are removed. Runtime origin parsing and policy checks validate retained values.', defaultBehavior: 'Uses an empty list.', emptyBehavior: 'An absent or empty value permits no additional exact origins.', invalidBehavior: 'An invalid retained origin fails capability construction with the network policy validation error.', precedence: 'The process list wholly replaces the empty default.', impact: 'Changing it expands or narrows the exact outbound HTTP allowlist.', failure: 'The runtime fails capability construction or denies the request.' }),
+  BUSTER_BROWSER_AXE_EXACT_ORIGINS: environmentContract({ purpose: 'Defines exact web origins permitted for the Buster Axe, Lighthouse, visual, and Playwright browser capabilities.', acceptedForm: 'A comma-separated list of origins; items are trimmed and empty items are removed. Each browser capability validates the retained origins.', defaultBehavior: 'Uses an empty list.', emptyBehavior: 'An absent or empty value permits no additional exact browser origins.', invalidBehavior: 'An invalid retained origin fails the affected browser capability policy construction.', precedence: 'The process list wholly replaces the empty default.', impact: 'Changing it expands or narrows browser test destinations.', failure: 'The runtime fails capability construction or denies a target outside the policy.' }),
+  BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET: environmentContract({ purpose: 'Controls whether the `network.http` capability accepts WebSocket requests.', acceptedForm: 'Only exact `true` enables WebSocket support.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An absent or empty value selects `false`.', invalidBehavior: 'Any value other than exact `true` is treated as false; no startup error is produced.', precedence: 'The exact process comparison is the only source.', impact: 'Changing it to exact `true` permits WebSocket traffic within the remaining network policy.', failure: 'WebSocket requests are denied when the effective value is false.' }),
+  BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY: environmentContract({ purpose: 'Names the source authority that must appear in every verified Nova snapshot attestation.', acceptedForm: 'A non-empty authority string; the loader rejects an empty effective value when it constructs the Ed25519 verifier.', defaultBehavior: 'Uses `nova:production`.', emptyBehavior: 'An empty value selects `nova:production`.', invalidBehavior: 'An empty generated authority fails with `BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID`; a different valid authority rejects attestations from the previous authority.', precedence: 'A truthy process value wins; otherwise `nova:production` applies.', impact: 'Changing it rotates the logical source issuer independently from the public key.', failure: 'Runtime startup or source-snapshot admission fails.' }),
+  BUSTER_V2_MAX_ACTIVE_JOBS: environmentContract({ purpose: 'Caps how many remote-plan jobs may execute at the same time.', acceptedForm: 'A non-empty value converted by JavaScript `Number` to a positive safe integer.', defaultBehavior: 'Uses `2`.', emptyBehavior: 'An empty value selects `2`.', invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe input fails with `BUSTER_REMOTE_CONFIG_INVALID:maximumActiveJobs`.', precedence: 'A non-empty process value wins; otherwise `2` applies.', impact: 'Changing it changes parallel job execution and resource pressure; accepted jobs wait in the queue when the cap is reached.', failure: 'Invalid configuration stops startup; valid excess work remains queued.' }),
+  BUSTER_V2_MAX_QUEUED_JOBS: environmentContract({ purpose: 'Caps accepted jobs waiting for an execution slot.', acceptedForm: 'A non-empty value converted by JavaScript `Number` to a positive safe integer.', defaultBehavior: 'Uses `16`.', emptyBehavior: 'An empty value selects `16`.', invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe input fails with `BUSTER_REMOTE_CONFIG_INVALID:maximumQueuedJobs`.', precedence: 'A non-empty process value wins; otherwise `16` applies.', impact: 'Changing it changes admission capacity while active slots are occupied.', failure: 'Invalid configuration stops startup; a full valid queue rejects new work with `BUSTER_REMOTE_ADMISSION_FULL`.' }),
+  BUSTER_V2_MAX_CONCURRENT_ATTEMPTS: environmentContract({ purpose: 'Caps both one job’s requested attempt concurrency and the sum of attempt weights across active jobs.', acceptedForm: 'A non-empty value converted by JavaScript `Number` to a positive safe integer.', defaultBehavior: 'Uses `64`.', emptyBehavior: 'An empty value selects `64`.', invalidBehavior: 'Zero, negative, fractional, nonnumeric, infinite, or unsafe input fails with `BUSTER_REMOTE_CONFIG_INVALID:maximumConcurrentAttempts`.', precedence: 'A non-empty process value wins; otherwise `64` applies.', impact: 'Changing it changes admission and scheduling of attempt-heavy jobs.', failure: 'Invalid configuration stops startup; an oversized job returns `BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT` and aggregate pressure delays queued jobs.' }),
+  KUBECLAW_REGISTRY_CONFIG: environmentContract({ purpose: 'Supplies the complete registry endpoint, transport, and authentication contract from which the entrypoint generates BuildKit and runtime client files.', acceptedForm: 'Non-empty JSON accepted by `scripts/registry-client-config.mjs` for both `buildkit` and `runtime` outputs.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'Malformed, incomplete, or unsafe registry configuration makes the generator stop before BuildKit starts.', precedence: 'The exact process value is written to the private temporary input and is the only registry authority.', impact: 'Changing it redirects image push/pull traffic and changes transport or credentials for both clients.', failure: 'The container stops before BuildKit or Buster starts.', required: 'required' }),
+  KUBERNETES_SERVICE_HOST: environmentContract({ purpose: 'Selects the Kubernetes API host written into the generated worker kubeconfig.', acceptedForm: 'A non-empty host or IP address supplied by Kubernetes service discovery.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'Malformed text creates an unusable API URL and later Kubernetes requests fail.', precedence: 'The exact process value is the only host source.', impact: 'Changing it redirects every worker Kubernetes capability to another API endpoint.', failure: 'Kubeconfig generation or later Kubernetes operations fail.', required: 'required' }),
+  KUBERNETES_SERVICE_PORT: environmentContract({ purpose: 'Selects the Kubernetes API port written into the generated worker kubeconfig.', acceptedForm: 'A non-empty port string supplied by Kubernetes service discovery.', defaultBehavior: 'No default in this entrypoint consumer.', emptyBehavior: 'An absent or empty value stops the entrypoint.', invalidBehavior: 'Malformed text creates an unusable API URL and later Kubernetes requests fail.', precedence: 'The exact process value is the only port source for this consumer.', impact: 'Changing it redirects every worker Kubernetes capability to another API port.', failure: 'Kubeconfig generation or later Kubernetes operations fail.', required: 'required' }),
+  RUNTIME_CONFIG_ROOT: environmentContract({ purpose: 'Carries the entrypoint-selected generated-configuration directory into its embedded Node generator.', acceptedForm: 'The internal value already selected through `BUSTER_PLAN_CONFIG_ROOT`.', defaultBehavior: 'Assigned internally before the child process starts.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'A mismatched path makes generated configuration writes fail or land outside the directory prepared by the shell.', precedence: 'The local shell assignment is the only producer.', impact: 'Joins shell directory preparation to Node file generation.', failure: 'The entrypoint stops before starting Buster.', required: 'internal' }),
+  REGISTRY_CLIENT_RUNTIME: environmentContract({ purpose: 'Carries the internally generated registry runtime-client file path into the embedded Node configuration generator.', acceptedForm: 'The private `runtime.json` path generated earlier in the same entrypoint.', defaultBehavior: 'Assigned internally before the child process starts.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'A missing or invalid file stops JSON parsing and configuration generation.', precedence: 'The local shell assignment is the only producer.', impact: 'Binds Buster container-build and scanner clients to the same registry contract.', failure: 'The entrypoint stops before starting Buster.', required: 'internal' }),
+  REGISTRY_REFERENCE: environmentContract({ purpose: 'Carries the normalized registry reference from the generated client contract into the embedded Node configuration generator.', acceptedForm: 'The non-empty registry reference read from the generated runtime client JSON.', defaultBehavior: 'Assigned internally before the child process starts.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'Missing or invalid registry JSON prevents this assignment or later produces invalid allowed prefixes.', precedence: 'The generated registry client file is the only producer.', impact: 'Sets repository and allowlist prefixes used by build, fixture, and security-scan capabilities.', failure: 'The entrypoint stops or registry operations are denied.', required: 'internal' }),
+  CONTROLLER_NAMESPACE: environmentContract({ purpose: 'Carries the validated projected ServiceAccount namespace into the embedded Node configuration generator.', acceptedForm: 'The internal lowercase letter, digit, and hyphen namespace value validated by the shell.', defaultBehavior: 'Read internally from the projected namespace file.', emptyBehavior: 'An empty projected namespace is rejected before assignment.', invalidBehavior: 'Invalid namespace text stops the entrypoint.', precedence: 'The projected ServiceAccount namespace file is the only producer.', impact: 'Sets the controller namespace used by Kubernetes capabilities.', failure: 'The entrypoint stops or capabilities target the wrong valid namespace.', required: 'internal' }),
+  BUSTER_V2_STATE_DIR: environmentContract({ purpose: 'Carries the resolved plan state directory into the embedded Node configuration generator.', acceptedForm: 'The internal path selected through `BUSTER_PLAN_STATE_DIR`.', defaultBehavior: 'Assigned internally from the selected state directory.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'A mismatched path separates shell ownership setup from runtime state resolution.', precedence: 'The local shell assignment is the only producer.', impact: 'Binds generated runtime state to the prepared directory.', failure: 'Runtime startup or durable state operations fail.', required: 'internal' }),
+  BUSTER_V2_RUN_DIR: environmentContract({ purpose: 'Carries the resolved job working directory into the embedded Node configuration generator.', acceptedForm: 'The internal path selected through `BUSTER_PLAN_RUN_DIR`.', defaultBehavior: 'Assigned internally from the selected run directory.', emptyBehavior: 'No supported empty state exists.', invalidBehavior: 'A mismatched path separates shell ownership setup from job workspace resolution.', precedence: 'The local shell assignment is the only producer.', impact: 'Binds generated runtime workspaces to the prepared directory.', failure: 'Runtime startup or job execution fails.', required: 'internal' }),
+};
+const entrypointEvidence = (line, endLine) => ({ path: busterRuntimeSource, line, endLine });
+const productionEvidence = (line, endLine) => ({ path: 'skills/buster/engine/test-gates/production.ts', line, endLine });
+const serviceEvidence = (line, endLine) => ({ path: 'skills/buster/engine/test-gates/remote-plan-service.ts', line, endLine });
+const busterRuntimeEvidence = {
+  BUILDKIT_HOST: [entrypointEvidence(7, 35), entrypointEvidence(53, 61), productionEvidence(252, 264)],
+  BUILDKIT_STATE_DIR: [entrypointEvidence(7, 35)],
+  BUILDKIT_OTEL_SOCKET_PATH: [entrypointEvidence(7, 35)],
+  BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT: [entrypointEvidence(63, 87), productionEvidence(200, 204), productionEvidence(355, 375)],
+  BUSTER_PLAN_PORT: [entrypointEvidence(171, 187), productionEvidence(410, 419), { path: 'skills/buster/engine/test-gates/remote-plan-runtime.ts', line: 24, endLine: 50 }],
+  BUSTER_PLAN_STATE_DIR: [entrypointEvidence(37, 41), entrypointEvidence(108, 117), productionEvidence(212, 225)],
+  BUSTER_PLAN_RUN_DIR: [entrypointEvidence(37, 41), entrypointEvidence(108, 117), productionEvidence(231, 237)],
+  BUSTER_PLAN_CONFIG_ROOT: [entrypointEvidence(37, 41), entrypointEvidence(108, 117), entrypointEvidence(147, 180)],
+  BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT: [entrypointEvidence(108, 145)],
+  BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY: [entrypointEvidence(103, 108), productionEvidence(135, 152), serviceEvidence(71, 105)],
+  BUSTER_TRUSTED_PEER_SPIFFE_ID: [entrypointEvidence(1, 6), entrypointEvidence(171, 187), entrypointEvidence(325, 336), { path: 'skills/buster/engine/test-gates/remote-plan-http.ts', line: 105, endLine: 120 }],
+  BUSTER_V2_MAX_ARCHIVE_BYTES: [entrypointEvidence(171, 187), productionEvidence(212, 225), serviceEvidence(71, 105)],
+  BUSTER_V2_MAX_EXTRACTED_BYTES: [entrypointEvidence(171, 187), productionEvidence(231, 237), serviceEvidence(474, 489)],
+  BUSTER_V2_MAX_ACTIVE_JOBS: [entrypointEvidence(171, 187), productionEvidence(231, 237), serviceEvidence(474, 489), serviceEvidence(647, 658)],
+  BUSTER_V2_MAX_QUEUED_JOBS: [entrypointEvidence(171, 187), productionEvidence(231, 237), serviceEvidence(474, 489), serviceEvidence(530, 540)],
+  BUSTER_V2_MAX_CONCURRENT_ATTEMPTS: [entrypointEvidence(171, 187), productionEvidence(231, 237), serviceEvidence(474, 489), serviceEvidence(530, 540), serviceEvidence(647, 658)],
+  BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY: [entrypointEvidence(171, 187), productionEvidence(212, 225), serviceEvidence(84, 105)],
+  BUSTER_ALLOWED_SOURCE_SECRETS: [entrypointEvidence(147, 153), entrypointEvidence(221, 227), productionEvidence(265, 277), { path: 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', line: 447, endLine: 464 }],
+  BUSTER_LEASE_API_GROUP: [entrypointEvidence(221, 237), productionEvidence(265, 280), { path: 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', line: 447, endLine: 453 }],
+  BUSTER_LEASE_API_VERSION: [entrypointEvidence(221, 237), productionEvidence(265, 280), { path: 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', line: 447, endLine: 453 }],
+  BUSTER_NETWORK_HTTP_EXACT_ORIGINS: [entrypointEvidence(147, 163), entrypointEvidence(239, 245)],
+  BUSTER_BROWSER_AXE_EXACT_ORIGINS: [entrypointEvidence(147, 163), entrypointEvidence(247, 292)],
+  BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET: [entrypointEvidence(147, 153), entrypointEvidence(239, 245)],
+  KUBECLAW_REGISTRY_CONFIG: [entrypointEvidence(11, 22), entrypointEvidence(215, 220), entrypointEvidence(296, 303)],
+  KUBERNETES_SERVICE_HOST: [entrypointEvidence(118, 145)],
+  KUBERNETES_SERVICE_PORT: [entrypointEvidence(118, 145)],
+  RUNTIME_CONFIG_ROOT: [entrypointEvidence(108, 117), entrypointEvidence(147, 180)],
+  REGISTRY_CLIENT_RUNTIME: [entrypointEvidence(11, 22), entrypointEvidence(147, 180), entrypointEvidence(296, 303)],
+  REGISTRY_REFERENCE: [entrypointEvidence(11, 22), entrypointEvidence(215, 227)],
+  CONTROLLER_NAMESPACE: [entrypointEvidence(118, 153), entrypointEvidence(221, 237)],
+  BUSTER_V2_STATE_DIR: [entrypointEvidence(108, 117), entrypointEvidence(171, 180), productionEvidence(212, 225)],
+  BUSTER_V2_RUN_DIR: [entrypointEvidence(108, 117), entrypointEvidence(171, 180), productionEvidence(231, 237)],
 };
 for (const [name, contract] of Object.entries(busterRuntimeContracts)) {
-  addEnvironmentConsumerContract(name, busterRuntimeSource, contract);
+  addEnvironmentConsumerContract(name, busterRuntimeSource, { ...contract, evidence: busterRuntimeEvidence[name] ?? [] });
 }
 
 for (const [name, contract] of Object.entries({
-  KUBERNETES_SERVICE_PORT: environmentContract({ purpose: 'Selects the Kubernetes API TCP port used by the Buster namespace controller.', acceptedForm: 'A non-empty port string; this reader trims whitespace but does not validate numeric syntax or range.', defaultBehavior: 'Uses `443`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects `443`.', invalidBehavior: 'A malformed non-empty value is concatenated into the API URL and later fails URL parsing, connection setup, or reconciliation.', precedence: 'A trimmed non-empty process value wins; otherwise `443` applies.', impact: 'Changing it redirects every controller request to another port on `KUBERNETES_SERVICE_HOST`.', failure: 'The controller cannot complete Kubernetes API requests.' }),
+  KUBERNETES_SERVICE_HOST: environmentContract({ purpose: 'Selects the Kubernetes API host used by the Buster namespace controller.', acceptedForm: 'A non-empty host name or IP address; this reader does not trim or validate syntax at startup.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value is rejected.', invalidBehavior: 'Malformed non-empty text reaches the API URL and later fails URL parsing, TLS, DNS, or connection setup.', precedence: 'The exact process value is the only host source.', impact: 'Changing it redirects every namespace-controller Kubernetes request.', failure: 'The controller stops before reconciliation for an empty value or cannot complete API requests for an unusable value.', required: 'required', evidence: [{ path: busterControllerSource, line: 132, endLine: 165 }] }),
+  KUBERNETES_SERVICE_PORT: environmentContract({ purpose: 'Selects the Kubernetes API TCP port used by the Buster namespace controller.', acceptedForm: 'A non-empty port string; this reader trims whitespace but does not validate numeric syntax or range.', defaultBehavior: 'Uses `443`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects `443`.', invalidBehavior: 'A malformed non-empty value is concatenated into the API URL and later fails URL parsing, connection setup, or reconciliation.', precedence: 'A trimmed non-empty process value wins; otherwise `443` applies.', impact: 'Changing it redirects every controller request to another port on `KUBERNETES_SERVICE_HOST`.', failure: 'The controller cannot complete Kubernetes API requests.', evidence: [{ path: busterControllerSource, line: 132, endLine: 165 }] }),
   BUSTER_LEASE_API_GROUP: environmentContract({ purpose: 'Selects the API group used in Buster lease request paths and the controller finalizer.', acceptedForm: 'A non-empty API-group string; this reader trims whitespace but does not validate syntax at startup.', defaultBehavior: 'Uses `kubeclaw.forgestack.ai`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default group.', invalidBehavior: 'A malformed non-empty value survives startup and later causes malformed or not-found API requests or an invalid finalizer.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in group applies.', impact: 'Changing it redirects lease discovery and changes the finalizer identity.', failure: 'Lease reconciliation or Kubernetes admission fails.' }),
   BUSTER_LEASE_API_VERSION: environmentContract({ purpose: 'Selects the API version used in Buster lease request paths.', acceptedForm: 'A non-empty API-version string; this reader trims whitespace but does not validate syntax at startup.', defaultBehavior: 'Uses `v1alpha1`.', emptyBehavior: 'An absent, empty, or whitespace-only value selects the default version.', invalidBehavior: 'A malformed or unavailable non-empty value survives startup and later causes malformed or not-found API requests.', precedence: 'A trimmed non-empty process value wins; otherwise the checked-in version applies.', impact: 'Changing it redirects lease discovery to another served API version.', failure: 'Lease reconciliation fails because the selected resource endpoint is invalid or unavailable.' }),
   BUSTER_ALLOWED_SOURCE_SECRETS: environmentContract({ purpose: 'Lists the Secret object names that a Buster lease may copy from its approved source namespace.', acceptedForm: 'A comma-separated list whose trimmed non-empty entries contain only letters, digits, dot, underscore, or hyphen.', defaultBehavior: 'Uses an empty allowlist.', emptyBehavior: 'An absent, empty, or whitespace-only value permits no source Secret names.', invalidBehavior: 'Any entry outside `^[A-Za-z0-9._-]+$` returns `invalid BUSTER_ALLOWED_SOURCE_SECRETS entry`.', precedence: 'The process value is split, trimmed, and validated; no other controller source adds names.', impact: 'Changing it changes which named Secret references can be admitted into leased namespaces.', failure: 'The controller returns an error before it starts when any entry is invalid.' }),
 })) addEnvironmentConsumerContract(name, busterControllerSource, contract);
+
+const kubernetesSubprocessEnvironmentSources = [
+  ['skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', 500, 520],
+  ['skills/buster/engine/test-gates/kubernetes-runtime-security.ts', 70, 85],
+  ['skills/buster/engine/test-gates/tailscale-exposure-runtime.ts', 90, 102],
+];
+for (const [sourcePath, line, endLine] of kubernetesSubprocessEnvironmentSources) {
+  addEnvironmentConsumerContract('KUBERNETES_SERVICE_HOST', sourcePath, environmentContract({ purpose: 'Passes the pod-discovered Kubernetes API host to the isolated kubectl child process used by this capability.', acceptedForm: 'The Kubernetes-provided host or IP string accepted by kubectl client discovery.', defaultBehavior: 'No repository default; Kubernetes normally injects the service value.', emptyBehavior: 'An absent value is passed as absent and kubectl must resolve configuration through the generated kubeconfig.', invalidBehavior: 'kubectl reports URL, DNS, TLS, or connection failure.', precedence: 'The child process receives the current parent-process value together with the explicit generated kubeconfig.', impact: 'Changing it changes Kubernetes client discovery for this capability.', failure: 'The capability command cannot reach the Kubernetes API.', evidence: [{ path: sourcePath, line, endLine }] }));
+  addEnvironmentConsumerContract('KUBERNETES_SERVICE_PORT', sourcePath, environmentContract({ purpose: 'Passes the pod-discovered Kubernetes API port to the isolated kubectl child process used by this capability.', acceptedForm: 'A port string accepted by kubectl client discovery.', defaultBehavior: 'No repository default in this consumer; Kubernetes normally injects the service value.', emptyBehavior: 'An absent value is passed as absent and kubectl must resolve configuration through the generated kubeconfig.', invalidBehavior: 'kubectl reports URL or connection failure for an unusable value.', precedence: 'The child process receives the current parent-process value together with the explicit generated kubeconfig.', impact: 'Changing it changes Kubernetes client discovery for this capability.', failure: 'The capability command cannot reach the Kubernetes API.', evidence: [{ path: sourcePath, line, endLine }] }));
+}
 
 for (const [sourcePath, purpose, failure] of [
   ['skills/prism/server/control-config.ts', 'Authenticates Control dispatch to the Prism worker when SPIFFE workload identity is disabled.', 'Control startup stops with `PRISM_WORKER_SECRET is required`.'],
@@ -5598,6 +5682,7 @@ function buildRuntimeInputInventory(yamlInventory) {
         assert.equal(typeof contract[field], 'string', `quality gate: ${name} contract lacks ${field}`);
         assert(contract[field].trim(), `quality gate: ${name} contract has an empty ${field}`);
       }
+      assert(contract.evidence?.length, `quality gate: ${name} contract lacks downstream implementation evidence`);
       assert.equal(entry.meaningStatus, 'authored-consumer-specific-contract',
         `quality gate: ${name} still publishes a generic transport description`);
       assert.doesNotMatch(`${entry.meaning} ${entry.defaultBehavior} ${entry.failureMeaning}`,
@@ -5615,8 +5700,22 @@ function buildRuntimeInputInventory(yamlInventory) {
       assert.equal(typeof contract[field], 'string', `quality gate: ${name} runtime contract lacks ${field}`);
       assert(contract[field].trim(), `quality gate: ${name} runtime contract has an empty ${field}`);
     }
+    assert(contract.evidence?.length, `quality gate: ${name} runtime contract lacks downstream implementation evidence`);
+    for (const authority of contract.evidence) {
+      assert(exists(authority.path), `quality gate: ${name} evidence source is missing: ${authority.path}`);
+      const sourceLines = read(authority.path).split('\n').length;
+      assert(Number.isInteger(authority.line) && Number.isInteger(authority.endLine)
+        && authority.line > 0 && authority.endLine >= authority.line && authority.endLine <= sourceLines
+        && authority.endLine - authority.line + 1 <= 60,
+      `quality gate: ${name} has an invalid evidence range at ${authority.path}`);
+    }
     assert.match(entry.meaningStatus, /^authored-consumer-specific-contracts?$/u,
       `quality gate: ${name} still publishes a generic Buster runtime description`);
+  }
+  for (const entry of groupedEnvironment.values()) {
+    if (!entry.readers.some((reader) => reader.path === busterRuntimeSource) || ['HOME', 'XDG_RUNTIME_DIR'].includes(entry.name)) continue;
+    assert(entry.consumerContracts.some((contract) => contract.path === busterRuntimeSource),
+      `quality gate: ${entry.name} is read by the Buster runtime entrypoint but lacks an exact consumer contract`);
   }
   const requireSensitivity = (name, expectedClass) => {
     const entry = groupedEnvironment.get(name);

@@ -302,11 +302,11 @@ try {
   assert.deepEqual(
     baselineInventory.networkExposures
       .filter(({ kind }) => kind === 'Ingress')
-      .map(({ namespace, name, backendService, backendPort }) => [`${namespace}/${name}`, backendService, backendPort]),
+      .map(({ namespace, name, routeKind, host, path: routePath, backendService, backendPort }) => [`${namespace}/${name}`, routeKind, host, routePath, backendService, backendPort]),
     [
-      ['argocd/argocd', 'argocd-server', 80],
-      ['kubeclaw/agent-nova-archviewer', 'agent-nova-archviewer', 3456],
-      ['kubeclaw/prism-studio', 'prism-studio', 80],
+      ['argocd/argocd', 'default-backend', null, null, 'argocd-server', 80],
+      ['kubeclaw/agent-nova-archviewer', 'default-backend', null, null, 'agent-nova-archviewer', 3456],
+      ['kubeclaw/prism-studio', 'default-backend', null, null, 'prism-studio', 80],
     ],
     'Ingress defaultBackend extraction changed or lost a published route');
   copyWorkspace();
@@ -337,9 +337,9 @@ try {
   const combinedIngressInventory = JSON.parse(combinedIngressResult.stdout);
   assert.deepEqual(combinedIngressInventory.networkExposures
     .filter(({ kind, namespace, name }) => kind === 'Ingress' && namespace === 'argocd' && name === 'argocd')
-    .map(({ host, path: routePath, backendService, backendPort }) => [host, routePath, backendService, backendPort]), [
-    ['*', '/', 'argocd-server', 80],
-    ['argocd.example.test', '/api', 'argocd-api', 8080],
+    .map(({ routeKind, host, path: routePath, backendService, backendPort }) => [routeKind, host, routePath, backendService, backendPort]), [
+    ['rule', 'argocd.example.test', '/api', 'argocd-api', 8080],
+    ['default-backend', null, null, 'argocd-server', 80],
   ], 'Ingress with rules and defaultBackend did not publish both effective routes');
   fs.writeFileSync(ingressFixturePath, ingressFixtureBefore);
 

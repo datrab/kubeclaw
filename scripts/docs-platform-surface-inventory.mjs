@@ -21,7 +21,7 @@ const root = path.resolve(sourceRootOverride ?? scriptRoot);
 assert(!isolatedMutation || (sourceRootOverride && root !== scriptRoot),
   'KUBECLAW_DOCS_ISOLATED_MUTATION requires an isolated KUBECLAW_DOCS_SOURCE_ROOT');
 const check = process.argv.includes('--check');
-const sourceRevision = '1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de';
+const sourceRevision = 'ef14b4239925502204e8db1ff2a1c14ff48cb8c4';
 const busterReadyActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true; selected my-values/buster-values.yaml inherits the chart default false';
 const busterProductActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true and busterNamespaceBroker.controller.productDecisions.enabled=true (BUSTER_PRODUCT_ENABLED=true); selected my-values/buster-values.yaml inherits the chart default false for both';
 const jsonTarget = path.join(root, 'docs/generated/inventory/platform-surfaces.json');
@@ -583,20 +583,28 @@ function networkExposuresFrom(rendered) {
       }));
     }
     if (value.kind === 'Ingress') {
-      const paths = (value.spec?.rules ?? []).flatMap((rule) => (rule.http?.paths ?? []).map((route) => ({ rule, route })));
+      const paths = (value.spec?.rules ?? []).flatMap((rule) => (rule.http?.paths ?? []).map((route) => ({ rule, route, routeKind: 'rule' })));
       const records = [
         ...paths,
-        ...(value.spec?.defaultBackend ? [{ rule: {}, route: { backend: value.spec.defaultBackend } }] : []),
+        ...(value.spec?.defaultBackend ? [{ rule: {}, route: { backend: value.spec.defaultBackend }, routeKind: 'default-backend' }] : []),
       ];
-      if (!records.length) records.push({ rule: {}, route: {} });
-      return records.map(({ rule, route }) => ({
-        value: `Ingress/${namespace}/${value.metadata.name}:${rule.host ?? '*'}${route.path ?? '/'}`,
+      if (!records.length) records.push({ rule: {}, route: {}, routeKind: 'unspecified' });
+      return records.map(({ rule, route, routeKind }) => {
+        const maintained = source.startsWith('helm:') || !fs.existsSync(path.join(root, source)) ? null : read(source);
+        const evidenceNeedle = routeKind === 'default-backend' ? 'defaultBackend:'
+          : route.path ? `path: ${route.path}` : null;
+        const evidenceIndex = maintained && evidenceNeedle ? maintained.indexOf(evidenceNeedle) : -1;
+        return {
+        value: routeKind === 'default-backend'
+          ? `Ingress/${namespace}/${value.metadata.name}:default-backend`
+          : `Ingress/${namespace}/${value.metadata.name}:${rule.host ?? '*'}${route.path ?? '<unspecified>'}`,
         kind: 'Ingress',
         namespace,
         name: value.metadata.name,
+        routeKind,
         ingressClassName: value.spec?.ingressClassName ?? null,
-        host: rule.host ?? '*',
-        path: route.path ?? '/',
+        host: routeKind === 'rule' ? rule.host ?? '*' : null,
+        path: routeKind === 'rule' ? route.path ?? null : null,
         pathType: route.pathType ?? null,
         backendService: route.backend?.service?.name ?? null,
         backendPort: route.backend?.service?.port?.name ?? route.backend?.service?.port?.number ?? null,
@@ -604,8 +612,9 @@ function networkExposuresFrom(rendered) {
         activationState,
         ...(activationCondition ? { activationCondition } : {}),
         source,
-        line,
-      }));
+        line: evidenceIndex >= 0 ? lineOf(maintained, evidenceIndex) : line,
+      };
+      });
     }
     return [];
   });

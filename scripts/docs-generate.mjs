@@ -251,7 +251,9 @@ ${table(['Resource', 'Exposure', 'Port or backend', 'Activation', 'Implementatio
   `\`${exposure.kind}/${exposure.namespace}/${exposure.name}\``,
   exposure.kind === 'Service'
     ? `type=\`${exposure.serviceType}\`<br>clusterIP=\`${exposure.clusterIP}\``
-    : `class=\`${exposure.ingressClassName ?? '<default>'}\`<br>host=\`${exposure.host}\`<br>path=\`${exposure.path}\``,
+    : exposure.routeKind === 'default-backend'
+      ? `class=\`${exposure.ingressClassName ?? '<default>'}\`<br>route=\`default backend\`<br>host/path=\`not applicable\``
+      : `class=\`${exposure.ingressClassName ?? '<default>'}\`<br>route=\`${exposure.routeKind}\`<br>host=\`${exposure.host ?? '<none>'}\`<br>path=\`${exposure.path ?? '<none>'}\``,
   exposure.kind === 'Service'
     ? `\`${exposure.protocol} ${exposure.portName ?? '<unnamed>'}:${exposure.port ?? '<none>'} -> ${exposure.targetPort ?? '<none>'}\`${exposure.nodePort ? `<br>nodePort=\`${exposure.nodePort}\`` : ''}`
     : `service=\`${exposure.backendService ?? '<none>'}:${exposure.backendPort ?? '<none>'}\`${exposure.tlsHosts?.length ? `<br>TLS hosts: ${exposure.tlsHosts.map((host) => `\`${host}\``).join(', ')}` : ''}`,
@@ -534,7 +536,14 @@ function renderEnvironment(deploy, secrets, runtimeInputs) {
     return `${authority}<br>Not a completed operator option. Authority owner: ${item.blockerOwner}. Completion requires an exact reader contract for purpose, accepted form, default/required rule, impact, and failure symptom.`;
   };
   const consumerContracts = (item) => item.consumerContracts?.length
-    ? item.consumerContracts.map((contract) => `[\`${contract.path}:${contract.line}\`](${pinnedSourceUrl(contract.path, contract.line, contract.line)})<br>Purpose: ${contract.purpose}<br>Accepted: ${contract.acceptedForm}<br>Default: ${contract.defaultBehavior}<br>Empty: ${contract.emptyBehavior}<br>Invalid: ${contract.invalidBehavior}<br>Required: ${contract.required}<br>Precedence: ${contract.precedence}<br>Impact: ${contract.impact}<br>Failure: ${contract.failure}`).join('<br><br>')
+    ? item.consumerContracts.map((contract) => {
+      const authorities = [{ path: contract.path, line: contract.line, endLine: contract.line }, ...(contract.evidence ?? [])]
+        .filter((authority, index, all) => all.findIndex((candidate) => candidate.path === authority.path
+          && candidate.line === authority.line && candidate.endLine === authority.endLine) === index)
+        .map((authority) => `[\`${authority.path}:${authority.line}${authority.endLine === authority.line ? '' : `-${authority.endLine}`}\`](${pinnedSourceUrl(authority.path, authority.line, authority.endLine)})`)
+        .join('<br>');
+      return `${authorities}<br>Purpose: ${contract.purpose}<br>Accepted: ${contract.acceptedForm}<br>Default: ${contract.defaultBehavior}<br>Empty: ${contract.emptyBehavior}<br>Invalid: ${contract.invalidBehavior}<br>Required: ${contract.required}<br>Precedence: ${contract.precedence}<br>Impact: ${contract.impact}<br>Failure: ${contract.failure}`;
+    }).join('<br><br>')
     : 'One name-level contract applies to all listed consumers, or the variable is a classified transport boundary.';
   const directSettingGuidance = (item) => item.setDirectly ? 'Set at the owning process boundary.'
     : item.direction.startsWith('internal shell assignment') ? 'Internal implementation detail; no operator or external setting exists.'
