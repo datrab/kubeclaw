@@ -204,7 +204,7 @@ try {
     }
   }
   for (const name of [
-    'BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT', 'BUSTER_PLAN_PORT', 'BUSTER_PLAN_RUN_DIR', 'BUSTER_PLAN_STATE_DIR',
+    'BUSTER_V2_TOKEN', 'BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT', 'BUSTER_PLAN_PORT', 'BUSTER_PLAN_RUN_DIR', 'BUSTER_PLAN_STATE_DIR',
     'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY', 'BUSTER_TRUSTED_PEER_SPIFFE_ID', 'BUSTER_V2_MAX_ARCHIVE_BYTES',
     'BUSTER_V2_MAX_EXTRACTED_BYTES', 'BUSTER_ALLOWED_SOURCE_SECRETS', 'BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION',
   ]) {
@@ -214,6 +214,11 @@ try {
     assert(item?.consumerContracts.some((contract) => contract.path === 'docker/buster-runtime-entrypoint.sh'),
       `${name}: Buster runtime entrypoint consumer is missing`);
   }
+  const busterToken = baselineRuntime.environment.find((candidate) => candidate.name === 'BUSTER_V2_TOKEN');
+  assert(busterToken?.readers.some((reader) => reader.path === 'docker/buster-runtime-entrypoint.sh' && reader.line === 4),
+    'BUSTER_V2_TOKEN: the entrypoint read must not be hidden by its later child-process assignment');
+  assert.equal(busterToken?.direction, 'injected by checked-in manifest and read by checked-in runtime source',
+    'BUSTER_V2_TOKEN: producer-to-reader direction is incorrect');
   const busterEntrypointReaders = baselineRuntime.environment.filter((item) => item.readers
     .some((reader) => reader.path === 'docker/buster-runtime-entrypoint.sh'));
   for (const item of busterEntrypointReaders.filter((candidate) => !['HOME', 'XDG_RUNTIME_DIR'].includes(candidate.name))) {

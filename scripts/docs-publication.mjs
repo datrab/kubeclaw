@@ -403,7 +403,7 @@ function schemaPropertyPaths(plugin, registration) {
 }
 
 function registrationDependencyFacts(plugin, registration, paths) {
-  const endpointPaths = paths.filter((field) => /(?:^|\.)(?:endpoint|endpointName|url|baseUrl|origin|host|port|address)$/iu.test(field));
+  const endpointPaths = paths.filter((field) => /(?:^|\.)(?:endpoint|endpointName|url|baseUrl|origin|allowedOrigins|allowedHostSuffixes|allowedPorts|host|port|address)$/iu.test(field));
   const secretPaths = paths.filter((field) => /(?:^|\.)(?:existingSecret(?:Key)?|secret(?:Name|Ref|Key)?|token(?:Path|Ref)?|password(?:Path|Ref)?|credential(?:Path|Ref)?|apiKey(?:Path|Ref)?|caPath|certPath|keyPath)$/iu.test(field));
   const required = [...new Set(registration.requiredCapabilities ?? [])].sort();
   const provided = [...new Set(registration.providesCapabilities ?? [])].sort();
@@ -489,6 +489,10 @@ function operatorPluginMatrix() {
   if (dependencyRows.length !== registrationCount) throw new Error('operator plugin matrix lost a discovered registration');
   const matrixFacts = [...selectionRows, ...dependencyRows].join('\n');
   if (/source-backed unknown/iu.test(matrixFacts)) throw new Error('operator plugin matrix contains an unexplained source-backed unknown');
+  const networkHttpRow = dependencyRows.find((row) => row.includes('kubeclaw.network-http:http'));
+  if (!networkHttpRow?.includes('`allowedOrigins`') || /Blocked external identity|Not applicable: no endpoint authority/iu.test(networkHttpRow)) {
+    throw new Error('network-http dependency row lost its schema-declared allowedOrigins authority');
+  }
   for (const requiredSample of ['redis-transport', 'runtime-dispatch', 'remote-test-gate', 'tailscale-exposure', 'network-http']) {
     if (!matrixFacts.includes(requiredSample)) throw new Error(`operator plugin matrix lacks required dependency sample ${requiredSample}`);
   }

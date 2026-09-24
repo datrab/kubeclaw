@@ -365,6 +365,17 @@ for (const [name, contract] of Object.entries(busterProductContracts)) {
 
 const busterRuntimeSource = 'docker/buster-runtime-entrypoint.sh';
 const busterRuntimeContracts = {
+  BUSTER_V2_TOKEN: environmentContract({
+    purpose: 'Supplies the bearer credential used to authenticate remote-plan requests when SPIFFE/XFCC authentication is not selected.',
+    acceptedForm: 'A non-empty string at entrypoint startup. Bearer-token mode additionally requires at least 32 characters.',
+    defaultBehavior: 'No default. The current entrypoint requires the value even when `BUSTER_TRUSTED_PEER_SPIFFE_ID` later selects SPIFFE authentication.',
+    emptyBehavior: 'An absent or empty value stops the entrypoint before BuildKit or Buster starts.',
+    invalidBehavior: 'In bearer-token mode, a value shorter than 32 characters stops server creation with `BUSTER_REMOTE_TOKEN_INVALID`; requests with a missing or different bearer value receive HTTP 401. In SPIFFE mode, the entrypoint requires the value but does not pass it to the Buster child process.',
+    precedence: 'The entrypoint captures and removes the process value. A non-empty `BUSTER_TRUSTED_PEER_SPIFFE_ID` selects SPIFFE and suppresses token forwarding; otherwise the captured value is passed to Buster as `BUSTER_V2_TOKEN` and is the sole bearer credential.',
+    impact: 'Changing it rotates Nova-to-Buster bearer authentication in token mode. It has no request-authentication effect in SPIFFE mode, although the current startup guard still requires it.',
+    failure: 'The container stops for a missing or empty value, the Buster server stops for a short bearer token, or requests with nonmatching credentials receive HTTP 401.',
+    required: 'required at entrypoint startup; used for request authentication only when SPIFFE is not selected',
+  }),
   BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT: environmentContract({
     purpose: 'Selects the delegated cgroup-v2 subtree that enforces process, memory, and CPU limits for Playwright browser work.',
     acceptedForm: 'The non-empty path must exist, resolve exactly to `/var/run/kubeclaw-browser-cgroup`, expose `pids`, `memory`, and `cpu` controllers, contain no host processes, and permit those controllers to be delegated.',
@@ -490,6 +501,7 @@ const entrypointEvidence = (line, endLine) => ({ path: busterRuntimeSource, line
 const productionEvidence = (line, endLine) => ({ path: 'skills/buster/engine/test-gates/production.ts', line, endLine });
 const serviceEvidence = (line, endLine) => ({ path: 'skills/buster/engine/test-gates/remote-plan-service.ts', line, endLine });
 const busterRuntimeEvidence = {
+  BUSTER_V2_TOKEN: [entrypointEvidence(1, 6), entrypointEvidence(171, 176), entrypointEvidence(325, 336), productionEvidence(133, 144), { path: 'skills/buster/engine/test-gates/remote-plan-http.ts', line: 8, endLine: 29 }, { path: 'skills/buster/engine/test-gates/remote-plan-http.ts', line: 105, endLine: 120 }],
   BUILDKIT_HOST: [entrypointEvidence(7, 35), entrypointEvidence(53, 61), productionEvidence(252, 264)],
   BUILDKIT_STATE_DIR: [entrypointEvidence(7, 35)],
   BUILDKIT_OTEL_SOCKET_PATH: [entrypointEvidence(7, 35)],
@@ -4335,11 +4347,15 @@ function environmentOccurrences(file, text) {
     for (const match of scanText.matchAll(regex)) {
       const name = match[1] ?? match[2];
       if (!name) continue;
-      if (assignments.has(name) && !assignments.get(name).some((item) => item.selfExternal) && kind !== 'kubernetes-env') continue;
+      const line = lineAt(text, match.index);
+      const precedingAssignments = (assignments.get(name) ?? []).filter((item) => item.line <= line);
+      // A later child-process assignment must not hide an earlier process input.
+      // Only the latest assignment that can reach this read decides whether the
+      // uppercase name is a local shell value or an environment-derived value.
+      if (precedingAssignments.length > 0 && !precedingAssignments.at(-1).selfExternal && kind !== 'kubernetes-env') continue;
       const operator = kind === 'shell-parameter' ? match[2] ?? null : null;
       const rawDefault = kind === 'shell-parameter' && match[2] ? match[3] : null;
       const sourceValue = shellParameterValue(operator, name, rawDefault);
-      const line = lineAt(text, match.index);
       const sourceLines = text.split('\n');
       const startIndex = Math.max(0, line - 1);
       const startLine = sourceLines[startIndex] ?? '';
