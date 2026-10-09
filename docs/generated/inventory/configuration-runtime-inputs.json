@@ -1109,7 +1109,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 1687,
+          "line": 1834,
           "path": "scripts/docs-parity-extract.mjs"
         }
       ],
@@ -1120,7 +1120,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 1687,
+      "line": 1834,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-parity-extract.mjs",
@@ -2097,7 +2097,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 889,
+          "line": 923,
           "path": "scripts/check-ap09-acceptance-contract.mjs"
         }
       ],
@@ -2108,7 +2108,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser argv lookup",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 889,
+      "line": 923,
       "name": "--evidence",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/check-ap09-acceptance-contract.mjs",
@@ -3047,7 +3047,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 1415,
+          "line": 1500,
           "path": "scripts/docs-parity-check.mjs"
         }
       ],
@@ -3058,7 +3058,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 1415,
+      "line": 1500,
       "name": "--readiness",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-parity-check.mjs",
@@ -3834,6 +3834,44 @@
       "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
       "runtimeOwner": "operator script scripts/runtime-tool-locks.mjs",
       "surface": "maintainer-verification",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
+          "line": 23,
+          "path": "scripts/docs-generate.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 23,
+      "name": "--update-source-revision",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-generate.mjs",
+      "ownerEvidence": "scripts/docs-generate.mjs",
+      "path": "scripts/docs-generate.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-generate.mjs",
+      "surface": "documentation-internal",
       "type": "boolean switch or command selector",
       "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
       "valueTaking": false
@@ -19889,7 +19927,7 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 40,
+          "line": 41,
           "path": "scripts/docs-generate.mjs"
         },
         {
@@ -19904,7 +19942,7 @@
       "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
       "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
       "meaning": "A checked-in process reads KUBECLAW_DOCS_ISOLATED_MUTATION, but this surface is maintainer-verification-input and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.",
-      "meaningEvidence": "scripts/docs-generate.mjs:40",
+      "meaningEvidence": "scripts/docs-generate.mjs:41",
       "meaningStatus": "classified-non-operator-boundary",
       "name": "KUBECLAW_DOCS_ISOLATED_MUTATION",
       "precedence": [
@@ -19920,7 +19958,7 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 40,
+          "line": 41,
           "path": "scripts/docs-generate.mjs"
         },
         {
@@ -52372,10 +52410,10 @@
     }
   ],
   "totals": {
-    "cliDefinitions": 111,
-    "cliFlags": 111,
+    "cliDefinitions": 112,
+    "cliFlags": 112,
     "cliInvocations": 0,
-    "cliOccurrences": 128,
+    "cliOccurrences": 129,
     "configurationConsumerSources": 274,
     "derivedValues": 47,
     "environmentConsumers": 856,

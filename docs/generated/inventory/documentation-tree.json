@@ -25070,6 +25070,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": ".github/workflows/docs-checks.yaml",
+          "token": "docs/blueprint/AP08-audit-ledger.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/blueprint/AP08-audit-ledger.json",
           "inputUse": false
@@ -25086,6 +25091,7 @@
         }
       ],
       "executableConsumers": [
+        ".github/workflows/docs-checks.yaml",
         "scripts/ap08-extension-inventory.mjs"
       ],
       "indirectExecutableConsumers": [],
@@ -25401,7 +25407,7 @@
         "scripts/check-ap09-acceptance-contract.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "15371f6625991704b9cea8e6d099e6e78420f580ea4c1ace2d1929787e78e74c"
+      "sha256": "e6bc61179aa566296da713fff6f3986902531a414e9999ae485f59384f6179d8"
     },
     {
       "path": "docs/blueprint/AP09-acceptance-fixtures.json",
@@ -25432,7 +25438,7 @@
         "scripts/check-ap09-acceptance-contract.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "57a32a27b94b83c1ad8325fc5dc15158145f73841025578cc097bca82c61aa1d"
+      "sha256": "94634456c70b599b3e2d871b0b5504c6537537dc1e2bb01e7e15e780b214d470"
     },
     {
       "path": "docs/blueprint/AP09-completeness-audit.md",
@@ -25788,7 +25794,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ef4e10c9e26ecac1c3945ae89c40b40c312278de5755e964bf55e57cf9cc0350"
+      "sha256": "eff1518698b57f3115a8bd527e9a2ca70e44d6aeae9420b9c7e3f7d13f2bb769"
     },
     {
       "path": "docs/blueprint/documentation-work-plan.md",
@@ -26003,7 +26009,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "8936066a0528564383b0dd8315fbc1858936a11bdd7fd7260fec2532004f984b"
+      "sha256": "4d7f23af11d1a35d1e7547ec4af22f4a2e070a60b905b73a1b49e50885b70c08"
     },
     {
       "path": "docs/blueprint/generated/completeness.json",
@@ -26042,7 +26048,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ecdf4f44b35cb81bcf2066d69cd926db03df387ab2b13dae1fc20b9634843caf"
+      "sha256": "5670e4da33a5811f84f6e46b025df5284a0180d0edac407cd78e313db831bbd5"
     },
     {
       "path": "docs/blueprint/generated/migration-ledger-summary.md",
@@ -26076,7 +26082,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ce0d5a396159042f4dea8f29b974224f0d038a97cd64885e4c43ac1f0823026a"
+      "sha256": "2b9bcd2a099dbfdad21a2619e1c1e33adbfa11650de49f9e12db0b437b94bc53"
     },
     {
       "path": "docs/blueprint/generated/migration-ledger.csv",
@@ -26125,7 +26131,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "382ab3cdd488f8f09296ee413dc3314cac7e81130e688b122b6fabf620f7ef26"
+      "sha256": "29ebed359482cc8c1068c68774f6c29c5e3cb5e218f01ab7b72bf10f827b9ecc"
     },
     {
       "path": "docs/blueprint/generated/platform-inventory.json",
@@ -27168,7 +27174,7 @@
         "scripts/check-configuration-cli-drift.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "b7f776359327aa0ae195ebbf685992f48c86e90709a2a122376b48c9e1f2c533"
+      "sha256": "1182ad86f509b9ce43035b79bb1541230246f57ae98948c8abfd7620c17218e0"
     },
     {
       "path": "docs/generated/inventory/configuration-schemas.json",
@@ -27433,7 +27439,7 @@
         "scripts/tests/docs-parity-status.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "9445b12121528c18544c5c96b2ec0cdb9cc8eaa9c2bf4a25195e1aede8dec2e3"
+      "sha256": "186b3c974c252d0c2a5ae683239ef084a4ae2dddfc700394b7f6ebd53c0cdd4d"
     },
     {
       "path": "docs/generated/inventory/documentation-parity-summary.json",
@@ -27486,7 +27492,7 @@
         "scripts/tests/docs-parity-status.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "49429e0a8db9a27ca76753dd6e91b70beb99cfdd68860631bbbe9463b3e3ba59"
+      "sha256": "ce212c4545069e15df39f02fe4c1741b2cc40fac35887c3829a836f97c4a114b"
     },
     {
       "path": "docs/generated/inventory/documentation-parity-units.jsonl",
@@ -27545,7 +27551,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "980287d035cd3127461b57eea3c35055b62cd516a494e2c3831dbe52e6fcda80"
+      "sha256": "e20eab500bd35f008bc76eb5cf23ae4d67e800f8586c573c22924a97f0d2fcfd"
     },
     {
       "path": "docs/generated/inventory/documentation-source-revision.json",
@@ -27579,7 +27585,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "3045aa6aa1bca7bf9d852141fe3904c847dea5e8523c6767cb51256b5255aa70"
+      "sha256": "291ee2acee981a9ed1def831f4749721a46b16be43b0ae20172034b683ca929e"
     },
     {
       "path": "docs/generated/inventory/documentation-tree.json",
@@ -27747,7 +27753,7 @@
         "scripts/check-platform-surface-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "db6cbd5b3aadc491c53d1c8456c76b9d5a7cece82763c26b5afb508a400aca88"
+      "sha256": "1aa5330ac6949433ff9734fe41a60d488cfbf94d36b5d2634aa4bd57460a1918"
     },
     {
       "path": "docs/generated/inventory/plugin-system.json",
@@ -27977,7 +27983,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "16cc7735b6e11552d81edf1b23d1a9fab3f369c6293ef264f77144a3b84006f2"
+      "sha256": "70fbb632c16c934f05f6fce0bfd175ef29bdbc3ac4601fd57554b6fc8462d202"
     },
     {
       "path": "docs/generated/reference/README.md",
@@ -133425,7 +133431,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "01f185a8cf499d514d3bc6245ab2baeec2a09ff36dac75622ec8c7a361d6b272"
+      "sha256": "1b397df4aad2cafbbfef19fd9f014a91c6671f34d559d812b79ac54c0a648b3c"
     },
     {
       "path": "docs/site/reference/configuration-change-impact.md",
@@ -133705,7 +133711,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "fd61e368b43962123ce6b7ca3860d153307923a3ec48a87a2803156cdbc59828"
+      "sha256": "a6ac1be7436a178f3cb0ec7898c6af130e89f305791bcd05e90e6cc0b25c8048"
     },
     {
       "path": "docs/site/reference/environment-variables.md",
@@ -133777,7 +133783,7 @@
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "f347d91f020c4dca1bc2b9a39c5e590f3ec3e3e37a9d6d69dfe6fe0c05df4d54"
+      "sha256": "f53d07a70ef60d1bbcd8a9e1811906ae1ba789f6a97113ccf398cb435c7ba5ce"
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
@@ -133801,7 +133807,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ae57d127d25a4171c3e13a5c45764e2e0467ab0545bbc32973028cf63e2cf78d"
+      "sha256": "b23fd5d7b7f92ddeab23142f3fa64f17cbaf72770c2b7d6950715514d4df0974"
     },
     {
       "path": "docs/site/reference/glossary.md",
@@ -133901,7 +133907,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "10d5c43e686598a09543a01fb8379cc1e3f3f2cb3eb299bcb5840913b79a1528"
+      "sha256": "6ce32cd813fb20016ff48780a7c6ec7f04568462b605b81e04b03aff4b518ec5"
     },
     {
       "path": "docs/site/reference/host-and-prism-configuration.md",
@@ -134292,7 +134298,7 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "8644c46677cb1c5ff7c5985918d1f2b3c03fe24aef8a4a107fb7afa7bb5fcdff"
+      "sha256": "d067ad47a282a4b1b19172a7c0f9978513dea1911b542e2c295dfc35956bf5c8"
     },
     {
       "path": "docs/site/reference/plugin-configuration.md",
@@ -134348,7 +134354,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "af489519eaa38eb70cee709644c6b7b5e836ee13796dc80d18b14699863e658b"
+      "sha256": "2d5a6db8aaeb09520eec3dd6a6018835c57fc54cea4a8413729a9be98e4966ae"
     },
     {
       "path": "docs/site/reference/project-pipeline-publication.md",
@@ -134491,7 +134497,7 @@
           ]
         }
       ],
-      "sha256": "0fb9647c014ae363cd154bebd0a2881aa1829c77e646bd9d73023d549b8b01fb"
+      "sha256": "3436ac45a1e2991443400f50f96fb1c192e6f8cf7944085bc11979775e794309"
     },
     {
       "path": "docs/site/reference/verification-commands.md",
@@ -134648,7 +134654,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "3843c2720e191ab76b77df14298759e9c4a152db4da19458e07ca12ab45fff60"
+      "sha256": "b09eedd9cf8d355eb6bf784c9caa2e26ce01af5b36c96c86e35c64ddce3292a7"
     },
     {
       "path": "docs/site/status/acceptance.md",
@@ -134793,6 +134799,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": ".github/workflows/docs-checks.yaml",
+          "token": "docs/site/status/open-issues.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/AP08.10-results.json",
           "token": "docs/site/status/open-issues.md",
           "inputUse": false
@@ -134838,7 +134849,9 @@
           "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        ".github/workflows/docs-checks.yaml"
+      ],
       "indirectExecutableConsumers": [],
       "sha256": "ffc2a75136bedac923c7488f12d4b08ab5cc9f224c1696d89a53716f6177b253"
     },

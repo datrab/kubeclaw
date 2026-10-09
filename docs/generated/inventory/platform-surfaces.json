@@ -1,6 +1,6 @@
 {
   "schemaVersion": "kubeclaw-platform-surfaces.v1",
-  "sourceRevision": "517f57ad7af131541e13474a2da362e7f39954db",
+  "sourceRevision": "81676a8f3289c0577fe8d712a1c3e110c33f26fb",
   "acceptanceContract": {
     "source": "docs/blueprint/AP09-acceptance-contract.md",
     "acceptanceIds": [

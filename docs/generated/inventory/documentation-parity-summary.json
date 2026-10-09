@@ -1,6 +1,6 @@
 {
   "schemaVersion": "kubeclaw-documentation-parity-summary.v1",
-  "extractorVersion": "kubeclaw-documentation-parity-extractor.v6",
+  "extractorVersion": "kubeclaw-documentation-parity-extractor.v7",
   "authority": "docs/blueprint/AP09-acceptance-contract.md#pflichtuebergang-zwischen-ap098-und-ap099",
   "baselineAuthority": "docs/config/documentation-tree-baseline.json",
   "classificationAuthority": "docs/config/documentation-tree-classification.json",
@@ -11,11 +11,10 @@
   "sourceCount": 249,
   "markdownSourceCount": 243,
   "svgSourceCount": 6,
-  "unitCount": 12460,
+  "unitCount": 12448,
   "countsByKind": {
     "code-block": 312,
     "heading": 2105,
-    "html": 12,
     "list-item": 5459,
     "paragraph": 3519,
     "svg-boundary": 6,
@@ -31,7 +30,7 @@
     "table-row": 688
   },
   "unitsJsonl": "docs/generated/inventory/documentation-parity-units.jsonl",
-  "unitsJsonlSha256": "980287d035cd3127461b57eea3c35055b62cd516a494e2c3831dbe52e6fcda80",
+  "unitsJsonlSha256": "e20eab500bd35f008bc76eb5cf23ae4d67e800f8586c573c22924a97f0d2fcfd",
   "sources": [
     {
       "originalPath": "docs/CONTRIBUTING.md",
@@ -43,7 +42,7 @@
       "sha256": "26680cf842b44e86ed968991ff170e127fe41d389c7f5ca942f327f585375260",
       "units": 5,
       "unitIdsSha256": "9688866f1b2298a443985db6db1677c9c82d1d445b5a5b568ca1614581ffaf88",
-      "extractionDigest": "940c23af2ede6b74c25e9e154531032fa237d321cc1394cd9277e5e402c71b64"
+      "extractionDigest": "befd6039390597685794f840a92459ca2044e329d452fa76ad57d9db8c0002e9"
     },
     {
       "originalPath": "docs/DOCUMENTATION_TOPIC_MAP.md",
@@ -55,7 +54,7 @@
       "sha256": "edbab3057ef5b2ba3c2db86953a096fb5a7434cb720ffe023e0222ff3eb98330",
       "units": 14,
       "unitIdsSha256": "b54eac5d017fa7f1c9f432c581e4c6898ce3449f3a59077b6389d6cf4834b269",
-      "extractionDigest": "3dd4b437a1ec87a8c690d16d2fb7bb8ffa3f324f98e99d1308a360d8c69b87aa"
+      "extractionDigest": "4244f33df1589de79a1afd2c89994bae5c6814b1d2a313ae6565bf345600d5c5"
     },
     {
       "originalPath": "docs/ROADMAP.md",
@@ -67,7 +66,7 @@
       "sha256": "ef8c6e7599dc5b0881942718a18a9a02d3cb9e4df78364dc47375117b44578ba",
       "units": 99,
       "unitIdsSha256": "d3e36f911b44e2bc6c343b30408a7799e04bee202c3cee2dbf60951939cc3240",
-      "extractionDigest": "84992b5a6d4d32a39a41e0c439c650f4d56f0712357a9e02783f8692faa5e219"
+      "extractionDigest": "d5043e6bc12fc26b5cacbfaab02e60c69914b7cdcf5e7f38d2602ce5c77ae9ab"
     },
     {
       "originalPath": "docs/architecture/README.md",
@@ -79,7 +78,7 @@
       "sha256": "1c3705a4929023b93cea40cd0da4eb52b72fa76a22b1ecf0040fc85a1436b1a1",
       "units": 15,
       "unitIdsSha256": "109e85468be7f480ae8c71b0ebac71d280d650929e0f8d637404537f71e5dd6b",
-      "extractionDigest": "b63362b60ce607acadacec868c456c979165865bad749cb24dbdffeda7d89419"
+      "extractionDigest": "540afff7f7ae36224bfa88a711c58fd44c6bbfaa012692dfa11202c4ada30484"
     },
     {
       "originalPath": "docs/architecture/buster-v2-runtime.md",
@@ -91,7 +90,7 @@
       "sha256": "4d8d17b1ca68889afb11d89d819d0f4aee183751f488afd340e630cd2284f603",
       "units": 19,
       "unitIdsSha256": "7c66553a22416feae420388012c86b69d5a79b5e6a0b779beb0e6b2c87a6fb3f",
-      "extractionDigest": "8f66ea8072c4c7da08bd24ee13a0951801f841fa10e918aa7a9c65f36b91d7ac"
+      "extractionDigest": "51254f1fd6f9be04d797679c9cf9461807df9b35602edaa385c892241cde91a1"
     },
     {
       "originalPath": "docs/architecture/capability-provider-routing.md",
@@ -103,7 +102,7 @@
       "sha256": "53c7bcd6bc9cff6498bc529340b573aab2a390b18ac32c7f866bbbbd390714a5",
       "units": 19,
       "unitIdsSha256": "d7d9af26730e4a288216d6daa11511b05b54f0fe869162a107260383ff2a462d",
-      "extractionDigest": "5131b2513237d724014c10978aebe8402cfcbf078239761551e29e034948ffa2"
+      "extractionDigest": "b3c642c9b1fc7126b75d44e640089462c14d5ec2348e5bef3998cef52d9d4602"
     },
     {
       "originalPath": "docs/architecture/echo-review-governance-implementation-plan.md",
@@ -115,7 +114,7 @@
       "sha256": "3d4ccaf392aa729ac147562df0c27fb82efaaefa46132093f1c8312a3943ba5a",
       "units": 163,
       "unitIdsSha256": "d7b89807e8f8d74db6b02396c8a53379b7caa7e683a5ef13a1c9bfb3b4679faf",
-      "extractionDigest": "30b9f4b8ea982b9b39caa692404956c6e9ae7b0a1572cfa8d26fc0ab219ddb37"
+      "extractionDigest": "c4c99adc3e92ab31485de1a92391205dad8dcd9b7aee921c302047ceb6ada772"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-1-baseline.md",
@@ -127,7 +126,7 @@
       "sha256": "9f858e8906f782fa2a718684de2b3163d30cfa180091532aaf0f9feefc481f71",
       "units": 151,
       "unitIdsSha256": "4ad905bb23a0997c898a6fdfa9cb4abeb391f3e7475ec17c88c149c87ff31154",
-      "extractionDigest": "2eca9db1c8a70d00236b4995a56f376a572c01a526ddb11d7a66cd031c2f4566"
+      "extractionDigest": "e162fa072898cf7fda455b213b072a486c9dd2bc4182351f19b5fca4ac755119"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-2-design.md",
@@ -139,7 +138,7 @@
       "sha256": "e8374d0bb139d6c5b0c61f727c525b02e7a1d8a27d4c8dd1b7fcc8675e1134ab",
       "units": 297,
       "unitIdsSha256": "87728e54964f7ef9725fa10bcaef00adc25ce2575f2ad7841acca6e43740deb9",
-      "extractionDigest": "1aa551cfa721e7039dfc3b5a354cfe93cfbbcfa1654bd6e773680ac6fcb6a0ff"
+      "extractionDigest": "83f8b46f302177084b82fb328f03da847e202f4e5cb1d4132262dcd198ccd85d"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-3-design.md",
@@ -151,7 +150,7 @@
       "sha256": "039071dac7b691d7670950d63cf517819210655164a8a7e2c6839cf01c07c17b",
       "units": 133,
       "unitIdsSha256": "3d8c5d3109df21e895bbc20fe2839a2c1ef4df988c7ea203cd84b62358af79bd",
-      "extractionDigest": "a92850008741f9d86b62dafb06a62752f173dc8018c36089330137420951c443"
+      "extractionDigest": "1f26a1ba8df754a96c9dcffdee66b65b7f94e764d33efaa0c315e930014c6d0c"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-4-design.md",
@@ -163,7 +162,7 @@
       "sha256": "b7a9fbab46bddc638ff3d0055c38dcf8106d94f7e65f3f8fd4b29137668debb9",
       "units": 190,
       "unitIdsSha256": "260562ba2ce4e14bf8dbf4f458a0313142509f3c03469ebbdac7d131ba51291f",
-      "extractionDigest": "c79e02e6c6c31388d5efbd6545a36bc2214e95c483a68d0e27e6711c89017b4a"
+      "extractionDigest": "5e856c94cd7e43d1683b1af2ec5304c44914b3d2effa637b9d105e46fecc33e8"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-4-plan.md",
@@ -175,7 +174,7 @@
       "sha256": "fdcdfbdfc1644f7c2f7b27a6abd87b5febbd4728a0ceb9829f86b1f435fcbc6c",
       "units": 141,
       "unitIdsSha256": "cd4d42a216eb308bc835251598f68c4a2c54046c934f540e181a3f5f4c40da3c",
-      "extractionDigest": "5d0426f6abb3078ec1a4b965595fb125a97ba8db01044e4b10bc7c5534634f8e"
+      "extractionDigest": "98b36c563ed6601666b87a889e963ee1491e54994d61f1c9bfd1af5d7c888b17"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-5-design.md",
@@ -187,7 +186,7 @@
       "sha256": "8038a0e0d705e7ea82850de374f585ee85116e36abe1e04ca27d33013bc3fafe",
       "units": 57,
       "unitIdsSha256": "61648d66616d89cdfdc2d3eb77de699b6c0e67f2bce55f3cde39d977f8cd3fc4",
-      "extractionDigest": "fa22f0b62ec01d707f6a4c28d3fd2262a8e44f41e100e39082977ade83844f54"
+      "extractionDigest": "5a86418a786cdb14cb7e1987c11a1955b0a082a79c1a592177dc6dac7daaa341"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-5-plan.md",
@@ -199,7 +198,7 @@
       "sha256": "39d33e1fd44b3d2ac48b0140da1b9893eb44d58c8dff0a93066a3eb8ed4ebab5",
       "units": 51,
       "unitIdsSha256": "248d5d0ca02129947f3bf8fb58553ec09015977ef5c0edea7a0a6cb90714ede2",
-      "extractionDigest": "d928c4b324798772bc6b506b055351264963254cac5c193ed3bc5b3826fc8ba4"
+      "extractionDigest": "c1440b4e4576d9fcf347006be04b07b3dd3d5c1f5af186fa07977c22733f0de5"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-6-design.md",
@@ -211,7 +210,7 @@
       "sha256": "793e0a4628474622a6fd9d7ba24082c0d427dfa1583f038facb183f4b263f569",
       "units": 39,
       "unitIdsSha256": "8e60703709ad72f4d64959545b036e78184cc4455bad2226e18344422a0044b6",
-      "extractionDigest": "2abffbf115c2390d62ac31bba91832ecd429483f50cb3d8bb5fb71dd88b7844d"
+      "extractionDigest": "343f55f3ca3fc9951d4dc3bd1d7a6d0dbdddbf1f969dedd598e956b55c7c44b0"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-6-plan.md",
@@ -223,7 +222,7 @@
       "sha256": "416f3f00cd7d6523da840cade2a0b3a95657bfb5bb27131c75949d4c0e5fd243",
       "units": 44,
       "unitIdsSha256": "e7f25c1b23fb89e3a070a6caa04c607b062219a74bac77f8c9b56da8093fb521",
-      "extractionDigest": "311e897fd1739844af2ec870afbf3ec0d41196ecee8b216def1e95b3e1d2c038"
+      "extractionDigest": "849f992610e456ea35d5e43510c24267c27ae41f71e0fbcd1bc730e66847c58c"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-7-design.md",
@@ -235,7 +234,7 @@
       "sha256": "1819af8a02b07d34805b05f2d851ee49f731a8d93148514792567d209954472a",
       "units": 49,
       "unitIdsSha256": "92f335c33a979f7f691e511cc9472c511c32bcd110540598646a37ba80f49897",
-      "extractionDigest": "60d56717394d9f6f97f645cb933e4f1588897859e0bdd6d275a08ba4dfb0759b"
+      "extractionDigest": "4059ee0f9041512ccb270eb190b07f8a9d8673d14347b1c0988241377085e36e"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-7-plan.md",
@@ -247,7 +246,7 @@
       "sha256": "94c4f2d53e861b0985a2e0da171c3839be31ca78bfd3b2244f9793673f8ab2d8",
       "units": 34,
       "unitIdsSha256": "dd65bba2807fd7f53ffbda54d85f88d45284da88adad5559a08e948ecf6ee7f6",
-      "extractionDigest": "a6a31942aa1e9e45c596af0b349af2615fb252d6b1e0839876dd320664b467f3"
+      "extractionDigest": "ecde707e261cfa3ac8a7975c8d2bed87025794d7dc18d27c3cbf4b18b77e4093"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-8-design.md",
@@ -259,7 +258,7 @@
       "sha256": "ee9175ddc0d691b08c3c4951342cc7f0c470352e8cce82a488ad4e8431499f91",
       "units": 43,
       "unitIdsSha256": "a7cc02b4bd24e611f7295b99817147c625fb436de825a40665ca67dd331d5a73",
-      "extractionDigest": "12171168a01da7cdd7098baf32494f83eb126c995c81baedd33b9a24dfbd8bb8"
+      "extractionDigest": "d736eafb73fb55094718c768a578561ea2fc8340874d7f9cb8757425f402689a"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-8-plan.md",
@@ -271,7 +270,7 @@
       "sha256": "5ba77784d12835079b44347d49e6331cb77ddfbf96194f288f476595939eeaa3",
       "units": 34,
       "unitIdsSha256": "321ecfcea0167c67abd476650c983fcfd8cd2d6fad5ae25b9449e72325b2d695",
-      "extractionDigest": "34a4183a7c177846b094f3d7030f9b163d701cb9ecfd35ca67623253bfac59ba"
+      "extractionDigest": "7b04fd9ed03c5b132df793d603cd5368f1c3785cdeb07f450b7ab006be2f05cf"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-9-evaluation.md",
@@ -283,7 +282,7 @@
       "sha256": "3d32e1e921a9e9e5754474369fad5f56f4e57d65c9df7b76b2b027fb3f96cc92",
       "units": 178,
       "unitIdsSha256": "9d757519dc70a4c4059f900181c8c621e4e0f47a439bb4afb97ea5263429ff7b",
-      "extractionDigest": "93f2216cd85819312d365737795005288f6710d5c0ac3b5c9ead069ca5412cd8"
+      "extractionDigest": "152b348b0fd88987264b58d6712e99d247761eb3f29ecc354fc7cbb5ba0f8c6c"
     },
     {
       "originalPath": "docs/architecture/echo-review-phase-9-hardening.md",
@@ -295,7 +294,7 @@
       "sha256": "b419ca4dd7d0dcd0499f648943ead04f2ebc8380c0d16b72fc882035bfc36068",
       "units": 53,
       "unitIdsSha256": "bc8333768070354b420e53fba1f30b3aacd4809c047a154b0f5a8335231c10fa",
-      "extractionDigest": "fafd3ef4557a9dbccde464c1b6cfa4d859458b60f12156679f83e49b4383cf63"
+      "extractionDigest": "1efa499c886456dd627426381ac32170e6e25499bcf96edf7c228eeef3bd6aed"
     },
     {
       "originalPath": "docs/architecture/echo-review-roadmap.md",
@@ -307,7 +306,7 @@
       "sha256": "a29f0813448ebbf27a0ee3d6b9f0c4d09fd04f048a4501b92357b9330ae187d3",
       "units": 29,
       "unitIdsSha256": "207d93febdb004c411596f4e79508f532f48b74b15a13c46db47abae94f750fb",
-      "extractionDigest": "e190345b413d768a5d2abbe651dd6401b0e1b3c66452b175b703a4166c9b4263"
+      "extractionDigest": "04518a38b1c676737a1069e49e7bd2cae6230981fe4bfc54f0fb89d6349e1c2a"
     },
     {
       "originalPath": "docs/architecture/echo-review-scalability-plan.md",
@@ -319,7 +318,7 @@
       "sha256": "08c3739463c6c7a37510926642272711f0f306cbd4d4390e6e6dba0ca9bbbaeb",
       "units": 104,
       "unitIdsSha256": "879e9ddfa6999453d4a7247b6e172228cadf08eead20ad112d5a76f236b11331",
-      "extractionDigest": "c23ff715c2ce5a03e1d2623d7578d14f557af497fda803ab1eea62262db0adcf"
+      "extractionDigest": "e969e44a056b244e59951c6993cceb781c5c7599055c001dc333e189050cde23"
     },
     {
       "originalPath": "docs/architecture/lifecycle-and-state.md",
@@ -331,7 +330,7 @@
       "sha256": "9432ef4b61663a7c25834ab6c418ff5f286e4720c4ad0f312b99c22352edfe20",
       "units": 10,
       "unitIdsSha256": "c01b563e625f7c914c8afdf0d112b09382768c8c89146adbb517f57e66e5f94d",
-      "extractionDigest": "0e5b547124b27d42d3bdf6f487510e915432232b7a6fa3b75ad25553795d0233"
+      "extractionDigest": "2648fd072790bff2e664e4b69b2024c2daf6c3cdcc25a016ad6eadaa7e1d6a79"
     },
     {
       "originalPath": "docs/architecture/nova-project-runtime.md",
@@ -343,7 +342,7 @@
       "sha256": "5300a34aca58b4ef7dc748375cb19170417aadf8c0e3f615e17103926b196f7a",
       "units": 3,
       "unitIdsSha256": "3cf7b5f703f7be9d2f6ce27c7a7714d6a32f45419e74d96573d9a160ac155a91",
-      "extractionDigest": "bc420b58b777b83e9c8c77a02237185735abc3fe1933cb16c57cab402dc72877"
+      "extractionDigest": "5af633c7143d2ae850bf91bb42e91b7b3ea171d27229a95ec800b0003d30fad5"
     },
     {
       "originalPath": "docs/architecture/ops-pod.md",
@@ -355,7 +354,7 @@
       "sha256": "bda3c0cfb8d035e8b8df8183d81337ecd3e23da69eed5535d1a7b310d6896d08",
       "units": 105,
       "unitIdsSha256": "a3442c9ed2612bbfd1c5cc364f00cab9e56c6af96b649cf4396b67c04353125a",
-      "extractionDigest": "b1011fed251538904ee156f525c6ae75734a51b2cfeee4c3e20a9e68edf82859"
+      "extractionDigest": "d492c87d2f87eff53548aaf4e5aea0cf830865a35717d164fb12b8f2a567bbe8"
     },
     {
       "originalPath": "docs/architecture/pipeline-observability-phase-5-7-a-audit.md",
@@ -367,7 +366,7 @@
       "sha256": "23a3623631ebe770ba22030ba88845bef1c4e0510bc09292ab3ddbfdae7a4930",
       "units": 62,
       "unitIdsSha256": "e8c3a2859af07fa1363b6c1c78619bd093464aa5103f536073e8fefe6dd647f9",
-      "extractionDigest": "2ff984e1fa3f3405092ae4688eb7f9866eec992e25952f927a978a749634f706"
+      "extractionDigest": "08b5f0a9e655b9951e57c65d21babf5cd2619722025e647bb9e674d607eb6425"
     },
     {
       "originalPath": "docs/architecture/pipeline-observability-phase-5-7-b-audit.md",
@@ -379,7 +378,7 @@
       "sha256": "4869271edc9e261c0e6460d5f4edbab4e86ff3c716e9920b43727b65d0bfca8e",
       "units": 27,
       "unitIdsSha256": "329de39509ac22bb271e354746d3dde8fef01199604402a64f68ff7b0d1b8ded",
-      "extractionDigest": "123401c027c4994d1a5a25a28db391ef05aa00caf7ca20d1ff36d73606419fe0"
+      "extractionDigest": "2dbcd5228a29602e7db2b9b0d70308b66011130ccf4ef8a8991a20092837d4b5"
     },
     {
       "originalPath": "docs/architecture/pipeline-observability-phase-5-7-c-audit.md",
@@ -391,7 +390,7 @@
       "sha256": "02cb0dfdb99a92377d8d60d14b507a574cf1c94d881495b1cabfd3bb132686f7",
       "units": 24,
       "unitIdsSha256": "b8a3634c7c0204b756d9cc16594e7a0a5b2fb8b8df7bd52958ffc57eb18526ce",
-      "extractionDigest": "00bc0c278ed2a9a3a41cfabd5b298f32e829a2658b133f656eb7ae9f322c09ba"
+      "extractionDigest": "4374ceed4967906cdeb8af4b9a7156d65a2921f49095756cd5b7b3d3fffdefc5"
     },
     {
       "originalPath": "docs/architecture/pipeline-observability-phase-5-7-d-audit.md",
@@ -403,7 +402,7 @@
       "sha256": "e0c9435a1fe76e1e43aded47635e35656760c28c659a75fcf706170c894e5fee",
       "units": 31,
       "unitIdsSha256": "3f899e3d6bddba82891967b6613eea7ef15c2a91a11b05fcf88e5d9c2d997a70",
-      "extractionDigest": "0381f288b22756db1d41b3da1b1403b5b972e8eaeda2d78aec9ccb15fc9f0915"
+      "extractionDigest": "69d07673279c65a6cc25e5f3048f7150f520e862537ec7571f3962b268a98611"
     },
     {
       "originalPath": "docs/architecture/pipeline-observability-phase-5-7-e-audit.md",
@@ -415,7 +414,7 @@
       "sha256": "3e48319f176460fe5e3b5c58c911179f7eec70e853ce1ab05224e82954b42f52",
       "units": 21,
       "unitIdsSha256": "3aad4bcee91bca1c661fb30b81d43325141521e7dcfd80ee752b60835b8806e6",
-      "extractionDigest": "42d6d02960121807695cd99b5ec233b1f7644c190f9c749ca2550d52b7ab3239"
+      "extractionDigest": "18a4cccadc71f10aad758e5053f19fbde09ccc805e9d198fed001af7721f31c5"
     },
     {
       "originalPath": "docs/architecture/pipeline-observability-phase-5-7-f-audit.md",
@@ -427,7 +426,7 @@
       "sha256": "b79ab724b66f35909c10df4e332c80a8a2a1c3299e2fbf11fc2b5cc4a581208d",
       "units": 15,
       "unitIdsSha256": "ca0e04cb2d2ef3b97764b5c1c0239d4bbcc60d6ed9ead3ffc8a53a7cc0693866",
-      "extractionDigest": "b0381e3f0f42967b6db9636663681e4a1bdf1b12a3ddfcc1b42d8270036d902e"
+      "extractionDigest": "67dc05087292d0c71ee1c7130c5c526120ecf0092c4cbacbb0602677b77d252c"
     },
     {
       "originalPath": "docs/architecture/pipeline-observability-phase-5-7-final-audit.md",
@@ -439,7 +438,7 @@
       "sha256": "cde4fd151dc9dbb92c5f7b27550e9b5f627171ac5a64549cfb217b071e96a7cd",
       "units": 80,
       "unitIdsSha256": "6b25865d2acd4188b9b84c04024c504eb33fd50a87d74651d6b937624eb9afd3",
-      "extractionDigest": "18ba00a9f4765b5a145e7c317e5932badb9bffc8030cb167a9d27410507c588c"
+      "extractionDigest": "91ee4368cc36c797db4b643d5f60f653453e59a7513539fce85eccd4c9dcb2ee"
     },
     {
       "originalPath": "docs/architecture/pipeline-reliability-remediation.md",
@@ -451,7 +450,7 @@
       "sha256": "2621b14c3bdc41b2b519f8213fd5b007b70adedf28f881a091ee6715365ca866",
       "units": 102,
       "unitIdsSha256": "357f01571a281f60d97b6f945f458ebdb0e841e6218b85b6964556468b03c48e",
-      "extractionDigest": "4839b6991822e09aca193737a5240218d34033d3c6d3c9a4e4b380284a7b70bf"
+      "extractionDigest": "82079cd57ad04828d32a77b10b60467f83179d396fdf9e12cf64a6e4c7f77cfe"
     },
     {
       "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-a-audit.md",
@@ -463,7 +462,7 @@
       "sha256": "a78b151c8027d67456c1ab5a9d7ebc447bdc4ada18e649028799ffa5314787ef",
       "units": 24,
       "unitIdsSha256": "25bea31697b11d675877a8da9cc48e0df9c41fb1b0be0f882c2a29cd725dba56",
-      "extractionDigest": "b85ef4bfd56487975dee58139a1f5a9b430d60ee2c0d94c064349433cb153827"
+      "extractionDigest": "496b22b37ca38392da7c4c70a434b4e1dc36787bf04722969ad8478bcb02afd2"
     },
     {
       "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-b-audit.md",
@@ -475,7 +474,7 @@
       "sha256": "f5fb127408ec6f952fa9028efe87d8d9c7d176b4a65afde51bca77e787b7360c",
       "units": 19,
       "unitIdsSha256": "dd65d18a59fd232d9a1c48d3bf07aa890ddef357b01d800b6e779fed8fa7feac",
-      "extractionDigest": "51db1a202f183bc2f6dabb2725d7fb9aa5d85cc434c486f6d0f9f558dfa423a2"
+      "extractionDigest": "324105595cfc4e3012e009f3606b3c608b6d250f04806120db27eb447b5cfba8"
     },
     {
       "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-c-audit.md",
@@ -487,7 +486,7 @@
       "sha256": "87734ab039787aea92d1710d7437593fb7f295611b5dc5d208379e0f34aafc62",
       "units": 14,
       "unitIdsSha256": "0aa67a8d99a8b958ec25b291fefccecc9564c4136f27e8dce60b1f264018ff98",
-      "extractionDigest": "241f1c23de78e271b77c55c58a792394b1c266545f7e582cc0de5688a69d1e4d"
+      "extractionDigest": "356d0fcc58ee3c12dbc4c885ed6dd6c8c647879a0c99164c0dcc2f8beb3b0274"
     },
     {
       "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-d-audit.md",
@@ -499,7 +498,7 @@
       "sha256": "45da29a727462eaabfe4fb3311fd42e4250ddcd2de737da45712db7d89edc8c4",
       "units": 15,
       "unitIdsSha256": "84a39dd923a49f563ddbf7059ac4e1da80e18832098ba7cde9ed145760cfa1cb",
-      "extractionDigest": "1846b368ea82c2c0c5ec912be6f16dddc7864cee93f633b8e384e6a822eb9e13"
+      "extractionDigest": "2edf13da7a0f74aa4cf9896987a672b43aceb660cfc9ee45d65e5bce5667b42f"
     },
     {
       "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-e-audit.md",
@@ -511,7 +510,7 @@
       "sha256": "3e6262f6c9f1c944bd945fe801988a070a631099beb1d27c644529f719f6cff0",
       "units": 14,
       "unitIdsSha256": "3ed66fd5e374845658eb567ec3c6b47832c024a018e7b40ca8d8b161748b99e6",
-      "extractionDigest": "645984f6ac777d9ee4324ec84495a44ef3fb3ee18f67a0c962852a89b35a4190"
+      "extractionDigest": "9890ea6fb0d8f909f014eefdc9b55d6c6b0c06c3b20bdf4f86d006ca1a8bcaea"
     },
     {
       "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-f-audit.md",
@@ -523,7 +522,7 @@
       "sha256": "c0f2c0aaee512dfa4a7aa13a1278ba5b6c737e3f74b90ecdbe9f54e9f0dd425d",
       "units": 15,
       "unitIdsSha256": "e9f9144cfa40829305f937712518eebf1d1e2c2f1f18447299c8e313ac6be651",
-      "extractionDigest": "f7e05131ccba1a4873604831e97fe2697b83091dd4d22a128c01114ed223274d"
+      "extractionDigest": "205b5d7464bf8c15e8ae24df88f8d00b9d02426124a67b9a47ab496bea939d65"
     },
     {
       "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md",
@@ -535,7 +534,7 @@
       "sha256": "9a804335034dc5a92e5f625bde28b256eb37ef6a449ad3119d87c5ff6ce8a307",
       "units": 40,
       "unitIdsSha256": "4f62e1e123f4ff0166e6ea6535847ebd7d7302dbe0d05c5c71bc1b7c4cb7a16c",
-      "extractionDigest": "f49503166233e7e22da223f97cb4352558ddcddd6111cf40a2f66a13757eb62a"
+      "extractionDigest": "6f763a40aef0d706a01d58de2c4a06a2f7ca5ef75608ac9329eaaf46c1de08d1"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-configuration-reference.md",
@@ -547,7 +546,7 @@
       "sha256": "9502e2297150d4c9208030437662790dfcda6c58f471221b83f96f9b6253e1fa",
       "units": 35,
       "unitIdsSha256": "aec0f7b4dfdfbcb78d75a7730720087f130a456057c1880b81732540a296d6c4",
-      "extractionDigest": "56a8b5ce53e855ec4fa92370f5f675cacf0a4a78abd7ab18f30301ff3b26b71b"
+      "extractionDigest": "f92f0c997b8016f80e2d34edfe1ccf0de3044cdb6485b7f91e5a186b2281a6d6"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-cutover-plan.md",
@@ -559,7 +558,7 @@
       "sha256": "7bd4672700f5d768bf933e73e441dfbaff1611d7f0e37816b1f52596d69f5fe8",
       "units": 17,
       "unitIdsSha256": "2f33bf335a9cbea87929af6d8b0dedf5434a443b3f3bd7b08cef799c0451359e",
-      "extractionDigest": "b3b362d4f686ec4adfb7794c271ed71f2bb3565017b52ec00826bd9c287e460b"
+      "extractionDigest": "37888b56ac6fc04b78775729cd00edf1c05f3847f11d0c273663084cae4297ea"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-error-reference.md",
@@ -571,7 +570,7 @@
       "sha256": "4cbf100d827b04ef675aaca60f119599e01731964752e7d87c45714642ff0406",
       "units": 46,
       "unitIdsSha256": "760d6749c68f2ae26cd3f1115ff3598242fb7a3480d96f9fd78fae0a3d052b98",
-      "extractionDigest": "3cc9148846235893a58c1fbb36e3228f41347f6ec3284553597fdf3b1422322e"
+      "extractionDigest": "75e5c70204d9576d33b5c548bdca882952e787758949925b8e3174bcff0120e9"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-implementation-plan.md",
@@ -583,7 +582,7 @@
       "sha256": "2bcd74f24ab9df6c36b546c20f1971811d4e443e808d1c9d4ba28ed269f7d649",
       "units": 21,
       "unitIdsSha256": "442e9613f1eeb1b5ceb993713b7f7ec6c2bd9955101d0ec3d3b958cdffc001b5",
-      "extractionDigest": "5ce03b005a59cffe253b0a150585ab07f080d11a65164641b3e15828f06c6960"
+      "extractionDigest": "b4c677c470e8f3ad430cef0d85581600eadd17962cfc69a436de9425a9ff18cb"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-operator-guide.md",
@@ -595,7 +594,7 @@
       "sha256": "a074e6de6302697c0a0b40f3117b1664de85bc6faf1b045fa53777f5ea81de94",
       "units": 52,
       "unitIdsSha256": "ae27d00826a103e5831fded5fafacb26a2150b02209e884086650d2d67771f7c",
-      "extractionDigest": "861ba528978a7891fa17b2c68bda05bfe5e7005eacf6a873ac9ab9fd40251594"
+      "extractionDigest": "a5f1d6c093b65e69f6708d20de13d4f9e69c21f36e4776a23a3db87f2b4546d4"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-parity-plan.md",
@@ -607,7 +606,7 @@
       "sha256": "35cde496f7b9d7f142e6d1318397e4feb79c3385703864450650b475c5b16589",
       "units": 19,
       "unitIdsSha256": "7da4fc09f90b893644b4f84ec045d60b0d55dc2cc5a46e9b0b584edb62c6828d",
-      "extractionDigest": "c022a05fdc986b0d2f207aa6eb7ab3e8fb5d3a38afac95778c62c5afc05973f3"
+      "extractionDigest": "2c82c49f4177922232812f8c3dbb4e0ca497fc237fb949eaadf8edb0d1021f83"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-security-model.md",
@@ -619,7 +618,7 @@
       "sha256": "1a5da95f7d9646d798ca956b67e755b4b8c0dfa5ca618a2497d927ca9eb699e5",
       "units": 29,
       "unitIdsSha256": "a1f47be70cda6de98817c764017002896e9f24bda9d1c20492c228cb51fd7804",
-      "extractionDigest": "5478b4febbe291ea6f905dade82c3ad2fe4357c6f18e95701dd876712d14ba94"
+      "extractionDigest": "a9df90e28f083320c82974900be3cf37062842bb473a198a7b7bd0dd9bb64281"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-a11y-user-guide.md",
@@ -631,7 +630,7 @@
       "sha256": "449a8e5ba524dd1f2a021f395cb73994730aba8b5052f9f9142019e43bc81907",
       "units": 34,
       "unitIdsSha256": "23f5b8d879dc4133331279b4e471f5a2d32b2a528d5cada3642275a1a9412102",
-      "extractionDigest": "f8fc56481940301057554d125f4dc597bfed47250ac1bfb9242493a9538cadab"
+      "extractionDigest": "95aa7094f733fa3b5bfd66a9f550f57f744f651fbb164e5a4a194348b4be4d07"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-configuration-reference.md",
@@ -643,7 +642,7 @@
       "sha256": "228b6e5b6343ed7e10dccf715a3bc377477c53564a009cef8c5e0615027e9511",
       "units": 11,
       "unitIdsSha256": "2c3e395e2468401d3b320527051f868e17331ef97490b98cbe52eb8553f7ed31",
-      "extractionDigest": "3c093f7499f48728b72a57c1163a37ef7407122483dabf4a3f209a704aad04df"
+      "extractionDigest": "f02d9126620de56c8592283092631f3325125633e1fbe74b8a6d3ffd4da80132"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-cutover-plan.md",
@@ -655,7 +654,7 @@
       "sha256": "464821b38e8cfbf597fe4e7df5b3bf81ed9fd1f810d0729cb4af28de449022f7",
       "units": 15,
       "unitIdsSha256": "70996382f9a056bca0fb91f54dd03bbbee92ad9fcad37224c34fbbfecd2e91b0",
-      "extractionDigest": "c43b951dd9b2c4766046bfe248e197bb90e0d68b0eaec840c521380258a4e1df"
+      "extractionDigest": "b8dae7b4f14a4a87464f073d5621f191091247d854266413d9964b436b499778"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-error-reference.md",
@@ -667,7 +666,7 @@
       "sha256": "37b9c86df821bbce3f0c5486f7d85f462a8943084ba8342b9a4016571c9795b6",
       "units": 57,
       "unitIdsSha256": "483c005c741b75d2f96f4d9db300cb59f24bb49feb0fd4f0c34a02c033f14527",
-      "extractionDigest": "75736ae7cd410ff53da7d0c0ff286a717dc17b0e2afd4bdca0da09ffaaa841bd"
+      "extractionDigest": "ecefc60c961dafb24a8854d6dd2e5e50345a953f3e14d877b21b4af38be12382"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-implementation-plan.md",
@@ -679,7 +678,7 @@
       "sha256": "de3106726cabf2e354c700e5af7d13d176aeeeaaf3d4aff27d8f6d131d68b7c3",
       "units": 14,
       "unitIdsSha256": "d34b44fb32dd43760a43b737260ba93dc3862582d90678257c1ac08236d7df82",
-      "extractionDigest": "edf667d213d8bb8bb37521c243257cdeca97b9cbd1fed101ff2662cfd10df453"
+      "extractionDigest": "ec2aaaa80cfbb4dd58034472af354e578fe62c34d59aa0017874d920dfd439d5"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-operator-guide.md",
@@ -691,7 +690,7 @@
       "sha256": "8af94a4be9191d98422ea206116404cf262ea1d2d54705a4e3bf18bdd6804dff",
       "units": 11,
       "unitIdsSha256": "a3adaf679d83b6ba36386248e538f17f6f5421d683bd6aae9337fe854e2fb99b",
-      "extractionDigest": "77f3da85ec60c72a92f4d9b4b7b68d131cddd4880e01115206524b4381d162c6"
+      "extractionDigest": "fabe093aa10c7ea364434df1d0f7fd4868d4cdc9754f88e4d2179bf521f934b4"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-parity-plan.md",
@@ -703,7 +702,7 @@
       "sha256": "0e19652d4b65a4d050f4596ad3a305532aa62e5036306414c0a9857d1bd8ede7",
       "units": 10,
       "unitIdsSha256": "bd9d57be93ae4c988d57e270d34e049ee1de689877203c4fc6adc0b3b40f8752",
-      "extractionDigest": "e908e53dce10333cd9bc502af9428ad7d27ee09986082ebc7fe89c7cfbf412ae"
+      "extractionDigest": "81d52c6478d9235f10ea2583f7b22455022890f08f2492c4dbc75eb84671c185"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-security-model.md",
@@ -715,7 +714,7 @@
       "sha256": "dff4c1abdc714d50226756a8d0cbf296adb75893fa4c532cae7f4eb97e90b7ce",
       "units": 5,
       "unitIdsSha256": "392904b88a27548b51e49d6809a4934d2a338c704ae85807abf1269e1dbd87b0",
-      "extractionDigest": "8fcf02bf669791fc08bf0a733709a21f5986e014e9d105933689c9ac950e6e61"
+      "extractionDigest": "92f1eecd7c38f6dc2fab707e0e03f461b71d38cf37b9bef49de6e84ebd741d04"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-three-phase-audit.md",
@@ -727,7 +726,7 @@
       "sha256": "72b29b2c15c440dffb454424d1b858a78b263a63311d3b7b54403a29083e48da",
       "units": 11,
       "unitIdsSha256": "89ea79db369b29a6795a2b3e666fa031f37af7775326780ba94a34376f1cfbd4",
-      "extractionDigest": "878696139344eee82a8af058820a08135909ca91b8f8e618651697ac99b8f3d3"
+      "extractionDigest": "c7359cb5a0a0258513caf4d4ab14f4ade6fc70c5e67bca229b3104a28afe3042"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-api-user-guide.md",
@@ -739,7 +738,7 @@
       "sha256": "65205fc9cc1830688f53ac81981dd79ce1a0f142eca6c898c8ce862ba16e95e1",
       "units": 6,
       "unitIdsSha256": "c185faa6ef5bd934473333116e75aa41d020444171701418661b095de28773da",
-      "extractionDigest": "3dd370e0717e60a727c2ad6af79de6f2e1a094972e062011a065e46ab87e96e5"
+      "extractionDigest": "f2ac42a690523c97626fc4dc7da48f2c5fe8abee802d794ec955eb2d84da7c2a"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-configuration-reference.md",
@@ -751,7 +750,7 @@
       "sha256": "6ef911793a7648f91b3bfddf083d3f561c970da5f8c6a67e8fc7015dbd45634f",
       "units": 147,
       "unitIdsSha256": "ad3816d45bc6ac2bd0ee990024a31eb630fdb705423e6ccf35e490f1b14c1444",
-      "extractionDigest": "b88d608960c338e40950ca9ef6432b3b41cf7d82e8eb2efec04735e08bd4f9e8"
+      "extractionDigest": "28d5cfb2800abc12a0c38000d1d914b8726b2aab4e36aa8ca051820dc209dafe"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-cutover-final-audit.md",
@@ -763,7 +762,7 @@
       "sha256": "c9e5e0ec0efbaba4efde9aafd13bd90839f8c6bfc7aae4a96d8123febbba7f96",
       "units": 9,
       "unitIdsSha256": "039a586230b2d50c9b9a8e1e480d1e135d36ca8e031d49b9a95796633b1f4d01",
-      "extractionDigest": "da2b61dcaabbbb51a0e965390be501cb0fe59650362f3124f994eff3f1de42ae"
+      "extractionDigest": "54f4353c4822c9fac91b0fadc7b8d1c47dda4d1d45530cd0812f22150540d5c3"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-cutover-plan.md",
@@ -775,7 +774,7 @@
       "sha256": "7b25833688439c9c834d9a6e8c3f39b9c80e234aa21b62d17ab99ffcb68713e6",
       "units": 3,
       "unitIdsSha256": "977cbd1dd4a6325c5bd27306bea9e265be42440767afc9c27697e93b7fce35af",
-      "extractionDigest": "eecd7ce83928cb660d479a533333f58fb55bc489a4a66e1c628e6f2951fdd646"
+      "extractionDigest": "75a81c226901552291995b43c6f98e34836f77fa8bf5cd446e8376ae1c4ff4c8"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-error-reference.md",
@@ -787,7 +786,7 @@
       "sha256": "bbaedf54c3f57097d685bac0b1780e692cc301442e1541671dbdace0f7aacc6c",
       "units": 53,
       "unitIdsSha256": "40384033520379a0ce02fda56587a0ee3024683c92b575b4d3edddc13e47c455",
-      "extractionDigest": "2e64d4d87816a6734eb9e0e57517307438ede801bee2102421af6ecb86be760b"
+      "extractionDigest": "3d340527630dd96bb34140c2e0d557589c0fd103305eaf16fd68316837ef56f6"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-implementation-final-audit.md",
@@ -799,7 +798,7 @@
       "sha256": "193da0ed88f171148a80b102253bc96b49df97cb89d9eebab962797b352fe21a",
       "units": 9,
       "unitIdsSha256": "7e062c16699d1bb9aedb41af58ade0a4eb5bdf2df81df991543ad140da9b16aa",
-      "extractionDigest": "d4f6b50d878b60dde32d37b965f703b330b1a5e7ebbf577b246ef2076386d284"
+      "extractionDigest": "0934cedb9810297f3a67f77f1d31e03ff2bd3522eac753a114a3eae905a3bb51"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-implementation-plan.md",
@@ -811,7 +810,7 @@
       "sha256": "82899ca4c4914f4330a0fe6ed8195a96bf37669198d96d8ef488ecd256a2e057",
       "units": 19,
       "unitIdsSha256": "16f109a9c7d964b1c3ee8059f85425af4dec88f97c34590f76d674911da983fa",
-      "extractionDigest": "4c4d2fb45257cbfb0bcb40e425988d580f7b76179378e4c581ed6345a0a77680"
+      "extractionDigest": "48f0571981a1b99586a7fc02754dc5adcfe86a43da67abcc02523c99c46894ab"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-operator-guide.md",
@@ -823,7 +822,7 @@
       "sha256": "d9caa7bcd291af115691a7105287cfd1f9fd5855acefa744a646261075f49cbb",
       "units": 106,
       "unitIdsSha256": "62a5e1a85c50b640d0d411c9f91e4c35b7fa80cc9c2b282a0d0b3841217db487",
-      "extractionDigest": "bb35f01e902659fbb6370939d5fca65cf4c9843c45aeefba44938f95d1dfb72e"
+      "extractionDigest": "283fefddb9dcdbad757662ecff27f73dfe34bb300e8bb2d7f536f11204f83557"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-parity-final-audit.md",
@@ -835,7 +834,7 @@
       "sha256": "34ba6d1cca3691e42323707e295b6f4b15c13bab0ba455a31030158d266d14dc",
       "units": 3,
       "unitIdsSha256": "97dcca1f361bbe79619f802c382c6a40d8379d6a7e7badd6d30db82024c0fea8",
-      "extractionDigest": "ebdb644991f9589f36ed00542a9e8ca4f32d804a2f3d74b70ad8694dbd062e10"
+      "extractionDigest": "223d5c7cb45ab3dda48de0e86866bfc695bd1e0af145d56ad9a4bec11a1b4ed5"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-parity-plan.md",
@@ -847,7 +846,7 @@
       "sha256": "d660d77e0d5cfa62193895b35e158bd9cd5e22564044e39f43c83c7d88981f9d",
       "units": 3,
       "unitIdsSha256": "8731d607b754163e048c8be7ca7c19d270190358333c92bd7ea631d7d233babc",
-      "extractionDigest": "72ecb957b3e79d57da982a332e0289dc6a7f21905dbee5f9104677b50f197c68"
+      "extractionDigest": "e8af406e0f7aaf1c615f885f1ebe4b1e5a20cc80b3ee1c2947f209619619e057"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-security-model.md",
@@ -859,7 +858,7 @@
       "sha256": "b28216219711c43fb0ed914621f8de6d01f29193873940a46e2b2c3d401ea3fa",
       "units": 30,
       "unitIdsSha256": "4d882621cc406283e14ce112af51b22ad18ad1f18855993a1a98fe7238c4b33e",
-      "extractionDigest": "e57b75934bd08e22c398ff9c3089e8307e25e9a55ac74883cf8875d532971d66"
+      "extractionDigest": "8f8fbfa9a16e37b92af9ef9015a2a47023f2e97bebe0312a6688887a38440c41"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-container-build-user-guide.md",
@@ -871,7 +870,7 @@
       "sha256": "e59ddb8ec635397e10c6f95b90a95e54c7187b4969c47115accb27397e141d7e",
       "units": 74,
       "unitIdsSha256": "ec28e132b467e2e27ff11444bd50c921e2b517aa7a7cbab0a1197b869bc6cba7",
-      "extractionDigest": "5c55144a51bb885676913d59fd028efb8c7860eb25c9a4a3620b6bf4c31cdc6c"
+      "extractionDigest": "e75bef1913bff1e001aeb3272496c11e79dfdcab398e22ca0570d8bf11810627"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-configuration-reference.md",
@@ -883,7 +882,7 @@
       "sha256": "04d4c495f05a94a05770fbe674a880c136424df32b36882c4c4fb812414258e7",
       "units": 5,
       "unitIdsSha256": "8ffa8aacf9c77cf3bd0c3f4603dd9682f65b02e70b25b016495b3ec80dd7ceca",
-      "extractionDigest": "a248860177e3b9d2870ce28ec417d25177d104bfd16681101ed68c3c2d48ad42"
+      "extractionDigest": "7ba4d343f9086f69490f51ec03a0bc4df5a471e4e59285f72225877787016fe8"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-error-reference.md",
@@ -895,7 +894,7 @@
       "sha256": "a7ae2c863195fb5007c158481dcd6ce066af8f6ad06ea518be8497001e2ec5cf",
       "units": 62,
       "unitIdsSha256": "fe5835b215f88179dc7f6651af0289604b6768bdd6f3cf846cf1259df08af0d5",
-      "extractionDigest": "c54a41844a0d67bb9e67d5c5b3f44aa85f4ce6b31601d23b97cc42878bcec444"
+      "extractionDigest": "a0bef99681a8a46ee28e90cbf04be01ec22044812a56e1e7e05c88fe679e2442"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-operator-guide.md",
@@ -907,7 +906,7 @@
       "sha256": "d2d948b90e0d24e577a207bb139f0a8ba55487f1a34010024278f7ad68db3196",
       "units": 24,
       "unitIdsSha256": "d1f932b2cdcb16cf67598cb1e1ea6defe73890ba7325ae7e94232f108341732a",
-      "extractionDigest": "4077c18ba34bd217a89f76405181ff0357e5edb5404e35ff63c4c0e8e2df34ea"
+      "extractionDigest": "a85ef9ce5562bb9f5adf7037f0f35f8f443a85f54fa10e34c18c1d75119d13f3"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-10-cutover-plan.md",
@@ -919,7 +918,7 @@
       "sha256": "3eaee6d995181ba21458e1f832ac0c50776969ed2314bb4f72602be031f6f198",
       "units": 22,
       "unitIdsSha256": "efe4d2d30b476c63b733ad80da0fd2fd2af3519f687a5d3f46ae9cf3fb9f8a8c",
-      "extractionDigest": "034a3f1a6243e9238e2fb9616924a01f0880ac024d7b210c9c54c4e0892f9dac"
+      "extractionDigest": "c630e047cc50127be703876856f60ca8dab38826a9ab4f634d0ab61cdfd55d10"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-8-plan.md",
@@ -931,7 +930,7 @@
       "sha256": "20fb29f7d9b30ab3eaf3f661c11e151ae4765ca725882f5e4e21796decdc1342",
       "units": 29,
       "unitIdsSha256": "1dd5b983e6dafa4ccde9e49ebe185d0547632384d4d30613389f498dea6ff375",
-      "extractionDigest": "f75197b60fdf760579ee8077fa8475f948a44f8325a5c26bda959c8099adb6b8"
+      "extractionDigest": "5364234d2698eb16df3a5c6895689aba1a8381e4fd7ba1578bb80c5f1e4afc66"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-9-parity-plan.md",
@@ -943,7 +942,7 @@
       "sha256": "4e26dd340e4680d028157d52ade63c9bc4d96536ec9bc89684e2f2c14d2718c4",
       "units": 30,
       "unitIdsSha256": "86a3c0fe6b3ccd7fa1bd581d37959648d05951a52a93921c2ab9fdc9a67a3486",
-      "extractionDigest": "f3b84c8b4dcd1a1a9bc22153f1a6a9eb1ea764cbaa0d9acf937d9ff0bdb6033e"
+      "extractionDigest": "e8f839196588176129210646a04b3aebac3c796bb8a93a1b80ea9a0cc4534a7f"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-security-model.md",
@@ -955,7 +954,7 @@
       "sha256": "a3e25a36ea16a7c5608b8b1806a08ec3e54be1e2568505df0f881d365fc20d69",
       "units": 13,
       "unitIdsSha256": "2b49071ee344cfb897a4512eb0db71d2da5271d26baf0b1c2f476b9687e1212a",
-      "extractionDigest": "9e60beb8bd0c5d1ec8599a5acb968944d0bd5053359343b1516e47b8d30e5e6e"
+      "extractionDigest": "90562cdec841bbf92cdbc56f86fbcaad2a7400ea259ffde10106ee5c1043ef5b"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-e2e-user-guide.md",
@@ -967,7 +966,7 @@
       "sha256": "4ece861290bafe7932c3fe06920e7da9074a3216c8552659a49333f187da1e24",
       "units": 24,
       "unitIdsSha256": "c8cfd370338a8c426cdd1d6244fc4fe01efc7973da064198b8fe75e5f4dea4e0",
-      "extractionDigest": "07e589c7611209db7f94d6b1585f1c00c3b38031f8cb440d7946c03c246b8844"
+      "extractionDigest": "541a2e5a6bfc3d1aee3e7dd933477a46f47f0deda259eec813791e2e10a5a83c"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-http-configuration-reference.md",
@@ -979,7 +978,7 @@
       "sha256": "4ca54c9dc1d112626e749b3a8c94b080189462e04c4d273a433ca80cd7366c20",
       "units": 47,
       "unitIdsSha256": "0f8b3c9581ae46222cfb7ee36219afb9a2c501b5b1db4dadfa2410fe5ebb700c",
-      "extractionDigest": "9f2423970cfcc42e244edb7da3b3f8cd43dcdfe33d81fbef12401be10cdd51b4"
+      "extractionDigest": "2d72bd7dbbcdb99df3aac9645d44f1bb886aa86427121b31dd517f6605efcd6e"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-http-cutover-final-audit.md",
@@ -991,7 +990,7 @@
       "sha256": "f47d8666b92d1b646e276875cc9ec3212445c13adaf3041e4e0542af296b9f5c",
       "units": 21,
       "unitIdsSha256": "6b1a37b0d1ba75ea2b0ebbda206c80911474850fd4b540cf4bfbcdc3a535665a",
-      "extractionDigest": "b33163ad8affdf85adf76ed89f9ed48b6629d89129b1e0588411777b300519d5"
+      "extractionDigest": "03ec49b6cee7710a0360bdc6baac0974918268463734b74e18152351c763757b"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-http-error-reference.md",
@@ -1003,7 +1002,7 @@
       "sha256": "9180458283284548461e70eca5e65f0c6e3254bc0d3939c9d3823ff80ef94c77",
       "units": 274,
       "unitIdsSha256": "394ab03288a2fb3e86123f6c12c7824939c63f0b5f3792f21c0d50374a649466",
-      "extractionDigest": "69706d2cbc10107d53b4c14c049cf6bd07bb4edd58691502ac9b0f5d6b13ad56"
+      "extractionDigest": "b9f50effb6042b8b04bdaf3cfa629f55ab69ae2ceb52c52fdea6ab0cca6295cc"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-http-implementation-plan.md",
@@ -1015,7 +1014,7 @@
       "sha256": "2d4664b5fb673d90d4c7edf9dffa771a3c2ed647a9d4f5deb967521b59df8d5b",
       "units": 18,
       "unitIdsSha256": "fdd906712bf179ece61f3be7847538c803500336a6646b1b0991203cca0e29a6",
-      "extractionDigest": "b8e18d3c956208b5ec8ab535f8ed80e66d3609c0b4184e486a727b2ebc6f32dc"
+      "extractionDigest": "71ba8ed621d4f9a64185c5a18270182500323c24a209c2f27aefefaadbc4c586"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-http-operator-guide.md",
@@ -1027,7 +1026,7 @@
       "sha256": "e62eec6f69901767f25eb991c0da053decad1c3285def293ae06ab6c7e9706c2",
       "units": 25,
       "unitIdsSha256": "a586f233a3e3b868590968d01a79f6bc3e480a2bd062629ac5edd381a5afb2dc",
-      "extractionDigest": "a54f11f165212a7389eb08f0555fe4bb299cb479343895dfbc56878a281efa78"
+      "extractionDigest": "0ad9079bb9fb7da6ddcea67d8c38358c785f474032a6fbbce7f33367392847b7"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-http-parity-final-audit.md",
@@ -1039,7 +1038,7 @@
       "sha256": "175bf66fb5c4855ee5931efc06f77601335a8a235b804feeb397cccf3207ea71",
       "units": 16,
       "unitIdsSha256": "dab210af7ca39802ec05555ce115710c7e86eba097d2a13f885c001462428bc7",
-      "extractionDigest": "25f88783ae0c813d86921a178b3a8a36d776ac050df0fd5891cc5029b7c58d66"
+      "extractionDigest": "2365a2d5a1e04c7aa8afb148caff0d58de8dea570bdce7f79335e47dc50d9f88"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-http-security-model.md",
@@ -1051,7 +1050,7 @@
       "sha256": "7c85f281626b7bb0ea9f613d91023d98ffc6a3bbe197ec1ab48e0fcb935606a4",
       "units": 22,
       "unitIdsSha256": "139293472daf98adf610e3476c99a2482dbde881753a004797adf9f3296f9419",
-      "extractionDigest": "87bedae5295dd9820a087518c3882aa02548270f599bca26a98a456d3228539b"
+      "extractionDigest": "ebded2671fcc5aea9dbcbd3cd9cde77dab78af4ab2dc7256343333cfb644b4e3"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-http-user-guide.md",
@@ -1063,7 +1062,7 @@
       "sha256": "db05b5431b17b6a0941f15df8351f1ba7d03b83830d9715475373e6165912934",
       "units": 30,
       "unitIdsSha256": "a4da6bb3dfdd91d556d4524c7b7d9ce3587e5f8b00db42ea8a131c2c62827580",
-      "extractionDigest": "706d395d991525f57e47e45aa5b70829196b3f08402208913be2785ca7579092"
+      "extractionDigest": "385707036aeb81f5719939616e56631ea7c0e82f48d88c130fe564f0823cce1f"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md",
@@ -1075,7 +1074,7 @@
       "sha256": "cbddb697988a5c2fd877cd5f478f2acc87c392f253a15a3c9162cf67f3e201d3",
       "units": 59,
       "unitIdsSha256": "d4db207c20894192467a49b3f72f6460829eb6748650116f2001918c196c60b9",
-      "extractionDigest": "f86534e9a02e96481b0a8ef326d21e171f9762d065dd393e603157cec207c4ba"
+      "extractionDigest": "78859d194474992308b60721e5d7a711029a0646e2ae852f64dd558d40a05c9d"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md",
@@ -1087,7 +1086,7 @@
       "sha256": "434534d85bb952bf8f17307b1a0d4facc21d43bfb39bac8e6ac058ea0d59e74b",
       "units": 17,
       "unitIdsSha256": "7558c8570e75e7cf2fe80dedc678582f47b66c8cead6193d235ef4ef26520e94",
-      "extractionDigest": "b28b16687e7cc923ea456d9ca5dc01da78b5eef898995d2444a83e2926bd777d"
+      "extractionDigest": "4f2168d9504746be2bdc9b7d4db984c83e22243847a45b96ea329fe1f615f09c"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md",
@@ -1099,7 +1098,7 @@
       "sha256": "9854ffc8188bcf9cac104702ae0ff0e4f245e14e285210a530417dfbd5449bbe",
       "units": 108,
       "unitIdsSha256": "4de36dc435e139d2861dae947835a2afa3a74bf81d0185072d946ad842f42577",
-      "extractionDigest": "869e8badba015cf2e59a152dfb3288adf00c4246ea8b0e89cb52b0494142ee98"
+      "extractionDigest": "c2a38f27002841e61ea6e9616d321b4e9ae48a1514e939ec78c52ccd73d9f523"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md",
@@ -1111,7 +1110,7 @@
       "sha256": "b3e089c47e7bbf1bdbf3963d95180c3e450fd57541a2c8b73d9792860881b815",
       "units": 15,
       "unitIdsSha256": "08043a3fddd83ccee0af3fefcc3f374379cb4713d797b21b0cf088d99093ca8a",
-      "extractionDigest": "56488deea34a35552f57bb9b48847d4f3b753c6ad8c0da744106e331512dc1ef"
+      "extractionDigest": "904ec30df67d58279764d8580fd4b9d577527dba27cec82ba6cc6aa3c5c4051a"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md",
@@ -1123,7 +1122,7 @@
       "sha256": "7dbf4b5fadb2d44382be3f458b7feb92af1a9a185d7af7dfd155cccaf92d3ebe",
       "units": 22,
       "unitIdsSha256": "8742deb512be2f8b69f73c0df4ef9a6e2f02905b538abb58a93b9c38c22f8d38",
-      "extractionDigest": "c0f51189c46c340079d2aa362d511dedde5e1e9262941ae97c67c94b50895cf0"
+      "extractionDigest": "f5d33d1c73a97626c22e99416e462470931a85d442f44ffb40c696028c18c4e8"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
@@ -1135,7 +1134,7 @@
       "sha256": "dff7f54c3321d1351fd496cd9fcd485f73451015c5c72d904ca473079291e785",
       "units": 22,
       "unitIdsSha256": "e6a109177279b6e67af5c8b7cd836ba8645f6aba35a0f20a0ba3f90401c254dc",
-      "extractionDigest": "11c0dccac14d875cc99137583dfd28d06e2a4592e551440328bc044cac08b3ec"
+      "extractionDigest": "e18e755748efb54580d5b625a8e664e48a96e77252ff4d4e5a511effba21e337"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-parity-final-audit.md",
@@ -1147,7 +1146,7 @@
       "sha256": "aa0ab2f75bdace7ecdf48f83d8792ff29a3deb92250c9787ed450369668f5660",
       "units": 14,
       "unitIdsSha256": "79b662190be93f04be3899c7ce2278d4ddd7030657931dba675380428932db6e",
-      "extractionDigest": "1321c23da9dc61a9ad2abfde63b3740d6476e7af456098d98431f15eff88e2c4"
+      "extractionDigest": "1ae14f55a0ef2d09148dd8c7a69f62225f0f41fbd9a54534039b050db0edbe3b"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md",
@@ -1159,7 +1158,7 @@
       "sha256": "a90d77023efa10abf12b6ecf314fc248fe6254c5ea6efde880ff43444402f426",
       "units": 24,
       "unitIdsSha256": "ab440a223af3e7f6434ba466ff20c7f969d1787850316a23074bb754e3ea49b4",
-      "extractionDigest": "fa5eac5da7ae954af5ffac6ac007171b5e281723cda683c4bb94aa8ef6017293"
+      "extractionDigest": "c66e78747929c388a41601322ed62f465bdcc9c8f41f585765bf39fa8d34d95d"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md",
@@ -1171,7 +1170,7 @@
       "sha256": "6d85d0cdb107ae95a0848bd75041910a1570107249aff8554aa0d9324506dd04",
       "units": 25,
       "unitIdsSha256": "5fbb4186745b09989984b8da615298fafda22d93414bff6c0e9c12f4d4d25603",
-      "extractionDigest": "4412fa7adeeb797dfd59af1a7e52039fc03da88c81d8fa2205e1111db198c3a7"
+      "extractionDigest": "4c1188755e15c927fe41f36f66d57d6689bdc7b414c12c8cb5de939df46b0755"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md",
@@ -1183,7 +1182,7 @@
       "sha256": "8a9c7861bff26c7d065dd8d1dfd73ae2a650bab6ab28cc267f91622265f8333c",
       "units": 27,
       "unitIdsSha256": "91ab3a6c94a0b805282205dd5b554aa74be51beacff31fc7f2f01d4c8de5968e",
-      "extractionDigest": "fecf4c3c61b08fb1bc690d2ccea54fb0288420cf1703ea92e2ee4433b622d7d3"
+      "extractionDigest": "0e392fd25da79e88db6d771f1b9f06c69fecaca864b091b345318b29221afb89"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-configuration-reference.md",
@@ -1195,7 +1194,7 @@
       "sha256": "687a3c2e8f4d12c61816954e451d48c1e24022853e6d5e343e30d7fb0615f363",
       "units": 33,
       "unitIdsSha256": "9a9e3a40b182694face6ed4fab7da22084dbddebcf692e1c9b2c0a965bb0b037",
-      "extractionDigest": "2650808b7f8421f397f5163bab592094fa5938fc0d1e222b67ca7538fdb5c985"
+      "extractionDigest": "90fb7632af319a76f2b48f089a29d2126460a49cf8b094ecb77397c9f86de9c1"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-cutover-plan.md",
@@ -1207,7 +1206,7 @@
       "sha256": "02f28c7a4c30be246884be16f4fcf160c2e78b8d25f1600dd24c323e980d53d0",
       "units": 20,
       "unitIdsSha256": "459d594b5c771f23b08064e8d1b2cb609ca70aaa179271adc35fa6919164eb74",
-      "extractionDigest": "17f35b776c18f3c29f63eb664549a894fc44b4101cd9c8876fa211a30b1556ed"
+      "extractionDigest": "9f5024ca14febe8bfec72932ac146f2d48655dc3530a112770f10ad75547e819"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-error-reference.md",
@@ -1219,7 +1218,7 @@
       "sha256": "b0b36d50d6fcb950b4c6c06b970fa2b2bb5db1e0859eebebb90b6aef3f96b94d",
       "units": 48,
       "unitIdsSha256": "55db278dc9b05cd6cd181e4df4689dc1b574368ea1c7ab323f22694c670afd4e",
-      "extractionDigest": "14dd31d8df846606d1d376cca9d9579773cd484294d5b093dead22b440b011c9"
+      "extractionDigest": "aca56af5e1f91cbbdd183234bf4b574d9b0d58c855f9451d19c78418abfc8906"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-implementation-plan.md",
@@ -1231,7 +1230,7 @@
       "sha256": "2bb2440faad3bcfa4cf38b6f8105f0de51df95ca3ca68469a24aaf7314984086",
       "units": 21,
       "unitIdsSha256": "3202f7726f583b1994b23b1a5560ddd4ff173a35876959179a24284effe43023",
-      "extractionDigest": "20be830e6007a79de3874889038c69248bfbde95bcba61dca18fd34033ef4ce7"
+      "extractionDigest": "ed01ad28d9eb3edbdb60a2bfd5173d3c6d1b143ff97d04bbabee6d5f054ce6c8"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-operator-guide.md",
@@ -1243,7 +1242,7 @@
       "sha256": "2fe21b0350ab15f1d4ba184b94fc6131a4bd99d0f2082b566f3207c623042ace",
       "units": 21,
       "unitIdsSha256": "29c6d0d010fb9f91da91a6e9b1b12ed58b6b5bec1bd14a5a088594205959374e",
-      "extractionDigest": "bc2b00fbc1ffce6cb6fe8ff1062a0c0e2ae0768155c115b587950cda0cb8f613"
+      "extractionDigest": "bff8821d82e4782d958daaa7ed32c0a43e39640de06462f6fb18ac10110391f7"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-parity-plan.md",
@@ -1255,7 +1254,7 @@
       "sha256": "10a0f42f9b743115035480c2af3bdf39fc5cd54551eaaf7554d5e81de28d1288",
       "units": 17,
       "unitIdsSha256": "1cafe37c4066ab5e06158f8aa51a254a035fe9e5333163bc557f14caae4714a8",
-      "extractionDigest": "708b53de4ff28ba8d1c64837f4363ad8748f44e4cc984176fd957eb99af80f82"
+      "extractionDigest": "41c83c17ec516b8a5ea0ca05b35a5d44c67b1f3c041b0a3112b9840af2cab4ae"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-security-model.md",
@@ -1267,7 +1266,7 @@
       "sha256": "2eeb977df6609235732e3c077b837ab77bc00772887787f112b67026774f458a",
       "units": 11,
       "unitIdsSha256": "8503b3dd9ce163c926f8ef7ed7498ec0f6867e182b61b77738f20bd98d534f3d",
-      "extractionDigest": "f59b840feaa77341a2821a8fb27146459c7e7e5bc178a1c9e9e67586a874d056"
+      "extractionDigest": "0265aa87bfc9461e7c18b862129469684a42e06cc39cbceb5773643b0a833ca8"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-user-guide.md",
@@ -1279,7 +1278,7 @@
       "sha256": "0576d2fc76dda430b2097c2577e2c81f61b20cabd2fb1b289a3b505e8184c411",
       "units": 25,
       "unitIdsSha256": "46bf1461ad64783bed5cf098a4f79010c1e8f4e190d291303f17f6529951214e",
-      "extractionDigest": "110c5f53f6b5035785995e033759973c00ec021586868417bb4af7c76d888781"
+      "extractionDigest": "fe6fdd9113cadf949439f4c3462c166f444ec5d202e72b47200871a4f9d14e62"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-6-a-audit.md",
@@ -1291,7 +1290,7 @@
       "sha256": "1ee06db8ff1603e4488bd4361508791937b1c7ac91bd6607f61ba281a4a5c6bc",
       "units": 34,
       "unitIdsSha256": "c269e39af31fa1761dbba7308d31bcca4a200969022d401c3bd0de2223914e65",
-      "extractionDigest": "c54f201de7ff8cca180f8b257bb977b0a2dd428a39c53da079784064f4c1d2ca"
+      "extractionDigest": "036c2e98adecf3e1989b953a82a58159c737e63dec71f8eca8c7a08d188aeae3"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-6-b-audit.md",
@@ -1303,7 +1302,7 @@
       "sha256": "4f6fec195c25729a1374603e0a9a6d52a3e13262a8fa29017c789a1c6db7f5ec",
       "units": 32,
       "unitIdsSha256": "bb1444760dc093432b7bc6f8a737212ad0abb90e07e4bfb17004c16bd354ba38",
-      "extractionDigest": "5c55afa2c5dd4453cddf75e3b9a342211ec9cd57b483b815aef44a6344f2f7ae"
+      "extractionDigest": "bde7cb0ad736b25294be9725b743235a94b43a6c50285f877348a99d7a863554"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-6-c-audit.md",
@@ -1315,7 +1314,7 @@
       "sha256": "e6ecd4ee2603058db848e3b58648979cc638e95ec7d4be6fe1e9efa7eaa8f03b",
       "units": 45,
       "unitIdsSha256": "d1a28f738b75af040f83f14002903d975c85202a4c6ae587f79d74cd1d33a123",
-      "extractionDigest": "edfeffe0f7c955bfaeea05b04f8d0d8f62350ba309cba873b47fb8310d54f1a7"
+      "extractionDigest": "34a83ac19f176dbd7457d03c9f3eba97fd0f2a46755c76cdd0fbce6be2d05dca"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-6-d-audit.md",
@@ -1327,7 +1326,7 @@
       "sha256": "b61e7cad5bd5ff367084008e0561192cfe70a8ab4140899598d35f9390ae40a0",
       "units": 55,
       "unitIdsSha256": "e4bb148cae71be5166099ec38c03c210bb1957ca101eb956ae7d78125acbb539",
-      "extractionDigest": "74b91e757c3dd621cec86309cc43eb8abe5a9aa0e6903a7dcfea018a5c32a675"
+      "extractionDigest": "06ba66a42ad27bce5e0bcab04e1082b01cc7d261105991625c4c87f1f9bba74f"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-6-e-audit.md",
@@ -1339,7 +1338,7 @@
       "sha256": "2a47fd244b2f7e3869527ed4e48f62dd716e3ba2c7f0a8778d50d0e946104e4b",
       "units": 40,
       "unitIdsSha256": "7685554f5320edcd25ac2fcf8bdb5c20b4155b9c2d8c905f3c3bca7ff086bb41",
-      "extractionDigest": "6dc079eb87e713526717a4fc38f7cb3c05d63ebe6f4e1f0d09f08d4e27e9e9a3"
+      "extractionDigest": "37bd01e6a31bf7f1d6828c7f227d180c42d2bf86a6aa5c5723488e1169def323"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-6-final-audit.md",
@@ -1351,7 +1350,7 @@
       "sha256": "e5ed5b65ff088c141dda8cebed70f1879bf91ff4b6524f17159e3996064e9467",
       "units": 51,
       "unitIdsSha256": "d6de2281ffc32da3529ba93d6f61601620d31c3013d2c1f816439d1f87bccb27",
-      "extractionDigest": "c89d260c222856733d4b65d26b16ff7762f25b418c33c8ddebf1d654d18c596e"
+      "extractionDigest": "8f7452cf5171af6f67f43e52f860f16fee98dcecd9a617a145c0be7ede46bc94"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-7-a-audit.md",
@@ -1363,7 +1362,7 @@
       "sha256": "2d1fb5dd9edacc8c30f0296e30b2175993580bbf32eb99c2b11eb8588b800be8",
       "units": 88,
       "unitIdsSha256": "3ad4f7c8f42b348ab1a78b665ad1c9b9b6ee5b6c9c7e7100911b6b359a72bed1",
-      "extractionDigest": "037e45f4be39f27bd41f20f35e6514054832b26af927cf7779468e745086e754"
+      "extractionDigest": "55256574ff275dd67c3d5568bd77a4af4b09d8ae0d76b6737256822fc9798de1"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-7-b-audit.md",
@@ -1375,7 +1374,7 @@
       "sha256": "8c89ba71f18971d934a2b413aa3fa8736ad8af75b3fda8cfb136792cc5d22c62",
       "units": 46,
       "unitIdsSha256": "12953f61644f80d77898dfe4c39a3bdef385129dda84c6a48306ffe6056fdee7",
-      "extractionDigest": "b3cb2a504b260c0d816923bf1629447c5e3bcd16b4cddb588137024155fa551a"
+      "extractionDigest": "5ddf362b04ac73d918a743528e5dfa1e9bb67b19ed96becf581152a1e12fecf5"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-7-c-audit.md",
@@ -1387,7 +1386,7 @@
       "sha256": "4151f8da7b083e0f7b91f98a1bca60b89e75d478d6bec23c1e3cd5479191992f",
       "units": 66,
       "unitIdsSha256": "1e5d605da250b4a261279471475807fe7d98c64f125118e23fb5f4fe47e00bfb",
-      "extractionDigest": "c99c9d282608e44e1ad42a3a88c180c903dbc0e9938aa4fbe0449405ff542002"
+      "extractionDigest": "86ae6c79e2567fae9c37a19f10dcfc55c33d863bba6fba32fda46a5c26fd1932"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-7-closeout.md",
@@ -1399,7 +1398,7 @@
       "sha256": "2552e4f083afb11f979f415ad53d501c8bef6939eba5f74c8cbb16b8d0f6e4a3",
       "units": 85,
       "unitIdsSha256": "605254ca6f1f1395368b3c7445be32b414d060f71a21fb96b45463d084ce55fb",
-      "extractionDigest": "fafafaac92f1d997ab2c9c1c38abab6dac4c7c624d3e118cbef6c2bfcf76560c"
+      "extractionDigest": "4ea3e51907334a5320bfc1eee1a3789ca24ef90c9615535385ac7e07610cf695"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-7-d-audit.md",
@@ -1411,7 +1410,7 @@
       "sha256": "017a422cd82eb95249ef92a126f552006402deb8875a3cc96ff08973d05a2afa",
       "units": 51,
       "unitIdsSha256": "2e9b27f3cd90006d812dd6fa68f4f27bc05fdf6cfad970da103d8039f45c4aaf",
-      "extractionDigest": "d64292e9b192c7195f617f6959a8f68a979ed8466137c348852eeff8d4827d20"
+      "extractionDigest": "13d1286b690e892456258f6e38805f1e4956e46e94a5451a2525380faea28994"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-7-e-audit.md",
@@ -1423,7 +1422,7 @@
       "sha256": "bb658bbb9eb1c78d18e39baf35c0ff39a253e361947defaf786488d89c765939",
       "units": 17,
       "unitIdsSha256": "3fd72a9069472f4d00fe3b61d487c2ba63209c3e75aeb0ae276516f20194eee3",
-      "extractionDigest": "0cf62b3f6c59151e296458d4d67f467c0eb54bbc62fff64eeb6d1905caf683fb"
+      "extractionDigest": "5f12a21c0accd2a2b3d40a958b4f14e869372c93112a7dccf1d3578a6f43b9da"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-7-f-audit.md",
@@ -1435,7 +1434,7 @@
       "sha256": "c3c5fc4468cac2ffc396f7897827a4b124d6201c9602c736bddb2f7a58291f1c",
       "units": 68,
       "unitIdsSha256": "ac1eb567c6f4e1a678ff46846df46842a175ad906006ac3e0391433dee4ec57a",
-      "extractionDigest": "907d712f1405c0d7ece41181b324e39fa666c6afd582b4e4ad889fa74e417901"
+      "extractionDigest": "c5846d913385bc8480dcd9bddce6618557ec567fd1f38aa70bc2d4cce5029395"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-7-final-audit.md",
@@ -1447,7 +1446,7 @@
       "sha256": "e063bc43854c11dd17ec8a12496b7adcbdad21ed524b40484d3dc3422766ed4b",
       "units": 54,
       "unitIdsSha256": "b4c90533ea1f3dd0b499a8775f4c0db443f68418b8081286f9f724b408121ddb",
-      "extractionDigest": "3776c1c4e9b8e9b052c4bd61c1059a67d0dc39858691707e2c0af03df25ce054"
+      "extractionDigest": "606ed132f6f376de44837e04896667417586ed03e7a1995f122b108350cd83d4"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-8-final-audit.md",
@@ -1459,7 +1458,7 @@
       "sha256": "12c9a1add8530d6ddfa24ab79114b961e61e24fd5d3e9c69d25dc41f7622b7a6",
       "units": 84,
       "unitIdsSha256": "51f4e0d4b80c90d8a8a7f71ad0de1826aeb8695b850dc6b444ce5d9bcc2cd991",
-      "extractionDigest": "a9e5a5de94d7dbb625cd4d2e661194a8c16ec965984e17da4ae065b6a18921cc"
+      "extractionDigest": "352df473d9f2bb179e24fd28b5a0a9b53eb02073fc5c557f8e4c3778ac0a96dd"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-9-comparison.md",
@@ -1471,7 +1470,7 @@
       "sha256": "7daa377877e307a811efada5d1f8e13ff66877447c6c85879e0b0d9846e863b3",
       "units": 38,
       "unitIdsSha256": "01b08e1dfb3c05733d4932ccd20c2ca2430f3a83e6767f4a119fb09890c340b0",
-      "extractionDigest": "40caef5788fd96d2942c0a113bf29cb26784b012464f384c2208b9cfbdb9ef06"
+      "extractionDigest": "b57306229fc8b0d77a4726fc3853e23341c94d392ce09936919f9a279f75b68a"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-phase-9-final-audit.md",
@@ -1483,7 +1482,7 @@
       "sha256": "07c22dbecb4dcecf4ada561b024b6b98024feda2956dba6cf0c058021f6025ae",
       "units": 53,
       "unitIdsSha256": "aef95d2f7cd39119746aa23ad0d263a1805a70af7e617e39c22af5a78d08c382",
-      "extractionDigest": "5db95999cdf6c6b3fb4e7545af37ae68eb75dfd0bedacb19e857bf3ec7c0c463"
+      "extractionDigest": "aabf5e28b21946ea3221b3aa95d176923e9ca3a11a61e1dfdcfbf9d51888acae"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-security-configuration-reference.md",
@@ -1495,7 +1494,7 @@
       "sha256": "4e017476552f21dc98208c0142cd3adf431bd618af35037e978a58106413157a",
       "units": 12,
       "unitIdsSha256": "7100fe7ba02365f0993a3e1da3fe62ee2fc18adb39cce65fc180c8a084d25220",
-      "extractionDigest": "dc743d199d59b2fdff1ccb119e21b1f64d121d1634fda9f0412527a047e15b0e"
+      "extractionDigest": "4a9317602f4b8661459a04bdb7d35964a16c8f56ab46687f13ee7acd312d3786"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-security-error-reference.md",
@@ -1507,7 +1506,7 @@
       "sha256": "87c5c4d47770d9de2bcb1793c81e9e1f3a03d4848a3337fab906f32a833e8aa8",
       "units": 45,
       "unitIdsSha256": "02d28215092ae44aa68fe019ed239c711b75dad7a5c7f318ba4a4a8df75c019a",
-      "extractionDigest": "955dff7b843dce97bae09c7dbba33bfbd06f0c20da1adde9d9b16b88cc73afa6"
+      "extractionDigest": "6147b1daa95b567e4db2ca1354cca8cdedf16a8488e2acc8f231b1794e9dea55"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-security-operator-guide.md",
@@ -1519,7 +1518,7 @@
       "sha256": "b64b13a053ceade7962f9289d2a2b9e95700f56cca2d4ad0a60e46e66d19e92e",
       "units": 9,
       "unitIdsSha256": "776960589e4ac1f3e5360624eb9ff5106a29f41adad32efd3867837c13459569",
-      "extractionDigest": "b2977d0560bc19e60244c14d1750372fed96e7c0e59348b374dc30d01e474483"
+      "extractionDigest": "cdbf1b949421a81154f1dc06c7bb73d3f36118b82a72aeadb30981c7caa03e2e"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-security-phase-10-cutover-plan.md",
@@ -1531,7 +1530,7 @@
       "sha256": "bfff496871c80d055ccdd38223aa6d449976aeee657ea89595f88e043c48c08e",
       "units": 17,
       "unitIdsSha256": "189f1ba67526e79333930b81dfacb00adc3dc1f5f40374d175521d50ab05f637",
-      "extractionDigest": "6c72fe909da7624820aefa3fa4fd6eb974a1730e91fd1eca0db9abde8c29a322"
+      "extractionDigest": "84839738a7f8bdbeba975ebd1e84a7ab09ce78a0ba34c29d995bcbf7a8c6589a"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-security-phase-8-plan.md",
@@ -1543,7 +1542,7 @@
       "sha256": "b2cf488ce0c67a39f93db4902089646bb65a5117ecb9c86a0f324cbddef237ba",
       "units": 21,
       "unitIdsSha256": "e32b3f75adbaed620c9e0b41170cc424e99a87ad45150186d1fa27b9418e8096",
-      "extractionDigest": "006b830070b9a6877f74d02edf873127904e4afabd11921c82035aa8ba85436e"
+      "extractionDigest": "a1c36e4d712814dbcebbc17281d50d5c186b9f94a4d51e6fb84e3216eecd13a0"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-security-phase-9-parity-plan.md",
@@ -1555,7 +1554,7 @@
       "sha256": "05ca88bb601498b121cf794e319fe5f47b950e6817be0a5059e33a6e4fdcebe1",
       "units": 17,
       "unitIdsSha256": "6c9964822095108c7c8c75cb5127b2fb3c4a84edffbe14e21f53b0ce9acb2129",
-      "extractionDigest": "d2fc3733c5ac8ce63044ef7c1bb15a4294a5b9781f2d10559c7653ebce90a3e8"
+      "extractionDigest": "394d07b429d914f892e07c58849371186b01c4f4546eababbc1acaf4ca58334b"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-security-security-model.md",
@@ -1567,7 +1566,7 @@
       "sha256": "2bb339930cb3df84d4779d945c19d5f7a150a1ff11d1682a91e52eaceac7965f",
       "units": 6,
       "unitIdsSha256": "64ebfd6cdba6cb1870de7b66b34c513f437f797e957be762cf451683602939df",
-      "extractionDigest": "ad721375ab1724b98eb6ac111a8382fcc9cea2f5a4952bbefbc27f6d6579f15a"
+      "extractionDigest": "22799c4b74f44f847fda06835f7c82d9ff8f777cef0f18d8d5997c664e79b168"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-security-user-guide.md",
@@ -1579,7 +1578,7 @@
       "sha256": "e085e96e517bdf8ce10c2337963bb5e5106ecd0590d39c10be896f1a55b3fe6f",
       "units": 11,
       "unitIdsSha256": "26365f4e57f927e0c3f74fd98aab70febdc4bf908cfcf4a9cbbb8f03f86a7780",
-      "extractionDigest": "f3479d08be3b0d125d2800970194d60f078bef5e356340418594e9d36f6c4948"
+      "extractionDigest": "5da18cd5e24e6eeca6e059a56bc3527d30cdc226f5e47d0061fc94c1e0e1b8bd"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-configuration-reference.md",
@@ -1591,7 +1590,7 @@
       "sha256": "7e5e2d439d65f1c2cc36dbb6d4adcaa589af610457c453af9dda01bc77095def",
       "units": 118,
       "unitIdsSha256": "eac92b0055231e852d498a68953e6ebc089e91bdfe7f84f20ed46edfe48ebedd",
-      "extractionDigest": "8e138f3a522b561176d8a04a700ca051f4a7304848fcba10322b1093b6110f0b"
+      "extractionDigest": "03951119737aab1e055ec72991ddb48ac09cd95e7f9eba3feae6aed12e55939a"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-cutover-final-audit.md",
@@ -1603,7 +1602,7 @@
       "sha256": "932ae5fcafcba696adb29a18e17c7bc900a6c2271d437779605ae5354d893d63",
       "units": 27,
       "unitIdsSha256": "b25533fdc0a4aaf22952bf0cfe2a0038137bc0d7d35028922a3a1ce788e03f81",
-      "extractionDigest": "d5943955f090ff3982ef13ce805ecb242c5687a60329760884f980ec88d1922d"
+      "extractionDigest": "49052567795f3f180f752a2a13aaef85f7452d2e0d3dcf3de51c5ef49c7c3bb7"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-cutover-plan.md",
@@ -1615,7 +1614,7 @@
       "sha256": "ddf34a038e49e624eb547ec79b4af40a3103d15038b41ddb8c57ddd315614e4b",
       "units": 14,
       "unitIdsSha256": "e3f2444c6f35abb24d0825f575c0688c9896594c33c21088719ba067f0caeb13",
-      "extractionDigest": "565630b7f1884215702c68f34c20f7fc18dc1a2803565c6c8bbf0f0051cc047d"
+      "extractionDigest": "24ac5813910698e0c8dc3671e0f98f5f3efe09815b533cac6ebdd6dd8902657e"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-error-reference.md",
@@ -1627,7 +1626,7 @@
       "sha256": "e1474ddd8e001611815300da549cfff84bc05083fc67c81ef86f0ffb110e6e94",
       "units": 37,
       "unitIdsSha256": "e1946abc44ac2c661631334a0169c45a75ecb759f6a736a2ba59fd6b0ab1d08f",
-      "extractionDigest": "19e6f00dc009f4b46dc51bbb70fff9540a40a134eeaa7d769faecc6fd19b6791"
+      "extractionDigest": "a4fa1822aac34ce47f2685912c72d1676897fa7c36517e814b493239016b02fc"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md",
@@ -1639,7 +1638,7 @@
       "sha256": "9938bf7fa994b7ebd7cbb9054da27517cc34c76ccf81496fe4ebc89e132721e6",
       "units": 14,
       "unitIdsSha256": "155f6ec3b597383a9d8c31034c1d0d7ad4bf71ff20e822063bb4415bd911152d",
-      "extractionDigest": "963fdcb9a70de655c5b7996dab0a545ff9d5bceb184b4da8370cfd1b9c8b8e09"
+      "extractionDigest": "5eaf16b6b6bd7aed6e542bfbf8e5dd6c939030759a881ac3898abe9a8db1f4ba"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-implementation-plan.md",
@@ -1651,7 +1650,7 @@
       "sha256": "9d1d160677bebd4ef04d6e5656615d2994ce8f6a80426cd20165a0c6251b0ec9",
       "units": 26,
       "unitIdsSha256": "45c46746ee9bdbe5ab163ae99befa6b17fcfd512031b640c3715fb64e4019252",
-      "extractionDigest": "894a5fd22791a09aae1a9a418e339efd8e1dd1f9941e2d6ca07e76a1bd76013a"
+      "extractionDigest": "32134b1ec9451b3b5c0abffd4b0760b019f0f9ffbcb776b5910bc30fa161644a"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-operator-guide.md",
@@ -1663,7 +1662,7 @@
       "sha256": "2d0c468869dda6272e989e0cb4cb630b5099c9f2568c2e95ff8c46980ba1b212",
       "units": 48,
       "unitIdsSha256": "2572b28a4baf10d558f30453bea33fb71949723799f0708a054cbc8e6c498324",
-      "extractionDigest": "9d0544092cb0033a4eb0915441df93eabf239916b43e5df19e1e066069e2fcd3"
+      "extractionDigest": "0a2bbf86bb1e3a46f0e721d8de9ed683b41e62d609ab8dacd0b82713e9ada14c"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-final-audit.md",
@@ -1675,7 +1674,7 @@
       "sha256": "2a260da3c205013cd9e22633ee95f2e862c75074022029e0886e1fc7dbfed3d5",
       "units": 11,
       "unitIdsSha256": "e9558a0693cdfb367a443cef169a5f8523ddc5a6be37a8fca4620bfd4436caeb",
-      "extractionDigest": "e77cef97d2c67f6cdb086e8f26ae159252b4680e10ce455d9c13d73f5ca87803"
+      "extractionDigest": "31b1cc004eb7674ab23aa6348cb96aa96dbfc11ce8ff217b81534a233840266b"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-plan.md",
@@ -1687,7 +1686,7 @@
       "sha256": "b81623c3b5b1f124bc44481eabf2637b6a52bbe7c9ac748860230c799067edb4",
       "units": 13,
       "unitIdsSha256": "f7ed612473d33ac4541e24e58a4324e65a481b11ca947c61a44b71cc8605530a",
-      "extractionDigest": "3e85008cf96d8725f509b17ce1aa4e744cd9d1baf1108d8373f77da96811b5c6"
+      "extractionDigest": "a3a9427288271fd62c5e09ebec75b35ccb6b9a1fa4f1afe16404c5fe7e210773"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-report.md",
@@ -1699,7 +1698,7 @@
       "sha256": "2e82aa0dbcac27819167934732fa9914965c2efa6537661871aee9a801f1eb50",
       "units": 11,
       "unitIdsSha256": "23505655851925fd9b7847dce0c90a3dc550e4a94f0d335bd7f91322d33cc5bf",
-      "extractionDigest": "07f64fd5cc787afa71669b2b5856bdd98dd5103b64a7f0cb33fadd662039fa24"
+      "extractionDigest": "feb402ac6041764f3b27b3e1592f5937ba6b3162aa4adf336e1a8575e3124cd0"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-security-model.md",
@@ -1711,7 +1710,7 @@
       "sha256": "06d873b2c503f54940adb6ccd13a30ce0fafdad691edd806113f31d117a46b95",
       "units": 20,
       "unitIdsSha256": "5bdfb4e7666474ca26e4d6f1ae74287ce6a4a92e33d9ba972b27098d576305fe",
-      "extractionDigest": "c717abd1054f6b9969aee6b7cde9ee0852e4f3c36156367a51ea2981f9964d69"
+      "extractionDigest": "468502c8c2344f8f217343cf3637c52c5cedf282f505c46a22064b4be2a96572"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-size-budget-user-guide.md",
@@ -1723,7 +1722,7 @@
       "sha256": "f04523146894df44e4facadb77939402c41c6d4e72e8e02c7314d7e368454bf6",
       "units": 48,
       "unitIdsSha256": "5f3ac43a6ebe26c607936b4045941cfb816f0ed4254d7f56d0878e29321b68a3",
-      "extractionDigest": "07fbdaf58781d967ff438dd167631d9b58296afeee7cc47fc5ff8c9f88afcb61"
+      "extractionDigest": "4ab91dcea619c0b207c5fb2a1b644c4c0f500a7957ade72efa6a9f1136193df8"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-suite-migration-workflow-v2-final-audit.md",
@@ -1735,7 +1734,7 @@
       "sha256": "d4cd495cb8f57bc1d6eea8ea4b56f3b5f1d56deebc82c34ff6de5f7203860df8",
       "units": 64,
       "unitIdsSha256": "3ac966237950edb178563cb9f77710e434df64f02ad1b907de4741c772ed96e8",
-      "extractionDigest": "dd1c8ef25f472f072bd169c5de83c76e78e3d17d5f5c8ba466666effa0b5bd07"
+      "extractionDigest": "efb09e7dc36b290303ab53cac40e2424287aa309e310e25437356ca07f57111e"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-suites-8-13-state-and-issues.md",
@@ -1747,7 +1746,7 @@
       "sha256": "81a5cb15ae88f0c690cef9365f8fe033812704c403b4cb5a526b5202eb36987f",
       "units": 61,
       "unitIdsSha256": "ed51426407bd2a26c2fa34788631aee9d02c5bab8910e519d10905394c0e50a4",
-      "extractionDigest": "f2379dc3cefbbffbdfc418ec876a60feff1017a1bd8e7fc575cbcfe3e7d29ce5"
+      "extractionDigest": "0745626f611bf6806218a370c59beec90f2d74ee4483a9037123e3c260422b23"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md",
@@ -1759,7 +1758,7 @@
       "sha256": "b0f5476954ffc2ae06834fa42da618b719cbeb6d0b2962fbdbcbe6690eece1c0",
       "units": 5,
       "unitIdsSha256": "9411e8c6daca21e9d317c2e79a83ba06cf062b7d488b7730e397ab08f647bb28",
-      "extractionDigest": "5095c8583d6eb527d7d1b8fac2fd56cb5c405ea6ad387d230e0480f46e80907c"
+      "extractionDigest": "088b50afd3067a1fabe62bc707806177c1d1e74758e03c7d9c872d61dc37f4a7"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-error-reference.md",
@@ -1771,7 +1770,7 @@
       "sha256": "d8d52c49a5254ee7a6a38dbb638acae2b1d05b4dca40c99359accfb7b1290910",
       "units": 43,
       "unitIdsSha256": "bc749d2db8cf744bdeb0f7ea6bfa6ff830576cbc67cdf88fd50be6c9cd620004",
-      "extractionDigest": "38d018c6859d9b01c458c0f5b23584531f67cc7a3bf0f4ffd896681341d565e3"
+      "extractionDigest": "1666ceb5c38112bd3d37cc1b7d6c9f73ea637dbc9efb4d58b682f181bf3c7cb2"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-implementation-plan.md",
@@ -1783,7 +1782,7 @@
       "sha256": "5dfbb7d0ad10825e416e35d6960626d23172bd1f9b09f3af32309d56e9d1d155",
       "units": 12,
       "unitIdsSha256": "addffe9816c105eb8252031de2decab3fe1ce290244f3c0419ded892646ca618",
-      "extractionDigest": "f08686d85f7b58c01ac76f47ddff6cfb4cd8b13eee65223e8a8c17084d3c78ad"
+      "extractionDigest": "2fc95bb1180b7a925cffc1844c58cf772d0bb7f17c3534486fb0d43ae421c60d"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md",
@@ -1795,7 +1794,7 @@
       "sha256": "4e40a157bd29d90edff8167b2fe9f24e532c1ca2fd2a4504da575936ea4ba4dd",
       "units": 15,
       "unitIdsSha256": "64090ffe6045306dd39b13fecd7251d759cb8d5c0a8ac013bf5d4d4d79ff9dae",
-      "extractionDigest": "b1b4782b1e7c5419481608e69295bb2edac6777c4c24c8fc12f7f4ff70cfc125"
+      "extractionDigest": "b9dba167b3d8598783f0a5241630311b91add89caad19c3734a4351e28fe4267"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-three-phase-audit.md",
@@ -1807,7 +1806,7 @@
       "sha256": "1d23633ebbb1ccba55987e5b6ccbac8c3ccff9a7462084b8bab57270cc53dfd5",
       "units": 28,
       "unitIdsSha256": "f44881bf5e4d9567f0dc60c4211e5a5975fe74dd39e00ddbe860e060c2825581",
-      "extractionDigest": "1ceea89d996bd31bb2ecb22404d04b1c39ea0b77ca4b82ce3aa5f43e3d3f1f91"
+      "extractionDigest": "ce4259ce51ce60aa21501d07603c9364e2362f7523da8caa1ad12c25dc5ca447"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md",
@@ -1819,7 +1818,7 @@
       "sha256": "bc7612c09f68034c65fec20dffebf3a9f5a71bde746c22bdae0deefba99f53ce",
       "units": 11,
       "unitIdsSha256": "9d33ce71e0b0bd686fa040d52dc420dc99341800950ee597af960ca00fdc8ad3",
-      "extractionDigest": "8dc42d8904f657593cb4793a976334a1b534c6affca45331991cabe35dc465a2"
+      "extractionDigest": "4ce05953e2e77a6d3d548943b17381cbaf67bad359ac516f60a92cdac2d9ffe8"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-visual-configuration-reference.md",
@@ -1831,7 +1830,7 @@
       "sha256": "7c4d1728eb9b0a20426a95f9c115da403775d35b8cf3866c78ac169e91b40624",
       "units": 23,
       "unitIdsSha256": "a9ada1c1b4ce215537a416d75ea2e2983907bc6b330236061681c45d214bc06c",
-      "extractionDigest": "d6927ef3300faf83e05543a66002922117ccee117ae5b29ccd44807af1c386a5"
+      "extractionDigest": "118f141f32ddf34cb6cd12550d4a3a802b82b121a334f7f9158b5b02a15f3963"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-visual-cutover-plan.md",
@@ -1843,7 +1842,7 @@
       "sha256": "9cd5570d01c84a4608c54e6c28d0352a13dfae63dfb64bdf26a86ef5a2293870",
       "units": 10,
       "unitIdsSha256": "3f52bfd241ed4ee8e668fdab2ae10a12e1a2d093dda3ed267d3da4a8173a8395",
-      "extractionDigest": "de49126d8405c054e0a5b1364328ae71e2931e0535b9abda08d7bd8e8cd35fa8"
+      "extractionDigest": "cc9738a06a589e4f843eeb2387589389d0917fc56cf996788917fe6463fbbc76"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-visual-error-reference.md",
@@ -1855,7 +1854,7 @@
       "sha256": "4feeccc59b28bf079d50e7809d028b144ce33534beb47a0bc9364581804e62a7",
       "units": 17,
       "unitIdsSha256": "8ef2354d04b791d5302019fb9f4de1ce79a4364fb18face28d162854679214b8",
-      "extractionDigest": "e19b6c73a636a7399a6cd01ebe2c7d9d90aa7ad2b34e465fd9b0e437cdb685ca"
+      "extractionDigest": "a045bb46da49852e9ade2772f732a47586ec0c6fc56ff493bbaf6a651dd7fb6e"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-visual-implementation-plan.md",
@@ -1867,7 +1866,7 @@
       "sha256": "a592559f536e951782c9ab6853375e05d4da040389d6ca282997ea383be0c622",
       "units": 16,
       "unitIdsSha256": "87e04075188ce3db40f93e11e80e27d5e567c39cb64e25f3476353ad85b6aa60",
-      "extractionDigest": "b8175bf53909a78feb1eff8950ef136e988497f353c69a9d3f78fa9f36515823"
+      "extractionDigest": "432fffb0569ad69ddfd86a836e35c71b7683a714201e98c53c946ee57d71a116"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-visual-operator-guide.md",
@@ -1879,7 +1878,7 @@
       "sha256": "6273e05ed54eae09257ff36cb665379708a482d2b354c1a75b0ae01e5695d2ec",
       "units": 15,
       "unitIdsSha256": "7c85c37b5b2db1d4fd4d8b16171bda0755b5a0352ac160e525ececef812d8edd",
-      "extractionDigest": "828b974289e1ae901f39af1313d11b6fc6b6be1642d0a2983afff57a97a9b8e0"
+      "extractionDigest": "f692557d3fc5de2f95806f7a487fac2c8931ee201010881a5726c4abbc5f9fab"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-visual-parity-plan.md",
@@ -1891,7 +1890,7 @@
       "sha256": "cad58991913b4a1f04243e3517745939b789c81033734c1856d0a978ee2f9b14",
       "units": 10,
       "unitIdsSha256": "1d8aa9ad0598c175f34d94014fd71e7b1cceb5e21f56ffe0cfcb662a24330fdb",
-      "extractionDigest": "ccc9b3d7b7661b4d318b36ab297081dc06f9f6169f73ca4cc7fcf8b2c223ec56"
+      "extractionDigest": "1dcd8d9f6132f4edd0d6e58619856b05f43c859bc460919830aa268af4bf800b"
     },
     {
       "originalPath": "docs/architecture/pipeline-test-gate-visual-security-model.md",
@@ -1903,7 +1902,7 @@
       "sha256": "ebeb5434e857aeb8746b240d1fc44c35cf9e1a03b630c5be7afc4497ff1edf24",
       "units": 11,
       "unitIdsSha256": "a13285694d0e7b90a0d9c6c5e1e40236a2d0cdb4043a1999931366d621a01749",
-      "extractionDigest": "cb90c42f9162a2b9ab3cb47bc33e91ac8406b73e0d40ab9663512e4fafd5afa1"
+      "extractionDigest": "2e370e33055e953e21b77a26ca6852da5a8ecd1f1435bf85ffe3cae7dd00f1fc"
     },
     {
       "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-audit.md",
@@ -1915,7 +1914,7 @@
       "sha256": "61af14995fa8a993e730f0a88782f2a260188d0a5e2d4f977a7a48d97c67c932",
       "units": 66,
       "unitIdsSha256": "7565d64bef7b8401ae131d61ac0e176d249f90c86250b0aef204a6404dae3ee9",
-      "extractionDigest": "db991095b4c7436111dee7947bf1b91c82caf0056d42a8411ce764a2ee401c77"
+      "extractionDigest": "514bbf239b6e8ed8aa7274c8e725d3849b8b094b713aee1a2ab0e468f0d45ffb"
     },
     {
       "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-c-audit.md",
@@ -1927,7 +1926,7 @@
       "sha256": "9bd46e33ec73c9248eff4ffa1da7f69c8d058fdf930cfd08e0358b7765b0dffd",
       "units": 61,
       "unitIdsSha256": "cfa50c875cf7612265244f6c580962bb8bf98004659fb388a5d5fdd3bc25afb7",
-      "extractionDigest": "881eca12ad727da115b78aefe52e92f64f2bc6cf75712ddc541cc70881544434"
+      "extractionDigest": "2f2bf0a0414316dd534dea421fa3863a32a97620be6844bf052e81631062955f"
     },
     {
       "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-d-audit.md",
@@ -1939,7 +1938,7 @@
       "sha256": "0b8cba6071865b7cae1d86aa1b48ed6cd6b1eafdf5a8b459d6ab7de091b94169",
       "units": 59,
       "unitIdsSha256": "3b8fcd4ad339c4c8048ade48ff224d0b09bd84e62a575f3d7165062360ed34d1",
-      "extractionDigest": "1c772ecf3a61ce1e29bf9027fe34a9f98c0b2ea18a0045112f90f3db7a0e1d72"
+      "extractionDigest": "0e95e2b1e050b3d8f2013cf9b29aa41d1085fa776d91a195d6e4e8e497eba869"
     },
     {
       "originalPath": "docs/architecture/plugin-system-implementation-plan.md",
@@ -1951,7 +1950,7 @@
       "sha256": "4b49896a6328e6b281402e13247b28f9d8177837914b4ebf5f0ab233f8267e20",
       "units": 733,
       "unitIdsSha256": "a9dd0f92bd9751ea29f4b762ded6d38035e4605c30ecbe41102b52b9fe9fd2ac",
-      "extractionDigest": "37c7d54c5f91e309de520144e9941deaf4fb33b29c5a07ea7be652102e2538ff"
+      "extractionDigest": "1a2a7512053edfd57e43e20a48f7985b8f684f8e1265c6164fdca4ccc0ed9854"
     },
     {
       "originalPath": "docs/architecture/plugin-system-phase10-changelog.md",
@@ -1963,7 +1962,7 @@
       "sha256": "9d4e05d82fb0ab816f53d9374d09269ab9d954674d0e70300b22d155baf93b2d",
       "units": 23,
       "unitIdsSha256": "ca3406f54c33faaab63f80b47d3acb59031b2683c24224ad5c605a126bda42bd",
-      "extractionDigest": "cc757813135c7dbf2bda10592d0200ff60f78641506f24b1ef03a04269163165"
+      "extractionDigest": "492648e0686f72cff09d1755c1a449562791f581b05d1cc3fa03f67d4f5a07e9"
     },
     {
       "originalPath": "docs/architecture/plugin-system-phase10-observer-assessment.md",
@@ -1975,7 +1974,7 @@
       "sha256": "7b601136dd1ba2f5a2ba08472098a1c79a1b46a424bdb1bc245477c2a8a4a21e",
       "units": 40,
       "unitIdsSha256": "65aade63765cf74a1442fd59f02be905a23b2869b03b8f6a14695561995b2934",
-      "extractionDigest": "7974a2f65a9ee3a9bafcaa5a7241cac244b4f161bb1b06ae6fa5cc5feb31bc49"
+      "extractionDigest": "d240bc05da05783858de1d40247846ec349ebeaca20aff62dba7dfc536111e4d"
     },
     {
       "originalPath": "docs/architecture/plugin-system-phase12-changelog.md",
@@ -1987,7 +1986,7 @@
       "sha256": "cd6fd5ca4ec207eefa9fc6ec4f1b859ed7b9fd26386902bb92413ed09d7e0af3",
       "units": 21,
       "unitIdsSha256": "7afccbede2146e7001ee7049074769e7a788ec1af000b78df63f77934d7024d7",
-      "extractionDigest": "bb76381638574946196be3470eb5dd168d41660ef76b204916664cbb55b0b7ad"
+      "extractionDigest": "eb41bfc504bb203cc856c62828d2bc4e92ee4e3a045a7854ce44eaf50970759a"
     },
     {
       "originalPath": "docs/architecture/plugin-system-phase9-changelog.md",
@@ -1999,7 +1998,7 @@
       "sha256": "6bd708e39668a965f084d080a59508595775a18ada9719a8de48debc1b47f5d9",
       "units": 132,
       "unitIdsSha256": "c1e31ed26536affc2a69854272818ea99dcbb2c2e251c4ad9e6da4c1822fd4ad",
-      "extractionDigest": "1370765938548caebfbb8051d609e13335e5901731bfa5a7d0e9aa8c970b0d13"
+      "extractionDigest": "b561d9de6b4862577d58fbad72fe2afd1d61ff0d610ac3e02f5b2170c3f937f3"
     },
     {
       "originalPath": "docs/architecture/plugin-system-phase9-extension-assessment.md",
@@ -2011,7 +2010,7 @@
       "sha256": "cd70d4161afa3e5f5b804db73fa96e7e074a69a48fe7a243ee64ddc7d584e3d9",
       "units": 231,
       "unitIdsSha256": "2c2a4bc1ee38a89c4dbbfd72ded2d480c1353881c3d20445cadfd3e7224ec58f",
-      "extractionDigest": "03003cf9f96fa5227dbcfd40d1eb811e00d2c5e1e717ef1145ba37925e8a028d"
+      "extractionDigest": "7400aaadcc34c14969235e0bd961b8a01329e7898bcecb26dd71759bde84260f"
     },
     {
       "originalPath": "docs/architecture/plugin-system-vision.md",
@@ -2023,7 +2022,7 @@
       "sha256": "f7534acaf117d8ec68e65d8308c75f65332042034c30154833595dbe6b2e2fed",
       "units": 252,
       "unitIdsSha256": "a68969732331150e3a1bf9514faf321c113976aa575591c901deadb266c1139e",
-      "extractionDigest": "0daf59ff4c6b8e434d6c7809fa855200b4b36f9632ec3240ec76c02ce4c8395c"
+      "extractionDigest": "d4347abb5991dbc3cb43265b3e2defb9e1e49c4507fbcaff4c66c0281f963bc6"
     },
     {
       "originalPath": "docs/architecture/prism-baseline-bundle-v1.md",
@@ -2035,7 +2034,7 @@
       "sha256": "b426e93a8e1db081dc078eaae5795e50de7168ed780cd52b5fffee891fa8c88b",
       "units": 100,
       "unitIdsSha256": "d5ba95d96e3ec223f3190264e63209978d10af30895cd4be2a1c918c4ac825ae",
-      "extractionDigest": "507e2b20c5ab1bd57ac26b2edc106f9866eaa757ec95d519248ebaa43c0ad701"
+      "extractionDigest": "b1bbddb116832999f0e0ca2a17552caa4b985d7fa85b3204332f7b3ba5e7d0ce"
     },
     {
       "originalPath": "docs/architecture/prism-corpus-ingestion-v1.md",
@@ -2047,7 +2046,7 @@
       "sha256": "813ec698bff180a448f23154f2a0abf9911cf9017b09e2744f17043eaf4b9cdc",
       "units": 94,
       "unitIdsSha256": "4e986e9756efc4a4a42d559bc6bcbfe655ff25f6fa2decbd34286883470c5e3c",
-      "extractionDigest": "3e0c8bb756bd42726c633a461a204cfccd50c438d0a9f7bc27fae08d6019de9b"
+      "extractionDigest": "cdb67d0ed7357ba85fda5b4e883625049365eb48abf095cd044494afe153c57b"
     },
     {
       "originalPath": "docs/architecture/prism-design-document-v1-review.md",
@@ -2059,7 +2058,7 @@
       "sha256": "efd0360d2cdbdf85365323194b3e8dec18986b5841f980fe3d0a79817510431c",
       "units": 145,
       "unitIdsSha256": "60c7cacd96fd3fc0b82bb3c86a2b0dcb2d5f7827e2805af72b1a9230b04339fb",
-      "extractionDigest": "6f1aebb247d459282ff2c4ca9f5d8af685e00325e6eb997b24b0b41b99df40a1"
+      "extractionDigest": "14e713d9f8774d16e5c01dfd1aa4aa7ddd927276548cb44b6ab46ddf59127800"
     },
     {
       "originalPath": "docs/architecture/prism-design-engine-architecture.md",
@@ -2071,7 +2070,7 @@
       "sha256": "a8333fc710d3b28055709f73f827c32cf673d7ea893384a6adcabc663d34f0e5",
       "units": 601,
       "unitIdsSha256": "2fa79a5dc40ee271dff46dc5df1f878ac3c44b24555f5c4403822cadbfc7425f",
-      "extractionDigest": "4bf2f61523f6a1ee1aa2886be6e2fd5141a165b4d88fc3331585ff064cade5f6"
+      "extractionDigest": "cdcce743b70960a953ba9b053fdcdd4d941d617cbf8aa4b785e565e07ab34dcb"
     },
     {
       "originalPath": "docs/architecture/prism-design-engine-contract-v1.md",
@@ -2083,7 +2082,7 @@
       "sha256": "424e5ec25cada0f2a8d0a5d9aac2e703f3af0fe5b375b105807181d07ae09ee6",
       "units": 196,
       "unitIdsSha256": "74c624dac55900ea3134210fa83dfb83ec2a0a21a454c4c7ebf73372e4ee7af6",
-      "extractionDigest": "3fb14a9627047743f5f5bbcb819d91febf0fad16ac5c5215639b82092ffcb2e3"
+      "extractionDigest": "5cdf2cfb5cda237ecbecf84a2014564027ebe694af89118de13ce91fd6f5175b"
     },
     {
       "originalPath": "docs/architecture/prism-helm-deployment-v1.md",
@@ -2095,7 +2094,7 @@
       "sha256": "f908bcafb63ab76b13064cc155559724bc0c333649061bca625d998b007498ba",
       "units": 98,
       "unitIdsSha256": "af3a61b205d3d7e907fffd4b75ffe3d23a614d35470b725354ae98e24b0639b6",
-      "extractionDigest": "cbfa45f852052dd9e3d1c5911801981c156eba5d2e8c364c003614c3a32dac44"
+      "extractionDigest": "bf299afde3a70943be16da69f2a1044552c8475fec5055923d19b1d21081fb9a"
     },
     {
       "originalPath": "docs/architecture/prism-openclaw-runtime.md",
@@ -2107,7 +2106,7 @@
       "sha256": "9ebf840b08f665dfecdfe46f26f7eab32d0988efdf5d4ae73ef929d5e554949a",
       "units": 16,
       "unitIdsSha256": "c9b1c8d515aa7d795e02b39fb94b32457eb784ba857f35f4c8e4c2707eca189f",
-      "extractionDigest": "2cc2ada4ce7715dba62dbf2390381104287bf7fe8f4fc5fe35f57e939aaf779e"
+      "extractionDigest": "b6fb0a9568343d5853af60c293ebc36f71bd0c9c320bae240ba4c9b9ec37f14a"
     },
     {
       "originalPath": "docs/architecture/prism-pipeline-fidelity-adapter-v1.md",
@@ -2119,7 +2118,7 @@
       "sha256": "618b540f44ef86f01471fc978a7481e5008f0506b30b8564bf5082cbae93e8e4",
       "units": 86,
       "unitIdsSha256": "eb75b74fb894fdbd215241d8036ba39bcef9dfcb4ae74d7a07c6657515f9c7ac",
-      "extractionDigest": "bf697336b152b651968fc63739d743d137bd9135a06cd5e626b7c8ebd2b9d994"
+      "extractionDigest": "b1d91bf135c996be8771b179b91c8ad77c7c20fd8e9576ab0ac92b30fb8b6d01"
     },
     {
       "originalPath": "docs/architecture/prism-preference-learning-v1.md",
@@ -2131,7 +2130,7 @@
       "sha256": "fb9fa66a49aa82e8f7ec64b32c44d9dfe4b40f43b209b9e15a159532c8fe8637",
       "units": 64,
       "unitIdsSha256": "bc5282c5e148f6f8cbea33fc7695789ad39b7523921fdec0ea4092756aaeb8e5",
-      "extractionDigest": "7eeeca55520967db5da78a3374f4511f7f7d560e2b459dc94720cde26c677ad8"
+      "extractionDigest": "6a73582a7610af6ff0420347c378be43da4fd0ee1e7813266d1089a2fb8e21e7"
     },
     {
       "originalPath": "docs/architecture/prism-prototype-runtime-v1.md",
@@ -2143,7 +2142,7 @@
       "sha256": "08627ae5f599c36519e1e5517d12d9c18eb9242e0d3eaea88a0077b56a018bfa",
       "units": 84,
       "unitIdsSha256": "3fbdff0b82c77e7b21b3812068a44d28a599bc9dce62af2f4c1ad480287a99e7",
-      "extractionDigest": "779d0a5a9c28a29c069ff2a3477177b6145a2d9d617e3d9a216e5e40645766b1"
+      "extractionDigest": "1cf1fc383fd80e573284e5fcd6ed742a7a50ba94b1d4edcbbe5a035c5b122026"
     },
     {
       "originalPath": "docs/architecture/prism-quality-gates-v1.md",
@@ -2155,7 +2154,7 @@
       "sha256": "f63adb67cf9819b20868eb1d281a588d2abe21c4451fa4301b38548814ce14d8",
       "units": 93,
       "unitIdsSha256": "6ab54654377d07e2e2b32b045263634ccbd6afb2448cb5d4d090713a60c21815",
-      "extractionDigest": "fea81a04594b9b638ef4eddd98c2b1cf97c233dbf5befa8ebdc07aa014b0185e"
+      "extractionDigest": "05409a8917b03202850a59b74a7f95a08bb98ea7db4ba66205b84b9db2bb2f45"
     },
     {
       "originalPath": "docs/architecture/prism-recovery-observability-v1.md",
@@ -2167,7 +2166,7 @@
       "sha256": "5d1b2287ad92e2eace31673a7d5369327462035d82fc81de3102947882f9b574",
       "units": 104,
       "unitIdsSha256": "4eb0bc3040aee58568c623c6f3037426d9b9ad64ba4a79389a83be2bba557b2c",
-      "extractionDigest": "4989457499ecbcc01bbe02b295e409d7006d9356d85d2f5f1c06fc6a80320433"
+      "extractionDigest": "7fa9f6162da1cbaa1bcb6ec35364671a2520c3fdda4c44a041c23760c648bfa1"
     },
     {
       "originalPath": "docs/architecture/prism-retrieval-ranking-v1.md",
@@ -2179,7 +2178,7 @@
       "sha256": "c3f15a246d42a9a62aefa3d8623fc27cf6193ec43346b6cfe3cf30fb0f985430",
       "units": 73,
       "unitIdsSha256": "a6de07204b95a1fc4912404672ff813a65dc4782ba15471c80668535a2d522f7",
-      "extractionDigest": "bd490d4d2ce9f8ae75db6859e12dfcb19e80ec1a3486636aa90a0258863b5ecd"
+      "extractionDigest": "a84cc67f719224df7d918044596f42f0bfcb3609aeeebf84442d3ae2a7b5475c"
     },
     {
       "originalPath": "docs/architecture/prism-storage-model-v1.md",
@@ -2191,7 +2190,7 @@
       "sha256": "16ca29a6fb2e894ee5a5c54c7ad4cb869cba86096cb07e798a8f37c7609af67d",
       "units": 105,
       "unitIdsSha256": "049d42fd776dea467321e7b597778e39d35d16d02bb5d52952acaad3975476b2",
-      "extractionDigest": "1d8b97479bb0827588014ac7fd837908b113b4e59af5306e7619fe790a0fdc77"
+      "extractionDigest": "e26d7ad80fe5754ba1ae7452975e782189fc06e44ca9ae6b719a9fd132a06682"
     },
     {
       "originalPath": "docs/architecture/prism-studio-interaction-v1.md",
@@ -2203,7 +2202,7 @@
       "sha256": "e57018c5e20097aea8cf39ddb08d683d9d8509d6077010276314ca1b87228a38",
       "units": 129,
       "unitIdsSha256": "60351bed573ae749b0ce64cff5993efcaea6b515a210602689e837bdbca1ea8a",
-      "extractionDigest": "9ec6b9e4b3458ce9ffd8136a9e7ddda55086ef658fa8b24937f6edcb83f833e0"
+      "extractionDigest": "45bc3d3ab13cb9567a5c3bbb279343e6ab60196552da94e6bbad94bd63aa8610"
     },
     {
       "originalPath": "docs/architecture/security-model.md",
@@ -2215,7 +2214,7 @@
       "sha256": "b03fb5379a5f93c638991233104d29e7203d939794508bb3cc3a15d3481bd67d",
       "units": 16,
       "unitIdsSha256": "e69f5ea612c941b299f0b077a37b206e9706372431c652731910e006d8dcebd3",
-      "extractionDigest": "6e8caca85affbaf130193d1e358fc2f0ed60739821d53a19780923a6a853e45d"
+      "extractionDigest": "361ec9ca67cb0abea8d71e7ea0dab29957a7e0636bad66d31a1961677f3315cb"
     },
     {
       "originalPath": "docs/deployment/README.md",
@@ -2227,7 +2226,7 @@
       "sha256": "77ab4b85bb8ca5546069e313c9ee73e7708594b4f77b54a5772ac2549a6d27ad",
       "units": 10,
       "unitIdsSha256": "1f2568cd53adb215444c87d6ea16612cd28cc3f1698b9455ca35b97d019fbd0e",
-      "extractionDigest": "595d6f191bbb5feb2cc615c92cdea8eedda495111efeb14884fd043f5b52489c"
+      "extractionDigest": "88c185fb4eaa27b3137dbd79a4bfd4c6b6ea3477d3c96dc7ea40b9b8b4c8726f"
     },
     {
       "originalPath": "docs/deployment/agent-deployments.md",
@@ -2239,7 +2238,7 @@
       "sha256": "3a969503b2d5eb67a84bb58110b5d65a22595138db6408308d19bd7ba5dfc71a",
       "units": 31,
       "unitIdsSha256": "c4c4a66f157e9bddfb8fed3199eef0c22ac4466fbee04deb9b7578cd771e89ca",
-      "extractionDigest": "4ad8794c7a037fa23062ffd35826e6b06a4fb8357dbe1a3594313d9426b35c33"
+      "extractionDigest": "16a777b56d92749fc89c491a84003a1168c01a4922b2a2d93e96633bf6aa49d2"
     },
     {
       "originalPath": "docs/deployment/continuous-gitops.md",
@@ -2251,7 +2250,7 @@
       "sha256": "7ca5a7875833ae498d0a6ffade64d6eb7bb3ffe98ba76e4142d0aecbcc54edfe",
       "units": 34,
       "unitIdsSha256": "21b58e3089d6aa8b70ac2a6a50f4b72151f49b9b84474563d7936dbac34235d8",
-      "extractionDigest": "fca677d82a837a9a295409b65922847f8165fd0bdf90d2600edba9487af86b74"
+      "extractionDigest": "7415ccb763d05b85b71180c8f47a5348f50eb590b70e3785ea96df782a4084e0"
     },
     {
       "originalPath": "docs/deployment/deployment-verification.md",
@@ -2263,7 +2262,7 @@
       "sha256": "87e96240f04e0e6f775b41cab6468cda40c72af808b3933edbfbf35fa374950c",
       "units": 7,
       "unitIdsSha256": "064f0ca1cade7a261b0e31039aef3ed89e17d43dbed05fff914135d03f9cc9a2",
-      "extractionDigest": "978bf7fb0bc375af8934170b758cbd7120d3fd12f6cc6ba49f2aea4a8a58592d"
+      "extractionDigest": "d82febee5a0656d23cd63001880f9da04bdbe309a19b7f9724df84fca494082a"
     },
     {
       "originalPath": "docs/deployment/infrastructure.md",
@@ -2275,7 +2274,7 @@
       "sha256": "04b913ddfed27fcfde8b30904fe7b80743811077bd31ebb3de29d24ea736d67a",
       "units": 7,
       "unitIdsSha256": "9a828e76b84ad9dafd9a9cb8b1f1aa2a9eeb23ba1fbeb61e5c602bc2fb1e5a7c",
-      "extractionDigest": "13b897cc0e02d6dd04728270878cf7761a4da68ad5d2096304a89c607914caf5"
+      "extractionDigest": "508335be996f6762796f58c602864b1fe2ede12593fb91c750a32b2056f564ff"
     },
     {
       "originalPath": "docs/deployment/litellm.md",
@@ -2287,7 +2286,7 @@
       "sha256": "beabeab189b98b73dbf7b12c06f979d1952e604ea2d07edaa33e500c38102988",
       "units": 14,
       "unitIdsSha256": "79147c3938867418e79593f16220b9f524055277be052c7ddcf9661a91ea2e23",
-      "extractionDigest": "6b65665bcbd75865dec0e820bb80bcf5b09e82da2de755cd4146188746a4d1a8"
+      "extractionDigest": "8156070342d113c3072da0caf33d2bdabf81ccce33ff126dc0ad18174e00822c"
     },
     {
       "originalPath": "docs/deployment/secrets.md",
@@ -2299,7 +2298,7 @@
       "sha256": "6d345f9b01cac31aa5ecbb0347110fa0515315c5d31bcbbc008005b6e3066849",
       "units": 7,
       "unitIdsSha256": "ba1d4325c6751a2c929be4b40634b29d9e4038e0765067ef7a9c9070c86d34c3",
-      "extractionDigest": "10a807c246424c2aefaa3c0b335542fc21c1258e04b1738fc391417055bbadcf"
+      "extractionDigest": "dd6c6ad81132f0e7ab4763cdf028e3c45abe4ff7bb0101c47d24a1b9ae4243d1"
     },
     {
       "originalPath": "docs/deployment/setup-flow.md",
@@ -2311,7 +2310,7 @@
       "sha256": "a87f306255d2a23e4afaf3a415474632ac358b4d2fe471b2336bdc6ea52fc6a9",
       "units": 7,
       "unitIdsSha256": "cf076e54291666abd7a20323f423006b9f00e430e1f8d2f9bb3e7a60c311d98e",
-      "extractionDigest": "56fa07d7e2d56001b0bdab40c5149ff27d2849c1fa75e1dac3d7a7adf1bff08f"
+      "extractionDigest": "6b10bb0e7b4732df521691a1f76f11c17ff4b9a7abc9d6ab2eb0714cda600029"
     },
     {
       "originalPath": "docs/deployment/tailscale-operator.md",
@@ -2323,7 +2322,7 @@
       "sha256": "2e942db5837c4394403bca278d39204c075b46b1e2319e5fe8bea3f82fc4948d",
       "units": 7,
       "unitIdsSha256": "559224f2af971c3527407a1bf720f27524bf0585464a223c70ca4b0162c0e468",
-      "extractionDigest": "c5291750dc8e9df86aa77198dc0f19c7a853baa7685fa49dfe08acb0fe6fadc4"
+      "extractionDigest": "1042087a51ddfcd088f6c5dfe99a9325c45df749c7e591566960c35d16746532"
     },
     {
       "originalPath": "docs/developers/README.md",
@@ -2335,7 +2334,7 @@
       "sha256": "6eac4ba865f02bc2d07d2b57573582b468f64e4a873baae92d5517d1a56c7cc2",
       "units": 10,
       "unitIdsSha256": "e0fa622816c4a8481aaf46982f81aa0398a9886ea60f9cef861cd30bb5b8f7bb",
-      "extractionDigest": "d0f2c5a0f049fc077bb6c9e10989c278f03984d739df34d464c9b0273131115d"
+      "extractionDigest": "658cde397b7e652adb2d4fe19ee3a275427e7db16ca2b385f4033f415d23d83e"
     },
     {
       "originalPath": "docs/developers/adding-verification.md",
@@ -2347,7 +2346,7 @@
       "sha256": "4f4c2fe10978363f6132de87cde0053073d3109ec8f2c5684a263a2913c79bdc",
       "units": 7,
       "unitIdsSha256": "a19bf72ef328f70adeba878e68ec7e87d50f9932d96b0539b5527b7ce3db74e5",
-      "extractionDigest": "c15d120afca61773495e335b6cae6ec1341f944fbdf4b4f584b02660195972d7"
+      "extractionDigest": "d0185d625ea1e382f7e4af8b1a9ad6f94eded0bc85a3e643c850f9e6f89ea6bf"
     },
     {
       "originalPath": "docs/developers/authoring-plugin-observers.md",
@@ -2359,7 +2358,7 @@
       "sha256": "fb8b1ff84be83cc3e54b35c6fa92c319fe2a1ef9fabdcf28c296a58bb8212af1",
       "units": 20,
       "unitIdsSha256": "abdf637e3231020e3a17c3915d4dcaa1947d4ef6208271350055338b0259d3fe",
-      "extractionDigest": "927b66cb81791e4dd2025219cc543baa4610b00a06967206ed9d314146dbd177"
+      "extractionDigest": "6c46ecf63eda43f2ba00280f30f155cdec618b54f091927662a4664fb9d2a8f3"
     },
     {
       "originalPath": "docs/developers/authoring-plugin-pipelines.md",
@@ -2371,7 +2370,7 @@
       "sha256": "45d69dfc636e7913e795775a2e5c4d8b3f73082a5f1f0af7d6a333332db81e2d",
       "units": 7,
       "unitIdsSha256": "9843b934d2bc2d2ffb4fad53b60ced4527736e8d3cf3608cf7391510edf53f6e",
-      "extractionDigest": "f571b741de849b3b0f8c6e8c05b2c77c714a44b9f7b4b51147ed55b82f9e7374"
+      "extractionDigest": "db38f5e1c2798dd158b73d0ec56d2f552c630881ae3b03945405d8085eb97c95"
     },
     {
       "originalPath": "docs/developers/contributing.md",
@@ -2383,7 +2382,7 @@
       "sha256": "f27436ec049b76962c7346db4302dfb430db79d856a5daf49a68d88769742ef0",
       "units": 4,
       "unitIdsSha256": "be83ebd170328c7a8c51664f0d733f3ebfec268f87d5efe2f605444fb919f2ef",
-      "extractionDigest": "ab4561bc926615163569996d192e6bdd4c33f8b28820c4e99233ade73243dbcc"
+      "extractionDigest": "6a69c950fe0de608b44736af44b40a530c34a77053aa4a5387d21143404703a7"
     },
     {
       "originalPath": "docs/developers/documentation-conventions.md",
@@ -2395,7 +2394,7 @@
       "sha256": "259506cd3035a7baa2d3699d573f59f9c514bc35c117a8b6e56ee9806299f323",
       "units": 10,
       "unitIdsSha256": "5e5c47fca036c98455a24a66a0d4c26e0835d9d61c11aeb88c0c71919c23d10e",
-      "extractionDigest": "a1f47e01f7e123118ddae1cbb0aa6f91c5c267dd008910bca6b18e85841ccf7b"
+      "extractionDigest": "ed4c5ac7d26f29a8dd68212e2b3a9aa829c316a50e39ffde0e43acf79de00316"
     },
     {
       "originalPath": "docs/developers/hooks-and-plugins.md",
@@ -2407,7 +2406,7 @@
       "sha256": "9e0b30874b3670ebbecc5c98c4e904344af448fb424126552583dc695adbb3be",
       "units": 3,
       "unitIdsSha256": "2323bce25fd3204b301cef2e1b825dc88e1d98fcae1902f54e11bc50ea13039a",
-      "extractionDigest": "b48a184cda49b7d001a6f3320d477cd7327191869a2a96a84ac18621eb6ccd47"
+      "extractionDigest": "e2834caecdf72804398c8ed6e19a32cf76c2eb99ca8bc3e450daf03822c229b8"
     },
     {
       "originalPath": "docs/developers/migrating-pipeline-plugins.md",
@@ -2419,7 +2418,7 @@
       "sha256": "32d5479d8ebccf321093baee79eaf5cd32aee78802757264fd5c4f50cfef6219",
       "units": 115,
       "unitIdsSha256": "d5d56fc7a6dc4303750cc868ca710b239884515f8d13513da2520c9ae25b2468",
-      "extractionDigest": "fabb4b1151cdfe85a0a3c76b7679d3e31f2343215d6b9b667220ce4ef1c3e087"
+      "extractionDigest": "9815a2a02e1b1170df502f6da2f8539369a2ecb8cab4e8c65ebd3c8037657cb4"
     },
     {
       "originalPath": "docs/developers/replacing-agent-runtime.md",
@@ -2431,7 +2430,7 @@
       "sha256": "4a663e35cddd2fab3d91df4f71a104e07747bf6b88e9f589fd2436448c714fdd",
       "units": 13,
       "unitIdsSha256": "4162c40ac44a48f43553f66b50948e40b93f626d9dcab3d9b3ecf406f00ea7b7",
-      "extractionDigest": "140c19de5f1b7af706042a920bf17324d84155cd2efb9403f6576585d45d965d"
+      "extractionDigest": "0e8f53d4c0bf2a5381d25dff5598485283a5663cbafa5f1b7e3b2a67bda0bb24"
     },
     {
       "originalPath": "docs/developers/templates/architecture-page.md",
@@ -2443,7 +2442,7 @@
       "sha256": "f4140df87f9fdc269c7a0d0266769e2abadabdbd109b6d3a2cc3fb71bbf384fd",
       "units": 11,
       "unitIdsSha256": "8a9dac5596e0b553941664d4b0047cb772bf3bb6110cc65e042e42560cbf6c46",
-      "extractionDigest": "f2b768810f35923065bdebe4bb5904758773ce89af03e1f43e8b54687f414eef"
+      "extractionDigest": "1f06ea1f2b38c354d2114024014bde2237df90003564413d76042d8df2e65230"
     },
     {
       "originalPath": "docs/developers/templates/deployment-component.md",
@@ -2455,7 +2454,7 @@
       "sha256": "07137287d73214dda18623a667a40758a75936546d57bd57a6163e786a4ce17c",
       "units": 12,
       "unitIdsSha256": "cd12f19955525c781695b8836c3f923064ca5c4f72265108486216d2df1ca8b9",
-      "extractionDigest": "49708e996073b053be8f4d22ca1aa2b675209891cce92081c1c6dcbeb886654d"
+      "extractionDigest": "0aebffdeaab8f0db3af83d152d80bf62c119ced5d3c510e3504539b1fd48e061"
     },
     {
       "originalPath": "docs/developers/templates/operator-task.md",
@@ -2467,7 +2466,7 @@
       "sha256": "485a194ded35584d636a34cb800ec5333bbead359d8309a753879258b37bd380",
       "units": 14,
       "unitIdsSha256": "6f9f11f31a6b6fd022696893d7acfffafcec8efe1045bd8c634114a4b90e96fc",
-      "extractionDigest": "275dba9225aed39d5ae0311bbc82bbab0af61fe003ba08b181060b1410966af8"
+      "extractionDigest": "824abe5059a24a7f0f0b52d75a4630ed61e18b4bdbac6c2a80db9c8f9a0ac09b"
     },
     {
       "originalPath": "docs/developers/templates/reference-page.md",
@@ -2479,7 +2478,7 @@
       "sha256": "ff2859e8fee429547fb58073fa3fab5c31aad112658add519c3e9f1f64bcaa60",
       "units": 11,
       "unitIdsSha256": "ceade38d29dae812a2ffa34d098e27218d5395ccfcd8f684a091621f8c4a5af1",
-      "extractionDigest": "fce07e96dc9c215ed577126b29ba7573cb3a6c4a6c8903891c0f5f8db3c14cc8"
+      "extractionDigest": "fd1d5157440e7e07174015c7bfdf0372c18d284744079ea27db38c0ed88aed37"
     },
     {
       "originalPath": "docs/developers/templates/runbook.md",
@@ -2491,7 +2490,7 @@
       "sha256": "197da35c83de8d46e036928b5c8b5b5e1d65097fbfaf888305ca2ebfbbbff7d3",
       "units": 14,
       "unitIdsSha256": "268db7dfcd5a6b97f291399d573d77d7487d4b6ca948420a398ae9b6c63a9fb4",
-      "extractionDigest": "fd1095550ab531eb6a0f992feb33390d03f7b0c4b29b78ecfa88e56fb94db5e9"
+      "extractionDigest": "3ca87e0168b48f3dd219115136e3939b3021dc3cbbbf7366e22473983f209a07"
     },
     {
       "originalPath": "docs/developers/templates/troubleshooting-entry.md",
@@ -2503,7 +2502,7 @@
       "sha256": "028586a3548f601a37a2f1230f6fd3b3871d1187d5cb1a7037ad6514f3f4afb4",
       "units": 10,
       "unitIdsSha256": "d98628cddf64c90f25b8802b3e505b6ac8ec6cd831b45514709357107b3c8d1c",
-      "extractionDigest": "35b482eae7672dcd4d1209e4a0860b9f5448adde42f9a0dc58a2c69724ab7a87"
+      "extractionDigest": "e4e62b216ae514f803d9bd8f3b448b5160b820520abd938d642b20b444144a79"
     },
     {
       "originalPath": "docs/developers/testing-and-ci.md",
@@ -2515,7 +2514,7 @@
       "sha256": "7701f67dd81d9b0a6ed3de46c47c6fd95e98fefcfc82575a5b011961c2c6030c",
       "units": 6,
       "unitIdsSha256": "3114b92814da8fc63c82edce70aee7ffd5379965face273e55014c235b605b0d",
-      "extractionDigest": "0ae9afde3c4e84275b43f878176e35957411085f1951eb02e971078060279bd0"
+      "extractionDigest": "abfdea102d850a2673f4a9cd5d4108106949c5fa74c236e9dd7736db6d308a51"
     },
     {
       "originalPath": "docs/diagrams/deployment-topology.svg",
@@ -2527,7 +2526,7 @@
       "sha256": "eeb8b97e925a013e9645c2751a9e26770e7bcea2bbba9f2968d0db5814f9b507",
       "units": 59,
       "unitIdsSha256": "d0a8240ccb23c7b984e5c05932d481f3e70a54b4a67d53bf2d420daeebd6afa3",
-      "extractionDigest": "45bec4efa73d0bc9676c71a05e75523a22a65fa2b2d75616193ba914c32a1b30"
+      "extractionDigest": "87e571df3560b12dbb924c7042e10863f6551bca61635be64cb97a64ce22425f"
     },
     {
       "originalPath": "docs/diagrams/failure-recovery-decision-flow.svg",
@@ -2539,7 +2538,7 @@
       "sha256": "92c311a52bc1866f843a12c35c90c769fa7389a3ad692aecdee618a188b575b9",
       "units": 38,
       "unitIdsSha256": "decae6ab8d965c23ef07453b36342df16ccb18a520aca87eabf1c985a6516929",
-      "extractionDigest": "e723ace31f250c23e31fbb4a180459ede0a139440814e2a2fdd66de28df8bc9a"
+      "extractionDigest": "dc8a9fd1d04216a524db85397c788f2cea823a9d1c384fcac1bcfcc4ffbf9c06"
     },
     {
       "originalPath": "docs/diagrams/final-preview-tailscale-flow.svg",
@@ -2551,7 +2550,7 @@
       "sha256": "32b991ee0e483576c0e027a51ee8451354f10493c000d88fc561cceb0b46d3c7",
       "units": 36,
       "unitIdsSha256": "9c945ae1450080253244a6a85bbf96c2eb78ca8be1d8a560f79ba6e73bc7af2b",
-      "extractionDigest": "11f15e74fe91a01986f096348ae50fedd3d862c9135fea5d50e9d15fa87a3a9a"
+      "extractionDigest": "d74798b59c11bd9d097ef1fa9c77ecf033180bea051e6467964074a0fee24a93"
     },
     {
       "originalPath": "docs/diagrams/infrastructure-dependencies.svg",
@@ -2563,7 +2562,7 @@
       "sha256": "7ef25360760e1711ddc905992a8998a65e357ae0cd2c99173585901fe6578e5d",
       "units": 39,
       "unitIdsSha256": "4200823784d8818c5c8e0c9629934ddd988ba2a391c0d901d6357728ee4e4fc5",
-      "extractionDigest": "ea0d511adfde83c7738ec1e91847fc0b3bb2c20af545d19401570b99afe7c490"
+      "extractionDigest": "43da2c7dbbfab19c1960b488fcbf937e0951718de2b4691867bf6b9f637614fd"
     },
     {
       "originalPath": "docs/diagrams/pipeline-runtime-flow.svg",
@@ -2575,7 +2574,7 @@
       "sha256": "2f188e667212c656ddb7cfb21cb6f760265d287af2ccbba3f0047dc4836234d7",
       "units": 36,
       "unitIdsSha256": "043838ed94fd385ff0c0a7ac95a5e2abd6c4d1065340fa4652bed3fea2048c63",
-      "extractionDigest": "ba7bf49f922deb5a3468f999d5cbce5a146cd470a52ff5d83b959b34c1a9ea5e"
+      "extractionDigest": "dad4ccb55da6fc02863f20b98240a3d465c6c3a7e2e99cb4c265656f26b93b1d"
     },
     {
       "originalPath": "docs/diagrams/secret-flow.svg",
@@ -2587,7 +2586,7 @@
       "sha256": "e453df06277f53e8cdace64ead5b73e4f2ccb2e680846bd5c231de7bd46aac58",
       "units": 35,
       "unitIdsSha256": "d23faca9249440f8d293c4eaba92ead7c40361a60e6c178194f59756b091a857",
-      "extractionDigest": "a2a986b1c20258f641569106fdad3b4902f8d3521053709669073eed94fe0de9"
+      "extractionDigest": "c221e529fbaea8f17959939aa0bf1ed5c1d0bd1b80ffdb0199f225af5e245bc0"
     },
     {
       "originalPath": "docs/operations/automatic-runtime-deployments.md",
@@ -2599,7 +2598,7 @@
       "sha256": "9d001097da50db6e0f9f6bb2a1d4e67113339a68b7378d3dce340ad439178bbf",
       "units": 17,
       "unitIdsSha256": "0b0dbc602f133a72c240162305a8975073048906adf8c61a5db3b53a49fcc972",
-      "extractionDigest": "65d835aac1d4b8cd9b8b3b732eda3072b10c8cbd55b67d13f6cbd74c3bfa5656"
+      "extractionDigest": "2d55e0cbf596cb00a973f2abbba2a4da039e955c38cff3cfb9b8896272928698"
     },
     {
       "originalPath": "docs/operations/ax41-rollout.md",
@@ -2611,7 +2610,7 @@
       "sha256": "581d6d5b2d1cd7500a604c1adf41cc245f8ba93754582f73018892f6c02d81a1",
       "units": 83,
       "unitIdsSha256": "d7242333145425f7def123231c5fc7642555098fba9c1da3487c109910b3208c",
-      "extractionDigest": "fcafb33bc2a132412aa65ba248d9afdd3eb5027cdd63f440e1e41844c2bdcb35"
+      "extractionDigest": "4f47a5f91aaa75c7fc3d2b515b355b10bfca18fba483fba6e659618a35f2e189"
     },
     {
       "originalPath": "docs/operations/data-plane-mtls.md",
@@ -2623,7 +2622,7 @@
       "sha256": "259f2316a58bf4665456eb9e0996d1d3b392b513c1e5f9ed47a1b6c9cbbfc7dc",
       "units": 29,
       "unitIdsSha256": "4309692ea8762faa56f2ef20df193542735881781d56e7a93c748bdf071ee3de",
-      "extractionDigest": "864c41c98784c80cbabc99d706c919de8a817f8dcb9cc0c2013890f3af1016f8"
+      "extractionDigest": "1b3b0f7bc5622a43cbebf1fb24c7cc7e997e7b03d61490bbc5511a443dc28000"
     },
     {
       "originalPath": "docs/operations/litellm-postgresql-recovery.md",
@@ -2635,7 +2634,7 @@
       "sha256": "7321b9b8ae89decdca3161c5889d4e0b0641c0c4f8e3b4f60d196ade61fd0749",
       "units": 26,
       "unitIdsSha256": "1985686f9f36c10fb7069383896d7dbece1b3e4c579591d874806a15b4a0d828",
-      "extractionDigest": "3104986a363da93ef5869cc9b243f39076c01b7ddc675eac50410b04300831d4"
+      "extractionDigest": "7e8a0542f88b020187b12d2240b2059fe6ca47e51cf228c64daa39fb1b09194f"
     },
     {
       "originalPath": "docs/operations/local-image-vulnerability-scan.md",
@@ -2647,7 +2646,7 @@
       "sha256": "1c67db709ebaa18ca26bd23eb42d070c18cd1e341ddced7ad6a4f8e85dea61e0",
       "units": 23,
       "unitIdsSha256": "2060a8dc156da227fe2ba5d19bbc3342db3a462a48c199a925fc55d59b12e9d4",
-      "extractionDigest": "824d0f4654e608f88117fa7be56294fb8482f4fde1f76e40850cb98cb48d68c9"
+      "extractionDigest": "6ae614b6f92de3a87d892f26124fa20d91239fa62401ec37313b6e8c7bb5022a"
     },
     {
       "originalPath": "docs/operations/native-worker-host-pools.md",
@@ -2659,7 +2658,7 @@
       "sha256": "78373c532fe2155bbe685564fc282ec5b5e1258df353ed86e35ec449fbeacc06",
       "units": 44,
       "unitIdsSha256": "1bdf3ce19fd094fb7967cacf7ca1c2c37116e36236b9579142966355522b8448",
-      "extractionDigest": "5d02ae7e286eed15671c635f91ceb37e4b7f6b6e3a82972336e115f7f1325505"
+      "extractionDigest": "2c145829117a937ff2ce067758abb589a29aea14c08ef23925fba94b0b7cf624"
     },
     {
       "originalPath": "docs/operations/observability-retention.md",
@@ -2671,7 +2670,7 @@
       "sha256": "e79e02b97e83c719589317852cb4f95c9d9391ec1e1b3ec82879f0be6805feb3",
       "units": 38,
       "unitIdsSha256": "4064f9197e0e786c31d5560e6fc8a77f6f068bed246aea64f5acc0c6d3d14b53",
-      "extractionDigest": "588bf00dddb13385b647800c705ab9bbcb395fe962cff332d4da03f324085df1"
+      "extractionDigest": "d376694ac911e97ae779dd18f17d7e9d622b06f7ad9d96f3eebc5a2ef74828e6"
     },
     {
       "originalPath": "docs/operations/postgresql-migration.md",
@@ -2683,7 +2682,7 @@
       "sha256": "71db4515dc3b5818f12f95918871b03049f817e893572f449045090264b61a42",
       "units": 26,
       "unitIdsSha256": "407299d0449c19a335599e3f97742ad7acc3e78ffe079591abdced13822ff306",
-      "extractionDigest": "269b25e1cf8f05022eb72e5bcf144b0fbf620e20c7a7486eec7a606bd268ac0f"
+      "extractionDigest": "84576d164e771f081f8f6a81c6a377f4550104687d59ea4116608b83d1e7549c"
     },
     {
       "originalPath": "docs/operations/prism-database-transitions.md",
@@ -2695,7 +2694,7 @@
       "sha256": "faaaf555e35d5eec38bcc8dcf4ea80a36fe6676a141792e34cd56d3a2c1d6fce",
       "units": 24,
       "unitIdsSha256": "ba45d2c1f4d002db091e0333b7d86cf8333bb00dde8ba4ee2a254ffc2c74ebf6",
-      "extractionDigest": "2e5964dbc326bcaa480c4405f776aebb5f8040ff0555c49a9622ca8d2776720f"
+      "extractionDigest": "ad1d8dd3eee54888bca51259f11fe4881ed3983811bdd3e96eda05be9c18b963"
     },
     {
       "originalPath": "docs/operations/prism-operator-guide.md",
@@ -2707,7 +2706,7 @@
       "sha256": "1ac119a4d90e8b479171ad978c0ad80a9cf71bb7298882a1e5e79e1e8cd01259",
       "units": 40,
       "unitIdsSha256": "d309c490b9f254ad99d2d986111e2b7cc42a817cd4c36b383202b9a38d5a9186",
-      "extractionDigest": "1a068c164d06922856f9addf70248d85d23f48b734615407780a06b00a08ee1e"
+      "extractionDigest": "06edccca681f4efb86faea8572dd73bab40646ac729b40cdc2e6f2ab216ca6cd"
     },
     {
       "originalPath": "docs/operations/prism-product-decisions.md",
@@ -2719,7 +2718,7 @@
       "sha256": "55f190c55c1a30277214ef700e95ade7eb9c837a70d9176d323637bbdff47c51",
       "units": 18,
       "unitIdsSha256": "63773ff0035e894fcaeaa3a05a51655090789f1cc3e575730d4db1300fcc7a50",
-      "extractionDigest": "faefeb1beedeaf0c3b7ed29d72fbb2725ca7edc14545d85842b1dab836a3ae7e"
+      "extractionDigest": "163fc61df02cdb757d71bb814d177e91721e9dda0837b15bf0b3e27d1eb7b07f"
     },
     {
       "originalPath": "docs/operations/redis-migration.md",
@@ -2731,7 +2730,7 @@
       "sha256": "3027d3102080e4b505a74f0b2b6f796f723a8530f03821819634d4b68558057b",
       "units": 33,
       "unitIdsSha256": "f4d89d8806fb00e9fdc5bf2e449cdeca7494f194ae2b6235c8384b26f19b62e8",
-      "extractionDigest": "3438b2630542ef8f5aa6c7ada4464a694a867a86c8f3cfa275a9e5a564f3139a"
+      "extractionDigest": "9803b0a5bee910e401dbe2b57c4727b830b0986d872e24a7d4b5fbaa26154269"
     },
     {
       "originalPath": "docs/operations/registry-clients.md",
@@ -2743,7 +2742,7 @@
       "sha256": "46778fa3d1939ecb11dea2289ba789d98c04744d2ab1122502248ebf2fae4dde",
       "units": 29,
       "unitIdsSha256": "8ce5292fa51a40967c627fd71c1c33cb441df923d138dc6f3cafe549e2e9a18a",
-      "extractionDigest": "64c722bb78a206c14e06d03b0ebfafa37cc0f4ab8f6f5cb30d494747085ab9f6"
+      "extractionDigest": "7926d8feb7e423c4abf8b0437d5afb3048577f2d5cfd43de8eb435ba296c4f4c"
     },
     {
       "originalPath": "docs/operations/runtime-versions-and-images.md",
@@ -2755,7 +2754,7 @@
       "sha256": "83470a7cee268caea556fd6fd53aba4d2e3fe62878ef1c41ba286184af816fa4",
       "units": 68,
       "unitIdsSha256": "7c689ecbe747fcbabbdef1dfaef87691fde0dab1dc374675449fbf3aea49861b",
-      "extractionDigest": "12955889d473e40f3f0678a212b171eec8b7c26b13f49d3a6920e2599c8dd5c2"
+      "extractionDigest": "0e53d8c08385962460e40395bdf724978857b009e412f5250c733a50dd5a7257"
     },
     {
       "originalPath": "docs/operations/stateful-infrastructure-upgrades.md",
@@ -2767,7 +2766,7 @@
       "sha256": "c40d880b4eaac419b6d0dfffedd5d61143ae6cf186e4a34cfb8713d856f03af8",
       "units": 17,
       "unitIdsSha256": "4f6abdbbc1045ab5efb59130feefca5660c04c2c3a6bd9d46ac11318622365ef",
-      "extractionDigest": "be659dac0e9cbdb1d7702308d58b2923cc415ac6fcdfe0ff532b53d62ddb558b"
+      "extractionDigest": "88841fd49059c398f60c53f03e30860393e9614b6a4a1590dd24dfb430194b40"
     },
     {
       "originalPath": "docs/operations/worker-trust-runbook.md",
@@ -2779,7 +2778,7 @@
       "sha256": "3064ce54bb2d81634a037a717ec1e740cf5bcf8d5eef83705d10a3fd2bd61fc7",
       "units": 294,
       "unitIdsSha256": "ca15e81c3a9c3941460fbd433b7fabcb760f95e5f71748ed2c2de1657e74d585",
-      "extractionDigest": "ec523d7c9715123391fddf4112f71f1bf40e25f65ae7910d2ac79e12416a1a0b"
+      "extractionDigest": "4613b8053e8adc1f7259aa02b78502be8806bd8222b70b5b307c4624951464f7"
     },
     {
       "originalPath": "docs/operators/README.md",
@@ -2791,7 +2790,7 @@
       "sha256": "ff8b8af017f3291753db349fefb9dad09aa163b295bf2b33fe23bbfeeb01f4dd",
       "units": 8,
       "unitIdsSha256": "f697416719c3bf9ba5a1a833dcbb88e2cc608efa29092bbf29e08f1b6fd8e871",
-      "extractionDigest": "204b6976c9ec05d7357636c5a1897b672861e2cf7599e37c0a08e82d95728b58"
+      "extractionDigest": "7d8906dd7a984105872ffb75ef015cc5cc66c041ef6b801007dbf8ad28526b78"
     },
     {
       "originalPath": "docs/operators/external-pipeline-plugins.md",
@@ -2803,7 +2802,7 @@
       "sha256": "ad3825be6da379c64de0b1570d0549912436bfbf44ec2d70158c3c025a793af6",
       "units": 12,
       "unitIdsSha256": "ef082ca3a2a9eb116d0d152f0b47a74e437b5c3d6a7773b42076b414f048dda8",
-      "extractionDigest": "282b02c3368e4515960701b71e3e5a22440a16046dcd86aca205d329f0a49bb9"
+      "extractionDigest": "845bd412269d2f928ee1779c8cbc0c0065bb20123241ff37485e74bc2f0db0c9"
     },
     {
       "originalPath": "docs/operators/final-preview-tailscale.md",
@@ -2815,7 +2814,7 @@
       "sha256": "39f5ef221db3162dabf4f72a4df08ca9459b04df64ac23c96f1ec914c4832618",
       "units": 7,
       "unitIdsSha256": "328cadad95561ebb8d951db557bb74a978637b02cb10bd4aff0dba6bb20cb16b",
-      "extractionDigest": "4b68ed0353b4ffe2a3416cbe83a0cbd9a848c259f26ed6bc016c5aeac018dacc"
+      "extractionDigest": "d23f2c125418583c3c3941dab675de1831aed220590ddd0c2130f7722aca4270"
     },
     {
       "originalPath": "docs/operators/plugin-observers.md",
@@ -2827,7 +2826,7 @@
       "sha256": "9f5cd7133e7a74f92bfb7c8638e2eec9e01a9f140c9f904487e48ee767345aec",
       "units": 24,
       "unitIdsSha256": "01c82efe1b1ba5c3978616a25cef3fceab23906dfa3f24561ded669d9e97fe8c",
-      "extractionDigest": "e089afe0f4cced0dd47de5723e0e7f19e18ed98dc5ab6cf44d714188cd11aca6"
+      "extractionDigest": "918e149f1ff6394617c485be5832f9cd9308530c80ad02baa38010695631ebea"
     },
     {
       "originalPath": "docs/operators/plugin-pipeline-lifecycle.md",
@@ -2839,7 +2838,7 @@
       "sha256": "f5729e2f6bbc8196e0b65f8b77afe3e2f95c62074a05a35eb57728c891527627",
       "units": 16,
       "unitIdsSha256": "767767283b8ba872414f58e2c52be9665bca7b09d2f00c04781d22448cd89172",
-      "extractionDigest": "4f3de66f867a57068cff5b4e61d1de19e5ddcc4c7d37f7f1c31afb87bf1d37a3"
+      "extractionDigest": "f07f5b65eb70ea98f9a75c05dc6ffc59fac079507ac4bd03d7e8f6181fbc3715"
     },
     {
       "originalPath": "docs/operators/recovery-runbook.md",
@@ -2851,7 +2850,7 @@
       "sha256": "afe3e33c416bba834739af8f157ccf2ff70679bfc833759f253a4fee4fda2134",
       "units": 12,
       "unitIdsSha256": "69ef88adf267579a3afdefef330db0404e71469422ae34e0a8ba34834a3fe649",
-      "extractionDigest": "1b5b9c9d89d6f3972db8da9607017ba537350923ff8ce52b84968293dad4af00"
+      "extractionDigest": "92cf14f04b3188e951241cfff96b768abb9d6b5d19c93c9be2ca6829e7e81fb3"
     },
     {
       "originalPath": "docs/operators/running-the-pipeline.md",
@@ -2863,7 +2862,7 @@
       "sha256": "45bf890502a7f605c72672c45b5635b12a60a9ea7eccaeda02b2cf2ea25e94e3",
       "units": 12,
       "unitIdsSha256": "d5eb7ae0f12da9f9fc5d29933d0ce02de5b4acd3d2642cd6a149de5a92c8f6e1",
-      "extractionDigest": "6362c8e38f614cc07c11ef93d31047eca92e959ced9e9164b677eba1d429d119"
+      "extractionDigest": "cbe7c97f33539d17f0a3760882f13a6a7b2f1cd217a3a33195c6421b883ca948"
     },
     {
       "originalPath": "docs/ops/ops-pod.md",
@@ -2875,7 +2874,7 @@
       "sha256": "ea0c24c9f60f2b636dac3f4164dc32152082e84c0a9b78f2fd9d0db7a011eb50",
       "units": 188,
       "unitIdsSha256": "1acae96da97783cad1351489eb36ffa614d582550353bb97cb6a6b9dd0f97ee0",
-      "extractionDigest": "bafba9691270ac693a93304d40e121fb1d9b63a33153acb2f675b9dcc056f31a"
+      "extractionDigest": "cd98f672eb6f7bbd084b8941c657ca96c1d4b631a8077742a6461528e84e567e"
     },
     {
       "originalPath": "docs/pipeline/architecture.md",
@@ -2887,7 +2886,7 @@
       "sha256": "8feb2ab1439efbbeff304eeb68944a4588addf0e2626d458ea8732e7119ee209",
       "units": 14,
       "unitIdsSha256": "9e1a0dd6a24699b817ed7c62bc2d0cc6fb29964ce3060fd48fccc99554e2ffba",
-      "extractionDigest": "3e5216b2eb84354a52ebbadba9da04024b18608c99215467cddc83dd3df6a274"
+      "extractionDigest": "041b5a798d2ddc452881b97365eb665d228240f674cac6722473300d2486ef39"
     },
     {
       "originalPath": "docs/reference/cli.md",
@@ -2897,9 +2896,9 @@
       "kind": "markdown",
       "bytes": 4571,
       "sha256": "fda3dbdcedcdb256bb4348b068c71fa435a052b6880f4f2a8997195e026faedd",
-      "units": 89,
-      "unitIdsSha256": "69d66b21248b7abe527239e945d3bab1ea934eefd24980af372d996785e32942",
-      "extractionDigest": "e82cc7df07b69e9d4882fa9ca5780675df8a58804f1a64d1ee6b5cbbc2a1c3d4"
+      "units": 87,
+      "unitIdsSha256": "db467481787086f432b16b8edb5ab362c95ea35fba9e59bfe8bd0a505ee46735",
+      "extractionDigest": "818e6b55160698fe8a43d9d6a0f14c7c20da71bc1b7ef04b3830d034887d8acf"
     },
     {
       "originalPath": "docs/reference/environment-variables.md",
@@ -2909,9 +2908,9 @@
       "kind": "markdown",
       "bytes": 5178,
       "sha256": "c685bf9c35ad79f85c9e305d9c4eece460b23d3085067b6c97bb24276999fc73",
-      "units": 55,
-      "unitIdsSha256": "7f30d2ec2ab49fe25076f755a1ac974d3f13d1f1fe063ead660c56cf61847df3",
-      "extractionDigest": "c19ec4d88246448066c27b1cd01c77438f89a28d4f44b2e1f4d729270b32593e"
+      "units": 53,
+      "unitIdsSha256": "96c6f6c1944998180838442e9aa9a1278e6c0ebda31559bbfd821f92b4dafe3d",
+      "extractionDigest": "d5b496d58c84e6364157ff88c52115a464cfc28e7d2cf0028c72b3d5465597c5"
     },
     {
       "originalPath": "docs/reference/helm-values.md",
@@ -2921,9 +2920,9 @@
       "kind": "markdown",
       "bytes": 6372,
       "sha256": "093363edfa9f5940bfee00482ef770e06abc88d817f1e236c12f8b4f4c622745",
-      "units": 44,
-      "unitIdsSha256": "ae08322ae066cc0d23c70d3ac0442a7638621566d89b1d72293fef9865e5842b",
-      "extractionDigest": "6bde79b39681af36b6bed5514f0652dd2306e7b461475e3eb373fc6db38bd021"
+      "units": 42,
+      "unitIdsSha256": "40358fe468c22467cbe653fd02c5dc1130984e10bb4e6fd5ccffe9c331e9a63f",
+      "extractionDigest": "151b1b8e8b1f1d88aa1a4116c114f5d5c239754a27694e348a059025a248a251"
     },
     {
       "originalPath": "docs/reference/openclaw-config.md",
@@ -2935,7 +2934,7 @@
       "sha256": "a699444095c801e55b8ed217cc88108784c55151035f5dedc1beb6b9b4e6045a",
       "units": 41,
       "unitIdsSha256": "30e2599f7cb974f69c718374f62ae159460f1f7bc58ba96a76d3e38828b3eb51",
-      "extractionDigest": "b69148abecdfeb09f93356589dc82b394fd928cb796f3cbd7ce4896223695d88"
+      "extractionDigest": "7ee1c4155be945e2eff0760e704a0fafa811a1e535e69da92cf6a5e8b4a23828"
     },
     {
       "originalPath": "docs/reference/secrets.md",
@@ -2945,9 +2944,9 @@
       "kind": "markdown",
       "bytes": 5225,
       "sha256": "d44ef65d40318b2ef985c5dd3e35f2e419f5a68d4d75f3fe71f2931aeba79995",
-      "units": 60,
-      "unitIdsSha256": "2493457f0d4de8ccab4aa09c419a5ae8e7d364a5e01e65e588f34c45fcab07dd",
-      "extractionDigest": "363eb54ff6d2bd5aed6d798c74aafacca74bcdf58c93d8a460608a66905c9a53"
+      "units": 58,
+      "unitIdsSha256": "756156aaba9129c907731482773718d1fb6392b7e559d869d2af69d228f0d284",
+      "extractionDigest": "b5ea3473c3b91f366944d4eec511807c2fb0529a5aad81b6ac3ab09440096b86"
     },
     {
       "originalPath": "docs/reference/verification-commands.md",
@@ -2957,9 +2956,9 @@
       "kind": "markdown",
       "bytes": 2486,
       "sha256": "671c3bb91d0b40407559e99949ff66a09bc4a11dd4fbfea59691e223f79e64aa",
-      "units": 32,
-      "unitIdsSha256": "0fc778faa1387d2bfd9e720c44426f805545db9ec808c7e9597d7b0f8389a38d",
-      "extractionDigest": "9f6bc79022a3f1b3317847405aadb7ca3ce97fefe7338f064c6de971fc03907a"
+      "units": 30,
+      "unitIdsSha256": "b333aa2b6e5c2a8fa137f8cb09379096dca16ad0cff0a8a1d43bb815a2eb9263",
+      "extractionDigest": "a5e8f4624fa41c5eb8c341271bb98986f9aee7886107dd0bdb0ace31c6d2a39f"
     },
     {
       "originalPath": "docs/reference/workflows.md",
@@ -2969,9 +2968,9 @@
       "kind": "markdown",
       "bytes": 12624,
       "sha256": "ce35add3dec10e78775975f24bc7f14b14955fe53283f51a501907be8380717a",
-      "units": 37,
-      "unitIdsSha256": "28ab0b44595919330deaa6cf0f5ec8fae8990baec3239e5089f1aaed72323879",
-      "extractionDigest": "b2e4c7f0e89a5662df0539a9d28787fe7ef92a3aa331f3cff7c8967ccb0cf236"
+      "units": 35,
+      "unitIdsSha256": "2c2cd25990b66c68dd98995bbbf5abce7d42cd38dad0141e8953003e3ec04ee8",
+      "extractionDigest": "f0b233450554df598896dc8d1f8269b85d45ba0f1444b8943662005c381ae27d"
     },
     {
       "originalPath": "docs/runbooks/prism-recovery.md",
@@ -2983,7 +2982,7 @@
       "sha256": "7e86f18cddddf7eed5c20b5b44689e1a709b92eee5dd4dfe50c6865e80b8df72",
       "units": 10,
       "unitIdsSha256": "55ba1006301676f3aa9dc138bec5464081bfda38e27ab6b6753c8332854a97ab",
-      "extractionDigest": "9756c84e08ab2bc022bb71563682d1c2438dc9688890d592e69aa2fe6a0903c8"
+      "extractionDigest": "b5acc9518694903b89a1ecfd7acc4dada69842f308b90b847a4287def98a87ac"
     },
     {
       "originalPath": "docs/security/prism-threat-model.md",
@@ -2995,7 +2994,7 @@
       "sha256": "6eedea956cf32f191d572d942f90f88fe4fd8b093c8316296b8ae1807cbb3d48",
       "units": 12,
       "unitIdsSha256": "019e875d6451d0206e1f54488588d0b4b9d2dd85f0eebda998f590f88f5c5249",
-      "extractionDigest": "55d4adfe3cafcb9c579272e0dce20e0c440e7079d1247b98a7099995f0bd5658"
+      "extractionDigest": "46d506c30004faf07d6bb2036ce0448e1d128502a26cc2cd060590140fcb395c"
     },
     {
       "originalPath": "docs/security/worker-trust.md",
@@ -3007,7 +3006,7 @@
       "sha256": "58c8bb270ac0ec4cf511bea0150ab995b96f140361412f109271cdf56b198ea5",
       "units": 316,
       "unitIdsSha256": "5c76a86ab1c11810a437b8fcf1aeb76973856bae3a21cab5301a0b472ac0f99d",
-      "extractionDigest": "bdf878278406f1d21109bf91d95efc867b57dc7b673b6dfb7bcb6b7b467408b0"
+      "extractionDigest": "145883fb1043b81ec87361c7cc282a80b00f8d510e3d4715586ef618befa4192"
     },
     {
       "originalPath": "docs/user-guides/prism-studio.md",
@@ -3019,7 +3018,7 @@
       "sha256": "acb59dc540bd8f33def51b8cb4c867692790d9bf8556e7e35e5f8d25a98dd319",
       "units": 11,
       "unitIdsSha256": "dd66fdfb1dcc88eb07af7e67255e8577321378fef8dc72986e8af6f5f39465e3",
-      "extractionDigest": "be765828dfbff5b8815450f1f1a31a532b04a5775462f19c199158746aba388c"
+      "extractionDigest": "63c67528255715473efa346aa1fb216e33f0d9556b5f4969acd56873fcbb0e49"
     }
   ]
 }

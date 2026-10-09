@@ -6,8 +6,8 @@
   "globalDeletionReady": false,
   "counts": {
     "missing-decision": 242,
-    "untriaged-decision": 7,
-    "invalid-decision": 0,
+    "untriaged-decision": 0,
+    "invalid-decision": 7,
     "missing-review": 0,
     "invalid-review": 0,
     "source-valid": 0
@@ -2444,8 +2444,8 @@
       "sourceValid": false,
       "counts": {
         "missing-decision": 0,
-        "untriaged-decision": 7,
-        "invalid-decision": 0,
+        "untriaged-decision": 0,
+        "invalid-decision": 7,
         "missing-review": 0,
         "invalid-review": 0,
         "source-valid": 0
@@ -2456,56 +2456,70 @@
           "legacyPath": "docs/_legacy-source/operators/external-pipeline-plugins.md",
           "decisionPath": "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json",
           "reviewPath": "docs/config/documentation-parity-reviews/operators/external-pipeline-plugins.md.json",
-          "state": "untriaged-decision",
-          "findings": []
+          "state": "invalid-decision",
+          "findings": [
+            "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json.source: stale or mismatched source binding\n+ actual - expected\n\n  {\n    baselineRevision: '8da6157b77247dcbdf209ef12f491f0b92ca858a',\n    classification: 'legacy-extraction-source',\n+   extractionDigest: '282b02c3368e4515960701b71e3e5a22440a16046dcd86aca205d329f0a49bb9',\n-   extractionDigest: '845bd412269d2f928ee1779c8cbc0c0065bb20123241ff37485e74bc2f0db0c9',\n    gitObject: 'e3df7b10fc2a8971f6fc0c3c5febd9e78c1a1e2c',\n    legacyPath: 'docs/_legacy-source/operators/external-pipeline-plugins.md',\n    originalPath: 'docs/operators/external-pipeline-plugins.md'\n  }\n"
+          ]
         },
         {
           "originalPath": "docs/operators/final-preview-tailscale.md",
           "legacyPath": "docs/_legacy-source/operators/final-preview-tailscale.md",
           "decisionPath": "docs/config/documentation-parity/operators/final-preview-tailscale.md.json",
           "reviewPath": "docs/config/documentation-parity-reviews/operators/final-preview-tailscale.md.json",
-          "state": "untriaged-decision",
-          "findings": []
+          "state": "invalid-decision",
+          "findings": [
+            "docs/config/documentation-parity/operators/final-preview-tailscale.md.json.source: stale or mismatched source binding\n+ actual - expected\n\n  {\n    baselineRevision: '8da6157b77247dcbdf209ef12f491f0b92ca858a',\n    classification: 'legacy-extraction-source',\n+   extractionDigest: '4b68ed0353b4ffe2a3416cbe83a0cbd9a848c259f26ed6bc016c5aeac018dacc',\n-   extractionDigest: 'd23f2c125418583c3c3941dab675de1831aed220590ddd0c2130f7722aca4270',\n    gitObject: 'c022744dcb232de4c7bf25c133aee339dbb6f157',\n    legacyPath: 'docs/_legacy-source/operators/final-preview-tailscale.md',\n    originalPath: 'docs/operators/final-preview-tailscale.md'\n  }\n"
+          ]
         },
         {
           "originalPath": "docs/operators/plugin-observers.md",
           "legacyPath": "docs/_legacy-source/operators/plugin-observers.md",
           "decisionPath": "docs/config/documentation-parity/operators/plugin-observers.md.json",
           "reviewPath": "docs/config/documentation-parity-reviews/operators/plugin-observers.md.json",
-          "state": "untriaged-decision",
-          "findings": []
+          "state": "invalid-decision",
+          "findings": [
+            "docs/config/documentation-parity/operators/plugin-observers.md.json.source: stale or mismatched source binding\n+ actual - expected\n\n  {\n    baselineRevision: '8da6157b77247dcbdf209ef12f491f0b92ca858a',\n    classification: 'legacy-extraction-source',\n+   extractionDigest: 'e089afe0f4cced0dd47de5723e0e7f19e18ed98dc5ab6cf44d714188cd11aca6',\n-   extractionDigest: '918e149f1ff6394617c485be5832f9cd9308530c80ad02baa38010695631ebea',\n    gitObject: 'c6f3e5116689f8a9cc8f4d34c9e84d911ce02b69',\n    legacyPath: 'docs/_legacy-source/operators/plugin-observers.md',\n    originalPath: 'docs/operators/plugin-observers.md'\n  }\n"
+          ]
         },
         {
           "originalPath": "docs/operators/plugin-pipeline-lifecycle.md",
           "legacyPath": "docs/_legacy-source/operators/plugin-pipeline-lifecycle.md",
           "decisionPath": "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json",
           "reviewPath": "docs/config/documentation-parity-reviews/operators/plugin-pipeline-lifecycle.md.json",
-          "state": "untriaged-decision",
-          "findings": []
+          "state": "invalid-decision",
+          "findings": [
+            "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json.source: stale or mismatched source binding\n+ actual - expected\n\n  {\n    baselineRevision: '8da6157b77247dcbdf209ef12f491f0b92ca858a',\n    classification: 'legacy-extraction-source',\n+   extractionDigest: '4f3de66f867a57068cff5b4e61d1de19e5ddcc4c7d37f7f1c31afb87bf1d37a3',\n-   extractionDigest: 'f07f5b65eb70ea98f9a75c05dc6ffc59fac079507ac4bd03d7e8f6181fbc3715',\n    gitObject: '007b204d74e8a895d919c37e28980a769acc43ec',\n    legacyPath: 'docs/_legacy-source/operators/plugin-pipeline-lifecycle.md',\n    originalPath: 'docs/operators/plugin-pipeline-lifecycle.md'\n  }\n"
+          ]
         },
         {
           "originalPath": "docs/operators/README.md",
           "legacyPath": "docs/_legacy-source/operators/README.md",
           "decisionPath": "docs/config/documentation-parity/operators/README.md.json",
           "reviewPath": "docs/config/documentation-parity-reviews/operators/README.md.json",
-          "state": "untriaged-decision",
-          "findings": []
+          "state": "invalid-decision",
+          "findings": [
+            "docs/config/documentation-parity/operators/README.md.json.source: stale or mismatched source binding\n+ actual - expected\n\n  {\n    baselineRevision: '8da6157b77247dcbdf209ef12f491f0b92ca858a',\n    classification: 'legacy-extraction-source',\n+   extractionDigest: '204b6976c9ec05d7357636c5a1897b672861e2cf7599e37c0a08e82d95728b58',\n-   extractionDigest: '7d8906dd7a984105872ffb75ef015cc5cc66c041ef6b801007dbf8ad28526b78',\n    gitObject: '89b6ddbeba0ea1bae5a848741f6728ba6964b112',\n    legacyPath: 'docs/_legacy-source/operators/README.md',\n    originalPath: 'docs/operators/README.md'\n  }\n"
+          ]
         },
         {
           "originalPath": "docs/operators/recovery-runbook.md",
           "legacyPath": "docs/_legacy-source/operators/recovery-runbook.md",
           "decisionPath": "docs/config/documentation-parity/operators/recovery-runbook.md.json",
           "reviewPath": "docs/config/documentation-parity-reviews/operators/recovery-runbook.md.json",
-          "state": "untriaged-decision",
-          "findings": []
+          "state": "invalid-decision",
+          "findings": [
+            "docs/config/documentation-parity/operators/recovery-runbook.md.json.source: stale or mismatched source binding\n+ actual - expected\n\n  {\n    baselineRevision: '8da6157b77247dcbdf209ef12f491f0b92ca858a',\n    classification: 'legacy-extraction-source',\n+   extractionDigest: '1b5b9c9d89d6f3972db8da9607017ba537350923ff8ce52b84968293dad4af00',\n-   extractionDigest: '92cf14f04b3188e951241cfff96b768abb9d6b5d19c93c9be2ca6829e7e81fb3',\n    gitObject: '8d4cb30621a3edeaa5d8a6eeedb7bffed1eb92e8',\n    legacyPath: 'docs/_legacy-source/operators/recovery-runbook.md',\n    originalPath: 'docs/operators/recovery-runbook.md'\n  }\n"
+          ]
         },
         {
           "originalPath": "docs/operators/running-the-pipeline.md",
           "legacyPath": "docs/_legacy-source/operators/running-the-pipeline.md",
           "decisionPath": "docs/config/documentation-parity/operators/running-the-pipeline.md.json",
           "reviewPath": "docs/config/documentation-parity-reviews/operators/running-the-pipeline.md.json",
-          "state": "untriaged-decision",
-          "findings": []
+          "state": "invalid-decision",
+          "findings": [
+            "docs/config/documentation-parity/operators/running-the-pipeline.md.json.source: stale or mismatched source binding\n+ actual - expected\n\n  {\n    baselineRevision: '8da6157b77247dcbdf209ef12f491f0b92ca858a',\n    classification: 'legacy-extraction-source',\n+   extractionDigest: '6362c8e38f614cc07c11ef93d31047eca92e959ced9e9164b677eba1d429d119',\n-   extractionDigest: 'cbe7c97f33539d17f0a3760882f13a6a7b2f1cd217a3a33195c6421b883ca948',\n    gitObject: '856cc812b33c0c69f7f8aff285a3033487eec48c',\n    legacyPath: 'docs/_legacy-source/operators/running-the-pipeline.md',\n    originalPath: 'docs/operators/running-the-pipeline.md'\n  }\n"
+          ]
         }
       ]
     },
