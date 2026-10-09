@@ -224,7 +224,7 @@ assert.match(
 );
 assert.match(
   chart,
-  /PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*chmod 0750 \/config[\s\S]*PLUGIN_TMPDIR=\/config\/\.kubeclaw-plugin-tmp[\s\S]*mkdir -m 0700 "\$PLUGIN_TMPDIR"[\s\S]*reset-managed-plugin-projects\.mjs \/config\/npm\/projects[\s\S]*for plugin_spec in\{\{- range \.Values\.pluginSeed\.specs \}\}[\s\S]*HOME=\/home\/node TMPDIR="\$PLUGIN_TMPDIR"[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --accept-capabilities/,
+  /name: tmp-permissions[\s\S]*chmod 1777 \/tmp[\s\S]*name: openclaw-state-migration[\s\S]*PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*reset-managed-plugin-projects\.mjs \/config\/npm\/projects[\s\S]*for plugin_spec in\{\{- range \.Values\.pluginSeed\.specs \}\}[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --accept-capabilities/,
   'the setup container must reset stale managed locks before installing official plugins from the authoritative offline cache',
 );
 for (const plugin of ['acpx', 'discord']) {
