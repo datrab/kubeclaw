@@ -14,10 +14,11 @@ test('update checks validate previous release selections while replacements buil
 
 test('ops promotion updates the Argo definition without authorizing a workload sync', () => {
   const prepare = promote.jobs.prepare.steps.find(step => step.name === 'Prepare release selection and values').run;
-  const open = promote.jobs.prepare.steps.find(step => step.name === 'Open release selection PR').run;
+  const select = promote.jobs.prepare.steps.find(step => step.name === 'Select Ops release on main');
   assert.match(prepare, /if \[\[ "\$RELEASE_FAMILY" == ops \]\]; then\s+node scripts\/argocd-self-management\.mjs/u);
-  assert.match(open, /git add gitops\/platform\/bootstrap\/codex-ops\.yaml/u);
-  assert.match(open, /codex-ops has no automated sync/u);
+  assert.equal(select.if, "inputs.family == 'ops'");
+  assert.match(select.run, /git add releases gitops\/platform\/bootstrap\/codex-ops\.yaml/u);
+  assert.match(select.run, /git push origin HEAD:main/u);
   const app = YAML.parse(fs.readFileSync('gitops/platform/bootstrap/codex-ops.yaml', 'utf8'));
   assert.equal(app.spec.syncPolicy.automated, undefined);
 });
