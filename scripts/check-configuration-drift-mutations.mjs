@@ -8,6 +8,7 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 
 const repositoryRoot = process.cwd();
+const consumerCoverageOnly = process.argv.includes('--consumer-coverage-only');
 const schemaRulesOnly = process.argv.includes('--schema-rules-only');
 const schemaSemanticsOnly = process.argv.includes('--schema-semantics-only');
 const environmentSecretOnly = process.argv.includes('--env-secret-only');
@@ -109,6 +110,38 @@ function schemaRuleCases() {
   ];
 }
 
+function consumerCoverageCases() {
+  return [
+    ['environment-consumer:same-name-new-reader', () => createFile('skills/prism/config/ap98-qualified-name-new-reader.ts', 'export const fixture = process.env.PRISM_CONTROL_URL;')],
+    ['environment-consumer:new-runtime-reader', () => createFile('skills/prism/config/ap98-new-runtime-reader.ts', 'export const fixture = process.env.AP98_NEW_RUNTIME_VALUE;')],
+    ['environment-consumer:same-name-new-producer', () => createFile('charts/ops-pod/templates/ap98-new-runtime-env.yaml', `apiVersion: v1
+kind: Pod
+metadata: {name: ap98-new-runtime-env}
+spec:
+  containers:
+    - name: fixture
+      image: example.invalid/fixture
+      env: [{name: PRISM_CONTROL_URL, value: https://fixture.invalid}]`)],
+    ['environment-consumer:bare-shell-reader', () => createFile('charts/ops-pod/templates/ap98-bare-shell-reader.yaml', `apiVersion: v1
+kind: Pod
+metadata: {name: ap98-bare-shell-reader}
+spec:
+  containers:
+    - name: fixture
+      image: example.invalid/fixture
+      env: [{name: REDIS_HOST, value: redis}]
+      command: [sh, -c, 'printf "%s" "$REDIS_HOST"']`)],
+    ['environment-consumer:same-name-embedded-reader', () => createFile('charts/ops-pod/templates/ap98-embedded-known-reader.yaml', `apiVersion: v1
+kind: ConfigMap
+metadata: {name: ap98-embedded-known-reader}
+data:
+  fixture.sh: |
+    cat > /tmp/fixture.mjs <<'NODE'
+    process.stdout.write(process.env.REDIS_HOST || '');
+    NODE`)],
+  ];
+}
+
 function mutateLineToken(relativePath, lineNumber, token) {
   const target = path.join(temporaryRoot, relativePath);
   const original = fs.readFileSync(target, 'utf8');
@@ -137,11 +170,13 @@ function expectDetected(name, mutate, verifyPublication = null) {
   try {
     const result = name.startsWith('payload-edge:')
       ? runGenerator('--check-payload-delivery-only')
+      : name.startsWith('environment-consumer:') ? runGenerator('--check-environment-coverage-only')
       : name.startsWith('schema-validation-rule:') ? runGenerator('--schemas-only', '--check') : runGenerator('--check');
     assert.notEqual(result.status, 0, `${name}: stale inventory was not detected`);
     const diagnostic = `${result.stdout}\n${result.stderr}`;
     assert.match(diagnostic, /(?:Configuration documentation inventory is stale|CONFIG_SEMANTIC_GAP|CONFIG_SCHEMA_UNSUPPORTED_(?:KEYWORD|REFERENCE)|CONFIG_YAML_AUTHORITY_DRIFT|CONFIG_YAML_(?:DOTTED_KEY|PATH_COLLISION|SEMANTIC_AUTHORITY|SEMANTIC_CONTRACT)|CONFIG_YAML_API_CONTRACT_GAP|CONFIG_YAML_LEAF_LINE_DRIFT|CONFIG_YAML_API_LEAF_(?:LINE|DIGEST)_DRIFT|CONFIG_PAYLOAD_(?:REQUEST_PATH|SWARM_READER)_BOUNDARY_CHANGED|schema logical regression|offline external Helm authority verification failed|external Helm authority lock bytes|external Helm extracted authority bytes|authority source bytes changed|indirect semantic contract|cannot extract vendored CRD authority|exact consumer line changed|consumer context changed|downstream receiver changed|consumer proof is not bound to this exact leaf|selected-value proof does not bind the exact source field|compressed bytes changed|manifest bytes changed|deployed config payload .* is missing|deployed config payload discovery differs|expected .* containing|mutation token is missing)/u, `${name}: failure did not identify inventory drift or a semantic authority gap`);
     const semanticRejected = /CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|authority source bytes changed/u.test(diagnostic);
+    if (name.startsWith('environment-consumer:')) assert.match(diagnostic, /CONFIG_SEMANTIC_GAP:.*(?:PRISM_CONTROL_URL|AP98_NEW_RUNTIME_VALUE|REDIS_HOST):(?:skills|charts)\//u, `${name}: exact missing pair was not reported`);
     if (name === 'environment-setting:add') {
       assert.match(diagnostic, /AP98_MUTATION_ENV/u, `${name}: diagnostic did not identify the new operator environment input`);
       assert.match(diagnostic, /purpose, accepted form, default and empty behavior, precedence, impact, and failure symptom/u, `${name}: diagnostic did not require the complete environment contract`);
@@ -212,6 +247,19 @@ function expectLocalHelmMaintenanceDetected(name, mutate, expectedDiagnostic) {
 try {
   ['charts', 'examples', 'gitops', 'my-values', 'releases', 'scripts', 'skills', 'docker', 'ops', 'tools', 'cmd', 'packaging', 'versions.json', 'docs/generated/inventory', 'docs/site'].forEach(copy);
   fs.symlinkSync(path.join(repositoryRoot, 'node_modules'), path.join(temporaryRoot, 'node_modules'), 'dir');
+  const runtimeSemantics = runGenerator('--check-runtime-consumer-semantics-only');
+  assert.equal(runtimeSemantics.status, 0, `runtime consumer semantic checks failed\n${runtimeSemantics.stdout}\n${runtimeSemantics.stderr}`);
+  console.log(runtimeSemantics.stdout.trim());
+  if (consumerCoverageOnly) {
+    const baseline = runGenerator('--check-environment-coverage-only');
+    assert.equal(baseline.status, 0, `consumer coverage baseline failed\n${baseline.stdout}\n${baseline.stderr}`);
+    console.log(baseline.stdout.trim());
+    for (const [name, mutate] of consumerCoverageCases()) expectDetected(name, mutate);
+    const recovered = runGenerator('--check-environment-coverage-only');
+    assert.equal(recovered.status, 0, `consumer coverage recovery failed\n${recovered.stdout}\n${recovered.stderr}`);
+    console.log('PASS focused environment consumer coverage mutations and baseline recovery');
+    fs.rmSync(temporaryRoot, { recursive: true, force: true }); process.exit(0);
+  }
   const semanticCheck = runGenerator('--check-schema-semantics-only');
   assert.equal(semanticCheck.status, 0, `configuration semantic checks failed\n${semanticCheck.stdout}\n${semanticCheck.stderr}`);
   console.log(semanticCheck.stdout.trim());
@@ -318,6 +366,13 @@ try {
       assert.ok(typeof item[field] === 'string' && item[field].trim().length >= 8, `${item.name}: incomplete environment contract field ${field}`);
       assert.doesNotMatch(item[field], new RegExp(`^(?:configure|set|use)\\s+[\`']?${escapedEnvironmentName}[\`']?\\.?$`, 'iu'), `${item.name}: tautological environment contract field ${field}`);
     }
+  }
+  for (const item of baselineRuntime.environment) {
+    assert.equal(item.unqualifiedReaders.length, 0, `${item.name}: an unqualified reader is hidden by the surface classification`);
+    assert.equal(item.unqualifiedProducers.length, 0, `${item.name}: an unqualified producer is hidden by the surface classification`);
+    for (const reader of item.readers) assert(item.consumerContracts.some((contract) => contract.path === reader.path), `${item.name}:${reader.path}: exact reader contract is missing`);
+    for (const producer of item.producerContracts) assert.equal(producer.qualified, true, `${item.name}:${producer.path}: exact producer qualification is missing`);
+    for (const contract of item.consumerContracts) for (const field of ['purpose', 'acceptedForm', 'defaultBehavior', 'emptyBehavior', 'invalidBehavior', 'required', 'precedence', 'owner', 'owningSurface', 'boundary', 'impact', 'failure']) assert(typeof contract[field] === 'string' && contract[field].trim(), `${item.name}:${contract.path}: missing contract ${field}`);
   }
   assert.equal(baselineRuntime.secrets.filter((item) => item.semanticStatus !== 'authored-secret-authority').length, 0, 'Secret authority blockers remain');
   for (const item of baselineRuntime.secrets) {
@@ -576,6 +631,7 @@ try {
   const firstExternalArchive = Object.values(externalArchiveManifest.charts).sort((left, right) => left.path.localeCompare(right.path))[0];
   const apiAuthorityManifest = JSON.parse(fs.readFileSync(path.join(temporaryRoot, 'scripts/docs-api-authority-lock.json'), 'utf8'));
   const cases = [
+    ...consumerCoverageCases(),
     ['helm-field:add', () => append('charts/kubeclaw/values.yaml', 'ap98Mutation:\n  nestedField: true')],
     ['helm-field:change', () => replaceOnce('charts/kubeclaw/values.yaml', 'replicaCount: 1', 'replicaCount: 2')],
     ['helm-field:remove', () => replaceOnce('charts/kubeclaw/values.yaml', 'replicaCount: 1\n', '')],

@@ -7,6 +7,7 @@ import process from 'node:process';
 import os from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import vm from 'node:vm';
 import ts from 'typescript';
 import YAML from 'yaml';
 import Ajv2020 from 'ajv/dist/2020.js';
@@ -16,6 +17,7 @@ import {
   assertLocalHelmAuthorityRegistry, localHelmAuthorityFile, localHelmAuthorityPaths, localHelmFieldAuthority,
 } from './docs-local-helm-authorities.mjs';
 import { apiFieldSchemaAuthority } from './docs-api-schema-authorities.mjs';
+import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
 } from './yaml-field-path.mjs';
@@ -865,33 +867,12 @@ function operatorEnvironmentFamilyContract(name) {
   return null;
 }
 
-function environmentMeaning(name, consumers, surface) {
-  const contract = ENVIRONMENT_CONTRACTS.get(name) ?? operatorEnvironmentFamilyContract(name);
+function environmentMeaning(name, consumers) {
   const consumer = consumers[0];
-  if (contract) {
-    assert(consumer, `environment contract ${name} has no source occurrence`);
-    return { status: 'authored-source-backed-contract', text: contract.purpose, evidence: `${consumer.path}:${consumer.line}`, blockerOwner: null, closureCondition: null, contract };
-  }
-  if (surface === 'operator-authored-input') {
-    return {
-      status: 'operator-contract-blocker',
-      text: `${consumer.path} reads ${name}, but the maintained catalog does not yet define its operator contract.`,
-      evidence: `${consumer.path}:${consumer.line}`,
-      blockerOwner: sourceOwner(consumer.path).component,
-      closureCondition: `Add a source-backed ${name} purpose, accepted form, default and empty behavior, precedence, impact, and exact failure meaning.`,
-    };
-  }
-  const injection = consumers.some((item) => item.access === 'kubernetes-env');
-  return {
-    status: 'classified-non-operator-boundary',
-    text: injection
-      ? `Checked-in deployment sources inject ${name}. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.`
-      : `A checked-in process reads ${name}, but this surface is ${surface} and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.`,
-    evidence: `${consumer.path}:${consumer.line}`,
-    blockerOwner: null,
-    closureCondition: null,
-    contract: null,
-  };
+  return { status: 'environment-consumer-contract-blocker',
+    text: `The receiving-source contract for ${name} must be established for each listed reader or external producer boundary.`,
+    evidence: `${consumer.path}:${consumer.line}`, blockerOwner: sourceOwner(consumer.path).component,
+    closureCondition: 'Qualify each exact receiving source with its default, empty and invalid behavior, required condition, precedence, owner, owning setting, change effect and failure.', contract: null };
 }
 
 const OPERATOR_ENV_SOURCE_RULES = [
@@ -2882,6 +2863,7 @@ function schemaDefaultBehavior(authorityPath, field, runtimeFallback) {
 }
 
 function schemaEmptyBehavior(field) {
+  if (field.negated) return 'This row describes a negated schema fragment. Its local rejection condition is inverted by the enclosing not rule; enclosing types and sibling constraints still apply to an empty string.';
   const constraints = new Map(field.constraints.map((constraint) => [constraint.name, constraint.value]));
   if (field.type === 'array') {
     if (Number(constraints.get('minItems') ?? 0) > 0) return 'An empty array is invalid because minItems requires at least one item.';
@@ -2906,7 +2888,36 @@ function schemaEmptyBehavior(field) {
     }
     return 'The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.';
   }
-  return 'A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.';
+  if (['any', 'unspecified'].includes(field.type)) return field.branches.length
+    ? 'This schema fragment does not declare a type. It does not reject an empty string by type; enclosing and sibling branches, resolved references, and the linked runtime validator determine whether that value is accepted.'
+    : 'This schema does not declare a type. An empty string is permitted unless a listed value or branch constraint rejects it; the linked runtime can validate it against a separate operation contract.';
+  if (field.type === 'never') return 'This false schema rejects every value, including an empty string.';
+  return 'A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well.';
+}
+
+function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema') {
+    const contract = observerInlineFieldContract(field.path.replace(/^\$\./u, ''));
+    if (contract) return { accepted: `The inline schema declares ${field.type} for plugin values. The runtime separately applies this normalization to the selected plugin or environment value: ${contract.acceptedForm}`,
+      empty: `The declared inline type still applies to plugin values. If a null or empty value reaches the resolver, it overrides earlier configuration and the environment before normalization. ${contract.emptyBehavior}`,
+      omission: `${contract.defaultBehavior} ${contract.precedence}`,
+      failure: contract.failure,
+      evidence: [...contract.evidence.map((item) => `${item.path}:${item.line}`), 'skills/common/plugins/openclaw-agent-observer/src/index.ts:197'] };
+  }
+  if (authorityPath === 'skills/buster/plugins/openapi/schemas/config.schema.json' && field.path === '$.operations[].body') return {
+    accepted: 'The configuration schema imposes no body type. At execution the selected OpenAPI operation must declare a JSON request body; its request schema validates the actual value',
+    empty: 'The configuration schema accepts an empty string. The selected OpenAPI request schema can accept or reject that string; omission is separately checked against requestBody.required.',
+    failure: 'An undeclared JSON request body, an operation request-schema violation, or a missing required body records an operation failure before the HTTP request is sent.',
+    evidence: ['skills/buster/plugins/openapi/src/provider.js:226'],
+  };
+  if (authorityPath !== 'skills/common/plugins/runtime-dispatch/schemas/config.schema.json') return null;
+  const rules = {
+    '$.targets.{*}.endpoint': ['An HTTP or HTTPS URL without username, password or fragment. HMAC targets outside loopback require HTTPS; spiffe-proxy targets must use loopback', 'Empty is rejected by the URL constructor; a configured target requires an endpoint.', 'Malformed URLs or forbidden protocol, credentials or fragments reject adapter activation. Non-loopback plaintext HMAC returns RUNTIME_CONFIG_INVALID:plaintextHmac; non-loopback SPIFFE proxy returns RUNTIME_CONFIG_INVALID:spiffeProxy.'],
+    '$.targets.{*}.tokenSecret': ['With HMAC, a secret identifier matching ^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$ is required. In spiffe-proxy mode no token secret is used', 'Empty is rejected in HMAC mode; spiffe-proxy omits the tokenSecret from its effective target.', 'A missing or invalid HMAC secret identifier rejects activation with RUNTIME_CONFIG_INVALID:tokenSecret. A later unavailable secret returns RUNTIME_SECRET_UNAVAILABLE.'],
+    '$.targets.{*}.authentication': ['spiffe-proxy selects loopback-only SPIFFE transport. The runtime otherwise selects HMAC, including when authentication is absent; the schema restricts explicitly configured values', 'An explicit empty value violates the schema enum. If that validator is bypassed, the runtime selects HMAC.', 'A target that does not satisfy its selected authentication mode rejects activation.'],
+  };
+  const rule = rules[field.path];
+  return rule ? { accepted: rule[0], empty: rule[1], failure: rule[2], evidence: ['skills/common/plugins/runtime-dispatch/src/adapter.ts:20', 'skills/common/plugins/runtime-dispatch/src/adapter.ts:65'] } : null;
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
@@ -3648,10 +3659,13 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
     return {
       authorityKey,
       status: 'structural-container',
-      text: 'Structural schema container. Child fields define configurable behavior.',
-      evidence: schemaAuthorityPath(authorityPath),
+      text: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema'
+        ? 'The observer merges registration configuration, then service configuration, then hook configuration. Later defined keys replace earlier keys; undefined is ignored, while null and empty replace earlier values. Each resulting defined key wins over its environment value before the field normalizer runs. Child rows state the actual bounds, defaults and failure rules.'
+        : 'Structural schema container. Child fields define configurable behavior.',
+      evidence: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema' ? 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts:21' : schemaAuthorityPath(authorityPath),
       schemaEvidence: schemaAuthorityPath(authorityPath),
-      implementationEvidence: null,
+      implementationEvidence: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema' ? 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts:21' : null,
+      additionalImplementationEvidence: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema' ? ['skills/common/plugins/openclaw-agent-observer/src/config.ts:87', 'skills/common/plugins/openclaw-agent-observer/src/index.ts:197'] : [],
       acceptedValues: schemaAcceptedValues(field),
       defaultBehavior: schemaDefaultBehavior(authorityPath, field, null),
       emptyBehavior: schemaEmptyBehavior(field),
@@ -3679,12 +3693,13 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
   const implementation = permitsInferredAuthority ? schemaImplementationEvidence(authorityPath, field.path) : null;
   const runtimeFallback = schemaRuntimeFallback(authorityPath, field);
   const describedPurpose = authoredDescription || purpose;
-  const acceptedValues = schemaAcceptedValues(field);
-  const defaultBehavior = collection?.omission ?? schemaDefaultBehavior(authorityPath, field, runtimeFallback);
-  const emptyBehavior = collection?.empty ?? schemaEmptyBehavior(field);
+  const runtimeRules = schemaRuntimeValidationRules(authorityPath, field);
+  const acceptedValues = [schemaAcceptedValues(field), runtimeRules?.accepted].filter(Boolean).map((value) => value.replace(/\.$/u, '')).join('; ');
+  const defaultBehavior = runtimeRules?.omission ?? collection?.omission ?? schemaDefaultBehavior(authorityPath, field, runtimeFallback);
+  const emptyBehavior = runtimeRules?.empty ?? collection?.empty ?? schemaEmptyBehavior(field);
   if (describedPurpose && implementation) {
     const changeImpact = `Changing ${field.path} changes this exact configured behavior when ${context} next loads it: ${describedPurpose}`;
-    const failureMeaning = `Schema validation rejects ${field.path} when it violates ${acceptedValues}. The linked consumer at ${implementation.path}:${implementation.line} owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.`;
+    const failureMeaning = runtimeRules?.failure ?? `Schema validation rejects ${field.path} when it violates ${acceptedValues}. The linked consumer at ${implementation.path}:${implementation.line} owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.`;
     return {
       authorityKey,
       status: field.description?.trim() ? 'schema-and-runtime-authority' : 'qualified-runtime-authority',
@@ -3693,6 +3708,7 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       schemaEvidence: schemaAuthorityPath(authorityPath),
       implementationEvidence: `${implementation.path}:${implementation.line}`,
       additionalImplementationEvidence: [...new Set([
+        ...(runtimeRules?.evidence ?? []),
         ...(collection?.additionalImplementationEvidence ?? []),
         ...(runtimeFallback ? [runtimeFallback.evidence] : []),
         ...(field.default !== '<none>' && schemaUsesProviderDefaults(authorityPath)
@@ -3739,12 +3755,14 @@ function schemaType(schema) {
   if (Array.isArray(schema.enum) && schema.enum.length) return [...new Set(schema.enum.map(typeOf))].join('|');
   for (const keyword of ['oneOf', 'anyOf']) {
     if (Array.isArray(schema[keyword]) && schema[keyword].length) {
-      const types = [...new Set(schema[keyword].map(schemaType).filter((item) => item !== 'unspecified'))];
+      const branchTypes = schema[keyword].map(schemaType);
+      if (branchTypes.some((item) => ['any', 'unspecified'].includes(item))) return 'unspecified';
+      const types = [...new Set(branchTypes)];
       if (types.length) return types.join('|');
     }
   }
-  if (schema.properties || schema.additionalProperties) return 'object';
-  if (schema.items || schema.prefixItems) return 'array';
+  // properties/items constrain their applicable JSON types; neither keyword
+  // excludes strings or other JSON values without an explicit type rule.
   return 'unspecified';
 }
 
@@ -4682,7 +4700,9 @@ function environmentOccurrences(file, text) {
       assignments.set(name, values);
     }
   }
+  const declaredYamlEnvironment = yamlSource ? new Set([...text.matchAll(/(?:^\s*-?\s*name:|\{\s*name\s*:)\s*['"]?([A-Z][A-Z0-9_]*)/gmu)].map((match) => match[1])) : new Set();
   const patterns = [];
+  if (yamlSource) patterns.push({ kind: 'embedded-shell-env', regex: /\$([A-Z][A-Z0-9_]*)\b/g });
   // YAML templates can contain shell or Node programs in block scalars. Other
   // source languages must use their own environment API. This prevents a
   // JavaScript test string that contains `${NAME}` from becoming a shell input.
@@ -4705,6 +4725,7 @@ function environmentOccurrences(file, text) {
       const name = match[1] ?? match[2];
       if (!name) continue;
       const line = lineAt(text, match.index);
+      if (kind === 'embedded-shell-env' && (!declaredYamlEnvironment.has(name) || text.split('\n')[line - 1].trim().startsWith('#'))) continue;
       const precedingAssignments = (assignments.get(name) ?? []).filter((item) => item.line <= line);
       // A later child-process assignment must not hide an earlier process input.
       // Only the latest assignment that can reach this read decides whether the
@@ -5798,6 +5819,58 @@ function enrichSecretFacts(secrets) {
   return secrets;
 }
 
+function environmentReaderContract(name, consumer) {
+  const identity = `${name}:${consumer.path}`;
+  const maintained = maintainedEnvironmentBindings.has(identity)
+    ? ENVIRONMENT_CONTRACTS.get(name) ?? operatorEnvironmentFamilyContract(name) : null;
+  const contract = runtimeConsumerContract(name, consumer.path)
+    ?? ENVIRONMENT_CONSUMER_CONTRACTS.get(identity) ?? maintained;
+  if (!contract) return null;
+  const qualified = { owner: sourceOwner(consumer.path).component,
+    owningSurface: `The receiving setting or command in ${consumer.path}; see the exact source and its producer bindings.`,
+    boundary: 'checked-in receiving source', ...contract };
+  assertRuntimeConsumerContract(qualified, identity);
+  return qualified;
+}
+
+function verifyEnvironmentConsumerCoverage() {
+  const entries = new Map();
+  for (const source of runtimeTextSources()) for (const occurrence of environmentOccurrences(source, read(source))) {
+    const entry = entries.get(occurrence.name) ?? { readers: [], producers: [] };
+    entry[occurrence.kind === 'kubernetes-env' ? 'producers' : 'readers'].push({ path: occurrence.path, line: occurrence.line, access: occurrence.kind });
+    entries.set(occurrence.name, entry);
+  }
+  const missing = [];
+  for (const [name, entry] of entries) {
+    for (const reader of entry.readers) if (!environmentReaderContract(name, reader)) missing.push(`${name}:${reader.path}`);
+    for (const producer of entry.producers) {
+      if (!qualifiedProducerBindings.has(`${name}:${producer.path}`)) missing.push(`${name}:${producer.path}`);
+      if (!entry.readers.length && !externalProducerContract(name, producer.path, producer)) missing.push(`${name}:${producer.path}:external boundary`);
+    }
+  }
+  assert.equal(missing.length, 0, `CONFIG_SEMANTIC_GAP: unqualified environment receiving sources: ${[...new Set(missing)].join(', ')}`);
+  console.log(`PASS exact environment receiving-source coverage (${entries.size} discovered names; every reader and producer pair qualified).`);
+}
+
+function environmentProducerSetting(producer) {
+  const lines = read(producer.path).split('\n');
+  const selected = [];
+  for (let index = producer.line - 1; index < Math.min(lines.length, producer.line + 12); index++) {
+    if (index > producer.line - 1 && /^\s*-\s*(?:name:|\{name:)/u.test(lines[index])) break;
+    selected.push(lines[index]);
+  }
+  const text = selected.join(' ');
+  const settings = [...new Set([...text.matchAll(/\.Values\.([A-Za-z0-9_.]+)/gu)].map((match) => match[1]))];
+  if (settings.length) return `${producer.path}: Helm fields ${settings.join(', ')}; the linked declaration supplies any render condition and default.`;
+  const literal = /\bvalue:\s*(["'])(.*?)\1/u.exec(text)?.[2];
+  const reference = /(?:secretKeyRef|configMapKeyRef|fieldRef|resourceFieldRef)\s*:/u.exec(text)?.[0];
+  const name = /name:\s*['"]?([A-Z][A-Z0-9_]*)/u.exec(text)?.[1];
+  const publishedLiteral = name && environmentDefaultIsSecretPayload(name) && literal ? '<redacted:sensitive-field>' : redactValue('environment-value', literal);
+  return literal !== undefined ? `${producer.path}:${producer.line}: fixed literal ${JSON.stringify(publishedLiteral)}`
+    : reference ? `${producer.path}:${producer.line}: declared ${reference} transport authority`
+      : `${producer.path}:${producer.line}: exact maintained workload environment declaration`;
+}
+
 function buildRuntimeInputInventory(yamlInventory) {
   const environment = [];
   const cliFlags = [];
@@ -5965,10 +6038,31 @@ function buildRuntimeInputInventory(yamlInventory) {
       entry.invalidBehavior = 'The owning producer or runtime reports invalid input; this inventory does not invent that external contract.';
       entry.precedenceExplanation = 'Use the listed producer or owning interface. Direct operator setting is not supported from this reference.';
     }
-    entry.consumerContracts = entry.readers.flatMap((consumer) => {
-      const contract = ENVIRONMENT_CONSUMER_CONTRACTS.get(`${entry.name}:${consumer.path}`);
-      return contract ? [{ path: consumer.path, line: consumer.line, access: consumer.access, ...contract }] : [];
-    }).filter((contract, index, contracts) => contracts.findIndex((candidate) => candidate.path === contract.path) === index);
+    const contractsByReader = new Map();
+    entry.unqualifiedReaders = [];
+    for (const consumer of entry.readers) {
+      if (contractsByReader.has(consumer.path)) continue;
+      const qualified = environmentReaderContract(entry.name, consumer);
+      if (!qualified) { entry.unqualifiedReaders.push({ name: entry.name, ...consumer }); continue; }
+      contractsByReader.set(consumer.path, { path: consumer.path, line: consumer.line, access: consumer.access,
+        ...qualified, purpose: `${qualified.purpose} Owner: ${qualified.owner}. Owning setting: ${qualified.owningSurface}. Boundary: ${qualified.boundary}.` });
+    }
+    entry.consumerContracts = [...contractsByReader.values()];
+    entry.unqualifiedProducers = entry.producers.filter((producer) => !qualifiedProducerBindings.has(`${entry.name}:${producer.path}`));
+    entry.producerContracts = entry.producers.map((producer) => ({ ...producer,
+      owner: sourceOwner(producer.path).component,
+      owningSurface: environmentProducerSetting(producer),
+      qualified: qualifiedProducerBindings.has(`${entry.name}:${producer.path}`),
+    }));
+    if (entry.readers.length === 0) {
+      for (const producer of entry.producers) {
+        const contract = externalProducerContract(entry.name, producer.path, producer);
+        if (!contract) { entry.unqualifiedProducers.push(producer); continue; }
+        assertRuntimeConsumerContract(contract, `${entry.name}:${producer.path}`);
+        entry.consumerContracts.push({ ...producer, ...contract,
+          purpose: `${contract.purpose} Owner: ${contract.owner}. Owning setting: ${contract.owningSurface}. Producer binding: ${environmentProducerSetting(producer)}. Boundary: ${contract.boundary}.` });
+      }
+    }
     const distinctConsumerContracts = new Set(entry.consumerContracts.map((contract) => JSON.stringify({
       acceptedForm: contract.acceptedForm,
       defaultBehavior: contract.defaultBehavior,
@@ -5992,8 +6086,8 @@ function buildRuntimeInputInventory(yamlInventory) {
       entry.failureMeaning = 'Use the exact consumer failure below; a single merged symptom would be incorrect.';
       entry.blockerOwner = null;
       entry.closureCondition = null;
-    } else if (entry.consumerContracts.length === 1 && !meaning.contract
-      && [...new Set(entry.readers.map((reader) => reader.path))].every((readerPath) => entry.consumerContracts.some((contract) => contract.path === readerPath))) {
+    } else if (entry.consumerContracts.length >= 1 && !meaning.contract
+      && entry.unqualifiedReaders.length === 0 && entry.unqualifiedProducers.length === 0) {
       const [contract] = entry.consumerContracts;
       entry.meaningStatus = 'authored-consumer-specific-contract';
       entry.meaning = contract.purpose;
@@ -6010,6 +6104,12 @@ function buildRuntimeInputInventory(yamlInventory) {
       entry.blockerOwner = null;
       entry.closureCondition = null;
     }
+    if (entry.unqualifiedReaders.length || entry.unqualifiedProducers.length) {
+      entry.meaningStatus = 'environment-consumer-contract-blocker';
+      entry.meaning = `The receiving-source contract is missing for ${[...entry.unqualifiedReaders, ...entry.unqualifiedProducers].map((item) => `${entry.name} at ${item.path}:${item.line}`).join('; ')}.`;
+      entry.blockerOwner = entry.runtimeOwner;
+      entry.closureCondition = 'Add an exact source-backed reader or external boundary contract, including its owning configuration, default, empty and invalid behavior, required condition, precedence, change effect and failure.';
+    }
     if (entry.name === 'BUNDLE_TMP_ROOT') {
       entry.producers = [{ path: 'charts/kubeclaw/templates/deployment.yaml', line: 944, access: 'internal-shell-assignment', value: '/tmp/code-bundle' }];
       entry.direction = 'internal shell assignment passed to one child Node process; not operator-authored or externally configurable';
@@ -6022,9 +6122,9 @@ function buildRuntimeInputInventory(yamlInventory) {
   }
   assert.equal([...groupedEnvironment.values()].filter((entry) => /blocker/u.test(entry.meaningStatus) && (!entry.blockerOwner || !entry.closureCondition)).length, 0,
     'quality gate: every unresolved environment meaning needs an owner and concrete closure condition');
-  const environmentContractGaps = [...groupedEnvironment.values()].filter((entry) => entry.surface === 'operator-authored-input' && /blocker/u.test(entry.meaningStatus));
+  const environmentContractGaps = [...groupedEnvironment.values()].filter((entry) => /blocker/u.test(entry.meaningStatus));
   if (!allowSemanticGaps && environmentContractGaps.length) {
-    throw new Error(`CONFIG_SEMANTIC_GAP: operator environment inputs lack qualified semantic authority: ${environmentContractGaps.slice(0, 20).map((entry) => entry.name).join(', ')}. Expected authority: owning reader plus purpose, accepted form, default and empty behavior, precedence, impact, and failure symptom.`);
+    throw new Error(`CONFIG_SEMANTIC_GAP: environment receiving sources lack qualified semantic authority: ${environmentContractGaps.flatMap((entry) => [...entry.unqualifiedReaders, ...entry.unqualifiedProducers].map((item) => `${entry.name}:${item.path}`)).slice(0, 30).join(', ')}. Expected authority: owning reader plus purpose, accepted form, default and empty behavior, precedence, impact, and failure symptom.`);
   }
   const controllerWrapperInputs = [
     'KUBECLAW_NAMESPACE', 'KUBERNETES_SERVICE_PORT', 'BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION',
@@ -6044,7 +6144,8 @@ function buildRuntimeInputInventory(yamlInventory) {
   ]) {
     const entry = groupedEnvironment.get(name);
     assert.equal(entry.surface, 'checked-in-injected-transport', `quality gate: ${name} is not a proved injected runtime input`);
-    assert.equal(entry.meaningStatus, 'authored-source-backed-contract', `quality gate: ${name} lacks its exact controller contract`);
+    assert.match(entry.meaningStatus, /^authored-consumer-specific-contracts?$/u, `quality gate: ${name} lacks its exact controller contract`);
+    assert(entry.consumerContracts.some((contract) => contract.path === busterControllerSource), `quality gate: ${name} lost its controller-specific semantic authority`);
     assert.doesNotMatch(`${entry.direction} ${entry.meaning}`, /external or unproved|external authority/iu,
       `quality gate: ${name} regressed to an unproved external boundary`);
   }
@@ -6271,6 +6372,10 @@ function buildRuntimeInputInventory(yamlInventory) {
     },
     totals: {
       environmentVariables: groupedEnvironment.size,
+      environmentReaderPairs: new Set([...groupedEnvironment.values()].flatMap((item) => item.readers.map((reader) => `${item.name}:${reader.path}`))).size,
+      environmentProducerPairs: new Set([...groupedEnvironment.values()].flatMap((item) => item.producers.map((producer) => `${item.name}:${producer.path}`))).size,
+      unqualifiedEnvironmentReaderPairs: [...groupedEnvironment.values()].reduce((sum, item) => sum + item.unqualifiedReaders.length, 0),
+      unqualifiedEnvironmentProducerPairs: [...groupedEnvironment.values()].reduce((sum, item) => sum + item.unqualifiedProducers.length, 0),
       environmentConsumers: [...groupedEnvironment.values()].reduce((sum, item) => sum + item.consumers.length, 0),
       environmentMeaningBlockers: [...groupedEnvironment.values()].filter((item) => /blocker/u.test(item.meaningStatus)).length,
       injectionOnlyEnvironmentVariables: [...groupedEnvironment.values()].filter((item) => item.surface === 'kubernetes-injected-transport').length,
@@ -6289,6 +6394,146 @@ function buildRuntimeInputInventory(yamlInventory) {
       unknownConsumer: derivedValues.filter((item) => item.consumers.includes('unknown')).length,
     },
   };
+}
+
+function sourceProgramPart(sourcePath, symbol, kind) {
+  const source = ts.createSourceFile(sourcePath, read(sourcePath), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  let selected;
+  const visit = (node) => {
+    if (kind === 'function' && ts.isFunctionDeclaration(node) && node.name?.text === symbol) selected = node.getText(source);
+    if (kind === 'initializer' && ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === symbol) selected = node.initializer?.getText(source);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  assert(selected, `${sourcePath}: source symbol ${symbol} is missing`);
+  return selected;
+}
+
+async function verifyRuntimeConsumerSemantics() {
+  const importSource = (file) => import(pathToFileURL(path.join(root, file)).href);
+  const studio = await importSource('skills/prism/server/studio-config.ts');
+  assert.equal(studio.loadStudioConfig({}).control.href, 'http://prism-control:8080/');
+  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_URL: '' }), /Invalid URL/u);
+  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_URL: 'https://control.invalid' }).control.href, 'https://control.invalid/');
+  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '' }), /PRISM_STUDIO_CONTROL_TIMEOUT_INVALID/u);
+  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '12' }).controlTimeoutMs, 12);
+  for (const value of [undefined, '', 'https://bridge.invalid']) {
+    const environment = value === undefined ? {} : { PRISM_CONTROL_URL: value };
+    const actual = vm.runInNewContext(sourceProgramPart('skills/prism/server/agent-bridge.mjs', 'controlUrl', 'initializer'), { process: { env: environment } });
+    assert.equal(actual, value || 'http://127.0.0.1:28080');
+  }
+  let requested, requestOptions;
+  const post = vm.runInNewContext(`${sourceProgramPart('skills/prism/openclaw-plugin/index.mjs', 'post', 'function')}; post`, {
+    process: { env: { PRISM_CONTROL_URL: 'https://environment.invalid' } }, URL,
+    fetch: async (url, options) => { requested = String(url); requestOptions = options; return { ok: true, json: async () => ({}) }; },
+  });
+  await post('/test', {}, { controlUrl: 'https://plugin.invalid' }); assert.equal(requested, 'https://plugin.invalid/test');
+  assert.equal(Object.hasOwn(requestOptions, 'signal'), false, 'OpenClaw post unexpectedly has a configured timeout');
+  await post('/test', {}, { controlUrl: '' }); assert.equal(requested, 'https://environment.invalid/test');
+  await assert.rejects(() => post('/test', {}, { controlUrl: 'malformed' }), /Invalid URL/u);
+  const bootstrap = await importSource('skills/prism/config/database-bootstrap.ts');
+  const completeBootstrap = { ADMIN_DATABASE_URL: 'postgresql://admin.invalid/db', PRISM_MIGRATOR_PASSWORD: 'm', PRISM_RUNTIME_PASSWORD: 'r', PRISM_READONLY_PASSWORD: 'q' };
+  assert.equal(bootstrap.prismDatabaseBootstrapConfig(completeBootstrap).adminUrl, completeBootstrap.ADMIN_DATABASE_URL);
+  for (const name of Object.keys(completeBootstrap)) assert.throws(() => bootstrap.prismDatabaseBootstrapConfig({ ...completeBootstrap, [name]: '' }), new RegExp(`${name} is required`, 'u'));
+  const observer = await importSource('skills/common/plugins/openclaw-agent-observer/src/config.ts');
+  const observerSource = read('skills/common/plugins/openclaw-agent-observer/src/config.ts');
+  const pairs = [...observerSource.matchAll(/configuredValue\(config, env, '([^']+)', '([^']+)'\)/gu)].map((match) => [match[1], match[2]]);
+  const observerEnv = Object.fromEntries(pairs.map(([key, name]) => [name, key === 'enabled' ? 'true' : key === 'redisHost' ? ' redis.invalid ' : key === 'redisPassword' ? ' secret ' : key === 'redisUsername' ? ' user ' : key === 'redisNetworkIsolation' ? 'isolated' : key === 'redisTls' ? 'false' : key === 'hookPriority' ? '0' : key === 'redisPort' ? '6379' : '2']));
+  const resolved = observer.resolveAgentObserverConfig({}, observerEnv);
+  assert.equal(resolved.enabled, true); assert.equal(resolved.redisHost, 'redis.invalid'); assert.equal(resolved.redisPassword, 'secret'); assert.equal(resolved.hookPriority, 0);
+  assert.equal(observer.resolveAgentObserverConfig({ enabled: false, redisHost: '' }, observerEnv).enabled, false);
+  assert.equal(observer.resolveAgentObserverConfig({ redisHost: '' }, observerEnv).redisHost, undefined);
+  assert.equal(observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_ENABLED: 'unexpected' }).enabled, false);
+  assert.throws(() => observer.resolveAgentObserverConfig({ enabled: null }, observerEnv), /enabled must be configured/u);
+  for (const [key, name] of pairs.filter(([key]) => !key.startsWith('redis') && key !== 'enabled')) {
+    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '' }), /required|configured/u, name);
+    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: 'not-a-number' }), /integer/u, name);
+    if (key !== 'hookPriority') assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '0' }), /positive integer/u, name);
+  }
+  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, REDIS_PORT: '65536' }), /between 1 and 65535/u);
+  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES: '5242881' }), /cannot exceed/u);
+  assert.equal(observer.resolveAgentObserverConfig({ redisTls: null }, observerEnv).redisTls, false);
+  assert.equal(observer.resolveAgentObserverConfig({ redisPort: null }, observerEnv).redisPort, undefined);
+  assert.equal(observer.resolveAgentObserverConfig({ hookPriority: ' ' }, observerEnv).hookPriority, 0);
+  assert.throws(() => observer.resolveAgentObserverConfig({ maxQueuePerStream: ' ' }, observerEnv), /positive integer/u);
+  const support = await importSource('skills/common/plugins/openclaw-agent-observer/src/observer-support.ts');
+  assert.deepEqual(support.mergeConfigInputs({ enabled: true, redisHost: 'registration' }, { redisHost: 'service' }, { enabled: undefined, redisHost: '' }), { enabled: true, redisHost: '' });
+  assert.deepEqual(support.mergeConfigInputs({ enabled: true }, { enabled: null }), { enabled: null });
+  for (const [key] of pairs) {
+    const field = flattenSchema(JSON.parse(read('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json')).configSchema).find((item) => item.path === `$.${key}`);
+    const rule = schemaRuntimeValidationRules('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema', field);
+    assert(rule?.accepted && rule.omission && rule.empty && rule.failure, `${key}: inline observer runtime contract is incomplete`);
+    assert.match(rule.omission, /Registration configuration.*service configuration.*hook configuration/u);
+  }
+  const transport = await importSource('skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts');
+  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'localhost', port: 6379 }), /Secure Redis transport policy violation/u);
+  assert.equal(transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, networkIsolation: 'documented' }).policy.networkIsolation, true);
+  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, enforceSecureMode: false }), /restricted to localhost/u);
+  const controlConfig = await importSource('skills/prism/server/control-config.ts');
+  const controlEnvironment = { PRISM_SESSION_SECRET: 'session', PRISM_INGRESS_SECRET: 'ingress', PRISM_INGESTION_SECRET: 'ingestion', PRISM_DISPATCH_SECRET: 'dispatch', PRISM_WORKER_SECRET: 'worker' };
+  assert.equal(controlConfig.loadControlServerConfig(controlEnvironment).dispatchSecret, 'dispatch');
+  for (const name of Object.keys(controlEnvironment)) assert.throws(() => controlConfig.loadControlServerConfig({ ...controlEnvironment, [name]: '' }), new RegExp(`${name} is required`, 'u'));
+  assert.throws(() => controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: '' }), /invalid platform pipeline preference subject/u);
+  assert.equal(controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: `user-${'a'.repeat(24)}` }).pipelinePreferenceSubject, `user-${'a'.repeat(24)}`);
+  const spiffe = { ...controlEnvironment, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_NOVA_SPIFFE_ID: 'nova', PRISM_TRUSTED_WORKER_SPIFFE_ID: 'worker', PRISM_CONTROL_SPIFFE_ID: 'control', PRISM_TRUSTED_AGENT_SPIFFE_ID: 'agent', PRISM_DISPATCH_SECRET: '', PRISM_WORKER_SECRET: '' };
+  assert.equal(controlConfig.loadControlServerConfig(spiffe).dispatchSecret, '');
+  assert.throws(() => controlConfig.loadControlServerConfig({ ...spiffe, PRISM_TRUSTED_NOVA_SPIFFE_ID: '' }), /trust policy is incomplete/u);
+  const ingestionTtl = sourceProgramPart('skills/prism/server/ingestion.ts', 'configuredQuarantineTtl', 'initializer');
+  const ingestionClamp = sourceProgramPart('skills/prism/server/ingestion.ts', 'quarantineTtl', 'initializer');
+  for (const [raw, expected] of [[undefined, 3600000], ['', 60000], ['-1', 60000], ['86400001', 86400000]]) {
+    const configured = vm.runInNewContext(ingestionTtl, { process: { env: raw === undefined ? {} : { PRISM_QUARANTINE_TTL_MS: raw } }, Number });
+    assert.equal(vm.runInNewContext(ingestionClamp, { configuredQuarantineTtl: configured, Math }), expected);
+  }
+  const chartText = read('charts/kubeclaw/templates/deployment.yaml');
+  const healthSource = chartText.slice(chartText.indexOf("<<'HEALTH_SCRIPT'") + "<<'HEALTH_SCRIPT'".length, chartText.indexOf('\n              HEALTH_SCRIPT'));
+  const healthAst = ts.createSourceFile('generated-health.mjs', healthSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  const enabledNode = healthAst.statements.find((statement) => ts.isFunctionDeclaration(statement) && statement.name?.text === 'enabled');
+  assert(enabledNode, 'embedded health boolean helper is missing');
+  for (const [raw, fallback, expected] of [[undefined, true, true], ['', true, true], ['TRUE', false, true], ['yes', false, true], [' true ', true, false], ['unexpected', true, false]]) {
+    const enabled = vm.runInNewContext(`${enabledNode.getText(healthAst)}; enabled`, { process: { env: raw === undefined ? {} : { TEST: raw } } });
+    assert.equal(enabled('TEST', fallback), expected);
+  }
+  const bare = environmentOccurrences('charts/example/templates/workload.yaml', 'env:\n  - {name: REDIS_HOST, value: redis}\nscript: |\n  printf "%s" "$REDIS_HOST"\n');
+  assert(bare.some((occurrence) => occurrence.name === 'REDIS_HOST' && occurrence.kind === 'embedded-shell-env'));
+  const ops = await importSource('tools/ops-mcp/src/config.mjs');
+  assert.equal(ops.loadOpsMcpConfig({}).defaultNamespace, 'kubeclaw');
+  assert.throws(() => ops.loadOpsMcpConfig({ OPS_DEFAULT_NAMESPACE: '' }), /OPS_ALLOWED_NAMESPACES/u);
+  const kube = await importSource('tools/ops-mcp/src/kubernetes.mjs');
+  assert.equal(typeof kube.createKubeRequest({ api: 'https://api.invalid' }), 'function');
+  for (const api of ['', 'http://api.invalid', 'https://user:pass@api.invalid', 'https://api.invalid/path', 'https://api.invalid/#fragment']) assert.throws(() => kube.createKubeRequest({ api }), /Invalid URL|HTTPS origin/u);
+  const dispatch = await importSource('skills/common/plugins/runtime-dispatch/src/adapter.ts');
+  const activate = (target) => dispatch.activate({ config: { targets: { sample: target } } });
+  for (const target of [{ endpoint: 'http://127.0.0.1:8080', tokenSecret: 'valid-secret' }, { endpoint: 'https://runtime.invalid', tokenSecret: 'valid-secret' }, { endpoint: 'http://localhost:8080', authentication: 'spiffe-proxy' }]) await activate(target).shutdown();
+  for (const endpoint of ['ftp://runtime.invalid', 'https://user:pass@runtime.invalid', 'https://runtime.invalid/#fragment', 'http://runtime.invalid']) assert.throws(() => activate({ endpoint, tokenSecret: 'valid-secret' }), /RUNTIME_CONFIG_INVALID/u);
+  for (const tokenSecret of ['', '../secret', 'UPPER', 'a'.repeat(129)]) assert.throws(() => activate({ endpoint: 'https://runtime.invalid', tokenSecret }), /RUNTIME_CONFIG_INVALID:tokenSecret/u);
+  assert.throws(() => activate({ endpoint: 'https://runtime.invalid', authentication: 'spiffe-proxy' }), /RUNTIME_CONFIG_INVALID:spiffeProxy/u);
+  const ajv = new Ajv2020({ strict: false }); addFormats(ajv);
+  const openapiSchema = JSON.parse(read('skills/buster/plugins/openapi/schemas/config.schema.json'));
+  const bodySchema = openapiSchema.properties.operations.items.properties.body;
+  assert.equal(ajv.compile(bodySchema)(''), true);
+  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(bodySchema)[0]), /wrong type/u);
+  assert.equal(schemaType({ properties: { value: { type: 'string' } } }), 'unspecified');
+  assert.equal(ajv.compile({ properties: { value: { type: 'string' } } })(''), true);
+  for (const schema of [{}, { default: 12, description: 'Annotation only' }, { anyOf: [{ type: 'integer' }, {}] }, { items: { type: 'integer' } }]) {
+    assert.equal(ajv.compile(schema)(''), true, 'unconstrained or type-specific keyword wrongly rejected a string');
+    assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(schema)[0]), /wrong (?:declared )?type/u);
+  }
+  const branches = { type: 'string', allOf: [{ minLength: 1 }] };
+  assert.equal(ajv.compile(branches)(''), false);
+  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(branches)[1]), /wrong type/u);
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-openapi-body-contract-'));
+  try {
+    fs.mkdirSync(path.join(workspace, 'repository')); fs.mkdirSync(path.join(workspace, 'evidence'));
+    const provider = await importSource('skills/buster/plugins/openapi/src/provider.js');
+    const invocation = { testIdentity: 'body-empty', configuration: { values: { specFile: 'spec.json', url: 'https://endpoint.invalid', operations: [{ operationId: 'sample', body: '' }] } }, inputs: [], workspace: { repository: 'repository', evidence: 'evidence' }, timeoutMs: 1000 };
+    for (const [requestSchema, expected, expectedCalls] of [[{ type: 'string' }, 'passed', 1], [{ type: 'string', minLength: 1 }, 'failed', 0], [{ type: 'object' }, 'failed', 0]]) {
+      fs.writeFileSync(path.join(workspace, 'repository/spec.json'), JSON.stringify({ openapi: '3.1.0', paths: { '/sample': { post: { operationId: 'sample', requestBody: { required: true, content: { 'application/json': { schema: requestSchema } } }, responses: { '204': { description: 'empty success' } } } } } }));
+      let calls = 0;
+      const result = await provider.provider().execute(invocation, { workspaceRoot: workspace, signal: new AbortController().signal, async invoke(capability, request) { calls++; assert.equal(capability, 'network.http'); assert.equal(request.payload.body, JSON.stringify('')); return { status: 204, body: '', headers: {} }; } });
+      assert.equal(result.outcome, expected); assert.equal(calls, expectedCalls);
+    }
+  } finally { fs.rmSync(workspace, { recursive: true, force: true }); }
+  console.log('PASS actual runtime consumer contracts: Prism source precedence, observer overrides/normalization/guards, Redis security, Ops API origins, dispatch URL/auth/secret identifiers, unconstrained and operation-validated OpenAPI bodies. No network calls or live commands.');
 }
 
 async function verifyConfigurationSchemaSemantics() {
@@ -6387,12 +6632,23 @@ async function verifyConfigurationSchemaSemantics() {
   console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');
 }
 
+if (argv.includes('--check-runtime-consumer-semantics-only')) {
+  await verifyRuntimeConsumerSemantics();
+  process.exit(0);
+}
+
+if (argv.includes('--check-environment-coverage-only')) {
+  verifyEnvironmentConsumerCoverage();
+  process.exit(0);
+}
+
 if (argv.includes('--check-schema-semantics-only')) {
   await verifyConfigurationSchemaSemantics();
   process.exit(0);
 }
 
 export function buildConfigurationInventories() {
+  if (argv.includes('--runtime-only')) return new Map([['configuration-runtime-inputs.json', buildRuntimeInputInventory({ files: [] })]]);
   if (argv.includes('--schemas-only')) return new Map([['configuration-schemas.json', buildSchemaInventory()]]);
   const yaml = buildYamlInventory();
   return new Map([

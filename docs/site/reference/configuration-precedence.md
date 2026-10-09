@@ -3,9 +3,9 @@
 Status: current cross-component reference
 Audience: operator, pipeline author, maintainer
 Owner: platform operations
-Evidence: skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts; skills/nova/core/test-gates/resolver.ts; tests/verification/e2e/support/platform-config.ts; charts/prism/templates/workloads.yaml
+Evidence: skills/common/plugins/openclaw-agent-observer/src/index.ts; skills/common/plugins/openclaw-agent-observer/src/observer-support.ts; skills/common/plugins/openclaw-agent-observer/src/config.ts; skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts; skills/nova/core/test-gates/resolver.ts; tests/verification/e2e/support/platform-config.ts; charts/prism/templates/workloads.yaml
 Applies to: current pipeline, project, chart, host, and Prism configuration
-Last verified: 2026-10-09 at source revision `68fec9f604a116d67fde83206fcb4016fdb503e3`
+Last verified: 2026-10-09 at source revision `10e95ee97567cd42357e95d2a443aee4732b359c`
 
 ## The governing rule
 
@@ -45,6 +45,18 @@ passes `definition.config` unchanged, and adapter startup returns the validated
 configuration unchanged. The test-provider resolver instead clones its input
 and validates that clone with default insertion enabled.
 
+The OpenClaw agent observer has its own merge. Registration configuration is
+applied first, then service configuration, then hook configuration. A later
+defined key wins. An `undefined` key is ignored, but `null` and an empty value
+replace the earlier value. Each merged key that is not `undefined` then wins
+over its environment variable. The field normalizer runs after that choice.
+For example, an empty `redisHost` replaces a valid environment host and becomes
+absent after trimming; it does not select the environment host again.
+`redisTls` falls back to `false`. Required event and queue limits have no
+fallback. See the [plugin field reference](plugin-configuration.md) and
+[environment reader contracts](environment-variables.md) for each field's
+bounds and failure rules.
+
 For example, the human-approval schema advertises `timeoutMinutes: 60`. The
 registry leaves an omitted timeout absent. The approval parser then applies
 `config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES`, whose constant is
@@ -72,17 +84,17 @@ with an absent-only rule.
 >
 > **Claim:** Registration validation preserves authored values; test-provider resolution inserts schema defaults in a clone; individual consumers apply their own fallbacks and collection rules.
 >
-> **Implementation:** [stage, observer, and adapter validation](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugin-runtime/foundation/registry/configuration.ts#L48-L81); [test-provider resolution](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121); [validation and cloned default insertion](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugin-runtime/foundation/registry/schema.ts#L94-L113)
+> **Implementation:** [stage, observer, and adapter validation](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/configuration.ts#L48-L81); [test-provider resolution](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121); [validation and cloned default insertion](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/schema.ts#L94-L113)
 >
-> [Stage configuration handoff](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/execution/stage-executor.ts#L70-L74); [adapter configuration handoff](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/execution/adapter-startup.ts#L50-L53); [approval timeout fallback](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/plugins/human-approval/src/approval.ts#L67-L80)
+> [Stage configuration handoff](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/execution/stage-executor.ts#L70-L74); [adapter configuration handoff](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/execution/adapter-startup.ts#L50-L53); [approval timeout fallback](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/plugins/human-approval/src/approval.ts#L67-L80)
 >
-> [Command defaults and report-mode conditions](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/buster/plugins/direct-command/src/provider.js#L58-L84); [common command-runner environment rejection](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugins/command-runner/src/adapter.ts#L54-L59); [Buster empty-string fallback](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/docker/buster-runtime-entrypoint.sh#L178-L187)
+> [Command defaults and report-mode conditions](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/buster/plugins/direct-command/src/provider.js#L58-L84); [common command-runner environment rejection](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/command-runner/src/adapter.ts#L54-L59); [Buster empty-string fallback](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/docker/buster-runtime-entrypoint.sh#L178-L187)
 >
-> **Contract or setting:** [approval timeout type and range](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/plugins/human-approval/schemas/config.schema.json#L24-L29)
+> **Contract or setting:** [approval timeout type and range](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/plugins/human-approval/schemas/config.schema.json#L24-L29)
 >
-> **Test evidence:** [platform configuration contract checks](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65) passed locally with Node 24.21.0. This contract check does not execute a deployed plugin.
+> **Test evidence:** [platform configuration contract checks](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65) passed locally with Node 24.21.0. This contract check does not execute a deployed plugin.
 >
-> **Revision:** `68fec9f604a116d67fde83206fcb4016fdb503e3`
+> **Revision:** `10e95ee97567cd42357e95d2a443aee4732b359c`
 >
 > **Limit:** Source evidence establishes default selection and the executor incompatibility. It does not establish successful direct-command execution through the shipped common command-runner.
 
@@ -133,18 +145,32 @@ retain its source name/key. Hashing a low-entropy token is not safe redaction.
 - Changing environment after a process captured its startup snapshot has no
   effect on that process.
 
+> **Source evidence — observer configuration**
+>
+> **Claim:** The observer merges registration, service and hook inputs. Later null and empty values remain explicit. Each defined merged key wins over its environment fallback before normalization.
+>
+> **Implementation:** [merge call and source order](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/index.ts#L192-L200); [defined-key merge](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts#L21-L29); [key selection and normalization](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/config.ts#L87-L111)
+>
+> **Contract or setting:** [inline host-plugin schema](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#L9-L32)
+>
+> **Test evidence:** Local checks exercised the actual merge and resolver with absent, explicit, null, empty, whitespace, invalid and out-of-range values. These checks used no live Redis connection.
+>
+> **Revision:** `10e95ee97567cd42357e95d2a443aee4732b359c`
+>
+> **Limit:** The schema advertises field types. The resolver and Redis transport apply additional runtime guards; a valid field alone does not prove a working observer connection.
+
 > **Source evidence — implemented merges**
 >
 > **Claim:** Platform paths resolve from one canonical file, test scopes have an explicit template/project/policy resolution order, and compact profile overrides can change only known paths.
 >
-> **Implementation:** [platform load and path base](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugin-runtime/foundation/config/platform.ts#L36-L69); [suite expansion and lowest requested concurrency](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/test-gates/resolver.ts#L304-L353)
+> **Implementation:** [platform load and path base](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/config/platform.ts#L36-L69); [suite expansion and lowest requested concurrency](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/test-gates/resolver.ts#L304-L353)
 >
-> [Suite overrides, direct nodes, and project concurrency](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/test-gates/resolver.ts#L354-L393); [known-path compact overrides](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/tests/verification/e2e/support/platform-config.ts#L98-L129)
+> [Suite overrides, direct nodes, and project concurrency](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/test-gates/resolver.ts#L354-L393); [known-path compact overrides](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/tests/verification/e2e/support/platform-config.ts#L98-L129)
 >
-> **Contract or setting:** [runtime records the effective authority subset](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/execution/engine-runtime.ts#L29-L42)
+> **Contract or setting:** [runtime records the effective authority subset](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/execution/engine-runtime.ts#L29-L42)
 >
-> **Test evidence:** [platform configuration contract checks](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65)
+> **Test evidence:** [platform configuration contract checks](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65)
 >
-> **Revision:** `68fec9f604a116d67fde83206fcb4016fdb503e3`
+> **Revision:** `10e95ee97567cd42357e95d2a443aee4732b359c`
 >
 > **Limit:** This precedence map does not replace Helm's own multi-file ordering or an external GitOps controller's declared reconciliation policy.

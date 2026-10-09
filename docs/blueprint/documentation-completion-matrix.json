@@ -14302,6 +14302,72 @@
       },
       "scope": "Three pages pass unchanged publication controlled-language function;104 pinned links match41 files and valid ranges. No formal STE certification or independent semantic acceptance.",
       "authorIdentity": "/root"
+    },
+    {
+      "command": "actual runtime consumer semantic checks",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/a98-runtime-consumer-semantics.log",
+      "logSha256": "39d103155fb104559b3b30fcb6d61ecca2d9a47badd7f87fb0450d7aaca0c879",
+      "sourceState": "completed consumer writer source corrections on4d42b9edaccf85d050cf3d50f5d62a440f342927; logs bind their executed scope, not future generated snapshot",
+      "authorIdentity": "/root/a98_config_writer",
+      "scope": "Author local semantic/focused mutation/freshness verification; not independent acceptance, full final mutation suite, browser or live proof."
+    },
+    {
+      "command": "actual schema/body runtime semantic checks",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/a98-schema-semantics.log",
+      "logSha256": "3db4929143cd681d6717d1058773c9da1dc712fa4c1dccf071f5d30089a9888c",
+      "sourceState": "completed consumer writer source corrections on4d42b9edaccf85d050cf3d50f5d62a440f342927; logs bind their executed scope, not future generated snapshot",
+      "authorIdentity": "/root/a98_config_writer",
+      "scope": "Author local semantic/focused mutation/freshness verification; not independent acceptance, full final mutation suite, browser or live proof."
+    },
+    {
+      "command": "five new exact-reader/producer/embedded/bare-shell coverage mutations and recovery",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/a98-final-consumer-coverage-mutations.log",
+      "logSha256": "1b0078d11c9d41e520f59e923af13a60c806eb59979b480adf480b6317e9d0d8",
+      "sourceState": "completed consumer writer source corrections on4d42b9edaccf85d050cf3d50f5d62a440f342927; logs bind their executed scope, not future generated snapshot",
+      "authorIdentity": "/root/a98_config_writer",
+      "scope": "Author local semantic/focused mutation/freshness verification; not independent acceptance, full final mutation suite, browser or live proof."
+    },
+    {
+      "command": "isolated configuration inventory generation",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/a98-final-qualified-consumer-generation.log",
+      "logSha256": "60152b5a91070b76f9e8e1f4d68b32f4cc8e84bcd569f44bb0fe8ef457df72f7",
+      "sourceState": "completed consumer writer source corrections on4d42b9edaccf85d050cf3d50f5d62a440f342927; logs bind their executed scope, not future generated snapshot",
+      "authorIdentity": "/root/a98_config_writer",
+      "scope": "Author local semantic/focused mutation/freshness verification; not independent acceptance, full final mutation suite, browser or live proof."
+    },
+    {
+      "command": "isolated strict configuration inventory freshness",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/a98-final-qualified-consumer-check.log",
+      "logSha256": "069906223428e787b29421549e10544ec89540d654c8adac9d6af4ca6223b909",
+      "sourceState": "completed consumer writer source corrections on4d42b9edaccf85d050cf3d50f5d62a440f342927; logs bind their executed scope, not future generated snapshot",
+      "authorIdentity": "/root/a98_config_writer",
+      "scope": "Author local semantic/focused mutation/freshness verification; not independent acceptance, full final mutation suite, browser or live proof."
+    },
+    {
+      "command": "final exact source-pair environment coverage after HOME correction",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/a98-final-source-coverage.log",
+      "logSha256": "9fb84072c32a8e3bffcfd7c48a6909b2d8f55909dbe7b1e4c09572c177853798",
+      "sourceState": "completed consumer writer source corrections on4d42b9edaccf85d050cf3d50f5d62a440f342927; logs bind their executed scope, not future generated snapshot",
+      "authorIdentity": "/root/a98_config_writer",
+      "scope": "Author local semantic/focused mutation/freshness verification; not independent acceptance, full final mutation suite, browser or live proof."
     }
   ],
   "reviewAssignments": [
@@ -14631,10 +14697,27 @@
       "report": "/tmp/a98-round3-reader-review.md",
       "reportSha256": "0b7b31748db7a9cf12554090dba2191e396e7b3abf85fe994098cf8811290cd8",
       "catalogueMappingNote": "OPR-010 belongs to AP09.4, not AP09.8 thirty-ID count, but Prism is expressly required by A98-12 and applicable procedural gates."
+    },
+    {
+      "agent": "/root/a98_reader_publication_round4",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "reviewedRevision": "4d42b9edaccf85d050cf3d50f5d62a440f342927",
+      "state": "running",
+      "scope": [
+        "docs/site/reference/project-pipeline-publication.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/capacity.md"
+      ],
+      "scopeLimit": "Full three-page reader partition only; no global gate or package acceptance."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 full consumer/dependency corrections and corrected three-page reader partition; all package acceptance remains open",
+    "stage": "AP09.8 completed consumer/dependency writer sources pending integration and generated snapshot; Prism full interruption draft outside repo; independent package acceptance open",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
     "next": "Finish consumer and dependency writer scopes. Integrate tested read-only republish admission procedure after current reader partition completes, then commit checked sources separately from regeneration. Execute required gates and complete new exhaustive independent partitions; no AP09.8 closure or parity masswork yet.",
@@ -14648,12 +14731,53 @@
     "currentMutationLog": "/tmp/kubeclaw-a98-current-config-mutations.log",
     "currentMutationSnapshot": "b35311ad8db0946f44286b4a26a99e8676f44de4",
     "agents": [
-      "/root/a98_config_writer",
-      "/root/a98_dependency_writer_round3"
+      "/root/a98_reader_publication_round4",
+      "/root/a98_reference_writer"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
-    "currentMutationState": "running-confirmed-handle-35062"
+    "currentMutationState": "running-confirmed-handle-35062",
+    "consumerWriterFinished": {
+      "agent": "/root/a98_config_writer",
+      "paths": [
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/docs-runtime-consumer-contracts.mjs",
+        "docs/site/reference/configuration-precedence.md"
+      ],
+      "finalSourceDigests": {
+        "scripts/docs-configuration-inventory.mjs": "39e20ce4283d7bdfc4babd0483cf1049d29f608b34740bb6841105ccf9066271",
+        "scripts/check-configuration-drift-mutations.mjs": "8752bca6c0c540eddd52fc39c868f9a531165814ea9bf7b669dfc1c0915830b1",
+        "scripts/docs-runtime-consumer-contracts.mjs": "dc7c44aeb418414f6706255218002efabf967000ece42a8473595c7b350c33b5",
+        "docs/site/reference/configuration-precedence.md": "cfc6f793308fd0a2c13ac91a24bc568480b6109867dddbf067b70b0760a88749"
+      },
+      "observedNames": 435,
+      "observedReaderPairs": 476,
+      "observedProducerPairs": 184,
+      "unqualifiedPairs": 0,
+      "accepted": false
+    },
+    "dependencyWriterFinished": {
+      "agent": "/root/a98_dependency_writer_round3",
+      "files": [
+        "scripts/docs-publication.mjs",
+        "scripts/plugin-source-closure.mjs",
+        "scripts/plugin-dependency-boundaries.mjs",
+        "scripts/plugin-schema-dependencies.mjs",
+        "scripts/tests/plugin-source-closure.test.mjs",
+        "scripts/tests/plugin-dependency-boundaries.test.mjs",
+        "scripts/tests/plugin-schema-dependencies.test.mjs"
+      ],
+      "authorReportedTests": {
+        "passed": 30,
+        "failed": 0
+      },
+      "observedPackages": 51,
+      "observedRegistrations": 70,
+      "unresolvedDiagnostics": 0,
+      "accepted": false,
+      "publicationCheck": "expected stale operator matrix before shared regeneration; earlier authored language finding corrected by its owner"
+    }
   },
   "productBoundaries": [
     {
