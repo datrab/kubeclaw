@@ -930,11 +930,11 @@ if (helm.error?.code !== 'ENOENT') {
     const configMap = loadAll(rendered).find(object => object?.kind === 'ConfigMap' && object.data?.['openclaw.json']);
     assert.ok(configMap, 'the rendered gateway configuration must be present');
     const defaults = JSON.parse(configMap.data['openclaw.json']).agents.defaults;
-    const models = defaults.model.primary === 'openai/gpt-6-astra'
-      ? ['openai/gpt-6-astra', 'openai/gpt-5.6-sol', 'openai/gpt-5.5']
+    const models = ['openai/gpt-6-astra', 'openai/gpt-6.1-sol'].includes(defaults.model.primary)
+      ? ['openai/gpt-6-astra', 'openai/gpt-6.1-sol', 'openai/gpt-5.6-sol', 'openai/gpt-5.5']
       : ['openai/gpt-5.6-sol', 'openai/gpt-5.5'];
     assert.deepEqual(defaults.modelPolicy.allow, models,
-      'fresh configs must retain approved models and allow Astra for its managed primary');
+      'fresh configs must retain approved models and allow Astra and 6.1 Sol for their managed primaries');
     for (const model of [defaults.model.primary, ...defaults.model.fallbacks]) {
       assert.ok(models.includes(model), 'every primary and fallback must be permitted');
     }

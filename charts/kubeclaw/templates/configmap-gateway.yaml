@@ -95,7 +95,7 @@ data:
           },
           "modelPolicy": {
             "allow": [
-              {{- if eq .Values.agent.model.primary "openai/gpt-6-astra" }}
+              {{- if has .Values.agent.model.primary (list "openai/gpt-6-astra" "openai/gpt-6.1-sol") }}
               "openai/gpt-6-astra",
               "openai/gpt-6.1-sol",
               {{- end }}
@@ -104,7 +104,7 @@ data:
             ]
           },
           "models": {
-            {{- if eq .Values.agent.model.primary "openai/gpt-6-astra" }}
+            {{- if has .Values.agent.model.primary (list "openai/gpt-6-astra" "openai/gpt-6.1-sol") }}
             "openai/gpt-6.1-sol": {
               "agentRuntime": {
                 "id": "codex"

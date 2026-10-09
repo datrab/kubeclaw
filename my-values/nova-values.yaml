@@ -70,7 +70,7 @@ commands:
 agent:
   project: "clawdeck"
   model:
-    primary: "openai/gpt-6-astra"
+    primary: "openai/gpt-6.1-sol"
     fallbacks: ["openai/gpt-5.5"]
   git:
     enabled: true
