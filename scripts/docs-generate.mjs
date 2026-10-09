@@ -131,6 +131,18 @@ function stableWriteMap() {
 }
 
 function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
+  const statusDefinitions = {
+    'qualified-runtime-authority': 'A field-specific explanation and its implementation evidence are recorded. Read the row for omission, empty-value and failure behavior; this label does not mean a live run passed.',
+    'schema-and-runtime-authority': 'The accepted shape comes from the schema, and the row identifies the runtime consumer. The schema alone does not prove that a default is applied.',
+    'structural-container': 'This row describes schema structure. Child fields and collection rules determine the accepted configuration; the label does not establish a runtime default.',
+    'schema-meaning-blocker': 'The accepted shape is known, but the field meaning or consumer evidence is incomplete. Do not use the row as a completed operator contract.',
+    'runtime-meaning-blocker': 'The current implementation is not sufficient evidence for a complete field contract. Use the stated safe boundary and required follow-up.',
+  };
+  const observedStatuses = [...new Set(configurationSchemas.files.flatMap((file) => file.fields.map((field) => field.meaning.status)))].sort();
+  for (const status of observedStatuses) {
+    if (!statusDefinitions[status]) throw new Error(`Configuration meaning status has no reader definition: ${status}`);
+  }
+  const statusLegend = table(['Meaning status', 'What the evidence establishes'], observedStatuses.map((status) => [`\`${status}\``, statusDefinitions[status]]));
   const displayValue = (value) => value === '<none>' || typeof value === 'string'
     ? String(value)
     : JSON.stringify(value);
@@ -154,7 +166,7 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
     return `${base}<br>Not a completed operator option. Authority owner: ${field.meaning.blockerOwner}. Completion requires qualified full-path meaning and runtime-consumer evidence.`;
   };
   const sections = configurationSchemas.files.map((file) => `<details>\n<summary><code>${file.path}</code> — ${file.fields.length} recursive schema facts</summary>\n\nSource evidence:\n\n${sourceRangeLinks(file.path)}\n\n${table(
-    ['Field', 'Meaning', 'Type', 'Required', 'Default', 'Constraints and branches', 'Owner and consumer evidence'],
+    ['Field', 'Meaning', 'Type', 'Required', 'Schema default', 'Constraints and branches', 'Owner and consumer evidence'],
     file.fields.map((field) => [
       `\`${field.path}\``,
       schemaMeaning(field),
@@ -189,6 +201,14 @@ Last verified: generated from the current source inventory
 Use this page to find the exact field contract before you change plugin or platform configuration. The generator follows every \`configSchema\` registration in plugin manifests. It does not assume that a file named \`config.schema.json\` is the complete set.
 
 ${generatedNotice(['docs/generated/inventory/configuration-schemas.json'])}
+## How To Read Field Evidence
+
+${statusLegend}
+
+The **Schema default** column reports the schema declaration. It is not a universal runtime default. Test-provider configuration can resolve schema defaults before validation; stage, adapter and observer registration validates supplied values without that resolution. A consumer can apply its own fallback. Read the field's implementation evidence before relying on omission or an empty value.
+
+Authority: [registration validation](${pinnedSourceUrl('skills/common/plugin-runtime/foundation/registry/configuration.ts', 42, 78)}) and [provider default resolution](${pinnedSourceUrl('skills/common/plugin-runtime/foundation/registry/configuration.ts', 102, 120)}). No live execution is established by this source inspection.
+
 ## Registered Schemas
 
 ${sections}

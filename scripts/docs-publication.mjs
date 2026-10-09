@@ -7,6 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
+import { pluginSourceClosure } from './plugin-source-closure.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
@@ -403,18 +404,34 @@ function schemaPropertyPaths(plugin, registration) {
 }
 
 function registrationDependencyFacts(plugin, registration, paths) {
-  const endpointPaths = paths.filter((field) => /(?:^|\.)(?:endpoint|endpointName|url|baseUrl|origin|allowedOrigins|allowedHostSuffixes|allowedPorts|host|port|address)$/iu.test(field));
-  const secretPaths = paths.filter((field) => /(?:^|\.)(?:existingSecret(?:Key)?|secret(?:Name|Ref|Key)?|token(?:Path|Ref)?|password(?:Path|Ref)?|credential(?:Path|Ref)?|apiKey(?:Path|Ref)?|caPath|certPath|keyPath)$/iu.test(field));
+  const fieldWords = (field) => field.replace(/([a-z0-9])([A-Z])/gu, '$1.$2').toLowerCase().split(/[.\[\]_-]+/u);
+  const endpointPaths = paths.filter((field) => fieldWords(field).some((word) => ['endpoint', 'url', 'origin', 'origins', 'host', 'hosts', 'ports', 'port', 'address'].includes(word)));
+  const sensitiveHints = new Set(Object.entries(plugin.manifest.uiHints ?? {}).filter(([, hint]) => hint.sensitive).map(([field]) => field));
+  const secretPaths = paths.filter((field) => sensitiveHints.has(field)
+    || fieldWords(field).some((word) => ['secret', 'secrets', 'token', 'password', 'credential', 'credentials'].includes(word))
+    || /(?:apiKey|caPath|certPath|keyPath)$/u.test(field));
   const required = [...new Set(registration.requiredCapabilities ?? [])].sort();
   const provided = [...new Set(registration.providesCapabilities ?? [])].sort();
   const modulePath = registration.module ? path.join(plugin.directory, registration.module) : null;
   const moduleIsFile = modulePath && fs.existsSync(modulePath) && fs.statSync(modulePath).isFile();
-  const implementation = moduleIsFile ? fs.readFileSync(modulePath, 'utf8') : '';
-  const implementationEvidence = moduleIsFile ? `\`${rel(modulePath)}\`` : `manifest \`${rel(plugin.file)}\``;
+  const closure = pluginSourceClosure(moduleIsFile ? modulePath : null, root);
+  const implementation = [...closure.sources.values()].join('\n');
+  const dependencySources = [...closure.sources.entries()].filter(([, text]) => /(?:\bredis\b|ioredis|createRedisClient|fetch\s*\(|https?:\/\/|tailscale|BuildKit)/iu.test(text));
+  const implementationEvidence = dependencySources.length
+    ? dependencySources.map(([file, text]) => {
+      const signal = /(?:\bredis\b|ioredis|createRedisClient|fetch\s*\(|https?:\/\/|tailscale|BuildKit)/iu.exec(text);
+      const line = text.slice(0, signal.index).split('\n').length;
+      return `[${rel(file)}](${sourceBase}/${rel(file)}#L${line}-L${line})`;
+    }).join(', ')
+    : moduleIsFile ? `\`${rel(modulePath)}\` and its ${closure.sources.size} statically resolved source files` : `manifest \`${rel(plugin.file)}\``;
+  const environmentBindings = [...implementation.matchAll(/configuredValue\(config,\s*env,\s*['"]([^'"]+)['"],\s*['"]([^'"]+)['"]\)/gu)]
+    .map((match) => ({ field: match[1], environment: match[2] }));
   const identity = `${plugin.manifest.id} ${registration.id}`.toLowerCase();
   const externalCapabilities = required.filter((capability) => /(?:network|browser|kubernetes|container\.build|runtime\.dispatch|operator\.request|secrets\.read)/u.test(capability));
   let service = null;
-  if (/redis/u.test(identity) || /\bredis(?:s)?:\/\//iu.test(implementation)) service = 'Redis transport or telemetry service';
+  if (/redis/u.test(identity) || /\bredis(?:s)?:\/\//iu.test(implementation)
+    || closure.externalImports.some((name) => ['ioredis', 'redis', '@redis/client'].includes(name))
+    || /\bcreateRedisClient\s*\(/u.test(implementation)) service = 'Redis transport or telemetry service';
   else if (/runtime-dispatch/u.test(identity)) service = 'configured runtime or OpenClaw dispatch target';
   else if (/remote-test-gate/u.test(identity)) service = 'Buster remote-plan service';
   else if (/transport/u.test(identity)) service = 'configured HTTP transport receiver';
@@ -427,19 +444,20 @@ function registrationDependencyFacts(plugin, registration, paths) {
   else if (/prism/u.test(identity) && /fetch\s*\(/u.test(implementation)) service = 'Prism control service';
 
   const noExternalProof = !service && endpointPaths.length === 0 && secretPaths.length === 0 && externalCapabilities.length === 0
+    && closure.unresolved.length === 0
     && !/(?:fetch\s*\(|https?:\/\/|redis(?:s)?:\/\/|tailscale|BuildKit)/iu.test(implementation);
   const serviceText = service
     ? `${service}; authority: ${endpointPaths.length ? endpointPaths.map((field) => `\`${field}\``).join(', ') : required.length ? `capability ${required.join(', ')}` : implementationEvidence}`
     : noExternalProof
       ? `Not applicable: no endpoint, Secret, external capability, or network client is declared or detected in ${implementationEvidence}.`
-      : `Blocked external identity: ${implementationEvidence} contains an external signal without a declared endpoint authority. Source owner: \`${rel(plugin.file)}\`. Closure: add a schema field or manifest dependency declaration.`;
+      : `Blocked external identity: ${implementationEvidence} contains an external signal or unresolved runtime import (${closure.unresolved.map((item) => item.replace(root + path.sep, '')).join(', ') || 'endpoint authority missing'}). Source owner: \`${rel(plugin.file)}\`. Resolve the implementation import and declare its dependency authority.`;
   const endpoint = endpointPaths.length
-    ? `${endpointPaths.map((field) => `\`${field}\``).join('<br>')}<br>Runtime supplies the concrete instance.`
+    ? `${endpointPaths.map((field) => `\`${field}\`${environmentBindings.some((binding) => binding.field === field) ? ` (environment fallback: \`${environmentBindings.find((binding) => binding.field === field).environment}\`)` : ''}`).join('<br>')}<br>Runtime supplies the concrete instance. Implementation authority: ${implementationEvidence}.`
     : service
       ? `Capability or implementation authority: ${implementationEvidence}; no independent endpoint knob is declared.`
       : 'Not applicable: no endpoint authority is required by this registration.';
   const secret = secretPaths.length
-    ? `${secretPaths.map((field) => `\`${field}\``).join('<br>')}<br>${required.includes('secrets.read') ? 'Resolved through the secrets.read capability boundary.' : 'Supplied through the schema-declared path/reference; the plugin does not own the backing store.'}`
+    ? `${secretPaths.map((field) => `\`${field}\`${environmentBindings.some((binding) => binding.field === field) ? ` (environment fallback: \`${environmentBindings.find((binding) => binding.field === field).environment}\`)` : ''}`).join('<br>')}<br>${required.includes('secrets.read') ? 'Resolved through the secrets.read capability boundary.' : plugin.openclaw ? 'The host supplies sensitive configuration or the named process environment. The host deployment owns credential projection and rotation; never publish the value.' : 'Supplied through the schema-declared value, path, or reference; inspect the linked consumer to identify the credential owner.'}`
     : required.includes('secrets.read')
       ? 'The resolved execution plan supplies Secret authority through secrets.read; no plugin-local Secret field is declared.'
       : 'Not applicable: no Secret field or secrets.read capability is declared.';
@@ -449,7 +467,7 @@ function registrationDependencyFacts(plugin, registration, paths) {
       ? `Not applicable to an external service; data remains with the declared artifact, state, repository, or host capability owner.`
       : `Blocked until the external authority is declared; source owner is \`${rel(plugin.file)}\`.`;
   const reachability = service
-    ? `${implementationEvidence} performs or delegates the call. A successful capability/provider result proves reachability; package discovery alone does not.`
+    ? `${implementationEvidence} performs or delegates the call. Require a bounded successful operation against the selected endpoint; package discovery or configuration validation does not prove reachability. A connection failure is not a successful readiness observation.`
     : noExternalProof
       ? 'Not applicable: this registration has no source-backed external reachability requirement.'
       : `Blocked: add a bounded preflight for the declared endpoint after the authority gap closes.`;
@@ -495,6 +513,10 @@ function operatorPluginMatrix() {
   }
   for (const requiredSample of ['redis-transport', 'runtime-dispatch', 'remote-test-gate', 'tailscale-exposure', 'network-http']) {
     if (!matrixFacts.includes(requiredSample)) throw new Error(`operator plugin matrix lacks required dependency sample ${requiredSample}`);
+  }
+  const observerRedisRow = dependencyRows.find((row) => row.includes('kubeclaw-agent-observer:kubeclaw-agent-observer'));
+  if (!observerRedisRow || !['Redis transport', '`redisHost`', '`redisPort`', '`redisPassword`', '`REDIS_PASSWORD`'].every((fact) => observerRedisRow.includes(fact))) {
+    throw new Error('OpenClaw observer dependency row lost its transitive Redis client or credential authority');
   }
   return [
     operatorMatrixStart,

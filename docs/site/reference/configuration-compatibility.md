@@ -109,6 +109,8 @@ manifests to declare compatibility.
 >
 > **Test evidence:** [historical worker fixture test](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/tests/worker-service.test.mts#L120-L151)
 >
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node --test skills/prism/tests/worker-service.test.mts` against implementation revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`: six tests passed, exit zero. These tests establish the stated local rejection behavior; they do not establish a supported live upgrade or rollback pair.
+>
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 >
 > **Limit:** Source compatibility does not prove that an older deployment image, external provider, or off-host backup remains available.

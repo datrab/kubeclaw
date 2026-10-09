@@ -180,6 +180,8 @@ existing run. Use the original bytes and packages, or start a new run.
 >
 > **Test evidence:** [ordinary and repair graph checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-plugin-system-v2-phase6.mjs#L75-L123); [execution and activation rejection checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-plugin-system-v2-phase6.mjs#L124-L152)
 >
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node tests/verification/contracts/check-plugin-system-v2-phase6.mjs` against implementation revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`: exit one. The local Alpine environment provides BusyBox `/usr/bin/flock`, which rejects the required `--timeout` option. This run does not establish successful pipeline execution or file-lock behavior. Use a host with the required util-linux locking command and repeat the complete check.
+>
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 >
 > **Limit:** A valid graph proves neither that an external effect succeeds nor that the selected stages provide sufficient product coverage.

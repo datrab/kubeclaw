@@ -80,6 +80,8 @@ retrying. A timeout does not prove that an external operation did not happen.
 >
 > **Test evidence:** [project graph drift rejection](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/reliability/project-recovery-version.test.mjs#L18-L31); [runtime isolation drift rejection](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/reliability/isolation-session.test.mjs#L101-L114)
 >
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node --test tests/verification/reliability/project-recovery-version.test.mjs tests/verification/reliability/isolation-session.test.mjs` against implementation revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`: 15 of 18 tests passed and three failed, exit one. The local host lacks the built native `plugin-sandbox` executable, and BusyBox `/usr/bin/flock` rejects `--timeout`. Do not treat this run as successful isolation or file-lock qualification. Build the native sandbox and provide util-linux locking before repeating the complete check.
+>
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 >
 > **Limit:** Local checks cannot choose a maintenance window or prove that an external dependency honors a credential overlap period.

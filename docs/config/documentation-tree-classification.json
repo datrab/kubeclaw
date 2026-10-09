@@ -23401,6 +23401,14 @@
       "originalPath": "docs/status/open-issues.json",
       "expectedPath": "docs/status/open-issues.json",
       "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/blueprint/documentation-completion-matrix.json",
+      "class": "internal-documentation-input",
+      "purpose": "Requirement planning, independent audit findings and continuation state; no acceptance implied.",
+      "originalPath": "docs/blueprint/documentation-completion-matrix.json",
+      "expectedPath": "docs/blueprint/documentation-completion-matrix.json",
+      "introducedAfterBaseline": true
     }
   ]
 }

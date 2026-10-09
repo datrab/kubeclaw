@@ -176,6 +176,8 @@ within its deadline. Check these dependencies before dispatch.
 >
 > **Test evidence:** [platform loading, default, bounds, and authority rejection](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L12-L63)
 >
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node tests/verification/contracts/check-plugin-system-v2-platform-config.mjs` against implementation revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`: exit zero and `ok: true`. This is a local configuration contract check; it does not establish deployment readiness.
+>
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 >
 > **Limit:** These sources validate local configuration and package authority. They do not prove the availability of an external service.

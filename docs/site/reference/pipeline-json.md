@@ -228,6 +228,8 @@ resolver policy; do not edit a resolved plan digest.
 >
 > **Test evidence:** [coupled pipeline scope and lint loading](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-pipeline-test-suite-resolver.mts#L155-L209); [resolution, expansion, bounds, and determinism](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-pipeline-test-suite-resolver.mts#L219-L260)
 >
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node tests/verification/contracts/check-pipeline-test-suite-resolver.mts` against implementation revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`: exit zero and `ok: true` for ten nodes and two links. This is local resolution evidence; it does not establish provider execution or live service reachability.
+>
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 >
 > **Limit:** Project setup and resolution validate declared local contracts. They do not prove that a remote provider ran or that the selected checks are sufficient unless the independent coverage policy requires them.

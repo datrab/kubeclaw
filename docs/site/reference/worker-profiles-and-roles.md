@@ -206,6 +206,8 @@ agreement; do not rewrite a persisted attempt or digest.
 >
 > **Test evidence:** [worker contract check](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-pipeline-worker-core-contracts.mts#L1-L45)
 >
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node tests/verification/contracts/check-pipeline-worker-core-contracts.mts` against implementation revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`: exit zero and `ok: true` for twelve contracts. This is contract evidence; it does not establish a deployed worker or host isolation.
+>
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 >
 > **Limit:** Contract validation and local cgroup checks do not establish cluster scheduling capacity or external service availability.
