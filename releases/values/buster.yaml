@@ -38,13 +38,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-37928264333-1/buster-f25697195bb1b18a5a0f69770deca6cc52f88d61.tgz
-  expectedCommit: f25697195bb1b18a5a0f69770deca6cc52f88d61
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-37929589807-1/buster-dd489bb5d171ada4b9d5bdb5d35d51036796bf29.tgz
+  expectedCommit: dd489bb5d171ada4b9d5bdb5d35d51036796bf29
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 647c4d3382b9aaecd42faf7e24ef09384d2e80efc50b835f47937f7d36a6f29b
+  sha256: cb56a73e00358a383c507f0e3cbbff6d246ea6b4937616d2513024fbfb54f32b
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-buster
