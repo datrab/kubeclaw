@@ -56,19 +56,33 @@ credential.
 
 ### 1. Capture the cluster-side inventory
 
+Record every namespace that the selected services use. Include the bound
+application and Prism namespaces, and each infrastructure namespace supplied
+by its owner. Run the block below once per recorded namespace. Replace
+`<namespace>` with that namespace; keep the bound cluster context unchanged.
+Use a separate output prefix for each namespace. An access failure leaves that
+service's budget incomplete and requires its owner to supply the measurement.
+
+Create the evidence directory once before the first capture:
+
 ```bash
-assert_cluster_binding
 umask 077
 mkdir "<evidence-dir>"
+```
+
+For each recorded namespace, capture its inventory:
+
+```bash
+assert_cluster_binding
 kubectl --context "<context>" -n "<namespace>" get pvc \
   -o custom-columns='NAME:.metadata.name,STATUS:.status.phase,CLASS:.spec.storageClassName,REQUEST:.spec.resources.requests.storage,CAPACITY:.status.capacity.storage' \
-  > "<evidence-dir>/pvc.txt"
+  > "<evidence-dir>/<namespace>-pvc.txt"
 kubectl --context "<context>" -n "<namespace>" get pods -o wide \
-  > "<evidence-dir>/pods.txt"
+  > "<evidence-dir>/<namespace>-pods.txt"
 kubectl --context "<context>" -n "<namespace>" get events \
-  --sort-by=.metadata.creationTimestamp > "<evidence-dir>/events.txt"
+  --sort-by=.metadata.creationTimestamp > "<evidence-dir>/<namespace>-events.txt"
 kubectl --context "<context>" -n "<namespace>" get cronjob,job \
-  > "<evidence-dir>/jobs.txt"
+  > "<evidence-dir>/<namespace>-jobs.txt"
 ```
 
 Expected observation: every selected PVC is `Bound`; its class, request, and
@@ -81,7 +95,7 @@ If Metrics Server is installed, capture workload usage separately:
 ```bash
 assert_cluster_binding
 kubectl --context "<context>" -n "<namespace>" top pods \
-  > "<evidence-dir>/pod-usage.txt"
+  > "<evidence-dir>/<namespace>-pod-usage.txt"
 ```
 
 If this command reports that metrics are unavailable, record that observation.

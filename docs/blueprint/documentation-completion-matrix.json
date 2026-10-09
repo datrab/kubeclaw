@@ -14027,6 +14027,37 @@
         "A98-13"
       ],
       "description": "Diagnosis calls restricted CLI normal authenticated path despite unsigned/self-asserted issuer signal; distinguish access restriction from envelope authentication."
+    },
+    {
+      "id": "A98-R3-REPUBLISH-ADMISSION-PROCEDURE",
+      "reportedAtRevision": "10e95ee97567cd42357e95d2a443aee4732b359c with authored page corrections",
+      "reportedBy": "/root/a98_reader_publication_round3",
+      "state": "corrected-pending-new-full-partition-independent-review",
+      "pages": [
+        "docs/site/reference/project-pipeline-publication.md"
+      ],
+      "description": "Bounded republish requires exact intended immutable-member verification before apply but currently provides no concrete command to derive publisher bytes/generation from trusted authoring and compare them. Root preparing and actually testing a read-only admission procedure outside repo; not yet integrated or accepted.",
+      "correctionAuthor": "/root"
+    },
+    {
+      "id": "A98-R3-PRISM-DIRECTION-LOST-KEY",
+      "reportedAtRevision": "10e95ee97567cd42357e95d2a443aee4732b359c with authored page corrections",
+      "reportedBy": "/root/a98_reader_publication_round3",
+      "state": "corrected-pending-new-full-partition-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "catalogueWorkPackage": "AP09.4",
+      "acceptanceIds": [
+        "A98-02",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Direction selection/feedback idempotency keys exist only in React useRef, unlike durable browser round/revision keys. Reload after uncertain response loses key; retry with fresh key can create another preference event. Document safe-stop/reconciliation owner and exact replay limits; no claim of generic browser recovery.",
+      "correctionAuthor": "/root"
     }
   ],
   "checks": [
@@ -14168,6 +14199,109 @@
       "logSha256": "69f6a9d2271ac4e6c97cdd9d1f2341823853b28f74590530871afd109791688e",
       "sourceState": "integrated-uncommitted-corrections-on-68fec9f604a116d67fde83206fcb4016fdb503e3",
       "scope": "local fixture/contract evidence; not independent acceptance or live validation"
+    },
+    {
+      "command": "Seven actual CLI publication corruption cases",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-root-corruption-recheck.log",
+      "logSha256": "0d2cb0ce90103b44a6fd996bf8802788904a01adfc16a45f1009b9000c21e5a1",
+      "sourceState": "10e95ee97567cd42357e95d2a443aee4732b359c with current authored page corrections",
+      "authorIdentity": "/root",
+      "authoredPageDigests": {
+        "docs/site/reference/project-pipeline-publication.md": "553ade31305c73a3ced6cb805f1837be31e51979ff74749192635ed825bedcdf",
+        "docs/site/use/prism-studio.md": "92e212eab5177513f25622367f272d9af71afa4305a0769b55e09d5d3fbc2565",
+        "docs/site/use/capacity.md": "39aae50f9105bf0f6ce8d4704dc098cc551d063a3af146403e5e5432769d1e06"
+      },
+      "scope": "Seven passed: four supported publication/recovery cases and three rejected corruption/layout cases with preserved committed pointers; no live service or provider executed. Integration verification only; no independent package acceptance."
+    },
+    {
+      "command": "npm run verify:prism:deploy-script",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-root-prism-recheck.log",
+      "logSha256": "bd217d905375388f6949b6ebd4965a0978ae3217480f3c3fcfb46401e72eab13",
+      "sourceState": "10e95ee97567cd42357e95d2a443aee4732b359c with current authored page corrections",
+      "authorIdentity": "/root",
+      "authoredPageDigests": {
+        "docs/site/reference/project-pipeline-publication.md": "553ade31305c73a3ced6cb805f1837be31e51979ff74749192635ed825bedcdf",
+        "docs/site/use/prism-studio.md": "92e212eab5177513f25622367f272d9af71afa4305a0769b55e09d5d3fbc2565",
+        "docs/site/use/capacity.md": "39aae50f9105bf0f6ce8d4704dc098cc551d063a3af146403e5e5432769d1e06"
+      },
+      "scope": "Workflow YAML, deploy command contract and Bash syntax passed; no deployment demonstrated. Integration verification only; no independent package acceptance."
+    },
+    {
+      "command": "node --test skills/prism/tests/control-server-config.test.mts",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-root-control-recheck.log",
+      "logSha256": "4baa31ee8f423d6454a2d8b3ff6fa43a2de6b882f89ed22d6cf78e300c809efa",
+      "sourceState": "10e95ee97567cd42357e95d2a443aee4732b359c with current authored page corrections",
+      "authorIdentity": "/root",
+      "authoredPageDigests": {
+        "docs/site/reference/project-pipeline-publication.md": "553ade31305c73a3ced6cb805f1837be31e51979ff74749192635ed825bedcdf",
+        "docs/site/use/prism-studio.md": "92e212eab5177513f25622367f272d9af71afa4305a0769b55e09d5d3fbc2565",
+        "docs/site/use/capacity.md": "39aae50f9105bf0f6ce8d4704dc098cc551d063a3af146403e5e5432769d1e06"
+      },
+      "scope": "Three actual local configuration tests passed. Integration verification only; no independent package acceptance."
+    },
+    {
+      "command": "npm run docs:drift:config:mutations",
+      "sessionId": 17726,
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-config-mutations.log",
+      "logSha256": "c0b24d1377e6e6d67c8da99156550b073645e178341553a079017d9d067803ca",
+      "sourceState": "c8987b18b450bc27571d5037cb6ce3fb26e0cbd0 original frozen mutation snapshot",
+      "authorIdentity": "/root",
+      "scope": "Full original configuration drift suite observed through final PASS; this does not validate later consumer/dependency source corrections."
+    },
+    {
+      "command": "seven actual CLI republish admission fixtures",
+      "sessionId": 41976,
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-republish-admission-fixtures.log",
+      "logSha256": "7a160c4069fea0151ec01c2cfba0a955c59e0d5ac7a309b0a5a3570010c516ad",
+      "sourceState": "10e95ee97567cd42357e95d2a443aee4732b359c product CLI and /tmp/kubeclaw-a98-republish-preflight.mjs proposal",
+      "scope": "Actual --print exact-byte/generation admission proof in isolated fixtures: known valid/malformed pipeline/pointer/missing-pointer permitted; malformed progress/corrupt immutable/symlink rejected. Proposal not yet integrated or independently accepted."
+    },
+    {
+      "command": "six current publication Bash blocks",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-six-publication-blocks.log",
+      "logSha256": "b4eaca11e82be8af0d2f45b5fbcac9ff3b233f653252a4ea455e48bdee4e64fc",
+      "sourceState": "10e95ee97567cd42357e95d2a443aee4732b359c with fresh authored corrections",
+      "authoredPageDigests": {
+        "docs/site/reference/project-pipeline-publication.md": "bc516af36196263cd0c1d4673a4ccd44159c8c6d61d49f98f11f372791c13693",
+        "docs/site/use/prism-studio.md": "a388f68820a6d0262c3d0d2c621d8c18297ea4787ff5eba2568948640fd1c6e2",
+        "docs/site/use/capacity.md": "39aae50f9105bf0f6ce8d4704dc098cc551d063a3af146403e5e5432769d1e06"
+      },
+      "scope": "All six current blocks executed unchanged in the supported branch sequence, read-only admission before disposable cleanup; strict published and retained pairs pass; no live provider.",
+      "authorIdentity": "/root"
+    },
+    {
+      "command": "scoped authored language and frozen links",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-root-authored-check.log",
+      "logSha256": "62fd6a08ad3d0879d3cbcc734d9ef327a0de3c784a40515aa4a81fb0766c809a",
+      "sourceState": "10e95ee97567cd42357e95d2a443aee4732b359c with fresh authored corrections",
+      "authoredPageDigests": {
+        "docs/site/reference/project-pipeline-publication.md": "bc516af36196263cd0c1d4673a4ccd44159c8c6d61d49f98f11f372791c13693",
+        "docs/site/use/prism-studio.md": "a388f68820a6d0262c3d0d2c621d8c18297ea4787ff5eba2568948640fd1c6e2",
+        "docs/site/use/capacity.md": "39aae50f9105bf0f6ce8d4704dc098cc551d063a3af146403e5e5432769d1e06"
+      },
+      "scope": "Three pages pass unchanged publication controlled-language function;104 pinned links match41 files and valid ranges. No formal STE certification or independent semantic acceptance.",
+      "authorIdentity": "/root"
     }
   ],
   "reviewAssignments": [
@@ -14451,18 +14585,63 @@
         "A98-14": "UNPROVEN"
       },
       "scopeLimit": "All30 requirements and14 gates have individual dispositions. Large generated/implementation surfaces not exhaustively certified; UNPROVEN is not PASS. No package closure or Astra acceptance."
+    },
+    {
+      "agent": "/root/a98_reader_publication_round3",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "reviewedRevision": "10e95ee97567cd42357e95d2a443aee4732b359c",
+      "authoredPageDigests": {
+        "docs/site/reference/project-pipeline-publication.md": "553ade31305c73a3ced6cb805f1837be31e51979ff74749192635ed825bedcdf",
+        "docs/site/use/prism-studio.md": "92e212eab5177513f25622367f272d9af71afa4305a0769b55e09d5d3fbc2565",
+        "docs/site/use/capacity.md": "39aae50f9105bf0f6ce8d4704dc098cc551d063a3af146403e5e5432769d1e06"
+      },
+      "state": "completed-rejection",
+      "scope": [
+        "docs/site/reference/project-pipeline-publication.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/capacity.md"
+      ],
+      "scopeLimit": "Complete reader-task partition for three authored pages; not whole-package acceptance. Broad gate coverage outside these pages remains unproven.",
+      "requirementVerdicts": {
+        "CFG-017": "FAIL",
+        "OPR-009": "PASS-documentation-partition-only",
+        "OPR-010": "FAIL"
+      },
+      "gateVerdicts": {
+        "A98-01": "UNPROVEN",
+        "A98-02": "FAIL-partition",
+        "A98-03": "PASS-Prism-prerequisite-partition-only",
+        "A98-04": "PASS-Prism-readiness-partition-only",
+        "A98-05": "PASS-Prism-signal-partition-only",
+        "A98-06": "FAIL-Prism-recovery-partition",
+        "A98-07": "UNPROVEN",
+        "A98-08": "UNPROVEN",
+        "A98-09": "UNPROVEN",
+        "A98-10": "PASS-publication-authority-partition-only",
+        "A98-11": "PASS-authored-precedence-partition-only",
+        "A98-12": "FAIL-Prism-partition",
+        "A98-13": "FAIL-partition",
+        "A98-14": "UNPROVEN"
+      },
+      "report": "/tmp/a98-round3-reader-review.md",
+      "reportSha256": "0b7b31748db7a9cf12554090dba2191e396e7b3abf85fe994098cf8811290cd8",
+      "catalogueMappingNote": "OPR-010 belongs to AP09.4, not AP09.8 thirty-ID count, but Prism is expressly required by A98-12 and applicable procedural gates."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 third parallel correction round; all package acceptance remains open",
+    "stage": "AP09.8 full consumer/dependency corrections and corrected three-page reader partition; all package acceptance remains open",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish full consumer/dependency/Prism/publication corrections, integrate sources and generators separately, run required gates to terminal and new exhaustive fresh-context independent reviews. No parity masswork or AP09.8 closure yet.",
+    "next": "Finish consumer and dependency writer scopes. Integrate tested read-only republish admission procedure after current reader partition completes, then commit checked sources separately from regeneration. Execute required gates and complete new exhaustive independent partitions; no AP09.8 closure or parity masswork yet.",
     "environmentConstraints": [],
     "qualifiedEnvironment": "Task-local Alpine packages under /tmp: GNU flock 2.42.3, GNU tar 1.35, coreutils 9.11 and PRoot bindings; native plugin-sandbox built locally. No target-image or live-cluster validation claimed.",
     "agentsCompleted": [
       "/root/a98_operator_writer",
-      "/root/a98_config_writer",
       "/root/a98_reference_writer"
     ],
     "currentMutationSession": 35062,
@@ -14470,9 +14649,11 @@
     "currentMutationSnapshot": "b35311ad8db0946f44286b4a26a99e8676f44de4",
     "agents": [
       "/root/a98_config_writer",
-      "/root/a98_dependency_writer_round3",
-      "/root/a98_reference_writer"
-    ]
+      "/root/a98_dependency_writer_round3"
+    ],
+    "baselineMutationState": "terminal-pass-old-source-snapshot",
+    "baselineMutationExitCode": 0,
+    "currentMutationState": "running-confirmed-handle-35062"
   },
   "productBoundaries": [
     {
