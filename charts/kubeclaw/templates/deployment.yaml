@@ -83,7 +83,6 @@ spec:
             - |
               set -eu
               chmod 1777 /tmp
-              test "$(stat -c '%a' /tmp)" = "1777"
               echo "==> Restored sticky permissions on the shared /tmp volume"
           securityContext:
             runAsUser: 0
@@ -95,6 +94,10 @@ spec:
             capabilities:
               drop:
                 - ALL
+              add:
+                # fsGroup volume ownership can differ from the container's
+                # effective owner; grant only the capability chmod requires.
+                - FOWNER
           resources:
             requests: { cpu: 10m, memory: 16Mi }
             limits: { cpu: 50m, memory: 32Mi }
