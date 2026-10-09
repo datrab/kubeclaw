@@ -65,7 +65,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 231
+          "line": 232
         }
       ]
     },
@@ -122,22 +122,22 @@
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 54
+          "line": 55
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 59
+          "line": 60
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-nova",
-          "line": 76
+          "line": 77
         },
         {
           "key": "existingSecret",
           "value": "nova-archviewer-auth",
-          "line": 92
+          "line": 93
         }
       ]
     },
