@@ -5,7 +5,7 @@ Audience: platform operator, security operator, pipeline operator
 Owner: platform configuration owner
 Evidence: skills/common/plugin-runtime/foundation/config/platform.schema.json; skills/common/plugin-runtime/foundation/registry/activation.ts; skills/common/plugin-runtime/foundation/packages/install.ts
 Applies to: `pipeline-platform.v2` at the recorded source revision
-Last verified: 2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`; no live external plugin activation was executed
+Last verified: 2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`; verification did not include live external plugin activation
 
 ## Purpose
 
@@ -367,4 +367,4 @@ before [atomically publishing the package](https://github.com/datrab/kubeclaw/bl
 while removal accepts only a direct child of the installation root
 ([implementation](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/foundation/packages/install.ts#L220-L234)).
 
-Compilation [prepares and validates the admitted registry](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine.ts#L18-L22), including [enabled module imports](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine-runtime.ts#L29-L41). Run startup [publishes the adapter set only after startup succeeds](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/adapters.ts#L34-L49); the starter [orders dependencies, calls factories and readiness, and rolls back a failure](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/adapter-startup.ts#L25-L61). These sources were inspected at `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`; no live external plugin activation was executed for this page.
+Compilation [prepares and validates the admitted registry](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine.ts#L18-L22), including [enabled module imports](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine-runtime.ts#L29-L41). Run startup [publishes the adapter set only after startup succeeds](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/adapters.ts#L34-L49). The starter [orders dependencies, calls factories and readiness, and rolls back a failure](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/adapter-startup.ts#L25-L61). Source inspection covered revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`. Verification did not include live external plugin activation.

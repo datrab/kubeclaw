@@ -208,7 +208,7 @@ ${statusLegend}
 
 The **Schema default** column reports the schema declaration. It is not a universal runtime default. Test-provider configuration can resolve schema defaults before validation; stage, adapter and observer registration validates supplied values without that resolution. A consumer can apply its own fallback. Read the field's implementation evidence before relying on omission or an empty value.
 
-Authority: [registration validation](${pinnedSourceUrl('skills/common/plugin-runtime/foundation/registry/configuration.ts', 42, 78)}) and [provider default resolution](${pinnedSourceUrl('skills/common/plugin-runtime/foundation/registry/configuration.ts', 102, 120)}). No live execution is established by this source inspection.
+Authority: [registration validation](${pinnedSourceUrl('skills/common/plugin-runtime/foundation/registry/configuration.ts', 42, 78)}) and [provider default resolution](${pinnedSourceUrl('skills/common/plugin-runtime/foundation/registry/configuration.ts', 102, 120)}). These rules apply to configuration validation before execution.
 
 ## Registered Schemas
 

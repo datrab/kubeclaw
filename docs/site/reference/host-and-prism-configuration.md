@@ -209,7 +209,7 @@ See [Configuration precedence](configuration-precedence.md).
 >
 > **Test evidence:** [Prism Control configuration tests](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/tests/control-server-config.test.mts#L1-L58)
 >
-> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node --test skills/prism/tests/control-server-config.test.mts`: three tests passed, exit zero. No cluster or native-worker check was executed for this page.
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node --test skills/prism/tests/control-server-config.test.mts`: three tests passed, exit zero. Verification did not include a cluster or native-worker check.
 >
 > **Revision:** `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
 >

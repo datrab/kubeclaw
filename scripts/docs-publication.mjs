@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { pluginSourceClosure } from './plugin-source-closure.mjs';
+import { stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
@@ -19,13 +20,18 @@ const command = process.argv[2] ?? 'check';
 const errors = [];
 
 function markdownLinkTargets(text) {
-  return [...text.matchAll(/(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g)]
+  return [...stripMarkdownCodeAndRawHtml(text).matchAll(/(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g)]
     .map((match) => match[1]);
 }
 
 if (JSON.stringify(markdownLinkTargets('[valid](target.md) and \\[a-z\\](?:not-a-link)'))
   !== JSON.stringify(['target.md'])) {
   throw new Error('publication link parser must retain valid links and ignore escaped schema regex syntax');
+}
+
+if (JSON.stringify(markdownLinkTargets('[before](before.md)\n```bash\n[[ $NAMESPACE =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]]\n[example](fenced.md)\n```\n`[example](inline.md)`\n[after](after.md)'))
+  !== JSON.stringify(['before.md', 'after.md'])) {
+  throw new Error('publication link parser must ignore code examples and retain surrounding reader links');
 }
 
 function walk(directory) {

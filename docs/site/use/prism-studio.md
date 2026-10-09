@@ -254,7 +254,7 @@ root-managed pool policy. Missing or invalid admission values stop startup.
 > Control [validates its preference and trust boundary](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/control-config.ts#L9-L38) and [captures one startup configuration](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/control-config.ts#L40-L72).
 > Studio [validates its port and Control timeout](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/studio-config.ts#L4-L17).
 > Worker [validates ingress and shutdown bounds](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/worker-config.ts#L1-L38).
-> Native configuration [admits resource and engine identity](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L4-L35), [host scope and authentication](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L38-L47), and [supervisor paths and journal bounds](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L50-L83).
+> Native configuration [admits resource and engine identity](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L4-L35) and [host scope and authentication](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L38-L47). It also validates [supervisor paths and journal bounds](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/config/native-worker.ts#L50-L83).
 
 The following settings are required when their feature is active. They have no
 safe implied identity:
@@ -516,8 +516,8 @@ Liveness only proves that the process can answer.
 The following status map applies to every step below at the recorded revision.
 “Implemented” means that the linked product code provides the operation; it does
 not mean that this deployment exercised it. The failed deploy gate and absent
-runtime selection stop this checkout before the live journey. None of these
-Studio-to-Nova steps was executed live for this page.
+runtime selection stop this checkout before the live journey. Verification did
+not include any live Studio-to-Nova step.
 
 | Step | Implemented operation and expected evidence | Verification boundary |
 | --- | --- | --- |
@@ -958,7 +958,7 @@ revocation or data removal.
 >
 > The bridge [aborts local admission on shutdown and preserves external-outcome uncertainty](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/agent-job-runner.mjs#L23-L46).
 > Control [returns the original durable agent-job status](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/control-server.ts#L280-L281).
-> Nova's [operator CLI command set](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/cli.ts#L21-L45) has no cancel command. These sources were inspected; no live abort or retirement was executed.
+> Nova's [operator CLI command set](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/cli.ts#L21-L45) has no cancel command. Source inspection covered these paths. Verification did not include a live abort or retirement.
 
 
 ### Studio page closed during a new round

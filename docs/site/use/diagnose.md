@@ -329,7 +329,7 @@ The [role health client bounds Redis connection and command waits](https://githu
 and [exits nonzero on a failed enabled check](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/deployment.yaml#L903-L929).
 The [audit reader rebuilds hash-verified durable events from filesystem state](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/telemetry/audit.ts#L14-L27).
 These mechanisms explain why Redis availability and readable Nova lifecycle
-state are separate observations. No Redis outage was executed for this page.
+state are separate observations. The checks for this page did not execute a Redis outage.
 
 Precondition: `statefulset/redis-master` has a positive ready replica count,
 its PVC is bound, and both role smoke checks pass. Both roles must have Redis
