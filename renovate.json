@@ -438,6 +438,28 @@
         "/^versions\\.json$/"
       ],
       "matchStrings": [
+        "\"OPS_NPM_HTTP_CACHE_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "http-cache-semantics",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_UNDICI_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "undici",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
         "\"OPS_NPM_IP_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
       ],
       "depNameTemplate": "ip-address",

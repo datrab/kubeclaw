@@ -31,6 +31,15 @@ async function verified(url, expected) {
   if (sha(bytes) !== expected) throw new Error(`Checksum mismatch: ${url}`);
   return expected;
 }
+async function githubTagCommit(repository, tag) {
+  let object = (await (await get(`https://api.github.com/repos/${repository}/git/ref/tags/${tag}`)).json()).object;
+  for (let depth = 0; depth < 5; depth++) {
+    if (object?.type === 'commit' && /^[a-f0-9]{40}$/.test(object.sha ?? '')) return object.sha;
+    if (object?.type !== 'tag' || !object.url?.startsWith('https://api.github.com/')) break;
+    object = (await (await get(object.url)).json()).object;
+  }
+  throw new Error(`Cannot resolve ${repository} tag ${tag} to a commit`);
+}
 async function imageDigest(reference) {
   const tag = reference.split('@')[0];
   const slash = tag.indexOf('/');
@@ -118,6 +127,13 @@ for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'H
     if (!fs.readFileSync('ops/pod/kubectl-build/go.mod', 'utf8').includes(`k8s.io/kubectl ${moduleVersion}`)) {
       throw new Error('Update the Ops kubectl source module locks before changing its version');
     }
+    continue;
+  }
+  if (tool === 'HELM' && args === next.imageOverrides['ops-pod']) {
+    const tag = `v${version}`;
+    const source = await get(`https://codeload.github.com/helm/helm/tar.gz/refs/tags/${tag}`);
+    next.buildArgs.OPS_HELM_SOURCE_SHA256 = sha(Buffer.from(await source.arrayBuffer()));
+    next.buildArgs.OPS_HELM_GIT_COMMIT = await githubTagCommit('helm/helm', tag);
     continue;
   }
   for (const arch of ['amd64', 'arm64']) {
