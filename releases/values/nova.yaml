@@ -1,4 +1,4 @@
-# Generated from release 03f726cd2beb0d33750466752ce78bf211de2693 and byte-matched source configuration; do not edit.
+# Generated from release 08d3de69a0dc67511259f7fdab04170d43b86a7d and byte-matched source configuration; do not edit.
 agentRole: nova
 gateway:
   startupDoctor:
@@ -21,7 +21,7 @@ initSetup:
       memory: 8Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-nova
-  digest: sha256:3afba4ad0de996b1a5ef5ee92488c6cbaf9852b1b391ffbf787f66fb0effb6e5
+  digest: sha256:9e785aed3b46614bc0e0f81d12cbb8669ee0e8d0e46719af13d280a6385a97d3
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -29,13 +29,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-37900431391-1/nova-cb35187a44cad23314d42cde527f621db3b32e06.tgz
-  expectedCommit: cb35187a44cad23314d42cde527f621db3b32e06
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-37908675872-1/nova-08d3de69a0dc67511259f7fdab04170d43b86a7d.tgz
+  expectedCommit: 08d3de69a0dc67511259f7fdab04170d43b86a7d
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: de4b23fd25517bc77e7ce21a6d3fd54aebf99a5e353cae6b851d6f140d5c0506
+  sha256: 869c816e53c9f0a9b9d8e9879301ecca94dca2ff9711ea4974bcc21d1d49859c
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-nova
@@ -139,7 +139,7 @@ probes:
     failureThreshold: 5
 extraContainers:
   - name: archviewer
-    image: ghcr.io/datrab/kubeclaw-archviewer@sha256:2cc0dbd87f25b46c6d451d3f46f909be5cacb9d4ec70baf31ca6bf878d0b3a82
+    image: ghcr.io/datrab/kubeclaw-archviewer@sha256:b7879139383af821a6e763533a5f1ae1e787adeb32e0e3bbd47407b54f873c4b
     imagePullPolicy: Always
     ports:
       - name: archviewer

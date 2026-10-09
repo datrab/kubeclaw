@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "commit": "03f726cd2beb0d33750466752ce78bf211de2693",
+  "commit": "08d3de69a0dc67511259f7fdab04170d43b86a7d",
   "images": {
-    "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:2cc0dbd87f25b46c6d451d3f46f909be5cacb9d4ec70baf31ca6bf878d0b3a82",
-    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:280451b412858ed51e8b3635373f1a5de7ded47596999c44a309854ee1b81c79",
-    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:86cd51cde32903baa7dc390757a48379db9fea733b9aef27db5c968b4ee1fbfa",
-    "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:4af78eb430014521f4872c8fb522c903ad34d5ab4313548c0f4737f33cae5d4e",
-    "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:3afba4ad0de996b1a5ef5ee92488c6cbaf9852b1b391ffbf787f66fb0effb6e5",
-    "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:1fc2d03022190343aa7d650fc01d6bab92fc5aa87a759d897363a9431f5b0fef",
-    "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:48dcf99922170ab0056ea07e26ff11e5ea5101472e35d75a68d49f481bbc6d71",
-    "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:85739991166d8f3891a54fc324c4db72026cd2b842ffdde58e7765edddbd2e17",
-    "prism-studio": "ghcr.io/datrab/kubeclaw-prism-studio@sha256:5917b3ee30acb565307cd8e0c92afcb3032919f3cee413e34cdb1992c175d1c3",
-    "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:e975d9937e63508cf64636bf7a6c471bd717f8e8b04a01251df9976514d7858e"
+    "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:b7879139383af821a6e763533a5f1ae1e787adeb32e0e3bbd47407b54f873c4b",
+    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:e2a96665c99c6c763ea0f16879187b7c2aa80f1e48032e470a9ca3c7d85221a1",
+    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:29bfd4b8359bf788b393a68d6c7b6040903b597bfa52866efdcee11b49db9c29",
+    "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:1d7054fe63124fb7e7ae69ca18f00dd762da751dca6ad8939a6c8d927a257a33",
+    "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:9e785aed3b46614bc0e0f81d12cbb8669ee0e8d0e46719af13d280a6385a97d3",
+    "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:6ce14d0c97adbe2f483a9fa20ba174206c6ee0989b25cac3d80c36819f7f753e",
+    "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:4165323827cb1482de3ca41dcbfcbd6f6cf40a2a08b72a0aa3e8092312962017",
+    "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:3dc6b22a5c03e6431d596c7bf4fc2ba3a770596ecb6bb201050bfb75ac2cf161",
+    "prism-studio": "ghcr.io/datrab/kubeclaw-prism-studio@sha256:dd050fbd1ed3fb9a6cba35456dad11f430a339f18c75abfd3fb8d4f96b3cfd37",
+    "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:b6e56e834b89bcce61ec0204a7206ef789f1d962660ba9892a7d7fd3a92bea25"
   },
-  "sourceRunId": 35498048075,
+  "sourceRunId": 37908675872,
   "sourceRunAttempt": 1
 }
