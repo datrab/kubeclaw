@@ -398,6 +398,7 @@
         "tests/verification/contracts"
       ],
       "checks": [
+        "npm run docs:prism-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1452,6 +1453,9 @@
         "scripts/docs-publication.mjs"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1549,6 +1553,9 @@
       ],
       "checks": [
         "npm run docs:buster-guides:check",
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1583,11 +1590,14 @@
       "appliesTo": "deployment commands and published operator/developer CLI definitions",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
+        "scripts/docs-generate.mjs",
         "docs/generated/inventory/deploy-script.json",
-        "docs/generated/inventory/configuration-runtime-inputs.json",
-        "scripts/docs-generate.mjs"
+        "docs/generated/inventory/configuration-runtime-inputs.json"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1610,6 +1620,9 @@
         "skills/prism/config/native-worker.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1632,6 +1645,9 @@
         "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1656,6 +1672,9 @@
         "skills/prism/server/worker-config.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1669,7 +1688,7 @@
       "audience": "operator, pipeline author, maintainer",
       "owner": "platform operations",
       "appliesTo": "current pipeline, project, chart, host, and Prism configuration",
-      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "lastVerified": "2026-10-09 at source revision `68fec9f604a116d67fde83206fcb4016fdb503e3`",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/config/platform.ts",
         "skills/nova/core/execution/engine-runtime.ts",
@@ -1678,6 +1697,9 @@
         "charts/prism/templates/workloads.yaml"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1712,12 +1734,16 @@
       "audience": "operator, security operator, developer",
       "owner": "the source component listed for each route or connection",
       "appliesTo": "discovered inbound routes and outbound network calls in shipped runtime sources",
-      "lastVerified": "generated from revision `81676a8f3289c0577fe8d712a1c3e110c33f26fb`",
+      "lastVerified": "generated from revision `5f19dbd35f25defb604bd3884b0ace2f044cd5df`",
       "sourceDependencies": [
+        "scripts/docs-generate.mjs",
         "docs/generated/inventory/platform-surfaces.json",
         "scripts/docs-platform-surface-inventory.mjs"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1733,11 +1759,14 @@
       "appliesTo": "checked-in runtime, deployment, chart, GitOps, and skill sources",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
+        "scripts/docs-generate.mjs",
         "docs/generated/inventory/configuration-runtime-inputs.json",
-        "scripts/docs-configuration-inventory.mjs",
-        "scripts/docs-generate.mjs"
+        "scripts/docs-configuration-inventory.mjs"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1773,11 +1802,15 @@
       "appliesTo": "checked-in Helm, GitOps, release, and infrastructure YAML configuration",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
+        "scripts/docs-generate.mjs",
         "docs/generated/inventory/configuration-values.json",
-        "scripts/docs-configuration-inventory.mjs",
-        "scripts/docs-generate.mjs"
+        "scripts/docs-configuration-inventory.mjs"
       ],
       "checks": [
+        "npm run docs:inventory:local-helm:check",
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1791,7 +1824,7 @@
       "audience": "platform operator, Prism operator, host administrator",
       "owner": "platform operations and Prism",
       "appliesTo": "current shipped chart configuration and Prism service loaders",
-      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "lastVerified": "2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`",
       "sourceDependencies": [
         "charts/kubeclaw/files/config/swarm.config.json",
         "tests/verification/e2e/support/platform-config.ts",
@@ -1802,6 +1835,9 @@
         "skills/prism/config/native-worker.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1856,6 +1892,9 @@
         "skills/nova/plugins/lint/src/engine"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1891,7 +1930,7 @@
       "audience": "project operator, pipeline author",
       "owner": "Nova project compiler",
       "appliesTo": "`nova-project.v2`",
-      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "lastVerified": "2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`",
       "sourceDependencies": [
         "skills/nova/project/compiler.ts",
         "skills/nova/project/source.ts",
@@ -1900,6 +1939,9 @@
         "skills/nova/project/cli.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1920,6 +1962,9 @@
         "skills/nova/core/execution/pipeline-loop.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1941,6 +1986,9 @@
         "skills/common/plugin-runtime/foundation/config/published-pair.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1961,6 +2009,9 @@
         "skills/nova/core/execution/engine-runtime.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1995,10 +2046,14 @@
       "appliesTo": "every plugin-registered configuration schema, pipeline-platform.v2, and the compact swarm configuration",
       "lastVerified": "generated from the current source inventory",
       "sourceDependencies": [
+        "scripts/docs-generate.mjs",
         "docs/generated/inventory/configuration-schemas.json",
         "scripts/docs-configuration-inventory.mjs"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2012,7 +2067,7 @@
       "audience": "project author, pipeline operator, maintainer",
       "owner": "Nova project setup",
       "appliesTo": "coupled `.swarm/progress.json` and `.swarm/pipeline.json`",
-      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "lastVerified": "2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`",
       "sourceDependencies": [
         "skills/nova/project_setup/tools/progress-scaffold.ts",
         "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
@@ -2020,6 +2075,9 @@
         "skills/nova/core/test-gates/pipeline.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2035,11 +2093,14 @@
       "appliesTo": "Kubernetes secret setup and checked-in Secret references",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
+        "scripts/docs-generate.mjs",
         "docs/generated/inventory/secret-setup.json",
-        "docs/generated/inventory/configuration-runtime-inputs.json",
-        "scripts/docs-generate.mjs"
+        "docs/generated/inventory/configuration-runtime-inputs.json"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2055,10 +2116,13 @@
       "appliesTo": "local and deployment verification",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
-        "docs/generated/inventory/deploy-script.json",
-        "scripts/docs-generate.mjs"
+        "scripts/docs-generate.mjs",
+        "docs/generated/inventory/deploy-script.json"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2081,6 +2145,9 @@
         "skills/prism/server/agent-attempt.ts"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2096,10 +2163,13 @@
       "appliesTo": "repository automation",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
-        "docs/generated/inventory/workflows.json",
-        "scripts/docs-generate.mjs"
+        "scripts/docs-generate.mjs",
+        "docs/generated/inventory/workflows.json"
       ],
       "checks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2570,6 +2640,7 @@
         "charts/prism"
       ],
       "checks": [
+        "npm run docs:prism-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2591,6 +2662,7 @@
         "my-values/prism-agent-values.yaml"
       ],
       "checks": [
+        "npm run docs:prism-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2611,6 +2683,7 @@
         "skills/nova/plugins/prism-design"
       ],
       "checks": [
+        "npm run docs:prism-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2777,6 +2850,7 @@
         "skills/nova/core/state/read-run-evidence.ts"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2796,6 +2870,7 @@
         "skills/nova/project/demo.ts"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2809,12 +2884,13 @@
       "audience": "operator, incident responder",
       "owner": "platform operations",
       "appliesTo": "current runtime roles and durable pipeline state",
-      "lastVerified": "2026-09-21; no controlled failure result is available",
+      "lastVerified": "2026-10-09; local snippet checks and synthetic guards only; no live dependency failure result is available",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "skills/nova/core/telemetry/audit.ts"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2828,12 +2904,13 @@
       "audience": "Kubernetes platform operator, security operator",
       "owner": "platform operations",
       "appliesTo": "current selected runtime release",
-      "lastVerified": "2026-09-21; no live cluster result is available",
+      "lastVerified": "2026-10-09; local snippet and release-boundary checks only; no live cluster result is available",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "docs/generated/inventory/deploy-script.json"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2847,13 +2924,14 @@
       "audience": "release maintainer, platform operator, security operator",
       "owner": "release engineering and platform operations",
       "appliesTo": "current release-selection and deployment contracts",
-      "lastVerified": "2026-09-21; no fresh live upgrade, rotation or retirement result is available",
+      "lastVerified": "2026-10-09; local projection and snippet checks only; no live upgrade, rotation or retirement result is available",
       "sourceDependencies": [
         "versions.json",
         "releases/ops-images.json",
         "scripts/deploy.sh"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2876,6 +2954,7 @@
         "skills/nova/core/execution/engine-run.ts"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2889,13 +2968,14 @@
       "audience": "platform operator, security operator, pipeline operator",
       "owner": "platform configuration owner",
       "appliesTo": "`pipeline-platform.v2` at the recorded source revision",
-      "lastVerified": "2026-09-21; the inventory check passed and no live external plugin result is available",
+      "lastVerified": "2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`; verification did not include live external plugin activation",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/config/platform.schema.json",
         "skills/common/plugin-runtime/foundation/registry/activation.ts",
         "skills/common/plugin-runtime/foundation/packages/install.ts"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2909,7 +2989,7 @@
       "audience": "Prism operator, designer, incident responder, platform maintainer",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage",
-      "lastVerified": "2026-09-21; no fresh live journey result is available",
+      "lastVerified": "2026-10-09; local Control configuration tests passed; no live journey result is available",
       "sourceDependencies": [
         "skills/prism",
         "skills/nova/plugins/prism-design",
@@ -2917,6 +2997,8 @@
         "scripts/deploy.sh"
       ],
       "checks": [
+        "npm run docs:prism-guides:check",
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2949,13 +3031,14 @@
       "audience": "platform operator, database operator, incident responder",
       "owner": "platform operations and data owners",
       "appliesTo": "current selected runtime and state formats",
-      "lastVerified": "2026-09-21; no fresh live restore result is available",
+      "lastVerified": "2026-10-09; local group-identity and snippet guards only; no live restore result is available",
       "sourceDependencies": [
         "charts/prism/files/prism-backup.sh",
         "scripts/postgresql-recovery.sh",
         "docs/status/open-issues.json"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2975,6 +3058,7 @@
         "tests/verification/live/worker-trust-cluster-e2e.sh"
       ],
       "checks": [
+        "npm run docs:operator-tasks:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"

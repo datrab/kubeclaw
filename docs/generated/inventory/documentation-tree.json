@@ -17,7 +17,7 @@
   "missingBaselineFiles": [],
   "counts": {
     "canonical-reader-documentation": 159,
-    "internal-documentation-input": 189,
+    "internal-documentation-input": 190,
     "legacy-extraction-source": 249,
     "deletable-remainder": 2335
   },
@@ -24800,6 +24800,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/07-documentation-quality-standard.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/blueprint/07-documentation-quality-standard.md",
           "inputUse": false
@@ -25363,6 +25368,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/AP09-acceptance-contract.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/blueprint/AP09-acceptance-contract.md",
           "inputUse": false
@@ -25450,6 +25460,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/AP09-completeness-audit.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/blueprint/AP09-completeness-audit.md",
           "inputUse": false
@@ -25478,6 +25493,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/AP09-execution-plan.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/blueprint/AP09-execution-plan.md",
@@ -25558,6 +25578,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/README.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/blueprint/acceptance-evidence/README.md",
@@ -25773,6 +25798,25 @@
       "sha256": "72b559ed27808b3cfefbbaeb1e2928650adf0e9290fa8748c8cfd9c58aa7477e"
     },
     {
+      "path": "docs/blueprint/documentation-completion-matrix.json",
+      "class": "internal-documentation-input",
+      "purpose": "Requirement planning, independent audit findings and continuation state; no acceptance implied.",
+      "originalPath": "docs/blueprint/documentation-completion-matrix.json",
+      "expectedPath": "docs/blueprint/documentation-completion-matrix.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/documentation-completion-matrix.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "20e476055ad93a5784abf8700797d05a46643c2b52df42240500081681a3248f"
+    },
+    {
       "path": "docs/blueprint/documentation-parity-contract.md",
       "class": "internal-documentation-input",
       "purpose": "documentation governance and acceptance input",
@@ -25805,6 +25849,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/documentation-work-plan.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/blueprint/documentation-work-plan.md",
@@ -25951,6 +26000,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/generated/ap09-catalogue.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/blueprint/generated/ap09-catalogue.json",
           "inputUse": false
@@ -25969,6 +26023,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/blueprint/generated/ap09-catalogue.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-governance.mjs",
+          "token": "docs/blueprint/generated/ap09-catalogue.json",
+          "inputUse": true
         }
       ],
       "executableConsumers": [
@@ -26642,7 +26701,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "051dfca5af66635438e60bf41b76f6a7c484b72df5a56d36777c3f5b4bee517e"
+      "sha256": "6654a329158f494ae67847ce503a008ecaaa3c9cf44c8f12324396f2f8b6a5e2"
     },
     {
       "path": "docs/config/platform-surface-map.json",
@@ -27125,6 +27184,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/generated/inventory/configuration-runtime-inputs.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/generated/inventory/configuration-runtime-inputs.json",
           "inputUse": false
@@ -27160,6 +27224,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/check-prism-guides.mjs",
+          "token": "docs/generated/inventory/configuration-runtime-inputs.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate-core.mjs",
           "token": "docs/generated/inventory/configuration-runtime-inputs.json",
           "inputUse": false
@@ -27171,10 +27240,11 @@
         }
       ],
       "executableConsumers": [
-        "scripts/check-configuration-cli-drift.mjs"
+        "scripts/check-configuration-cli-drift.mjs",
+        "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "1182ad86f509b9ce43035b79bb1541230246f57ae98948c8abfd7620c17218e0"
+      "sha256": "3ba413147e4e7bad923ccba0c22ad79ca779590297094c11b1b388b1a4e63e83"
     },
     {
       "path": "docs/generated/inventory/configuration-schemas.json",
@@ -27185,6 +27255,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/generated/inventory/configuration-schemas.json",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/generated/inventory/configuration-schemas.json",
@@ -27213,7 +27288,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "beef1eb7869883b9cfd9d14c5e8a0273d43b12cd22642e15578eb54050a818c7"
+      "sha256": "f8572aa77504fab704ff5d64311d3454ebbbab0c9371a44719bc7e3ddd01a53c"
     },
     {
       "path": "docs/generated/inventory/configuration-values.json",
@@ -27224,6 +27299,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/generated/inventory/configuration-values.json",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/generated/inventory/configuration-values.json",
@@ -27245,6 +27325,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/check-prism-guides.mjs",
+          "token": "docs/generated/inventory/configuration-values.json",
+          "inputUse": true
+        },
+        {
           "sourcePath": "scripts/docs-generate.mjs",
           "token": "docs/generated/inventory/configuration-values.json",
           "inputUse": false
@@ -27256,10 +27341,11 @@
         }
       ],
       "executableConsumers": [
+        "scripts/check-prism-guides.mjs",
         "scripts/vendor-external-helm-authorities.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "fb493658a64133ff4d2cbf099b966a627e92bac981043b3b8d88d924b3689bda"
+      "sha256": "d6130152638e938fc731dfdf028ca8427418c0ce78e6d66358ea524358f05b40"
     },
     {
       "path": "docs/generated/inventory/deploy-script.json",
@@ -27282,6 +27368,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP03-work-packages.json",
+          "token": "docs/generated/inventory/deploy-script.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/generated/inventory/deploy-script.json",
           "inputUse": false
         },
@@ -27585,7 +27676,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "291ee2acee981a9ed1def831f4749721a46b16be43b0ae20172034b683ca929e"
+      "sha256": "e5d1ecb6a490a7323564458d31ac6f4a8e1090e0d99fa67c10d7de8cf098d60d"
     },
     {
       "path": "docs/generated/inventory/documentation-tree.json",
@@ -27708,6 +27799,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/generated/inventory/platform-surfaces.json",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/generated/inventory/platform-surfaces.json",
@@ -27871,6 +27967,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP03-work-packages.json",
+          "token": "docs/generated/inventory/secret-setup.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/generated/inventory/secret-setup.json",
           "inputUse": false
         },
@@ -29050,6 +29151,11 @@
           "sourcePath": "scripts/docs-blueprint-generate.mjs",
           "token": "docs/operator-tasks.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-governance.mjs",
+          "token": "docs/operator-tasks.json",
+          "inputUse": true
         },
         {
           "sourcePath": "scripts/docs-tree-boundary.mjs",
@@ -125457,6 +125563,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/README.md",
           "inputUse": false
@@ -125521,6 +125632,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP05-gap-plan.md",
+          "token": "docs/site/decisions/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/decisions/README.md",
           "inputUse": false
         },
@@ -125907,6 +126023,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/extend/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/extend/README.md",
           "inputUse": false
@@ -126000,6 +126121,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/extend/buster.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/extend/buster.md",
           "inputUse": false
@@ -126057,6 +126183,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP08.10-results.json",
+          "token": "docs/site/extend/contracts.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/extend/contracts.md",
           "inputUse": false
         },
@@ -126551,6 +126682,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/extend/nova.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/extend/nova.md",
           "inputUse": false
@@ -126594,6 +126730,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/extend/platform/buster.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/extend/platform/buster.md",
@@ -126641,6 +126782,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/extend/platform/prism.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/extend/platform/prism.md",
           "inputUse": false
@@ -126662,6 +126808,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/extend/platform/prism.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-governance.mjs",
           "token": "docs/site/extend/platform/prism.md",
           "inputUse": false
         }
@@ -126693,6 +126844,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/extend/plugin-catalogue/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/extend/plugin-catalogue/README.md",
           "inputUse": false
         },
@@ -129275,6 +129431,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/extend/testing.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/extend/testing.md",
           "inputUse": false
@@ -129328,6 +129489,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/product-surfaces.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/product-surfaces.md",
@@ -129393,6 +129559,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-completeness-audit.md",
+          "token": "docs/site/reference/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/reference/README.md",
           "inputUse": false
         },
@@ -132166,6 +132337,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/buster-suites.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/buster-suites.md",
           "inputUse": false
@@ -133322,6 +133498,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/capabilities.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/reference/capabilities.md",
           "inputUse": false
@@ -133370,6 +133551,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/cli.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/reference/cli.md",
@@ -133431,7 +133617,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "1b397df4aad2cafbbfef19fd9f014a91c6671f34d559d812b79ac54c0a648b3c"
+      "sha256": "90977f542f92d893e70d1b972151c2c3ac15aa841c65b8c2295836a8aa9fc8e4"
     },
     {
       "path": "docs/site/reference/configuration-change-impact.md",
@@ -133443,6 +133629,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/configuration-change-impact.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/configuration-change-impact.md",
           "inputUse": false
@@ -133470,7 +133661,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f1bc9daf97d5caf22d62e395bd921810d2f0a416c9ddcae453b9ef9b02b60e46"
+      "sha256": "a72a6946c411b40f6a1105c75e213817379cd3a0d22293735d8003e597380b5a"
     },
     {
       "path": "docs/site/reference/configuration-compatibility.md",
@@ -133482,6 +133673,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/configuration-compatibility.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/configuration-compatibility.md",
           "inputUse": false
@@ -133509,7 +133705,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "1092c17161302d2519feb5f278e5cff067aa44ae10bf006cae5b1c2fef04c931"
+      "sha256": "402adee124a8e498e3c88c7e78a1cb8c3e15295e9cd7cf048c426f610303aae1"
     },
     {
       "path": "docs/site/reference/configuration-errors.md",
@@ -133521,6 +133717,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/configuration-errors.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/configuration-errors.md",
           "inputUse": false
@@ -133548,7 +133749,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "8cb45a5c9d1f6da9944c7f4701df76984bf354df73bc982298ecaa6a86cc4918"
+      "sha256": "4e3d9b850a7055aa3a0008ffa71404ea548e0f9f6b63ee8b40b52e7f1cce2074"
     },
     {
       "path": "docs/site/reference/configuration-precedence.md",
@@ -133560,6 +133761,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/configuration-precedence.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/configuration-precedence.md",
           "inputUse": false
@@ -133587,7 +133793,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c9986f226c6bd5bd1af95b8784c4b8f3c78488d6b57e7db7b72ab436443b00b8"
+      "sha256": "8ac45ac51d05f8616f069812bfbf1b0960e5400902a360a3221bf403cca0338f"
     },
     {
       "path": "docs/site/reference/documentation-governance.md",
@@ -133598,6 +133804,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/documentation-governance.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/documentation-governance.md",
@@ -133674,6 +133885,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/endpoints.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/endpoints.md",
           "inputUse": false
@@ -133711,7 +133927,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "a6ac1be7436a178f3cb0ec7898c6af130e89f305791bcd05e90e6cc0b25c8048"
+      "sha256": "15f80dba980c17d3037c83b84c34fdda0adc1106df4547dcf1bbd5fbb47fa45f"
     },
     {
       "path": "docs/site/reference/environment-variables.md",
@@ -133722,6 +133938,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/environment-variables.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/reference/environment-variables.md",
@@ -133753,6 +133974,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/check-prism-guides.mjs",
+          "token": "docs/site/reference/environment-variables.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/environment-variables.md",
           "inputUse": false
@@ -133780,10 +134006,11 @@
       ],
       "executableConsumers": [
         "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/check-prism-guides.mjs",
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "f53d07a70ef60d1bbcd8a9e1811906ae1ba789f6a97113ccf398cb435c7ba5ce"
+      "sha256": "eff0321f1cdfa2a6f50fb7d1e5861d493c2a3846f831dd95a71619685c2576db"
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
@@ -133794,6 +134021,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/generated-documentation-map.json",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/generated-documentation-map.json",
@@ -133807,7 +134039,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b23fd5d7b7f92ddeab23142f3fa64f17cbaf72770c2b7d6950715514d4df0974"
+      "sha256": "92dff878bb9840f3aa44ab9280d97283ab0ae0fafbabfccbf8826e03aae4e5d7"
     },
     {
       "path": "docs/site/reference/glossary.md",
@@ -133818,6 +134050,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/glossary.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/glossary.md",
@@ -133853,6 +134090,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/helm-values.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/reference/helm-values.md",
           "inputUse": false
@@ -133883,6 +134125,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/check-prism-guides.mjs",
+          "token": "docs/site/reference/helm-values.md",
+          "inputUse": true
+        },
+        {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/helm-values.md",
           "inputUse": false
@@ -133904,10 +134151,11 @@
         }
       ],
       "executableConsumers": [
-        "scripts/check-configuration-drift-mutations.mjs"
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "6ce32cd813fb20016ff48780a7c6ec7f04568462b605b81e04b03aff4b518ec5"
+      "sha256": "ba4390fe8d0fa19947c3a189da453b748644f774e05865a6bbd146ba94ed341b"
     },
     {
       "path": "docs/site/reference/host-and-prism-configuration.md",
@@ -133918,6 +134166,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/host-and-prism-configuration.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/host-and-prism-configuration.md",
@@ -133946,7 +134199,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "0829f170b28d77a5b61cf91d9f6788afe342cfe82da4e8c4a65c1bfa1b8a78e4"
+      "sha256": "59658000da23d8dee93f7c62f7f7d4caa89dc9ba55d6b052004851d7d7b06469"
     },
     {
       "path": "docs/site/reference/lint-policy-generated.md",
@@ -134003,6 +134256,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/lint-policy.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/lint-policy.md",
@@ -134096,6 +134354,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/nova-project.md",
           "inputUse": false
@@ -134140,7 +134403,7 @@
         "scripts/check-suite-migration-workflow.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "cbcd1cc12b08fc8e7913bf9f8cdd1e8b13da7cb9dde469faf48275fb7fe4d58f"
+      "sha256": "7f67c50891bf658696ec62827368f5889bbbf053a468c2056d730275fef5b4cf"
     },
     {
       "path": "docs/site/reference/pipeline-definition.md",
@@ -134152,6 +134415,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/pipeline-definition.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/pipeline-definition.md",
           "inputUse": false
@@ -134179,7 +134447,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "a57615c8de2b9d7a135fe50a79a25465d5f0dfad2aeda55b2dbbc43695f839fd"
+      "sha256": "79506eb8308fd016f8e1ed1a6e7a707046558a6b257bfcf84f8a61b05275f13e"
     },
     {
       "path": "docs/site/reference/pipeline-json.md",
@@ -134191,6 +134459,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/pipeline-json.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/pipeline-json.md",
           "inputUse": false
@@ -134218,7 +134491,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "9e819372123a92c6cf9ba7a21092558ab7dd0f7c336ac5bc75b19e883b5d3e76"
+      "sha256": "6a2c64f775deb58cef4f6d63d196fda32bf6456840ab24a90567ade1fb94d407"
     },
     {
       "path": "docs/site/reference/pipeline-platform.md",
@@ -134230,6 +134503,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/pipeline-platform.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/pipeline-platform.md",
           "inputUse": false
@@ -134257,7 +134535,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "e64270a8af2bbe911a1e82021c3f5d3b592ef0cf7c2eef12d7d2bb5ce068f58f"
+      "sha256": "d0f01b7c56f0bc4abc61d2d6aab788596cfb6d39e2318c0e2c5484075193e204"
     },
     {
       "path": "docs/site/reference/platform-surfaces-generated.md",
@@ -134310,6 +134588,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/plugin-configuration.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/plugin-configuration.md",
           "inputUse": false
@@ -134354,7 +134637,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "2d5a6db8aaeb09520eec3dd6a6018835c57fc54cea4a8413729a9be98e4966ae"
+      "sha256": "03a8136bef83b168542c58880dd2c0152bc4b2e1d610331810bc93ae3ffc26e9"
     },
     {
       "path": "docs/site/reference/project-pipeline-publication.md",
@@ -134365,6 +134648,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/project-pipeline-publication.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/project-pipeline-publication.md",
@@ -134403,7 +134691,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "0d082413b04e00637a830188b133b8eecb2a44935937c5c1d288d05e5425cae8"
+      "sha256": "1f69d9f214de901ed2637ebcda06e91c90c446c6d25802b85b04a010f1157c0d"
     },
     {
       "path": "docs/site/reference/secrets.md",
@@ -134414,6 +134702,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/secrets.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/reference/secrets.md",
@@ -134497,7 +134790,7 @@
           ]
         }
       ],
-      "sha256": "3436ac45a1e2991443400f50f96fb1c192e6f8cf7944085bc11979775e794309"
+      "sha256": "cf20e0ffbc6ff342bf14dfea1a85641ac53a161c273a94fd2b9dc837b8a531be"
     },
     {
       "path": "docs/site/reference/verification-commands.md",
@@ -134508,6 +134801,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/verification-commands.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/reference/verification-commands.md",
@@ -134568,6 +134866,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/worker-profiles-and-roles.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/reference/worker-profiles-and-roles.md",
           "inputUse": false
@@ -134595,7 +134898,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ff35f37b606e8db800805cbb875f0061fa1e7dcea1019f3fd13ef6974ef09bb5"
+      "sha256": "486591423840e29af09468c746010ddb298558ebda2482526365377a8181ad85"
     },
     {
       "path": "docs/site/reference/workflows.md",
@@ -134654,7 +134957,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b09eedd9cf8d355eb6bf784c9caa2e26ce01af5b36c96c86e35c64ddce3292a7"
+      "sha256": "0280269e57663e4cf11da185f31bf19e1cc176def25c7e8edeb8310845351615"
     },
     {
       "path": "docs/site/status/acceptance.md",
@@ -134687,6 +134990,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP08.10-results.json",
+          "token": "docs/site/status/acceptance.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/status/acceptance.md",
           "inputUse": false
         },
@@ -134751,6 +135059,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP05-gap-plan.md",
+          "token": "docs/site/status/current.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/status/current.md",
           "inputUse": false
         },
@@ -134946,6 +135259,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/understand/README.md",
           "inputUse": false
@@ -135025,6 +135343,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/archviewer.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/archviewer.md",
           "inputUse": false
@@ -135066,6 +135389,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/buster-namespace-controller.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/buster-namespace-controller.md",
           "inputUse": false
@@ -135106,6 +135434,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/buster.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/understand/buster.md",
@@ -135153,6 +135486,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/codex-integration.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/codex-integration.md",
           "inputUse": false
@@ -135195,6 +135533,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/understand/communication.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/understand/communication.md",
           "inputUse": false
         },
@@ -135258,6 +135601,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/components-and-authority.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/components-and-authority.md",
           "inputUse": false
@@ -135310,6 +135658,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/understand/data-and-state.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/understand/data-and-state.md",
           "inputUse": false
         },
@@ -135378,6 +135731,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/deployment-and-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/deployment-and-trust.md",
           "inputUse": false
@@ -135427,6 +135785,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/echo.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/echo.md",
           "inputUse": false
@@ -135467,6 +135830,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/forge.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/forge.md",
@@ -135514,6 +135882,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/nova-core.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/nova-core.md",
           "inputUse": false
@@ -135554,6 +135927,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/openclaw.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/openclaw.md",
@@ -135597,6 +135975,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/understand/ops-mcp.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/understand/ops-mcp.md",
           "inputUse": false
         },
@@ -135705,6 +136088,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/understand/platform-and-operations.md",
           "inputUse": false
         },
@@ -135822,6 +136210,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/plugin-runtime.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/plugin-runtime.md",
           "inputUse": false
@@ -135863,6 +136256,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/prism-data.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/prism-data.md",
           "inputUse": false
@@ -135884,6 +136282,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/prism-data.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-governance.mjs",
           "token": "docs/site/understand/prism-data.md",
           "inputUse": false
         }
@@ -135922,6 +136325,11 @@
           "sourcePath": "scripts/check-prism-guides.mjs",
           "token": "docs/site/understand/prism-runtime.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-governance.mjs",
+          "token": "docs/site/understand/prism-runtime.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -135939,6 +136347,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/prism.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/understand/prism.md",
@@ -135968,6 +136381,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/understand/prism.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-governance.mjs",
+          "token": "docs/site/understand/prism.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -135985,6 +136403,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/request-state-recovery.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/request-state-recovery.md",
@@ -136111,6 +136534,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/security-and-trust.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/security-and-trust.md",
           "inputUse": false
@@ -136180,6 +136608,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/telemetry.md",
           "inputUse": false
@@ -136238,6 +136671,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/understand/worker-core.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/understand/worker-core.md",
@@ -136352,6 +136790,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/use/README.md",
           "inputUse": false
@@ -136418,6 +136861,11 @@
       "introducedAfterBaseline": false,
       "locationValid": true,
       "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/capacity.md",
+          "inputUse": false
+        },
         {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/use/capacity.md",
@@ -136491,6 +136939,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/demo-delivery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/use/demo-delivery.md",
           "inputUse": false
@@ -136553,6 +137006,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/diagnose.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/use/diagnose.md",
           "inputUse": false
@@ -136610,7 +137068,7 @@
           ]
         }
       ],
-      "sha256": "74107da3a3ce222b2d9d50a9dd6d5ddb04de4d273e304ded1e7effac0c82d51c"
+      "sha256": "c07b3fc319ae4b44a7d77fe66ded747e5e293ec01538eb180128a6c66992c7ac"
     },
     {
       "path": "docs/site/use/install.md",
@@ -136623,6 +137081,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/install.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/use/install.md",
           "inputUse": false
         },
@@ -136700,7 +137163,7 @@
           ]
         }
       ],
-      "sha256": "cb2eee0cdfd0a541d747890ccf8d3a8f385d5b531460094c634dcd0a3e6fe1e1"
+      "sha256": "295302b6b34636efde96ecc1a91881b7fbcd5334e537ec1acec92e719cc84f9c"
     },
     {
       "path": "docs/site/use/maintenance.md",
@@ -136713,6 +137176,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/maintenance.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/use/maintenance.md",
           "inputUse": false
         },
@@ -136777,7 +137245,7 @@
           ]
         }
       ],
-      "sha256": "9192c89420517021586ef8249853b76e3f5a791f8fe0456b86ada6cd4130e07a"
+      "sha256": "1510bc4635791a79df6730cffd0b60893ea0c42c76e6bf353b14a700ca109279"
     },
     {
       "path": "docs/site/use/operate.md",
@@ -136790,6 +137258,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/operate.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/use/operate.md",
           "inputUse": false
         },
@@ -136878,6 +137351,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/plugins.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/site/use/plugins.md",
           "inputUse": false
@@ -136933,7 +137411,7 @@
           ]
         }
       ],
-      "sha256": "fca643c73666f45e0f779cc8655a6aea2232791cb54ea6cb8821c33de118d1da"
+      "sha256": "ede826b311d1c6b9aa715692e42eded67dc27764df8f493a71323581d9e3d495"
     },
     {
       "path": "docs/site/use/prism-studio.md",
@@ -136946,6 +137424,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/prism-studio.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/use/prism-studio.md",
           "inputUse": false
         },
@@ -136988,6 +137471,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/use/prism-studio.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-governance.mjs",
+          "token": "docs/site/use/prism-studio.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -137007,7 +137495,7 @@
           ]
         }
       ],
-      "sha256": "434f91b70f5b2cca64d86d287a94cf18159f881f98cb310a3e8cd1ddc696ec01"
+      "sha256": "aa8b9e2cad8ba54642e4ecc390c4660758a9b351dbcac54376fa0bc1c5fa24fc"
     },
     {
       "path": "docs/site/use/quickstart.md",
@@ -137110,6 +137598,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/recovery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/review-ledger.jsonl",
           "token": "docs/site/use/recovery.md",
           "inputUse": false
@@ -137180,7 +137673,7 @@
           ]
         }
       ],
-      "sha256": "560d1f726d8edcdf1f0eb35fdf13d80bec249af29225e6a2074e2d4a6cdbaefa"
+      "sha256": "fbeb0c02ab3ee3e6a98c438992910825472618e91cbf9267872096be3b3e28cf"
     },
     {
       "path": "docs/site/use/worker-trust.md",
@@ -137272,6 +137765,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/workflows/buster-suite.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/use/workflows/buster-suite.md",
           "inputUse": false
         },
@@ -137510,6 +138008,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP05-gap-plan.md",
+          "token": "docs/status/open-issues.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/status/open-issues.json",
           "inputUse": false
         },

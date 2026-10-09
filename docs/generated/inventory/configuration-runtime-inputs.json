@@ -83,7 +83,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 32,
+          "line": 36,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -94,7 +94,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 32,
+      "line": 36,
       "name": "--allow-local-helm-authority-maintenance",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -159,7 +159,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 27,
+          "line": 31,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -170,7 +170,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 27,
+      "line": 31,
       "name": "--allow-semantic-gaps",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -197,7 +197,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 26,
+          "line": 30,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -208,7 +208,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 26,
+      "line": 30,
       "name": "--allow-sensitivity-fixture",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -544,7 +544,7 @@
         }
       ],
       "default": "false/not selected",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:43",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:125",
       "documentationReason": "The bound authored page explains --apply in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -881,7 +881,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 25,
+          "line": 29,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -892,7 +892,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 25,
+      "line": 29,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -1798,7 +1798,7 @@
         }
       ],
       "default": "false/not selected",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:38",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:108",
       "documentationReason": "The bound authored page explains --check in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -1831,7 +1831,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 5965,
+          "line": 6405,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1842,7 +1842,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 5965,
+      "line": 6405,
       "name": "--check-payload-delivery-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -1899,6 +1899,44 @@
       "type": "value-taking argument; source does not prove a narrower type",
       "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
       "valueTaking": true
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
+          "line": 6390,
+          "path": "scripts/docs-configuration-inventory.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 6390,
+      "name": "--check-schema-semantics-only",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
+      "ownerEvidence": "scripts/docs-configuration-inventory.mjs",
+      "path": "scripts/docs-configuration-inventory.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-configuration-inventory.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
     },
     {
       "aliasFor": null,
@@ -2330,7 +2368,7 @@
         }
       ],
       "default": "false/not selected",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:50",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:41",
       "documentationReason": "The bound authored page explains --help in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -2900,7 +2938,7 @@
         }
       ],
       "default": "false/not selected",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:49",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:185",
       "documentationReason": "The bound authored page explains --print in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -2976,7 +3014,7 @@
         }
       ],
       "default": "<none>",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:33",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:108",
       "documentationReason": "The bound authored page explains --project in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -3242,7 +3280,7 @@
         }
       ],
       "default": "nearest parent containing .git",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:48",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:108",
       "documentationReason": "The bound authored page explains --repo in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -3432,7 +3470,7 @@
         }
       ],
       "default": "<selected .swarm directory>/progress.scaffold.json",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:48",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:184",
       "documentationReason": "The bound authored page explains --scaffold in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -3457,6 +3495,44 @@
       "type": "value-taking argument; source does not prove a narrower type",
       "unknownOptionBehavior": "Any argument outside the four value options, three action switches, --help, and -h fails.",
       "valueTaking": true
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
+          "line": 6396,
+          "path": "scripts/docs-configuration-inventory.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 6396,
+      "name": "--schemas-only",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
+      "ownerEvidence": "scripts/docs-configuration-inventory.mjs",
+      "path": "scripts/docs-configuration-inventory.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-configuration-inventory.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
     },
     {
       "aliasFor": null,
@@ -3660,7 +3736,7 @@
         }
       ],
       "default": "<none>",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:46",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:182",
       "documentationReason": "The bound authored page explains --swarm in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -4230,7 +4306,7 @@
         }
       ],
       "default": "false/not selected",
-      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:50",
+      "documentationAuthority": "docs/site/reference/project-pipeline-publication.md:186",
       "documentationReason": "The bound authored page explains -h in operator context.",
       "documentationStatus": "authored-documentation",
       "duplicateOptionBehavior": "A repeated value option uses its last value. Repeated boolean switches are idempotent.",
@@ -7894,6 +7970,22 @@
       "tools",
       "cmd",
       "packaging"
+    ],
+    "shellSecretRule": "every .sh source below the declared runtime roots, excluding quoted heredoc bodies; discover direct kubectl create secret commands and shell command arrays, and reject any discovered Secret without semantic authority",
+    "textExtensions": [
+      ".c",
+      ".cjs",
+      ".cts",
+      ".go",
+      ".h",
+      ".js",
+      ".mjs",
+      ".mts",
+      ".py",
+      ".sh",
+      ".ts",
+      ".yaml",
+      ".yml"
     ]
   },
   "environment": [
@@ -52410,10 +52502,10 @@
     }
   ],
   "totals": {
-    "cliDefinitions": 112,
-    "cliFlags": 112,
+    "cliDefinitions": 114,
+    "cliFlags": 114,
     "cliInvocations": 0,
-    "cliOccurrences": 129,
+    "cliOccurrences": 131,
     "configurationConsumerSources": 274,
     "derivedValues": 47,
     "environmentConsumers": 856,

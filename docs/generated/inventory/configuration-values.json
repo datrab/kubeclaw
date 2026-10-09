@@ -26957,11 +26957,11 @@
             },
             {
               "blockerOwner": null,
-              "changeImpact": "Changes availability, scheduling demand, rollout behavior, and resource consumption.",
+              "changeImpact": "Changing the count from one conflicts with the single-writer artifact-storage boundary; the chart refuses supported integer alternatives.",
               "closureCondition": null,
               "constraints": [
-                "A non-negative integer. Zero stops all replicas for components whose template permits zero.",
-                "empty/omitted: An empty scalar is invalid. Removing the override uses the chart default."
+                "The integer `1` is the supported value. Zero is not a supported stop mechanism. The chart checks the integer-converted value before rendering the Deployment; the Kubernetes replicas field must still be an integer.",
+                "empty/omitted: An explicit empty value fails the chart guard. An omitted override uses the chart default `1`."
               ],
               "consumers": [
                 {
@@ -26995,12 +26995,12 @@
               ],
               "defaultKind": "chart-default",
               "effectiveValueProof": "charts/prism/values.yaml -> charts/prism/templates/workloads.yaml:1",
-              "failureMeaning": "A negative or fractional value fails rendering or admission. Too few replicas reduce availability; too many can remain Pending.",
+              "failureMeaning": "A value whose integer conversion is not one stops rendering with `control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage`. A fractional value can survive integer conversion but remains invalid for the Kubernetes replicas field; do not deploy it.",
               "meaning": {
-                "acceptedValues": "A non-negative integer. Zero stops all replicas for components whose template permits zero.",
+                "acceptedValues": "The integer `1` is the supported value. Zero is not a supported stop mechanism. The chart checks the integer-converted value before rendering the Deployment; the Kubernetes replicas field must still be an integer.",
                 "blockerOwner": null,
                 "closureCondition": null,
-                "emptyBehavior": "An empty scalar is invalid. Removing the override uses the chart default.",
+                "emptyBehavior": "An explicit empty value fails the chart guard. An omitted override uses the chart default `1`.",
                 "evidence": "charts/prism/values.yaml:27; charts/prism/templates/workloads.yaml:1; charts/prism/templates/workloads.yaml:20; scripts/docs-local-helm-field-authorities.json",
                 "externalChart": null,
                 "localHelmChart": "charts/prism",
@@ -27014,12 +27014,12 @@
                   "endLine": 27473,
                   "line": 27467,
                   "path": "scripts/docs-local-helm-field-authorities.json",
-                  "sourceRangeSha256": "6e9f2e7bf7ca91920e7c4ab176428bde0939e8b8e28a516222e4973bb79b3b3c"
+                  "sourceRangeSha256": "4ace1965ef36d5ec5d1719e929ed7656782d8fa5cf3c5a97ea15fa175b140f29"
                 },
                 "semanticGroup": "replica-count",
                 "sourceFileSha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
                 "status": "local-helm-field-authority",
-                "text": "Sets the desired replica count for control. Accepted values: A non-negative integer. Zero stops all replicas for components whose template permits zero. Selected chart default: the checked-in value in this row is the chart default. Empty or omitted value: An empty scalar is invalid. Removing the override uses the chart default."
+                "text": "Keeps the Prism control service at one replica while its artifact volume uses ReadWriteOnce storage. Accepted values: The integer `1` is the supported value. Zero is not a supported stop mechanism. The chart checks the integer-converted value before rendering the Deployment; the Kubernetes replicas field must still be an integer. Selected chart default: the checked-in value in this row is the chart default. Empty or omitted value: An explicit empty value fails the chart guard. An omitted override uses the chart default `1`."
               },
               "ownerComponent": "Helm chart charts/prism",
               "ownerEvidence": "charts/prism/Chart.yaml",
@@ -31791,12 +31791,12 @@
             },
             {
               "blockerOwner": null,
-              "changeImpact": "Changes availability, scheduling demand, rollout behavior, and resource consumption.",
+              "changeImpact": "Changing the count from one conflicts with the selected single native worker boundary; the chart refuses supported integer alternatives.",
               "closureCondition": null,
               "constraints": [
                 "template regexMatch validation",
-                "A non-negative integer. Zero stops all replicas for components whose template permits zero.",
-                "empty/omitted: An empty scalar is invalid. Removing the override uses the chart default."
+                "The integer `1` is the only supported value. The chart schema fixes this field to `1`; zero is not a supported stop mechanism.",
+                "empty/omitted: An explicit empty value fails the chart guard. An omitted override uses the chart default `1`."
               ],
               "consumers": [
                 {
@@ -31832,12 +31832,12 @@
               ],
               "defaultKind": "chart-default",
               "effectiveValueProof": "charts/prism/values.yaml -> charts/prism/templates/workloads.yaml:5",
-              "failureMeaning": "A negative or fractional value fails rendering or admission. Too few replicas reduce availability; too many can remain Pending.",
+              "failureMeaning": "Any value other than `1` fails the chart schema before template rendering. The native-worker template also requires the release namespace, selected node and 64-character lowercase hexadecimal policy digest; a mismatch stops rendering with `native Prism requires one worker, its selected namespace/node and generated policy digest`.",
               "meaning": {
-                "acceptedValues": "A non-negative integer. Zero stops all replicas for components whose template permits zero.",
+                "acceptedValues": "The integer `1` is the only supported value. The chart schema fixes this field to `1`; zero is not a supported stop mechanism.",
                 "blockerOwner": null,
                 "closureCondition": null,
-                "emptyBehavior": "An empty scalar is invalid. Removing the override uses the chart default.",
+                "emptyBehavior": "An explicit empty value fails the chart guard. An omitted override uses the chart default `1`.",
                 "evidence": "charts/prism/values.yaml:42; charts/prism/templates/workloads.yaml:5; charts/prism/templates/workloads.yaml:20; scripts/docs-local-helm-field-authorities.json",
                 "externalChart": null,
                 "localHelmChart": "charts/prism",
@@ -31851,12 +31851,12 @@
                   "endLine": 31832,
                   "line": 31826,
                   "path": "scripts/docs-local-helm-field-authorities.json",
-                  "sourceRangeSha256": "d2b2318bd7439d4a8006534d04b5178a4962606da84b26e726f1ba30ad3f9aa8"
+                  "sourceRangeSha256": "641f8c967d652b44e618a440f27ff513269cc5b08c86674a074621e2f2721cdb"
                 },
                 "semanticGroup": "replica-count",
                 "sourceFileSha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
                 "status": "local-helm-field-authority",
-                "text": "Sets the desired replica count for worker. Accepted values: A non-negative integer. Zero stops all replicas for components whose template permits zero. Selected chart default: the checked-in value in this row is the chart default. Empty or omitted value: An empty scalar is invalid. Removing the override uses the chart default."
+                "text": "Keeps the native Prism worker at one replica on the selected namespace and node with the generated policy digest. Accepted values: The integer `1` is the only supported value. The chart schema fixes this field to `1`; zero is not a supported stop mechanism. Selected chart default: the checked-in value in this row is the chart default. Empty or omitted value: An explicit empty value fails the chart guard. An omitted override uses the chart default `1`."
               },
               "ownerComponent": "Helm chart charts/prism",
               "ownerEvidence": "charts/prism/Chart.yaml",
