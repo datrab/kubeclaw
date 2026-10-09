@@ -5833,6 +5833,21 @@ function environmentReaderContract(name, consumer) {
   return qualified;
 }
 
+// Source ownership can name a file and then its field, role, or binding. Keep
+// those parts separate in reader prose: a colon-qualified setting is not a
+// repository filename. The raw owner and owningSurface fields remain intact.
+function environmentSourceProse(value) {
+  return value.replace(/(?<![`A-Za-z0-9_/])((?:\.github|charts|my-values|skills|scripts|docker|ops|tools|cmd|packaging|gitops|releases)\/(?:[A-Za-z0-9_./-]+\.(?:json|ya?ml|m?[jt]s|cjs|cts|tsx?|sh|py|go)|(?:[A-Za-z0-9_.-]+\/)*Dockerfile(?:\.[A-Za-z0-9_-]+)?))(?::(?:(\d+):)?|#)?/gu,
+    (match, sourcePath, line) => {
+      const qualifier = match.slice(sourcePath.length);
+      return `\`${sourcePath}\`${line ? ` at line ${line}` : ''}${qualifier ? ' — ' : ''}`;
+    });
+}
+
+function environmentConsumerPurpose(contract, producer = null) {
+  return `${environmentSourceProse(contract.purpose)} Owner: ${environmentSourceProse(contract.owner)}. Owning setting: ${environmentSourceProse(contract.owningSurface).replace(/\.$/u, '')}.${producer ? ` Producer binding: ${environmentProducerSetting(producer)}.` : ''} Boundary: ${contract.boundary}.`;
+}
+
 function verifyEnvironmentConsumerCoverage() {
   const entries = new Map();
   for (const source of runtimeTextSources()) for (const occurrence of environmentOccurrences(source, read(source))) {
@@ -5855,20 +5870,26 @@ function verifyEnvironmentConsumerCoverage() {
 function environmentProducerSetting(producer) {
   const lines = read(producer.path).split('\n');
   const selected = [];
+  const declarationIndent = /^\s*/u.exec(lines[producer.line - 1])[0].length;
   for (let index = producer.line - 1; index < Math.min(lines.length, producer.line + 12); index++) {
-    if (index > producer.line - 1 && /^\s*-\s*(?:name:|\{name:)/u.test(lines[index])) break;
+    // A sibling value, Helm action, or container field does not belong to this
+    // environment declaration. Its Values expressions cannot prove this input.
+    if (index > producer.line - 1 && /^\s*\S/u.test(lines[index])
+      && !/^\s*#/u.test(lines[index]) && /^\s*/u.exec(lines[index])[0].length <= declarationIndent) break;
     selected.push(lines[index]);
   }
-  const text = selected.join(' ');
+  const text = selected.join('\n');
   const settings = [...new Set([...text.matchAll(/\.Values\.([A-Za-z0-9_.]+)/gu)].map((match) => match[1]))];
-  if (settings.length) return `${producer.path}: Helm fields ${settings.join(', ')}; the linked declaration supplies any render condition and default.`;
-  const literal = /\bvalue:\s*(["'])(.*?)\1/u.exec(text)?.[2];
+  const location = `\`${producer.path}\` at line ${producer.line}`;
+  if (settings.length) return `${location}; Helm fields ${settings.map((setting) => `\`${setting}\``).join(', ')}; the linked declaration supplies any render condition and default`;
+  const literalSource = /\bvalue:\s*("(?:[^"\\]|\\.)*"|'(?:[^']|'')*'|[^,}\n]+)/u.exec(text)?.[1]?.trim();
+  const literal = literalSource && !literalSource.startsWith('{{') ? YAML.parse(literalSource) : undefined;
   const reference = /(?:secretKeyRef|configMapKeyRef|fieldRef|resourceFieldRef)\s*:/u.exec(text)?.[0];
   const name = /name:\s*['"]?([A-Z][A-Z0-9_]*)/u.exec(text)?.[1];
-  const publishedLiteral = name && environmentDefaultIsSecretPayload(name) && literal ? '<redacted:sensitive-field>' : redactValue('environment-value', literal);
-  return literal !== undefined ? `${producer.path}:${producer.line}: fixed literal ${JSON.stringify(publishedLiteral)}`
-    : reference ? `${producer.path}:${producer.line}: declared ${reference} transport authority`
-      : `${producer.path}:${producer.line}: exact maintained workload environment declaration`;
+  const publishedLiteral = name && environmentDefaultIsSecretPayload(name) && literal !== undefined ? '<redacted:sensitive-field>' : redactValue('environment-value', literal);
+  return literal !== undefined ? `${location}; fixed literal ${JSON.stringify(publishedLiteral)}`
+    : reference ? `${location}; declared \`${reference.replace(/\s*:\s*$/u, '')}\` transport authority`
+      : `${location}; exact maintained workload environment declaration`;
 }
 
 function buildRuntimeInputInventory(yamlInventory) {
@@ -6045,7 +6066,7 @@ function buildRuntimeInputInventory(yamlInventory) {
       const qualified = environmentReaderContract(entry.name, consumer);
       if (!qualified) { entry.unqualifiedReaders.push({ name: entry.name, ...consumer }); continue; }
       contractsByReader.set(consumer.path, { path: consumer.path, line: consumer.line, access: consumer.access,
-        ...qualified, purpose: `${qualified.purpose} Owner: ${qualified.owner}. Owning setting: ${qualified.owningSurface}. Boundary: ${qualified.boundary}.` });
+        ...qualified, purpose: environmentConsumerPurpose(qualified) });
     }
     entry.consumerContracts = [...contractsByReader.values()];
     entry.unqualifiedProducers = entry.producers.filter((producer) => !qualifiedProducerBindings.has(`${entry.name}:${producer.path}`));
@@ -6060,7 +6081,7 @@ function buildRuntimeInputInventory(yamlInventory) {
         if (!contract) { entry.unqualifiedProducers.push(producer); continue; }
         assertRuntimeConsumerContract(contract, `${entry.name}:${producer.path}`);
         entry.consumerContracts.push({ ...producer, ...contract,
-          purpose: `${contract.purpose} Owner: ${contract.owner}. Owning setting: ${contract.owningSurface}. Producer binding: ${environmentProducerSetting(producer)}. Boundary: ${contract.boundary}.` });
+          purpose: environmentConsumerPurpose(contract, producer) });
       }
     }
     const distinctConsumerContracts = new Set(entry.consumerContracts.map((contract) => JSON.stringify({

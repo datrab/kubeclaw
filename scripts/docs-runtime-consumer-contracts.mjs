@@ -146,15 +146,63 @@ for (const source of ['scripts/check-monitoring.mjs', 'scripts/check-platform-se
   add(source, renderName, 'Selects pre-rendered manifests used by the maintainer platform check.', 'A directory containing <application>-render.yaml files.', 'Absent or empty invokes Helm rendering instead.', 'Empty selects Helm rendering.', 'Missing or invalid files fail the check; stale fixtures can produce misleading evidence and must match the selected sources.', 'A truthy render-directory value replaces live local Helm rendering.', 'Changes the manifest evidence checked; this does not deploy resources.', 'The maintainer check stops on file, YAML or assertion errors.', `${source}:render fixture input`, 'optional', 'maintainer manifest verification');
   add(source, 'HELM_BIN', 'Selects the local Helm executable for maintainer chart rendering.', 'An executable path or command accepted by execFileSync.', 'Absent uses helm.', 'Empty is retained by ?? and executable creation fails.', 'A missing executable or failed Helm template call stops the check.', `A truthy ${renderName} bypasses this reader; otherwise a defined HELM_BIN wins over helm.`, 'Changes the renderer used for source-bound manifest checks.', 'The maintainer check stops without complete render evidence.', `${source}:local renderer selection`, 'optional', 'maintainer manifest verification');
 }
-for (const [source, name, purpose] of [
-  ['scripts/docs-platform-surface-inventory.mjs', 'KUBECLAW_DOCS_SOURCE_ROOT', 'Selects an isolated source tree for documentation platform discovery.'],
-  ['scripts/docs-generate.mjs', 'KUBECLAW_DOCS_ISOLATED_MUTATION', 'Allows the declared isolated documentation mutation path.'],
-  ['scripts/docs-platform-surface-inventory.mjs', 'KUBECLAW_DOCS_ISOLATED_MUTATION', 'Allows isolated documentation platform discovery.'],
-  ['scripts/check-operator-task-registry.mjs', 'OPERATOR_TASK_EXECUTION_ROOT', 'Selects the isolated executable tree for task verification.'],
-  ['scripts/check-operator-task-registry.mjs', 'OPERATOR_TASK_SITE_ROOT', 'Selects the isolated published-site tree for task verification.'],
-  ['scripts/check-operator-task-registry.mjs', 'OPERATOR_TASK_USE_ROOT', 'Selects the isolated operator-guide tree for task verification.'],
-  ['scripts/generate-operator-task-registry.mjs', 'OPERATOR_TASK_IMPLEMENTATION_ROOT', 'Selects the isolated implementation tree for task generation.'],
-]) add(source, name, purpose, name.endsWith('MUTATION') ? 'Only exact 1 selects isolated mutation mode.' : 'A source or output directory path resolved by the named tool.', name.endsWith('MUTATION') ? 'Absent leaves isolated mutation mode disabled.' : 'Absent or empty uses the tool root or canonical repository directory.', name.endsWith('MUTATION') ? 'Empty leaves the isolated mode disabled.' : 'Empty selects the checked-in fallback through the truthy-value condition; KUBECLAW_DOCS_SOURCE_ROOT instead retains empty through ?? and path.resolve selects the current directory.', 'Wrong paths fail file or source-binding checks; a mode token other than 1 does not enable isolation.', processOnly, 'Changes only the maintainer verification source or isolation mode.', 'Documentation or task checks fail on missing or unbound source evidence.', `${source}:isolated verification interface`, 'optional', 'maintainer documentation verification');
+const verificationRoots = [
+  ['scripts/docs-platform-surface-inventory.mjs', 'KUBECLAW_DOCS_SOURCE_ROOT',
+    'Selects the directory from which the platform catalogue builder reads source files and, in write mode, writes its JSON and reference-page outputs.',
+    'A directory path resolved relative to the current working directory.',
+    'Absent uses the repository directory containing the script.',
+    'Empty is retained by ??; path.resolve selects the current working directory.',
+    'A missing or invalid source-revision lock stops startup. Unreadable files, invalid source data, or stale output in --check mode fail the builder.',
+    'Changes the source tree and output directory of this development tool.', [[17, 32], [1142, 1147]]],
+  ['scripts/docs-generate.mjs', 'KUBECLAW_DOCS_ISOLATED_MUTATION',
+    'Permits a detached source directory in the reference-page generator when --allow-detached-source-root is also supplied.',
+    'Only exact 1 satisfies the environment part of the detached-directory guard.',
+    'Absent leaves detached-directory permission disabled.',
+    'Empty leaves detached-directory permission disabled.',
+    'Any other token leaves permission disabled. A --root different from the current Git worktree root is rejected unless both opt-ins are present; the value does not bypass revision validation.',
+    'Changes whether this development tool accepts --root different from the current Git worktree root.', [[19, 22], [28, 43]]],
+  ['scripts/docs-platform-surface-inventory.mjs', 'KUBECLAW_DOCS_ISOLATED_MUTATION',
+    'Requires the platform catalogue builder to use a separate source directory for an isolated run.',
+    'Only exact 1 enables the separate-directory assertion.',
+    'Absent leaves the separate-directory assertion disabled.',
+    'Empty leaves the separate-directory assertion disabled.',
+    'Any other token leaves the assertion disabled. With exact 1, KUBECLAW_DOCS_SOURCE_ROOT must be non-empty and resolve to a directory different from the repository directory containing the script.',
+    'Adds a source-directory guard to this development tool; it does not select a directory itself.', [[17, 22]]],
+  ['scripts/check-operator-task-registry.mjs', 'OPERATOR_TASK_EXECUTION_ROOT',
+    'Selects the package.json and shell-script tree used to trace commands for dependency-installation checks in the operator task checker.',
+    'A directory path resolved relative to the current working directory, containing package.json and the referenced shell scripts.',
+    'Absent uses the current working directory.',
+    'Empty selects the current working directory through the truthy-value condition.',
+    'An unreadable package.json or invalid JSON stops the checker. Existing referenced shell scripts are read recursively; scripts absent from this tree are skipped by that traversal.',
+    'Changes which package scripts and shell files this development tool uses to inspect command dependencies.', [[163, 186]]],
+  ['scripts/check-operator-task-registry.mjs', 'OPERATOR_TASK_SITE_ROOT',
+    'Selects the Markdown tree scanned for cluster-command bindings and dependency-installation procedure links by the operator task checker.',
+    'A readable directory tree resolved relative to the current working directory.',
+    'Absent uses docs/site under the current working directory.',
+    'Empty selects docs/site under the current working directory through the truthy-value condition.',
+    'Directory or file read errors stop the checker. A command block without its required cluster binding or dependency-installation link fails an assertion.',
+    'Changes the full Markdown tree inspected by this development tool; the operator-guide tree has its own OPERATOR_TASK_USE_ROOT setting.', [[78, 85], [162, 164], [187, 208]]],
+  ['scripts/check-operator-task-registry.mjs', 'OPERATOR_TASK_USE_ROOT',
+    'Selects the operator-guide Markdown tree scanned for task markers, variants, and command blocks by the operator task checker.',
+    'A readable guide directory resolved relative to the current working directory, containing the required named guide files.',
+    'Absent uses docs/site/use under the current working directory.',
+    'Empty selects docs/site/use under the current working directory through the truthy-value condition.',
+    'Directory or file read errors stop the checker. Missing or duplicate task markers, invalid command bindings, or missing required guide links fail assertions.',
+    'Changes the operator guides inspected by this development tool; the task registry and canonical procedure-section references still come from the current working directory.', [[6, 17], [76, 85], [119, 159], [304, 318]]],
+  ['scripts/generate-operator-task-registry.mjs', 'OPERATOR_TASK_IMPLEMENTATION_ROOT',
+    'Selects the implementation tree from which the operator task inventory generator discovers project recovery error codes.',
+    'A directory path resolved relative to the current working directory, containing skills/nova/project/recovery.ts and delivery-manifest.ts.',
+    'Absent uses the repository directory containing the script.',
+    'Empty selects the repository directory containing the script through the truthy-value condition.',
+    'Unreadable recovery source files stop the generator. A difference between discovered recovery outcomes and the authored task inventory fails an assertion.',
+    'Changes the recovery source files inspected by this development tool; authored input and output paths remain under the repository directory containing the script.', [[8, 13], [20, 46]]],
+];
+for (const [source, name, purpose, form, fallback, empty, invalid, impact, ranges] of verificationRoots) {
+  add(source, name, purpose, form, fallback, empty, invalid, processOnly, impact,
+    'The tool exits with an error when the stated input or consistency check fails.',
+    `${source}:development tool process environment`, 'optional', 'development tool process input');
+  contracts.get(`${name}:${source}`).evidence = ranges.map(([line, endLine]) => ({ path: source, line, endLine }));
+}
 
 for (const [name, expected] of [['GITHUB_ACTIONS', 'true'], ['RUNNER_ENVIRONMENT', 'github-hosted']]) add('scripts/prepare-image-build-runner.sh', name, 'Confirms that destructive image-builder host preparation runs on a disposable GitHub-hosted runner.', `Exactly ${expected}; all other text is rejected.`, 'No default; absent fails the host guard.', 'Empty fails the host guard.', 'The script rejects the host before removing host SDK directories.', processOnly, 'Controls whether disposable runner disk preparation is permitted.', 'The preparation command exits before its destructive work.', '.github/workflows/build-images.yaml:runner preparation', 'required CI host marker', 'GitHub Actions runner metadata');
 for (const [name, purpose] of [['RUNNER_TEMP', 'Selects the host directory for extracted pinned Redis binaries and libraries.'], ['GITHUB_ENV', 'Selects the GitHub Actions output file to which Redis executable paths are appended.']]) add('scripts/prepare-reliability-services.sh', name, purpose, 'A writable directory for RUNNER_TEMP or writable runner environment file for GITHUB_ENV.', 'No default.', 'The shell :? guard rejects absent or empty.', 'Filesystem, Docker extraction or executable checks stop preparation.', processOnly, 'Changes the test-service host storage or exported executable paths.', 'CI preparation exits without complete test-service setup.', '.github/workflows:reliability service preparation', 'required in CI', 'GitHub Actions runner interface');
@@ -298,14 +346,40 @@ for (const name of ['BACKUP_MAXIMUM_BYTES', 'BACKUP_MAXIMUM_RETAINED_BYTES', 'BA
 add(backup, 'BACKUP_ROOT', 'Selects the backup-group directory and exclusive lock for Prism database and artifact backups.', 'An absolute path other than /, not a symlink, equal to its canonical realpath after creation.', 'No default.', 'The shell :? guard rejects absent or empty.', 'Invalid roots return PRISM_BACKUP_ROOT_INVALID; overlap with the artifact root is rejected during backup.', processOnly, 'Changes the backup history, capacity accounting and lock authority.', 'The operation stops without replacing a completed group.', 'charts/prism/values.yaml:backup.root', 'required');
 add(backup, 'PGDATABASE', 'Selects the database dumped by Prism backup and recorded in its metadata.', 'An identifier matching ^[a-zA-Z_][a-zA-Z0-9_]{0,62}$.', 'No default.', 'Empty is rejected when backup_group runs.', 'Invalid identifiers return PRISM_BACKUP_DATABASE_INVALID; libpq reports connection errors.', processOnly, 'Changes the database included in each immutable backup group.', 'Backup stops without a completed group.', 'charts/prism/templates/backup.yaml:PGDATABASE', 'required for backup');
 
+const observerNormalizationEvidence = {
+  string: [{ path: observer, line: 47, endLine: 50 }],
+  port: [{ path: observer, line: 63, endLine: 70 }],
+  boolean: [{ path: observer, line: 5, endLine: 5 }, { path: observer, line: 33, endLine: 37 }],
+  'boolean-required': [{ path: observer, line: 5, endLine: 5 }, { path: observer, line: 39, endLine: 45 }],
+  positive: [{ path: observer, line: 52, endLine: 61 }],
+  integer: [{ path: observer, line: 72, endLine: 81 }],
+};
 for (const [name, [setting, kind]] of Object.entries(observerSettings)) {
   const contract = contracts.get(`${name}:${observer}`);
   contract.owningSurface = `skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema.properties.${setting}; OpenClaw plugin config.${setting}`;
-  contract.evidence = [{ path: observer, line: 87, endLine: 111 }];
-  if (kind === 'event') { contract.acceptedForm = 'A Number-convertible integer from 1 through 5242880 bytes.'; contract.evidence.push({ path: 'skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts', line: 31, endLine: 43 }); }
+  contract.evidence = [{ path: observer, line: 83, endLine: 111 }, ...(observerNormalizationEvidence[kind] ?? [])];
+  if (kind === 'event') {
+    contract.acceptedForm = 'A Number-convertible integer from 1 through 5242880 bytes.';
+    contract.purpose += ' The plugin imports a generated copy of normalizeAgentObservabilityMaxEventBytes. syncContract copies the tracked agent-observability contract source into that generated consumer directory; the tracked normalizer and size constant are the source authority.';
+    // The generated copy is ignored by Git. Source links must prove both the
+    // canonical behavior and the copy boundary at the documented revision.
+    contract.evidence.push(
+      { path: observer, line: 1, endLine: 1 },
+      { path: 'skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs', line: 6, endLine: 14 },
+      { path: 'skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs', line: 18, endLine: 28 },
+      { path: 'contracts/agent-observability/v1/src/routing.ts', line: 1, endLine: 6 },
+      { path: 'contracts/agent-observability/v1/src/routing.ts', line: 31, endLine: 43 },
+      { path: 'contracts/agent-observability/v1/src/constants.ts', line: 11, endLine: 11 },
+    );
+  }
   if (name.startsWith('REDIS_')) {
     contract.purpose += ' The Redis writer then requires a trimmed non-empty host and a valid port. Its default secure policy requires a password, TLS, or an accepted network-isolation declaration, including for loopback.';
-    contract.evidence.push({ path: 'skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts', line: 27, endLine: 35 }, { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts', line: 112, endLine: 140 });
+    contract.evidence.push(
+      { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts', line: 27, endLine: 44 },
+      { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts', line: 10, endLine: 11 },
+      { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts', line: 50, endLine: 76 },
+      { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts', line: 112, endLine: 140 },
+    );
     if (kind === 'raw') contract.acceptedForm = 'Passed unchanged by config resolution, then normalized as a boolean or trimmed lowercase text: 1, true, yes, on, required, enabled, isolated, network-policy, network_policy or documented marks isolation; other values are false.';
   }
 }
@@ -317,7 +391,10 @@ export function observerInlineFieldContract(field) {
   return { ...contract,
     purpose: `Configures observer ${field}. ${contract.purpose}`,
     precedence: `Registration configuration is merged first, then service configuration, then hook configuration. Later defined keys replace earlier keys; undefined keys are ignored. Null and empty values replace earlier values. The merged config.${field}, when not undefined, wins over env.${pair[0]}; normalization then runs.`,
-    evidence: [...(contract.evidence ?? []), { path: 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts', line: 21, endLine: 29 }],
+    evidence: [...(contract.evidence ?? []),
+      { path: 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts', line: 21, endLine: 29 },
+      { path: 'skills/common/plugins/openclaw-agent-observer/src/index.ts', line: 195, endLine: 200 },
+    ],
   };
 }
 

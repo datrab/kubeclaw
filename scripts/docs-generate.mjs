@@ -575,7 +575,9 @@ function renderEnvironment(deploy, secrets, runtimeInputs) {
       return `${authorities}<br>Purpose: ${contract.purpose}<br>Accepted: ${contract.acceptedForm}<br>Default: ${contract.defaultBehavior}<br>Empty: ${contract.emptyBehavior}<br>Invalid: ${contract.invalidBehavior}<br>Required: ${contract.required}<br>Precedence: ${contract.precedence}<br>Impact: ${contract.impact}<br>Failure: ${contract.failure}`;
     }).join('<br><br>')
     : 'One name-level contract applies to all listed consumers, or the variable is a classified transport boundary.';
-  const directSettingGuidance = (item) => item.setDirectly ? 'Set at the owning process boundary.'
+  const directSettingGuidance = (item) => item.surface === 'maintainer-verification-input'
+    ? 'Set only for the listed development tool invocation. This input does not configure a running product service.'
+    : item.setDirectly ? 'Set at the owning process boundary.'
     : item.direction.startsWith('internal shell assignment') ? 'Internal implementation detail; no operator or external setting exists.'
       : 'Do not set directly; use the listed producer or external authority.';
 
@@ -590,7 +592,9 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists environment variables that the checked-in runtime sources read or inject. It includes deployment helpers, Kubernetes templates, skills, tools, and image entrypoints. A source reference proves that a file uses the name. It does not prove that every deployment sets the variable.
+This page lists environment variables that the checked-in sources read or inject. It includes deployment helpers, Kubernetes templates, skills, tools, and image entrypoints. It also includes inputs to development tools. A source reference proves that a file uses the name. It does not prove that every deployment sets the variable.
+
+The Surface column identifies the receiving process. A \`maintainer-verification-input\` controls a development tool, such as its input directory. Set it only when you run that tool. It does not configure a running product service. The consumer-specific contract identifies the tool, its accepted values, and its errors.
 
 ${generatedNotice(['docs/generated/inventory/configuration-runtime-inputs.json'])}
 ## Surface Coverage
@@ -599,6 +603,7 @@ ${table(['Class', 'Count', 'Meaning'], [
   ['All discovered names', runtimeInputs.totals.environmentVariables, 'Unique names read from process input or injected by checked-in Kubernetes YAML.'],
   ['Operator-authored inputs', runtimeInputs.totals.operatorAuthoredEnvironmentInputs, 'A checked-in operator command reads this input directly.'],
   ['Injection-only names', runtimeInputs.totals.injectionOnlyEnvironmentVariables, 'A checked-in manifest produces the variable, but no checked-in receiving reader proves its behavior.'],
+  ['Development-tool inputs', rows.filter((item) => item.surface === 'maintainer-verification-input').length, 'Inputs to the named development tools. These names remain in the complete reference but do not configure running product services.'],
 ])}
 ## Variables
 

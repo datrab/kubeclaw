@@ -14863,12 +14863,14 @@
     }
   ],
   "continuation": {
-    "stage": "AP09.8 integrated full Prism interruption corrections and schema-code rendering fixes; source commit then regenerate; all independent package acceptance open",
+    "stage": "AP09.8 config reference rendering and tracked-source corrections verified in scoped checks; plugin Source audit found additional material defects; package acceptance open",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Commit only source/render/Prism/matrix changes, preserve existing generated changes unstaged, regenerate against new fullSHA and run affected gates/build. Commit generated outputs separately. Start new exhaustive fresh Source/Reader/Quality partitions; no Astra or AP09.8 closure without complete Sol proof. Observe both live immutable mutation handles to terminal; no mass parity/deletion.",
-    "environmentConstraints": [],
-    "qualifiedEnvironment": "Task-local Alpine packages under /tmp: GNU flock 2.42.3, GNU tar 1.35, coreutils 9.11 and PRoot bindings; native plugin-sandbox built locally. No target-image or live-cluster validation claimed.",
+    "next": "Integrate exclusive writer changes, run focused checks, commit source separately and regenerate against its SHA. Re-run references/publication/reader-boundary gates. Recover full mutation proof with a new immutable run only after confirmed former handles are missing. Complete fresh Source/Reader/Quality reviews and Astra package acceptance before parity work.",
+    "environmentConstraints": [
+      "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
+    ],
+    "qualifiedEnvironment": "Historical task-local tooling reported in earlier runs. Current availability and current run result require fresh verification; no live-cluster proof.",
     "agentsCompleted": [
       "/root/a98_operator_writer",
       "/root/a98_reference_writer"
@@ -14876,10 +14878,13 @@
     "currentMutationSession": 35062,
     "currentMutationLog": "/tmp/kubeclaw-a98-current-config-mutations.log",
     "currentMutationSnapshot": "b35311ad8db0946f44286b4a26a99e8676f44de4",
-    "agents": [],
+    "agents": [
+      "/root/a98_dependency_source_audit_current",
+      "/root/a98_plugin_matrix_accuracy_writer"
+    ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
-    "currentMutationState": "running-confirmed-handle-35062",
+    "currentMutationState": "unproven-process-handle-missing-on-resumption",
     "consumerWriterFinished": {
       "agent": "/root/a98_config_writer",
       "paths": [
@@ -14923,7 +14928,65 @@
     },
     "qualifiedMutationSession": 19341,
     "qualifiedMutationSnapshot": "25eecc6a72c9ce5b734e54d9fb12782b41903773",
-    "qualifiedMutationLog": "/tmp/kubeclaw-a98-qualified-full-mutations.log"
+    "qualifiedMutationLog": "/tmp/kubeclaw-a98-qualified-full-mutations.log",
+    "qualifiedMutationState": "unproven-no-running-process-observed-on-resumption",
+    "runtimeRevalidation": {
+      "sourceRevision": "c613fbcac2b0daf2f36047372ebc4680be3d4339",
+      "remoteRevision": "c613fbcac2b0daf2f36047372ebc4680be3d4339",
+      "generatedFilesUncommitted": 14,
+      "formerReviewAgentsAvailable": false,
+      "formerLogsAvailable": false,
+      "currentReferenceGate": "FAIL: malformed owner/setting path prose and ignored generated observer authority",
+      "readerBoundaryGate": "FAIL: persistent tool interface prose uses forbidden documentation-workflow wording",
+      "finalAcceptanceEvidence": "README only; complete bundle missing",
+      "baselineMutationClaim": "Historical recorded PASS at older source; original log unavailable after runtime resumption. Not current-source acceptance."
+    },
+    "resumedSourceCorrections": [
+      {
+        "author": "/root/a98_reference_render_fix",
+        "file": "scripts/docs-configuration-inventory.mjs",
+        "change": "Separate source paths and setting labels; restrict producer extraction to exact declaration; retain literals and Secret transport",
+        "reportedChecks": [
+          "syntax and diff",
+          "435-name receiving source coverage",
+          "518 composed purposes validated by original reference parser",
+          "CURRENT_PROJECT exact owning field, unquoted result-root literal, Secret transport and raw ownership assertions"
+        ],
+        "accepted": false
+      },
+      {
+        "author": "/root/a98_observer_source_fix",
+        "file": "scripts/docs-runtime-consumer-contracts.mjs",
+        "change": "Tracked observer contract and copy provenance; normalization, Redis, inline merge evidence; exact permanent tool contracts",
+        "reportedChecks": [
+          "syntax and diff",
+          "18 event input checks",
+          "30 tool input guards",
+          "35 evidence ranges in12 tracked files at c613 source"
+        ],
+        "accepted": false
+      }
+    ],
+    "rootScopedChecks": {
+      "schemaAndRuntimeSemantics": {
+        "command": "node scripts/check-configuration-drift-mutations.mjs --schema-semantics-only",
+        "exitCode": 0,
+        "log": "/tmp/kubeclaw-a98-resumed-schema-semantics.log",
+        "scope": "Isolated copy of working source before integrated source commit; local semantic proof only, not full mutation suite or package acceptance"
+      },
+      "referenceParserTests": {
+        "command": "node --test scripts/tests/docs-check-refs.test.mjs",
+        "exitCode": 0,
+        "passed": 4,
+        "log": "/tmp/kubeclaw-a98-resumed-refs-parser-tests.log"
+      }
+    },
+    "pluginSourceOpenFindings": [
+      "Host plugins incorrectly use Nova grant activation namespace",
+      "Resolved invocations falsely described as unresolved data authority",
+      "Current line numbers combined with historical source revision produce wrong package-lock citations",
+      "Dynamic process.env credential selector in secret-resolver omitted"
+    ]
   },
   "productBoundaries": [
     {
