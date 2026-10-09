@@ -227,7 +227,7 @@ data:
               {{- if $discordGuildUsers }}
               "users": {{ $discordGuildUsers | uniq | toJson }},
               {{- end }}
-              "requireMention": true
+              "requireMention": {{ .Values.discord.requireMention | toJson }}
             }
           },
           "threadBindings": {

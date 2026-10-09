@@ -50,6 +50,7 @@ litellm:
   existingSecretKey: "litellmApiKey"
 
 discord:
+  requireMention: false
   enabled: true
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "discordToken-nova"
