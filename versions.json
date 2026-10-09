@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "openclaw": {
-    "version": "2026.9.5",
-    "digest": "sha256:ea298b62be8955d3ef750e2004a610dd90c3a30e5f9886e5d654d78a0c573218"
+    "version": "2026.9.9",
+    "digest": "sha256:7f10d5cc975a90b65192eaa099454fe33ce8ce2390806c61c65cd868e9ef730d"
   },
   "codex": {
     "version": "0.162.0"
@@ -13,7 +13,7 @@
     "BUSTER_NODE_BASE": "node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e",
     "CONTROLLER_GO_BASE": "golang:1.22-bookworm@sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253",
     "CONTROLLER_RUNTIME_BASE": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
-    "DEBIAN_SNAPSHOT": "20260901T000000Z",
+    "DEBIAN_SNAPSHOT": "20261008T000000Z",
     "GOCYCLO_VERSION": "v0.6.0",
     "GOVULNCHECK_VERSION": "v1.1.4",
     "GO_SHA256_AMD64": "5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053",
