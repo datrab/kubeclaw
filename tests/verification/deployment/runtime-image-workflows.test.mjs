@@ -4,12 +4,22 @@ import test from 'node:test';
 import YAML from 'yaml';
 
 const read = name => YAML.parse(fs.readFileSync(`.github/workflows/${name}.yaml`, 'utf8'));
-const main = read('build-images'), pr = read('role-images'), updates = read('update-checks');
+const main = read('build-images'), pr = read('role-images'), updates = read('update-checks'), promote = read('promote-runtime');
 
 test('update checks validate previous release selections while replacements build', () => {
   const run = updates.jobs.policy.steps.find(step => step.name === 'Check generated versions and release receipt validation').run;
   assert.match(run, /materialize-release\.mjs --check --check-selected-source(?: --family=ops)?/u);
   assert.match(run, /materialize-release\.mjs --check --check-selected-source --family=ops/u);
+});
+
+test('ops promotion updates the Argo definition without authorizing a workload sync', () => {
+  const prepare = promote.jobs.prepare.steps.find(step => step.name === 'Prepare release selection and values').run;
+  const open = promote.jobs.prepare.steps.find(step => step.name === 'Open release selection PR').run;
+  assert.match(prepare, /if \[\[ "\$RELEASE_FAMILY" == ops \]\]; then\s+node scripts\/argocd-self-management\.mjs/u);
+  assert.match(open, /git add gitops\/platform\/bootstrap\/codex-ops\.yaml/u);
+  assert.match(open, /codex-ops has no automated sync/u);
+  const app = YAML.parse(fs.readFileSync('gitops/platform/bootstrap/codex-ops.yaml', 'utf8'));
+  assert.equal(app.spec.syncPolicy.automated, undefined);
 });
 
 test('each runtime is built once per event and PR builds cannot publish', () => {

@@ -23,9 +23,10 @@ Architecture: [Codex Ops Pod architecture](../architecture/ops-pod.md).
 ## Overview
 
 One StatefulSet runs the official Codex CLI and the KubeClaw MCP server in separate
-containers. It is installed directly with Helm, independently of Argo and the
-KubeClaw build/reconciliation pipeline. There is no additional VM. An optional
-unprivileged Tailscale sidecar provides outbound access to the existing tailnet.
+containers. Argo owns the Helm release, but the `codex-ops` child Application has
+no automated sync so an image promotion cannot restart an active workspace. There
+is no additional VM. An optional unprivileged Tailscale sidecar provides outbound
+access to the existing tailnet.
 
 This is an in-cluster operations workspace. A broken agent, pipeline or Argo does
 not inherently take it down. A failed node, container runtime, Kubernetes network,
@@ -73,21 +74,21 @@ publishes on main or manual dispatch. Use its immutable digests for
 npm package, plus Git, GitHub CLI, kubectl and Helm. It does not assume that OpenAI
 publishes a ready-made mobile remote-host container.
 
-Run from a checkout on your existing administration machine with Python 3,
-kubectl, Helm and bootstrap permissions:
+The Ops promotion workflow selects the immutable image digests and regenerates
+`gitops/platform/bootstrap/codex-ops.yaml`. Merging that selection updates Argo's
+desired revision, but does not deploy it. Review the `codex-ops` child diff in Argo
+and manually sync it without Prune or Force when the workspace is idle. Then run:
 
 ```bash
 export KUBE_CONTEXT='<your-existing-context>'
-export OPS_CODEX_IMAGE='ghcr.io/datrab/kubeclaw-codex-ops@sha256:<build-digest>'
-export OPS_MCP_IMAGE='ghcr.io/datrab/kubeclaw-ops-mcp@sha256:<build-digest>'
-./scripts/deploy-ops-pod.sh deploy
+./scripts/deploy-ops-pod.sh verify
 ```
 
-The helper discovers actual API endpoints and existing observer namespaces,
-validates the Helm render, creates `kubeclaw-ops`, generates the MCP bearer and
-copies the existing `kubeclaw/ghcr-secret` if needed. It does not print credentials.
-The deployment is deliberately not gated on login-dependent readiness. Wait for
-the containers to be running before using the commands below; initial `NotReady`
+The direct `deploy` helper remains a bootstrap/recovery path before Argo adoption;
+do not use it for routine upgrades of an Argo-owned release. The helper discovers
+actual API endpoints and existing observer namespaces, validates the Helm render,
+creates `kubeclaw-ops`, generates the MCP bearer and copies the existing
+`kubeclaw/ghcr-secret` if needed. It does not print credentials. Initial `NotReady`
 while awaiting Codex login is expected.
 
 For an existing pull secret in another namespace set `OPS_PULL_SECRET_SOURCE_NAMESPACE`.
