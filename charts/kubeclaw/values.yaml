@@ -104,7 +104,7 @@ initSetup:
 # npm remains in offline mode against the cache baked into the gateway image.
 # The install-mode marker forces a one-time repair when provenance rules change.
 pluginSeed:
-  installMode: "official-npm-v2-reset-managed-projects"
+  installMode: "official-npm-v3-authoritative-reseed"
   specs:
     - "npm:@openclaw/acpx@2026.9.9"
     - "npm:@openclaw/discord@2026.9.9"

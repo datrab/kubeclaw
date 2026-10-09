@@ -635,11 +635,24 @@ spec:
                   rm -rf /tmp/openclaw-plugin-npm-cache
                   mkdir -p /tmp/openclaw-plugin-npm-cache
                   cp -a /opt/openclaw-plugin-home/npm-cache/. /tmp/openclaw-plugin-npm-cache/
-                  # The chart has just synchronized managed plugin settings.
-                  # Complete their doctor-owned migrations against the current
-                  # plugin metadata before replacing managed npm projects.
-                  echo "    Completing managed plugin configuration migrations"
-                  HOME=/home/node openclaw doctor --fix --non-interactive
+                  managed_plugin_ids=()
+                  for plugin_spec in{{- range .Values.pluginSeed.specs }} {{ . | quote }}{{- end }}; do
+                    plugin_id="${plugin_spec#npm:@openclaw/}"
+                    plugin_id="${plugin_id%@*}"
+                    managed_plugin_ids+=("$plugin_id")
+                  done
+                  # A cache change is an authoritative replacement, not an
+                  # in-place OpenClaw update. Retire the old install records
+                  # through the supported lifecycle API before deleting their
+                  # managed projects. Desired config is restored below.
+                  if [ -n "$CONFIG_PLUGIN_CACHE_VERSION" ]; then
+                    for plugin_id in "${managed_plugin_ids[@]}"; do
+                      HOME=/home/node \
+                        NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache \
+                        NPM_CONFIG_OFFLINE=true \
+                        openclaw plugins uninstall "$plugin_id" --keep-files --force
+                    done
+                  fi
                   # Managed npm roots retain package locks across image upgrades. Reset
                   # them before an offline reseed so they cannot request tarballs from
                   # an older dependency graph that the new authoritative cache omits.
@@ -649,9 +662,22 @@ spec:
                     HOME=/home/node \
                       NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache \
                       NPM_CONFIG_OFFLINE=true \
-                      openclaw plugins install "${plugin_spec}" --force --pin --accept-capabilities
+                      openclaw plugins install "${plugin_spec}" --force --pin --no-enable --accept-capabilities
                   done
-                  HOME=/home/node openclaw plugins registry --refresh
+                  node /init-config/restore-managed-plugin-config.mjs \
+                    /config/openclaw.json /init-config/openclaw.json
+                  # The newly installed plugin metadata is now available, so
+                  # Doctor can migrate the restored settings without network
+                  # repair or references to the retired payload.
+                  echo "    Completing managed plugin configuration migrations"
+                  HOME=/home/node \
+                    NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache \
+                    NPM_CONFIG_OFFLINE=true \
+                    openclaw doctor --fix --non-interactive
+                  HOME=/home/node \
+                    NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache \
+                    NPM_CONFIG_OFFLINE=true \
+                    openclaw plugins registry --refresh
                   if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
                     cp -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version /config/.kubeclaw-plugin-cache-version
                   else
