@@ -4,9 +4,9 @@ Status: local deploy-script verification passed; absent runtime release selectio
 Audience: Prism operator, designer, incident responder, platform maintainer
 Owner: Prism maintainers
 Evidence: skills/prism; skills/nova/plugins/prism-design; charts/prism; scripts/deploy.sh
-Evidence revision: `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61`
+Evidence revision: `4d42b9edaccf85d050cf3d50f5d62a440f342927`
 Applies to: the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage
-Last verified: 2026-10-09; local deploy-script and Control configuration checks passed; no live journey result is available
+Last verified: 2026-10-09; local deploy-script, Control configuration, and interruption checks passed; no browser recovery or live journey result is available
 
 ## Purpose
 
@@ -93,12 +93,12 @@ The implementation pipeline remains responsible for production code.
 
 > **The important authority boundary**
 >
-> Studio approval publishes an immutable Baseline Bundle. It does not resume Nova.
+> Studio attempts approval first and immutable publication second. Approval alone does not publish a bundle or resume Nova.
 > A separate operator-created Nova signal resumes the run. Its issuer is
 > caller-supplied and unsigned; CLI access is the effective authority. Nova then asks Prism for
 > the approved bundle and verifies all content before it accepts the handoff.
 >
-> [The Prism stage creates the wait, publishes the operator request, and validates the later approval signal](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/plugins/prism-design/src/stage.ts#L8-L34).
+> [The Prism stage creates the wait, publishes the operator request, and validates the later approval signal](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/nova/plugins/prism-design/src/stage.ts#L8-L34).
 
 ## Know the Running Parts
 
@@ -122,13 +122,13 @@ approved pipeline input.
 
 > **Source evidence — component flow**
 >
-> [Control authenticates and validates the Nova dispatch](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L174-L213).
+> [Control authenticates and validates the Nova dispatch](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L174-L213).
 >
-> It then [stores the request and starts a design round or returns the approved baseline](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L214-L240).
+> It then [stores the request and starts a design round or returns the approved baseline](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L214-L240).
 >
-> [The agent bridge claims only durable jobs and records the bounded OpenClaw outcome](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/agent-job-runner.mjs#L16-L46).
+> [The agent bridge claims only durable jobs and records the bounded OpenClaw outcome](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/agent-job-runner.mjs#L16-L46).
 >
-> [The native worker host uses a deterministic provider; production model work stays in the managed Prism agent](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/native-worker-host.ts#L12-L33).
+> [The native worker host uses a deterministic provider; production model work stays in the managed Prism agent](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/native-worker-host.ts#L12-L33).
 
 ## Before You Start
 
@@ -161,9 +161,9 @@ empty. The deploy script rejects an empty or invalid selected digest.
 
 > **Source evidence — release admission**
 >
-> [The deploy command requires both materialized values files and validates all four Prism image digests](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1593-L1616).
+> [The deploy command requires both materialized values files and validates all four Prism image digests](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1593-L1616).
 >
-> [The chart defaults deliberately leave the four image digests empty](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/prism/values.yaml#L1-L7).
+> [The chart defaults deliberately leave the four image digests empty](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/prism/values.yaml#L1-L7).
 
 ## Configuration Sources and Precedence
 
@@ -192,9 +192,9 @@ operator-supplied file adds private values but cannot replace selected release t
 
 > **Source evidence — precedence**
 >
-> [The deploy script captures private overlays and fixes the base files to materialized release values](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L100-L103).
+> [The deploy script captures private overlays and fixes the base files to materialized release values](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L100-L103).
 >
-> [Service release values, private overlay, fixed trust and Secret overrides are applied in that order](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1725-L1744).
+> [Service release values, private overlay, fixed trust and Secret overrides are applied in that order](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1725-L1744).
 
 ### Main Helm values
 
@@ -229,9 +229,9 @@ unconsumed override; schema acceptance alone does not prove an effect.
 
 > **Source evidence — deployment constraints**
 >
-> The [workload template rejects Control and worker replica counts other than one](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/prism/templates/workloads.yaml#L1-L8).
-> The [schema requires its core groups and closes images](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/prism/values.schema.json#L59-L108), but [leaves some nested resources open](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/prism/values.schema.json#L510-L531).
-> [Selected defaults include storage, backup, exposure, and trust](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/prism/values.yaml#L44-L92).
+> The [workload template rejects Control and worker replica counts other than one](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/prism/templates/workloads.yaml#L1-L8).
+> The [schema requires its core groups and closes images](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/prism/values.schema.json#L59-L108), but [leaves some nested resources open](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/prism/values.schema.json#L510-L531).
+> [Selected defaults include storage, backup, exposure, and trust](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/prism/values.yaml#L44-L92).
 
 ### Runtime settings and defaults
 
@@ -253,10 +253,10 @@ root-managed pool policy. Missing or invalid admission values stop startup.
 
 > **Source evidence — runtime configuration**
 >
-> Control [validates its preference and trust boundary](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-config.ts#L9-L38) and [captures one startup configuration](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-config.ts#L40-L72).
-> Studio [validates its port and Control timeout](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/studio-config.ts#L4-L17).
-> Worker [validates ingress and shutdown bounds](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/worker-config.ts#L1-L38).
-> Native configuration [admits resource and engine identity](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/config/native-worker.ts#L4-L35) and [host scope and authentication](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/config/native-worker.ts#L38-L47). It also validates [supervisor paths and journal bounds](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/config/native-worker.ts#L50-L83).
+> Control [validates its preference and trust boundary](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-config.ts#L9-L38) and [captures one startup configuration](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-config.ts#L40-L72).
+> Studio [validates its port and Control timeout](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/studio-config.ts#L4-L17).
+> Worker [validates ingress and shutdown bounds](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/worker-config.ts#L1-L38).
+> Native configuration [admits resource and engine identity](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/config/native-worker.ts#L4-L35) and [host scope and authentication](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/config/native-worker.ts#L38-L47). It also validates [supervisor paths and journal bounds](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/config/native-worker.ts#L50-L83).
 
 The following settings are required when their feature is active. They have no
 safe implied identity:
@@ -277,9 +277,9 @@ separate from the Baseline Bundle approval flow.
 
 > **Source evidence — conditional configuration**
 >
-> [Control rejects an incomplete SPIFFE trust policy and otherwise requires the fallback secrets](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-config.ts#L16-L55).
+> [Control rejects an incomplete SPIFFE trust policy and otherwise requires the fallback secrets](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-config.ts#L16-L55).
 >
-> [Product authority is disabled unless explicitly selected and then requires HTTPS, an operator allowlist, and a dedicated Ed25519 key](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/control/product-decisions.ts#L20-L43).
+> [Product authority is disabled unless explicitly selected and then requires HTTPS, an operator allowlist, and a dedicated Ed25519 key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/control/product-decisions.ts#L20-L43).
 
 ### Deploy-command settings
 
@@ -344,21 +344,21 @@ chart supports them.
 
 > **Source evidence — agent configuration**
 >
-> The common chart defines [role, image, bundle, and registry value families](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/kubeclaw/values.yaml#L16-L63).
+> The common chart defines [role, image, bundle, and registry value families](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/kubeclaw/values.yaml#L16-L63).
 >
-> It defines [worker-trust values](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/kubeclaw/values.yaml#L132-L145).
+> It defines [worker-trust values](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/kubeclaw/values.yaml#L132-L145).
 >
-> It also defines [auth, LiteLLM, Stitch, and Discord values](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/kubeclaw/values.yaml#L147-L201) and [model and Git values](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/charts/kubeclaw/values.yaml#L203-L220).
+> It also defines [auth, LiteLLM, Stitch, and Discord values](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/kubeclaw/values.yaml#L147-L201) and [model and Git values](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/charts/kubeclaw/values.yaml#L203-L220).
 >
-> The shipped overlay fixes [the role, image, code bundle, authentication, and model endpoint](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/my-values/prism-agent-values.yaml#L1-L40).
+> The shipped overlay fixes [the role, image, code bundle, authentication, and model endpoint](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/my-values/prism-agent-values.yaml#L1-L40).
 >
-> It fixes [the agent, service, trust, and bridge selection](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/my-values/prism-agent-values.yaml#L45-L85) and [workspace and dependency probes](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/my-values/prism-agent-values.yaml#L87-L103).
+> It fixes [the agent, service, trust, and bridge selection](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/my-values/prism-agent-values.yaml#L45-L85) and [workspace and dependency probes](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/my-values/prism-agent-values.yaml#L87-L103).
 >
 > Private authority identities are deliberately excluded from these links.
 >
-> The deploy command [resolves and verifies the selected Prism bundle](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1688-L1724).
+> The deploy command [resolves and verifies the selected Prism bundle](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1688-L1724).
 >
-> It then [applies the private overlay before binding the bundle and LiteLLM endpoint](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1725-L1748).
+> It then [applies the private overlay before binding the bundle and LiteLLM endpoint](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1725-L1748).
 
 ### Nova Prism-stage configuration
 
@@ -377,7 +377,7 @@ namespaces, operator target, signal type, and issuer ID.
 
 > **Contract evidence — stage configuration**
 >
-> [The Prism stage configuration schema is closed and requires all four fields](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/plugins/prism-design/schemas/config.schema.json#L1-L1).
+> [The Prism stage configuration schema is closed and requires all four fields](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/nova/plugins/prism-design/schemas/config.schema.json#L1-L1).
 
 ### Secrets
 
@@ -402,7 +402,7 @@ component that owns the managed model route.
 
 > **Source evidence — Secret creation**
 >
-> [The deployment command creates missing values, verifies every required key, and does not print secret values](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1639-L1681).
+> [The deployment command creates missing values, verifies every required key, and does not print secret values](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1639-L1681).
 
 ## Deploy Prism
 
@@ -472,17 +472,17 @@ until the old workload can no longer return.
 
 > **Source evidence — deployment order**
 >
-> The deploy command [resolves and verifies the selected bundle](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1684-L1724).
+> The deploy command [resolves and verifies the selected bundle](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1684-L1724).
 >
-> It [assembles overrides and renders both roles](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1725-L1748).
+> It [assembles overrides and renders both roles](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1725-L1748).
 >
-> It then [runs host and trust preflight, Secret checks, and the Prism Helm install](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1750-L1781).
+> It then [runs host and trust preflight, Secret checks, and the Prism Helm install](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1750-L1781).
 >
-> Finally, it [installs the agent and waits for every workload](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1782-L1797).
+> Finally, it [installs the agent and waits for every workload](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1782-L1797).
 >
-> [The maintained deploy waits for the chart-owned PostgreSQL StatefulSet, and smoke enters that StatefulSet](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/deploy.sh#L1793-L1811).
+> [The maintained deploy waits for the chart-owned PostgreSQL StatefulSet, and smoke enters that StatefulSet](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/deploy.sh#L1793-L1811).
 >
-> [Migrations take one advisory lock and commit each ordered migration name in one transaction](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/storage/index.ts#L21-L75).
+> [Migrations take one advisory lock and commit each ordered migration name in one transaction](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/index.ts#L21-L75).
 
 ### 4. Verify status and smoke behavior
 
@@ -523,11 +523,79 @@ not include any live Studio-to-Nova step.
 | 4 | Authenticated direction selection and feedback use retained idempotency keys. | Source inspected; browser interaction unexecuted. |
 | 5 | A new child round binds current document, architecture, parent, and request identity. | Source inspected; live round and concurrency behavior unexecuted. |
 | 6 | Typed edits create revisions; natural-language edits create durable jobs. | Source inspected; browser editing and provider reconciliation unexecuted. |
-| 7 | History restore creates a new current revision. | Source inspected; actual database restore action unexecuted. |
+| 7 | History restore creates a new current revision. | Isolated embedded database/HTTP checks completed; installed database and browser restore unexecuted. |
 | 8 | Studio previews views, states, flows, assets, and viewport choices. | Source inspected; browser and asset delivery unexecuted. |
 | 9 | Worker evaluation produces findings for the exact document revision. | Source inspected; native worker execution unexecuted. |
 | 10 | A human approves the current revision; Control renders and publishes an immutable Baseline Bundle. | Source inspected; publication, browser capture, and separate human approval unexecuted. |
 | 11 | An authorized CLI caller submits the original wait's signal; Nova verifies and imports the approved bundle. | Source inspected; restricted signal submission and final Nova import unexecuted. |
+
+### Interruption and retry boundaries
+
+A lost response leaves an **uncertain result**: the request can have committed
+before Studio received its reply. A retry repeats the original request identity
+and content. A new key, event, approval, revision, or architecture represents
+different work; it does not reconcile the original result.
+
+**Idempotency** means that the same accepted identity and content produce no
+second canonical change. **Reconciliation** checks the original request's durable
+result before another action. These properties differ between operations.
+A server replay contract does not establish a usable Studio recovery control.
+
+Perform one state-changing action at a time. Wait for its result before another
+edit, direction action, round, restore, approval, or signal. Keep the original
+project URL, actor, architecture, document revision, action, time, and non-secret
+request evidence. Include a returned key, event, job, approval, or bundle identity
+when available. Do not retain cookies, CSRF values, tokens, or private keys.
+
+| Operation | Retained identity and result | Response loss, reload, and retry boundary |
+| --- | --- | --- |
+| Submit Nova architecture | Nova derives dispatch identity from the original run and architecture digest. Control binds the request and round. | Use the original run's recovery path. A newer architecture supersedes work; it is not a retry. Stop for an uncertain external outcome. |
+| Renew Studio session | Control returns new session/CSRF cookies and the same user hash for the same trusted identity. | Renew access through the trusted ingress. Preserve the original user and project. Session renewal does not reconcile product writes. |
+| Request a child round | Studio stores the exact request/key and returned generation in tab session storage. Control checks the recorded start digest. | Retry only the stored request. Reload can reconnect while that storage survives. Missing storage, changed identity, or supersession requires a stop. |
+| Select or reject a direction | Control commits the decision and preference receipt together. Studio keeps its key in component memory. | Same user/key/body permits server replay. Studio errors hide controls; reload loses the key. Stop for maintainer reconciliation after an uncertain result. |
+| Record direction feedback | The same key reuses one preference receipt; a fresh key records another event. | Do not repeat an uncertain click. The current UI cannot recover a lost key or retrieve its exact decision receipt. |
+| Apply a typed edit | The request carries its base revision. The committed history stores the operation; Studio has no pending operation key. | Reload current content and history. An identical old request can fail with revision conflict after its first commit. Author a new edit only after reconciliation. |
+| Propose a natural-language edit | The helper stores the original instruction, base revision, key, and returned job ID. Control stores one matching job. | The helper supports same-request reconciliation. Current Studio errors and pending-request reloads hide its button; stop at this UI limit. Lost storage also requires a stop. |
+| Undo or restore history | Each successful restore stores a new revision with its source revision ID. The UI sends no idempotency key. | Never repeat blindly. The same restore can create another revision. Compare current/history receipts; stop if the original result remains uncertain. |
+| Forget a learned preference | Control deduplicates one exact wire event. Studio creates a new event ID and timestamp per click. | A fresh click can append another retraction event. Maintainers must reconcile the original target and event before another attempt. |
+| Evaluate a design | Studio derives a worker key from embedded document identity and revision. Control binds the exact input and durable worker receipt. | Recheck the same unchanged revision only. Reload clears warning acceptance. Conflicting input, unresolved native ownership, or changed revision requires a stop or fresh evaluation. |
+| Create human approval | Control inserts one approval per project/design digest. Studio retains its returned ID only inside the approval function. | Lost response or later publication failure can hide the original ID. Repeating Approve attempts another insert and can fail on duplicate digest. Stop. |
+| Publish baseline | Control reuses a committed baseline for the same project/document/approval. Capture identities also contain that approval ID. | Studio Approve restarts approval; it does not replay this baseline request. Missing ID or uncertain capture requires maintainer reconciliation. |
+| Resume Nova | The signal file retains the original wait, signal ID, key, issuer, approval, architecture, and bundle. | Audit the original run before retry. Resolved/expired waits and terminal runs can reject another CLI call. Never replace identities to force acceptance. |
+
+Tab session storage is conditional evidence, not a backup.
+A same-tab reload can retain it. A closed tab, new tab, cleared storage, changed
+browser, or changed user can lose access to the original request.
+Reopening a URL does not prove that its pending identity survived.
+The direction keys and approval function's local variables have shorter lifetimes.
+
+When Studio shows **Prism cannot open**, it hides the action controls.
+An in-memory key or helper retry function does not make a retry button available.
+Use [Safe Recovery Procedures](#safe-recovery-procedures) for the affected action.
+If no supported operator path can identify the original result, stop for Prism
+maintainers. Retain evidence and keep later approval, publication, and resume closed.
+
+> **Source evidence — client lifetime and result identity**
+>
+> **Claim:** Operation-specific retention and server guards do not provide universal browser replay.
+>
+> **Implementation:** Studio [stores pending revision state during startup](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L124-L131) and [replaces controls with its failure screen](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L497-L505).
+> Its [direction keys remain in component memory](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L277-L283).
+> The round helper [stores and reuses the original request](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/design-round-client.ts#L8-L23).
+> The revision helper [retains its request and validates the returned job/result](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/agent-revision-client.ts#L6-L33).
+>
+> **Contract:** Control [rejects different worker input under a retained key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/control/native-operation-store.ts#L28-L45).
+>
+> **Test evidence:** The [round HTTP fixture preserves one request across response loss](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/tests/design-round-client.test.mts#L9-L37).
+> The [revision HTTP/database fixture preserves the original job and reports NeedsNova](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/tests/agent-revision-client.test.mts#L16-L44).
+> The [decision fixtures distinguish exact replay from new feedback](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/tests/control-decisions.test.mts#L33-L67).
+>
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran five selected client/decision/round/domain-storage suites: all 17 tests passed, exit zero.
+> These checks use isolated HTTP, storage substitutes, and embedded PGlite. They do not exercise Studio browser controls or production dependencies.
+>
+> **Revision:** `4d42b9edaccf85d050cf3d50f5d62a440f342927`
+>
+> **Limit:** Source and isolated client/database checks do not prove browser recovery, native execution, or a live journey.
 
 ### Step 1: Let Nova create the governed project
 
@@ -545,6 +613,15 @@ Nova independently creates a durable wait for `prism.approval.resolved`.
 
 Do not create a second Nova run because directions are still pending.
 The active request and job have durable identities.
+After a lost dispatch response, retain the original run and architecture reference.
+Use [run recovery](operate.md#canonical-run-control-procedure) to inspect that run's
+wait, dispatch effects, and receipts. Do not invoke a new run or change the
+architecture merely to obtain another response. An unresolved agent outcome
+requires Prism maintainers; repeated dispatch does not authorize another external launch.
+
+> Nova [derives the dispatch key from the run, architecture digest, and approval phase](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/nova/plugins/prism-design/src/stage.ts#L20-L25).
+> Control [validates architecture transitions and starts the bound round](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L214-L230).
+> The round store [replays an exact recorded start and rejects conflicting content](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/control/design-generations.ts#L25-L44).
 
 ### Step 2: Open Studio and choose the project
 
@@ -574,11 +651,11 @@ The governed Nova path is the supported operator journey.
 
 > **Source evidence — session and chooser**
 >
-> [Control validates the signed session and the separate CSRF cookie and header](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L108-L123).
+> [Control validates the signed session and the separate CSRF cookie and header](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L108-L123).
 >
-> [The session route returns the CSRF value and stable user identity](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L152-L172).
+> [The session route returns the CSRF value and stable user identity](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L152-L172).
 >
-> [Studio starts the session, lists projects, and loads the selected document](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/studio/app.tsx#L97-L149).
+> [Studio starts the session, lists projects, and loads the selected document](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L97-L149).
 
 ### Step 3: Wait for exactly three directions
 
@@ -594,16 +671,18 @@ Documents for one generation. Control checks:
 Studio polls the current round until the direction set is available.
 It shows the direction title, summary, trade-offs, and approved-corpus references.
 
-If a request is interrupted, reload the same Studio URL.
-Studio retains the round identity in session storage and reconnects to that round.
-Do not clear session storage until you have reconciled the request or recorded why
-the durable request can be abandoned.
+For the initial Nova dispatch, reloading Studio observes Control's current round.
+Studio does not retain Nova's dispatch request in browser storage.
+For a child round requested in Studio, the round helper stores its exact request.
+A same-tab reload reconnects only while that stored request and original user survive.
+Follow [Child round interrupted](#child-round-interrupted) when its result is uncertain.
+Do not clear storage or create a replacement request to hide the uncertainty.
 
 > **Source evidence — direction commit and reconnect**
 >
-> [Control validates and stores exactly three agent directions](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L243-L277).
+> [Control validates and stores exactly three agent directions](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L243-L277).
 >
-> [Studio retains the idempotency key and generation ID and rejects a superseded pending round](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/studio/design-round-client.ts#L3-L48).
+> [Studio retains the idempotency key and generation ID and rejects a superseded pending round](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/design-round-client.ts#L3-L48).
 
 ### Step 4: Compare, select, and give feedback
 
@@ -618,20 +697,22 @@ Use these actions deliberately:
 | **Keep this detail** | Records an explicit preservation preference. It does not lock a node in the document. |
 
 Each direction mutation uses an idempotency key.
-Studio keeps that key only while its current component remains mounted.
-A reload or tab closure loses this in-memory key, unlike the stored round request.
-Do not reload while a direction action has an uncertain result.
-Keep the same tab and request body; repeating there reuses the pending key.
+Control binds replay to the same authenticated user, key, direction, and body.
+Studio keeps a pending key only in component memory; a reload or tab closure
+loses it. A failed action sets the failure screen and hides the buttons.
+Keeping the tab open therefore preserves evidence but does not expose a retry action.
 
-If the page has already reloaded after an uncertain action, stop direction actions.
-Do not repeat feedback with a new key: it can create another preference event.
+After an uncertain direction action, stop further direction actions and feedback.
 Retain the project, round, direction, action, time, and non-secret request evidence.
-The Prism owner must reconcile the recorded decision and preference event before work resumes.
+Prism maintainers must reconcile the decision and preference receipt before work resumes.
 A selected direction alone cannot prove whether Control stored separate feedback.
-The current UI has no supported recovery command for a lost direction key.
-Do not reconstruct one from guesswork or modify preference rows to force recovery.
-A future recovery path must retain the key across reload and prove same-request replay
-without duplicate preference evidence.
+A fresh feedback key can create another event. An already selected or rejected
+direction can reject a new decision rather than return the original receipt.
+
+The current UI has no supported recovery action for an uncertain or lost-key decision.
+Do not reconstruct a key or modify preference rows.
+A supported recovery path must retain keys across reload, keep reconciliation
+controls available after errors, and prove same-request replay without duplicate events.
 
 Personal learning is a separate policy choice.
 The pipeline can use a configured personal subject only when the platform-owned
@@ -640,15 +721,22 @@ Project content cannot select another person's subject.
 
 > **Source evidence — human direction authority**
 >
-> [Control accepts only the supported feedback actions and requires an idempotency key](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L346-L387).
+> [Control accepts only the supported feedback actions and requires an idempotency key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L346-L387).
 >
-> [Studio retains pending direction keys only in component memory](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/studio/app.tsx#L277-L330).
-> [Control derives event identity from the user and supplied key](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/control/direction-decisions.ts#L43-L61).
-> [The isolated decision test proves deduplication with the same key and another event with a fresh key](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/tests/control-decisions.test.mts#L54-L63).
+> [Studio retains pending direction keys only in component memory](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L277-L330).
+> [Control derives event identity from the user and supplied key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/control/direction-decisions.ts#L43-L61).
+> [The isolated decision test proves deduplication with the same key and another event with a fresh key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/tests/control-decisions.test.mts#L54-L63).
 
 ### Step 5: Request another design round when needed
 
-Request another round only after you have a current document and revision.
+Studio offers **Request new design round** after all three directions are rejected.
+Confirm each rejection before requesting that new round.
+The pending-round button instead retries the stored request.
+A selected direction has no replacement-round button in the current UI.
+If it needs replacement, stop for Prism maintainers; do not fabricate rejections
+or call a guessed route to create another round.
+
+A new child round requires the current document and revision.
 The request binds:
 
 - the internal project ID;
@@ -661,17 +749,20 @@ The request binds:
 
 This is not a retry of the first round.
 It is a new child round with a new generation identity.
-Retry an uncertain request with the retained key.
+Retry an uncertain child request only through its retained request and key.
+See [Child round interrupted](#child-round-interrupted) for storage and supersession limits.
 
 Control locks the project transaction and rejects a stale document, stale parent,
 or changed architecture. Late results from a superseded round cannot become the
-current direction set.
+current direction set. An admitted successor can still wait behind an unresolved
+predecessor job. Stop for maintainer reconciliation when Control reports that blocked
+session; a new key does not release the predecessor.
 
 > **Source evidence — round creation**
 >
-> [Control checks current project, architecture, parent, document, revision, and idempotency before it admits another round](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L346-L365).
+> [Control checks current project, architecture, parent, document, revision, and idempotency before it admits another round](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L346-L365).
 >
-> [Studio preserves the pending request and tells the operator to reconnect with the same key](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/studio/app.tsx#L332-L348).
+> [Studio preserves the pending request and tells the operator to reconnect with the same key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L332-L348).
 
 ### Step 6: Edit the selected revision
 
@@ -692,6 +783,14 @@ The visual editor converts supported Puck changes into Prism operations:
 Every operation carries `baseRevision`.
 Control applies it only to the current revision and creates a new immutable
 revision. A concurrent edit causes a revision conflict instead of silent overwrite.
+The UI stores no durable typed-operation key or pending receipt.
+An identical request after its first commit fails against the old base revision;
+it does not return that committed result.
+
+After response loss, follow [Typed edit or restore interrupted](#typed-edit-or-restore-interrupted).
+Reload and compare current content and history before another edit.
+Changing only `baseRevision` converts an uncertain retry into a new operation.
+Do not use that change to clear a conflict.
 
 #### Natural-language revisions
 
@@ -700,20 +799,26 @@ Studio stores one pending request with its base revision and idempotency key.
 Control creates a durable Prism agent job in the same project session.
 The agent must return a complete document with exactly the next revision number.
 
-If Studio loses the response, use **Reconcile existing change**.
-Do not change the text or create a second request while the first identity is pending.
-An uncertain external agent launch becomes `needs_nova`; it is not automatically
-replayed because the first launch can have produced an external effect.
+The client helper can resubmit the same stored request and poll its original job.
+It clears that request only after a completed result has exactly `baseRevision + 1`.
+Do not change its instruction, key, or job identity while the result is uncertain.
+
+The current UI does not expose recovery after an error or reload.
+An error hides the controls. Loading a retained revision request also sets that
+failure screen, so **Reconcile existing change** is unavailable on that path.
+Follow [Natural-language revision interrupted](#natural-language-revision-interrupted).
+An uncertain external launch becomes `needs_nova`; creating another request does
+not authorize replay or release a blocked project session.
 
 > **Source evidence — revisions**
 >
-> [The domain applies typed operations only at the expected base revision and then increments once](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/domain/index.ts#L67-L113).
+> [The domain applies typed operations only at the expected base revision and then increments once](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/domain/index.ts#L67-L113).
 >
-> The repository [applies an operation and advances the current revision with compare-and-swap](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/storage/index.ts#L262-L293).
+> The repository [applies an operation and advances the current revision with compare-and-swap](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/index.ts#L262-L293).
 >
-> Whole-document replacement [checks the expected revision and uses the same compare-and-swap boundary](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/storage/index.ts#L294-L330).
+> Whole-document replacement [checks the expected revision and uses the same compare-and-swap boundary](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/index.ts#L294-L330).
 >
-> [Studio retains and reconciles one natural-language revision request](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/studio/agent-revision-client.ts#L3-L34).
+> [Studio retains and reconciles one natural-language revision request](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/agent-revision-client.ts#L3-L34).
 
 ### Step 7: Inspect or restore history
 
@@ -726,12 +831,16 @@ This preserves the complete history and gives the restore a new current identity
 
 After a restore, repeat evaluation and preview checks.
 All prior warning acceptance and approval state is stale for the new revision.
+Undo and Restore use the same restore endpoint and send no idempotency key.
+Repeating the same source revision can create another current revision.
+After response loss, stop restore actions and follow
+[Typed edit or restore interrupted](#typed-edit-or-restore-interrupted).
 
 > **Source evidence — restore**
 >
-> [Control exposes history and a restore operation for one document](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L389-L421).
+> [Control exposes history and a restore operation for one document](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L389-L421).
 >
-> [Restore creates a new revision and records the source revision ID](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/storage/index.ts#L211-L260).
+> [Restore creates a new revision and records the source revision ID](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/index.ts#L211-L260).
 
 ### Step 8: Test the preview
 
@@ -756,9 +865,9 @@ Publication later creates independent worker-rendered screenshots and ARIA snaps
 
 > **Source evidence — preview boundary**
 >
-> [Studio builds the preview from the selected view, state, viewport, assets, components, and theme](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/studio/preview.ts#L1-L31).
+> [Studio builds the preview from the selected view, state, viewport, assets, components, and theme](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/preview.ts#L1-L31).
 >
-> [Studio resolves only declared flow transitions from preview messages](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/studio/flows.ts#L1-L47).
+> [Studio resolves only declared flow transitions from preview messages](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/flows.ts#L1-L47).
 
 ### Step 9: Evaluate the exact current revision
 
@@ -784,21 +893,39 @@ A document change can create a different finding set.
 Therefore, warning acceptance belongs to the evaluated revision and must not be
 copied blindly to a later revision.
 
+Wait for evaluation to finish before editing or approving.
+Studio uses `studio-evaluate-<embedded-document-id>-<revision>` for the worker request.
+Its embedded document ID comes from Design Document metadata; it is not the
+Control URL's internal document UUID. Reuse requires the same exact input.
+A conflicting key or unresolved worker attempt requires Prism maintainers.
+Do not supply a fresh key to evade that condition.
+
+A response loss does not create a document revision, but it can leave a durable
+worker attempt. Reload clears the displayed report and warning acceptance.
+Recheck only the unchanged revision when readiness and original attempt ownership
+remain known. If an edit committed while evaluation ran, discard that report
+and evaluate the newly loaded revision before accepting warnings.
+
+> Studio [binds evaluation to the loaded revision and derives its worker key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L406-L442).
+> Control [loads the requested immutable revision](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L425-L453).
+> Native operation storage [preserves the original attempt and rejects input conflicts](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/control/native-operation-store.ts#L28-L45).
+> It [stores the bound result before completion](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/control/native-operation-store.ts#L49-L68).
+
 > **Source evidence — quality gate**
 >
-> [The evaluator defines finding levels, gate families, stable IDs, and the final status rule](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/evaluation/index.ts#L4-L36).
+> [The evaluator defines finding levels, gate families, stable IDs, and the final status rule](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/evaluation/index.ts#L4-L36).
 >
-> The evaluator checks [document structure and node references](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/evaluation/index.ts#L37-L96).
+> The evaluator checks [document structure and node references](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/evaluation/index.ts#L37-L96).
 >
-> It checks [asset references and alternative text](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/evaluation/index.ts#L97-L131) and [state and responsive references](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/evaluation/index.ts#L132-L160).
+> It checks [asset references and alternative text](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/evaluation/index.ts#L97-L131) and [state and responsive references](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/evaluation/index.ts#L132-L160).
 >
-> It also checks [flow endpoints and transition coverage](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/evaluation/index.ts#L162-L197).
+> It also checks [flow endpoints and transition coverage](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/evaluation/index.ts#L162-L197).
 >
-> Finally, it derives [transition validity, recovery coverage, and the final status](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/evaluation/index.ts#L198-L235).
+> Finally, it derives [transition validity, recovery coverage, and the final status](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/evaluation/index.ts#L198-L235).
 
 ### Step 10: Approve and publish
 
-Before you select **Approve design**, confirm:
+Before you select **Approve**, confirm:
 
 - the intended direction is selected;
 - the displayed document revision is the revision you reviewed;
@@ -808,7 +935,9 @@ Before you select **Approve design**, confirm:
   operating policy requires one;
 - the active Nova architecture has not changed.
 
-Studio performs two separate writes.
+Select **Approve** once and wait for its final result.
+Do not edit, restore, request another round, or click approval again while it runs.
+Studio performs two separate writes; they are not one atomic transaction.
 
 First, it creates an approval bound to:
 
@@ -832,23 +961,47 @@ Record both. The current UI does not provide a browser download button for the
 archive. In this workflow, **export** means immutable publication to Prism's
 artifact store. Nova performs the governed handoff and imports the archive.
 
+Approval response loss, capture failure, or lost publication response can leave
+an approval committed without a visible success message.
+Studio keeps `approvalBody.id` only inside that invocation and displays it after
+baseline success. It persists no approval/publication request for reload.
+Repeating **Approve** starts another approval insert instead of replaying baseline
+publication with the original ID. The project/design-digest uniqueness rule can
+reject it with `approval_project_id_design_digest_key` while retaining the original approval.
+Do not change content or create a new identity merely to escape that rejection.
+
+Control can return a saved baseline for the same project, document, and approval ID.
+That return identifies the original publication; it does not approve changed content
+or renew its active architecture authority. Before first commit, capture and worker
+ownership can still need reconciliation. Concurrent baseline requests do not provide
+a supported browser retry procedure.
+
+After any uncertain approval/publication result, follow
+[Approval or publication interrupted](#approval-or-publication-interrupted).
+A render error does not roll back the earlier approval.
+Do not submit a Nova signal until the original approval and exact bundle are verified.
+
 > **Source evidence — approval and publication**
 >
-> [Control binds approval to the current document, quality findings, warnings, and active architecture](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L521-L565).
+> [Control binds approval to the current document, quality findings, warnings, and active architecture](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L521-L565).
 >
-> Control [rejects a baseline with a mismatched project, document, approval, or revision](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L567-L607).
+> Control [rejects a baseline with a mismatched project, document, approval, or revision](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L567-L607).
 >
-> It then [rejects stale digests, blocked quality, changed warnings, or a missing active direction](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L608-L629).
+> It then [rejects stale digests, blocked quality, changed warnings, or a missing active direction](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L608-L629).
 >
-> Control [assembles the specification and acceptance criteria](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L630-L662).
+> Control [assembles the specification and acceptance criteria](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L630-L662).
 >
-> It [collects bounded content-addressed assets](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L663-L692).
+> It [collects bounded content-addressed assets](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L663-L692).
 >
-> It then [renders and validates every preview and its accessibility evidence](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L693-L752).
+> It then [renders and validates every preview and its accessibility evidence](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L693-L752).
 >
-> Finally, it [stores the content-addressed bundle and baseline record](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L753-L797).
+> Finally, it [stores the content-addressed bundle and baseline record](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L753-L797).
 >
-> [Studio calculates the document digest, creates the approval, publishes the baseline, and shows both identities](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/studio/app.tsx#L350-L405).
+> The schema [allows one approval per project/design digest](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/migrations/001_prism.sql#L67-L70).
+> Control [returns an existing baseline only for the same project/document/approval](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L567-L590).
+> The schema [also restricts each project/bundle-key/revision publication](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/migrations/001_prism.sql#L29-L34).
+>
+> [Studio calculates the document digest, creates the approval, publishes the baseline, and shows both identities](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L350-L405).
 
 ### Step 11: Resume Nova with the approved identities
 
@@ -898,13 +1051,18 @@ Do not resume with a guessed digest.
 Do not use the Design Document digest as the bundle digest.
 Do not reuse an approval after a new architecture or document revision.
 
+If the signal command loses its response, follow
+[Nova resume response lost](#nova-resume-response-lost).
+An unchanged signal file is necessary for an exact retry, but it does not
+make a resolved wait accept another CLI invocation.
+
 > **Source evidence — final handoff**
 >
-> [Control returns the approved artifact and archive only for a matching active baseline](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L226-L240).
+> [Control returns the approved artifact and archive only for a matching active baseline](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L226-L240).
 >
-> Nova validates [archive objects, paths, encoding, manifests, file sets, and digests](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/plugins/prism-design/src/archive.ts#L6-L52).
+> Nova validates [archive objects, paths, encoding, manifests, file sets, and digests](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/nova/plugins/prism-design/src/archive.ts#L6-L52).
 >
-> It checks [required members, document identity, previews, and the response artifact identity](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/plugins/prism-design/src/archive.ts#L54-L88) before storage.
+> It checks [required members, document identity, previews, and the response artifact identity](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/nova/plugins/prism-design/src/archive.ts#L54-L88) before storage.
 
 ## What Is in the Baseline Bundle
 
@@ -929,9 +1087,9 @@ was approved. The approval and active architecture binding supply that authority
 
 > **Contract evidence — archive format**
 >
-> The archive contract defines [profiles, safe paths, and canonical checksum encoding](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/contracts/prism/v1/src/baseline-archive.ts#L1-L54).
+> The archive contract defines [profiles, safe paths, and canonical checksum encoding](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/contracts/prism/v1/src/baseline-archive.ts#L1-L54).
 >
-> Its assembler [validates members, builds metadata, and returns the bundle digest and bytes](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/contracts/prism/v1/src/baseline-archive.ts#L56-L92).
+> Its assembler [validates members, builds metadata, and returns the bundle digest and bytes](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/contracts/prism/v1/src/baseline-archive.ts#L56-L92).
 
 ## Safe Recovery Procedures
 
@@ -966,50 +1124,225 @@ revocation or data removal.
 
 > **Source evidence — stopped work remains durable**
 >
-> The bridge [aborts local admission on shutdown and preserves external-outcome uncertainty](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/agent-job-runner.mjs#L23-L46).
-> Control [returns the original durable agent-job status](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/server/control-server.ts#L280-L281).
-> Nova's [operator CLI command set](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/core/cli.ts#L21-L45) has no cancel command. Live abort and retirement have no verified outcome for this procedure.
+> The bridge [aborts local admission on shutdown and preserves external-outcome uncertainty](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/agent-job-runner.mjs#L23-L46).
+> Control [returns the original durable agent-job status](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L280-L281).
+> Nova's [operator CLI command set](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/nova/core/cli.ts#L21-L45) has no cancel command. Live abort and retirement have no verified outcome for this procedure.
 
 
-### Studio page closed during a new round
+### Child round interrupted
 
-1. Reopen the same project URL in the same browser session.
-2. Let Studio read the retained round request.
-3. Retry the same request identity when Studio offers that action.
-4. Stop if Studio says the round was superseded.
-5. Inspect the current Control round before you clear session storage.
+Use this path for a Studio-requested child round, with the original authenticated
+user and exact project URL. It does not recover Nova's initial dispatch.
+Keep the same tab while its pending session-storage record survives.
 
-Reason: a new idempotency key can create a second intended round. The retained
-key distinguishes a retry from new product work.
+1. Retain the original request, key, document revision, parent round, and returned generation ID.
+2. Select **Retry the same design round** only if Studio offers it.
+3. Confirm that the request and returned generation identities remain unchanged.
+4. Wait for exactly three directions in that generation.
+5. Confirm the loaded document belongs to those directions before another mutation.
 
-### Studio page closed during a natural-language revision
+A same-tab reload can read and resubmit the stored request.
+It does not authorize a new request if storage disappeared.
+Stop on invalid storage, missing identity, changed user, changed generation,
+supersession, stale parent, or `NeedsNova`. Do not clear the record to enable new work.
+The Prism maintainers must reconcile the original round and agent job.
+A superseded result cannot become current merely because its request can replay.
 
-1. Reopen the same document URL in the same browser session.
-2. Select **Reconcile existing change**.
-3. Keep the original instruction and key.
-4. Stop on `needs_nova`, a changed job identity, or a returned revision other than
-   exactly `baseRevision + 1`.
+A supported lost-storage recovery path must locate the original request by
+verified user/project identity and restore its exact receipt without a second round.
+A supported selected-direction replacement must provide an explicit action with
+source revision, parent, architecture, and predecessor-lifecycle checks.
+Neither recovery path is an implemented Studio action at this revision.
 
-Reason: Control never treats an uncertain external OpenClaw launch as safe to replay.
+> Studio [exposes a new round only for three rejected directions or a retained pending request](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L608-L632).
+> The helper [rejects supersession and clears only a matching completed request](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/design-round-client.ts#L34-L48).
+> Admission [refuses unresolved external outcomes and blocked sessions](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/control/agent-admission.ts#L16-L23).
+
+### Natural-language revision interrupted
+
+The helper retains one request and can reconcile its original job.
+The current Studio error screen prevents that operator action after response loss
+or loading a retained pending revision. Do not interpret the helper's tests as
+proof of usable browser recovery.
+
+1. Stop new revisions, rounds, approval, publication, and Nova signals.
+2. Preserve the original instruction, base revision, key, and returned job ID when available.
+3. Retain the original document URL, user, time, and sanitized error.
+4. Ask Prism maintainers to reconcile that exact job and its committed revision.
+5. Keep work stopped until the original result and current revision are known.
+
+Control's `GET /v1/agent-jobs/{id}` exposes the durable receipt to an authenticated
+client. `NeedsNova` identifies an unresolved external outcome or blocked session.
+It does not permit a new launch. A missing or invalid stored request also
+requires maintainer reconciliation; do not reconstruct it from the latest document.
+
+No supported generic operator command currently recovers this browser path.
+A supported repair must preserve the original request, expose reconciliation after
+reload/error, verify the same job and exactly next revision, and avoid uncertain
+external replay. It needs dropped-response, reload, changed-identity, supersession,
+and completed-result checks before this boundary can be removed.
+
+> The helper [reuses the original instruction/key and reconciles the same job](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/agent-revision-client.ts#L12-L34).
+> Studio [sets failure when it loads that pending request](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L124-L126).
+> The [failure screen hides controls](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L497-L505).
+> Control [returns an authenticated job receipt](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L280-L281).
+
+### Typed edit or restore interrupted
+
+Use the original project/document URL and authenticated user.
+Stop further edits and restore actions. A transport error does not prove rollback.
+
+1. Retain the original base revision or restore source revision ID.
+2. Retain the actor, action, request time, body when available, and sanitized error.
+3. Reload the current document through the same trusted session.
+4. Open **Revision history** and compare the resulting revision with the intended change.
+5. Ask Prism maintainers to reconcile the original receipt if the result remains ambiguous.
+
+Control's current-document and history reads expose committed content and revision
+records. History also includes actor, creation time, and stored operation.
+A restore operation records `sourceRevisionId`; Studio's history list does not
+show all those receipt fields. Maintainers must correlate the exact source, actor,
+time, parent/current revision, and intended content before they authorize more work.
+The latest revision number alone does not prove which request committed.
+
+An identical typed request can reject against its old base after the first commit.
+Do not change its base revision to make a retry pass.
+An identical restore can commit another revision even when its source is unchanged.
+Do not press **Undo** or **Restore** again to test whether the first attempt worked.
+
+There is no automated receipt recovery for these Studio actions.
+If reconciliation cannot distinguish their original outcome, preserve evidence and stop.
+A supported restore retry needs a persisted request key, source/base binding, exact
+result lookup, and one committed revision after duplicate clicks or response loss.
+Typed-edit recovery needs the same persisted request/result distinction without
+silently rebasing the original intention.
+
+> Studio [sends typed edits without a pending receipt key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L161-L183).
+> It [sends restore without an idempotency key](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L232-L248).
+> Control [exposes current content, history, restore, and typed writes](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L390-L423).
+> History [returns actor/time/operation receipts](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/index.ts#L211-L236).
+> Restore [copies the source into another new revision on each successful call](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/index.ts#L237-L260).
 
 ### Revision conflict
 
-1. Do not resubmit the old operation with a changed base revision.
+1. Stop edits until the original request's outcome is known.
 2. Reload the current document and history.
-3. Compare the other committed change with your intended change.
-4. Create a new operation against the current revision only after that review.
+3. Compare committed changes with the original operation and intention.
+4. Author a new operation only after resolving that uncertainty.
 
-Reason: changing only the revision number can apply an old intention to new content.
+A conflict can mean another edit won, or that your first request committed before
+its reply disappeared. The conflict alone does not distinguish those cases.
+A new base revision creates a new operation against different content.
+
+### Preference retraction interrupted
+
+**What Prism learned** reads preference evidence.
+**Forget** writes a retraction event; it does not erase earlier evidence.
+Studio creates a new event identity and timestamp on each click and stores no
+pending retraction request.
+
+After response loss, stop preference mutations and retain the original target,
+actor, time, and request/event identity when available. Ask Prism maintainers to
+correlate the event and its retraction in the authenticated preference history.
+Do not infer a missing commit from a hidden or unavailable button.
+A new click can append a second event for the same target.
+
+The server supports an exact replay of one wire event, including its original
+ID, content, owner, and time. Current Studio does not expose that retained replay.
+If the original outcome remains unknown, stop before another preference action.
+A supported recovery path must persist that exact event and expose its receipt
+across errors and reload, with no duplicate retraction evidence.
+
+> Studio [creates a fresh retraction event for each click](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L250-L275).
+> Control [writes events and returns authenticated preference history](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L894-L915).
+> Preference storage [replays only the exact recorded wire event and owner](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/control/preferences.ts#L18-L28).
+
+### Approval or publication interrupted
+
+Use this path for response loss, page closure, duplicate-digest rejection,
+render failure after approval, or an uncertain baseline result.
+A rejected repeat does not remove the original approval.
+
+1. Stop approval, publication, editing, restore, new rounds, and Nova signals.
+2. Retain the project, document revision/digest, architecture, approver, time, and sanitized error.
+3. Retain the original approval ID, publication body, and bundle receipt when available.
+4. Ask Prism maintainers to reconcile the original approval and any baseline/worker receipts.
+5. Keep the journey stopped until those exact identities and outcomes are verified.
+
+The owner must distinguish approval not committed, approval committed without
+baseline, baseline capture still uncertain, and baseline committed with a lost reply.
+Use retained request evidence, Control logs, canonical approval/baseline records,
+worker attempt receipts, and artifact verification. Correlate project, document
+revision/digest, approver/time, architecture, original approval ID, and bundle identity.
+Do not repair by deleting approval rows, changing digests, or editing content to
+obtain a different uniqueness key.
+
+Studio has no approval-status lookup or persisted publication retry action.
+Without the original approval identity, repeating **Approve** cannot recover its receipt.
+With that identity, Control can reuse an already committed baseline through the
+same project/document/approval request. This is a server capability, not an
+implemented Studio recovery procedure. Missing or uncertain capture still requires
+owner reconciliation; a same-ID retry does not authorize unsafe native replay.
+
+This page provides no generic owner restore command for approval/publication.
+If the original result cannot be verified through an owned procedure, preserve
+its evidence and keep execution stopped. A supported recovery path must persist
+approval intent/result before publication, expose authenticated result lookup, and
+reconcile the original baseline identity after reload or failure.
+It must prove lost approval response, post-approval capture failure, lost baseline
+response, duplicate click, concurrent request, changed content, and superseded architecture
+without a second approval or conflicting publication.
+
+> Studio [keeps the approval ID locally and displays it only after publication succeeds](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/studio/app.tsx#L371-L403).
+> Control [inserts approval before returning its ID](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L540-L565).
+> Baseline [replay checks the original project/document/approval](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L567-L590).
+> Capture [uses approval-bound identities](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L693-L715).
+> The bundle [enters artifact storage before the baseline row and reply](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/server/control-server.ts#L776-L797).
+>
+> **Check status:** On 2026-10-09, an isolated original-Control HTTP check used migrated embedded PGlite and Node.js `v24.21.0`.
+> Approval committed with HTTP 201 before the relay dropped its reply. An identical approval repeat returned HTTP 422 and retained one original row.
+> An injected render-admission failure retained that approval and left no baseline; no worker dispatch occurred.
+> A SQL-seeded baseline receipt returned HTTP 200 with `reused: true` for the original approval request.
+> This proves receipt lookup only; it does not prove baseline rendering, artifact publication, browser recovery, or live approval.
+> The isolated check passed, exit zero, against the recorded source revision.
 
 ### Approval or publication rejected as stale
 
+Reconcile any earlier uncertain approval/publication before this path.
+A stale rejection does not prove that no prior approval or baseline exists.
+
 1. Reload the current document and active directions.
 2. Confirm the active architecture request.
-3. Run evaluation again.
-4. Repeat all preview checks affected by the change.
-5. Create a new approval for the new current revision.
+3. Run evaluation again after the loaded revision becomes stable.
+4. Repeat all preview checks affected by the genuine change.
+5. Approve the new reviewed revision only after Prism maintainers resolve the earlier outcome.
 
-Never modify the database approval row or baseline row.
+Do not create a content change merely to clear a duplicate-digest error.
+Use [Approval or publication interrupted](#approval-or-publication-interrupted) for that error.
+Never modify approval or baseline rows to renew their authority.
+
+### Nova resume response lost
+
+Keep the original run, wait, signal file, signal ID/key, issuer, approval,
+architecture digest, and bundle digest. Do not create another run or decision.
+
+1. Stop additional signal submissions.
+2. Use the canonical run-control audit for the original run.
+3. Check its durable wait, signal, resolution, dispatch, imported artifact, and final state.
+4. Verify the imported artifact matches the original approved bundle before claiming completion.
+5. Keep execution stopped if the audit cannot establish the signal's outcome.
+
+If the original wait remains active, use only the unchanged signal and canonical
+run-control procedure after checking expiry and recorded signal content.
+A resolved wait can reject with `WAIT_UNKNOWN_OR_STALE`; a terminal run can
+reject with `WAIT_RUN_TERMINAL`. Those errors do not authorize a replacement signal.
+An identical signal journal entry prevents another recording, but it does not
+make the CLI return a saved run result after the wait disappears.
+Prism maintainers own this interruption boundary. The Nova operator performs the
+run audit and restricted signal submission.
+
+> Nova [checks terminal status and the active wait before recording the signal](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/nova/core/execution/engine-run.ts#L84-L108).
+> It [deduplicates exact signal content and refuses another signal for that wait](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/nova/core/execution/engine-run.ts#L109-L122).
 
 ### Worker not ready
 
@@ -1044,9 +1377,9 @@ directory-sync steps before it acknowledges an object.
 
 > **Source evidence — durable artifacts**
 >
-> [The artifact store verifies regular files and content digests on every read](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/storage/artifacts.ts#L20-L29).
+> [The artifact store verifies regular files and content digests on every read](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/artifacts.ts#L20-L29).
 >
-> [Artifact publication uses a private pending file, file sync, non-replacing link, and directory sync](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/storage/artifacts.ts#L39-L67).
+> [Artifact publication uses a private pending file, file sync, non-replacing link, and directory sync](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/storage/artifacts.ts#L39-L67).
 
 ## Diagnosis Map
 
@@ -1055,13 +1388,16 @@ directory-sync steps before it acknowledges an object.
 | Studio shows no projects | Nova dispatch or Control admission | Nova stage result; Control request log; `prism.project` and active `design_request` | Reconcile the original dispatch. Do not create a replacement project. |
 | Project exists but has no directions | Prism agent job | `prism.agent_job` state, fence, result, and outcome; agent bridge log | Wait, reconcile, or escalate `needs_nova`. Do not replay an uncertain launch. |
 | Studio says invalid session | Tailscale identity exchange or cookie forwarding | Studio proxy log; two `Set-Cookie` headers | Fix ingress/proxy handling. Do not weaken CSRF or session checks. |
-| New round remains pending | Durable round or agent job | Browser-retained generation ID; current round ID; job state | Retry the same retained request identity. |
+| New round remains pending | Retained request, current round, or blocked agent session | Stored request/key, generation ID and durable job state | Retry only the retained request when Studio offers it; stop on missing storage or unresolved predecessor. |
 | Visual edit reports revision conflict | Concurrent document change | Current document and revision history | Reload, compare, and author a new operation. |
-| Natural-language change remains pending | Agent job reconciliation | Retained job ID and `/v1/agent-jobs/{id}` receipt | Reconcile the same job. Escalate `needs_nova`. |
+| Natural-language change remains pending or reload hides controls | Stored request, agent job, or Studio failure screen | Original key/instruction/base and `/v1/agent-jobs/{id}` receipt | Stop for Prism maintainer reconciliation. The helper contract does not provide recovery controls on the failure screen. |
+| Restore or Undo reply disappears | Non-idempotent restore and history | Source revision ID, actor/time, current revision and stored operation | Do not repeat. Reconcile history through the original document and stop on ambiguity. |
+| Direction or preference action has an uncertain result | Client key lifetime and preference receipt | Original actor/action/key/event, current direction and durable preference evidence | Stop mutations. Reconcile the exact receipt; a new identity can create another event. |
+| Evaluation reply disappears | Pinned revision and native attempt | Embedded document identity, revision, worker key/receipt and readiness | Recheck unchanged input only after ownership is known; stop on conflicting input or uncertain worker state. |
 | Preview asset fails | Artifact reference, size, media type, or digest | Browser error and Control artifact read | Verify the bound artifact. Do not replace bytes behind an ID. |
 | Evaluation is blocked | Design Document quality | Exact finding ID, gate, target, and message | Correct the current document and evaluate again. |
-| Approval fails | Current revision, digest, ownership, or warning set | Control response and current document digest | Reload and review. Never patch the approval table. |
-| Publication fails during capture | Worker render, browser, asset, or accessibility evidence | Worker result, full log artifact, target ID | Fix the document or worker boundary, then create a valid new publication attempt. |
+| Approval fails or its reply disappears | Approval insert, uniqueness, revision, digest, or architecture | Original request, current digest, approval constraint/error and canonical receipt | Stop. Reconcile the original approval before any repeat; use the interruption procedure. |
+| Publication fails or its reply disappears | Original approval, worker capture, artifact write, or baseline commit | Original approval ID, worker receipt, full log artifact, target ID and baseline record | Stop. Reconcile approval/publication separately; another Approve click cannot replay the original baseline request. |
 | Nova rejects resume | Wait, issuer, architecture, approval, or bundle identity | Nova signal validation and Prism stage reason | Correct the unsigned signal through the restricted Nova CLI. Issuer matching does not authenticate its caller. |
 | Nova rejects archive | Stored bytes or archive member contract | Exact `PRISM_ARCHIVE_*` error | Preserve evidence and diagnose. Do not bypass verification. |
 | Worker returns 503 on `/ready` | Native reconciliation or nonce database | Readiness JSON and worker diagnostic event | Restore the dependency or reconcile ownership before admission. |
@@ -1172,17 +1508,18 @@ and retained output for each live acceptance.
 
 > **Test evidence**
 >
-> [The bootstrap installs deterministic dependencies for the root and four spike packages](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/scripts/bootstrap-prism-tests.sh#L1-L8).
+> [The bootstrap installs deterministic dependencies for the root and four spike packages](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/scripts/bootstrap-prism-tests.sh#L1-L8).
 >
-> The [local Prism command definitions](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/package.json#L25-L41) and [repository and live gates](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/package.json#L265-L292) define the invocations above.
-> At this revision, Node.js `v24.21.0` ran `node --test skills/prism/tests/control-server-config.test.mts` on 2026-10-09: three tests passed, exit zero. The command `npm run verify:prism:deploy-script` also passed, exit zero. It checked workflow YAML, the deploy-command contract, and Bash syntax. The runtime materialization check stopped at the absent `releases/runtime-images.json`. The remaining checks in the table have no result for this page. No successful deployment or Studio-to-Nova journey is established by these results.
+> The [local Prism command definitions](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/package.json#L25-L41) and [repository and live gates](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/package.json#L265-L292) define the invocations above.
+> With implementation bytes matching this revision, Node.js `v24.21.0` ran `node --test skills/prism/tests/control-server-config.test.mts` on 2026-10-09: three tests passed, exit zero. The command `npm run verify:prism:deploy-script` also passed, exit zero. It checked workflow YAML, the deploy-command contract, and Bash syntax. The runtime materialization check stopped at the absent `releases/runtime-images.json`. The other full gate commands in the table have no result for this page. Separate interruption fixtures above report their narrower local results. No successful deployment or Studio-to-Nova journey is established by these results.
 
 ## Implemented, Environment-Dependent, and Not an Operator Surface
 
 | Capability | Current status | What you can claim |
 | --- | --- | --- |
 | Project, request, round, direction, document, revision, approval, and baseline persistence | Implemented and covered by source-level tests | The contracts and database behavior work in the tested environment. |
-| Studio chooser, visual editing, natural-language request reconciliation, preview, evaluation, approval, and publication request | Implemented and covered by build, unit, and browser tests | The maintained UI behavior works under its test setup. |
+| Studio chooser, visual editing, preview, evaluation, approval, and publication request | Implemented; interruption recovery varies by action | Claim only the source/fixture/browser behavior actually checked. Error screens and lost identities can block recovery. |
+| Natural-language client-helper reconciliation | Implemented and checked in isolated HTTP/database fixtures; current error/reload UI blocks its control | Helper replay does not prove browser recovery or a live provider result. |
 | Durable native worker operation and restart journal | Implemented; native proof needs a prepared Linux host and isolated database | Claim native operation only with retained native gate evidence. |
 | PostgreSQL migration and pgvector retrieval | Implemented; native PostgreSQL proof needs configured test databases | Claim actual PostgreSQL behavior only when the native suite ran. |
 | Tailscale Studio ingress and SPIFFE service trust | Charted and checked structurally; live proof is environment-specific | Claim live identity only after cluster tests. |
@@ -1199,7 +1536,7 @@ The pipeline helper limit is important. The helpers return data structures only.
 Their tests prove conversion and rejection rules, not an installed downstream
 deployment.
 
-> [The handoff helpers create a visual-plan fragment and read-only assignment declarations](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/prism/pipeline-adapter/index.ts#L1-L57).
+> [The handoff helpers create a visual-plan fragment and read-only assignment declarations](https://github.com/datrab/kubeclaw/blob/4d42b9edaccf85d050cf3d50f5d62a440f342927/skills/prism/pipeline-adapter/index.ts#L1-L57).
 
 ## Developer Routing
 

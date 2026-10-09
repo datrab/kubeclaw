@@ -14058,6 +14058,72 @@
       ],
       "description": "Direction selection/feedback idempotency keys exist only in React useRef, unlike durable browser round/revision keys. Reload after uncertain response loses key; retry with fresh key can create another preference event. Document safe-stop/reconciliation owner and exact replay limits; no claim of generic browser recovery.",
       "correctionAuthor": "/root"
+    },
+    {
+      "id": "A98-R4-PRISM-APPROVAL-RESPONSE-LOSS",
+      "reportedAtRevision": "4d42b9edaccf85d050cf3d50f5d62a440f342927",
+      "reportedBy": "/root/a98_reader_publication_round4",
+      "state": "corrected-pending-new-full-partition-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "catalogueWorkPackage": "AP09.4",
+      "acceptanceIds": [
+        "A98-02",
+        "A98-06",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "An approval can commit before its HTTP response is lost or later baseline render fails. Identical retry returns422 duplicate project/design_digest; original approval ID is only a local Studio variable. Missing owner-stop and reconciliation boundary.",
+      "correctionAuthor": "/root/a98_reference_writer",
+      "draftSha256": "32e519b304604708adcf0af22e3d478e9d54e4e521965efa725a293784580247"
+    },
+    {
+      "id": "A98-R4-PRISM-HISTORY-RESTORE-RETRY",
+      "reportedAtRevision": "4d42b9edaccf85d050cf3d50f5d62a440f342927",
+      "reportedBy": "/root/a98_reader_publication_round4",
+      "state": "corrected-pending-new-full-partition-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "catalogueWorkPackage": "AP09.4",
+      "acceptanceIds": [
+        "A98-02",
+        "A98-06",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Identical restore has no idempotency key or expected-revision guard; each repeat commits another current revision. Missing response-loss containment and history reconciliation.",
+      "correctionAuthor": "/root/a98_reference_writer",
+      "draftSha256": "32e519b304604708adcf0af22e3d478e9d54e4e521965efa725a293784580247"
+    },
+    {
+      "id": "A98-R4-PRISM-UI-RECOVERY-UNAVAILABLE",
+      "reportedAtRevision": "4d42b9edaccf85d050cf3d50f5d62a440f342927",
+      "reportedBy": "/root/a98_reference_writer",
+      "state": "corrected-pending-new-full-partition-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "catalogueWorkPackage": "AP09.4",
+      "acceptanceIds": [
+        "A98-02",
+        "A98-06",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Source-author full-scope audit found global failure screen hides controls after pending natural revision or direction errors; helper replay/in-memory identity does not provide an executable UI recovery action.",
+      "correctionAuthor": "/root/a98_reference_writer",
+      "draftSha256": "32e519b304604708adcf0af22e3d478e9d54e4e521965efa725a293784580247"
     }
   ],
   "checks": [
@@ -14368,6 +14434,60 @@
       "sourceState": "completed consumer writer source corrections on4d42b9edaccf85d050cf3d50f5d62a440f342927; logs bind their executed scope, not future generated snapshot",
       "authorIdentity": "/root/a98_config_writer",
       "scope": "Author local semantic/focused mutation/freshness verification; not independent acceptance, full final mutation suite, browser or live proof."
+    },
+    {
+      "command": "dependency source/schema/boundary tests",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-qualified-dependency-tests.log",
+      "logSha256": "0032723880483ea6a30b3bff11cc9c28fbc31de61490d53e28bb1069c47f642c",
+      "scope": "30 tests passed; local code verification, not independent source acceptance."
+    },
+    {
+      "command": "qualified publication check",
+      "state": "terminal",
+      "exitCode": 1,
+      "result": "failed",
+      "log": "/tmp/kubeclaw-a98-qualified-publication-check.log",
+      "logSha256": "32bebdfbc36599d7643a89f4e50b063569fc3d0183cfe6082c0eca1b59b912aa",
+      "scope": "Bare generated regex/schema text became unwanted Markdown links. Build did not execute after check failure. Rendering source correction and affected checks required."
+    },
+    {
+      "command": "qualified generated references check",
+      "state": "terminal",
+      "exitCode": 1,
+      "result": "failed",
+      "log": "/tmp/kubeclaw-a98-qualified-references-check.log",
+      "logSha256": "20afdefa5d46419bb5def0c6b423acb87b44f2f21b07bd6f6efe060aedf51893",
+      "scope": "Source guard rejected three source formatting changes during gate chain; check is not a freshness PASS and will be rerun against new source-bound generation."
+    },
+    {
+      "command": "Prism interruption contracts",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-prism-interruption-contracts.log",
+      "logSha256": "69986cc8c1080305071ed1228216e9d7dd4a3add63027fd186ba008210a11372",
+      "scope": "Five focused suites17/17 passed; author local contracts, not browser or live proof."
+    },
+    {
+      "command": "Prism isolated HTTP interruption cases",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-prism-interruption-http.log",
+      "logSha256": "554e55a0bb3625a7efb9c4290bf2b58b97723084ebe75aec57aa44e256cc3abe",
+      "scope": "Author original Control HTTP/PGlite: lost approval, postapproval native-admission failure, seeded baseline replay receipt only, typed conflicts, duplicate restore, preference event identity. No real rendering, browser, worker or provider."
+    },
+    {
+      "command": "Prism draft language/source/local-link/guide checks",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/tmp/kubeclaw-a98-prism-interruption-validate.log",
+      "logSha256": "cd419b0024b4770b6e544808751a2e83cd9a2f93b440cad3164f58a07bf17516",
+      "scope": "127 pinned links41 files,31 local links,9 preserved Bash blocks syntax only, controlled language and draft guide check pass. No independent acceptance."
     }
   ],
   "reviewAssignments": [
@@ -14707,20 +14827,46 @@
       "freshContext": true,
       "readOnly": true,
       "reviewedRevision": "4d42b9edaccf85d050cf3d50f5d62a440f342927",
-      "state": "running",
+      "state": "completed-rejection",
       "scope": [
         "docs/site/reference/project-pipeline-publication.md",
         "docs/site/use/prism-studio.md",
         "docs/site/use/capacity.md"
       ],
-      "scopeLimit": "Full three-page reader partition only; no global gate or package acceptance."
+      "scopeLimit": "Full three-page reader partition only; no global gate or package acceptance.",
+      "requirementVerdicts": {
+        "CFG-017": "PASS-documentation-partition-only",
+        "OPR-009": "PASS-documentation-partition-only",
+        "OPR-010": "FAIL"
+      },
+      "gateVerdicts": {
+        "A98-01": "UNPROVEN-outside-complete-gate-scope",
+        "A98-02": "FAIL-partition",
+        "A98-03": "UNPROVEN-outside-complete-gate-scope",
+        "A98-04": "UNPROVEN-outside-complete-gate-scope",
+        "A98-05": "UNPROVEN-outside-complete-gate-scope",
+        "A98-06": "FAIL-partition",
+        "A98-07": "UNPROVEN-outside-complete-gate-scope",
+        "A98-08": "UNPROVEN-outside-complete-gate-scope",
+        "A98-09": "UNPROVEN-outside-complete-gate-scope",
+        "A98-10": "UNPROVEN-outside-complete-gate-scope",
+        "A98-11": "UNPROVEN-outside-complete-gate-scope",
+        "A98-12": "FAIL-partition",
+        "A98-13": "FAIL-partition",
+        "A98-14": "UNPROVEN-outside-complete-gate-scope"
+      },
+      "report": "/tmp/kubeclaw-a98-reader-round4-report.md",
+      "reportSha256": "e34bb22500526f300a03b8f41e3cc989ec77699d3b3c8c11970f915af45e7e3a",
+      "artifactIndex": "/tmp/kubeclaw-a98-reader-round4-artifact-index.json",
+      "artifactIndexSha256": "6dd64070b6fe0fdfff12e7622bb3ba317fad85e794e1f75f3cf2e3f6ac9dfbd7",
+      "evidenceProvenance": "Administrative report records exact previously executed stdin and captured tool-output transcripts. Saved fixture files themselves were not rerun. Supplied author logs remain explicitly separate."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 completed consumer/dependency writer sources pending integration and generated snapshot; Prism full interruption draft outside repo; independent package acceptance open",
+    "stage": "AP09.8 integrated full Prism interruption corrections and schema-code rendering fixes; source commit then regenerate; all independent package acceptance open",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish consumer and dependency writer scopes. Integrate tested read-only republish admission procedure after current reader partition completes, then commit checked sources separately from regeneration. Execute required gates and complete new exhaustive independent partitions; no AP09.8 closure or parity masswork yet.",
+    "next": "Commit only source/render/Prism/matrix changes, preserve existing generated changes unstaged, regenerate against new fullSHA and run affected gates/build. Commit generated outputs separately. Start new exhaustive fresh Source/Reader/Quality partitions; no Astra or AP09.8 closure without complete Sol proof. Observe both live immutable mutation handles to terminal; no mass parity/deletion.",
     "environmentConstraints": [],
     "qualifiedEnvironment": "Task-local Alpine packages under /tmp: GNU flock 2.42.3, GNU tar 1.35, coreutils 9.11 and PRoot bindings; native plugin-sandbox built locally. No target-image or live-cluster validation claimed.",
     "agentsCompleted": [
@@ -14730,10 +14876,7 @@
     "currentMutationSession": 35062,
     "currentMutationLog": "/tmp/kubeclaw-a98-current-config-mutations.log",
     "currentMutationSnapshot": "b35311ad8db0946f44286b4a26a99e8676f44de4",
-    "agents": [
-      "/root/a98_reader_publication_round4",
-      "/root/a98_reference_writer"
-    ],
+    "agents": [],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
     "currentMutationState": "running-confirmed-handle-35062",
@@ -14777,7 +14920,10 @@
       "unresolvedDiagnostics": 0,
       "accepted": false,
       "publicationCheck": "expected stale operator matrix before shared regeneration; earlier authored language finding corrected by its owner"
-    }
+    },
+    "qualifiedMutationSession": 19341,
+    "qualifiedMutationSnapshot": "25eecc6a72c9ce5b734e54d9fb12782b41903773",
+    "qualifiedMutationLog": "/tmp/kubeclaw-a98-qualified-full-mutations.log"
   },
   "productBoundaries": [
     {

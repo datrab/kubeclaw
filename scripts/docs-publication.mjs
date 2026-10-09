@@ -10,7 +10,7 @@ import addFormats from 'ajv-formats';
 import { pluginSourceClosure, pluginInvocationFacts, pluginCapabilityRoutes } from './plugin-source-closure.mjs';
 import { dependencySchemaFacts } from './plugin-schema-dependencies.mjs';
 import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.mjs';
-import { stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
+import { markdownInlineLinks, stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
@@ -26,6 +26,41 @@ function markdownLinkTargets(text) {
     .map((match) => match[1]);
 }
 
+function markdownInlineCode(value) {
+  const text = String(value);
+  const longest = Math.max(0, ...[...text.matchAll(/`+/gu)].map((match) => match[0].length));
+  const delimiter = '`'.repeat(longest + 1);
+  const padding = /^[` ]|[` ]$/u.test(text) ? ' ' : '';
+  return `${delimiter}${padding}${text}${padding}${delimiter}`;
+}
+
+function schemaConstraint(name, value) {
+  return markdownInlineCode(`${name}=${JSON.stringify(value)}`);
+}
+
+function schemaConditions(conditions) {
+  return conditions.map(markdownInlineCode).join(' and ');
+}
+
+function schemaSemanticText(field) {
+  const text = field.meaning?.text ?? '';
+  const visible = stripMarkdownCodeAndRawHtml(text);
+  const links = markdownInlineLinks(text);
+  const values = [...new Set([
+    field.meaning?.acceptedValues,
+    field.path,
+    ...(field.constraints ?? []).map(({ name, value }) => `${name}=${JSON.stringify(value)}`),
+  ].filter(Boolean))].sort((a, b) => b.length - a.length);
+  let result = '';
+  for (let cursor = 0; cursor < text.length;) {
+    const insideLink = links.some((link) => cursor >= link.start && cursor < link.end);
+    const value = !insideLink && values.find((candidate) => visible.startsWith(candidate, cursor));
+    if (value) { result += markdownInlineCode(value); cursor += value.length; }
+    else result += text[cursor++];
+  }
+  return result;
+}
+
 if (JSON.stringify(markdownLinkTargets('[valid](target.md) and \\[a-z\\](?:not-a-link)'))
   !== JSON.stringify(['target.md'])) {
   throw new Error('publication link parser must retain valid links and ignore escaped schema regex syntax');
@@ -34,6 +69,27 @@ if (JSON.stringify(markdownLinkTargets('[valid](target.md) and \\[a-z\\](?:not-a
 if (JSON.stringify(markdownLinkTargets('[before](before.md)\n```bash\n[[ $NAMESPACE =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]]\n[example](fenced.md)\n```\n`[example](inline.md)`\n[after](after.md)'))
   !== JSON.stringify(['before.md', 'after.md'])) {
   throw new Error('publication link parser must ignore code examples and retain surrounding reader links');
+}
+
+// Exercise the shipped operator target grammar: bare schema syntax really does
+// resemble a link, while rendered constraints and predicates must remain data.
+const messagingSchema = JSON.parse(fs.readFileSync(path.join(root, 'skills/common/plugins/operator-messaging/schemas/config.schema.json'), 'utf8'));
+const messagingTargetPattern = Object.keys(messagingSchema.properties.targets.patternProperties)[0];
+const schemaRenderingExample = [
+  schemaConstraint('pattern', messagingTargetPattern),
+  schemaConstraint('if', { properties: { target: { pattern: messagingTargetPattern } } }),
+  schemaConditions([`if ${JSON.stringify({ pattern: messagingTargetPattern })}`, 'literal `` delimiter [example](data.md)']),
+  schemaSemanticText({ path: '$.target', constraints: [{ name: 'pattern', value: messagingTargetPattern }], meaning: {
+    acceptedValues: `string with pattern=${JSON.stringify(messagingTargetPattern)}`,
+    text: `Accepted values: string with pattern=${JSON.stringify(messagingTargetPattern)}. Failure: $.target rejects pattern=${JSON.stringify(messagingTargetPattern)}. [$.target](../reference/configuration-precedence.md)`,
+  } }),
+  '[Configuration precedence](../reference/configuration-precedence.md)',
+].join('; ');
+if (!markdownLinkTargets(messagingTargetPattern).length
+  || JSON.stringify(markdownLinkTargets(schemaRenderingExample)) !== JSON.stringify(['../reference/configuration-precedence.md', '../reference/configuration-precedence.md'])
+  || !schemaRenderingExample.includes(JSON.stringify(messagingTargetPattern))
+  || !schemaRenderingExample.includes('[$.target](../reference/configuration-precedence.md)')) {
+  throw new Error('schema rendering must preserve exact regexp data, ignore schema-shaped links and retain a genuine reader link');
 }
 
 function walk(directory) {
@@ -142,8 +198,8 @@ function registrationName(registration) {
 function manifestValue(value) {
   if (value === undefined) return 'Not declared.';
   if (Array.isArray(value) && value.length === 0) return 'Empty list.';
-  if (typeof value === 'string') return `\`${value}\``;
-  return `\`${JSON.stringify(value)}\``;
+  if (typeof value === 'string') return markdownInlineCode(value);
+  return markdownInlineCode(JSON.stringify(value));
 }
 
 function sourceLink(label, target) {
@@ -159,7 +215,7 @@ function schemaFacts(directory, schemaPath, inlineSchema, manifestFile) {
   const fields = Object.entries(schema.properties ?? {}).map(([name, value]) => {
     const type = Array.isArray(value.type) ? value.type.join(' or ') : value.type ?? (value.const !== undefined ? 'constant' : value.enum ? 'enumeration' : value.$ref ? 'referenced schema' : 'schema-defined');
     const flags = [required.has(name) ? 'required' : 'optional'];
-    if (Object.hasOwn(value, 'default')) flags.push(`default \`${JSON.stringify(value.default)}\``);
+    if (Object.hasOwn(value, 'default')) flags.push(`default ${markdownInlineCode(JSON.stringify(value.default))}`);
     if (value.writeOnly) flags.push('sensitive write-only value');
     if (value.enum) flags.push(`allowed ${manifestValue(value.enum)}`);
     if (Object.hasOwn(value, 'const')) flags.push(`value ${manifestValue(value.const)}`);
@@ -439,19 +495,19 @@ function registrationDependencyFacts(plugin, registration) {
   const configFile = configurationSemantics.files.find((item) => item.path === (registration.configSchema ? rel(path.join(plugin.directory, registration.configSchema)) : `${rel(plugin.file)}#$.configSchema`));
   const semanticPath = (field) => `$.${field.replaceAll('{key}', '.{*}').replace(/\{key matches ("(?:\\.|[^"\\])*")\}/gu, (_all, pattern) => `.{pattern:${JSON.parse(pattern)}}`)}`;
   function renderField(field) {
-    const constraint = Object.entries(field.constraints).filter(([name]) => !['description', 'default'].includes(name)).map(([name, value]) => `${name}=${JSON.stringify(value)}`).join('; ');
+    const constraint = Object.entries(field.constraints).filter(([name]) => !['description', 'default'].includes(name)).map(([name, value]) => schemaConstraint(name, value)).join('; ');
     const binding = environmentBindings.find((item) => item.field === field.path);
     const semantics = configFile?.fields?.filter((item) => item.path === semanticPath(field.path)) ?? [];
-    const authority = [...new Set(semantics.map((item) => item.meaning?.text).filter(Boolean))].join(' ');
-    const fallback = Object.hasOwn(field.constraints, 'default') ? ` Schema default annotation: \`${JSON.stringify(field.constraints.default)}\`; the runtime consumer decides insertion or fallback.` : '';
-    return `\`${field.path}\`: ${constraint || 'schema permits this field'}${field.conditions.length ? `; applies ${field.conditions.join(' and ')}` : ''}.${binding ? ` Explicit configuration wins when it is not undefined; otherwise process \`${binding.environment}\` supplies the value. The linked parser owns empty-value normalization.` : ''}${authority ? ` ${authority}` : fallback}`;
+    const authority = [...new Set(semantics.map(schemaSemanticText).filter(Boolean))].join(' ');
+    const fallback = Object.hasOwn(field.constraints, 'default') ? ` Schema default annotation: ${markdownInlineCode(JSON.stringify(field.constraints.default))}; the runtime consumer decides insertion or fallback.` : '';
+    return `${markdownInlineCode(field.path)}: ${constraint || 'schema permits this field'}${field.conditions.length ? `; applies ${schemaConditions(field.conditions)}` : ''}.${binding ? ` Explicit configuration wins when it is not undefined; otherwise process \`${binding.environment}\` supplies the value. The linked parser owns empty-value normalization.` : ''}${authority ? ` ${authority}` : fallback}`;
   }
   const parentPaths = new Set([...endpoints, ...secrets].map((field) => field.path.lastIndexOf('.') < 0 ? '$' : field.path.slice(0, field.path.lastIndexOf('.'))));
   const authFields = schema.fields.filter((field) => /(?:authentication|redisTls|redisNetworkIsolation)$/u.test(field.path));
   const predicates = schema.predicates.filter((item) => parentPaths.has(item.path) && ['required', 'dependentRequired', 'not', 'if', 'anyOf', 'oneOf'].includes(item.keyword));
   const schemaContract = [...new Set([
     ...authFields.map(renderField),
-    ...predicates.map((item) => `\`${item.path}\`: ${item.conditions.length ? `applies ${item.conditions.join(' and ')}; ` : ''}${item.keyword}=${JSON.stringify(item.value)}`),
+    ...predicates.map((item) => `${markdownInlineCode(item.path)}: ${item.conditions.length ? `applies ${schemaConditions(item.conditions)}; ` : ''}${schemaConstraint(item.keyword, item.value)}`),
   ])].join('<br>');
   let endpoint = endpoints.length ? [...new Set(endpoints.map(renderField)), schemaContract, `The runtime request and selected configuration supply the concrete instance. ${evidence}.`].filter(Boolean).join('<br>')
     : service ? `The invocation or delegated runtime binding supplies the target; no plugin-local endpoint field. ${evidence}.`
