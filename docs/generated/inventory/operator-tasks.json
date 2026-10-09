@@ -780,7 +780,7 @@
       ],
       "supportedStartState": "Selected Prism release and prepared cluster dependencies",
       "productLimits": [
-        "Current Prism deploy verification has an open stale assertion",
+        "Local deployment contract verification does not prove live Prism deployment or workload trust",
         "Same-server database proof is not external restore"
       ],
       "procedure": {

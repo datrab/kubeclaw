@@ -25814,7 +25814,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "20e476055ad93a5784abf8700797d05a46643c2b52df42240500081681a3248f"
+      "sha256": "5a440133f745c648342e42a6274e4b0b71c15d622313126cb6ff21b3f537a4e8"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -27244,7 +27244,7 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "3ba413147e4e7bad923ccba0c22ad79ca779590297094c11b1b388b1a4e63e83"
+      "sha256": "0c9aaeb7772d85daac6d43601b0f53434ee2a18ddfe0a2ee946b1a9e93ec55f2"
     },
     {
       "path": "docs/generated/inventory/configuration-schemas.json",
@@ -27284,11 +27284,16 @@
           "sourcePath": "scripts/docs-generate.mjs",
           "token": "docs/generated/inventory/configuration-schemas.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-publication.mjs",
+          "token": "docs/generated/inventory/configuration-schemas.json",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f8572aa77504fab704ff5d64311d3454ebbbab0c9371a44719bc7e3ddd01a53c"
+      "sha256": "85e3c211af748344a2132e6ee48ed6f07a712157e9ddb270e00bb80fd577421b"
     },
     {
       "path": "docs/generated/inventory/configuration-values.json",
@@ -27672,11 +27677,23 @@
           "sourcePath": "scripts/docs-platform-surface-inventory.mjs",
           "token": "docs/generated/inventory/documentation-source-revision.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-publication.mjs",
+          "token": "docs/generated/inventory/documentation-source-revision.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/tests/plugin-dependency-boundaries.test.mjs",
+          "token": "docs/generated/inventory/documentation-source-revision.json",
+          "inputUse": true
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "scripts/tests/plugin-dependency-boundaries.test.mjs"
+      ],
       "indirectExecutableConsumers": [],
-      "sha256": "e5d1ecb6a490a7323564458d31ac6f4a8e1090e0d99fa67c10d7de8cf098d60d"
+      "sha256": "f360ad873ee678e5f92ecc58dac54cf7b2b58ccd75e4bf4f76540c24ae9e47a3"
     },
     {
       "path": "docs/generated/inventory/documentation-tree.json",
@@ -27788,7 +27805,7 @@
         "scripts/generate-operator-task-registry.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "e36c70b24de3b09733083d99d64867104f943a5a5247ce5186f3838ca482240a"
+      "sha256": "d2cd0e87a2a872e94059a2f01c01e9c88bd1b58f71e181ad1957708dbcecd82b"
     },
     {
       "path": "docs/generated/inventory/platform-surfaces.json",
@@ -29128,6 +29145,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/operator-tasks.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/operator-tasks.json",
           "inputUse": false
@@ -29173,7 +29195,7 @@
         "scripts/generate-operator-task-registry.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "cc580fbab067beefbaf3b7725492ee83de9b1a7e5e46b3e0b9d4d7132d23040d"
+      "sha256": "1432aba0ff538a9a54f433e653e2eeee4a822290789dbf05819815958cc93bbb"
     },
     {
       "path": "docs/review/README.md",
@@ -126939,7 +126961,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c070131166c7cc9e3a31d3e04a334a3fbdfbad113f17dba16de12c69ea750ff6"
+      "sha256": "b0412b99aa6e9a36639ccdf360d85b9967cc2501bbf7638477e2c5a3fa27bb10"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
@@ -126973,7 +126995,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "1c5d64714b3a08f28481dfb8e6833c7ca8870416aa4e24ab515544f89487f56d"
+      "sha256": "724f2045a1bdf084f006976addae37918960fe0c43668f1f9a4132426f89dafe"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
@@ -127027,7 +127049,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "7c09052c5784380dcccef0e3989b13eceb17aee5a5c1d7effd34746deb142065"
+      "sha256": "60897eefd90cddb21ba517bd8fadae9c261705318337a8f8a76ebf912a6db8af"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
@@ -127076,7 +127098,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "abf624e66a4cf978aaa3fd7086871df97050e89124fb5cd7394abee5b2000ac9"
+      "sha256": "526034af3e08171bb979753db704b6c3cd8e81e25265501eebc04cbe41c66961"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
@@ -127125,7 +127147,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f8403470fec6945291143f4be76d264339fcb3fb24b753a4792c51949ab1bd0d"
+      "sha256": "e90fed8abd1305654a3dfa82c583bf82d6ad80497563cb8cdaeb6c61373b4e3d"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
@@ -127174,7 +127196,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "31b5249010de051168d5f0fbe8c4f1ca0dde7a977f44d121937c1b80ac0dadca"
+      "sha256": "ef2a004db71c3b95e30921a23bd85ba60845f2ce064a7253fff582c75e939aec"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
@@ -127223,7 +127245,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "d5c49f09e44b45014726b1a43b33ecbe078df906381b3e8a7c89293dc26f1628"
+      "sha256": "91b8cb09d189079bd8b6d9439e51f3de5c5d70cf279883c927a91c0ebcfbddbb"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
@@ -127272,7 +127294,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "d7e1dbca1622bc45b00cccb515aae2a1e207f523042c9894ac5e9a6498becc87"
+      "sha256": "523d286650aee819b03733f095649b7acf0aab9c1d2feceef6209899f3000269"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
@@ -127321,7 +127343,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "718dca3b5bf540769fd00aa4cfcbbc747532eea544b7df2e7a902b2625fc09f3"
+      "sha256": "1cf5e7db1dbeec607d626fad2720dc478d11a509334c9e00602843ba5ba60782"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
@@ -127370,7 +127392,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "28d3838d12940f6c491278579a099ce387df771aeaa48878cf4afb4349fdc607"
+      "sha256": "2f606c7f681153248f2c0700735c2d382da624d22ebe98eb12d44f8ab36e042e"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
@@ -127419,7 +127441,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "31d9513d25e38ca821acd4c842bd8e4f8c96a349176d6dfb4a2c1f1187f045a3"
+      "sha256": "c44ba197fa4a92ace1461ce9d3778d6de93513284151826ebefc42f073aede85"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
@@ -127468,7 +127490,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f248528ed693de9917128e0a5f34d5ffa390eb01c585fa5cdfd5634e2fa9c0f8"
+      "sha256": "b76f673fb03db6e50d41998554b7c0b8a08fb2578ff5eecf6449e6c05fc5c99a"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
@@ -127517,7 +127539,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "3d920779a11692dde90246f1f732497183a99691a805644ad284eb6b4ea59d3d"
+      "sha256": "124102a4fc5f7d911160010f221dd606da4c1788026320522ec003cdaeccd41e"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
@@ -127566,7 +127588,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "6e7a5a559c849e6be6f139f923fbb541c70b6a51a46a67e0f197440ee509d8e4"
+      "sha256": "4978335b7fca73c553871364fd1713d06a11fff24e4e2d3b165cabeb0b3b9212"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
@@ -127615,7 +127637,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "3bded3afc8d99fa55354a9fecd7fe388310df9348ac582a5a4041fa0e7efb811"
+      "sha256": "c08e55e53eed31594055c3e15875e259cdbaaf8a8b940355663abc81176a2fa5"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
@@ -127659,7 +127681,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "39b9fd33d4b1737d6bd3368502262e7f59050a83dc7f2e0d220ae539ebd2ccd9"
+      "sha256": "d8a9518dffe67c673c1f216ebae8d9f165e472f8d91ae4de1405234e3aeb1781"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
@@ -127703,7 +127725,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c915439fea1f5466860ed20581f61f26adc4f826295ab0e186caafa16fda2bea"
+      "sha256": "003acce00509e59764dc5f85599badde46ff10239e6509cc1ba57e958d292fd3"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
@@ -127752,7 +127774,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "542e9c8c4bb39c97b080990308acdec1ef882d1dc7de5debc082c07b68691def"
+      "sha256": "e23a89bd310d67887f46f3080c05fb8f0abecf6a01ed28dd392918fffeff855e"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
@@ -127801,7 +127823,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "acd8d29072c713293ea40bb576a1ec21a3213848f3da56349add80a9b221bce2"
+      "sha256": "791a2579373bd04ac67a7b17fa730edbde083806fc7d5cb03eb34d6d945cf409"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
@@ -127855,7 +127877,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "8603d14f55d7cfb22cd933f87ca787cb40e7391a876afd6aa4a560d75fc846f6"
+      "sha256": "f21ec73b7e5f6c4199116add998c789c21d50bf692ac12e6eda26785f7e0d873"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
@@ -127909,7 +127931,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "84617e56bf4ad4e9ecc9f5650a3b261590e1d44ab10d816d0447850246147117"
+      "sha256": "e5ba9c09b7791088497e243e1b4bbaebeeb8a1b99a6c2b51f84b168d88476e57"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
@@ -127958,7 +127980,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "5656a1664333ce1df98904ad03596584a5871a7af1346f1b156e928509143db6"
+      "sha256": "882e3ba7932ed995c072cc0f97b2a7c5f73ebdbe0615da347b45aa5195b422e9"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
@@ -128007,7 +128029,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "bc63f0ebe1ebd3ef8a0c387e48997f432ebc5f07be0bf83e94d75f7f33963560"
+      "sha256": "bb58673e8b4343660ff47402b25332720b9f2d65419220d6098e38224db48359"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
@@ -128056,7 +128078,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "fbc1f521a0e1777a3fee3f7fa2c10c54e7b007a426af4a0d931ece7c9971a234"
+      "sha256": "ba66218a9a3a98cfc933ebd993bf0173b70ada64fc646013b9fed394754ca614"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
@@ -128105,7 +128127,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "920971ff56a7a1a07e81fc41322f368abaada45bbde0e36431486d53c7b9f6ee"
+      "sha256": "ba51b5c2fef9d78d5b46b7dfbdbbcd360cce51ee1393f7effd7db75406c555b3"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
@@ -128159,7 +128181,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "409388e00488e4cb692147d5047eb224d63c153347da9c174717ed768ebedf38"
+      "sha256": "dd35d7f78c17fc0ec3bfc757d050a9ef7ada5649bee06b2ee987b1eab4b17234"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
@@ -128208,7 +128230,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "4af9eadbcc537b9ad3ffe10e2db0cb9b5a2f4d96be623045c87e4c5119b6d9a7"
+      "sha256": "9e664e113b35a9468849506814e9137c86f6dcf59660f5e0ab41c560808d8f99"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
@@ -128257,7 +128279,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ba13ea7ab35b47f86c63739cdbf1cf2a7e74622a2314f14209a80261b55b6d78"
+      "sha256": "c3de6976663a20aaa1bb3af6c7931a5c341696f399cd70760f05f565f2c62407"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
@@ -128306,7 +128328,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b808311beeb0581d77c67b6207aaac64666c7f9b619483402b703e7a08b758e4"
+      "sha256": "cb9dde6755e19a93c9977eb03db090a65e696ee46dca6d2c975f3ec53772879d"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
@@ -128355,7 +128377,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c367b9cc0524b73bba95dca6333adcc0eeba585a68411aea360226b6e8e0026c"
+      "sha256": "05cf9a5d41abdc3c74a90ff9af0e299890555e157ee610b0be821d0898f1cf46"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
@@ -128404,7 +128426,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "7bf3363ba4c6755e626ba2bbe9dcbacf9d570e15c694aa96b5f08734a78be593"
+      "sha256": "a0d403829fbbccb0e884718e0239c10f4d2f788a9bca95c99c631c63362f5376"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
@@ -128453,7 +128475,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "5d3dc4d8ba4184c274532e9b1040bf55d56efb73a1644ac06ffb85ddb1f06360"
+      "sha256": "03324a29542e55a086798e3d64ae09b2ddce19a9973c7752f722d7b29e33a96f"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
@@ -128502,7 +128524,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "897351746ef331ee71fb2fd82d87b715fa9ffe25f9d2fdf2d69e3f456f6ed23a"
+      "sha256": "df21d036219e502471dbf6667feb9ba06544384fd4a66b7d0412457b482ae601"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
@@ -128551,7 +128573,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "bc046f9fc5410ee66286bcc082a22113224c259b4f319cf7b02d8ee54fef89ba"
+      "sha256": "78dad9875690c4eff14c6741507bea81fab8a0d46a7356a1f7b428ad0b0ef4cc"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
@@ -128605,7 +128627,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ec25b4c26bb3b6ab4deaf68718ffd671d65958bf64f9c0c970fdaec8a1786ce8"
+      "sha256": "81cf9e68ff3ee0ddf78de8bab6f873abcfdceafb446283e6b84dc96de4ff5435"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
@@ -128659,7 +128681,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "9de34cc2f292e604e4b10911dd0d7ad5a1404f83f7dc8f27a3df278e976689d6"
+      "sha256": "00df22ddec94df7526dac59d2101bf3ec4cafa11ce9fb1e4db6a22ce816a59f7"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
@@ -128708,7 +128730,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "38709d785f48915eae56e37ef85b850c63722c63b55febd29cac4d108af154ff"
+      "sha256": "9e81278894a3ce402dc5a015881c6ad5e9fdc5393bd0c05232876ef8f7bf3106"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
@@ -128757,7 +128779,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "154d35128025a7b2583250ebbab6fd3b80f657c7d9595a03fd7ec3db92851958"
+      "sha256": "55eef9fa9cd41c43ad5aa4abe14709a25f041ea1bea4390b00ccc29d7e1882ce"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
@@ -128806,7 +128828,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "42520ff74e44ac69b284de2558cba65cd14d6c73f127e28a6493674a4574dade"
+      "sha256": "de3c2e6102337878b4380b085008ef6f6706134360cc0b3c73bb9bd1e8288741"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
@@ -128855,7 +128877,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "cc8fd289f38508ac19bdbdd5ca803af97b95067116b4118b1618a74423b4e033"
+      "sha256": "799c4ae4251d66904f9140ad5ec94d98e77454966694ef25e9c322204094feac"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
@@ -128904,7 +128926,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "7da1765377e183d963a83bc76700c58dd5aeaea9dc81369f6e6a1f65af1b64be"
+      "sha256": "e3175656fb6535c2530863f2e36a3bb77b7a05936759b52bbc23e4fc052a395d"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
@@ -128953,7 +128975,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "a674658e5fbb75917d6bdfcc8eb1262ba37963c9eb0aeba4582a8a502d36f529"
+      "sha256": "453492f81af9a6efb997ef5011d58ca30752442b7766dd20a0a5005f9b1245b1"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
@@ -129002,7 +129024,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "973411b100d7f54b689e36b3f3d8191f5a72e86f1bc8df0b99e8931f53685451"
+      "sha256": "07b36a44c6f72d8ffd6c99dddcf932f55867479e28b16719dff38f5c740841cb"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
@@ -129051,7 +129073,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "fa0ed512c027dea45406d94295e7e7d41f82b175b0fd1118aec5e27df40ee0be"
+      "sha256": "9cce1b2c5cccd7789b55744b17f936b1a5feadf56aa1cddc817734f280afff3d"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
@@ -129100,7 +129122,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "1d3bf07e873b88ba9f9f6954cdd6141ea7350fb6aaef1faa6f6a300d0c671929"
+      "sha256": "b38dbc89926e08c985f188d96892a097a9e1e740fe4af0a86650423e970011ab"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
@@ -129149,7 +129171,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "963db7ab61e7c0882aab78e464c0cb3f0b3d35d15c438d14c65b9796174d78ce"
+      "sha256": "abd5bf4aac158fa476e987fad9458723ec6f1246374d94cfede5c06f44bdaaeb"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
@@ -129198,7 +129220,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "da7c6e41e813db95822fd802d80b9dd29d1e2fac69827cda8e46c7eda77d0a9e"
+      "sha256": "ee8aa39ad443b471cbe1a5dd9342b90250c235fbb8871980069d83c238461b9e"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
@@ -129247,7 +129269,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c57fcbaa41512a46c5df3e4a9ba88250431662b2a2e1b56eb803e40836c41019"
+      "sha256": "87b543251a1569defbf87fc9c96f7c308545aed5e5e7aa1e74492cf5861a3b8f"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
@@ -129296,7 +129318,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "fd55b46bafe76bf51259f0fe57275c5b85660c7b0904e7dcd6586500f55336ea"
+      "sha256": "39dd24e8625192e0843493271a176ec08982830c76662b282e0ca478254fc9e9"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
@@ -129345,7 +129367,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "0530e62dd021951dea5bbf5913693c535b7d46dda62cf99a11614cc6b44c7fdf"
+      "sha256": "49cd858e00355033d6b36edcd9338bc2ee011d9c613ec88090b04fdf074e1e80"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
@@ -129394,7 +129416,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b9520d494137f7e7c0f354b9c6fa2c38d5c14a23735ea461e2a19788e3bd255d"
+      "sha256": "d5cb6444aafdc9a6acb9d8125cc57a5549d5f4fdd87cc52ca1a8277aa1076da4"
     },
     {
       "path": "docs/site/extend/testing.md",
@@ -133540,7 +133562,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "d9ffa76173e0767c35fef4a6a9ee204df7ae088ac3c67d697745b4162d0df5d1"
+      "sha256": "2c26acafb038da4b67bf5c6a608ce386018e996a02e5caed37c57a20b029c3e7"
     },
     {
       "path": "docs/site/reference/cli.md",
@@ -133617,7 +133639,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "90977f542f92d893e70d1b972151c2c3ac15aa841c65b8c2295836a8aa9fc8e4"
+      "sha256": "28750735705f4743456e0341dc47600d1052c350d1436874849034c6e598356e"
     },
     {
       "path": "docs/site/reference/configuration-change-impact.md",
@@ -133793,7 +133815,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "8ac45ac51d05f8616f069812bfbf1b0960e5400902a360a3221bf403cca0338f"
+      "sha256": "cfc6f793308fd0a2c13ac91a24bc568480b6109867dddbf067b70b0760a88749"
     },
     {
       "path": "docs/site/reference/documentation-governance.md",
@@ -133927,7 +133949,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "15f80dba980c17d3037c83b84c34fdda0adc1106df4547dcf1bbd5fbb47fa45f"
+      "sha256": "05c0babba57315fcba33b443253525a0bee837bd8697b82ee9f7a14205a27560"
     },
     {
       "path": "docs/site/reference/environment-variables.md",
@@ -134010,7 +134032,7 @@
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "eff0321f1cdfa2a6f50fb7d1e5861d493c2a3846f831dd95a71619685c2576db"
+      "sha256": "a901e958ad3f713f422a01a4d156179cb4a14b61b1d92f33c4e27b5027970669"
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
@@ -134039,7 +134061,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "92dff878bb9840f3aa44ab9280d97283ab0ae0fafbabfccbf8826e03aae4e5d7"
+      "sha256": "a3c2be03bdc54063d0f85840b9e52757e4eb37f181158f15cd53b4f901b7f56b"
     },
     {
       "path": "docs/site/reference/glossary.md",
@@ -134078,7 +134100,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b21c5c7cc9f8135c23329ebff4334018f1f28c41b8f503b6da9f5a2cfb1464bf"
+      "sha256": "2c9577b4009b97f3b0fbb289104ba77b5d87e392f3715229419af63939befd85"
     },
     {
       "path": "docs/site/reference/helm-values.md",
@@ -134155,7 +134177,7 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "ba4390fe8d0fa19947c3a189da453b748644f774e05865a6bbd146ba94ed341b"
+      "sha256": "ca38f1608cb3bff89c2b661ad39a59a07e4774064622fb038fdbe5b00d44823f"
     },
     {
       "path": "docs/site/reference/host-and-prism-configuration.md",
@@ -134637,7 +134659,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "03a8136bef83b168542c58880dd2c0152bc4b2e1d610331810bc93ae3ffc26e9"
+      "sha256": "c01ee491eb9049ea232a97f4d7fc369eb84d5860af05541a57bd516026b06459"
     },
     {
       "path": "docs/site/reference/project-pipeline-publication.md",
@@ -134691,7 +134713,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "1f69d9f214de901ed2637ebcda06e91c90c446c6d25802b85b04a010f1157c0d"
+      "sha256": "bc516af36196263cd0c1d4673a4ccd44159c8c6d61d49f98f11f372791c13693"
     },
     {
       "path": "docs/site/reference/secrets.md",
@@ -134790,7 +134812,7 @@
           ]
         }
       ],
-      "sha256": "cf20e0ffbc6ff342bf14dfea1a85641ac53a161c273a94fd2b9dc837b8a531be"
+      "sha256": "97a4e983cf22b9d33851a88f4324d54ff99566a299d5e982cc09ad415dfe4fc7"
     },
     {
       "path": "docs/site/reference/verification-commands.md",
@@ -135166,7 +135188,7 @@
         ".github/workflows/docs-checks.yaml"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "ffc2a75136bedac923c7488f12d4b08ab5cc9f224c1696d89a53716f6177b253"
+      "sha256": "c6c34f19bad1e5ebb9dd3d8d3b8da0928c10f9a1cf096cfc575c03e4e9ad5246"
     },
     {
       "path": "docs/site/status/roadmap.md",
@@ -136922,7 +136944,7 @@
           ]
         }
       ],
-      "sha256": "9fc0d4798327b2fb78a1b118fabd5934f29b14621f12035ce4e7787b97df3384"
+      "sha256": "39aae50f9105bf0f6ce8d4704dc098cc551d063a3af146403e5e5432769d1e06"
     },
     {
       "path": "docs/site/use/demo-delivery.md",
@@ -137068,7 +137090,7 @@
           ]
         }
       ],
-      "sha256": "c07b3fc319ae4b44a7d77fe66ded747e5e293ec01538eb180128a6c66992c7ac"
+      "sha256": "bc9d0c1023c80f42200802322e16506a2fd839cfa1a6c7bac846be41c9e83515"
     },
     {
       "path": "docs/site/use/install.md",
@@ -137163,7 +137185,7 @@
           ]
         }
       ],
-      "sha256": "295302b6b34636efde96ecc1a91881b7fbcd5334e537ec1acec92e719cc84f9c"
+      "sha256": "3d3ed7aef9384678d8c535aed1db4c7c6c0f320a542ac128ec2e9348c567b147"
     },
     {
       "path": "docs/site/use/maintenance.md",
@@ -137245,7 +137267,7 @@
           ]
         }
       ],
-      "sha256": "1510bc4635791a79df6730cffd0b60893ea0c42c76e6bf353b14a700ca109279"
+      "sha256": "af5aa911a01bc81b6650e3ed2ea9d4691f0245ebb6aba6a1ed95ed5f53681252"
     },
     {
       "path": "docs/site/use/operate.md",
@@ -137339,7 +137361,7 @@
           ]
         }
       ],
-      "sha256": "1cc0327f539d8f350d192d3267b2aa1352c5ec13ac6838661e48b1e90a83c066"
+      "sha256": "5865d25a7181c90f0614f11b37b3253bce639a204e85fa84026523d3fb6614cb"
     },
     {
       "path": "docs/site/use/plugins.md",
@@ -137411,7 +137433,7 @@
           ]
         }
       ],
-      "sha256": "ede826b311d1c6b9aa715692e42eded67dc27764df8f493a71323581d9e3d495"
+      "sha256": "93517ed29d34d00743d6b2155a0c81b2949fa6e8edc3ae3cb088fc0b00692810"
     },
     {
       "path": "docs/site/use/prism-studio.md",
@@ -137495,7 +137517,7 @@
           ]
         }
       ],
-      "sha256": "aa8b9e2cad8ba54642e4ecc390c4660758a9b351dbcac54376fa0bc1c5fa24fc"
+      "sha256": "bc3ce3f07ca3ad6fb7c5997754c1186f4e61676661e5185badbc4554485e3829"
     },
     {
       "path": "docs/site/use/quickstart.md",
@@ -137673,7 +137695,7 @@
           ]
         }
       ],
-      "sha256": "fbeb0c02ab3ee3e6a98c438992910825472618e91cbf9267872096be3b3e28cf"
+      "sha256": "4737ab0e840fbc5b2ce6918732337b5c9293b72200eced566d8200def12d70cc"
     },
     {
       "path": "docs/site/use/worker-trust.md",
@@ -137691,6 +137713,11 @@
         },
         {
           "sourcePath": "docs/blueprint/ap01-baseline/file-inventory.tsv",
+          "token": "docs/site/use/worker-trust.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/use/worker-trust.md",
           "inputUse": false
         },
@@ -137752,7 +137779,7 @@
           ]
         }
       ],
-      "sha256": "e4648293d7e145f7322b5302424adba824ac74a7b850edca2351bd53f0007098"
+      "sha256": "6266a31e106846a9ca06850fa8b0f4216aad1288a91096daa2d3fd0784c69da7"
     },
     {
       "path": "docs/site/use/workflows/buster-suite.md",
@@ -137809,7 +137836,7 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "db72b09aca3de16dfb2fd264bd07c8725af13232c86af82edc728e44462b72a7"
+      "sha256": "093b130609942009c4328af4ab30a6defe2129e6932aca45cd349cd174b98505"
     },
     {
       "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
@@ -137985,7 +138012,7 @@
         "scripts/tests/docs-status.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "33535bb132a0f9521adba7abd449a0de1c83513638f905a2743f663c232c6188"
+      "sha256": "eab447f90b4da37fab56b312ace321245acd0ee1f7903e47005c3bfa65ce7856"
     },
     {
       "path": "docs/status/open-issues.json",
@@ -138081,7 +138108,7 @@
         "scripts/tests/docs-status.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "12a0d50f0255a201e380374cdbfeee634be88e29e67fddf19edb7be10849c491"
+      "sha256": "27bc1d00585abace7169365cd6b201e15a43f8a6a3ff1513c94feeaa7d436ac0"
     }
   ]
 }
