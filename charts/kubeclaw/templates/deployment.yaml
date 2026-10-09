@@ -598,18 +598,26 @@ spec:
                   rm -rf /tmp/openclaw-plugin-npm-cache
                   mkdir -p /tmp/openclaw-plugin-npm-cache
                   cp -a /opt/openclaw-plugin-home/npm-cache/. /tmp/openclaw-plugin-npm-cache/
+                  # Kubernetes emptyDir roots do not necessarily retain /tmp's
+                  # sticky bit. OpenClaw rejects temporary install workspaces with
+                  # writable, non-sticky ancestors, so use a private owned path.
+                  chmod 0750 /config
+                  PLUGIN_TMPDIR=/config/.kubeclaw-plugin-tmp
+                  rm -rf "$PLUGIN_TMPDIR"
+                  mkdir -m 0700 "$PLUGIN_TMPDIR"
                   # Managed npm roots retain package locks across image upgrades. Reset
                   # them before an offline reseed so they cannot request tarballs from
                   # an older dependency graph that the new authoritative cache omits.
                   node /init-config/reset-managed-plugin-projects.mjs /config/npm/projects
                   for plugin_spec in{{- range .Values.pluginSeed.specs }} {{ . | quote }}{{- end }}; do
                     echo "    Installing pinned official plugin ${plugin_spec} from offline cache"
-                    HOME=/home/node \
+                    HOME=/home/node TMPDIR="$PLUGIN_TMPDIR" \
                       NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache \
                       NPM_CONFIG_OFFLINE=true \
                       openclaw plugins install "${plugin_spec}" --force --pin --accept-capabilities
                   done
-                  HOME=/home/node openclaw plugins registry --refresh
+                  HOME=/home/node TMPDIR="$PLUGIN_TMPDIR" openclaw plugins registry --refresh
+                  rm -rf "$PLUGIN_TMPDIR"
                   if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
                     cp -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version /config/.kubeclaw-plugin-cache-version
                   else
