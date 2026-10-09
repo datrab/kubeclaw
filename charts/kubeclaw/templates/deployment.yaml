@@ -337,6 +337,10 @@ spec:
         - name: init-setup
           image: {{ include "kubeclaw.image" .Values.image | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # Plugin configuration migrations are doctor-owned and require a TTY
+          # even with --fix. This container remains exclusive and pre-gateway.
+          stdin: true
+          tty: true
           securityContext:
             {{- if .Values.runAsRoot }}
             runAsUser: 0
@@ -631,6 +635,11 @@ spec:
                   rm -rf /tmp/openclaw-plugin-npm-cache
                   mkdir -p /tmp/openclaw-plugin-npm-cache
                   cp -a /opt/openclaw-plugin-home/npm-cache/. /tmp/openclaw-plugin-npm-cache/
+                  # The chart has just synchronized managed plugin settings.
+                  # Complete their doctor-owned migrations against the current
+                  # plugin metadata before replacing managed npm projects.
+                  echo "    Completing managed plugin configuration migrations"
+                  HOME=/home/node openclaw doctor --fix --non-interactive
                   # Managed npm roots retain package locks across image upgrades. Reset
                   # them before an offline reseed so they cannot request tarballs from
                   # an older dependency graph that the new authoritative cache omits.
