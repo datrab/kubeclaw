@@ -2,7 +2,7 @@
   "name": "@kubeclaw/codex-ops-pod",
   "private": true,
   "version": "0.1.0",
-  "dependencies": { "@openai/codex": "0.153.4" },
+  "dependencies": { "@openai/codex": "0.162.0" },
   "devDependencies": { "yaml": "2.8.1" },
   "scripts": { "test": "python3 test/supervisor_test.py && node --test test/*.test.mjs" }
 }

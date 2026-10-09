@@ -41,6 +41,17 @@
         "/^versions\\.json$/"
       ],
       "matchStrings": [
+        "\"codex\": \\{\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "@openai/codex",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
         "\"RUFF_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
       ],
       "depNameTemplate": "ruff",
@@ -427,6 +438,28 @@
         "/^versions\\.json$/"
       ],
       "matchStrings": [
+        "\"OPS_NPM_HTTP_CACHE_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "http-cache-semantics",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_UNDICI_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "undici",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
         "\"OPS_NPM_IP_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
       ],
       "depNameTemplate": "ip-address",
@@ -625,6 +658,19 @@
     },
     {
       "matchManagers": [
+        "npm"
+      ],
+      "matchFileNames": [
+        "ops/pod/package.json"
+      ],
+      "matchPackageNames": [
+        "@openai/codex"
+      ],
+      "enabled": false,
+      "description": "Codex is generated from the central versions.json declaration."
+    },
+    {
+      "matchManagers": [
         "helm-values"
       ],
       "matchPackageNames": [
@@ -646,8 +692,11 @@
           "versions.json",
           "docker/**",
           "ops/pod/Dockerfile",
+          "ops/pod/package.json",
+          "ops/pod/package-lock.json",
           "tools/ops-mcp/Dockerfile",
           "charts/**",
+          "docs/ops/ops-pod.md",
           "skills/common/plugins/openclaw-agent-observer/package.json",
           "scripts/scan-runtime-images.sh",
           ".github/workflows/*.yaml",

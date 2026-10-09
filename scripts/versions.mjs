@@ -16,6 +16,8 @@ function validateVersionEntries(entries) {
 function versionArguments(manifest) {
   if (manifest.schemaVersion !== 1 || !/^\d{4}\.\d+\.\d+(?:-\d+)?$/.test(manifest.openclaw?.version)
     || !/^sha256:[a-f0-9]{64}$/.test(manifest.openclaw?.digest)) throw new Error('Invalid OpenClaw version manifest');
+  if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(manifest.codex?.version ?? ''))
+    throw new Error('Invalid Codex version manifest');
   for (const key of ['OPENCLAW_BASE', 'OPENCLAW_PLUGIN_VERSION']) {
     if (Object.hasOwn(manifest.buildArgs, key)) throw new Error(`OpenClaw must have one authority: ${key}`);
   }
@@ -116,6 +118,9 @@ function bindInfrastructureVersions(manifest, replaceOne) {
 
 function bindApplicationVersions(manifest, args, replaceOne) {
   replaceOne('charts/kubeclaw/Chart.yaml', /^appVersion:.*$/m, `appVersion: "${manifest.openclaw.version}"`);
+  replaceOne('ops/pod/package.json', /"@openai\/codex": "[^"]+"/, `"@openai/codex": "${manifest.codex.version}"`);
+  replaceOne('charts/ops-pod/Chart.yaml', /^appVersion:.*$/m, `appVersion: "${manifest.codex.version}"`);
+  replaceOne('docs/ops/ops-pod.md', /^\| Codex CLI [^ |]+ /m, `| Codex CLI ${manifest.codex.version} `);
   for (const plugin of ['acpx', 'discord']) replaceOne('charts/kubeclaw/values.yaml',
     new RegExp(`^    - "npm:@openclaw/${plugin}@[^"\\n]+"$`, 'm'), `    - "npm:@openclaw/${plugin}@${manifest.openclaw.version}"`);
   replaceOne('charts/kubeclaw/files/config/lint-policy.json', /"kubernetes_version": "[^"]+"/,

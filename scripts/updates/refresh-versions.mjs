@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { syncVersions } from '../versions.mjs';
 import { updateRuntimeToolLocks } from '../runtime-tool-locks.mjs';
+import { syncCodexLock } from '../sync-codex-lock.mjs';
 
 // Mounted read-only from the trusted default-branch checkout, never from a bot PR.
 const root = process.cwd();
@@ -29,6 +30,15 @@ async function verified(url, expected) {
   const bytes = Buffer.from(await (await get(url)).arrayBuffer());
   if (sha(bytes) !== expected) throw new Error(`Checksum mismatch: ${url}`);
   return expected;
+}
+async function githubTagCommit(repository, tag) {
+  let object = (await (await get(`https://api.github.com/repos/${repository}/git/ref/tags/${tag}`)).json()).object;
+  for (let depth = 0; depth < 5; depth++) {
+    if (object?.type === 'commit' && /^[a-f0-9]{40}$/.test(object.sha ?? '')) return object.sha;
+    if (object?.type !== 'tag' || !object.url?.startsWith('https://api.github.com/')) break;
+    object = (await (await get(object.url)).json()).object;
+  }
+  throw new Error(`Cannot resolve ${repository} tag ${tag} to a commit`);
 }
 async function imageDigest(reference) {
   const tag = reference.split('@')[0];
@@ -61,6 +71,11 @@ async function imageDigest(reference) {
 if (next.openclaw.version !== before.openclaw.version) {
   for (const plugin of ['acpx', 'discord']) await get(`https://registry.npmjs.org/@openclaw%2f${plugin}/${next.openclaw.version}`);
   next.openclaw.digest = await imageDigest(`ghcr.io/openclaw/openclaw:${next.openclaw.version}`);
+}
+const codexChanged = next.codex.version !== before.codex.version;
+if (codexChanged) {
+  const release = await (await get(`https://registry.npmjs.org/@openai%2fcodex/${next.codex.version}`)).json();
+  if (release.name !== '@openai/codex' || release.version !== next.codex.version) throw new Error(`Codex release unavailable: ${next.codex.version}`);
 }
 for (const section of ['buildArgs', 'infrastructure', 'automation']) {
   for (const [key, value] of Object.entries(next[section] ?? {})) {
@@ -114,6 +129,13 @@ for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'H
     }
     continue;
   }
+  if (tool === 'HELM' && args === next.imageOverrides['ops-pod']) {
+    const tag = `v${version}`;
+    const source = await get(`https://codeload.github.com/helm/helm/tar.gz/refs/tags/${tag}`);
+    next.buildArgs.OPS_HELM_SOURCE_SHA256 = sha(Buffer.from(await source.arrayBuffer()));
+    next.buildArgs.OPS_HELM_GIT_COMMIT = await githubTagCommit('helm/helm', tag);
+    continue;
+  }
   for (const arch of ['amd64', 'arm64']) {
     console.log(`Verifying upstream ${tool} ${version} linux/${arch}`);
     const { url, digest } = await releaseArtifact(tool, version, arch);
@@ -128,5 +150,6 @@ if (next.buildArgs.GH_VERSION !== before.buildArgs.GH_VERSION) {
 try {
   fs.writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`);
   console.log(JSON.stringify(syncVersions(root, false)));
+  console.log(JSON.stringify(syncCodexLock(root, codexChanged)));
   console.log(JSON.stringify(updateRuntimeToolLocks(root)));
 } catch (error) { fs.writeFileSync(file, original); throw error; }

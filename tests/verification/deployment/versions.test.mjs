@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 import { syncVersions, versionOutputs } from '../../../scripts/versions.mjs';
+import { syncCodexLock } from '../../../scripts/sync-codex-lock.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 
@@ -28,6 +29,7 @@ test('central versions update actual build/deployment files and reject drift wit
     const manifest = JSON.parse(fs.readFileSync(path.join(copy, 'versions.json'), 'utf8'));
     // A synthetic version tests propagation only; it is never built or declared a real release.
     manifest.openclaw.version = '2099.1.1';
+    manifest.codex.version = '99.1.2';
     manifest.redisProduction.chartVersion = '25.99.1';
     manifest.monitoringCharts.loki.version = '99.1.2';
     manifest.redisProduction.image = `registry-1.docker.io/bitnami/redis:latest@sha256:${'a'.repeat(64)}`;
@@ -53,6 +55,9 @@ test('central versions update actual build/deployment files and reject drift wit
       assert.ok(dockerfile.includes('ARG OPENCLAW_PLUGIN_VERSION=2099.1.1'));
     }
     assert.ok(fs.readFileSync(path.join(copy, 'charts/kubeclaw/values.yaml'), 'utf8').includes('npm:@openclaw/acpx@2099.1.1'));
+    assert.equal(JSON.parse(fs.readFileSync(path.join(copy, 'ops/pod/package.json'), 'utf8')).dependencies['@openai/codex'], '99.1.2');
+    assert.match(fs.readFileSync(path.join(copy, 'charts/ops-pod/Chart.yaml'), 'utf8'), /appVersion: "99\.1\.2"/);
+    assert.match(fs.readFileSync(path.join(copy, 'docs/ops/ops-pod.md'), 'utf8'), /\| Codex CLI 99\.1\.2 /);
     const policy = fs.readFileSync(path.join(copy, 'charts/kubeclaw/files/config/lint-policy.json'), 'utf8');
     assert.ok(policy.includes('"kubernetes_version": "1.99.9"'));
     assert.ok(policy.includes('/v1.99.9-standalone-strict/'));
@@ -86,4 +91,21 @@ test('every central base requires a digest, including non-OpenClaw runtimes', ()
     if (key.endsWith('_BASE')) assert.match(value, /@sha256:[a-f0-9]{64}$/);
   }
   assert.equal(fs.existsSync(path.join(root, 'docker/Dockerfile.general')), false);
+});
+
+test('the generated Codex package and integrity lock agree with the central version', () => {
+  const version = JSON.parse(fs.readFileSync(path.join(root, 'versions.json'), 'utf8')).codex.version;
+  assert.deepEqual(syncCodexLock(root), { changed: false, version });
+  const copy = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-codex-lock-'));
+  try {
+    fs.mkdirSync(path.join(copy, 'ops/pod'), { recursive: true });
+    for (const file of ['package.json', 'package-lock.json']) {
+      fs.copyFileSync(path.join(root, 'ops/pod', file), path.join(copy, 'ops/pod', file));
+    }
+    const lockFile = path.join(copy, 'ops/pod/package-lock.json');
+    const lock = JSON.parse(fs.readFileSync(lockFile, 'utf8'));
+    lock.packages['node_modules/@openai/codex'].version = '0.0.0';
+    fs.writeFileSync(lockFile, JSON.stringify(lock));
+    assert.throws(() => syncCodexLock(copy), /Codex lock drift/);
+  } finally { fs.rmSync(copy, { recursive: true, force: true }); }
 });

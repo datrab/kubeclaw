@@ -46,7 +46,9 @@ jobs:
           elif test -f releases/runtime-images.json; then
             node scripts/updates/materialize-release.mjs --check --check-selected-source
           fi
-          if test -f releases/ops-images.json; then node scripts/updates/materialize-release.mjs --check --family=ops; fi
+          if test -f releases/ops-images.json; then
+            node scripts/updates/materialize-release.mjs --check --check-selected-source --family=ops
+          fi
       - name: Verify selected digests against successful source workflow receipts
         env:
           GITHUB_TOKEN: ${{ github.token }}
