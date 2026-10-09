@@ -958,7 +958,7 @@ revocation or data removal.
 >
 > The bridge [aborts local admission on shutdown and preserves external-outcome uncertainty](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/agent-job-runner.mjs#L23-L46).
 > Control [returns the original durable agent-job status](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/control-server.ts#L280-L281).
-> Nova's [operator CLI command set](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/cli.ts#L21-L45) has no cancel command. Source inspection covered these paths. Verification did not include a live abort or retirement.
+> Nova's [operator CLI command set](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/cli.ts#L21-L45) has no cancel command. Live abort and retirement have no verified outcome for this procedure.
 
 
 ### Studio page closed during a new round

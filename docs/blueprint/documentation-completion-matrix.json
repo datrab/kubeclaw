@@ -6,7 +6,7 @@
   "catalogueAuthority": "docs/blueprint/generated/ap09-catalogue.json",
   "acceptanceAuthority": "docs/blueprint/AP09-acceptance-contract.md",
   "overallState": "in-progress",
-  "priorPackageAcceptance": "AP01-AP08 and AP09.0-AP09.7 recorded internal completion requires verification; no final AP09.7 Astra record found in initial repository search.",
+  "priorPackageAcceptance": "Independent read-only evidence discovery by /root/prior_acceptance_evidence_audit at d01b3db09d1d823da80bb26eb636ec0136d0d6ae found no current attributable individual acceptance records for AP01-AP08 or AP09.0-AP09.7. This is missing evidence, not proof of content failure. Historical claims remain historical; current impact review required.",
   "overarchingPackages": [
     {
       "id": "AP01",
@@ -13497,6 +13497,28 @@
         "uniqueSourceRevisionPairs": 557,
         "scopePages": 26
       }
+    },
+    {
+      "agent": "/root/prior_acceptance_evidence_audit",
+      "role": "prior-acceptance-evidence-discovery",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "readOnly": true,
+      "reviewedRevision": "d01b3db09d1d823da80bb26eb636ec0136d0d6ae",
+      "result": "MISSING current independent evidence; no content/package acceptance",
+      "scope": "AP01-AP08; AP09.0-AP09.7; exact git-blob impact comparison",
+      "authorities": [
+        "docs/blueprint/AP09-execution-plan.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/generated/ap09-catalogue.json",
+        "docs/blueprint/acceptance-evidence/README.md"
+      ],
+      "findings": [
+        "AP09.7 final Astra-medium record absent; 53 catalogue requirements and A97-01 through A97-12 require attributable individual acceptance.",
+        "AP08 two reviewed pages changed; AP09.6 four reviewed lint pages changed; AP09.7 platform/communication/data pages changed. Revision difference requires impact review, not automatic semantic failure.",
+        "Historical writer prose and default evidenceValidated=false checks do not establish independent acceptance."
+      ]
     }
   ],
   "continuation": {
