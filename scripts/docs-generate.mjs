@@ -710,6 +710,9 @@ git diff --check
 }
 
 function renderWorkflows(workflows) {
+  // Documentation production belongs to the internal inventory. The reader
+  // reference describes automation that builds, validates, or delivers the product.
+  const productWorkflows = workflows.workflows.filter((workflow) => workflow.path !== '.github/workflows/docs-checks.yaml');
   return `# Workflow Inventory
 
 Status: generated reference
@@ -721,12 +724,12 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists repository GitHub Actions workflows, their trigger surfaces, path filters, jobs, schedules, and command/action references. Use it when docs, deployment, images, tests, skills, plugins, or CI behavior change.
+This page lists product GitHub Actions workflows, their triggers, path filters, jobs, schedules, and command/action references. Use it when deployment, images, tests, skills, plugins, or CI behavior change.
 
 ${generatedNotice(workflows.generatedFrom)}
 ## Workflows
 
-${table(['Workflow', 'Triggers', 'Path filters', 'Schedules', 'Jobs', 'Commands/actions'], workflows.workflows.map((workflow) => [
+${table(['Workflow', 'Triggers', 'Path filters', 'Schedules', 'Jobs', 'Commands/actions'], productWorkflows.map((workflow) => [
   `\`${workflow.path}\` (${workflow.name})`,
   workflow.triggers.map((trigger) => `\`${trigger}\``).join(', '),
   workflow.pathFilters.length ? workflow.pathFilters.map((filter) => `\`${filter}\``).join('<br>') : '',
@@ -740,7 +743,7 @@ ${generatedEnd()}
 | Guardrail | Protected surface | Failure signal |
 | --- | --- | --- |
 | \`npm run docs:check:generated\` | generated inventory and generated reference pages | stale \`docs/generated/inventory/*.json\` or stale generated reference Markdown |
-| \`npm run docs:check:refs\` | local Markdown links and cited repository paths in active docs/current audit artifacts | missing doc, script, workflow, chart, config, test, skill, plugin, or root file path |
+| \`npm run docs:check:refs\` | local Markdown links and cited repository paths | missing doc, script, workflow, chart, config, test, skill, plugin, or root file path |
 | \`npm run docs:check:coverage\` | documentation topic-map consistency | missing active docs referenced by the topic map or vague topic-map weakness language |
 | \`git diff --check\` | whitespace hygiene in changed files | trailing whitespace or conflict-marker-like whitespace errors |
 
