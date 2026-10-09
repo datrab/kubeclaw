@@ -7,6 +7,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { approvedDocumentationDeletions, deletionApprovalPath,
+  deletionManifestPath } from './docs-parity-transition.mjs';
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outputPath = 'docs/generated/inventory/documentation-tree.json';
 const classificationPath = 'docs/config/documentation-tree-classification.json';
@@ -15,6 +18,7 @@ const derivedParityRoots = [
   'docs/config/documentation-parity',
   'docs/config/documentation-parity-reviews',
 ];
+const derivedTransitionPaths = new Set([deletionApprovalPath, deletionManifestPath]);
 const allowedClasses = new Set([
   'canonical-reader-documentation',
   'internal-documentation-input',
@@ -665,6 +669,23 @@ function parityRoot(pathname) {
   return derivedParityRoots.find((candidate) => pathname.startsWith(`${candidate}/`)) ?? null;
 }
 
+function derivedTransitionClassification(pathname) {
+  if (!derivedTransitionPaths.has(pathname)) return null;
+  const entry = fs.lstatSync(path.join(root, pathname));
+  assert(!entry.isSymbolicLink() && entry.isFile(),
+    `${pathname}: documentation transition authority must be a repository-internal regular file`);
+  return {
+    path: pathname,
+    class: 'internal-documentation-input',
+    purpose: pathname === deletionApprovalPath
+      ? 'Committed AP10 documentation deletion approval.'
+      : 'Generated full-readiness evidence bound by the AP10 deletion approval.',
+    originalPath: pathname,
+    expectedPath: pathname,
+    introducedAfterBaseline: true,
+  };
+}
+
 function derivedParityClassification(pathname, classification) {
   const rootPath = parityRoot(pathname);
   if (!rootPath) return null;
@@ -773,17 +794,21 @@ function build() {
   const dependencies = executableDocumentDependencies(paths, consumers);
   const classification = classificationRegistry();
   const baseline = baselineRegistry();
+  const approvedDeletions = approvedDocumentationDeletions(root);
   assert.equal(classification.value.baselineRevision, baseline.value.baselineRevision,
     'classification and immutable baseline revisions differ');
   for (const pathname of classification.records.keys()) {
-    assert(!parityRoot(pathname),
-      `${pathname}: documentation parity decision and review classifications are derived, not explicit`);
+    assert(!parityRoot(pathname) && !derivedTransitionPaths.has(pathname),
+      `${pathname}: documentation parity and transition classifications are derived, not explicit`);
   }
-  const derived = new Map(paths.filter((pathname) => parityRoot(pathname))
-    .map((pathname) => [pathname, derivedParityClassification(pathname, classification)]));
+  const derived = new Map(paths.filter((pathname) => parityRoot(pathname) || derivedTransitionPaths.has(pathname))
+    .map((pathname) => [pathname, parityRoot(pathname)
+      ? derivedParityClassification(pathname, classification)
+      : derivedTransitionClassification(pathname)]));
   const current = new Set(paths);
   const unclassified = paths.filter((pathname) => !classification.records.has(pathname) && !derived.has(pathname));
-  const absentClassifications = [...classification.records.keys()].filter((pathname) => !current.has(pathname));
+  const absentClassifications = [...classification.records.keys()]
+    .filter((pathname) => !current.has(pathname) && !approvedDeletions.paths.has(pathname));
   assert.equal(unclassified.length, 0,
     `unclassified documentation files: ${unclassified.slice(0, 30).join(', ')}`);
   assert.equal(absentClassifications.length, 0,
@@ -836,7 +861,8 @@ function build() {
     assert.equal(file.introducedAfterBaseline, !baseline.records.has(file.originalPath),
       `${file.path}: introducedAfterBaseline disagrees with the immutable baseline`);
   }
-  const missingBaselineFiles = [...baseline.records.keys()].filter((originalPath) => !byOriginal.has(originalPath));
+  const missingBaselineFiles = [...baseline.records.keys()].filter((originalPath) => !byOriginal.has(originalPath)
+    && !approvedDeletions.originalPaths.has(originalPath));
   assert.equal(missingBaselineFiles.length, 0,
     `baseline documentation disappeared without deletion approval: ${missingBaselineFiles.slice(0, 30).join(', ')}`);
   for (const file of files.filter((item) => item.class === 'legacy-extraction-source')) {

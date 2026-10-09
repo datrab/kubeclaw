@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { inflateSync } from 'node:zlib';
 
 import { buildParityInventory, extractionBindingDigest } from './docs-parity-extract.mjs';
+import { readinessGateCommands as REQUIRED_GATES } from './lib/docs-parity-gates.mjs';
 import { markdownAnchorEntries } from './lib/docs-markdown-anchors.mjs';
 
 const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -48,22 +49,12 @@ const CODE_CLASSIFICATIONS = new Set([
   'runnable-example', 'configuration-example', 'expected-output', 'illustrative-pseudocode',
   'identifier-list', 'obsolete-example',
 ]);
+const GENERATED_OR_REVIEW_PATH = /(?:^|\/)(?:\.tmp|artifacts|generated|review|reviews|node_modules|dist|build|coverage|vendor)(?:\/|$)|(?:^|\/)[^/]*(?:\.generated\.|-generated\.)/u;
+const IMPLEMENTATION_EXTENSION = /\.(?:c|cc|cpp|cs|go|java|js|jsx|kt|mjs|mts|php|py|rb|rs|sh|ts|tsx)$/u;
+const TEST_PATH = /(?:^|\/)(?:__tests__|test|tests)(?:\/|$)|(?:^|\/)[^/]+\.(?:spec|test)\.[^/]+$/u;
 const BEHAVIORAL_CLAIM_TYPES = new Set([
   'fact', 'decision', 'reason', 'constraint', 'procedure', 'configuration', 'failure', 'recovery',
   'security-boundary', 'example', 'status-or-limit', 'source-evidence', 'visual-relationship',
-]);
-const REQUIRED_GATES = Object.freeze([
-  { id: 'extraction', file: 'scripts/docs-parity-extract.mjs', args: ['--check'] },
-  { id: 'documentation-tree', file: 'scripts/docs-tree-boundary.mjs', args: ['--check'] },
-  { id: 'documentation-tree-mutations', file: 'scripts/tests/docs-tree-boundary.test.mjs',
-    nodeArgs: ['--test'], args: [
-      'scripts/tests/docs-markdown-anchors.test.mjs',
-      'scripts/tests/docs-check-refs.test.mjs',
-    ] },
-  { id: 'site', file: 'scripts/docs-check.mjs', args: [] },
-  { id: 'publication', file: 'scripts/docs-publication.mjs', args: ['check'] },
-  { id: 'references', file: 'scripts/docs-check-refs.mjs', args: [] },
-  { id: 'reader-boundary', file: 'scripts/check-site-reader-boundary.mjs', args: [] },
 ]);
 export const readinessGateCommands = REQUIRED_GATES;
 const PARITY_SOURCE_STATES = Object.freeze([
@@ -208,7 +199,8 @@ function buildReferenceIndex(root, sources) {
   const references = new Map(sources.map((source) => [source.originalPath, new Set()]));
   const scannedFiles = [];
   for (const file of repositoryFiles(root)) {
-    if (metadata.has(file) || sources.some((source) => file === source.legacyPath)) continue;
+    if (metadata.has(file) || file.startsWith('docs/generated/inventory/documentation-parity-')
+      || sources.some((source) => file === source.legacyPath)) continue;
     if (file.startsWith(`${decisionsRoot}/`) || file.startsWith(`${reviewsRoot}/`)) continue;
     let buffer;
     try { buffer = fs.readFileSync(path.join(root, file)); } catch { continue; }
@@ -253,21 +245,43 @@ function buildReferenceIndex(root, sources) {
   };
 }
 
+function scannerInputBinding(root, reviewedRevision, scannedFiles) {
+  const entries = scannedFiles.map((repositoryPath) => {
+    let reviewedObject;
+    try { reviewedObject = git(root, ['rev-parse', `${reviewedRevision}:${repositoryPath}`]).trim(); }
+    catch { assert.fail(`${repositoryPath}: active-dependency scanner input is absent at reviewedRevision`); }
+    const currentObject = gitObject(fs.readFileSync(path.join(root, repositoryPath)), root);
+    assert.equal(currentObject, reviewedObject,
+      `${repositoryPath}: active-dependency scanner input changed after reviewedRevision`);
+    return { path: repositoryPath, gitObject: currentObject };
+  });
+  return sha256(canonical(entries));
+}
+
 function buildActiveDependencyReview(root, source, reviewedRevision, contentRoot, referenceIndex = null) {
   const index = referenceIndex ?? buildReferenceIndex(root, [source]);
   const matches = index.references.get(source.originalPath) ?? [];
   return {
-    verdict: 'PASS',
     reviewedRevision,
+    reviewedTree: git(root, ['rev-parse', `${reviewedRevision}^{tree}`]).trim(),
     contentRoot,
+    scope: {
+      paths: [source.originalPath, source.legacyPath],
+      risks: ['dynamic-configuration', 'generated-paths', 'runtime-lookup', 'external-consumers'],
+    },
+    methods: [],
+    evidence: [],
+    findings: [],
     scanner: {
       version: ACTIVE_DEPENDENCY_SCANNER_VERSION,
       searchedPaths: [source.originalPath, source.legacyPath],
       scannedFileCount: index.scannedFiles.length,
       scannedPathsSha256: sha256(canonical(index.scannedFiles)),
+      scannerInputRoot: scannerInputBinding(root, reviewedRevision, index.scannedFiles),
       matches,
     },
     limitation: ACTIVE_DEPENDENCY_LIMITATION,
+    verdict: 'PENDING',
   };
 }
 
@@ -381,7 +395,8 @@ function loadUnits(root) {
     const label = `${unitsPath}:${index + 1}`;
     for (const key of ['schemaVersion', 'extractorVersion', 'unitId', 'originalPath', 'legacyPath',
       'baselineRevision', 'baselineGitObject', 'sourceKind', 'kind', 'headingPath', 'byteStart',
-      'byteEnd', 'lineStart', 'lineEnd', 'exact', 'exactSha256', 'normalized', 'normalizedSha256', 'text']) {
+      'byteEnd', 'lineStart', 'lineEnd', 'exact', 'exactSha256', 'normalized', 'normalizedSha256', 'text',
+      'atomicSegments']) {
       assert(Object.hasOwn(unit, key), `${label}: missing ${key}`);
     }
     assert.equal(unit.schemaVersion, 'kubeclaw-documentation-parity-unit.v1', `${label}: unsupported schemaVersion`);
@@ -395,6 +410,7 @@ function loadUnits(root) {
     assert.equal(typeof unit.exact, 'string', `${label}.exact: must be a string`);
     assert.equal(typeof unit.normalized, 'string', `${label}.normalized: must be a string`);
     assert.equal(typeof unit.text, 'string', `${label}.text: must be a string`);
+    assert(Array.isArray(unit.atomicSegments), `${label}.atomicSegments: must be an array`);
     if (Object.hasOwn(unit, 'textSha256')) {
       assert.equal(unit.textSha256, sha256(unit.text), `${label}: textSha256 does not match text`);
     }
@@ -632,14 +648,38 @@ function validateEvidence(root, evidence, reviewedRevision, gitState, label, { b
   assert(EVIDENCE_BASES.has(evidence.basis), `${label}: unsupported evidence basis`);
   if (behavioral) assert.notEqual(evidence.basis, 'documentation-governance', `${label}: behavioral evidence cannot be documentation governance`);
   nonempty(evidence.assertion, `${label}.assertion`);
-  assert(!evidence.path.startsWith('docs/config/documentation-parity')
-    && !evidence.path.startsWith('docs/generated/')
-    && !evidence.path.startsWith('docs/_legacy-source/'), `${label}: evidence is not a current authority`);
+  assert(normalizeExcerpt(evidence.assertion).length >= 12 && /[\p{L}\p{N}].*[\p{L}\p{N}]/u.test(evidence.assertion),
+    `${label}: evidence assertion is too trivial to explain the supported statement`);
+  assert(!evidence.path.startsWith(`${decisionsRoot}/`)
+    && !evidence.path.startsWith(`${reviewsRoot}/`)
+    && !evidence.path.startsWith('docs/_legacy-source/')
+    && !GENERATED_OR_REVIEW_PATH.test(evidence.path), `${label}: evidence is a generated, review, legacy, or decision artifact`);
   if (behavioral) {
     assert(!evidence.path.startsWith('docs/site/')
       && evidence.path !== 'docs/blueprint/documentation-parity-contract.md',
     `${label}: canonical parity documentation cannot prove current behavior`);
   }
+  const basisPathMatches = {
+    'current-implementation': !evidence.path.startsWith('docs/')
+      && !TEST_PATH.test(evidence.path)
+      && !evidence.path.startsWith('contracts/') && !evidence.path.startsWith('charts/')
+      && !evidence.path.startsWith('config/') && IMPLEMENTATION_EXTENSION.test(evidence.path),
+    'current-contract': evidence.path.startsWith('contracts/'),
+    'current-schema': /(?:^|\/)schemas?\//u.test(evidence.path)
+      || /\.schema\.(?:json|ya?ml)$/u.test(evidence.path)
+      || /(?:^|\/)(?:openapi|swagger)(?:[-_.]|$)/u.test(evidence.path),
+    'current-configuration': evidence.path.startsWith('charts/') || evidence.path.startsWith('config/')
+      || evidence.path.startsWith('configs/') || evidence.path.startsWith('.github/workflows/')
+      || /(?:^|\/)(?:[^/]+\.)?(?:config|values)\.(?:json|jsonc|toml|ya?ml)$/u.test(evidence.path)
+      || /^(?:package(?:-lock)?\.json|go\.mod)$/u.test(evidence.path),
+    'current-test': TEST_PATH.test(evidence.path),
+    'documentation-governance': evidence.path.startsWith('docs/config/')
+      || evidence.path === 'docs/blueprint/documentation-parity-contract.md'
+      || evidence.path === routeRegistryPath
+      || /^scripts\/docs-parity-(?:check|extract)\.mjs$/u.test(evidence.path),
+  };
+  assert.equal(basisPathMatches[evidence.basis], true,
+    `${label}: ${evidence.basis} evidence path is outside that basis path class`);
   const absolute = safeRepositoryPath(root, evidence.path, `${label}.path`);
   assert(fs.existsSync(absolute) && fs.lstatSync(absolute).isFile(), `${label}: evidence must be a current regular file, not a symlink`);
   assert.equal(path.relative(root, fs.realpathSync(absolute)).replaceAll('\\', '/'), evidence.path,
@@ -655,6 +695,48 @@ function validateEvidence(root, evidence, reviewedRevision, gitState, label, { b
   const mode = git(root, ['ls-tree', evidence.revision, '--', evidence.path]).trim().split(/\s+/u)[0];
   assert(['100644', '100755'].includes(mode), `${label}: evidence path is not a recorded regular file`);
   validateSpan(buffer, evidence, label);
+  const selected = normalizeExcerpt(buffer.subarray(evidence.byteStart, evidence.byteEnd).toString('utf8'));
+  const tokens = selected.match(/[\p{L}\p{N}_-]+/gu) ?? [];
+  assert(selected.length >= 8 && tokens.length >= 2 && tokens.some((token) => /[\p{L}\p{N}]/u.test(token)),
+    `${label}: evidence span is punctuation-only or too trivial to support a claim`);
+}
+
+function validateCodeClassification(classification, claims, label) {
+  const rules = {
+    'runnable-example': { claimTypes: ['example', 'procedure'], truthStates: ['current'], disposition: 'mapped',
+      evidenceBases: ['current-implementation', 'current-test'] },
+    'configuration-example': { claimTypes: ['configuration', 'example'], truthStates: ['current'], disposition: 'mapped',
+      evidenceBases: ['current-configuration', 'current-schema', 'current-implementation', 'current-test'] },
+    'expected-output': { claimTypes: ['example', 'fact', 'failure', 'status-or-limit'], truthStates: ['current'], disposition: 'mapped',
+      evidenceBases: ['current-test', 'current-implementation', 'current-contract'] },
+    'illustrative-pseudocode': { claimTypes: ['example', 'procedure'], truthStates: ['current', 'historical-decision'],
+      disposition: 'mapped', evidenceBases: ['current-implementation', 'current-contract', 'current-test'] },
+    'identifier-list': { claimTypes: ['configuration', 'fact', 'source-evidence'], truthStates: ['current'], disposition: 'mapped',
+      evidenceBases: ['current-contract', 'current-schema', 'current-configuration', 'current-implementation'] },
+    'obsolete-example': { claimTypes: ['configuration', 'example', 'procedure', 'source-evidence'],
+      truthStates: ['obsolete-or-incorrect'], disposition: 'omitted', evidenceBases: null },
+  };
+  const rule = rules[classification];
+  assert(claims.length > 0, `${label}: classified code block has no semantic claims`);
+  for (const claim of claims) {
+    assert(rule.claimTypes.includes(claim.claimType),
+      `${label}: ${classification} is incompatible with claimType ${claim.claimType}`);
+    assert(rule.truthStates.includes(claim.truthState),
+      `${label}: ${classification} is incompatible with truthState ${claim.truthState}`);
+    assert.equal(claim.disposition, rule.disposition,
+      `${label}: ${classification} is incompatible with disposition ${claim.disposition}`);
+    if (rule.disposition === 'mapped') {
+      assert(claim.targets.length > 0, `${label}: ${classification} requires a concrete canonical target`);
+      if (claim.truthState === 'current') {
+        assert(claim.evidence.length > 0 && claim.evidence.every((item) => rule.evidenceBases.includes(item.basis)),
+          `${label}: ${classification} has incompatible or missing evidence basis`);
+      }
+    } else {
+      assert.equal(claim.targets.length, 0, `${label}: obsolete-example cannot map a canonical target`);
+      assert.equal(claim.omission?.reasonCode, 'obsolete-or-incorrect',
+        `${label}: obsolete-example requires an obsolete-or-incorrect omission`);
+    }
+  }
 }
 
 function validateClaim(root, claim, unit, sourceBuffer, site, publishedPaths, reviewedRevision, gitState, label) {
@@ -804,6 +886,7 @@ function validateDecision(root, value, source, units, site, publishedPaths, gitS
     assert(Array.isArray(coverage.fragments) && coverage.fragments.length > 0, `${coverageLabel}: visible unit has no claim/structural coverage`);
     let cursor = unit.byteStart;
     let claimFragments = 0;
+    const unitClaimIds = [];
     for (const [fragmentIndex, fragment] of coverage.fragments.entries()) {
       const fragmentLabel = `${coverageLabel}.fragments[${fragmentIndex}]`;
       exactKeys(fragment, ['kind', 'claimId', 'reasonCode', 'byteStart', 'byteEnd'], fragmentLabel);
@@ -825,6 +908,7 @@ function validateDecision(root, value, source, units, site, publishedPaths, gitS
         assert.equal(claim.source.byteStart, fragment.byteStart, `${fragmentLabel}: claim start differs from coverage`);
         assert.equal(claim.source.byteEnd, fragment.byteEnd, `${fragmentLabel}: claim end differs from coverage`);
         coveredClaims.push(fragment.claimId);
+        unitClaimIds.push(fragment.claimId);
         claimFragments += 1;
       } else {
         assert.equal(fragment.claimId, null, `${fragmentLabel}: structural fragment cannot name a claim`);
@@ -836,6 +920,41 @@ function validateDecision(root, value, source, units, site, publishedPaths, gitS
     }
     assert.equal(cursor, unit.byteEnd, `${coverageLabel}: unit tail is uncovered`);
     if (!['table-delimiter'].includes(unit.kind)) assert(claimFragments > 0, `${coverageLabel}: visible content has no atomic claim`);
+    if (unit.sourceKind === 'markdown') {
+      if (unit.kind !== 'table-delimiter') {
+        assert(unit.atomicSegments.length > 0, `${coverageLabel}: Markdown unit has no deterministic atomic segments`);
+      }
+      let priorEnd = unit.byteStart;
+      const segmentCountByClaim = new Map(unitClaimIds.map((claimId) => [claimId, 0]));
+      for (const [segmentIndex, segment] of unit.atomicSegments.entries()) {
+        const segmentLabel = `${coverageLabel}.atomicSegments[${segmentIndex}]`;
+        exactKeys(segment, ['index', 'kind', 'byteStart', 'byteEnd', 'exactSha256', 'normalizedSha256'], segmentLabel);
+        assert.equal(segment.index, segmentIndex, `${segmentLabel}: segment index is not deterministic`);
+        assert(['statement', 'table-cell', 'code-statement'].includes(segment.kind),
+          `${segmentLabel}: unsupported atomic segment kind`);
+        assert(segment.byteStart >= unit.byteStart && segment.byteEnd <= unit.byteEnd && segment.byteStart < segment.byteEnd,
+          `${segmentLabel}: atomic segment leaves its extracted unit`);
+        assert(segment.byteStart >= priorEnd, `${segmentLabel}: atomic segments overlap or are out of order`);
+        priorEnd = segment.byteEnd;
+        const selected = sourceBuffer.subarray(segment.byteStart, segment.byteEnd);
+        assert.equal(segment.exactSha256, sha256(selected), `${segmentLabel}: exactSha256 is stale`);
+        assert.equal(segment.normalizedSha256, sha256(normalizeExcerpt(selected.toString('utf8'))),
+          `${segmentLabel}: normalizedSha256 is stale`);
+        const owners = coverage.fragments.filter((fragment) => fragment.kind === 'claim'
+          && fragment.byteStart <= segment.byteStart && fragment.byteEnd >= segment.byteEnd);
+        assert.equal(owners.length, 1,
+          `${segmentLabel}: every atomic statement must be wholly owned by exactly one claim`);
+        segmentCountByClaim.set(owners[0].claimId, (segmentCountByClaim.get(owners[0].claimId) ?? 0) + 1);
+      }
+      for (const claimId of unitClaimIds) {
+        assert.equal(segmentCountByClaim.get(claimId), 1,
+          `${coverageLabel}: claim ${claimId} must cover exactly one atomic statement, table cell, or code statement`);
+      }
+    }
+    if (unit.kind === 'code-block') {
+      validateCodeClassification(coverage.codeBlockClassification,
+        unitClaimIds.map((claimId) => claimsById.get(claimId)), coverageLabel);
+    }
   }
   assert.equal(new Set(coveredClaims).size, coveredClaims.length, `${label}: a claim is used by multiple coverage fragments`);
   assert.deepEqual([...coveredClaims].sort(), [...claimIds].sort(), `${label}: claim coverage is incomplete or contains extras`);
@@ -894,8 +1013,35 @@ function validateReview(value, source, decisionSha256, decisionInfo, contentRoot
   assert.deepEqual([...value.claimIds].sort(), [...decisionInfo.claimIds].sort(), `${label}: review claim set differs from decision`);
   assert.equal(new Set(value.claimIds).size, value.claimIds.length, `${label}: review claimIds contain duplicates`);
   assert.equal(value.classificationVerdict, 'PASS', `${label}: source classification must be PASS`);
-  assert.deepEqual(value.activeDependencyReview, activeDependencyReview,
-    `${label}: active dependency attestation is stale or not bound to this revision and content root`);
+  exactKeys(value.activeDependencyReview, ['reviewedRevision', 'reviewedTree', 'contentRoot', 'scope', 'methods',
+    'evidence', 'findings', 'scanner', 'limitation', 'verdict'], `${label}.activeDependencyReview`);
+  for (const key of ['reviewedRevision', 'reviewedTree', 'contentRoot', 'scope', 'scanner', 'limitation']) {
+    assert.deepEqual(value.activeDependencyReview[key], activeDependencyReview[key],
+      `${label}: active dependency attestation is stale or not bound to the reviewed tree`);
+  }
+  assert(Array.isArray(value.activeDependencyReview.methods)
+    && value.activeDependencyReview.methods.length > 0, `${label}: active dependency review requires manual methods`);
+  value.activeDependencyReview.methods.forEach((method, index) => {
+    exactKeys(method, ['kind', 'detail'], `${label}.activeDependencyReview.methods[${index}]`);
+    assert.equal(method.kind, 'manual-inspection', `${label}: dependency-review methods must record manual inspection`);
+    nonempty(method.detail, `${label}.activeDependencyReview.methods[${index}].detail`);
+  });
+  assert(Array.isArray(value.activeDependencyReview.evidence)
+    && value.activeDependencyReview.evidence.length > 0, `${label}: active dependency review requires manual evidence`);
+  value.activeDependencyReview.evidence.forEach((evidence, index) => {
+    exactKeys(evidence, ['kind', 'detail'], `${label}.activeDependencyReview.evidence[${index}]`);
+    assert(['scanner-result', 'manual-observation'].includes(evidence.kind),
+      `${label}.activeDependencyReview.evidence[${index}]: unsupported evidence kind`);
+    nonempty(evidence.detail, `${label}.activeDependencyReview.evidence[${index}].detail`);
+  });
+  assert(Array.isArray(value.activeDependencyReview.findings),
+    `${label}.activeDependencyReview.findings: must be an array`);
+  value.activeDependencyReview.findings.forEach((finding, index) => {
+    exactKeys(finding, ['id', 'status', 'detail'], `${label}.activeDependencyReview.findings[${index}]`);
+    nonempty(finding.id, `${label}.activeDependencyReview.findings[${index}].id`);
+    nonempty(finding.detail, `${label}.activeDependencyReview.findings[${index}].detail`);
+    assert.equal(finding.status, 'resolved', `${label}: unresolved active dependency finding ${finding.id}`);
+  });
   assert.equal(value.activeDependencyReview.verdict, 'PASS', `${label}: active dependency review must PASS`);
   assert.deepEqual(value.activeDependencyReview.scanner.matches, [], `${label}: active dependency scanner found matches`);
   assert(Array.isArray(value.claimVerdicts), `${label}.claimVerdicts: must be an array`);

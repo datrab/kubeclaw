@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-untriaged.v1",
+  "status": "untriaged",
+  "source": {
+    "originalPath": "docs/operators/external-pipeline-plugins.md",
+    "legacyPath": "docs/_legacy-source/operators/external-pipeline-plugins.md",
+    "classification": "legacy-extraction-source",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "e3df7b10fc2a8971f6fc0c3c5febd9e78c1a1e2c",
+    "extractionDigest": "282b02c3368e4515960701b71e3e5a22440a16046dcd86aca205d329f0a49bb9"
+  }
+}

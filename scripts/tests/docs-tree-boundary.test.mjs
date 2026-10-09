@@ -31,8 +31,10 @@ function failFileSystem(method) {
 
 function fixture(options = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-doc-tree-'));
-  write(root, 'scripts/docs-tree-boundary.mjs', fs.readFileSync(
-    path.join(sourceRoot, 'scripts/docs-tree-boundary.mjs'), 'utf8'));
+  for (const relative of ['scripts/docs-tree-boundary.mjs', 'scripts/docs-parity-transition.mjs',
+    'scripts/lib/docs-parity-gates.mjs']) {
+    write(root, relative, fs.readFileSync(path.join(sourceRoot, relative), 'utf8'));
+  }
   write(root, 'docs/site/README.md', '# Canonical\n');
   write(root, 'docs/legacy.md', '# Source\n\nA retained fact.\n');
   if (options.fixture) {
@@ -432,8 +434,10 @@ test('treats deployment and runtime YAML roots as executable configuration', () 
 
 test('supports a real SHA-256 Git repository tree', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-doc-tree-sha256-'));
-  write(root, 'scripts/docs-tree-boundary.mjs', fs.readFileSync(
-    path.join(sourceRoot, 'scripts/docs-tree-boundary.mjs'), 'utf8'));
+  for (const relative of ['scripts/docs-tree-boundary.mjs', 'scripts/docs-parity-transition.mjs',
+    'scripts/lib/docs-parity-gates.mjs']) {
+    write(root, relative, fs.readFileSync(path.join(sourceRoot, relative), 'utf8'));
+  }
   write(root, 'docs/site/README.md', '# Canonical\n');
   run(root, 'git', ['init', '-q', '--object-format=sha256']);
   run(root, 'git', ['config', 'user.name', 'Docs Test']);

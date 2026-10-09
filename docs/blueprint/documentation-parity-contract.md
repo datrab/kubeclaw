@@ -118,6 +118,22 @@ An executable or factual example needs a verified canonical example or an
 evidence-backed omission. A prose paragraph with a similar topic is not a valid
 replacement.
 
+The label is not descriptive metadata alone. The checker applies this
+compatibility matrix to every atomic claim in the block:
+
+| Classification | Allowed current claim types | Required result |
+| --- | --- | --- |
+| `runnable-example` | `example`, `procedure` | Current and mapped, with an implementation or test locator and a concrete target |
+| `configuration-example` | `configuration`, `example` | Current and mapped, with configuration, schema, implementation, or test evidence and a concrete target |
+| `expected-output` | `example`, `fact`, `failure`, `status-or-limit` | Current and mapped, with test, implementation, or contract evidence and a concrete target |
+| `illustrative-pseudocode` | `example`, `procedure` | Current or historical and mapped; a current claim needs implementation, contract, or test evidence |
+| `identifier-list` | `configuration`, `fact`, `source-evidence` | Current and mapped, with contract, schema, configuration, or implementation evidence |
+| `obsolete-example` | `configuration`, `example`, `procedure`, `source-evidence` | Obsolete, omitted, targetless, and backed by an `obsolete-or-incorrect` omission |
+
+The whole block must satisfy its row. Mixing a current runnable example and an
+obsolete command under one classification fails closed; the source must be
+split into separately classified units before it can become deletion-ready.
+
 ### SVG coverage
 
 An SVG is not one indivisible unit. Extraction records its title, description,
@@ -174,6 +190,21 @@ Each claim has one truth state:
 
 `unknown` always blocks readiness.
 
+The extractor records ordered `atomicSegments` for every Markdown unit. Prose
+segments end at sentence or semicolon boundaries, table headers and rows split
+at cells and then at statement boundaries within each cell, frontmatter splits at fields, and fenced code splits at nonblank lines
+and semicolon statement boundaries. Each segment binds its exact byte range and
+exact and normalized hashes. These ranges are deterministic extraction output,
+not author-selected decision metadata.
+
+Every atomic segment must be wholly owned by exactly one claim, and every claim
+fragment in a Markdown unit must own exactly one atomic segment. Formatting on
+either side can remain in that claim fragment or be marked structural, but one
+broad claim cannot cover two extracted statements, cells, or code statements.
+Consequently evidence for one sentence cannot make an adjacent sentence pass.
+Changing this segmentation requires an extractor-version change and regeneration
+of the extraction ledger.
+
 ### Claim compatibility matrix
 
 The machine gate applies this matrix. A decision cannot use a looser combination.
@@ -191,6 +222,24 @@ The machine gate applies this matrix. A decision cannot use a looser combination
 Evidence for a behavioral claim cannot cite the canonical page, this parity
 contract, a decision file, a generated inventory, or another legacy source as
 proof of current behavior.
+
+Evidence bases are path-class specific:
+
+| Basis | Accepted authority class |
+| --- | --- |
+| `current-implementation` | Non-documentation implementation source files, excluding tests, contracts, charts, and configuration |
+| `current-contract` | Files below `contracts/` |
+| `current-schema` | Schema directories/files or OpenAPI/Swagger authorities |
+| `current-configuration` | Chart, configuration, workflow, values, or config files |
+| `current-test` | Test trees or files named as tests/specifications |
+| `documentation-governance` | Narrow documentation configuration, this contract, or the parity checker/extractor |
+
+Generated outputs, review artifacts, decision/review records, dependency output,
+and legacy sources are never evidence authorities. Each locator must select a
+substantial span with at least two meaningful tokens; punctuation-only and tiny
+token fragments fail even when their hashes and revision bindings are correct.
+The assertion must also explain the exact supported statement rather than merely
+naming the file.
 
 ## Valid canonical mapping
 
@@ -269,11 +318,22 @@ review bind the same reviewed revision. The checker derives assignment provenanc
 from the commit containing the assignment authority and rejects uncommitted
 assignment changes.
 
-Every review also contains an `activeDependencyReview` verdict bound to the
-reviewed revision and content root. It records the exact old and legacy paths,
-the static scanner version, scanned-path evidence, and zero matches. The checker
-reruns one cached repository scan and also recognizes direct links and simple
-path construction such as `["docs", "old.md"].join("/")`.
+Every review also contains an explicitly authored `activeDependencyReview`
+record bound to the reviewed revision, that revision's complete Git tree, and
+the content root. It records scope, manual methods, evidence, findings, verdict,
+the exact old and legacy paths, the static scanner version, and zero matches.
+The scanner-input root hashes every scanned path and Git blob and the checker
+requires those inputs to remain byte-identical to the reviewed revision. A
+later change anywhere in the scanner input set therefore invalidates the review,
+even if the path list itself did not change. The checker also recognizes direct
+links and simple path construction such as
+`["docs", "old.md"].join("/")`.
+
+The scanner helper produces a `PENDING` record with empty manual methods and
+evidence. It cannot generate `PASS`. The assigned reviewer must document the
+manual inspection of dynamic configuration, generated paths, runtime lookup,
+and external-consumer risk, record evidence and resolved findings, and then set
+the verdict. A record without manual methods and evidence is invalid.
 
 This scan is deliberately not described as complete program analysis. Dynamic
 configuration, generated paths, runtime lookup, and external consumers can evade
@@ -321,6 +381,44 @@ the fixed generated manifest is the only permitted worktree difference so that a
 generate-then-check round trip does not create a circular commit requirement.
 Only full readiness may report `PASS` or set `deletionReady` to `true`.
 
+## Committed AP10 deletion handoff
+
+Readiness and deletion are two separate commits. They are joined by
+`docs/config/documentation-ap10-deletion-approval.json`; no command generates
+this approval as `PASS`.
+
+1. At reviewed revision **R**, run full readiness from a clean tree. The
+   generated manifest identifies R and records all same-revision gates.
+2. Commit **A** with exactly the generated manifest and the manually authored
+   approval. A must have R as its first parent. The approval binds R, R's exact
+   Git tree, the manifest SHA-256, and every approved path and Git blob.
+3. The AP10 deletion commit **D** must be the first first-parent commit after A
+   and must have A as its exact first parent. D must delete, rather than modify
+   or rename, every approved blob. It may not delete an unapproved legacy blob.
+4. Later descendants retain the approval. The transition checker finds D again,
+   verifies the A-to-D diff, and rejects restoration of an approved path.
+
+The approval set is exact: it contains every `legacy-extraction-source` and
+every `deletable-remainder` in R's classification. A legacy entry cites its
+passing independent parity classification review. Every deletable-remainder
+entry, including every baseline Markdown and SVG file, has its own explicit
+revision-bound classification review with scope, manual methods, blob-bound
+evidence, findings, and `PASS` verdict. This prevents a whole-tree deletion from
+treating remainder classification as an implicit bulk approval.
+
+`npm run docs:parity:transition:check` enforces all three states: before approval
+all classified deletion candidates must still have their reviewed blobs; at A
+the exact approval bridge is checked; at D and later commits every deletion is
+checked against A. `docs:check` and the documentation CI workflow invoke this
+gate. The tree boundary accepts missing baseline paths only after that validator
+has verified D.
+
+Repository fields such as `reviewerId` are auditable assertions, not
+cryptographic identity. This repository has no authenticated signing authority
+for these records. The checker states that limitation and does not pretend to
+prove who performed a review; authenticated reviewer identity remains a required
+control of the acceptance workflow.
+
 ## Safe batch scaffolding
 
 The scaffold command creates the complete decision-file set for exactly one
@@ -366,6 +464,8 @@ The gate must reject at least these changes:
 - a missing review, matching author and reviewer, or one negative claim verdict;
 - an active reference to an old or legacy path;
 - a stale active-dependency attestation or a simple composed old path;
+- an automatically generated active-dependency `PASS`, a missing manual method,
+  or any scanner input changed after the reviewed revision;
 - a canonical page that reads an internal transition input through a literal,
   array join, string concatenation, template, `path.join`, or `new URL` value;
 - a broken reference-style link or an anchor hidden in a Setext heading,
@@ -373,6 +473,11 @@ The gate must reject at least these changes:
 - a changed SVG label, non-image render artifact, or unreviewed visual relationship;
 - a redirect assessment that conflicts with the original route or route registry;
 - stale generated inventory, report, or deletion manifest;
+- an approval commit that changes anything besides the approval and readiness
+  manifest, does not bind its exact parent tree, omits a deletable remainder, or
+  lacks a blob-bound independent classification review;
+- an AP10 commit with the wrong parent, a modified or renamed approved source,
+  a removed unapproved legacy blob, or a later restoration;
 - a scaffold interruption during any staging or publication phase, including an
   author change made before recovery;
 - a wrong recovery blob; and

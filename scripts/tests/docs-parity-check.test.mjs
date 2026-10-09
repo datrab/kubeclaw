@@ -70,6 +70,16 @@ function span(buffer, byteStart = 0, byteEnd = buffer.length) {
   };
 }
 
+function manualActiveDependencyReview(root, source, reviewedRevision, contentRoot) {
+  const review = buildActiveDependencyReview(root, source, reviewedRevision, contentRoot);
+  review.methods = [{ kind: 'manual-inspection',
+    detail: 'Reviewed dynamic configuration, generated paths, runtime lookup, and external-consumer risk.' }];
+  review.evidence = [{ kind: 'scanner-result', detail: 'The bound static scan reported zero matches.' },
+    { kind: 'manual-observation', detail: 'No non-literal or external dependency was identified.' }];
+  review.verdict = 'PASS';
+  return review;
+}
+
 const decisionPath = 'docs/config/documentation-parity/legacy.md.json';
 const reviewPath = 'docs/config/documentation-parity-reviews/legacy.md.json';
 const sitePath = 'docs/site/guide.md';
@@ -272,7 +282,7 @@ function fixture({ sourceText = 'Alpha current behavior.\n', sourceKind = 'markd
       targetSpecificity: 'PASS', dispositionJustification: 'PASS',
     }],
     visualVerdicts: [],
-    activeDependencyReview: buildActiveDependencyReview(root, source, reviewedRevision, contentRoot),
+    activeDependencyReview: manualActiveDependencyReview(root, source, reviewedRevision, contentRoot),
     verdict: 'PASS',
     findings: [],
   };
@@ -299,7 +309,7 @@ function refreshContentBindings(root) {
   json(root, decisionPath, decision);
   const review = load(root, reviewPath);
   review.contentRoot = contentRoot;
-  review.activeDependencyReview = buildActiveDependencyReview(root, decision.source, decision.reviewedRevision, contentRoot);
+  review.activeDependencyReview = manualActiveDependencyReview(root, decision.source, decision.reviewedRevision, contentRoot);
   review.decisionSha256 = sha256(fs.readFileSync(path.join(root, decisionPath)));
   json(root, reviewPath, review);
 }
@@ -348,7 +358,7 @@ function completeSvgDecision(root) {
   review.visualVerdicts = decision.visualEvidence.map((item) => ({ unitIds: item.unitIds,
     relationUnitIds: item.relationUnitIds, renderedSha256: item.renderedSha256, mediaType: item.mediaType,
     width: item.width, height: item.height, renderer: item.renderer, verdict: 'PASS' }));
-  review.activeDependencyReview = buildActiveDependencyReview(root, decision.source, decision.reviewedRevision,
+  review.activeDependencyReview = manualActiveDependencyReview(root, decision.source, decision.reviewedRevision,
     decision.contentRoot);
   review.decisionSha256 = sha256(fs.readFileSync(path.join(root, svgDecisionPath)));
   json(root, svgReviewPath, review);
@@ -400,9 +410,8 @@ test('readiness cannot bypass the documentation-tree classification gate', () =>
   write(root, 'docs/rogue-unclassified.md', '# Rogue\n');
   write(root, 'scripts/docs-tree-boundary.mjs',
     "throw new Error('unclassified documentation file');\n");
-  refreshContentBindings(root);
   commitFixture(root, 'add unclassified documentation');
-  assert.throws(() => validateParity({ root, readiness: true }), /Command failed/u);
+  assert.throws(() => validateParity({ root, readiness: true }), /scanner input|Command failed/u);
 });
 
 test('rejects anchor-only mapping without a concrete excerpt', () => {
@@ -419,7 +428,6 @@ test('rejects anchor-only mapping without a concrete excerpt', () => {
 test('rejects a changed mapped excerpt even with refreshed content bindings', () => {
   const root = fixture();
   write(root, sitePath, '# Guide\n\nAlpha behavior changed.\n');
-  refreshContentBindings(root);
   assert.throws(() => validateParity({ root }), /normalized excerpt must occur exactly once/u);
 });
 
@@ -427,7 +435,6 @@ test('rejects a duplicate normalized target excerpt', () => {
   const root = fixture();
   write(root, 'docs/site/duplicate.md', '# Duplicate\n\nAlpha   current behavior.\n');
   classifyCanonical(root, 'docs/site/duplicate.md');
-  refreshContentBindings(root);
   assert.throws(() => validateParity({ root }), /normalized excerpt must occur exactly once/u);
 });
 
@@ -582,6 +589,15 @@ test('rejects visible words hidden as structural coverage', () => {
   assert.throws(() => validateParity({ root }), /structural coverage cannot hide visible words/u);
 });
 
+test('rejects one broad claim spanning multiple extractor-authored atomic statements', () => {
+  const root = fixture({ sourceText: 'Alpha current behavior. Beta is independently configurable.\n' });
+  const decision = load(root, decisionPath);
+  assert.equal(decision.unitCoverage[0].fragments.length, 1);
+  json(root, decisionPath, decision);
+  resignReview(root, true);
+  assert.throws(() => validateParity({ root }), /must cover exactly one atomic statement/u);
+});
+
 test('rejects a relative Markdown link to the old reader path', () => {
   const root = fixture();
   write(root, 'docs/site/other.md', '# Other\n\n[Old page](../legacy.md)\n');
@@ -705,6 +721,105 @@ test('rejects a canonical documentation page forged as current behavioral eviden
   assert.throws(() => validateParity({ root }), /canonical parity documentation cannot prove current behavior/u);
 });
 
+test('rejects trivial, generated-review, and basis-mismatched evidence', () => {
+  const trivial = fixture();
+  const trivialDecision = load(trivial, decisionPath);
+  const implementation = fs.readFileSync(path.join(trivial, 'src/behavior.js'));
+  const punctuation = implementation.indexOf(';');
+  Object.assign(trivialDecision.claims[0].evidence[0], span(implementation, punctuation, punctuation + 1));
+  json(trivial, decisionPath, trivialDecision);
+  resignReview(trivial, true);
+  assert.throws(() => validateParity({ root: trivial }), /punctuation-only or too trivial/u);
+
+  const reviewArtifact = fixture();
+  const artifactDecision = load(reviewArtifact, decisionPath);
+  const rendered = fs.readFileSync(path.join(reviewArtifact, 'docs/review/rendered.png'));
+  artifactDecision.claims[0].evidence = [{
+    revision: artifactDecision.reviewedRevision,
+    path: 'docs/review/rendered.png',
+    basis: 'current-implementation',
+    assertion: 'A review rendering is not implementation authority.',
+    gitObject: gitObject(rendered, reviewArtifact),
+    ...span(rendered),
+  }];
+  json(reviewArtifact, decisionPath, artifactDecision);
+  resignReview(reviewArtifact, true);
+  assert.throws(() => validateParity({ root: reviewArtifact }), /generated, review, legacy, or decision artifact/u);
+
+  const generatedArtifact = fixture();
+  const generatedDecision = load(generatedArtifact, decisionPath);
+  const generatedPath = 'docs/generated/inventory/documentation-parity-units.jsonl';
+  const generated = fs.readFileSync(path.join(generatedArtifact, generatedPath));
+  generatedDecision.claims[0].evidence = [{
+    revision: generatedDecision.reviewedRevision,
+    path: generatedPath,
+    basis: 'current-implementation',
+    assertion: 'Generated extraction output cannot prove implementation behavior.',
+    gitObject: gitObject(generated, generatedArtifact),
+    ...span(generated),
+  }];
+  json(generatedArtifact, decisionPath, generatedDecision);
+  resignReview(generatedArtifact, true);
+  assert.throws(() => validateParity({ root: generatedArtifact }), /generated, review, legacy, or decision artifact/u);
+
+  const wrongBasis = fixture();
+  const wrongBasisDecision = load(wrongBasis, decisionPath);
+  wrongBasisDecision.claims[0].evidence[0].basis = 'current-test';
+  json(wrongBasis, decisionPath, wrongBasisDecision);
+  resignReview(wrongBasis, true);
+  assert.throws(() => validateParity({ root: wrongBasis }), /current-test evidence path is outside that basis path class/u);
+
+  const testAsImplementation = fixture();
+  const testDecision = load(testAsImplementation, decisionPath);
+  const testPath = 'scripts/tests/docs-tree-boundary.test.mjs';
+  const testBuffer = fs.readFileSync(path.join(testAsImplementation, testPath));
+  testDecision.claims[0].evidence = [{
+    revision: testDecision.reviewedRevision,
+    path: testPath,
+    basis: 'current-implementation',
+    assertion: 'A test file cannot masquerade as implementation evidence.',
+    gitObject: gitObject(testBuffer, testAsImplementation),
+    ...span(testBuffer),
+  }];
+  json(testAsImplementation, decisionPath, testDecision);
+  resignReview(testAsImplementation, true);
+  assert.throws(() => validateParity({ root: testAsImplementation }),
+    /current-implementation evidence path is outside that basis path class/u);
+});
+
+test('rejects code classifications incompatible with claim semantics and proof shape', () => {
+  const compatible = fixture({ sourceText: '```text\nAlpha current behavior.\n```\n' });
+  const compatibleDecision = load(compatible, decisionPath);
+  compatibleDecision.unitCoverage[0].codeBlockClassification = 'expected-output';
+  json(compatible, decisionPath, compatibleDecision);
+  resignReview(compatible, true);
+  assert.doesNotThrow(() => validateParity({ root: compatible }));
+
+  const mutate = (change, expected) => {
+    const root = fixture({ sourceText: '```js\nalpha()\n```\n' });
+    const decision = load(root, decisionPath);
+    decision.unitCoverage[0].codeBlockClassification = 'runnable-example';
+    change(decision.claims[0]);
+    json(root, decisionPath, decision);
+    resignReview(root, true);
+    assert.throws(() => validateParity({ root }), expected);
+  };
+  mutate(() => {}, /runnable-example is incompatible with claimType fact/u);
+  mutate((claim) => { claim.claimType = 'example'; claim.truthState = 'historical-decision'; },
+    /runnable-example is incompatible with truthState historical-decision/u);
+  mutate((claim) => {
+    claim.claimType = 'example';
+    claim.disposition = 'omitted';
+    claim.targets = [];
+    claim.evidence = [];
+    claim.omission = { reasonCode: 'obsolete-or-incorrect', explanation: 'Not runnable now.', evidence: [] };
+  }, /runnable-example is incompatible with disposition omitted/u);
+  mutate((claim) => { claim.claimType = 'example'; claim.evidence[0].basis = 'current-configuration'; },
+    /runnable-example has incompatible or missing evidence basis/u);
+  mutate((claim) => { claim.claimType = 'example'; claim.targets = []; },
+    /runnable-example requires a concrete canonical target/u);
+});
+
 test('rejects an unclassified publication target and a fake fenced heading anchor', () => {
   const unpublished = fixture();
   const classification = load(unpublished, 'docs/config/documentation-tree-classification.json');
@@ -775,7 +890,8 @@ test('never grants readiness without every same-revision gate and a clean tree',
   write(root, 'scripts/docs-check.mjs', 'throw new Error("site gate failed");\n');
   commitFixture(root, 'make site gate fail');
   const forgedRunner = () => [{ id: 'site', status: 'PASS' }];
-  assert.throws(() => validateParity({ root, readiness: true, gateRunner: forgedRunner }), /Command failed/u);
+  assert.throws(() => validateParity({ root, readiness: true, gateRunner: forgedRunner }),
+    /scanner input changed|Command failed/u);
 });
 
 test('requires trusted review provenance and rendered SVG review evidence', () => {
@@ -992,6 +1108,26 @@ test('ignores narrow immutable audit metadata but rejects executable and configu
   review.activeDependencyReview.contentRoot = '0'.repeat(64);
   json(staleAttestation, reviewPath, review);
   assert.throws(() => validateParity({ root: staleAttestation }), /active dependency attestation is stale/u);
+});
+
+test('dependency scanner evidence cannot generate a PASS review and binds every scanned input blob', () => {
+  const pending = fixture();
+  const decision = load(pending, decisionPath);
+  const generated = buildActiveDependencyReview(pending, decision.source, decision.reviewedRevision,
+    decision.contentRoot);
+  assert.equal(generated.verdict, 'PENDING');
+  assert.deepEqual(generated.methods, []);
+  assert.deepEqual(generated.evidence, []);
+
+  const noManualReview = load(pending, reviewPath);
+  noManualReview.activeDependencyReview = generated;
+  json(pending, reviewPath, noManualReview);
+  assert.throws(() => validateParity({ root: pending }), /requires manual methods/u);
+
+  const staleScannerInput = fixture();
+  write(staleScannerInput, 'scripts/docs-check.mjs', 'process.stdout.write("changed scanner input\\n");\n');
+  assert.throws(() => validateParity({ root: staleScannerInput }),
+    /active-dependency scanner input changed after reviewedRevision/u);
 });
 
 test('exports categorical strict per-source inspection and fail-closed global findings', () => {

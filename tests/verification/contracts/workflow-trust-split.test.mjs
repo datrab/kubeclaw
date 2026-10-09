@@ -84,10 +84,20 @@ test('trusted docs check before a scoped main-only commit and consume no validat
   assert.doesNotMatch(JSON.stringify(job),/download-artifact|cache:|head_ref/u);
   assert.equal(job.steps.find(s=>s.uses?.startsWith('actions/checkout@')).with.ref,'${{ github.sha }}');
   const commit=job.steps.find(s=>s.name==='Commit generated docs');assert.equal(job.steps.at(-1),commit);
-  assert.match(commit.run,/git add docs\/generated docs\/reference/u);
+  assert.match(commit.run,/git add docs\/generated docs\/site\/reference docs\/reference docs\/architecture\/plugin-system-current-inventory\.md/u);
+  assert.match(commit.run,/git diff --quiet/u);
+  assert.match(commit.run,/git ls-files --others --exclude-standard/u);
   assert.match(commit.run,/git push origin HEAD:refs\/heads\/main/u);
   assert.doesNotMatch(commit.run,/--force|git add \./u);
-  for(const command of ['npm run docs:check:generated','node scripts/docs-check.mjs','npm run docs:check:refs','npm run docs:check:coverage','git diff --check'])assert(job.steps.some(s=>s.run===command));
+  for(const command of ['npm run docs:check:generated','node scripts/docs-check.mjs','npm run docs:check:refs','npm run docs:parity:transition:check','npm run docs:check:coverage','git diff --check'])assert(job.steps.some(s=>s.run===command));
+});
+
+test('pull-request drift detection covers every generator output and new untracked output',()=>{
+  const step=docs.jobs.validate.steps.find(s=>s.name==='Reject generated docs drift');
+  assert(step);
+  assert.match(step.run,/git status --porcelain --untracked-files=all/u);
+  assert.doesNotMatch(step.run,/git diff --quiet -- docs\/generated/u);
+  assert.match(step.run,/git status --short --untracked-files=all/u);
 });
 
 test('every external action in the two entrypoints is commit pinned',()=>{

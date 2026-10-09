@@ -229,6 +229,43 @@ test('coverage assertion rejects a mutation that omits visible Markdown', () => 
   );
 });
 
+test('extracts deterministic atomic segments for prose, list, table, and code subclaims', () => {
+  const buffer = Buffer.from(`First fact. Second fact.
+
+- First item fact; second item fact.
+
+| Left claim | Right claim |
+| --- | --- |
+| One value. Another value. | Two values |
+
+\`\`\`js
+start(); finish();
+verify()
+\`\`\`
+`);
+  const units = extractMarkdown(buffer, directSource('docs/atomic.md'));
+  const segmentText = (unit) => unit.atomicSegments.map((segment) =>
+    buffer.subarray(segment.byteStart, segment.byteEnd).toString('utf8'));
+  assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'paragraph')),
+    ['First fact.', 'Second fact.']);
+  assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'list-item')),
+    ['- First item fact;', 'second item fact.']);
+  assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'table-header')),
+    ['Left claim', 'Right claim']);
+  assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'table-row')),
+    ['One value.', 'Another value.', 'Two values']);
+  assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'code-block')),
+    ['start();', 'finish();', 'verify()']);
+  for (const unit of units) {
+    for (const [index, segment] of unit.atomicSegments.entries()) {
+      assert.equal(segment.index, index);
+      assert(segment.byteStart >= unit.byteStart && segment.byteEnd <= unit.byteEnd);
+      assert.match(segment.exactSha256, /^[0-9a-f]{64}$/u);
+      assert.match(segment.normalizedSha256, /^[0-9a-f]{64}$/u);
+    }
+  }
+});
+
 test('extracts SVG labels plus deterministic node, edge, and group relations', () => {
   const svg = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg">
   <title>System map</title><desc>Node and relation description</desc>

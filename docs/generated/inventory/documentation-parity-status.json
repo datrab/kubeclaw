@@ -1,0 +1,2861 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-status.v1",
+  "sourceCount": 249,
+  "batchCount": 23,
+  "sourceValidationComplete": false,
+  "globalDeletionReady": false,
+  "counts": {
+    "missing-decision": 242,
+    "untriaged-decision": 7,
+    "invalid-decision": 0,
+    "missing-review": 0,
+    "invalid-review": 0,
+    "source-valid": 0
+  },
+  "batches": [
+    {
+      "id": "project-navigation-and-status",
+      "owner": "documentation-governance",
+      "sourceCount": 4,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 4,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/README.md",
+          "legacyPath": "docs/_legacy-source/architecture/README.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/README.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/README.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/README.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/CONTRIBUTING.md",
+          "legacyPath": "docs/_legacy-source/CONTRIBUTING.md",
+          "decisionPath": "docs/config/documentation-parity/CONTRIBUTING.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/CONTRIBUTING.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/CONTRIBUTING.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/DOCUMENTATION_TOPIC_MAP.md",
+          "legacyPath": "docs/_legacy-source/DOCUMENTATION_TOPIC_MAP.md",
+          "decisionPath": "docs/config/documentation-parity/DOCUMENTATION_TOPIC_MAP.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/DOCUMENTATION_TOPIC_MAP.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/DOCUMENTATION_TOPIC_MAP.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/ROADMAP.md",
+          "legacyPath": "docs/_legacy-source/ROADMAP.md",
+          "decisionPath": "docs/config/documentation-parity/ROADMAP.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/ROADMAP.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/ROADMAP.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nova-core-and-plugin-runtime",
+      "owner": "nova-runtime",
+      "sourceCount": 10,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 10,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/capability-provider-routing.md",
+          "legacyPath": "docs/_legacy-source/architecture/capability-provider-routing.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/capability-provider-routing.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/capability-provider-routing.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/capability-provider-routing.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/lifecycle-and-state.md",
+          "legacyPath": "docs/_legacy-source/architecture/lifecycle-and-state.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/lifecycle-and-state.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/lifecycle-and-state.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/lifecycle-and-state.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/nova-project-runtime.md",
+          "legacyPath": "docs/_legacy-source/architecture/nova-project-runtime.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/nova-project-runtime.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/nova-project-runtime.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/nova-project-runtime.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/plugin-system-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/plugin-system-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/plugin-system-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/plugin-system-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/plugin-system-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/plugin-system-phase10-changelog.md",
+          "legacyPath": "docs/_legacy-source/architecture/plugin-system-phase10-changelog.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/plugin-system-phase10-changelog.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/plugin-system-phase10-changelog.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/plugin-system-phase10-changelog.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/plugin-system-phase10-observer-assessment.md",
+          "legacyPath": "docs/_legacy-source/architecture/plugin-system-phase10-observer-assessment.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/plugin-system-phase10-observer-assessment.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/plugin-system-phase10-observer-assessment.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/plugin-system-phase10-observer-assessment.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/plugin-system-phase12-changelog.md",
+          "legacyPath": "docs/_legacy-source/architecture/plugin-system-phase12-changelog.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/plugin-system-phase12-changelog.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/plugin-system-phase12-changelog.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/plugin-system-phase12-changelog.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/plugin-system-phase9-changelog.md",
+          "legacyPath": "docs/_legacy-source/architecture/plugin-system-phase9-changelog.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/plugin-system-phase9-changelog.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/plugin-system-phase9-changelog.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/plugin-system-phase9-changelog.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/plugin-system-phase9-extension-assessment.md",
+          "legacyPath": "docs/_legacy-source/architecture/plugin-system-phase9-extension-assessment.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/plugin-system-phase9-extension-assessment.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/plugin-system-phase9-extension-assessment.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/plugin-system-phase9-extension-assessment.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/plugin-system-vision.md",
+          "legacyPath": "docs/_legacy-source/architecture/plugin-system-vision.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/plugin-system-vision.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/plugin-system-vision.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/plugin-system-vision.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "echo",
+      "owner": "echo-runtime",
+      "sourceCount": 18,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 18,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/echo-review-governance-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-governance-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-governance-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-governance-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-governance-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-1-baseline.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-1-baseline.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-1-baseline.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-1-baseline.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-1-baseline.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-2-design.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-2-design.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-2-design.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-2-design.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-2-design.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-3-design.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-3-design.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-3-design.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-3-design.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-3-design.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-4-design.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-4-design.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-4-design.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-4-design.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-4-design.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-4-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-4-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-4-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-4-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-4-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-5-design.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-5-design.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-5-design.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-5-design.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-5-design.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-5-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-5-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-5-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-5-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-5-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-6-design.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-6-design.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-6-design.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-6-design.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-6-design.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-6-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-6-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-6-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-6-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-6-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-7-design.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-7-design.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-7-design.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-7-design.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-7-design.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-7-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-7-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-7-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-7-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-7-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-8-design.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-8-design.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-8-design.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-8-design.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-8-design.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-8-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-8-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-8-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-8-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-8-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-9-evaluation.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-9-evaluation.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-9-evaluation.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-9-evaluation.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-9-evaluation.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-phase-9-hardening.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-phase-9-hardening.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-phase-9-hardening.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-phase-9-hardening.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-phase-9-hardening.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-roadmap.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-roadmap.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-roadmap.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-roadmap.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-roadmap.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/echo-review-scalability-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/echo-review-scalability-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/echo-review-scalability-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/echo-review-scalability-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/echo-review-scalability-plan.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prism",
+      "owner": "prism-runtime",
+      "sourceCount": 21,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 21,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/prism-baseline-bundle-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-baseline-bundle-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-baseline-bundle-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-baseline-bundle-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-baseline-bundle-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-corpus-ingestion-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-corpus-ingestion-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-corpus-ingestion-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-corpus-ingestion-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-corpus-ingestion-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-design-document-v1-review.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-design-document-v1-review.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-design-document-v1-review.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-design-document-v1-review.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-design-document-v1-review.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-design-engine-architecture.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-design-engine-architecture.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-design-engine-architecture.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-design-engine-architecture.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-design-engine-architecture.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-design-engine-contract-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-design-engine-contract-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-design-engine-contract-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-design-engine-contract-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-design-engine-contract-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-helm-deployment-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-helm-deployment-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-helm-deployment-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-helm-deployment-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-helm-deployment-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-openclaw-runtime.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-openclaw-runtime.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-openclaw-runtime.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-openclaw-runtime.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-openclaw-runtime.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-pipeline-fidelity-adapter-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-pipeline-fidelity-adapter-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-pipeline-fidelity-adapter-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-pipeline-fidelity-adapter-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-pipeline-fidelity-adapter-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-preference-learning-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-preference-learning-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-preference-learning-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-preference-learning-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-preference-learning-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-prototype-runtime-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-prototype-runtime-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-prototype-runtime-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-prototype-runtime-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-prototype-runtime-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-quality-gates-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-quality-gates-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-quality-gates-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-quality-gates-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-quality-gates-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-recovery-observability-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-recovery-observability-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-recovery-observability-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-recovery-observability-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-recovery-observability-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-retrieval-ranking-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-retrieval-ranking-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-retrieval-ranking-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-retrieval-ranking-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-retrieval-ranking-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-storage-model-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-storage-model-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-storage-model-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-storage-model-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-storage-model-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/prism-studio-interaction-v1.md",
+          "legacyPath": "docs/_legacy-source/architecture/prism-studio-interaction-v1.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/prism-studio-interaction-v1.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/prism-studio-interaction-v1.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/prism-studio-interaction-v1.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/prism-database-transitions.md",
+          "legacyPath": "docs/_legacy-source/operations/prism-database-transitions.md",
+          "decisionPath": "docs/config/documentation-parity/operations/prism-database-transitions.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/prism-database-transitions.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/prism-database-transitions.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/prism-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/operations/prism-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/operations/prism-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/prism-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/prism-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/prism-product-decisions.md",
+          "legacyPath": "docs/_legacy-source/operations/prism-product-decisions.md",
+          "decisionPath": "docs/config/documentation-parity/operations/prism-product-decisions.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/prism-product-decisions.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/prism-product-decisions.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/runbooks/prism-recovery.md",
+          "legacyPath": "docs/_legacy-source/runbooks/prism-recovery.md",
+          "decisionPath": "docs/config/documentation-parity/runbooks/prism-recovery.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/runbooks/prism-recovery.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/runbooks/prism-recovery.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/security/prism-threat-model.md",
+          "legacyPath": "docs/_legacy-source/security/prism-threat-model.md",
+          "decisionPath": "docs/config/documentation-parity/security/prism-threat-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/security/prism-threat-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/security/prism-threat-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/user-guides/prism-studio.md",
+          "legacyPath": "docs/_legacy-source/user-guides/prism-studio.md",
+          "decisionPath": "docs/config/documentation-parity/user-guides/prism-studio.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/user-guides/prism-studio.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/user-guides/prism-studio.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "observability-packaging-and-reliability",
+      "owner": "runtime-reliability",
+      "sourceCount": 15,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 15,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-observability-phase-5-7-a-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-observability-phase-5-7-a-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-a-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-observability-phase-5-7-a-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-a-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-observability-phase-5-7-b-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-observability-phase-5-7-b-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-b-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-observability-phase-5-7-b-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-b-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-observability-phase-5-7-c-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-observability-phase-5-7-c-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-c-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-observability-phase-5-7-c-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-c-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-observability-phase-5-7-d-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-observability-phase-5-7-d-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-d-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-observability-phase-5-7-d-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-d-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-observability-phase-5-7-e-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-observability-phase-5-7-e-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-e-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-observability-phase-5-7-e-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-e-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-observability-phase-5-7-f-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-observability-phase-5-7-f-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-f-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-observability-phase-5-7-f-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-f-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-observability-phase-5-7-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-observability-phase-5-7-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-observability-phase-5-7-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-observability-phase-5-7-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-reliability-remediation.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-reliability-remediation.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-reliability-remediation.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-reliability-remediation.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-reliability-remediation.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-a-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging-phase-5-6-a-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-a-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-runtime-packaging-phase-5-6-a-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-a-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-b-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging-phase-5-6-b-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-b-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-runtime-packaging-phase-5-6-b-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-b-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-c-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging-phase-5-6-c-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-c-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-runtime-packaging-phase-5-6-c-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-c-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-d-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging-phase-5-6-d-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-d-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-runtime-packaging-phase-5-6-d-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-d-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-e-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging-phase-5-6-e-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-e-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-runtime-packaging-phase-5-6-e-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-e-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-f-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging-phase-5-6-f-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-f-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-runtime-packaging-phase-5-6-f-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-f-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "worker-core",
+      "owner": "worker-runtime",
+      "sourceCount": 3,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 3,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-worker-core-phase-5-5-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-worker-core-phase-5-5-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-worker-core-phase-5-5-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-c-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-c-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-worker-core-phase-5-5-c-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-worker-core-phase-5-5-c-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-worker-core-phase-5-5-c-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-d-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-d-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-worker-core-phase-5-5-d-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-worker-core-phase-5-5-d-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-worker-core-phase-5-5-d-audit.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-core-and-shared-migration",
+      "owner": "buster-runtime",
+      "sourceCount": 20,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 20,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/buster-v2-runtime.md",
+          "legacyPath": "docs/_legacy-source/architecture/buster-v2-runtime.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/buster-v2-runtime.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/buster-v2-runtime.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/buster-v2-runtime.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-6-a-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-6-a-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-a-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-6-a-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-a-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-6-b-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-6-b-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-b-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-6-b-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-b-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-6-c-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-6-c-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-c-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-6-c-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-c-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-6-d-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-6-d-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-d-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-6-d-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-d-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-6-e-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-6-e-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-e-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-6-e-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-e-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-6-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-6-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-6-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-6-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-7-a-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-7-a-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-a-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-7-a-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-a-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-7-b-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-7-b-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-b-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-7-b-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-b-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-7-c-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-7-c-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-c-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-7-c-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-c-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-7-closeout.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-7-closeout.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-closeout.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-7-closeout.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-closeout.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-7-d-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-7-d-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-d-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-7-d-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-d-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-7-e-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-7-e-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-e-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-7-e-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-e-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-7-f-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-7-f-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-f-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-7-f-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-f-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-7-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-7-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-7-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-7-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-8-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-8-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-8-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-8-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-8-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-9-comparison.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-9-comparison.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-9-comparison.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-9-comparison.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-9-comparison.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-phase-9-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-9-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-9-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-phase-9-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-phase-9-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-suite-migration-workflow-v2-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-suite-migration-workflow-v2-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-suite-migration-workflow-v2-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-suite-migration-workflow-v2-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-suite-migration-workflow-v2-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-suites-8-13-state-and-issues.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-suites-8-13-state-and-issues.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-suites-8-13-state-and-issues.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-suites-8-13-state-and-issues.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-suites-8-13-state-and-issues.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-accessibility",
+      "owner": "buster-accessibility",
+      "sourceCount": 8,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 8,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-a11y-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-a11y-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-a11y-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-a11y-cutover-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-a11y-cutover-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-cutover-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-a11y-cutover-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-cutover-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-a11y-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-a11y-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-a11y-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-a11y-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-a11y-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-a11y-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-a11y-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-a11y-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-a11y-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-a11y-parity-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-a11y-parity-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-parity-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-a11y-parity-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-parity-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-a11y-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-a11y-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-a11y-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-a11y-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-a11y-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-a11y-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-a11y-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-api",
+      "owner": "buster-api",
+      "sourceCount": 9,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 9,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-cutover-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-cutover-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-cutover-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-cutover-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-cutover-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-parity-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-parity-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-parity-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-parity-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-parity-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-three-phase-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-three-phase-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-three-phase-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-three-phase-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-three-phase-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-api-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-api-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-api-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-api-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-api-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-container-build",
+      "owner": "buster-container-build",
+      "sourceCount": 11,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 11,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-cutover-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-cutover-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-cutover-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-cutover-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-cutover-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-cutover-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-cutover-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-cutover-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-cutover-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-cutover-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-implementation-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-implementation-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-implementation-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-implementation-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-implementation-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-parity-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-parity-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-parity-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-parity-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-parity-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-parity-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-parity-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-parity-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-parity-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-parity-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-container-build-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-container-build-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-container-build-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-container-build-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-end-to-end",
+      "owner": "buster-end-to-end",
+      "sourceCount": 8,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 8,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-e2e-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-e2e-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-e2e-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-e2e-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-e2e-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-10-cutover-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-phase-10-cutover-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-phase-10-cutover-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-e2e-phase-10-cutover-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-phase-10-cutover-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-8-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-phase-8-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-phase-8-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-e2e-phase-8-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-phase-8-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-9-parity-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-phase-9-parity-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-phase-9-parity-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-e2e-phase-9-parity-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-phase-9-parity-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-e2e-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-e2e-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-e2e-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-e2e-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-e2e-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-http",
+      "owner": "buster-http",
+      "sourceCount": 8,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 8,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-http-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-http-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-http-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-http-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-http-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-http-cutover-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-http-cutover-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-http-cutover-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-http-cutover-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-http-cutover-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-http-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-http-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-http-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-http-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-http-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-http-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-http-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-http-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-http-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-http-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-http-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-http-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-http-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-http-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-http-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-http-parity-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-http-parity-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-http-parity-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-http-parity-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-http-parity-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-http-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-http-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-http-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-http-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-http-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-http-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-http-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-http-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-http-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-http-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-kubernetes-fixture",
+      "owner": "buster-kubernetes",
+      "sourceCount": 10,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 10,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-parity-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-parity-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-parity-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-parity-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-parity-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-lighthouse",
+      "owner": "buster-lighthouse",
+      "sourceCount": 8,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 8,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-lighthouse-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-lighthouse-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-cutover-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-lighthouse-cutover-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-cutover-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-lighthouse-cutover-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-cutover-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-lighthouse-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-lighthouse-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-lighthouse-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-lighthouse-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-lighthouse-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-lighthouse-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-parity-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-lighthouse-parity-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-parity-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-lighthouse-parity-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-parity-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-lighthouse-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-lighthouse-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-lighthouse-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-lighthouse-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-lighthouse-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-security",
+      "owner": "buster-security",
+      "sourceCount": 8,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 8,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-security-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-security-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-security-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-security-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-security-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-security-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-security-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-security-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-security-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-security-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-security-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-security-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-security-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-security-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-security-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-security-phase-10-cutover-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-security-phase-10-cutover-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-security-phase-10-cutover-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-security-phase-10-cutover-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-security-phase-10-cutover-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-security-phase-8-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-security-phase-8-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-security-phase-8-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-security-phase-8-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-security-phase-8-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-security-phase-9-parity-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-security-phase-9-parity-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-security-phase-9-parity-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-security-phase-9-parity-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-security-phase-9-parity-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-security-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-security-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-security-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-security-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-security-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-security-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-security-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-security-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-security-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-security-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-size-budget",
+      "owner": "buster-size-budget",
+      "sourceCount": 12,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 12,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-cutover-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-cutover-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-cutover-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-cutover-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-cutover-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-cutover-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-cutover-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-cutover-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-cutover-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-cutover-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-final-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-parity-final-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-parity-final-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-parity-final-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-parity-final-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-parity-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-parity-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-parity-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-parity-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-report.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-parity-report.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-parity-report.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-parity-report.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-parity-report.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-size-budget-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-size-budget-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-size-budget-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-size-budget-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-tailscale-exposure",
+      "owner": "buster-demo-delivery",
+      "sourceCount": 6,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 6,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-tailscale-exposure-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-tailscale-exposure-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-three-phase-audit.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-three-phase-audit.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-three-phase-audit.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-tailscale-exposure-three-phase-audit.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-three-phase-audit.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buster-suite-visual",
+      "owner": "buster-visual",
+      "sourceCount": 7,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 7,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-visual-configuration-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-visual-configuration-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-configuration-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-visual-configuration-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-configuration-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-visual-cutover-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-visual-cutover-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-cutover-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-visual-cutover-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-cutover-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-visual-error-reference.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-visual-error-reference.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-error-reference.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-visual-error-reference.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-error-reference.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-visual-implementation-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-visual-implementation-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-implementation-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-visual-implementation-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-implementation-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-visual-operator-guide.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-visual-operator-guide.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-operator-guide.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-visual-operator-guide.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-operator-guide.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-visual-parity-plan.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-visual-parity-plan.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-parity-plan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-visual-parity-plan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-parity-plan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/pipeline-test-gate-visual-security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-visual-security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/pipeline-test-gate-visual-security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/pipeline-test-gate-visual-security-model.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-deployment-operations-and-security",
+      "owner": "platform-operations",
+      "sourceCount": 26,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 26,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/architecture/ops-pod.md",
+          "legacyPath": "docs/_legacy-source/architecture/ops-pod.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/ops-pod.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/ops-pod.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/ops-pod.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/architecture/security-model.md",
+          "legacyPath": "docs/_legacy-source/architecture/security-model.md",
+          "decisionPath": "docs/config/documentation-parity/architecture/security-model.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/architecture/security-model.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/architecture/security-model.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/agent-deployments.md",
+          "legacyPath": "docs/_legacy-source/deployment/agent-deployments.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/agent-deployments.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/agent-deployments.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/agent-deployments.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/continuous-gitops.md",
+          "legacyPath": "docs/_legacy-source/deployment/continuous-gitops.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/continuous-gitops.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/continuous-gitops.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/continuous-gitops.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/deployment-verification.md",
+          "legacyPath": "docs/_legacy-source/deployment/deployment-verification.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/deployment-verification.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/deployment-verification.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/deployment-verification.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/infrastructure.md",
+          "legacyPath": "docs/_legacy-source/deployment/infrastructure.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/infrastructure.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/infrastructure.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/infrastructure.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/litellm.md",
+          "legacyPath": "docs/_legacy-source/deployment/litellm.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/litellm.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/litellm.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/litellm.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/README.md",
+          "legacyPath": "docs/_legacy-source/deployment/README.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/README.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/README.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/README.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/secrets.md",
+          "legacyPath": "docs/_legacy-source/deployment/secrets.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/secrets.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/secrets.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/secrets.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/setup-flow.md",
+          "legacyPath": "docs/_legacy-source/deployment/setup-flow.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/setup-flow.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/setup-flow.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/setup-flow.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/deployment/tailscale-operator.md",
+          "legacyPath": "docs/_legacy-source/deployment/tailscale-operator.md",
+          "decisionPath": "docs/config/documentation-parity/deployment/tailscale-operator.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/deployment/tailscale-operator.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/deployment/tailscale-operator.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/automatic-runtime-deployments.md",
+          "legacyPath": "docs/_legacy-source/operations/automatic-runtime-deployments.md",
+          "decisionPath": "docs/config/documentation-parity/operations/automatic-runtime-deployments.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/automatic-runtime-deployments.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/automatic-runtime-deployments.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/ax41-rollout.md",
+          "legacyPath": "docs/_legacy-source/operations/ax41-rollout.md",
+          "decisionPath": "docs/config/documentation-parity/operations/ax41-rollout.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/ax41-rollout.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/ax41-rollout.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/data-plane-mtls.md",
+          "legacyPath": "docs/_legacy-source/operations/data-plane-mtls.md",
+          "decisionPath": "docs/config/documentation-parity/operations/data-plane-mtls.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/data-plane-mtls.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/data-plane-mtls.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/litellm-postgresql-recovery.md",
+          "legacyPath": "docs/_legacy-source/operations/litellm-postgresql-recovery.md",
+          "decisionPath": "docs/config/documentation-parity/operations/litellm-postgresql-recovery.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/litellm-postgresql-recovery.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/litellm-postgresql-recovery.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/local-image-vulnerability-scan.md",
+          "legacyPath": "docs/_legacy-source/operations/local-image-vulnerability-scan.md",
+          "decisionPath": "docs/config/documentation-parity/operations/local-image-vulnerability-scan.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/local-image-vulnerability-scan.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/local-image-vulnerability-scan.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/native-worker-host-pools.md",
+          "legacyPath": "docs/_legacy-source/operations/native-worker-host-pools.md",
+          "decisionPath": "docs/config/documentation-parity/operations/native-worker-host-pools.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/native-worker-host-pools.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/native-worker-host-pools.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/observability-retention.md",
+          "legacyPath": "docs/_legacy-source/operations/observability-retention.md",
+          "decisionPath": "docs/config/documentation-parity/operations/observability-retention.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/observability-retention.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/observability-retention.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/postgresql-migration.md",
+          "legacyPath": "docs/_legacy-source/operations/postgresql-migration.md",
+          "decisionPath": "docs/config/documentation-parity/operations/postgresql-migration.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/postgresql-migration.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/postgresql-migration.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/redis-migration.md",
+          "legacyPath": "docs/_legacy-source/operations/redis-migration.md",
+          "decisionPath": "docs/config/documentation-parity/operations/redis-migration.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/redis-migration.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/redis-migration.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/registry-clients.md",
+          "legacyPath": "docs/_legacy-source/operations/registry-clients.md",
+          "decisionPath": "docs/config/documentation-parity/operations/registry-clients.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/registry-clients.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/registry-clients.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/runtime-versions-and-images.md",
+          "legacyPath": "docs/_legacy-source/operations/runtime-versions-and-images.md",
+          "decisionPath": "docs/config/documentation-parity/operations/runtime-versions-and-images.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/runtime-versions-and-images.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/runtime-versions-and-images.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/stateful-infrastructure-upgrades.md",
+          "legacyPath": "docs/_legacy-source/operations/stateful-infrastructure-upgrades.md",
+          "decisionPath": "docs/config/documentation-parity/operations/stateful-infrastructure-upgrades.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/stateful-infrastructure-upgrades.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/stateful-infrastructure-upgrades.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/operations/worker-trust-runbook.md",
+          "legacyPath": "docs/_legacy-source/operations/worker-trust-runbook.md",
+          "decisionPath": "docs/config/documentation-parity/operations/worker-trust-runbook.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operations/worker-trust-runbook.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/operations/worker-trust-runbook.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/ops/ops-pod.md",
+          "legacyPath": "docs/_legacy-source/ops/ops-pod.md",
+          "decisionPath": "docs/config/documentation-parity/ops/ops-pod.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/ops/ops-pod.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/ops/ops-pod.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/security/worker-trust.md",
+          "legacyPath": "docs/_legacy-source/security/worker-trust.md",
+          "decisionPath": "docs/config/documentation-parity/security/worker-trust.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/security/worker-trust.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/security/worker-trust.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "operator-handbook-sources",
+      "owner": "platform-operations",
+      "sourceCount": 7,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 0,
+        "untriaged-decision": 7,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/operators/external-pipeline-plugins.md",
+          "legacyPath": "docs/_legacy-source/operators/external-pipeline-plugins.md",
+          "decisionPath": "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operators/external-pipeline-plugins.md.json",
+          "state": "untriaged-decision",
+          "findings": []
+        },
+        {
+          "originalPath": "docs/operators/final-preview-tailscale.md",
+          "legacyPath": "docs/_legacy-source/operators/final-preview-tailscale.md",
+          "decisionPath": "docs/config/documentation-parity/operators/final-preview-tailscale.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operators/final-preview-tailscale.md.json",
+          "state": "untriaged-decision",
+          "findings": []
+        },
+        {
+          "originalPath": "docs/operators/plugin-observers.md",
+          "legacyPath": "docs/_legacy-source/operators/plugin-observers.md",
+          "decisionPath": "docs/config/documentation-parity/operators/plugin-observers.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operators/plugin-observers.md.json",
+          "state": "untriaged-decision",
+          "findings": []
+        },
+        {
+          "originalPath": "docs/operators/plugin-pipeline-lifecycle.md",
+          "legacyPath": "docs/_legacy-source/operators/plugin-pipeline-lifecycle.md",
+          "decisionPath": "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operators/plugin-pipeline-lifecycle.md.json",
+          "state": "untriaged-decision",
+          "findings": []
+        },
+        {
+          "originalPath": "docs/operators/README.md",
+          "legacyPath": "docs/_legacy-source/operators/README.md",
+          "decisionPath": "docs/config/documentation-parity/operators/README.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operators/README.md.json",
+          "state": "untriaged-decision",
+          "findings": []
+        },
+        {
+          "originalPath": "docs/operators/recovery-runbook.md",
+          "legacyPath": "docs/_legacy-source/operators/recovery-runbook.md",
+          "decisionPath": "docs/config/documentation-parity/operators/recovery-runbook.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operators/recovery-runbook.md.json",
+          "state": "untriaged-decision",
+          "findings": []
+        },
+        {
+          "originalPath": "docs/operators/running-the-pipeline.md",
+          "legacyPath": "docs/_legacy-source/operators/running-the-pipeline.md",
+          "decisionPath": "docs/config/documentation-parity/operators/running-the-pipeline.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/operators/running-the-pipeline.md.json",
+          "state": "untriaged-decision",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "developer-and-extension-sources",
+      "owner": "developer-experience",
+      "sourceCount": 16,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 16,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/developers/adding-verification.md",
+          "legacyPath": "docs/_legacy-source/developers/adding-verification.md",
+          "decisionPath": "docs/config/documentation-parity/developers/adding-verification.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/adding-verification.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/adding-verification.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/authoring-plugin-observers.md",
+          "legacyPath": "docs/_legacy-source/developers/authoring-plugin-observers.md",
+          "decisionPath": "docs/config/documentation-parity/developers/authoring-plugin-observers.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/authoring-plugin-observers.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/authoring-plugin-observers.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/authoring-plugin-pipelines.md",
+          "legacyPath": "docs/_legacy-source/developers/authoring-plugin-pipelines.md",
+          "decisionPath": "docs/config/documentation-parity/developers/authoring-plugin-pipelines.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/authoring-plugin-pipelines.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/authoring-plugin-pipelines.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/contributing.md",
+          "legacyPath": "docs/_legacy-source/developers/contributing.md",
+          "decisionPath": "docs/config/documentation-parity/developers/contributing.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/contributing.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/contributing.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/documentation-conventions.md",
+          "legacyPath": "docs/_legacy-source/developers/documentation-conventions.md",
+          "decisionPath": "docs/config/documentation-parity/developers/documentation-conventions.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/documentation-conventions.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/documentation-conventions.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/hooks-and-plugins.md",
+          "legacyPath": "docs/_legacy-source/developers/hooks-and-plugins.md",
+          "decisionPath": "docs/config/documentation-parity/developers/hooks-and-plugins.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/hooks-and-plugins.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/hooks-and-plugins.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/migrating-pipeline-plugins.md",
+          "legacyPath": "docs/_legacy-source/developers/migrating-pipeline-plugins.md",
+          "decisionPath": "docs/config/documentation-parity/developers/migrating-pipeline-plugins.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/migrating-pipeline-plugins.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/migrating-pipeline-plugins.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/README.md",
+          "legacyPath": "docs/_legacy-source/developers/README.md",
+          "decisionPath": "docs/config/documentation-parity/developers/README.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/README.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/README.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/replacing-agent-runtime.md",
+          "legacyPath": "docs/_legacy-source/developers/replacing-agent-runtime.md",
+          "decisionPath": "docs/config/documentation-parity/developers/replacing-agent-runtime.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/replacing-agent-runtime.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/replacing-agent-runtime.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/templates/architecture-page.md",
+          "legacyPath": "docs/_legacy-source/developers/templates/architecture-page.md",
+          "decisionPath": "docs/config/documentation-parity/developers/templates/architecture-page.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/templates/architecture-page.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/templates/architecture-page.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/templates/deployment-component.md",
+          "legacyPath": "docs/_legacy-source/developers/templates/deployment-component.md",
+          "decisionPath": "docs/config/documentation-parity/developers/templates/deployment-component.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/templates/deployment-component.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/templates/deployment-component.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/templates/operator-task.md",
+          "legacyPath": "docs/_legacy-source/developers/templates/operator-task.md",
+          "decisionPath": "docs/config/documentation-parity/developers/templates/operator-task.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/templates/operator-task.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/templates/operator-task.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/templates/reference-page.md",
+          "legacyPath": "docs/_legacy-source/developers/templates/reference-page.md",
+          "decisionPath": "docs/config/documentation-parity/developers/templates/reference-page.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/templates/reference-page.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/templates/reference-page.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/templates/runbook.md",
+          "legacyPath": "docs/_legacy-source/developers/templates/runbook.md",
+          "decisionPath": "docs/config/documentation-parity/developers/templates/runbook.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/templates/runbook.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/templates/runbook.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/templates/troubleshooting-entry.md",
+          "legacyPath": "docs/_legacy-source/developers/templates/troubleshooting-entry.md",
+          "decisionPath": "docs/config/documentation-parity/developers/templates/troubleshooting-entry.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/templates/troubleshooting-entry.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/templates/troubleshooting-entry.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/developers/testing-and-ci.md",
+          "legacyPath": "docs/_legacy-source/developers/testing-and-ci.md",
+          "decisionPath": "docs/config/documentation-parity/developers/testing-and-ci.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/developers/testing-and-ci.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/developers/testing-and-ci.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reference-and-pipeline-sources",
+      "owner": "documentation-governance",
+      "sourceCount": 8,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 8,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/pipeline/architecture.md",
+          "legacyPath": "docs/_legacy-source/pipeline/architecture.md",
+          "decisionPath": "docs/config/documentation-parity/pipeline/architecture.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/pipeline/architecture.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/pipeline/architecture.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/reference/cli.md",
+          "legacyPath": "docs/_legacy-source/reference/cli.md",
+          "decisionPath": "docs/config/documentation-parity/reference/cli.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/reference/cli.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/reference/cli.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/reference/environment-variables.md",
+          "legacyPath": "docs/_legacy-source/reference/environment-variables.md",
+          "decisionPath": "docs/config/documentation-parity/reference/environment-variables.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/reference/environment-variables.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/reference/environment-variables.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/reference/helm-values.md",
+          "legacyPath": "docs/_legacy-source/reference/helm-values.md",
+          "decisionPath": "docs/config/documentation-parity/reference/helm-values.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/reference/helm-values.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/reference/helm-values.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/reference/openclaw-config.md",
+          "legacyPath": "docs/_legacy-source/reference/openclaw-config.md",
+          "decisionPath": "docs/config/documentation-parity/reference/openclaw-config.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/reference/openclaw-config.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/reference/openclaw-config.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/reference/secrets.md",
+          "legacyPath": "docs/_legacy-source/reference/secrets.md",
+          "decisionPath": "docs/config/documentation-parity/reference/secrets.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/reference/secrets.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/reference/secrets.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/reference/verification-commands.md",
+          "legacyPath": "docs/_legacy-source/reference/verification-commands.md",
+          "decisionPath": "docs/config/documentation-parity/reference/verification-commands.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/reference/verification-commands.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/reference/verification-commands.md.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/reference/workflows.md",
+          "legacyPath": "docs/_legacy-source/reference/workflows.md",
+          "decisionPath": "docs/config/documentation-parity/reference/workflows.md.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/reference/workflows.md.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/reference/workflows.md.json: decision is missing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "architecture-diagrams",
+      "owner": "architecture",
+      "sourceCount": 6,
+      "sourceValid": false,
+      "counts": {
+        "missing-decision": 6,
+        "untriaged-decision": 0,
+        "invalid-decision": 0,
+        "missing-review": 0,
+        "invalid-review": 0,
+        "source-valid": 0
+      },
+      "sources": [
+        {
+          "originalPath": "docs/diagrams/deployment-topology.svg",
+          "legacyPath": "docs/_legacy-source/diagrams/deployment-topology.svg",
+          "decisionPath": "docs/config/documentation-parity/diagrams/deployment-topology.svg.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/diagrams/deployment-topology.svg.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/diagrams/deployment-topology.svg.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/diagrams/failure-recovery-decision-flow.svg",
+          "legacyPath": "docs/_legacy-source/diagrams/failure-recovery-decision-flow.svg",
+          "decisionPath": "docs/config/documentation-parity/diagrams/failure-recovery-decision-flow.svg.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/diagrams/failure-recovery-decision-flow.svg.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/diagrams/failure-recovery-decision-flow.svg.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/diagrams/final-preview-tailscale-flow.svg",
+          "legacyPath": "docs/_legacy-source/diagrams/final-preview-tailscale-flow.svg",
+          "decisionPath": "docs/config/documentation-parity/diagrams/final-preview-tailscale-flow.svg.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/diagrams/final-preview-tailscale-flow.svg.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/diagrams/final-preview-tailscale-flow.svg.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/diagrams/infrastructure-dependencies.svg",
+          "legacyPath": "docs/_legacy-source/diagrams/infrastructure-dependencies.svg",
+          "decisionPath": "docs/config/documentation-parity/diagrams/infrastructure-dependencies.svg.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/diagrams/infrastructure-dependencies.svg.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/diagrams/infrastructure-dependencies.svg.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/diagrams/pipeline-runtime-flow.svg",
+          "legacyPath": "docs/_legacy-source/diagrams/pipeline-runtime-flow.svg",
+          "decisionPath": "docs/config/documentation-parity/diagrams/pipeline-runtime-flow.svg.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/diagrams/pipeline-runtime-flow.svg.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/diagrams/pipeline-runtime-flow.svg.json: decision is missing"
+          ]
+        },
+        {
+          "originalPath": "docs/diagrams/secret-flow.svg",
+          "legacyPath": "docs/_legacy-source/diagrams/secret-flow.svg",
+          "decisionPath": "docs/config/documentation-parity/diagrams/secret-flow.svg.json",
+          "reviewPath": "docs/config/documentation-parity-reviews/diagrams/secret-flow.svg.json",
+          "state": "missing-decision",
+          "findings": [
+            "docs/config/documentation-parity/diagrams/secret-flow.svg.json: decision is missing"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const extractorVersion = 'kubeclaw-documentation-parity-extractor.v5';
+export const extractorVersion = 'kubeclaw-documentation-parity-extractor.v6';
 export const unitsPath = 'docs/generated/inventory/documentation-parity-units.jsonl';
 export const summaryPath = 'docs/generated/inventory/documentation-parity-summary.json';
 
@@ -685,6 +685,109 @@ function stableId(source, kind, byteStart, byteEnd) {
   ].join('\0'))).slice(0, 32)}`;
 }
 
+function trimmedCharacterRange(value, start, end) {
+  while (start < end && /\s/u.test(value[start])) start += 1;
+  while (end > start && /\s/u.test(value[end - 1])) end -= 1;
+  return start < end ? [start, end] : null;
+}
+
+function proseAtomicRanges(raw) {
+  const ranges = [];
+  let start = 0;
+  const boundary = /[.!?;](?:[\])}"'\u2019\u201d]*)(?=\s|$)/gu;
+  for (const match of raw.matchAll(boundary)) {
+    const end = match.index + match[0].length;
+    const range = trimmedCharacterRange(raw, start, end);
+    if (range) ranges.push(range);
+    start = end;
+  }
+  const tail = trimmedCharacterRange(raw, start, raw.length);
+  if (tail) ranges.push(tail);
+  return ranges;
+}
+
+function tableAtomicRanges(raw) {
+  const cells = [];
+  let start = 0;
+  let escaped = false;
+  let codeTicks = 0;
+  const close = (end) => {
+    const range = trimmedCharacterRange(raw, start, end);
+    if (range && /[^|]/u.test(raw.slice(range[0], range[1]))) cells.push(range);
+    start = end + 1;
+  };
+  for (let index = 0; index < raw.length; index += 1) {
+    const character = raw[index];
+    if (escaped) { escaped = false; continue; }
+    if (character === '\\') { escaped = true; continue; }
+    if (character === '`') {
+      let length = 1;
+      while (raw[index + length] === '`') length += 1;
+      codeTicks = codeTicks === 0 ? length : codeTicks === length ? 0 : codeTicks;
+      index += length - 1;
+      continue;
+    }
+    if (character === '|' && codeTicks === 0) close(index);
+  }
+  const tail = trimmedCharacterRange(raw, start, raw.length);
+  if (tail && /[^|]/u.test(raw.slice(tail[0], tail[1]))) cells.push(tail);
+  return cells.flatMap(([cellStart, cellEnd]) => proseAtomicRanges(raw.slice(cellStart, cellEnd))
+    .map(([startOffset, endOffset]) => [cellStart + startOffset, cellStart + endOffset]));
+}
+
+function codeAtomicRanges(raw, metadata) {
+  const lines = raw.match(/.*?(?:\r\n|\r|\n|$)/gu) ?? [];
+  if (lines.at(-1) === '') lines.pop();
+  let characterOffset = lines[0]?.length ?? 0;
+  const body = lines.slice(1, metadata.closed === false ? undefined : -1);
+  const ranges = [];
+  for (const line of body) {
+    const contentEnd = line.replace(/(?:\r\n|\r|\n)$/u, '').length;
+    let start = 0;
+    for (let index = 0; index < contentEnd; index += 1) {
+      if (line[index] !== ';') continue;
+      const range = trimmedCharacterRange(line, start, index + 1);
+      if (range) ranges.push([characterOffset + range[0], characterOffset + range[1]]);
+      start = index + 1;
+    }
+    const tail = trimmedCharacterRange(line, start, contentEnd);
+    if (tail) ranges.push([characterOffset + tail[0], characterOffset + tail[1]]);
+    characterOffset += line.length;
+  }
+  return ranges;
+}
+
+function atomicSegments(raw, draft) {
+  let ranges;
+  if (draft.kind === 'code-block') ranges = codeAtomicRanges(raw, draft.metadata);
+  else if (['table-header', 'table-row'].includes(draft.kind)) ranges = tableAtomicRanges(raw);
+  else if (['paragraph', 'list-item', 'blockquote', 'callout', 'html'].includes(draft.kind)) {
+    ranges = proseAtomicRanges(raw);
+  } else if (draft.kind === 'frontmatter') {
+    ranges = raw.split(/(?<=\n)/u).map((line, index, all) => {
+      const start = all.slice(0, index).reduce((sum, item) => sum + item.length, 0);
+      const trimmed = trimmedCharacterRange(line, 0, line.length);
+      return trimmed ? [start + trimmed[0], start + trimmed[1]] : null;
+    }).filter((range) => range && !/^(?:---|\+\+\+|\.\.\.)$/u.test(raw.slice(range[0], range[1])));
+  } else if (draft.kind === 'table-delimiter') ranges = [];
+  else ranges = trimmedCharacterRange(raw, 0, raw.length) ? [trimmedCharacterRange(raw, 0, raw.length)] : [];
+  return ranges.map(([characterStart, characterEnd], index) => {
+    const byteStart = draft.byteStart + Buffer.byteLength(raw.slice(0, characterStart));
+    const byteEnd = draft.byteStart + Buffer.byteLength(raw.slice(0, characterEnd));
+    const selected = Buffer.from(raw.slice(characterStart, characterEnd));
+    return {
+      index,
+      kind: draft.kind === 'code-block' ? 'code-statement'
+        : ['table-header', 'table-row'].includes(draft.kind) ? 'table-cell'
+          : 'statement',
+      byteStart,
+      byteEnd,
+      exactSha256: sha256(selected),
+      normalizedSha256: sha256(Buffer.from(normalizeExcerpt(selected.toString('utf8')))),
+    };
+  });
+}
+
 function finalizeUnits(buffer, source, drafts) {
   const lines = lineRecords(buffer);
   return drafts.map((draft) => {
@@ -714,6 +817,7 @@ function finalizeUnits(buffer, source, drafts) {
       normalizedSha256: normalizedHash,
       text,
       textSha256: sha256(Buffer.from(text)),
+      atomicSegments: source.kind === 'markdown' ? atomicSegments(raw, draft) : [],
       ...draft.metadata,
     };
   });

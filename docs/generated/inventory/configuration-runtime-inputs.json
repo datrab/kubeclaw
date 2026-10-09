@@ -691,44 +691,6 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 15,
-          "path": "scripts/docs-tree-boundary.mjs"
-        }
-      ],
-      "default": "false/not selected",
-      "documentationAuthority": null,
-      "documentationReason": "This definition is not part of the operator-runtime surface.",
-      "documentationStatus": "not-required-in-operator-handbook",
-      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
-      "evidence": "argument membership check",
-      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 15,
-      "name": "--bootstrap-classification",
-      "occurrenceCount": 1,
-      "ownerComponent": "operator script scripts/docs-tree-boundary.mjs",
-      "ownerEvidence": "scripts/docs-tree-boundary.mjs",
-      "path": "scripts/docs-tree-boundary.mjs",
-      "precedence": [
-        "explicit command-line flag",
-        "parser-specific duplicate handling",
-        "environment or source default when the consumer declares one",
-        "built-in behavior"
-      ],
-      "required": "conditional",
-      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
-      "runtimeOwner": "operator script scripts/docs-tree-boundary.mjs",
-      "surface": "documentation-internal",
-      "type": "boolean switch or command selector",
-      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
-      "valueTaking": false
-    },
-    {
-      "aliasFor": null,
-      "changeImpact": "Selects the parser branch or value used by this command.",
-      "classification": "definition",
-      "consumers": [
-        {
-          "kind": "argument-parser",
           "line": 7,
           "path": "scripts/ap08-extension-inventory.mjs"
         }
@@ -1109,6 +1071,82 @@
       "consumers": [
         {
           "kind": "argument-parser",
+          "line": 13,
+          "path": "scripts/docs-parity-batches.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 13,
+      "name": "--check",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-parity-batches.mjs",
+      "ownerEvidence": "scripts/docs-parity-batches.mjs",
+      "path": "scripts/docs-parity-batches.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-parity-batches.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
+          "line": 1687,
+          "path": "scripts/docs-parity-extract.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 1687,
+      "name": "--check",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-parity-extract.mjs",
+      "ownerEvidence": "scripts/docs-parity-extract.mjs",
+      "path": "scripts/docs-parity-extract.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-parity-extract.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
           "line": 23,
           "path": "scripts/docs-platform-surface-inventory.mjs"
         }
@@ -1173,44 +1211,6 @@
       "required": "conditional",
       "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
       "runtimeOwner": "operator script scripts/docs-status.mjs",
-      "surface": "documentation-internal",
-      "type": "boolean switch or command selector",
-      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
-      "valueTaking": false
-    },
-    {
-      "aliasFor": null,
-      "changeImpact": "Selects the parser branch or value used by this command.",
-      "classification": "definition",
-      "consumers": [
-        {
-          "kind": "argument-parser",
-          "line": 14,
-          "path": "scripts/docs-tree-boundary.mjs"
-        }
-      ],
-      "default": "false/not selected",
-      "documentationAuthority": null,
-      "documentationReason": "This definition is not part of the operator-runtime surface.",
-      "documentationStatus": "not-required-in-operator-handbook",
-      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
-      "evidence": "argument membership check",
-      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 14,
-      "name": "--check",
-      "occurrenceCount": 1,
-      "ownerComponent": "operator script scripts/docs-tree-boundary.mjs",
-      "ownerEvidence": "scripts/docs-tree-boundary.mjs",
-      "path": "scripts/docs-tree-boundary.mjs",
-      "precedence": [
-        "explicit command-line flag",
-        "parser-specific duplicate handling",
-        "environment or source default when the consumer declares one",
-        "built-in behavior"
-      ],
-      "required": "conditional",
-      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
-      "runtimeOwner": "operator script scripts/docs-tree-boundary.mjs",
       "surface": "documentation-internal",
       "type": "boolean switch or command selector",
       "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
@@ -3039,6 +3039,44 @@
       "type": "value-taking argument; source does not prove a narrower type",
       "unknownOptionBehavior": "The project parser rejects any option outside its five-name allow-list. Without --project, this entry point delegates the complete argv to the Core CLI.",
       "valueTaking": true
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
+          "line": 1415,
+          "path": "scripts/docs-parity-check.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 1415,
+      "name": "--readiness",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-parity-check.mjs",
+      "ownerEvidence": "scripts/docs-parity-check.mjs",
+      "path": "scripts/docs-parity-check.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-parity-check.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
     },
     {
       "aliasFor": null,
@@ -52334,10 +52372,10 @@
     }
   ],
   "totals": {
-    "cliDefinitions": 110,
-    "cliFlags": 110,
+    "cliDefinitions": 111,
+    "cliFlags": 111,
     "cliInvocations": 0,
-    "cliOccurrences": 127,
+    "cliOccurrences": 128,
     "configurationConsumerSources": 274,
     "derivedValues": 47,
     "environmentConsumers": 856,

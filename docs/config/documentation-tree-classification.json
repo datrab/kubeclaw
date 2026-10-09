@@ -3315,6 +3315,14 @@
       "introducedAfterBaseline": true
     },
     {
+      "path": "docs/generated/inventory/documentation-parity-status.json",
+      "class": "internal-documentation-input",
+      "purpose": "generated documentation support",
+      "originalPath": "docs/generated/inventory/documentation-parity-status.json",
+      "expectedPath": "docs/generated/inventory/documentation-parity-status.json",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/generated/inventory/documentation-parity-units.jsonl",
       "class": "internal-documentation-input",
       "purpose": "generated documentation support",

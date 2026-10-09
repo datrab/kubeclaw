@@ -17,7 +17,7 @@
   "missingBaselineFiles": [],
   "counts": {
     "canonical-reader-documentation": 159,
-    "internal-documentation-input": 181,
+    "internal-documentation-input": 189,
     "legacy-extraction-source": 249,
     "deletable-remainder": 2335
   },
@@ -11094,6 +11094,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-parity/operators/README.md.json",
+          "token": "docs/_legacy-source/operators/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/README.md.json",
+          "token": "docs/operators/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/operators/README.md",
           "inputUse": false
@@ -11134,6 +11144,16 @@
         },
         {
           "sourcePath": "docs/config/documentation-parity-review-assignments.json",
+          "token": "docs/operators/external-pipeline-plugins.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json",
+          "token": "docs/_legacy-source/operators/external-pipeline-plugins.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json",
           "token": "docs/operators/external-pipeline-plugins.md",
           "inputUse": false
         },
@@ -11187,6 +11207,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-parity/operators/final-preview-tailscale.md.json",
+          "token": "docs/_legacy-source/operators/final-preview-tailscale.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/final-preview-tailscale.md.json",
+          "token": "docs/operators/final-preview-tailscale.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/operators/final-preview-tailscale.md",
           "inputUse": false
@@ -11232,6 +11262,16 @@
         },
         {
           "sourcePath": "docs/config/documentation-parity-review-assignments.json",
+          "token": "docs/operators/plugin-observers.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/plugin-observers.md.json",
+          "token": "docs/_legacy-source/operators/plugin-observers.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/plugin-observers.md.json",
           "token": "docs/operators/plugin-observers.md",
           "inputUse": false
         },
@@ -11285,6 +11325,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json",
+          "token": "docs/_legacy-source/operators/plugin-pipeline-lifecycle.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json",
+          "token": "docs/operators/plugin-pipeline-lifecycle.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/operators/plugin-pipeline-lifecycle.md",
           "inputUse": false
@@ -11334,6 +11384,16 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/config/documentation-parity/operators/recovery-runbook.md.json",
+          "token": "docs/_legacy-source/operators/recovery-runbook.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/recovery-runbook.md.json",
+          "token": "docs/operators/recovery-runbook.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/operators/recovery-runbook.md",
           "inputUse": false
@@ -11379,6 +11439,16 @@
         },
         {
           "sourcePath": "docs/config/documentation-parity-review-assignments.json",
+          "token": "docs/operators/running-the-pipeline.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/running-the-pipeline.md.json",
+          "token": "docs/_legacy-source/operators/running-the-pipeline.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-parity/operators/running-the-pipeline.md.json",
           "token": "docs/operators/running-the-pipeline.md",
           "inputUse": false
         },
@@ -25718,7 +25788,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "7d8069b6c00c393f023a21def6541ba00300fa179b23c8e6dbf46004fdfc0e88"
+      "sha256": "ef4e10c9e26ecac1c3945ae89c40b40c312278de5755e964bf55e57cf9cc0350"
     },
     {
       "path": "docs/blueprint/documentation-work-plan.md",
@@ -26312,6 +26382,97 @@
       "sha256": "97c4b8d9741b4bda01e36c02ecd947e27f72f2c87b99053416fbe4161b2d815a"
     },
     {
+      "path": "docs/config/documentation-parity/operators/README.md.json",
+      "class": "internal-documentation-input",
+      "purpose": "documentation parity decision input",
+      "originalPath": "docs/config/documentation-parity/operators/README.md.json",
+      "expectedPath": "docs/config/documentation-parity/operators/README.md.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "0300f6ea7e2c5cd2ffa18181d7933f4d23e8640860a98c2253a538906c9530e0"
+    },
+    {
+      "path": "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json",
+      "class": "internal-documentation-input",
+      "purpose": "documentation parity decision input",
+      "originalPath": "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json",
+      "expectedPath": "docs/config/documentation-parity/operators/external-pipeline-plugins.md.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "ac152bd323a4508b19391c7b9c3286e4c423086b968db513142f282778b43f7d"
+    },
+    {
+      "path": "docs/config/documentation-parity/operators/final-preview-tailscale.md.json",
+      "class": "internal-documentation-input",
+      "purpose": "documentation parity decision input",
+      "originalPath": "docs/config/documentation-parity/operators/final-preview-tailscale.md.json",
+      "expectedPath": "docs/config/documentation-parity/operators/final-preview-tailscale.md.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "638b380d2ba2abe5797ae664be53ecb374875d1b501edf140cdc18f43e15dce4"
+    },
+    {
+      "path": "docs/config/documentation-parity/operators/plugin-observers.md.json",
+      "class": "internal-documentation-input",
+      "purpose": "documentation parity decision input",
+      "originalPath": "docs/config/documentation-parity/operators/plugin-observers.md.json",
+      "expectedPath": "docs/config/documentation-parity/operators/plugin-observers.md.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "489ecf0520ca191112881a3e997ccc36894c2f1376fd9ce9aacd2de159cfc2df"
+    },
+    {
+      "path": "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json",
+      "class": "internal-documentation-input",
+      "purpose": "documentation parity decision input",
+      "originalPath": "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json",
+      "expectedPath": "docs/config/documentation-parity/operators/plugin-pipeline-lifecycle.md.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "671f99547109b4670b4322a7fd93b574723d2a9f7aa4a6aa2158687ec65724e2"
+    },
+    {
+      "path": "docs/config/documentation-parity/operators/recovery-runbook.md.json",
+      "class": "internal-documentation-input",
+      "purpose": "documentation parity decision input",
+      "originalPath": "docs/config/documentation-parity/operators/recovery-runbook.md.json",
+      "expectedPath": "docs/config/documentation-parity/operators/recovery-runbook.md.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "a2b3d2d65431a20e3f501f5b610647d353528defdfe5f8660191155dd1b1fe4d"
+    },
+    {
+      "path": "docs/config/documentation-parity/operators/running-the-pipeline.md.json",
+      "class": "internal-documentation-input",
+      "purpose": "documentation parity decision input",
+      "originalPath": "docs/config/documentation-parity/operators/running-the-pipeline.md.json",
+      "expectedPath": "docs/config/documentation-parity/operators/running-the-pipeline.md.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "1cd7c98b484915f949bdf44543df14a3c7e922abc2e973bdd4ac068a643f16c5"
+    },
+    {
       "path": "docs/config/documentation-tree-baseline.json",
       "class": "internal-documentation-input",
       "purpose": "documentation configuration authority",
@@ -26341,6 +26502,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-parity-transition.mjs",
+          "token": "docs/config/documentation-tree-baseline.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-tree-boundary.mjs",
           "token": "docs/config/documentation-tree-baseline.json",
           "inputUse": false
@@ -26356,6 +26522,11 @@
           "inputUse": true
         },
         {
+          "sourcePath": "scripts/tests/docs-parity-transition.test.mjs",
+          "token": "docs/config/documentation-tree-baseline.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/tests/docs-tree-boundary.test.mjs",
           "token": "docs/config/documentation-tree-baseline.json",
           "inputUse": false
@@ -26364,6 +26535,7 @@
       "executableConsumers": [
         "scripts/tests/docs-parity-check.test.mjs",
         "scripts/tests/docs-parity-extract.test.mjs",
+        "scripts/tests/docs-parity-transition.test.mjs",
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
@@ -26409,6 +26581,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-parity-transition.mjs",
+          "token": "docs/config/documentation-tree-classification.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-tree-boundary.mjs",
           "token": "docs/config/documentation-tree-classification.json",
           "inputUse": false
@@ -26439,6 +26616,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/tests/docs-parity-transition.test.mjs",
+          "token": "docs/config/documentation-tree-classification.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/tests/docs-tree-boundary.test.mjs",
           "token": "docs/config/documentation-tree-classification.json",
           "inputUse": false
@@ -26450,10 +26632,11 @@
         "scripts/tests/docs-parity-extract.test.mjs",
         "scripts/tests/docs-parity-review-assignments.test.mjs",
         "scripts/tests/docs-parity-status.test.mjs",
+        "scripts/tests/docs-parity-transition.test.mjs",
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "e40f3c73318280842b6e65ce45f39158655f79558338feea02f03430405a81bc"
+      "sha256": "051dfca5af66635438e60bf41b76f6a7c484b72df5a56d36777c3f5b4bee517e"
     },
     {
       "path": "docs/config/platform-surface-map.json",
@@ -26985,7 +27168,7 @@
         "scripts/check-configuration-cli-drift.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "328ac037ed7c190d6b40245f66ecd5beaf083e5490995bc264153c409d96d19b"
+      "sha256": "b7f776359327aa0ae195ebbf685992f48c86e90709a2a122376b48c9e1f2c533"
     },
     {
       "path": "docs/generated/inventory/configuration-schemas.json",
@@ -27222,6 +27405,37 @@
       "sha256": "0fca5aff8b28f8e0c9c067350eb90964e2f29cd0f83abc81115ed7fcd0df6d1a"
     },
     {
+      "path": "docs/generated/inventory/documentation-parity-status.json",
+      "class": "internal-documentation-input",
+      "purpose": "generated documentation support",
+      "originalPath": "docs/generated/inventory/documentation-parity-status.json",
+      "expectedPath": "docs/generated/inventory/documentation-parity-status.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/generated/inventory/documentation-parity-status.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-parity-status.mjs",
+          "token": "docs/generated/inventory/documentation-parity-status.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/tests/docs-parity-status.test.mjs",
+          "token": "docs/generated/inventory/documentation-parity-status.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [
+        "scripts/tests/docs-parity-status.test.mjs"
+      ],
+      "indirectExecutableConsumers": [],
+      "sha256": "9445b12121528c18544c5c96b2ec0cdb9cc8eaa9c2bf4a25195e1aede8dec2e3"
+    },
+    {
       "path": "docs/generated/inventory/documentation-parity-summary.json",
       "class": "internal-documentation-input",
       "purpose": "generated documentation support",
@@ -27272,7 +27486,7 @@
         "scripts/tests/docs-parity-status.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "24dba9bce61ab207cc1a8939ea90dea12256fcbd5aeb6060933c5574353bc642"
+      "sha256": "49429e0a8db9a27ca76753dd6e91b70beb99cfdd68860631bbbe9463b3e3ba59"
     },
     {
       "path": "docs/generated/inventory/documentation-parity-units.jsonl",
@@ -27331,7 +27545,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "27da5c30e20d5df388ce49169df78fb07b78908616f4b136fcd79c9a041c434b"
+      "sha256": "980287d035cd3127461b57eea3c35055b62cd516a494e2c3831dbe52e6fcda80"
     },
     {
       "path": "docs/generated/inventory/documentation-source-revision.json",

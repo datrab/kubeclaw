@@ -31,13 +31,13 @@ jobs:
         run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
       - name: Reject generated docs drift
         run: |
-          if git diff --quiet -- docs/generated docs/reference docs/architecture/plugin-system-current-inventory.md; then
+          if [ -z "$(git status --porcelain --untracked-files=all)" ]; then
             echo "Generated docs are already current."
             exit 0
           fi
 
           echo "::error::Generated docs are stale. Run npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate and commit the result."
-          git diff --name-only -- docs/generated docs/reference docs/architecture/plugin-system-current-inventory.md
+          git status --short --untracked-files=all
           exit 1
       - name: Check generated docs freshness
         run: npm run docs:check:generated
@@ -51,6 +51,8 @@ jobs:
         run: npm run docs:site-boundary:check
       - name: Check documentation tree classification and immutable baseline
         run: npm run docs:tree:check && npm run docs:tree:mutations
+      - name: Check documentation parity transition
+        run: npm run docs:parity:transition:check
       - name: Check documentation topic map
         run: npm run docs:check:coverage
       - name: Check whitespace
@@ -91,20 +93,27 @@ jobs:
         run: npm run docs:site-boundary:check
       - name: Check documentation tree classification and immutable baseline
         run: npm run docs:tree:check && npm run docs:tree:mutations
+      - name: Check documentation parity transition
+        run: npm run docs:parity:transition:check
       - name: Check documentation topic map
         run: npm run docs:check:coverage
       - name: Check whitespace
         run: git diff --check
       - name: Commit generated docs
         run: |
-          if git diff --quiet -- docs/generated docs/reference docs/architecture/plugin-system-current-inventory.md; then
+          if [ -z "$(git status --porcelain --untracked-files=all)" ]; then
             echo "Generated docs are already current."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/generated docs/reference docs/architecture/plugin-system-current-inventory.md
+          git add docs/generated docs/site/reference docs/reference docs/architecture/plugin-system-current-inventory.md
+          if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            echo "::error::A documentation generator changed a path outside the declared generated outputs."
+            git status --short --untracked-files=all
+            exit 1
+          fi
           git commit -m "docs: refresh generated references"
           git push origin HEAD:refs/heads/main
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
