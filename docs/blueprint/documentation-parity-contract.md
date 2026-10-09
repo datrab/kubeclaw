@@ -190,12 +190,26 @@ Each claim has one truth state:
 
 `unknown` always blocks readiness.
 
-The extractor records ordered `atomicSegments` for every Markdown unit. Prose
-segments end at sentence or semicolon boundaries, table headers and rows split
-at cells and then at statement boundaries within each cell, frontmatter splits at fields, and fenced code splits at nonblank lines
-and semicolon statement boundaries. Each segment binds its exact byte range and
-exact and normalized hashes. These ranges are deterministic extraction output,
-not author-selected decision metadata.
+The extractor records ordered `atomicSegments` for every semantic Markdown
+unit. Prose segments end only at sentence-ending punctuation; semicolons never
+create a boundary because their meaning depends on Markdown and programming
+language context. Table headers and rows split at cells and then at those same
+sentence boundaries within each cell. YAML frontmatter is split at top-level
+mapping-field lines: a field begins at column zero with a key and a mapping
+colon outside quotes, and continues through all indented, blank, and comment
+lines before the next such field. Thus a field's block scalar, nested mapping,
+or list remains one segment. A substantive top-level construct outside that
+conservative shape fails extraction instead of being guessed. TOML frontmatter
+retains the conservative physical-line model. Fenced code splits only at
+nonblank physical lines; it does not pretend to parse language-specific
+strings, comments, loop headers, or statement terminators. Each segment binds
+its exact byte range and exact and normalized hashes. These ranges are
+deterministic extraction output, not author-selected decision metadata.
+
+Raw HTML that has neither rendered text nor a link/image reference is not a
+semantic unit. This excludes comments and empty markup from claim requirements.
+Raw HTML with rendered text or a reference remains extracted and must be
+covered.
 
 Every atomic segment must be wholly owned by exactly one claim, and every claim
 fragment in a Markdown unit must own exactly one atomic segment. Formatting on
@@ -230,16 +244,24 @@ Evidence bases are path-class specific:
 | `current-implementation` | Non-documentation implementation source files, excluding tests, contracts, charts, and configuration |
 | `current-contract` | Files below `contracts/` |
 | `current-schema` | Schema directories/files or OpenAPI/Swagger authorities |
-| `current-configuration` | Chart, configuration, workflow, values, or config files |
+| `current-configuration` | Chart, configuration, workflow, values, config, Dockerfile, or Renovate configuration files, including JSON5 Renovate files |
 | `current-test` | Test trees or files named as tests/specifications |
 | `documentation-governance` | Narrow documentation configuration, this contract, or the parity checker/extractor |
 
-Generated outputs, review artifacts, decision/review records, dependency output,
-and legacy sources are never evidence authorities. Each locator must select a
-substantial span with at least two meaningful tokens; punctuation-only and tiny
-token fragments fail even when their hashes and revision bindings are correct.
-The assertion must also explain the exact supported statement rather than merely
-naming the file.
+Generated outputs, documentation review artifacts below `docs/review/` (or its
+plural-named review-artifact counterpart), decision/review records, dependency
+output, and legacy sources are never evidence authorities. A product
+implementation directory whose name is `review` is not rejected merely because
+of that name. Each locator must select a substantial span with at least two
+meaningful tokens that each contain two or more letters or numbers;
+punctuation-only, one-character, and tiny token fragments fail even
+when their hashes and revision bindings are correct. The assertion must contain
+at least four meaningful tokens and an explanatory predicate such as `uses`,
+`requires`, `returns`, `validates`, or `prevents`. It must also contain at least
+three distinct, meaningful statement tokens after path words and locator phrases
+such as “see” are removed. It must explain the exact supported statement rather
+than merely naming the evidence path or listing nouns, and it must identify at
+least one term that is present in the selected evidence span.
 
 ## Valid canonical mapping
 
@@ -383,9 +405,10 @@ Only full readiness may report `PASS` or set `deletionReady` to `true`.
 
 ## Committed AP10 deletion handoff
 
-Readiness and deletion are two separate commits. They are joined by
-`docs/config/documentation-ap10-deletion-approval.json`; no command generates
-this approval as `PASS`.
+Readiness and deletion are two separate commits. They are joined by the manually
+authored AP10 deletion-approval record consumed by
+`npm run docs:parity:transition:check`; no command generates this approval as
+`PASS`.
 
 1. At reviewed revision **R**, run full readiness from a clean tree. The
    generated manifest identifies R and records all same-revision gates.
@@ -396,15 +419,27 @@ this approval as `PASS`.
    and must have A as its exact first parent. D must delete, rather than modify
    or rename, every approved blob. It may not delete an unapproved legacy blob.
 4. Later descendants retain the approval. The transition checker finds D again,
-   verifies the A-to-D diff, and rejects restoration of an approved path.
+   verifies the A-to-D diff, and rejects restoration of an approved path in any
+   first-parent commit, including a later re-deletion. The approval and manifest
+   bytes remain identical to A.
+
+The transition checker replays readiness in a detached worktree at R. If R has
+a package lock, it installs exactly that dependency tree with lifecycle scripts
+disabled before it runs R's checker and gate list. It never substitutes the
+current checkout's `node_modules`. Thus a later dependency upgrade cannot change
+the meaning or result of historical readiness.
 
 The approval set is exact: it contains every `legacy-extraction-source` and
 every `deletable-remainder` in R's classification. A legacy entry cites its
 passing independent parity classification review. Every deletable-remainder
 entry, including every baseline Markdown and SVG file, has its own explicit
 revision-bound classification review with scope, manual methods, blob-bound
-evidence, findings, and `PASS` verdict. This prevents a whole-tree deletion from
-treating remainder classification as an implicit bulk approval.
+evidence, findings, and `PASS` verdict. The method list contains exactly one
+`complete-content-inspection` and one `consumer-reference-search` record. Each
+record has a substantive detail that names the concrete deletion path. Each
+evidence detail names its concrete evidence path. Repeated, numbered, or generic
+filler is not accepted. This prevents a whole-tree deletion from treating
+remainder classification as an implicit bulk approval.
 
 `npm run docs:parity:transition:check` enforces all three states: before approval
 all classified deletion candidates must still have their reviewed blobs; at A

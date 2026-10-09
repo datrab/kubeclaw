@@ -80,7 +80,27 @@ jobs:
       - name: Check canonical open-issue register and generated view
         run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
       - name: Regenerate docs
-        run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
+        run: |
+          npm run docs:generate -- --revision "$GITHUB_SHA" --update-source-revision
+          npm run plugin-system:inventory
+          npm run docs:ap08:inventory
+          npm run docs:ap08:review-scope
+          npm run docs:ap09:catalogue
+          npm run docs:ap09:platform-inventory
+          npm run docs:lint-policy:generate
+          npm run docs:inventory
+          npm run docs:inventory:local-helm
+          npm run docs:inventory:config
+          npm run docs:operator-tasks:generate
+          npm run docs:generate -- --revision "$GITHUB_SHA"
+          npm run docs:governance:generate
+          npm run docs:parity:batches
+          npm run docs:parity:assignments
+          npm run docs:parity:extract
+          npm run docs:parity:status
+          npm run docs:blueprint:generate
+          npm run docs:status:generate
+          npm run docs:tree:generate
       - name: Check generated docs freshness
         run: npm run docs:check:generated
       - name: Check Markdown hygiene
@@ -108,7 +128,14 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/generated docs/site/reference docs/reference docs/architecture/plugin-system-current-inventory.md
+          if [ -n "$(git diff --cached --name-only)" ]; then
+            echo "::error::A documentation generator staged changes before the trusted output check."
+            git status --short --untracked-files=all
+            exit 1
+          fi
+          git add docs/generated docs/site/reference docs/site/status/open-issues.md \
+            docs/architecture/plugin-system-current-inventory.md docs/blueprint/generated \
+            docs/blueprint/AP08-audit-ledger.json scripts/docs-local-helm-field-authorities.json
           if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
             echo "::error::A documentation generator changed a path outside the declared generated outputs."
             git status --short --untracked-files=all

@@ -30,16 +30,34 @@ const evidenceClasses = new Set([
   'live', 'manual-reader', 'mutation', 'reviewer',
 ]);
 const manualRunIds = new Set([
-  'A97-11', 'A98-13', 'A99-12', 'A910-11', 'A912-10', 'A912-12',
+  'A97-11', 'A99-12', 'A910-11', 'A912-10', 'A912-12',
   'A913-03', 'A913-04', 'A913-05', 'A913-06', 'A913-11', 'A913-12',
 ]);
 const renderRunIds = new Set(['A912-01', 'A912-04', 'A912-05', 'A912-06', 'A912-07', 'A912-08', 'A912-09']);
 const deploymentRunIds = new Set([
-  'A98-03', 'A98-04', 'A98-05', 'A98-06', 'A98-07', 'A98-08', 'A98-09', 'A98-12',
+  'A98-03', 'A98-04', 'A98-05', 'A98-06', 'A98-08', 'A98-09',
   'A99-06', 'A99-07', 'A99-08', 'A910-01', 'A910-08', 'A910-09',
 ]);
 const mutationRunIds = new Set(['A97-12', 'A98-14', 'A99-13', 'A910-14', 'A911-11', 'A913-08']);
-const productLimitIds = new Set(['A97-04', 'A97-06', 'A97-07', 'A910-13', 'A913-10', 'A913-12']);
+const productLimitIds = new Set([
+  'A97-04', 'A97-06', 'A97-07', 'A98-07', 'A98-12', 'A98-13',
+  'A910-13', 'A913-10', 'A913-12',
+]);
+const documentationTruthBoundaries = new Map([
+  ['A98-07', {
+    pass: 'Backup and restore documentation identifies the data scope, consistency point, encryption, credentials, retention, integrity check, empty-target assumptions, restore order, and functional verification. It separates implemented and verified paths from incomplete or unverified restore paths. A missing full-platform restore is an explicit product limitation, not a documentation blocker.',
+    fail: 'An unverified restore is presented as verified, an incomplete path is presented as supported, or the limitation has no safe boundary and follow-up condition.',
+  }],
+  ['A98-12', {
+    pass: 'Prism/Studio and Demo Delivery documentation gives the complete intended journey from setup to separate human acceptance, including failure, abort, resume, and cleanup. Each step states whether it is implemented, verified, fixture-only, or currently unavailable. The absence of a reproducible live delivery route is an explicit product limitation, not a documentation blocker.',
+    fail: 'A mock, render, or synthetic provider run is presented as a live production journey, or an unavailable step has no clear boundary and follow-up condition.',
+  }],
+  ['A98-13', {
+    pass: 'Every operator procedure is complete enough for a fresh-context technical reader to identify prerequisites, authority, commands, expected observations, safe-stop conditions, recovery boundaries, and unsupported capabilities without chat knowledge. Two independent live operator executions are recommended product validation, but they are not required for documentation completion.',
+    fail: 'A procedure depends on undocumented author knowledge, or the text claims successful execution that did not occur.',
+  }],
+]);
+const deferredProductValidationPurpose = 'These live product exercises remain valuable, but they do not block acceptance of complete and truthful documentation. They must not be reported as passed unless they were executed.';
 const requiredExecutionScenarioIds = [
   'EXEC-PLATFORM-SUCCESS', 'EXEC-WAIT-RESUME', 'EXEC-CANCELLATION', 'EXEC-RESTART-RECOVERY',
   'EXEC-UPGRADE', 'EXEC-ROLLBACK', 'EXEC-DECOMMISSION', 'EXEC-PRISM-JOURNEY', 'EXEC-DEMO-JOURNEY',
@@ -55,7 +73,7 @@ function primaryEvidenceClass(id) {
   return 'contract';
 }
 function requiredRunIds(id) {
-  return id === 'A98-13' ? ['A98-13-OPERATOR-1', 'A98-13-OPERATOR-2'] : [`${id}-PRIMARY`];
+  return [`${id}-PRIMARY`];
 }
 
 function git(args, options = {}) {
@@ -195,11 +213,19 @@ function contract() {
     assert(row.pass.length >= 80 && row.fail.length >= 40, `${row.id} is underspecified`);
     assert(!/\b(?:TODO|TBD|later|as needed)\b/iu.test(`${row.pass} ${row.fail}`), `${row.id} is vague`);
   }
+  for (const [id, boundary] of documentationTruthBoundaries) {
+    const row = rows.find((item) => item.id === id);
+    assert.deepEqual({ pass: row?.pass, fail: row?.fail }, boundary,
+      `${id} documentation/product truth boundary changed`);
+  }
   const antiCheating = source.split('## 2. Nicht verhandelbare Regeln gegen Scheinabnahmen')[1]
     .split('## 3. Drei getrennte Beweisebenen')[0];
   assert.equal([...antiCheating.matchAll(/^\d+\. \*\*/gmu)].length, 15, 'anti-cheating rules changed');
   assert(source.includes('261 Anforderungsbefunde') && source.includes('AP09-acceptance-fixtures.json'),
     'contract lacks individual findings or fixtures');
+  assert(source.includes('`EXEC-PRISM-JOURNEY` and `EXEC-DEMO-JOURNEY` are post-documentation product\nvalidation scenarios. They do not require a run for documentation acceptance.')
+    && source.includes('`READER-OPERATOR-01` through\n`READER-OPERATOR-04` are post-documentation product validation tasks. They do\nnot require a participant or a result for documentation acceptance.'),
+  'contract contradicts the non-blocking post-documentation validation boundary');
   assert(fs.readFileSync(p('docs/blueprint/AP09-execution-plan.md'), 'utf8').includes('(AP09-acceptance-contract.md)'),
     'execution plan does not bind the contract');
   return rows;
@@ -222,6 +248,16 @@ function fixture() {
     participantVisibleFields: ['id', 'persona', 'startPath', 'objective', 'taskInput', 'allowedAssistance', 'failureThreshold'],
     facilitatorOnlyFields: ['fixturePaths', 'injectedFaultId', 'facilitatorSetup', 'requiredOutcomes', 'participantRequirements'],
   });
+  assert(value.postDocumentationProductValidation
+    && typeof value.postDocumentationProductValidation === 'object',
+  'post-documentation product-validation scope is required');
+  assert.equal(value.postDocumentationProductValidation.purpose, deferredProductValidationPurpose,
+    'post-documentation product validation must forbid fabricated success');
+  exactIds(value.postDocumentationProductValidation.readerTaskIds,
+    ['READER-OPERATOR-01', 'READER-OPERATOR-02', 'READER-OPERATOR-03', 'READER-OPERATOR-04'],
+    'non-blocking operator reader tasks');
+  exactIds(value.postDocumentationProductValidation.executionScenarioIds,
+    ['EXEC-PRISM-JOURNEY', 'EXEC-DEMO-JOURNEY'], 'non-blocking live product scenarios');
   assert.equal(value.searchQueries.length, 5);
   assert.deepEqual(value.renderScenarios.map((item) => item.browser).sort(), ['chromium', 'firefox', 'webkit']);
   const readerPersonaMinimums = new Map([
@@ -602,6 +638,11 @@ function evidence(file, rows, catalog, fixtures) {
     }
   }
   const allReaderTasks = [...fixtures.readerTasks, ...dynamicReaderTasks];
+  const deferredReaderIds = new Set(fixtures.postDocumentationProductValidation.readerTaskIds);
+  const requiredReaderTasks = allReaderTasks.filter((task) => !deferredReaderIds.has(task.id));
+  const deferredScenarioIds = new Set(fixtures.postDocumentationProductValidation.executionScenarioIds);
+  const requiredExecutionScenarios = fixtures.executionScenarios
+    .filter((scenario) => !deferredScenarioIds.has(scenario.id));
   unique(allReaderTasks.map((item) => item.id), 'all reader task IDs');
 
   exactIds(value.requirements.map((item) => item.id), [...catalogueById.keys()], 'requirement findings');
@@ -638,7 +679,7 @@ function evidence(file, rows, catalog, fixtures) {
     assert.equal(reviewer.verdict, 'PASS');
     artifactRefs([reviewer.report_artifact_id], artifactIndex, `${reviewer.id}.report`, 'reviewer');
   }
-  assert(Array.isArray(value.participants) && value.participants.length >= allReaderTasks.length,
+  assert(Array.isArray(value.participants) && value.participants.length >= requiredReaderTasks.length,
     'reader executions need separate participant records');
   unique(value.participants.map((item) => item.id), 'participant IDs');
   assert(value.participants.every((item) => !reviewerIds.includes(item.id)),
@@ -654,8 +695,6 @@ function evidence(file, rows, catalog, fixtures) {
     artifactRefs([participant.report_artifact_id], artifactIndex, `${participant.id}.report`, 'manual-reader');
     participantById.set(participant.id, participant);
   }
-  assert(value.participants.filter((item) => item.role === 'operator').length >= 2,
-    'at least two distinct operators are required');
   for (const task of fixtures.readerTasks) task.fixturePaths.forEach((fixtureFile) =>
     gitBlob(value.reviewed_revision, fixtureFile, `${task.id}.fixturePaths`));
 
@@ -674,7 +713,7 @@ function evidence(file, rows, catalog, fixtures) {
 
   assert(Array.isArray(value.scenario_results), 'scenario_results must be recorded');
   exactIds(value.scenario_results.map((item) => item.scenario_id),
-    fixtures.executionScenarios.map((item) => item.id), 'execution scenario results');
+    requiredExecutionScenarios.map((item) => item.id), 'documentation-blocking execution scenario results');
   for (const result of value.scenario_results) {
     const scenario = fixtures.executionScenarios.find((item) => item.id === result.scenario_id);
     assert.equal(result.revision, value.reviewed_revision, `${result.scenario_id}.revision differs`);
@@ -746,11 +785,6 @@ function evidence(file, rows, catalog, fixtures) {
         assert.equal(run.expected_outcome, rowById.get(label).pass, `${run.run_id} changed its expected outcome`);
       }
     }
-    if (label === 'A98-13') {
-      const actors = requiredRunIds(label).map((id) => runs.find((run) => run.run_id === id).participant_id);
-      unique(actors, `${label} operator participants`);
-      actors.forEach((id) => assert.equal(participantById.get(id)?.role, 'operator', `${id} is not an operator`));
-    }
     assert(point.negative_proof.length > 0 && point.limits.length > 0);
     for (const [index, proof] of point.negative_proof.entries()) {
       text(proof.scenario, `${label}.negative_proof[${index}].scenario`, 20);
@@ -770,7 +804,7 @@ function evidence(file, rows, catalog, fixtures) {
     exactIds(point.reviewer_ids, reviewerIds, `${label}.reviewer_ids`);
   }
 
-  const allFixtures = [...fixtures.searchQueries, ...fixtures.renderScenarios, ...allReaderTasks];
+  const allFixtures = [...fixtures.searchQueries, ...fixtures.renderScenarios, ...requiredReaderTasks];
   exactIds(value.fixture_results.map((item) => item.fixture_id), allFixtures.map((item) => item.id), 'fixture results');
   for (const result of value.fixture_results) {
     assert.equal(result.verdict, 'PASS');

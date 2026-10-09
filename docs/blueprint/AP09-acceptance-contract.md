@@ -178,15 +178,18 @@ verweisen auf genau diesen nachgerechneten Seitenhash. Rohes Markdown,
 gegenseitig bestätigende JSON-Reports, Überschriften in Codeblöcken und frei
 behauptete `id`-Texte sind keine gültigen Anchor-Beweise.
 
-Die Execution-Matrix ist ebenfalls unveränderlich an den geprüften Commit
-gebunden. Sie trennt erfolgreichen Plattformlauf, Wait/Resume, Cancellation,
-Restart/Recovery, Upgrade, Rollback, Stilllegung, Prism, Demo Delivery sowie
-Ausfälle von Redis, PostgreSQL, Registry/BuildKit, Tailscale, LiteLLM, Git,
-Worker, externem Effect und Demo-Acceptance. Jeder Eintrag besitzt eigene
-Inputs oder Fault-Injection, Sollbeobachtungen, Evidenzklasse, Gate-Bindung und
-Fehlerschwelle. Der Evidence-Checker verlangt jeden Eintrag einzeln; ein frei
-formulierter Sammellauf oder das generische Pflichtfeld `<Gate-ID>-PRIMARY`
-ersetzt keinen dieser Läufe.
+The execution matrix is immutable at the reviewed commit. It separates the
+successful platform run, wait and resume, cancellation, restart and recovery,
+upgrade, rollback, decommission, Prism, Demo Delivery, and the registered
+dependency failures. Each scenario has its own input or injected fault,
+expected observation, evidence class, gate binding, and failure threshold.
+The evidence checker requires each documentation-blocking scenario separately.
+`EXEC-PRISM-JOURNEY` and `EXEC-DEMO-JOURNEY` are post-documentation product
+validation scenarios. They do not require a run for documentation acceptance.
+If a result is recorded for either scenario, it must keep its real status and
+must not report `passed` unless the scenario was executed successfully. A
+free-form aggregate run or the generic `<Gate-ID>-PRIMARY` run cannot replace
+any required scenario.
 
 Ausführungen enthalten Umgebung, Status, exakten Befehl oder Schritt,
 Exit-Code, Beobachtung und Artefaktverweise. Negative Beweise, Mutationen,
@@ -198,33 +201,30 @@ Er kann weder die Wahrheit einer menschlichen Beobachtung noch die tatsächliche
 Unabhängigkeit einer Identität beweisen. Diese Verantwortung bleibt ausdrücklich
 bei den drei Reviewern; ein grüner Maschinencheck allein erteilt kein `PASS`.
 
-Jedes Gate besitzt den unveränderlichen Pflichtlauf `<Gate-ID>-PRIMARY`; nur
-`A98-13` besitzt stattdessen die zwei Pflichtläufe `A98-13-OPERATOR-1` und
-`A98-13-OPERATOR-2`. Der Checker bindet jeden Lauf an die vollständige
-PASS-Bedingung der Tabellenzeile und an eine vorab festgelegte Evidenzklasse.
-Ein `PASS` verlangt jeden Pflichtlauf mit Status `passed`; fehlende, blockierte,
-übersprungene oder fehlgeschlagene Pflichtläufe können nicht durch einen
-Source-Check ersetzt werden. Zusätzliche fehlgeschlagene Versuche bleiben mit
-ihrem echten Status im Ledger. Ein Produktlimit ersetzt keinen Pflichtlauf.
+Each gate has the immutable required run `<Gate-ID>-PRIMARY`. The checker binds
+the run to the full pass condition in the table and to a predefined evidence
+class. A pass requires the documentation-verification run status `passed`.
+For an explicitly allowed product limitation, this run verifies that the text
+fully explains the real boundary, its effect, safe alternatives, and the
+condition that will remove the limitation. The verification does not prove that
+the product capability works. Separate product-operation attempts keep their
+real status, including `blocked` or `failed`, in the ledger.
 
-Reviewer und Ausführungsteilnehmer sind verschiedene Identitäten. Jede
-vorregistrierte statische oder dynamisch erzeugte Reader-Aufgabe erhält einen
-eigenen Fresh-Context-Teilnehmer,
-der zuvor nicht an der Dokumentation mitgearbeitet hat. Die vier statischen
-Operator-Reader-Aufgaben erhalten je einen solchen Teilnehmer. Die beiden
-Pflichtläufe `A98-13-OPERATOR-1` und `A98-13-OPERATOR-2` verwenden zwei
-verschiedene Operatoren. Das Ledger bewahrt
-jeden deklarierten Versuch, auch einen fehlgeschlagenen, und bindet den
-akzeptierten Versuch an Teilnehmer, Startzeit, tatsächlich verwendete Hilfen
-und einen gehashten Bericht. Die Reviewer bestätigen zusätzlich, dass kein
-Versuch und keine unerlaubte Hilfe verschwiegen wurde; der Checker kann diese
-menschliche Vollständigkeit nicht allein beweisen.
+Reviewers and execution participants are different identities. Each
+documentation-blocking static or generated reader task has a fresh-context
+participant who did not write the documentation. `READER-OPERATOR-01` through
+`READER-OPERATOR-04` are post-documentation product validation tasks. They do
+not require a participant or a result for documentation acceptance. If an
+attempt is recorded, the ledger keeps its real result, participant, start time,
+used assistance, and hashed report. Reviewers also confirm that the ledger does
+not hide a declared attempt or unapproved assistance. The checker cannot prove
+that human completeness by itself.
 
-Eine Produktgrenze kann nur ein Gate bestehen lassen, dessen Gegenstand gerade
-die ehrliche Beschreibung dieser Grenze ist. Ein nicht ausgeführter Restore,
-ein übersprungener Reader-Task oder ein blockierter, als unterstützt
-beschriebener Ablauf erfüllt niemals ein Ausführungsgate. Dann lautet der
-Befund `FAIL` oder `NOT READY`.
+A product limitation can satisfy a gate only if the gate evaluates an honest
+description of available and unavailable behavior. The documentation must not
+present a blocked operation as supported or successfully executed. Missing
+product behavior remains implementation or product-validation work. It does
+not prevent acceptance of complete and accurate documentation.
 
 ## 5. AP09.7 — Plattform, Spezialisten, Kommunikation, Daten und Sicherheit
 
@@ -259,13 +259,13 @@ Lifecycle, Konfiguration und produktbezogene Journeys getrennt geprüft.
 | A98-04 | Start, Readiness und Beobachtung unterscheiden Prozessstart, Servicebereitschaft, Abhängigkeitsbereitschaft und fachliche Funktionsfähigkeit mit exakten Signalen. | „Pod running“ oder HTTP 200 wird allein als Plattformbereitschaft gewertet. |
 | A98-05 | Signal, Wait/Resume, Cancellation und Restart verwenden vollständige aktuelle Verträge einschließlich `resume-signal.v2`, Issuance, Signatur/Authority, Idempotenz, Replay, Reihenfolge und falscher Signale. | Ein syntaktisches Beispiel ersetzt Issuance- und Wiederholungsregeln. |
 | A98-06 | Der Symptomindex führt von beobachtbaren Symptomen über unterscheidende Checks zur Ursache, Stop-Regel und sicheren Recovery; er deckt Pflichtabhängigkeiten und unklare Resultate ab. | Diagnose beginnt mit der angenommenen Ursache oder empfiehlt pauschales Neustarten. |
-| A98-07 | Backup und Restore nennen Datenumfang, Konsistenzpunkt, Verschlüsselung, Credentials, Aufbewahrung, Integritätsprüfung, leere Zielumgebung, Restore-Reihenfolge und fachliche Endprüfung. | Ein Backupbefehl ohne tatsächlich geprüften Restore erhält `PASS`. |
+| A98-07 | Backup and restore documentation identifies the data scope, consistency point, encryption, credentials, retention, integrity check, empty-target assumptions, restore order, and functional verification. It separates implemented and verified paths from incomplete or unverified restore paths. A missing full-platform restore is an explicit product limitation, not a documentation blocker. | An unverified restore is presented as verified, an incomplete path is presented as supported, or the limitation has no safe boundary and follow-up condition. |
 | A98-08 | Upgrade und Rollback nennen Versionsmatrix, Preflight, irreversible Grenze, Datenmigration, Reihenfolge, Health-Gates, Abbruch, Rückkehrpfad und Evidenzaufbewahrung. | Rollback wird nach einer irreversiblen Migration versprochen oder nur Helm-Render geprüft. |
 | A98-09 | Stilllegung entfernt Workloads, Zugriff, Secrets, Daten, Artefakte und externe Ressourcen in sicherer Reihenfolge und nennt ausdrücklich aufzubewahrende Audit-/Recovery-Evidenz. | Cleanup verwendet ungebundene Globs oder löscht Daten vor der letzten Exportprüfung. |
 | A98-10 | Ein rekursives Konfigurationsinventar erfasst `swarm.config.json`, Helm Values, GitOps Values, Environment, Secrets, CLI-/Scriptflags und abgeleitete Werte mit Typ, Pflichtstatus, Default, Grenze, Owner und Consumer. | Eine Quelle oder ein verschachteltes Feld fehlt; README-Text gilt nicht als Authority. |
 | A98-11 | Für jeden effektiven Wert ist die vollständige Präzedenz vom authored input bis zum Runtime-Consumer erklärt; Konflikt-, leerer-Wert-, Secret- und ungültiger-Wert-Fälle sind getestet. | Zwei Quellen können denselben Wert setzen, ohne dass der Gewinner beweisbar ist. |
-| A98-12 | Prism/Studio und Demo Delivery besitzen ausführbare Journeys vom Setup bis zur getrennten menschlichen Acceptance, mit Fehler-, Abbruch-, Wiederaufnahme- und Cleanup-Weg. | Ein Mock-, Render- oder synthetischer Providerlauf wird als Produktionsjourney ausgegeben. |
-| A98-13 | Getrennte Fresh-Context-Operatoren führen den vollständigen erfolgreichen Installations-/Start-/Diagnoseweg, einen Preflight-Safe-Stop, den aktuell unterstützten isolierten Komponenten-Restore und die vollständige Plattform-Restore-Grenze ohne Chatwissen aus. Eine Grenze ersetzt keinen unterstützten Pflichtlauf. | Der Autor erklärt die Schritte, ein DNS-Safe-Stop ersetzt die erfolgreiche Installation, eine gelesene Produktgrenze ersetzt den unterstützten Restore, oder Reviewer lesen nur, ohne auszuführen. |
+| A98-12 | Prism/Studio and Demo Delivery documentation gives the complete intended journey from setup to separate human acceptance, including failure, abort, resume, and cleanup. Each step states whether it is implemented, verified, fixture-only, or currently unavailable. The absence of a reproducible live delivery route is an explicit product limitation, not a documentation blocker. | A mock, render, or synthetic provider run is presented as a live production journey, or an unavailable step has no clear boundary and follow-up condition. |
+| A98-13 | Every operator procedure is complete enough for a fresh-context technical reader to identify prerequisites, authority, commands, expected observations, safe-stop conditions, recovery boundaries, and unsupported capabilities without chat knowledge. Two independent live operator executions are recommended product validation, but they are not required for documentation completion. | A procedure depends on undocumented author knowledge, or the text claims successful execution that did not occur. |
 | A98-14 | Mutationstests erkennen ein neues Helm-Feld, Environment-Setting, Secret, Scriptflag und `swarm.config.json`-Feld ohne Operator-Dokumentation. | Nur bekannte Feldzahlen werden geprüft oder ein neues Feld bleibt grün. |
 
 ### Pflichtübergang zwischen AP09.8 und AP09.9

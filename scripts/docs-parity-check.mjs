@@ -49,9 +49,13 @@ const CODE_CLASSIFICATIONS = new Set([
   'runnable-example', 'configuration-example', 'expected-output', 'illustrative-pseudocode',
   'identifier-list', 'obsolete-example',
 ]);
-const GENERATED_OR_REVIEW_PATH = /(?:^|\/)(?:\.tmp|artifacts|generated|review|reviews|node_modules|dist|build|coverage|vendor)(?:\/|$)|(?:^|\/)[^/]*(?:\.generated\.|-generated\.)/u;
+const NON_AUTHORITY_PATH = /(?:^|\/)(?:\.tmp|artifacts|generated|node_modules|dist|build|coverage|vendor)(?:\/|$)|(?:^|\/)[^/]*(?:\.generated\.|-generated\.)/u;
+const DOCUMENTATION_REVIEW_PATH = /^docs\/(?:review|reviews)(?:\/|$)/u;
 const IMPLEMENTATION_EXTENSION = /\.(?:c|cc|cpp|cs|go|java|js|jsx|kt|mjs|mts|php|py|rb|rs|sh|ts|tsx)$/u;
 const TEST_PATH = /(?:^|\/)(?:__tests__|test|tests)(?:\/|$)|(?:^|\/)[^/]+\.(?:spec|test)\.[^/]+$/u;
+const SPECIAL_CONFIGURATION_PATH = /(?:^|\/)(?:Dockerfile(?:\.[^/]+)?|\.renovaterc(?:\.(?:json|json5))?|renovate\.(?:json|json5)|renovate-config\.(?:cjs|js|mjs|json|json5))$/u;
+const ASSERTION_BOILERPLATE = new Set(['see', 'refer', 'reference', 'file', 'path', 'source', 'evidence', 'at', 'in']);
+const ASSERTION_PREDICATE = /\b(?:is|are|has|have|uses|returns|throws|emits|requires|rejects|accepts|selects|defines|sets|creates|reads|writes|validates|checks|maps|binds|loads|stores|runs|calls|claims|prove|proves|prevents|allows|provides|contains|matches|extends)\b/iu;
 const BEHAVIORAL_CLAIM_TYPES = new Set([
   'fact', 'decision', 'reason', 'constraint', 'procedure', 'configuration', 'failure', 'recovery',
   'security-boundary', 'example', 'status-or-limit', 'source-evidence', 'visual-relationship',
@@ -188,7 +192,16 @@ function assertReadinessTree(root, revision, allowDeletionManifestOutput = false
   assert.deepEqual(unexpected, [], `${phase}: working tree has changes outside the fixed generated deletion manifest`);
 }
 
-function buildReferenceIndex(root, sources) {
+function repositoryTreeAt(root, revision) {
+  return new Map(git(root, ['ls-tree', '-r', '-z', '--full-tree', revision])
+    .split('\0').filter(Boolean).map((line) => {
+      const match = /^(\d+)\s+blob\s+([0-9a-f]+)\t(.+)$/u.exec(line);
+      assert(match, `cannot parse repository tree entry at ${revision}: ${line}`);
+      return [match[3], { mode: match[1], gitObject: match[2] }];
+    }).sort(([left], [right]) => compareText(left, right)));
+}
+
+function buildReferenceIndex(root, sources, reviewedRevision = null) {
   const metadata = new Set([
     baselinePath, classificationPath, unitsPath, extractionSummaryPath, assignmentsPath, deletionManifestPath,
     'docs/config/documentation-parity-batches.json', 'docs/generated/inventory/documentation-parity-batches.json',
@@ -198,12 +211,24 @@ function buildReferenceIndex(root, sources) {
   ]));
   const references = new Map(sources.map((source) => [source.originalPath, new Set()]));
   const scannedFiles = [];
-  for (const file of repositoryFiles(root)) {
+  const reviewedTree = reviewedRevision ? repositoryTreeAt(root, reviewedRevision) : null;
+  const files = reviewedTree ? [...reviewedTree.keys()] : repositoryFiles(root);
+  for (const file of files) {
     if (metadata.has(file) || file.startsWith('docs/generated/inventory/documentation-parity-')
       || sources.some((source) => file === source.legacyPath)) continue;
     if (file.startsWith(`${decisionsRoot}/`) || file.startsWith(`${reviewsRoot}/`)) continue;
     let buffer;
-    try { buffer = fs.readFileSync(path.join(root, file)); } catch { continue; }
+    try {
+      if (!reviewedRevision) buffer = fs.readFileSync(path.join(root, file));
+      else {
+        const currentPath = path.join(root, file);
+        const candidate = fs.existsSync(currentPath) && fs.statSync(currentPath).isFile()
+          ? fs.readFileSync(currentPath) : null;
+        buffer = candidate && gitObject(candidate, root) === reviewedTree.get(file).gitObject
+          ? candidate
+          : git(root, ['show', `${reviewedRevision}:${file}`], { encoding: 'buffer' });
+      }
+    } catch { continue; }
     if (buffer.includes(0)) continue;
     const text = buffer.toString('utf8');
     const provenanceMetadata = file.startsWith('docs/review/')
@@ -239,18 +264,30 @@ function buildReferenceIndex(root, sources) {
       if (originalPath) references.get(originalPath).add(file);
     }
   }
+  const current = reviewedRevision ? buildReferenceIndex(root, sources) : null;
+  if (current) {
+    for (const [source, files] of current.references) {
+      for (const file of files) references.get(source).add(file);
+    }
+  }
   return {
     references: new Map([...references].map(([source, files]) => [source, [...files].sort(compareText)])),
     scannedFiles: [...new Set(scannedFiles)].sort(compareText),
+    currentScannedFiles: current?.scannedFiles ?? null,
   };
 }
 
-function scannerInputBinding(root, reviewedRevision, scannedFiles) {
+function scannerInputBinding(root, reviewedRevision, scannedFiles, currentScannedFiles) {
+  assert.deepEqual(currentScannedFiles, scannedFiles,
+    'active-dependency scanner input file set changed after reviewedRevision');
   const entries = scannedFiles.map((repositoryPath) => {
     let reviewedObject;
     try { reviewedObject = git(root, ['rev-parse', `${reviewedRevision}:${repositoryPath}`]).trim(); }
     catch { assert.fail(`${repositoryPath}: active-dependency scanner input is absent at reviewedRevision`); }
-    const currentObject = gitObject(fs.readFileSync(path.join(root, repositoryPath)), root);
+    const currentPath = path.join(root, repositoryPath);
+    assert(fs.existsSync(currentPath) && fs.statSync(currentPath).isFile(),
+      `${repositoryPath}: active-dependency scanner input was deleted after reviewedRevision`);
+    const currentObject = gitObject(fs.readFileSync(currentPath), root);
     assert.equal(currentObject, reviewedObject,
       `${repositoryPath}: active-dependency scanner input changed after reviewedRevision`);
     return { path: repositoryPath, gitObject: currentObject };
@@ -259,7 +296,7 @@ function scannerInputBinding(root, reviewedRevision, scannedFiles) {
 }
 
 function buildActiveDependencyReview(root, source, reviewedRevision, contentRoot, referenceIndex = null) {
-  const index = referenceIndex ?? buildReferenceIndex(root, [source]);
+  const index = referenceIndex ?? buildReferenceIndex(root, [source], reviewedRevision);
   const matches = index.references.get(source.originalPath) ?? [];
   return {
     reviewedRevision,
@@ -277,7 +314,8 @@ function buildActiveDependencyReview(root, source, reviewedRevision, contentRoot
       searchedPaths: [source.originalPath, source.legacyPath],
       scannedFileCount: index.scannedFiles.length,
       scannedPathsSha256: sha256(canonical(index.scannedFiles)),
-      scannerInputRoot: scannerInputBinding(root, reviewedRevision, index.scannedFiles),
+      scannerInputRoot: scannerInputBinding(root, reviewedRevision, index.scannedFiles,
+        index.currentScannedFiles),
       matches,
     },
     limitation: ACTIVE_DEPENDENCY_LIMITATION,
@@ -293,6 +331,40 @@ function exactKeys(value, expected, label) {
 function nonempty(value, label) {
   assert.equal(typeof value, 'string', `${label}: must be a string`);
   assert(value.trim().length > 0, `${label}: must not be empty`);
+}
+
+function meaningfulEvidenceTokens(value) {
+  return (value.match(/[\p{L}\p{N}_-]+/gu) ?? [])
+    .filter((token) => (token.match(/[\p{L}\p{N}]/gu) ?? []).length >= 2);
+}
+
+function assertionOnlyNamesEvidence(assertion, evidencePath) {
+  const assertionTokens = meaningfulEvidenceTokens(assertion).map((token) => token.toLocaleLowerCase('en-US'));
+  const pathTokens = new Set(meaningfulEvidenceTokens(evidencePath).map((token) => token.toLocaleLowerCase('en-US')));
+  const supportedStatementTokens = assertionTokens.filter((token) => !pathTokens.has(token)
+    && !ASSERTION_BOILERPLATE.has(token));
+  return new Set(supportedStatementTokens).size < 3;
+}
+
+function assertionMatchesEvidence(assertion, selectedEvidence) {
+  const assertionTokens = new Set(meaningfulEvidenceTokens(assertion)
+    .map((token) => token.toLocaleLowerCase('en-US'))
+    .filter((token) => !ASSERTION_BOILERPLATE.has(token)));
+  return meaningfulEvidenceTokens(selectedEvidence)
+    .map((token) => token.toLocaleLowerCase('en-US'))
+    .some((token) => assertionTokens.has(token));
+}
+
+function substantiveReviewDetail(value, label) {
+  nonempty(value, label);
+  const tokens = meaningfulEvidenceTokens(value)
+    .map((token) => token.toLocaleLowerCase('en-US').replace(/\d+$/u, ''))
+    .filter((token) => /\p{L}/u.test(token));
+  const hasAction = /\b(?:inspect(?:ed|ion)?|read|search(?:ed)?|compar(?:e|ed|ison)|trac(?:e|ed)|verif(?:y|ied|ication)|check(?:ed)?|review(?:ed)?|confirm(?:ed)?|identif(?:y|ied)|observ(?:e|ed|ation)|report(?:ed)?|resolv(?:e|ed))\b/iu.test(value);
+  const scopeTerms = value.match(/\b(?:file|blob|path|content|consumer|reference|dependency|source|finding|behavior|configuration|output|record|scan|match)(?:s|es|ed)?\b/giu) ?? [];
+  assert(normalizeExcerpt(value).length >= 48 && tokens.length >= 6 && new Set(tokens).size >= 5
+    && hasAction && new Set(scopeTerms.map((term) => term.toLocaleLowerCase('en-US'))).size >= 2,
+    `${label}: must explain the performed check or observed evidence in substantive detail`);
 }
 
 function lstatIfPresent(pathname) {
@@ -648,12 +720,16 @@ function validateEvidence(root, evidence, reviewedRevision, gitState, label, { b
   assert(EVIDENCE_BASES.has(evidence.basis), `${label}: unsupported evidence basis`);
   if (behavioral) assert.notEqual(evidence.basis, 'documentation-governance', `${label}: behavioral evidence cannot be documentation governance`);
   nonempty(evidence.assertion, `${label}.assertion`);
-  assert(normalizeExcerpt(evidence.assertion).length >= 12 && /[\p{L}\p{N}].*[\p{L}\p{N}]/u.test(evidence.assertion),
+  assert(normalizeExcerpt(evidence.assertion).length >= 12
+    && meaningfulEvidenceTokens(evidence.assertion).length >= 4
+    && ASSERTION_PREDICATE.test(evidence.assertion)
+    && !assertionOnlyNamesEvidence(evidence.assertion, evidence.path),
     `${label}: evidence assertion is too trivial to explain the supported statement`);
   assert(!evidence.path.startsWith(`${decisionsRoot}/`)
     && !evidence.path.startsWith(`${reviewsRoot}/`)
     && !evidence.path.startsWith('docs/_legacy-source/')
-    && !GENERATED_OR_REVIEW_PATH.test(evidence.path), `${label}: evidence is a generated, review, legacy, or decision artifact`);
+    && !NON_AUTHORITY_PATH.test(evidence.path)
+    && !DOCUMENTATION_REVIEW_PATH.test(evidence.path), `${label}: evidence is a generated, review, legacy, or decision artifact`);
   if (behavioral) {
     assert(!evidence.path.startsWith('docs/site/')
       && evidence.path !== 'docs/blueprint/documentation-parity-contract.md',
@@ -663,7 +739,8 @@ function validateEvidence(root, evidence, reviewedRevision, gitState, label, { b
     'current-implementation': !evidence.path.startsWith('docs/')
       && !TEST_PATH.test(evidence.path)
       && !evidence.path.startsWith('contracts/') && !evidence.path.startsWith('charts/')
-      && !evidence.path.startsWith('config/') && IMPLEMENTATION_EXTENSION.test(evidence.path),
+      && !evidence.path.startsWith('config/') && !SPECIAL_CONFIGURATION_PATH.test(evidence.path)
+      && IMPLEMENTATION_EXTENSION.test(evidence.path),
     'current-contract': evidence.path.startsWith('contracts/'),
     'current-schema': /(?:^|\/)schemas?\//u.test(evidence.path)
       || /\.schema\.(?:json|ya?ml)$/u.test(evidence.path)
@@ -671,7 +748,8 @@ function validateEvidence(root, evidence, reviewedRevision, gitState, label, { b
     'current-configuration': evidence.path.startsWith('charts/') || evidence.path.startsWith('config/')
       || evidence.path.startsWith('configs/') || evidence.path.startsWith('.github/workflows/')
       || /(?:^|\/)(?:[^/]+\.)?(?:config|values)\.(?:json|jsonc|toml|ya?ml)$/u.test(evidence.path)
-      || /^(?:package(?:-lock)?\.json|go\.mod)$/u.test(evidence.path),
+      || /^(?:package(?:-lock)?\.json|go\.mod)$/u.test(evidence.path)
+      || SPECIAL_CONFIGURATION_PATH.test(evidence.path),
     'current-test': TEST_PATH.test(evidence.path),
     'documentation-governance': evidence.path.startsWith('docs/config/')
       || evidence.path === 'docs/blueprint/documentation-parity-contract.md'
@@ -696,9 +774,11 @@ function validateEvidence(root, evidence, reviewedRevision, gitState, label, { b
   assert(['100644', '100755'].includes(mode), `${label}: evidence path is not a recorded regular file`);
   validateSpan(buffer, evidence, label);
   const selected = normalizeExcerpt(buffer.subarray(evidence.byteStart, evidence.byteEnd).toString('utf8'));
-  const tokens = selected.match(/[\p{L}\p{N}_-]+/gu) ?? [];
-  assert(selected.length >= 8 && tokens.length >= 2 && tokens.some((token) => /[\p{L}\p{N}]/u.test(token)),
+  const tokens = meaningfulEvidenceTokens(selected);
+  assert(selected.length >= 8 && tokens.length >= 2,
     `${label}: evidence span is punctuation-only or too trivial to support a claim`);
+  assert(assertionMatchesEvidence(evidence.assertion, selected),
+    `${label}: evidence assertion does not identify any supported term in the selected evidence span`);
 }
 
 function validateCodeClassification(classification, claims, label) {
@@ -1024,7 +1104,7 @@ function validateReview(value, source, decisionSha256, decisionInfo, contentRoot
   value.activeDependencyReview.methods.forEach((method, index) => {
     exactKeys(method, ['kind', 'detail'], `${label}.activeDependencyReview.methods[${index}]`);
     assert.equal(method.kind, 'manual-inspection', `${label}: dependency-review methods must record manual inspection`);
-    nonempty(method.detail, `${label}.activeDependencyReview.methods[${index}].detail`);
+    substantiveReviewDetail(method.detail, `${label}.activeDependencyReview.methods[${index}].detail`);
   });
   assert(Array.isArray(value.activeDependencyReview.evidence)
     && value.activeDependencyReview.evidence.length > 0, `${label}: active dependency review requires manual evidence`);
@@ -1032,7 +1112,7 @@ function validateReview(value, source, decisionSha256, decisionInfo, contentRoot
     exactKeys(evidence, ['kind', 'detail'], `${label}.activeDependencyReview.evidence[${index}]`);
     assert(['scanner-result', 'manual-observation'].includes(evidence.kind),
       `${label}.activeDependencyReview.evidence[${index}]: unsupported evidence kind`);
-    nonempty(evidence.detail, `${label}.activeDependencyReview.evidence[${index}].detail`);
+    substantiveReviewDetail(evidence.detail, `${label}.activeDependencyReview.evidence[${index}].detail`);
   });
   assert(Array.isArray(value.activeDependencyReview.findings),
     `${label}.activeDependencyReview.findings: must be an array`);
@@ -1245,7 +1325,7 @@ function validateParity({ root = defaultRoot, readiness = false, collectFindings
   const assignments = loadAssignments(root, gitState);
   assert.deepEqual([...assignments.keys()].sort(compareText), sources.map((source) => source.originalPath).sort(compareText),
     `${assignmentsPath}: assignment source set differs from extraction sources`);
-  const referenceIndex = buildReferenceIndex(root, sources);
+  const referenceIndexes = new Map();
   const records = [];
   const sourceInspections = [];
   for (const sourceBase of sources) {
@@ -1299,6 +1379,11 @@ function validateParity({ root = defaultRoot, readiness = false, collectFindings
     }
     const decisionSha256 = sha256(decisionBytes);
     const assignment = assignments.get(source.originalPath);
+    if (!referenceIndexes.has(decision.reviewedRevision)) {
+      referenceIndexes.set(decision.reviewedRevision,
+        buildReferenceIndex(root, sources, decision.reviewedRevision));
+    }
+    const referenceIndex = referenceIndexes.get(decision.reviewedRevision);
     const references = referenceIndex.references.get(source.originalPath);
     if (references.length) {
       const message = `${source.originalPath}: active files still depend on the old or legacy path: ${references.join(', ')}`;

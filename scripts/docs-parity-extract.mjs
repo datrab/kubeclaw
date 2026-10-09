@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const extractorVersion = 'kubeclaw-documentation-parity-extractor.v6';
+export const extractorVersion = 'kubeclaw-documentation-parity-extractor.v7';
 export const unitsPath = 'docs/generated/inventory/documentation-parity-units.jsonl';
 export const summaryPath = 'docs/generated/inventory/documentation-parity-summary.json';
 
@@ -470,8 +470,91 @@ function inlineSemantics(value, definitions = new Map(), { collectReferences = t
   return { text: decodeEntities(output).replace(/\s+/gu, ' ').trim(), references };
 }
 
+function maskIntrinsicallyHiddenHtml(value) {
+  const voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
+    'link', 'meta', 'param', 'source', 'track', 'wbr']);
+  const attributeNames = (raw) => {
+    const names = [];
+    let cursor = 0;
+    while (cursor < raw.length) {
+      while (/\s|\//u.test(raw[cursor] ?? '')) cursor += 1;
+      if (cursor >= raw.length) break;
+      const start = cursor;
+      while (cursor < raw.length && !/[\s=/]/u.test(raw[cursor])) cursor += 1;
+      if (cursor === start) { cursor += 1; continue; }
+      names.push(raw.slice(start, cursor).toLocaleLowerCase('en-US'));
+      while (/\s/u.test(raw[cursor] ?? '')) cursor += 1;
+      if (raw[cursor] !== '=') continue;
+      cursor += 1;
+      while (/\s/u.test(raw[cursor] ?? '')) cursor += 1;
+      const quote = raw[cursor] === '"' || raw[cursor] === "'" ? raw[cursor] : null;
+      if (quote) {
+        cursor += 1;
+        while (cursor < raw.length && raw[cursor] !== quote) cursor += 1;
+        if (raw[cursor] === quote) cursor += 1;
+      } else while (cursor < raw.length && !/\s/u.test(raw[cursor])) cursor += 1;
+    }
+    return names;
+  };
+  const tokens = [];
+  for (let start = value.indexOf('<'); start >= 0; start = value.indexOf('<', start + 1)) {
+    if (value.startsWith('<!--', start)) {
+      const commentEnd = value.indexOf('-->', start + 4);
+      if (commentEnd < 0) break;
+      start = commentEnd + 2;
+      continue;
+    }
+    let quote = null;
+    let end = start + 1;
+    for (; end < value.length; end += 1) {
+      const character = value[end];
+      if (quote) { if (character === quote) quote = null; continue; }
+      if (character === '"' || character === "'") { quote = character; continue; }
+      if (character === '>') break;
+    }
+    if (end >= value.length) break;
+    const raw = value.slice(start, end + 1);
+    const closing = /^<\s*\/\s*([A-Za-z][\w:-]*)[^>]*>$/u.exec(raw);
+    if (closing) tokens.push({ start, end: end + 1, name: closing[1].toLocaleLowerCase('en-US'), closing: true });
+    else {
+      const opening = /^<\s*([A-Za-z][\w:-]*)([\s\S]*?)>$/u.exec(raw);
+      if (opening) {
+        const name = opening[1].toLocaleLowerCase('en-US');
+        tokens.push({ start, end: end + 1, name, closing: false,
+          hidden: name === 'template' || attributeNames(opening[2]).includes('hidden'),
+          selfClosing: /\/\s*>$/u.test(raw) || voidElements.has(name) });
+      }
+    }
+    start = end;
+  }
+  const ranges = [];
+  const stack = [];
+  for (const token of tokens) {
+    if (!token.closing) {
+      if (token.selfClosing) { if (token.hidden) ranges.push([token.start, token.end]); }
+      else stack.push(token);
+      continue;
+    }
+    const openingIndex = stack.findLastIndex((candidate) => candidate.name === token.name);
+    if (openingIndex < 0) continue;
+    const [opening] = stack.splice(openingIndex, 1);
+    if (opening.hidden) ranges.push([opening.start, token.end]);
+  }
+  for (const opening of stack) if (opening.hidden) ranges.push([opening.start, value.length]);
+  if (!ranges.length) return value;
+  let cursor = 0;
+  let masked = '';
+  for (const [start, end] of ranges.sort((left, right) => left[0] - right[0])) {
+    if (start < cursor) continue;
+    masked += value.slice(cursor, start);
+    masked += ' '.repeat(end - start);
+    cursor = end;
+  }
+  return masked + value.slice(cursor);
+}
+
 function visibleText(value, definitions = new Map()) {
-  return inlineSemantics(value
+  return inlineSemantics(maskIntrinsicallyHiddenHtml(value)
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/gu, '$1')
     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/giu, ' ')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/giu, ' '), definitions).text;
@@ -694,7 +777,7 @@ function trimmedCharacterRange(value, start, end) {
 function proseAtomicRanges(raw) {
   const ranges = [];
   let start = 0;
-  const boundary = /[.!?;](?:[\])}"'\u2019\u201d]*)(?=\s|$)/gu;
+  const boundary = /[.!?](?:[\])}"'\u2019\u201d]*)(?=\s|$)/gu;
   for (const match of raw.matchAll(boundary)) {
     const end = match.index + match[0].length;
     const range = trimmedCharacterRange(raw, start, end);
@@ -743,18 +826,70 @@ function codeAtomicRanges(raw, metadata) {
   const ranges = [];
   for (const line of body) {
     const contentEnd = line.replace(/(?:\r\n|\r|\n)$/u, '').length;
-    let start = 0;
-    for (let index = 0; index < contentEnd; index += 1) {
-      if (line[index] !== ';') continue;
-      const range = trimmedCharacterRange(line, start, index + 1);
-      if (range) ranges.push([characterOffset + range[0], characterOffset + range[1]]);
-      start = index + 1;
-    }
-    const tail = trimmedCharacterRange(line, start, contentEnd);
-    if (tail) ranges.push([characterOffset + tail[0], characterOffset + tail[1]]);
+    const range = trimmedCharacterRange(line, 0, contentEnd);
+    if (range) ranges.push([characterOffset + range[0], characterOffset + range[1]]);
     characterOffset += line.length;
   }
   return ranges;
+}
+
+function yamlFrontmatterAtomicRanges(raw) {
+  const openingEnd = raw.search(/\r\n|\r|\n/u);
+  assert(openingEnd >= 0, 'YAML frontmatter opening delimiter has no line ending');
+  const openingLength = raw.startsWith('\r\n', openingEnd) ? 2 : 1;
+  const bodyStart = openingEnd + openingLength;
+  const closing = /(\r\n|\r|\n)(?:---|\.\.\.)[^\S\r\n]*(?:(?:\r\n|\r|\n)|$)$/u.exec(raw);
+  assert(closing, 'YAML frontmatter closing delimiter is missing');
+  const bodyEnd = closing.index + closing[1].length;
+  const body = raw.slice(bodyStart, bodyEnd);
+  const fieldStarts = [];
+  const lines = body.match(/.*?(?:\r\n|\r|\n|$)/gu) ?? [];
+  if (lines.at(-1) === '') lines.pop();
+  let offset = 0;
+  for (const lineWithEnding of lines) {
+    const line = lineWithEnding.replace(/(?:\r\n|\r|\n)$/u, '');
+    if (!line.trim() || /^\s*#/u.test(line)) {
+      offset += lineWithEnding.length;
+      continue;
+    }
+    if (/^\s/u.test(line)) {
+      assert(fieldStarts.length > 0,
+        'YAML frontmatter indented content cannot precede the first top-level mapping field');
+    } else {
+      assert(!'-?:{},[]!&*%'.includes(line[0]),
+        'YAML frontmatter must use plain top-level mapping fields, not sequence, flow, tag, or anchor syntax');
+      let quote = null;
+      let escaped = false;
+      let separator = -1;
+      for (let index = 0; index < line.length; index += 1) {
+        const character = line[index];
+        if (escaped) { escaped = false; continue; }
+        if (quote === '"' && character === '\\') { escaped = true; continue; }
+        if (quote) {
+          if (character === quote) quote = null;
+          continue;
+        }
+        if (character === '"' || character === "'") { quote = character; continue; }
+        if (character === ':' && (index + 1 === line.length || /\s/u.test(line[index + 1]))) {
+          separator = index;
+          break;
+        }
+      }
+      assert(separator > 0, 'YAML frontmatter must use top-level mapping fields');
+      fieldStarts.push(offset);
+    }
+    offset += lineWithEnding.length;
+  }
+  const substantive = body.replace(/^\s*(?:#.*)?$/gmu, '').trim();
+  if (!substantive) return [];
+  assert(fieldStarts.length > 0, 'YAML frontmatter has content but no top-level mapping field');
+  return fieldStarts.map((fieldStart, index) => {
+    const rangeStart = index === 0 ? 0 : fieldStart;
+    const fieldEnd = fieldStarts[index + 1] ?? body.length;
+    const range = trimmedCharacterRange(body, rangeStart, fieldEnd);
+    assert(range, 'YAML frontmatter field is empty');
+    return [bodyStart + range[0], bodyStart + range[1]];
+  });
 }
 
 function atomicSegments(raw, draft) {
@@ -764,11 +899,14 @@ function atomicSegments(raw, draft) {
   else if (['paragraph', 'list-item', 'blockquote', 'callout', 'html'].includes(draft.kind)) {
     ranges = proseAtomicRanges(raw);
   } else if (draft.kind === 'frontmatter') {
-    ranges = raw.split(/(?<=\n)/u).map((line, index, all) => {
-      const start = all.slice(0, index).reduce((sum, item) => sum + item.length, 0);
-      const trimmed = trimmedCharacterRange(line, 0, line.length);
-      return trimmed ? [start + trimmed[0], start + trimmed[1]] : null;
-    }).filter((range) => range && !/^(?:---|\+\+\+|\.\.\.)$/u.test(raw.slice(range[0], range[1])));
+    if (draft.metadata.format === 'yaml') ranges = yamlFrontmatterAtomicRanges(raw);
+    else {
+      ranges = raw.split(/(?<=\n)/u).map((line, index, all) => {
+        const start = all.slice(0, index).reduce((sum, item) => sum + item.length, 0);
+        const trimmed = trimmedCharacterRange(line, 0, line.length);
+        return trimmed ? [start + trimmed[0], start + trimmed[1]] : null;
+      }).filter((range) => range && !/^(?:\+\+\+)$/u.test(raw.slice(range[0], range[1])));
+    }
   } else if (draft.kind === 'table-delimiter') ranges = [];
   else ranges = trimmedCharacterRange(raw, 0, raw.length) ? [trimmedCharacterRange(raw, 0, raw.length)] : [];
   return ranges.map(([characterStart, characterEnd], index) => {
@@ -844,7 +982,11 @@ export function assertMarkdownVisibleCoverage(buffer, units, sourcePath = '<mark
     if (cursor < start) {
       const raw = buffer.subarray(cursor, start).toString('utf8');
       const operational = raw.replace(/<!--[\s\S]*?-->/gu, ' ');
-      if (/[^\s]/u.test(operational)) missing.push({ byteStart: cursor, text: normalizeExcerpt(operational) });
+      const gapVisibleText = visibleText(operational);
+      const gapReferences = inlineReferences(operational);
+      if (gapVisibleText || gapReferences.length > 0) {
+        missing.push({ byteStart: cursor, text: normalizeExcerpt(gapVisibleText || operational) });
+      }
     }
     cursor = Math.max(cursor, end);
   }
@@ -874,6 +1016,13 @@ export function extractMarkdown(buffer, source) {
     drafts.push({ kind, byteStart, byteEnd, headingContext: [...headingContext], metadata,
       text: textOverride ?? markdownNormalized(kind, raw, metadata, definitions) });
   };
+  const addHtml = (startLine, endLine) => {
+    const raw = buffer.subarray(lines[startLine].start, lines[endLine].end).toString('utf8');
+    const htmlVisibleText = visibleText(raw, definitions);
+    const references = inlineReferences(raw, definitions);
+    if (!htmlVisibleText && references.length === 0) return;
+    add('html', startLine, endLine, { visibleText: htmlVisibleText, references });
+  };
   let index = 0;
   const listIndents = [];
   if (lines[0]?.text === '---' || lines[0]?.text === '+++') {
@@ -890,8 +1039,7 @@ export function extractMarkdown(buffer, source) {
     if (rawHtmlLines.has(index)) {
       let end = index;
       while (rawHtmlLines.has(end + 1)) end += 1;
-      const raw = buffer.subarray(lines[index].start, lines[end].end).toString('utf8');
-      add('html', index, end, { visibleText: visibleText(raw, definitions), references: inlineReferences(raw, definitions) });
+      addHtml(index, end);
       index = end + 1;
       continue;
     }
@@ -1039,8 +1187,7 @@ export function extractMarkdown(buffer, source) {
     if (htmlStart(text)) {
       let end = index;
       while (end + 1 < lines.length && lines[end + 1].text.trim() && !isBlockStart(lines, end + 1)) end += 1;
-      const raw = buffer.subarray(lines[index].start, lines[end].end).toString('utf8');
-      add('html', index, end, { visibleText: visibleText(raw, definitions), references: inlineReferences(raw, definitions) });
+      addHtml(index, end);
       index = end + 1;
       continue;
     }

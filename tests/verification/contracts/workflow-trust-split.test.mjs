@@ -84,11 +84,19 @@ test('trusted docs check before a scoped main-only commit and consume no validat
   assert.doesNotMatch(JSON.stringify(job),/download-artifact|cache:|head_ref/u);
   assert.equal(job.steps.find(s=>s.uses?.startsWith('actions/checkout@')).with.ref,'${{ github.sha }}');
   const commit=job.steps.find(s=>s.name==='Commit generated docs');assert.equal(job.steps.at(-1),commit);
-  assert.match(commit.run,/git add docs\/generated docs\/site\/reference docs\/reference docs\/architecture\/plugin-system-current-inventory\.md/u);
+  assert.match(commit.run,/git add docs\/generated docs\/site\/reference docs\/site\/status\/open-issues\.md/u);
+  assert.match(commit.run,/docs\/blueprint\/generated/u);
+  assert.match(commit.run,/scripts\/docs-local-helm-field-authorities\.json/u);
+  assert.match(commit.run,/git diff --cached --name-only/u);
+  assert.doesNotMatch(commit.run,/git add[^\n]*docs\/reference(?:\s|$)/u);
   assert.match(commit.run,/git diff --quiet/u);
   assert.match(commit.run,/git ls-files --others --exclude-standard/u);
   assert.match(commit.run,/git push origin HEAD:refs\/heads\/main/u);
   assert.doesNotMatch(commit.run,/--force|git add \./u);
+  const regenerate=job.steps.find(s=>s.name==='Regenerate docs');
+  assert.match(regenerate.run,/docs:generate -- --revision "\$GITHUB_SHA" --update-source-revision/u);
+  for(const generator of ['docs:ap09:platform-inventory','docs:inventory:config','docs:operator-tasks:generate',
+    'docs:blueprint:generate','docs:status:generate','docs:tree:generate']) assert.match(regenerate.run,new RegExp(generator.replaceAll(':','\\:')));
   for(const command of ['npm run docs:check:generated','node scripts/docs-check.mjs','npm run docs:check:refs','npm run docs:parity:transition:check','npm run docs:check:coverage','git diff --check'])assert(job.steps.some(s=>s.run===command));
 });
 

@@ -74,8 +74,10 @@ function manualActiveDependencyReview(root, source, reviewedRevision, contentRoo
   const review = buildActiveDependencyReview(root, source, reviewedRevision, contentRoot);
   review.methods = [{ kind: 'manual-inspection',
     detail: 'Reviewed dynamic configuration, generated paths, runtime lookup, and external-consumer risk.' }];
-  review.evidence = [{ kind: 'scanner-result', detail: 'The bound static scan reported zero matches.' },
-    { kind: 'manual-observation', detail: 'No non-literal or external dependency was identified.' }];
+  review.evidence = [{ kind: 'scanner-result',
+    detail: 'The revision-bound static dependency scan reported zero literal path matches.' },
+    { kind: 'manual-observation',
+      detail: 'No non-literal configuration source or external consumer dependency was identified.' }];
   review.verdict = 'PASS';
   return review;
 }
@@ -117,7 +119,8 @@ function pngFixture({ width = 1, height = 1, bitDepth = 8, colorType = 4, interl
 }
 
 function fixture({ sourceText = 'Alpha current behavior.\n', sourceKind = 'markdown',
-  siteText = '# Guide\n\nAlpha current behavior.\n', unregisteredBaselineText = null } = {}) {
+  siteText = '# Guide\n\nAlpha current behavior.\n', unregisteredBaselineText = null,
+  reviewedDependencyText = null } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-doc-parity-'));
   const sourceBuffer = Buffer.from(sourceText);
   const sourceName = sourceKind === 'diagram' ? 'legacy.svg' : 'legacy.md';
@@ -153,6 +156,13 @@ function fixture({ sourceText = 'Alpha current behavior.\n', sourceKind = 'markd
     deprecatedTerms: [], historicalRouteBoundary: 'No earlier public routes are authoritative.',
   });
   write(root, 'src/behavior.js', 'export const behavior = "Alpha";\n');
+  write(root, 'src/single-token.js', 'meaningful;;;;;;;;\n');
+  write(root, 'skills/nova/plugins/review/src/index.js', 'export const reviewBehavior = "Alpha review";\n');
+  write(root, 'containers/worker/Dockerfile', 'FROM node:22-alpine\nUSER node\n');
+  write(root, 'renovate.json', '{"extends":["config:recommended"]}\n');
+  write(root, '.github/renovate.json5', '{ extends: ["config:recommended"] }\n');
+  write(root, 'tools/renovate-config.js', 'export default { extends: ["config:recommended"] };\n');
+  if (reviewedDependencyText !== null) write(root, 'config/reviewed-dependency.json', reviewedDependencyText);
   json(root, 'docs/config/documentation-tree-classification.json', {
     schemaVersion: 'kubeclaw-documentation-tree-classification.v1',
     baselineRevision,
@@ -777,7 +787,7 @@ test('rejects trivial, generated-review, and basis-mismatched evidence', () => {
     revision: testDecision.reviewedRevision,
     path: testPath,
     basis: 'current-implementation',
-    assertion: 'A test file cannot masquerade as implementation evidence.',
+    assertion: 'A test file is not implementation evidence.',
     gitObject: gitObject(testBuffer, testAsImplementation),
     ...span(testBuffer),
   }];
@@ -785,6 +795,123 @@ test('rejects trivial, generated-review, and basis-mismatched evidence', () => {
   resignReview(testAsImplementation, true);
   assert.throws(() => validateParity({ root: testAsImplementation }),
     /current-implementation evidence path is outside that basis path class/u);
+});
+
+test('distinguishes documentation review artifacts from a product plugin named review', () => {
+  const root = fixture();
+  const decision = load(root, decisionPath);
+  const evidencePath = 'skills/nova/plugins/review/src/index.js';
+  const evidenceBuffer = fs.readFileSync(path.join(root, evidencePath));
+  decision.claims[0].evidence = [{
+    revision: decision.reviewedRevision,
+    path: evidencePath,
+    basis: 'current-implementation',
+    assertion: 'The review plugin implementation selects its Alpha review behavior.',
+    gitObject: gitObject(evidenceBuffer, root),
+    ...span(evidenceBuffer),
+  }];
+  json(root, decisionPath, decision);
+  refreshContentBindings(root);
+  assert.doesNotThrow(() => validateParity({ root }));
+});
+
+test('accepts Dockerfile and Renovate files only as current configuration authorities', () => {
+  for (const evidencePath of ['containers/worker/Dockerfile', 'renovate.json', '.github/renovate.json5', 'tools/renovate-config.js']) {
+    const root = fixture();
+    const decision = load(root, decisionPath);
+    const evidenceBuffer = fs.readFileSync(path.join(root, evidencePath));
+    decision.claims[0].evidence = [{
+      revision: decision.reviewedRevision,
+      path: evidencePath,
+      basis: 'current-configuration',
+      assertion: evidencePath.includes('Dockerfile')
+        ? 'The selected configuration sets USER node for the current worker policy.'
+        : 'The selected configuration extends the config recommended policy.',
+      gitObject: gitObject(evidenceBuffer, root),
+      ...span(evidenceBuffer),
+    }];
+    json(root, decisionPath, decision);
+    refreshContentBindings(root);
+    assert.doesNotThrow(() => validateParity({ root }), evidencePath);
+
+    const wrongBasis = load(root, decisionPath);
+    wrongBasis.claims[0].evidence[0].basis = 'current-implementation';
+    json(root, decisionPath, wrongBasis);
+    resignReview(root, true);
+    assert.throws(() => validateParity({ root }),
+      /current-implementation evidence path is outside that basis path class/u, evidencePath);
+  }
+});
+
+test('rejects locator-only assertions and spans without two meaningful tokens', () => {
+  const locatorOnly = fixture();
+  const locatorDecision = load(locatorOnly, decisionPath);
+  locatorDecision.claims[0].evidence[0].assertion = 'src/behavior.js';
+  json(locatorOnly, decisionPath, locatorDecision);
+  resignReview(locatorOnly, true);
+  assert.throws(() => validateParity({ root: locatorOnly }),
+    /evidence assertion is too trivial to explain the supported statement/u);
+
+  const prefixedLocator = fixture();
+  const prefixedDecision = load(prefixedLocator, decisionPath);
+  prefixedDecision.claims[0].evidence[0].assertion = 'See src/behavior.js';
+  json(prefixedLocator, decisionPath, prefixedDecision);
+  resignReview(prefixedLocator, true);
+  assert.throws(() => validateParity({ root: prefixedLocator }),
+    /evidence assertion is too trivial to explain the supported statement/u);
+
+  const vagueLocator = fixture();
+  const vagueDecision = load(vagueLocator, decisionPath);
+  vagueDecision.claims[0].evidence[0].assertion = 'Consult this location for further details';
+  json(vagueLocator, decisionPath, vagueDecision);
+  resignReview(vagueLocator, true);
+  assert.throws(() => validateParity({ root: vagueLocator }),
+    /evidence assertion is too trivial to explain the supported statement/u);
+
+  const nounList = fixture();
+  const nounListDecision = load(nounList, decisionPath);
+  nounListDecision.claims[0].evidence[0].assertion = 'Alpha beta gamma';
+  json(nounList, decisionPath, nounListDecision);
+  resignReview(nounList, true);
+  assert.throws(() => validateParity({ root: nounList }),
+    /evidence assertion is too trivial to explain the supported statement/u);
+
+  const oneMeaningfulToken = fixture();
+  const tokenDecision = load(oneMeaningfulToken, decisionPath);
+  const evidencePath = 'src/single-token.js';
+  const implementation = fs.readFileSync(path.join(oneMeaningfulToken, evidencePath));
+  tokenDecision.claims[0].evidence = [{
+    revision: tokenDecision.reviewedRevision,
+    path: evidencePath,
+    basis: 'current-implementation',
+    assertion: 'The implementation defines the currently selected behavior.',
+    gitObject: gitObject(implementation, oneMeaningfulToken),
+    ...span(implementation),
+  }];
+  json(oneMeaningfulToken, decisionPath, tokenDecision);
+  resignReview(oneMeaningfulToken, true);
+  assert.throws(() => validateParity({ root: oneMeaningfulToken }),
+    /evidence span is punctuation-only or too trivial/u);
+
+  const paddedCharacters = fixture();
+  const paddedDecision = load(paddedCharacters, decisionPath);
+  const paddedPath = 'src/padded-characters.js';
+  write(paddedCharacters, paddedPath, 'a- b-;;;\n');
+  execFileSync('git', ['add', paddedPath], { cwd: paddedCharacters });
+  execFileSync('git', ['commit', '-qm', 'add padded evidence'], { cwd: paddedCharacters });
+  paddedDecision.reviewedRevision = execFileSync('git', ['rev-parse', 'HEAD'], {
+    cwd: paddedCharacters, encoding: 'utf8',
+  }).trim();
+  const paddedBuffer = fs.readFileSync(path.join(paddedCharacters, paddedPath));
+  paddedDecision.claims[0].evidence = [{
+    revision: paddedDecision.reviewedRevision, path: paddedPath, basis: 'current-implementation',
+    assertion: 'The implementation defines the current selected behavior.',
+    gitObject: gitObject(paddedBuffer, paddedCharacters), ...span(paddedBuffer),
+  }];
+  json(paddedCharacters, decisionPath, paddedDecision);
+  refreshContentBindings(paddedCharacters);
+  assert.throws(() => validateParity({ root: paddedCharacters }),
+    /evidence span is punctuation-only or too trivial/u);
 });
 
 test('rejects code classifications incompatible with claim semantics and proof shape', () => {
@@ -1128,6 +1255,30 @@ test('dependency scanner evidence cannot generate a PASS review and binds every 
   write(staleScannerInput, 'scripts/docs-check.mjs', 'process.stdout.write("changed scanner input\\n");\n');
   assert.throws(() => validateParity({ root: staleScannerInput }),
     /active-dependency scanner input changed after reviewedRevision/u);
+
+  const deletedScannerInput = fixture();
+  fs.unlinkSync(path.join(deletedScannerInput, 'scripts/docs-check.mjs'));
+  assert.throws(() => validateParity({ root: deletedScannerInput }),
+    /scanner input file set changed|scanner input was deleted/u);
+
+  const hiddenDependency = fixture({
+    reviewedDependencyText: '{"documentationInput":"docs/_legacy-source/legacy.md"}\n',
+  });
+  fs.unlinkSync(path.join(hiddenDependency, 'config/reviewed-dependency.json'));
+  assert.throws(() => validateParity({ root: hiddenDependency }),
+    /active files still depend on the old or legacy path/u);
+
+  const weakMethod = fixture();
+  let weakReview = load(weakMethod, reviewPath);
+  weakReview.activeDependencyReview.methods[0].detail = 'x';
+  json(weakMethod, reviewPath, weakReview);
+  assert.throws(() => validateParity({ root: weakMethod }), /substantive detail/u);
+
+  const weakEvidence = fixture();
+  weakReview = load(weakEvidence, reviewPath);
+  weakReview.activeDependencyReview.evidence[0].detail = 'x';
+  json(weakEvidence, reviewPath, weakReview);
+  assert.throws(() => validateParity({ root: weakEvidence }), /substantive detail/u);
 });
 
 test('exports categorical strict per-source inspection and fail-closed global findings', () => {

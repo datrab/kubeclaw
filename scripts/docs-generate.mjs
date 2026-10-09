@@ -20,6 +20,7 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const allowDetachedSourceRoot = argv.includes('--allow-detached-source-root');
+const updateSourceRevision = argv.includes('--update-source-revision');
 const sourceRevisionLockPath = path.join(root, 'docs/generated/inventory/documentation-source-revision.json');
 const lockedSourceRevision = fs.existsSync(sourceRevisionLockPath)
   ? JSON.parse(fs.readFileSync(sourceRevisionLockPath, 'utf8')).revision
@@ -39,6 +40,14 @@ const gitRoot = path.resolve(execFileSync('git', ['rev-parse', '--show-toplevel'
 }).trim());
 if (root !== gitRoot && (!allowDetachedSourceRoot || process.env.KUBECLAW_DOCS_ISOLATED_MUTATION !== '1')) {
   throw new Error('documentation source root is outside the checked Git worktree; a detached mutation fixture must opt in explicitly');
+}
+if (updateSourceRevision) {
+  if (checkOnly) throw new Error('--update-source-revision cannot be combined with --check');
+  if (root !== gitRoot) throw new Error('--update-source-revision requires the checked Git worktree');
+  fs.writeFileSync(sourceRevisionLockPath, `${JSON.stringify({
+    revision: sourceRevision,
+    purpose: 'Pins generated reader evidence to the commit that contains all cited source and documentation authorities. Update this lock only after a source commit and before the separate generated-reference commit.',
+  }, null, 2)}\n`);
 }
 if (root === gitRoot) {
   const generatedPrefixes = ['docs/generated/', 'docs/site/'];

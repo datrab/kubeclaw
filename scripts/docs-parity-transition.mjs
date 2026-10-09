@@ -4,10 +4,9 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
-import { readinessGateCommands } from './lib/docs-parity-gates.mjs';
 
 const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const deletionApprovalPath = 'docs/config/documentation-ap10-deletion-approval.json';
@@ -47,6 +46,18 @@ function exactKeys(value, expected, label) {
 function nonempty(value, label) {
   assert.equal(typeof value, 'string', `${label}: must be a string`);
   assert(value.trim(), `${label}: must not be empty`);
+}
+
+function substantive(value, label) {
+  nonempty(value, label);
+  const words = (value.trim().match(/[\p{L}\p{N}][\p{L}\p{N}_-]*/gu) ?? [])
+    .map((word) => word.toLocaleLowerCase('en-US').replace(/\d+$/u, ''))
+    .filter((word) => /\p{L}/u.test(word));
+  const hasAction = /\b(?:inspect(?:ed|ion)?|read|search(?:ed)?|compar(?:e|ed|ison)|trac(?:e|ed)|verif(?:y|ied|ication)|check(?:ed)?|review(?:ed)?|confirm(?:ed)?|identif(?:y|ied)|observ(?:e|ed|ation)|report(?:ed)?|resolv(?:e|ed))\b/iu.test(value);
+  const scopeTerms = value.match(/\b(?:file|blob|path|content|consumer|reference|dependency|source|finding|behavior|configuration|output|record|scan|match)(?:s|es|ed)?\b/giu) ?? [];
+  assert(value.trim().length >= 48 && words.length >= 6 && new Set(words).size >= 5
+    && hasAction && new Set(scopeTerms.map((term) => term.toLocaleLowerCase('en-US'))).size >= 2,
+    `${label}: must explain the performed check or observed evidence in substantive detail`);
 }
 
 function showBytes(root, revision, repositoryPath) {
@@ -107,12 +118,70 @@ function expectedDeletions(root, reviewedRevision) {
     }).sort((left, right) => left.path.localeCompare(right.path));
 }
 
+function reproducedReadiness(root, reviewedRevision, manifestBytes) {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-readiness-replay-'));
+  const checkout = path.join(temporaryRoot, 'reviewed');
+  let registered = false;
+  try {
+    git(root, ['worktree', 'add', '--detach', checkout, reviewedRevision]);
+    registered = true;
+    const manifestAbsolute = path.join(checkout, deletionManifestPath);
+    fs.mkdirSync(path.dirname(manifestAbsolute), { recursive: true });
+    fs.writeFileSync(manifestAbsolute, manifestBytes);
+    if (fs.existsSync(path.join(checkout, 'package-lock.json'))) {
+      try {
+        execFileSync(process.platform === 'win32' ? 'npm.cmd' : 'npm',
+          ['ci', '--ignore-scripts', '--no-audit', '--no-fund'], {
+            cwd: checkout,
+            env: { ...process.env, GIT_NO_REPLACE_OBJECTS: '1' },
+            encoding: 'utf8',
+            maxBuffer: 128 * 1024 * 1024,
+            stdio: ['ignore', 'pipe', 'pipe'],
+          });
+      } catch (error) {
+        const detail = error?.stderr?.toString?.().trim() || error?.message || String(error);
+        assert.fail(`${reviewedRevision}: cannot install the dependency tree bound by its package lock: ${detail}`);
+      }
+    }
+    try {
+      execFileSync(process.execPath, ['scripts/docs-parity-check.mjs',
+        `--check-deletion-manifest=${deletionManifestPath}`], {
+        cwd: checkout,
+        env: { ...process.env, GIT_NO_REPLACE_OBJECTS: '1' },
+        encoding: 'utf8',
+        maxBuffer: 128 * 1024 * 1024,
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+    } catch (error) {
+      const detail = error?.stderr?.toString?.().trim() || error?.message || String(error);
+      assert.fail(`${deletionManifestPath}: historical readiness replay failed at ${reviewedRevision}: ${detail}`);
+    }
+    const gateJson = execFileSync(process.execPath, ['--input-type=module', '--eval',
+      "import('./scripts/lib/docs-parity-gates.mjs').then(({readinessGateCommands}) => process.stdout.write(JSON.stringify(readinessGateCommands)))"], {
+      cwd: checkout,
+      env: { ...process.env, GIT_NO_REPLACE_OBJECTS: '1' },
+      encoding: 'utf8',
+      maxBuffer: 16 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    const gates = JSON.parse(gateJson);
+    assert(Array.isArray(gates) && gates.length > 0,
+      `${reviewedRevision}: historical readiness gate list must be a non-empty array`);
+    return gates;
+  } finally {
+    if (registered) {
+      try { git(root, ['worktree', 'remove', '--force', checkout]); } catch { /* preserve the primary failure */ }
+    }
+    fs.rmSync(temporaryRoot, { recursive: true, force: true });
+  }
+}
+
 function validateFindings(findings, label) {
   assert(Array.isArray(findings), `${label}: must be an array`);
   findings.forEach((finding, index) => {
     exactKeys(finding, ['id', 'status', 'detail'], `${label}[${index}]`);
     nonempty(finding.id, `${label}[${index}].id`);
-    nonempty(finding.detail, `${label}[${index}].detail`);
+    substantive(finding.detail, `${label}[${index}].detail`);
     assert.equal(finding.status, 'resolved', `${label}: unresolved finding ${finding.id}`);
   });
 }
@@ -138,13 +207,24 @@ function validateClassificationApproval(root, revision, deletion, value, label) 
   assert.equal(value.reviewedRevision, revision, `${label}: remainder review is stale`);
   assert.deepEqual(value.scope, { path: deletion.path, originalPath: deletion.originalPath,
     classification: 'deletable-remainder' }, `${label}: review scope differs from the deletion`);
-  assert(Array.isArray(value.methods) && value.methods.length > 0, `${label}: manual methods are required`);
-  value.methods.forEach((method, index) => nonempty(method, `${label}.methods[${index}]`));
+  assert(Array.isArray(value.methods) && value.methods.length === 2,
+    `${label}: exactly two structured manual methods are required`);
+  const requiredMethodKinds = ['complete-content-inspection', 'consumer-reference-search'];
+  assert.deepEqual(value.methods.map((method) => method?.kind).sort(), requiredMethodKinds,
+    `${label}: manual method kinds must be exactly ${requiredMethodKinds.join(', ')}`);
+  value.methods.forEach((method, index) => {
+    exactKeys(method, ['kind', 'detail'], `${label}.methods[${index}]`);
+    substantive(method.detail, `${label}.methods[${index}].detail`);
+    assert(method.detail.includes(deletion.path) || method.detail.includes(deletion.originalPath),
+      `${label}.methods[${index}].detail: must name the concrete reviewed path`);
+  });
   assert(Array.isArray(value.evidence) && value.evidence.length > 0, `${label}: evidence is required`);
   value.evidence.forEach((evidence, index) => {
     exactKeys(evidence, ['path', 'gitObject', 'detail'], `${label}.evidence[${index}]`);
     nonempty(evidence.path, `${label}.evidence[${index}].path`);
-    nonempty(evidence.detail, `${label}.evidence[${index}].detail`);
+    substantive(evidence.detail, `${label}.evidence[${index}].detail`);
+    assert(evidence.detail.includes(evidence.path),
+      `${label}.evidence[${index}].detail: must name the concrete evidence path`);
     assert.equal(objectAt(root, revision, evidence.path), evidence.gitObject,
       `${label}.evidence[${index}]: evidence blob is stale`);
   });
@@ -167,7 +247,8 @@ function validateManifest(root, approvalCommit, reviewedRevision, expected, appr
     `${deletionManifestPath}: readiness was not run at the approved revision`);
   assert.equal(manifest.deletionReady, true, `${deletionManifestPath}: deletionReady must be true`);
   assert(SHA256.test(manifest.contentRoot), `${deletionManifestPath}: invalid contentRoot`);
-  const expectedGates = readinessGateCommands.map((gate) => ({ id: gate.id, revision: reviewedRevision,
+  const historicalGates = reproducedReadiness(root, reviewedRevision, bytes);
+  const expectedGates = historicalGates.map((gate) => ({ id: gate.id, revision: reviewedRevision,
     status: 'PASS', commandSha256: sha256(canonical({ executable: 'node', nodeArgs: gate.nodeArgs ?? [],
       file: gate.file, args: gate.args })) }));
   assert.deepEqual(manifest.readinessGates, expectedGates,
@@ -184,9 +265,13 @@ function validateManifest(root, approvalCommit, reviewedRevision, expected, appr
   }
 }
 
-function approvalIntroduction(root) {
-  const commits = git(root, ['log', '--format=%H', '--diff-filter=A', '--', deletionApprovalPath])
+function approvalIntroductions(root) {
+  return git(root, ['log', '--format=%H', '--diff-filter=A', '--', deletionApprovalPath])
     .split('\n').filter(Boolean);
+}
+
+function approvalIntroduction(root) {
+  const commits = approvalIntroductions(root);
   assert.equal(commits.length, 1, `${deletionApprovalPath}: approval must be introduced exactly once`);
   return commits[0];
 }
@@ -230,6 +315,20 @@ function validateApproval(root, approvalCommit) {
   return { approval, reviewedRevision, expected };
 }
 
+function validateImmutableBridge(root, approvalCommit, head) {
+  const approvalObject = objectAt(root, approvalCommit, deletionApprovalPath);
+  const manifestObject = objectAt(root, approvalCommit, deletionManifestPath);
+  assert(approvalObject && manifestObject, `${approvalCommit}: approval bridge is incomplete`);
+  const descendants = git(root, ['rev-list', '--reverse', '--first-parent', `${approvalCommit}..${head}`])
+    .split('\n').filter(Boolean);
+  for (const revision of descendants) {
+    assert.equal(objectAt(root, revision, deletionApprovalPath), approvalObject,
+      `${deletionApprovalPath}: approval bytes changed after the approval commit at ${revision}`);
+    assert.equal(objectAt(root, revision, deletionManifestPath), manifestObject,
+      `${deletionManifestPath}: readiness manifest bytes changed after the approval commit at ${revision}`);
+  }
+}
+
 function validateDeletionCommit(root, approvalCommit, expected, head) {
   const afterApproval = git(root, ['rev-list', '--reverse', '--first-parent', `${approvalCommit}..${head}`])
     .split('\n').filter(Boolean);
@@ -241,12 +340,16 @@ function validateDeletionCommit(root, approvalCommit, expected, head) {
   const deletionCommit = afterApproval[0];
   assert.equal(firstParent(root, deletionCommit), approvalCommit,
     'AP10 deletion commit must have the readiness approval commit as its exact first parent');
-  const changes = git(root, ['diff-tree', '--no-commit-id', '--name-status', '-r', approvalCommit, deletionCommit])
+  const changes = git(root, ['diff-tree', '--no-commit-id', '--name-status', '-r', '-M', approvalCommit, deletionCommit])
     .split('\n').filter(Boolean).map((line) => {
       const [status, ...parts] = line.split('\t');
       return { status, path: parts.at(-1) };
     });
   const expectedByPath = new Map(expected.map((item) => [item.path, item]));
+  for (const change of changes) {
+    assert(!change.status.startsWith('R'),
+      `${change.path}: AP10 must delete approved blobs, not rename them`);
+  }
   for (const item of expected) {
     const change = changes.find((candidate) => candidate.path === item.path);
     assert(change, `${item.path}: approved deletion is missing from the AP10 deletion commit`);
@@ -259,14 +362,18 @@ function validateDeletionCommit(root, approvalCommit, expected, head) {
     && (item.path.startsWith('docs/_legacy-source/') || expectedByPath.has(item.path)))) {
     assert(expectedByPath.has(change.path), `${change.path}: deletion commit removed an unapproved legacy blob`);
   }
-  for (const item of expected) assert.equal(objectAt(root, head, item.path), null,
-    `${item.path}: an approved legacy blob was restored after AP10 deletion`);
+  for (const revision of afterApproval.slice(1)) {
+    for (const item of expected) assert.equal(objectAt(root, revision, item.path), null,
+      `${item.path}: an approved legacy blob was restored after AP10 deletion at ${revision}`);
+  }
   return { phase: 'deletion-verified', deletionCommit };
 }
 
 export function validateParityTransition(root = defaultRoot) {
   const head = git(root, ['rev-parse', 'HEAD']).trim();
   if (!objectAt(root, head, deletionApprovalPath)) {
+    assert.equal(approvalIntroductions(root).length, 0,
+      `${deletionApprovalPath}: committed approval was removed after its introduction`);
     const expected = expectedDeletions(root, head);
     for (const item of expected) assert.equal(objectAt(root, head, item.path), item.gitObject,
       `${item.path}: documentation deletion requires a committed AP10 approval`);
@@ -276,6 +383,7 @@ export function validateParityTransition(root = defaultRoot) {
   const approvalCommit = approvalIntroduction(root);
   try { git(root, ['merge-base', '--is-ancestor', approvalCommit, head]); }
   catch { assert.fail(`${deletionApprovalPath}: approval commit is not an ancestor of HEAD`); }
+  validateImmutableBridge(root, approvalCommit, head);
   const { expected } = validateApproval(root, approvalCommit);
   const transition = validateDeletionCommit(root, approvalCommit, expected, head);
   return { ...transition, head, approvalCommit, approvedDeletionCount: expected.length,

@@ -5,6 +5,11 @@
     "participantVisibleFields": ["id", "persona", "startPath", "objective", "taskInput", "allowedAssistance", "failureThreshold"],
     "facilitatorOnlyFields": ["fixturePaths", "injectedFaultId", "facilitatorSetup", "requiredOutcomes", "participantRequirements"]
   },
+  "postDocumentationProductValidation": {
+    "purpose": "These live product exercises remain valuable, but they do not block acceptance of complete and truthful documentation. They must not be reported as passed unless they were executed.",
+    "readerTaskIds": ["READER-OPERATOR-01", "READER-OPERATOR-02", "READER-OPERATOR-03", "READER-OPERATOR-04"],
+    "executionScenarioIds": ["EXEC-PRISM-JOURNEY", "EXEC-DEMO-JOURNEY"]
+  },
   "renderCriteria": [
     { "id": "no-horizontal-page-overflow", "passCondition": "At the registered viewport, document.scrollWidth is less than or equal to document.clientWidth." },
     { "id": "navigation-keyboard-reachable", "passCondition": "Starting at the address bar and using only Tab, Shift+Tab, Enter, Escape, Space, and arrow keys, every visible navigation link can receive focus and activate its declared target." },

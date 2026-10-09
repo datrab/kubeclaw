@@ -249,13 +249,13 @@ verify()
   assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'paragraph')),
     ['First fact.', 'Second fact.']);
   assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'list-item')),
-    ['- First item fact;', 'second item fact.']);
+    ['- First item fact; second item fact.']);
   assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'table-header')),
     ['Left claim', 'Right claim']);
   assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'table-row')),
     ['One value.', 'Another value.', 'Two values']);
   assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'code-block')),
-    ['start();', 'finish();', 'verify()']);
+    ['start(); finish();', 'verify()']);
   for (const unit of units) {
     for (const [index, segment] of unit.atomicSegments.entries()) {
       assert.equal(segment.index, index);
@@ -263,6 +263,85 @@ verify()
       assert.match(segment.exactSha256, /^[0-9a-f]{64}$/u);
       assert.match(segment.normalizedSha256, /^[0-9a-f]{64}$/u);
     }
+  }
+});
+
+test('semicolon-like syntax never creates language-blind atomic boundaries', () => {
+  const buffer = Buffer.from(`Use \`left;right\` and keep this prose; it is one sentence.
+
+\`\`\`js
+const message = "left;right"; // keep; together
+for (let index = 0; index < 2; index += 1) run(index);
+\`\`\`
+`);
+  const units = extractMarkdown(buffer, directSource('docs/semicolon-syntax.md'));
+  const segmentText = (unit) => unit.atomicSegments.map((segment) =>
+    buffer.subarray(segment.byteStart, segment.byteEnd).toString('utf8'));
+  assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'paragraph')),
+    ['Use `left;right` and keep this prose; it is one sentence.']);
+  assert.deepEqual(segmentText(units.find((unit) => unit.kind === 'code-block')), [
+    'const message = "left;right"; // keep; together',
+    'for (let index = 0; index < 2; index += 1) run(index);',
+  ]);
+});
+
+test('omits invisible HTML units but retains visible HTML and referenced images', () => {
+  const buffer = Buffer.from(`<!-- reviewer-only note -->
+
+<div></div>
+
+<template>Template-only text.</template>
+
+<div hidden>Hidden text.</div>
+
+<div title=" hidden ">Reader-visible attribute text.</div>
+
+<div title=x/hidden>Reader-visible unquoted attribute text.</div>
+
+<aside>Reader-visible HTML.</aside>
+
+<img src="diagram.svg" alt="">
+`);
+  const units = extractMarkdown(buffer, directSource('docs/html-visibility.md'));
+  const html = units.filter((unit) => unit.kind === 'html');
+  assert.equal(html.length, 4);
+  assert.equal(html[0].visibleText, 'Reader-visible attribute text.');
+  assert.equal(html[1].visibleText, 'Reader-visible unquoted attribute text.');
+  assert.equal(html[2].visibleText, 'Reader-visible HTML.');
+  assert.deepEqual(html[3].references, [{
+    kind: 'html-image', label: '', destination: 'diagram.svg', title: null,
+  }]);
+  assert(!units.some((unit) => unit.exact.includes('reviewer-only note') || unit.exact.includes('<div></div>')
+    || unit.exact.includes('Template-only text') || unit.exact.includes('Hidden text')));
+  assert.doesNotThrow(() => assertMarkdownVisibleCoverage(buffer, units, 'docs/html-visibility.md'));
+});
+
+test('groups YAML multiline values and lists by top-level frontmatter field', () => {
+  const buffer = Buffer.from(`---
+title: >
+  A multiline
+  title
+tags:
+  - parity
+  - review
+owner: docs
+---
+# Guide
+`);
+  const units = extractMarkdown(buffer, directSource('docs/frontmatter-fields.md'));
+  const frontmatter = units.find((unit) => unit.kind === 'frontmatter');
+  const segmentText = frontmatter.atomicSegments.map((segment) =>
+    buffer.subarray(segment.byteStart, segment.byteEnd).toString('utf8'));
+  assert.deepEqual(segmentText, [
+    'title: >\n  A multiline\n  title',
+    'tags:\n  - parity\n  - review',
+    'owner: docs',
+  ]);
+  for (const invalid of ['---\n- item: value\n---\n', '---\n{title: Hello, owner: docs}\n---\n',
+    '---\n!!map {foo: bar}\n---\n', '---\n&root {foo: bar}\n---\n',
+    '---\n%YAML 1.2\ntitle: Probe\n---\n', '---\n  orphan: value\ntitle: Probe\n---\n']) {
+    assert.throws(() => extractMarkdown(Buffer.from(invalid), directSource('docs/invalid-frontmatter.md')),
+      /top-level mapping field/u);
   }
 });
 
@@ -345,16 +424,16 @@ test('resolves CommonMark definitions inside list and blockquote containers', ()
   ]);
 });
 
-test('does not resolve definitions inside raw HTML blocks', () => {
+test('does not resolve definitions or require semantic claims inside invisible raw HTML blocks', () => {
   const units = extractMarkdown(Buffer.from(`<script>
 [target]: evil.md
 </script>
 
 Use [target].
 `), directSource('docs/raw-html-definitions.md'));
-  assert.equal(units[0].kind, 'html');
-  assert.equal(units[1].text, 'Use [target].');
-  assert.deepEqual(units[1].references, []);
+  assert.equal(units.length, 1);
+  assert.equal(units[0].text, 'Use [target].');
+  assert.deepEqual(units[0].references, []);
   assert(!units.some((unit) => unit.kind === 'link-definition'));
 });
 

@@ -6,7 +6,6 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { readinessGateCommands } from '../docs-parity-check.mjs';
 import {
   deletionApprovalPath,
   deletionManifestPath,
@@ -44,6 +43,12 @@ function sha256(value) {
   return crypto.createHash('sha256').update(value).digest('hex');
 }
 
+const fixtureGateCommands = [{ id: 'fixture-readiness', file: 'scripts/fixture-gate.mjs', args: [] }];
+
+function fixtureManifestRoot({ baselineRevision, reviewedRevision, legacyObject, reviewObject, gates }) {
+  return sha256(canonical({ baselineRevision, reviewedRevision, legacyObject, reviewObject, gates }));
+}
+
 function fixture() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-parity-transition-'));
   execFileSync('git', ['init', '-q'], { cwd: root });
@@ -79,14 +84,53 @@ function fixture() {
   const reviewPath = 'docs/config/documentation-parity-reviews/legacy.md.json';
   json(root, reviewPath, { schemaVersion: 'fixture', source: { originalPath: 'docs/legacy.md' },
     reviewer: { id: 'source-reviewer' }, classificationVerdict: 'PASS' });
+  write(root, 'scripts/lib/docs-parity-gates.mjs',
+    `export const readinessGateCommands = Object.freeze(${JSON.stringify(fixtureGateCommands)});\n`);
+  write(root, 'scripts/fixture-gate.mjs', "process.stdout.write('fixture readiness: PASS\\n');\n");
+  write(root, 'scripts/docs-parity-check.mjs', `
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import { readinessGateCommands } from './lib/docs-parity-gates.mjs';
+const canonical = (value) => Array.isArray(value) ? \`[\${value.map(canonical).join(',')}]\`
+  : value && typeof value === 'object' ? \`{\${Object.keys(value).sort().map((key) => \`\${JSON.stringify(key)}:\${canonical(value[key])}\`).join(',')}}\`
+    : JSON.stringify(value);
+const sha256 = (value) => crypto.createHash('sha256').update(value).digest('hex');
+const git = (args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
+const manifest = JSON.parse(fs.readFileSync('docs/generated/inventory/documentation-deletion-manifest.json', 'utf8'));
+const reviewedRevision = git(['rev-parse', 'HEAD']);
+const baselineRevision = JSON.parse(fs.readFileSync('docs/config/documentation-tree-baseline.json')).baselineRevision;
+const reviewBytes = fs.readFileSync('docs/config/documentation-parity-reviews/legacy.md.json');
+const review = JSON.parse(reviewBytes);
+assert.equal(review.classificationVerdict, 'PASS');
+for (const gate of readinessGateCommands) execFileSync(process.execPath, [gate.file, ...gate.args]);
+const gates = readinessGateCommands.map((gate) => ({ id: gate.id, revision: reviewedRevision, status: 'PASS',
+  commandSha256: sha256(canonical({ executable: 'node', nodeArgs: gate.nodeArgs ?? [], file: gate.file, args: gate.args })) }));
+const legacyObject = git(['rev-parse', reviewedRevision + ':docs/_legacy-source/legacy.md']);
+const contentRoot = sha256(canonical({ baselineRevision, reviewedRevision, legacyObject,
+  reviewObject: sha256(reviewBytes), gates }));
+assert.equal(manifest.baselineRevision, baselineRevision);
+assert.equal(manifest.validatedRevision, reviewedRevision);
+assert.equal(manifest.contentRoot, contentRoot);
+assert.deepEqual(manifest.readinessGates, gates);
+assert.equal(manifest.sources.length, 1);
+assert.equal(manifest.sources[0].gitObject, legacyObject);
+assert.equal(manifest.sources[0].reviewState, 'PASS');
+assert.equal(manifest.deletionReady, true);
+process.stdout.write('fixture parity: PASS\\n');
+`);
   const reviewedRevision = commit(root, 'reviewed readiness tree');
   const reviewedTree = git(root, ['rev-parse', `${reviewedRevision}^{tree}`]);
-  const gates = readinessGateCommands.map((gate) => ({ id: gate.id, revision: reviewedRevision, status: 'PASS',
+  const gates = fixtureGateCommands.map((gate) => ({ id: gate.id, revision: reviewedRevision, status: 'PASS',
     commandSha256: sha256(canonical({ executable: 'node', nodeArgs: gate.nodeArgs ?? [],
       file: gate.file, args: gate.args })) }));
+  const reviewObject = sha256(fs.readFileSync(path.join(root, reviewPath)));
   const manifest = {
     schemaVersion: 'kubeclaw-documentation-deletion-manifest.v1', baselineRevision,
-    validatedRevision: reviewedRevision, contentRoot: 'a'.repeat(64), readinessGates: gates,
+    validatedRevision: reviewedRevision,
+    contentRoot: fixtureManifestRoot({ baselineRevision, reviewedRevision, legacyObject, reviewObject, gates }),
+    readinessGates: gates,
     sources: [{ originalPath: 'docs/legacy.md', legacyPath: 'docs/_legacy-source/legacy.md',
       gitObject: legacyObject, reviewPath, reviewState: 'PASS', deletionReady: true }],
     deletionReady: true,
@@ -107,9 +151,14 @@ function fixture() {
         classificationApproval: { kind: 'independent-remainder-review', reviewerId: 'remainder-reviewer',
           reviewedRevision, scope: { path: 'docs/review/old.md', originalPath: 'docs/review/old.md',
             classification: 'deletable-remainder' },
-          methods: ['Inspected the complete file and searched current executable and reader consumers.'],
+          methods: [
+            { kind: 'complete-content-inspection',
+              detail: 'Read every section of docs/review/old.md and classified its complete content as historical work output.' },
+            { kind: 'consumer-reference-search',
+              detail: 'Searched current source, configuration, and reader paths for consumers of docs/review/old.md; no active dependency remained.' },
+          ],
           evidence: [{ path: 'docs/review/old.md', gitObject: remainderObject,
-            detail: 'The reviewed blob is historical work output with no current consumer.' }],
+            detail: 'The blob at docs/review/old.md is historical work output with no current consumer.' }],
           findings: [], verdict: 'PASS' } },
     ],
     verdict: 'APPROVE_AP10_DELETION',
@@ -163,6 +212,16 @@ test('rejects stale readiness parent and forged blob approvals', () => {
   assert.throws(() => validateParityTransition(forged.root), /deletion identity is stale/u);
 });
 
+test('replays readiness at the reviewed revision and rejects a forged manifest', () => {
+  const forged = fixture();
+  const manifest = structuredClone(forged.manifest);
+  manifest.contentRoot = 'f'.repeat(64);
+  const bytes = `${JSON.stringify(manifest, null, 2)}\n`;
+  write(forged.root, deletionManifestPath, bytes);
+  rewriteApproval(forged, (approval) => { approval.readinessManifest.sha256 = sha256(bytes); });
+  assert.throws(() => validateParityTransition(forged.root), /historical readiness replay failed/u);
+});
+
 test('requires explicit independent review for every deletable remainder', () => {
   const missing = fixture();
   rewriteApproval(missing, (approval) => { approval.deletions = approval.deletions.slice(0, 1); });
@@ -181,4 +240,92 @@ test('rejects modified approved sources and unapproved legacy deletions in AP10'
   const extra = fixture();
   deleteApproved(extra, { deleteUnapproved: true });
   assert.throws(() => validateParityTransition(extra.root), /removed an unapproved legacy blob/u);
+});
+
+test('rejects a restore followed by a second deletion on the first-parent chain', () => {
+  const value = fixture();
+  deleteApproved(value);
+  write(value.root, 'docs/_legacy-source/legacy.md', '# Legacy\n');
+  commit(value.root, 'restore approved legacy source');
+  fs.unlinkSync(path.join(value.root, 'docs/_legacy-source/legacy.md'));
+  commit(value.root, 'delete restored source again');
+  assert.throws(() => validateParityTransition(value.root), /was restored after AP10 deletion/u);
+});
+
+test('rejects any approval or manifest rewrite after approval, including a later revert', () => {
+  for (const target of [deletionApprovalPath, deletionManifestPath]) {
+    const value = fixture();
+    const original = fs.readFileSync(path.join(value.root, target));
+    write(value.root, target, '{}\n');
+    commit(value.root, `replace ${target}`);
+    write(value.root, target, original);
+    commit(value.root, `restore ${target}`);
+    assert.throws(() => validateParityTransition(value.root), /bytes changed after the approval commit/u);
+  }
+
+  const removed = fixture();
+  fs.unlinkSync(path.join(removed.root, deletionApprovalPath));
+  commit(removed.root, 'remove approval bridge');
+  assert.throws(() => validateParityTransition(removed.root), /committed approval was removed/u);
+});
+
+test('requires substantive manual review methods and evidence', () => {
+  const weakMethod = fixture();
+  rewriteApproval(weakMethod, (approval) => { approval.deletions[1].classificationApproval.methods = ['x']; });
+  assert.throws(() => validateParityTransition(weakMethod.root), /structured manual methods/u);
+
+  const weakEvidence = fixture();
+  rewriteApproval(weakEvidence, (approval) => {
+    approval.deletions[1].classificationApproval.evidence[0].detail = 'x';
+  });
+  assert.throws(() => validateParityTransition(weakEvidence.root), /substantive detail/u);
+
+  const repeatedFiller = fixture();
+  rewriteApproval(repeatedFiller, (approval) => {
+    approval.deletions[1].classificationApproval.methods = [
+      { kind: 'complete-content-inspection', detail: 'Reviewed file content source; checked path output record.' },
+      { kind: 'consumer-reference-search', detail: 'Reviewed file content source; checked path output record.' },
+    ];
+  });
+  assert.throws(() => validateParityTransition(repeatedFiller.root), /concrete reviewed path/u);
+
+  const suffixedFiller = fixture();
+  rewriteApproval(suffixedFiller, (approval) => {
+    approval.deletions[1].classificationApproval.methods = ['review1 review2 review3 review4 review5 review6'];
+  });
+  assert.throws(() => validateParityTransition(suffixedFiller.root), /structured manual methods/u);
+
+  const numberedSentence = fixture();
+  rewriteApproval(numberedSentence, (approval) => {
+    approval.deletions[1].classificationApproval.methods = [
+      'Reviewed file item 1; reviewed file item 2; reviewed file item 3.',
+    ];
+  });
+  assert.throws(() => validateParityTransition(numberedSentence.root), /structured manual methods/u);
+
+  const weakFinding = fixture();
+  rewriteApproval(weakFinding, (approval) => {
+    approval.deletions[1].classificationApproval.findings = [{
+      id: 'finding-1', status: 'resolved', detail: 'review review review review',
+    }];
+  });
+  assert.throws(() => validateParityTransition(weakFinding.root), /substantive detail/u);
+});
+
+test('rejects moving an approved blob to a new path instead of deleting it', () => {
+  const value = fixture();
+  fs.mkdirSync(path.join(value.root, 'archive'), { recursive: true });
+  git(value.root, ['mv', 'docs/_legacy-source/legacy.md', 'archive/legacy.md']);
+  fs.unlinkSync(path.join(value.root, 'docs/review/old.md'));
+  commit(value.root, 'rename approved legacy blob');
+  assert.throws(() => validateParityTransition(value.root), /must delete approved blobs, not rename/u);
+});
+
+test('uses the gate list committed at the reviewed revision', () => {
+  const value = fixture();
+  deleteApproved(value);
+  write(value.root, 'scripts/lib/docs-parity-gates.mjs',
+    "export const readinessGateCommands = Object.freeze([{ id: 'future-gate', file: 'future.mjs', args: [] }]);\n");
+  commit(value.root, 'add a future readiness gate');
+  assert.equal(validateParityTransition(value.root).phase, 'deletion-verified');
 });
