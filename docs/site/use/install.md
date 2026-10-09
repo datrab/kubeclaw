@@ -5,7 +5,7 @@ Audience: Kubernetes platform operator, security operator
 Owner: platform operations
 Evidence: scripts/deploy.sh; docs/generated/inventory/deploy-script.json
 Applies to: current selected runtime release
-Last verified: 2026-09-21; no live cluster result is available
+Last verified: 2026-10-09; local snippet and release-boundary checks only; no live cluster result is available
 
 ## Objective
 
@@ -27,12 +27,14 @@ authorities are the implementation and configuration sources.
 
 Before any cluster mutation, complete [Planning Record](#planning-record),
 [Supported Versions](#supported-versions), [Bind Cluster Authority](#bind-cluster-authority),
-and the read-only checks at the start of [Prerequisites](#prerequisites). The
-DNS and storage probe is the first controlled cluster mutation; it creates only
-the exact disposable resources declared there. After its cleanup succeeds,
-complete [Select Configuration](#select-configuration),
-[Preflight Without Mutation](#preflight-without-mutation), and
-[Prepare Independent Access](#prepare-independent-access). Then use
+[Select Configuration](#select-configuration), the read-only
+[Prerequisites](#prerequisites), [Preflight Without Mutation](#preflight-without-mutation),
+and [Prepare Independent Access](#prepare-independent-access), in that order.
+Every source, release-selection, render, access, and read-only dependency gate
+must pass. An absent runtime selection stops this installation here, including
+the disposable probe. Only then run [Prove DNS and disposable storage](#prove-dns-and-disposable-storage).
+That probe is the first controlled cluster mutation. It creates only the exact
+disposable resources declared there. After its cleanup succeeds, use
 [Install in Dependency Order](#install-in-dependency-order). Stop and retain
 the exact failed command before correcting an input. Do not continue with a
 partial dependency set.
@@ -157,8 +159,8 @@ Do not rely on the user's default kubeconfig or on printing its current context.
 
 Obtain the following values from the platform authority through a channel
 independent of the kubeconfig being tested: a dedicated kubeconfig file, its
-exact context name, the expected API server URL, and the existing
-`kube-system` namespace UID. Start a new restricted shell in
+exact context name, the expected API server URL, the existing
+`kube-system` namespace UID, and the application and Prism namespace names. Start a new restricted shell in
 `<repository-root>`, replace every placeholder, and keep that same shell for
 the entire procedure:
 
@@ -169,6 +171,12 @@ export KUBECONFIG="<kubeconfig-path>"
 export EXPECTED_CONTEXT="<context>"
 export EXPECTED_CLUSTER_SERVER="<cluster-server>"
 export EXPECTED_KUBE_SYSTEM_UID="<kube-system-uid>"
+export NAMESPACE="<namespace>"
+export PRISM_NAMESPACE="<prism-namespace>"
+for target_namespace in "$NAMESPACE" "$PRISM_NAMESPACE"; do
+  test "${#target_namespace}" -le 63
+  [[ $target_namespace =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]] || exit 1
+done
 case "$KUBECONFIG" in /*) ;; *) printf '%s\n' 'KUBECONFIG must be absolute' >&2; exit 1 ;; esac
 test -f "$KUBECONFIG" && test ! -L "$KUBECONFIG"
 chmod 600 -- "$KUBECONFIG"
@@ -190,16 +198,23 @@ bound_helm() {
 }
 bound_deploy() {
   assert_cluster_binding || { printf '%s\n' 'CLUSTER_BINDING_MISMATCH' >&2; return 1; }
-  env KUBECONFIG="$KUBECONFIG" NAMESPACE="$NAMESPACE" ./scripts/deploy.sh "$@"
+  env KUBECONFIG="$KUBECONFIG" NAMESPACE="$NAMESPACE" PRISM_NAMESPACE="$PRISM_NAMESPACE" ./scripts/deploy.sh "$@"
 }
-readonly KUBECONFIG EXPECTED_CONTEXT EXPECTED_CLUSTER_SERVER EXPECTED_KUBE_SYSTEM_UID
+readonly KUBECONFIG EXPECTED_CONTEXT EXPECTED_CLUSTER_SERVER EXPECTED_KUBE_SYSTEM_UID NAMESPACE PRISM_NAMESPACE
 assert_cluster_binding
-printf 'context=%s\nserver=%s\nkube-system-uid=%s\n' \
-  "$EXPECTED_CONTEXT" "$EXPECTED_CLUSTER_SERVER" "$EXPECTED_KUBE_SYSTEM_UID"
+printf 'context=%s\nserver=%s\nkube-system-uid=%s\nnamespace=%s\nprism-namespace=%s\n' \
+  "$EXPECTED_CONTEXT" "$EXPECTED_CLUSTER_SERVER" "$EXPECTED_KUBE_SYSTEM_UID" "$NAMESPACE" "$PRISM_NAMESPACE"
 ```
 
 Expected observation: `use-context` succeeds, the assertion exits zero, and
-the three printed values exactly match the independently supplied record.
+the five printed values exactly match the independently supplied record.
+`<namespace>` is the application namespace; `<prism-namespace>` is the Prism
+namespace. Use the same name for both when Prism shares the application
+namespace. Both must be Kubernetes namespace names: 1 to 63 lowercase letters,
+digits, or hyphens, starting and ending with a letter or digit. The exported
+read-only values bind raw script clients as well as the wrappers.
+The script otherwise [defaults `NAMESPACE` to `kubeclaw` and `PRISM_NAMESPACE`
+to `NAMESPACE`](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/deploy.sh#L81-L98).
 From this point onward, use only `bound_kubectl`, `bound_helm`, and
 `bound_deploy` from this shell for every cluster read or mutation on this page.
 The read-only kubeconfig prevents an accidental context rewrite after binding.
@@ -235,11 +250,16 @@ bound_kubectl auth can-i create namespaces
 bound_kubectl auth can-i delete namespaces
 bound_kubectl auth can-i create clusterroles.rbac.authorization.k8s.io
 bound_kubectl auth can-i create customresourcedefinitions.apiextensions.k8s.io
-bound_kubectl auth can-i create secrets -n "<namespace>"
-bound_kubectl auth can-i create pods -n "<namespace>"
-bound_kubectl auth can-i get pods/log -n "<namespace>"
-bound_kubectl auth can-i create persistentvolumeclaims -n "<namespace>"
-bound_kubectl -n argocd get applications.argoproj.io --ignore-not-found
+bound_kubectl auth can-i create secrets -n "$NAMESPACE"
+bound_kubectl auth can-i create pods -n "$NAMESPACE"
+bound_kubectl auth can-i get pods/log -n "$NAMESPACE"
+bound_kubectl auth can-i create persistentvolumeclaims -n "$NAMESPACE"
+argo_application_crd="$(bound_kubectl get crd applications.argoproj.io --ignore-not-found -o name)"
+if [[ -n $argo_application_crd ]]; then
+  bound_kubectl -n argocd get applications.argoproj.io
+else
+  printf '%s\n' 'ARGO_APPLICATION_CRD_ABSENT: optional Argo ownership is unavailable'
+fi
 ```
 
 Expected observations:
@@ -252,13 +272,114 @@ Expected observations:
   endpoints. This does not yet prove a Pod can resolve a name.
 - Every required authorization check prints `yes`.
 
+An absent Argo Application CRD means that this optional ownership mechanism
+is unavailable. An authorization or API failure during the CRD lookup or
+Application query is a stop; it is not evidence that Argo is absent. This
+read-only lookup requires permission to get that named CRD. The
+[deployment ownership guard uses the same explicit CRD-absence distinction](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/gitops-owner.mjs#L14-L21).
+
 Stop for any unexpected context, missing node, unknown StorageClass, `no`
 authorization result, missing DNS endpoint, or unowned existing data. Continue
-with the cluster dependency probe below only after these read-only checks pass.
+with source and release preflight only after these read-only checks pass.
 
-### Prove DNS and disposable storage
+## Select Configuration
 
-This probe is the first cluster mutation. It creates one unique namespace, one
+Repository values are examples and public defaults.
+Private operator values must use separate files.
+
+Use these references before editing values:
+
+- [Environment Variables](../reference/environment-variables.md).
+- [Helm Values](../reference/helm-values.md).
+- [Secrets](../reference/secrets.md).
+- [Version Authorities](maintenance.md#version-authorities).
+
+The effective order for runtime role values is:
+
+1. Chart defaults.
+2. Source-bound generated release values.
+3. Role-specific repository values.
+4. Private operator overlay.
+5. Supported command overrides.
+
+Do not select a different image in a private overlay.
+Image identity belongs to the reviewed release receipt.
+
+The application and Prism namespaces are already exported and read-only in
+the bound shell. Inspect those exact targets without changing either value:
+
+```bash
+assert_cluster_binding
+bound_kubectl get namespace "$NAMESPACE" --ignore-not-found
+bound_kubectl get namespace "$PRISM_NAMESPACE" --ignore-not-found
+```
+
+The last command may return no namespace before the first setup.
+It must not return an unexpected environment with the same name.
+
+## Preflight Without Mutation
+
+This section makes no cluster change. First complete the canonical
+[Locked Dependency Installation](quickstart.md#locked-dependency-installation)
+in this disposable checkout. Then run the source checks:
+
+```bash
+npm run versions:check
+npm run docs:check:generated
+npm run verify:prism:deploy-script
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+```
+
+The Prism source check currently stops at a stale prompt-ownership assertion.
+[The Prism deployment source-check issue](../status/open-issues.md#prism-deployment-source-check-is-stale-after-prompt-ownership-moved) tracks that exact repair.
+Do not report the Prism preflight as passed until the unchanged command exits with status zero.
+
+Render each selected role before mutation:
+
+```bash
+bound_deploy render nova
+bound_deploy render buster
+bound_deploy render prism
+```
+
+Runtime rendering requires `releases/runtime-images.json` and its generated values.
+The current source revision does not contain that runtime selection.
+
+If the selection is absent, stop before any cluster mutation, including the
+DNS and storage probe, namespace creation, and Secret setup.
+Use the reviewed promotion workflow to create it from successful build receipts.
+Never invent the file or substitute mutable image tags.
+
+Treat rendered output as sensitive configuration.
+Review images, Secrets, service accounts, PVCs, ports, and network policies.
+
+Complete [client preparation](maintenance.md#prepare-the-client-projections)
+from the reviewed Buster render. If a new node configuration is required, the
+platform owner must supply its installation, cold-pull, and rollback procedure
+before this installation can proceed. Local projection generation does not
+prove node readiness.
+
+Stop if the selected release is absent, client preparation or node prerequisites
+are incomplete, or the render changes an unowned resource.
+
+## Prepare Independent Access
+
+Before setup, prove that the administration machine can reach the cluster API.
+Record a second route to the host or control plane.
+
+Do not count Tailscale inside the target cluster as the only second route.
+A CNI or cluster failure can remove that route.
+
+The optional Ops Pod supports routine operations after cluster readiness.
+The [platform boundary](../understand/platform-and-operations.md#ops-pod-tool-policy-is-not-kubernetes-authority) explains the optional Ops Pod. Treat its installation and credentials as a separate administrative surface.
+
+[Automated host bootstrap and restore](../status/open-issues.md#automated-host-bootstrap-and-restore-prerequisites-are-incomplete) tracks the missing prerequisites.
+
+## Prove DNS and disposable storage
+
+Complete every earlier nonmutating gate before this probe. The runtime
+selection and all three role renders must pass; a failure forbids probe
+creation. This probe is the first cluster mutation. It creates one unique namespace, one
 PVC, and one Pod. The cluster administrator authorizes those resources. The
 StorageClass controller owns provisioning, and cluster DNS owns name
 resolution. Run it from the bound administration shell.
@@ -290,7 +411,8 @@ const value = require("./versions.json").buildArgs.OPS_NODE_BASE;
 if (!/^[^@]+@sha256:[a-f0-9]{64}$/.test(value)) process.exit(1);
 process.stdout.write(value);
 ')"
-case "$PREFLIGHT_NAMESPACE" in kubeclaw-preflight-[a-z0-9-]*) ;; *) exit 1 ;; esac
+test "${#PREFLIGHT_NAMESPACE}" -le 63
+[[ $PREFLIGHT_NAMESPACE =~ ^kubeclaw-preflight-[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]] || exit 1
 test -n "$PREFLIGHT_STORAGE_CLASS"
 test -n "$PREFLIGHT_STORAGE_REQUEST"
 test ! -e "$PREFLIGHT_EVIDENCE_DIR"
@@ -448,98 +570,13 @@ finalizers; do not remove finalizers blindly. Retain the selected image digest,
 StorageClass, provisioner, reclaim policy, request, namespace/PVC/PV identities,
 YAML, events, log, command exit statuses, and full disposition proof.
 
-## Select Configuration
-
-Repository values are examples and public defaults.
-Private operator values must use separate files.
-
-Use these references before editing values:
-
-- [Environment Variables](../reference/environment-variables.md).
-- [Helm Values](../reference/helm-values.md).
-- [Secrets](../reference/secrets.md).
-- [Version Authorities](maintenance.md#version-authorities).
-
-The effective order for runtime role values is:
-
-1. Chart defaults.
-2. Source-bound generated release values.
-3. Role-specific repository values.
-4. Private operator overlay.
-5. Supported command overrides.
-
-Do not select a different image in a private overlay.
-Image identity belongs to the reviewed release receipt.
-
-Set the explicit application namespace once in the already bound shell. Make
-it read-only so every deployment entry point uses the same namespace:
-
-```bash
-export NAMESPACE="<namespace>"
-readonly NAMESPACE
-assert_cluster_binding
-bound_kubectl get namespace "$NAMESPACE" --ignore-not-found
-```
-
-The last command may return no namespace before the first setup.
-It must not return an unexpected environment with the same name.
-
-## Preflight Without Mutation
-
-This section makes no additional cluster change. First complete the canonical
-[Locked Dependency Installation](quickstart.md#locked-dependency-installation)
-in this disposable checkout. Then run the source checks:
-
-```bash
-npm run versions:check
-npm run docs:check:generated
-npm run verify:prism:deploy-script
-node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
-```
-
-The Prism source check currently stops at a stale prompt-ownership assertion.
-[The Prism deployment source-check issue](../status/open-issues.md#prism-deployment-source-check-is-stale-after-prompt-ownership-moved) tracks that exact repair.
-Do not report the Prism preflight as passed until the unchanged command exits with status zero.
-
-Render each selected role before mutation:
-
-```bash
-bound_deploy render nova
-bound_deploy render buster
-bound_deploy render prism
-```
-
-Runtime rendering requires `releases/runtime-images.json` and its generated values.
-The current source revision does not contain that runtime selection.
-
-If the selection is absent, stop before deployment.
-Use the reviewed promotion workflow to create it from successful build receipts.
-Never invent the file or substitute mutable image tags.
-
-Treat rendered output as sensitive configuration.
-Review images, Secrets, service accounts, PVCs, ports, and network policies.
-
-Stop if the selected release is absent or the render changes an unowned resource.
-
-## Prepare Independent Access
-
-Before setup, prove that the administration machine can reach the cluster API.
-Record a second route to the host or control plane.
-
-Do not count Tailscale inside the target cluster as the only second route.
-A CNI or cluster failure can remove that route.
-
-The optional Ops Pod supports routine operations after cluster readiness.
-The [platform boundary](../understand/platform-and-operations.md#ops-pod-tool-policy-is-not-kubernetes-authority) explains the optional Ops Pod. Treat its installation and credentials as a separate administrative surface.
-
-[Automated host bootstrap and restore](../status/open-issues.md#automated-host-bootstrap-and-restore-prerequisites-are-incomplete) tracks the missing prerequisites.
-
 ## Install in Dependency Order
 
 ### 1. Create Namespace and Secrets
 
 `infra` requires the SPIRE namespaces to exist; `setup` creates only the
-application namespace. Create all three explicitly after preflight succeeds:
+application namespace. Create the application and identity namespaces explicitly after preflight
+succeeds. When Prism has a separate namespace, create that exact namespace too:
 
 ```bash
 namespace_manifests="$(mktemp -d)"
@@ -553,13 +590,18 @@ bound_kubectl create namespace spire-system --dry-run=client -o yaml \
 bound_kubectl apply -f "$namespace_manifests/application.yaml"
 bound_kubectl apply -f "$namespace_manifests/spire-server.yaml"
 bound_kubectl apply -f "$namespace_manifests/spire-system.yaml"
+if [[ $PRISM_NAMESPACE != "$NAMESPACE" ]]; then
+  bound_kubectl create namespace "$PRISM_NAMESPACE" --dry-run=client -o yaml \
+    > "$namespace_manifests/prism.yaml"
+  bound_kubectl apply -f "$namespace_manifests/prism.yaml"
+fi
 rm -rf -- "$namespace_manifests"
 trap - EXIT
-bound_kubectl get namespace "$NAMESPACE" spire-server spire-system
+bound_kubectl get namespace "$NAMESPACE" "$PRISM_NAMESPACE" spire-server spire-system
 ```
 
 Expected observation: each apply reports `created`, `configured`, or
-`unchanged`, and the final command reports all three namespaces `Active`.
+`unchanged`, and the final command reports each selected namespace `Active`.
 Stop if the binding assertion fails or an existing
 namespace has another owner or policy.
 

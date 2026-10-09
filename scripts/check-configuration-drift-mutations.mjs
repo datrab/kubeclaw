@@ -4,8 +4,12 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 
 const repositoryRoot = process.cwd();
+const schemaRulesOnly = process.argv.includes('--schema-rules-only');
+const schemaSemanticsOnly = process.argv.includes('--schema-semantics-only');
 const environmentSecretOnly = process.argv.includes('--env-secret-only');
 const casePrefix = process.argv.find((argument) => argument.startsWith('--case-prefix='))?.slice('--case-prefix='.length) ?? null;
 const sourceRevision = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: repositoryRoot, encoding: 'utf8' }).stdout.trim();
@@ -75,6 +79,36 @@ function mutateJson(relativePath, edit) {
   return () => fs.writeFileSync(target, original);
 }
 
+function mutateSchemaRule(relativePath, edit, selectRule, example, expectedBefore, expectedAfter) {
+  const ajv = new Ajv2020({ strict: false }); addFormats(ajv);
+  const original = JSON.parse(fs.readFileSync(path.join(temporaryRoot, relativePath), 'utf8'));
+  assert.equal(ajv.compile(selectRule(original))(example), expectedBefore, `${relativePath}: semantic mutation starting condition differs`);
+  const restore = mutateJson(relativePath, edit);
+  try {
+    const changed = JSON.parse(fs.readFileSync(path.join(temporaryRoot, relativePath), 'utf8'));
+    assert.equal(ajv.compile(selectRule(changed))(example), expectedAfter, `${relativePath}: mutation did not change the declared validation behavior`);
+  } catch (error) { restore(); throw error; }
+  return restore;
+}
+
+function schemaRuleCases() {
+  return [
+    ['schema-validation-rule:property-name-add', () => mutateSchemaRule('skills/common/plugins/command-runner/schemas/config.schema.json',
+      (value) => { value.properties.executableCatalog.propertyNames.minLength = 8; }, (value) => value.properties.executableCatalog, { node: '/usr/bin/node' }, true, false)],
+    ['schema-validation-rule:property-name-change', () => mutateSchemaRule('skills/common/plugins/command-runner/schemas/config.schema.json',
+      (value) => { value.properties.executableCatalog.propertyNames.pattern = '^other$'; }, (value) => value.properties.executableCatalog, { node: '/usr/bin/node' }, true, false)],
+    ['schema-validation-rule:property-name-remove', () => mutateSchemaRule('skills/common/plugins/command-runner/schemas/config.schema.json',
+      (value) => { delete value.properties.executableCatalog.propertyNames; }, (value) => value.properties.executableCatalog, { 'invalid key': '/usr/bin/node' }, false, true)],
+    ['schema-validation-rule:contains-change', () => mutateSchemaRule('skills/nova/plugins/review/schemas/config.schema.json',
+      (value) => { value.properties.policy.properties.blocking.properties.priorities.allOf[0].contains.const = 'P1'; }, (value) => value.properties.policy.properties.blocking.properties.priorities, ['P0'], true, false)],
+    ['schema-validation-rule:contains-remove', () => mutateSchemaRule('skills/nova/plugins/review/schemas/config.schema.json',
+      (value) => { delete value.properties.policy.properties.blocking.properties.priorities.allOf; }, (value) => value.properties.policy.properties.blocking.properties.priorities, ['P1'], false, true)],
+    ['schema-validation-rule:paired-requirement-remove', () => mutateSchemaRule('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json',
+      (value) => { delete value.properties.targets.additionalProperties.dependentRequired; }, (value) => ({ type: 'object', properties: value.properties.targets.additionalProperties.properties, dependentRequired: value.properties.targets.additionalProperties.dependentRequired ?? {} }), { resultEndpoint: 'https://result.invalid' }, false, true)],
+    ['schema-validation-rule:unsupported-add', () => mutateJson('skills/buster/plugins/direct-command/schemas/config.schema.json', (value) => { value.properties.args.unevaluatedItems = false; })],
+  ];
+}
+
 function mutateLineToken(relativePath, lineNumber, token) {
   const target = path.join(temporaryRoot, relativePath);
   const original = fs.readFileSync(target, 'utf8');
@@ -103,16 +137,16 @@ function expectDetected(name, mutate, verifyPublication = null) {
   try {
     const result = name.startsWith('payload-edge:')
       ? runGenerator('--check-payload-delivery-only')
-      : runGenerator('--check');
+      : name.startsWith('schema-validation-rule:') ? runGenerator('--schemas-only', '--check') : runGenerator('--check');
     assert.notEqual(result.status, 0, `${name}: stale inventory was not detected`);
     const diagnostic = `${result.stdout}\n${result.stderr}`;
-    assert.match(diagnostic, /(?:Configuration documentation inventory is stale|CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|CONFIG_YAML_(?:DOTTED_KEY|PATH_COLLISION|SEMANTIC_AUTHORITY|SEMANTIC_CONTRACT)|CONFIG_YAML_API_CONTRACT_GAP|CONFIG_YAML_LEAF_LINE_DRIFT|CONFIG_YAML_API_LEAF_(?:LINE|DIGEST)_DRIFT|CONFIG_PAYLOAD_(?:REQUEST_PATH|SWARM_READER)_BOUNDARY_CHANGED|schema logical regression|offline external Helm authority verification failed|external Helm authority lock bytes|external Helm extracted authority bytes|authority source bytes changed|indirect semantic contract|cannot extract vendored CRD authority|exact consumer line changed|consumer context changed|downstream receiver changed|consumer proof is not bound to this exact leaf|selected-value proof does not bind the exact source field|compressed bytes changed|manifest bytes changed|deployed config payload .* is missing|deployed config payload discovery differs|expected .* containing|mutation token is missing)/u, `${name}: failure did not identify inventory drift or a semantic authority gap`);
+    assert.match(diagnostic, /(?:Configuration documentation inventory is stale|CONFIG_SEMANTIC_GAP|CONFIG_SCHEMA_UNSUPPORTED_(?:KEYWORD|REFERENCE)|CONFIG_YAML_AUTHORITY_DRIFT|CONFIG_YAML_(?:DOTTED_KEY|PATH_COLLISION|SEMANTIC_AUTHORITY|SEMANTIC_CONTRACT)|CONFIG_YAML_API_CONTRACT_GAP|CONFIG_YAML_LEAF_LINE_DRIFT|CONFIG_YAML_API_LEAF_(?:LINE|DIGEST)_DRIFT|CONFIG_PAYLOAD_(?:REQUEST_PATH|SWARM_READER)_BOUNDARY_CHANGED|schema logical regression|offline external Helm authority verification failed|external Helm authority lock bytes|external Helm extracted authority bytes|authority source bytes changed|indirect semantic contract|cannot extract vendored CRD authority|exact consumer line changed|consumer context changed|downstream receiver changed|consumer proof is not bound to this exact leaf|selected-value proof does not bind the exact source field|compressed bytes changed|manifest bytes changed|deployed config payload .* is missing|deployed config payload discovery differs|expected .* containing|mutation token is missing)/u, `${name}: failure did not identify inventory drift or a semantic authority gap`);
     const semanticRejected = /CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|authority source bytes changed/u.test(diagnostic);
     if (name === 'environment-setting:add') {
       assert.match(diagnostic, /AP98_MUTATION_ENV/u, `${name}: diagnostic did not identify the new operator environment input`);
       assert.match(diagnostic, /purpose, accepted form, default and empty behavior, precedence, impact, and failure symptom/u, `${name}: diagnostic did not require the complete environment contract`);
     }
-    if (name === 'secret-setting:add') {
+    if (name === 'secret-setting:add' || name === 'shell-secret-source:add') {
       assert.match(diagnostic, /ap98-mutation/u, `${name}: diagnostic did not identify the new Secret authority`);
       assert.match(diagnostic, /purpose, namespace, keys, optionality, producer, consumer, rotation owner and method, and failure symptom/u, `${name}: diagnostic did not require the complete Secret contract`);
     }
@@ -178,6 +212,22 @@ function expectLocalHelmMaintenanceDetected(name, mutate, expectedDiagnostic) {
 try {
   ['charts', 'examples', 'gitops', 'my-values', 'releases', 'scripts', 'skills', 'docker', 'ops', 'tools', 'cmd', 'packaging', 'versions.json', 'docs/generated/inventory', 'docs/site'].forEach(copy);
   fs.symlinkSync(path.join(repositoryRoot, 'node_modules'), path.join(temporaryRoot, 'node_modules'), 'dir');
+  const semanticCheck = runGenerator('--check-schema-semantics-only');
+  assert.equal(semanticCheck.status, 0, `configuration semantic checks failed\n${semanticCheck.stdout}\n${semanticCheck.stderr}`);
+  console.log(semanticCheck.stdout.trim());
+  if (schemaSemanticsOnly) { fs.rmSync(temporaryRoot, { recursive: true, force: true }); process.exit(0); }
+  if (schemaRulesOnly) {
+    const initial = runGenerator('--schemas-only');
+    assert.equal(initial.status, 0, `schema mutation baseline failed\n${initial.stdout}\n${initial.stderr}`);
+    const before = runGenerator('--schemas-only', '--check');
+    assert.equal(before.status, 0, `schema mutation baseline check failed\n${before.stdout}\n${before.stderr}`);
+    for (const [name, mutate] of schemaRuleCases()) expectDetected(name, mutate);
+    const recovered = runGenerator('--schemas-only', '--check');
+    assert.equal(recovered.status, 0, `schema mutation baseline recovery failed\n${recovered.stdout}\n${recovered.stderr}`);
+    console.log('PASS focused schema validation-rule mutations and baseline recovery');
+    fs.rmSync(temporaryRoot, { recursive: true, force: true }); process.exit(0);
+  }
+
   const generated = runGenerator('--allow-semantic-gaps');
   assert.equal(generated.status, 0, `could not generate temporary baseline\n${generated.stdout}\n${generated.stderr}`);
   const baseline = runGenerator('--check');
@@ -737,6 +787,8 @@ spec:
     ['payload-boundary:request-path-binding-add', () => replaceOnce('skills/nova/plugins/lint/src/engine/index.ts', 'const policyPath = fs.realpathSync(request.policyPath);', 'const policyPath = fs.realpathSync(request.policyPath || "/runtime-config/lint-policy.json");')],
     ['payload-boundary:runtime-reader-add', () => createFile('skills/nova/core/ap98-swarm-reader.ts', 'export const configPath = process.env.SWARM_CONFIG || "/home/node/.openclaw/swarm.config.json";')],
     ['undeployed-policy-pack:change', () => replaceOnce('charts/kubeclaw/files/config/kubernetes-policy-pack-default.json', '"version": "1.0.0"', '"version": "1.0.1"')],
+    ['shell-secret-source:add', () => createFile('scripts/ap98-secret-source-audit.sh', 'kubectl create secret generic ap98-mutation --from-literal=opaque=fixture')],
+    ...schemaRuleCases(),
     ['nested-plugin-config:add', () => mutateJson('skills/nova/plugins/lint/schemas/config.schema.json', (value) => { value.properties.ap98Mutation = { type: 'object', properties: { nested: { type: 'boolean', default: true } } }; })],
     ['common-name-plugin-config:add', () => mutateJson('skills/nova/plugins/lint/schemas/config.schema.json', (value) => { value.properties.enabled = { type: 'boolean', default: true }; })],
     ['local-ref-cycle:change', () => mutateJson('skills/buster/plugins/direct-command/schemas/config.schema.json', (value) => { value.$defs.artifact = { $ref: '#/$defs/artifact' }; })],
@@ -1163,4 +1215,6 @@ printf '%s\\n' "$UNINVOKED_FLOW_CANARY"
   fs.rmSync(temporaryRoot, { recursive: true, force: true });
 }
 
-console.log('All configuration documentation drift mutations passed.');
+console.log(casePrefix
+  ? `Selected configuration documentation drift mutations passed (${casePrefix}).`
+  : 'All configuration documentation drift mutations passed.');

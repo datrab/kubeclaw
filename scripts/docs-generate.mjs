@@ -161,7 +161,8 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
     // Escape brackets in generated prose so they render as literal contract
     // syntax while real source links, appended below, remain discoverable.
     const literalMeaning = field.meaning.text.replaceAll('[', '\\[').replaceAll(']', '\\]');
-    const base = `${literalMeaning}<br>Status: \`${field.meaning.status}\`<br>Evidence: ${meaningEvidenceLink(field.meaning.evidence)}`;
+    const additionalEvidence = (field.meaning.additionalImplementationEvidence ?? []).map(meaningEvidenceLink);
+    const base = `${literalMeaning}<br>Status: \`${field.meaning.status}\`<br>Evidence: ${[meaningEvidenceLink(field.meaning.evidence), ...additionalEvidence].join(', ')}`;
     if (!/blocker/u.test(field.meaning.status)) return base;
     return `${base}<br>Not a completed operator option. Authority owner: ${field.meaning.blockerOwner}. Completion requires qualified full-path meaning and runtime-consumer evidence.`;
   };

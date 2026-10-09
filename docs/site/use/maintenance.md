@@ -5,7 +5,7 @@ Audience: release maintainer, platform operator, security operator
 Owner: release engineering and platform operations
 Evidence: versions.json; releases/ops-images.json; scripts/deploy.sh
 Applies to: current release-selection and deployment contracts
-Last verified: 2026-09-21; no fresh live upgrade, rotation or retirement result is available
+Last verified: 2026-10-09; local projection and snippet checks only; no live upgrade, rotation or retirement result is available
 
 ## Objective
 
@@ -18,7 +18,9 @@ Before any cluster command on this page, complete
 [Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
 shell for upgrade, rollback, rotation, GitOps, or decommission work. Every raw
 `kubectl`, Helm, or `scripts/deploy.sh` command below must inherit its exported
-read-only `KUBECONFIG`; every shown `<context>` must equal `EXPECTED_CONTEXT`.
+read-only `KUBECONFIG`, `NAMESPACE`, and `PRISM_NAMESPACE`. The binding section
+validates and freezes both namespace names before any command here; every shown
+`<context>` must equal `EXPECTED_CONTEXT`.
 Run `assert_cluster_binding` immediately before each command block. Stop on any
 mismatch and follow the binding section's recovery; never fall back to the
 default kubeconfig.
@@ -73,9 +75,9 @@ Before changing trust, capture non-secret references and consumers:
 
 ```bash
 assert_cluster_binding
-kubectl --context "<context>" -n "<namespace>" get secrets \
+kubectl --context "<context>" -n "$NAMESPACE" get secrets \
   -o custom-columns='NAME:.metadata.name,TYPE:.type,CREATED:.metadata.creationTimestamp'
-kubectl --context "<context>" -n "<namespace>" get deploy,statefulset,cronjob \
+kubectl --context "<context>" -n "$NAMESPACE" get deploy,statefulset,cronjob \
   -o yaml > "<evidence-dir>/credential-consumers.yaml"
 ```
 
@@ -240,8 +242,22 @@ Two controllers must not manage the same resource.
 
 ## GitOps Operation
 
-Argo can own platform and runtime Applications after an explicit ownership transfer.
-The Git repository remains the desired-state authority.
+This section starts with healthy, already Argo-owned Applications. The Git
+repository remains the desired-state authority. Treat transfer from an existing
+Helm installation as a separate change with a retained resource and data
+inventory. The current activation preflight [rejects existing Helm releases,
+Helm-owned resources, and unmanaged existing resources](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/gitops.mjs#L123-L145).
+The imperative [ownership guard also rejects claimed namespaces and retained
+Argo tracking metadata](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/gitops-owner.mjs#L14-L27).
+Deleting an Application without its workloads does not transfer ownership.
+
+The repository supplies no supported in-place Helm-to-Argo takeover procedure.
+Stop before sync or imperative deployment when ownership is mixed or the
+platform owner has not supplied a versioned transfer procedure. That procedure
+must retain the old desired state and data, stop competing reconciliation,
+identify every transferred resource, verify one resulting owner, define the
+rollback boundary, and prove health plus application reads. Do not remove Helm
+or Argo ownership metadata merely to make a preflight pass.
 
 Before sync, inspect each selected Application:
 
@@ -302,8 +318,8 @@ Then inspect the running identity:
 
 ```bash
 assert_cluster_binding
-kubectl -n "<namespace>" get deployment agent-nova -o jsonpath='{.spec.template.spec.containers[*].image}{"\n"}'
-kubectl -n "<namespace>" get pods -l app.kubernetes.io/instance=agent-nova -o jsonpath='{range .items[*]}{.status.containerStatuses[*].imageID}{"\n"}{end}'
+kubectl -n "$NAMESPACE" get deployment agent-nova -o jsonpath='{.spec.template.spec.containers[*].image}{"\n"}'
+kubectl -n "$NAMESPACE" get pods -l app.kubernetes.io/instance=agent-nova -o jsonpath='{range .items[*]}{.status.containerStatuses[*].imageID}{"\n"}{end}'
 ```
 
 Repeat for Buster after Nova verification.
@@ -340,8 +356,8 @@ Before the change:
 ```bash
 assert_cluster_binding
 ./scripts/deploy.sh prism-status
-kubectl -n "<namespace>" get cronjob,job,pvc
-kubectl -n "<namespace>" get deployment,statefulset -o wide
+kubectl -n "$PRISM_NAMESPACE" get cronjob,job,pvc
+kubectl -n "$PRISM_NAMESPACE" get deployment,statefulset -o wide
 ```
 
 After the change:
@@ -349,8 +365,8 @@ After the change:
 ```bash
 assert_cluster_binding
 ./scripts/deploy.sh prism-smoke
-kubectl -n "<namespace>" get jobs -l app=prism-migrate
-kubectl -n "<namespace>" logs job/prism-migrate --all-containers
+kubectl -n "$PRISM_NAMESPACE" get jobs -l app=prism-migrate
+kubectl -n "$PRISM_NAMESPACE" logs job/prism-migrate --all-containers
 ```
 
 The Helm hook can delete the successful migration Job.
@@ -416,7 +432,155 @@ The complete expiry and restore contract remains open.
 
 ## Registry and BuildKit Maintenance
 
-Use the client and image-lifetime procedure in this section.
+Prepare BuildKit, the Buster runtime, and Kubernetes node pulls from the same
+registry contract. A projection is a client configuration file derived from
+that contract. Different endpoint, trust, or credential choices between clients
+can let a build succeed while the node cannot pull its result.
+
+### Prepare the client projections
+
+Start in `<repository-root>` on the administration machine after locked
+installation of repository dependencies and successful release/configuration
+preflight. Use the reviewed Buster render from [Render and Compare](#render-and-compare)
+or the install render. `<buster-render-file>` is that protected YAML file.
+`<new-registry-preparation-dir>` is a new private directory outside Git and the
+incident evidence directory. It will contain a node file with credentials.
+
+The registry owner must first supply a node-reachable origin, DNS, HTTPS, the
+credential authority, and an owned storage/backup process. Select these inputs
+in `runtimeInfrastructure.registry`: `endpoint`, `transport`, `authSecretName`,
+`usernameKey`, and `passwordKey`. A private CA also needs `caSecretName`,
+`caSecretKey`, and the absolute host path `nodeCaFile`. The render maps the
+worker's CA path separately. Configure `runtimeInfrastructure.dockerHubMirror`
+only when the cache owner supplies its distinct origin, transport, and trust.
+An omitted or explicitly empty mirror disables that route. The writable
+registry and the mirror must have different hosts. Credentials require HTTPS;
+`http-lab` permits anonymous access only in the controlled lab.
+
+The [chart builds `registry-clients.v1` and credential references from these
+settings](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/_registry-clients.tpl#L15-L44).
+It rejects unsafe transport, incomplete trust, and competing sidecar settings.
+Ask the credential authority to inject the same selected username and password
+into `KUBECLAW_REGISTRY_USERNAME` and `KUBECLAW_REGISTRY_PASSWORD` in this
+restricted shell, without placing values in command arguments, Git, or logs.
+Do not retrieve or print Kubernetes Secret contents for this task.
+
+Extract the contract from exactly one rendered Buster runtime container and
+produce three new files. These commands write local files only:
+
+```bash
+umask 077
+export BUSTER_RENDER_FILE="<buster-render-file>"
+export REGISTRY_PREP_DIR="<new-registry-preparation-dir>"
+test -f "$BUSTER_RENDER_FILE" && test ! -L "$BUSTER_RENDER_FILE"
+test ! -e "$REGISTRY_PREP_DIR"
+mkdir -m 0700 "$REGISTRY_PREP_DIR"
+node --input-type=module - "$BUSTER_RENDER_FILE" \
+  "$REGISTRY_PREP_DIR/registry-clients.json" <<'NODE'
+import fs from 'node:fs';
+import { parseAllDocuments } from 'yaml';
+const [renderFile, outputFile] = process.argv.slice(2);
+const documents = parseAllDocuments(fs.readFileSync(renderFile, 'utf8'));
+if (documents.some(document => document.errors.length)) throw new Error('rendered YAML is invalid');
+const containers = documents.map(document => document.toJSON())
+  .filter(document => document?.kind === 'Deployment')
+  .flatMap(document => document.spec?.template?.spec?.containers ?? [])
+  .filter(container => container.name === 'buster-v2-runtime');
+if (containers.length !== 1) throw new Error('one rendered Buster runtime is required');
+const entries = (containers[0].env ?? []).filter(entry => entry.name === 'KUBECLAW_REGISTRY_CONFIG');
+if (entries.length !== 1 || typeof entries[0].value !== 'string') {
+  throw new Error('one literal rendered registry contract is required');
+}
+const contract = JSON.parse(entries[0].value);
+if (contract.schemaVersion !== 'registry-clients.v1') throw new Error('wrong registry contract version');
+fs.writeFileSync(outputFile, `${JSON.stringify(contract)}\n`, { flag: 'wx', mode: 0o600 });
+NODE
+for registry_output in buildkit runtime node; do
+  node scripts/registry-client-config.mjs "$REGISTRY_PREP_DIR/registry-clients.json" \
+    "$registry_output" "$REGISTRY_PREP_DIR/$registry_output.config"
+done
+node --input-type=module - "$REGISTRY_PREP_DIR" <<'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import { registryClientConfig } from './scripts/registry-client-config.mjs';
+const directory = process.argv[2];
+const bytes = name => fs.readFileSync(path.join(directory, name));
+const contract = JSON.parse(bytes('registry-clients.json'));
+const expected = registryClientConfig(contract, process.env);
+assert.equal(bytes('buildkit.config').toString(), expected.buildkit);
+assert.deepEqual(JSON.parse(bytes('runtime.config')), expected.runtime);
+assert.deepEqual(JSON.parse(bytes('node.config')), expected.node);
+const files = ['registry-clients.json', 'buildkit.config', 'runtime.config', 'node.config'];
+for (const name of files) {
+  const file = fs.lstatSync(path.join(directory, name));
+  assert.ok(file.isFile() && !file.isSymbolicLink());
+  assert.equal(file.mode & 0o777, 0o600);
+}
+console.log(JSON.stringify({ registryOrigin: expected.runtime.registryBaseUrl,
+  registryReference: expected.runtime.registryReference,
+  mirrorOrigin: contract.dockerHubMirror?.endpoint || null,
+  contractDigest: 'sha256:' + crypto.createHash('sha256').update(bytes('registry-clients.json')).digest('hex'),
+  projectionDigests: Object.fromEntries(files.slice(1).map(name =>
+    [name, 'sha256:' + crypto.createHash('sha256').update(bytes(name)).digest('hex')])),
+  privateModesVerified: true, scope: 'local-client-generation' }));
+NODE
+```
+
+Expected observation: every command exits zero, all four files have mode
+`0600`, and the final non-secret report identifies the selected origin,
+reference, optional mirror, contract digest, and projection digests. Retain
+that report, tool versions, render digest, command exit statuses, and the
+external credential-authority reference. Store the generated node file only
+with its credential authority; never copy its contents into evidence.
+The [generator validates clients and authentication](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/registry-client-config.mjs#L23-L54)
+and [writes private new files without overwriting them](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/registry-client-config.mjs#L98-L118).
+
+Stop on a missing release/render, absent or duplicate runtime container,
+invalid JSON/YAML, implicit or contradictory transport, missing credential,
+incomplete trust pair, shared writable/cache host, existing output, or differing
+projection. Preserve only the sanitized failure and input digest. Correct the
+owned Helm input or credential source, render again, and start in a new output
+directory. Do not patch the generated files.
+
+### Install and prove the selected clients
+
+| Client | Implemented configuration path | Remaining operator proof |
+| --- | --- | --- |
+| BuildKit and Buster | The deployed entrypoint regenerates its BuildKit TOML and runtime JSON from the same rendered contract, then starts BuildKit with that TOML. | Verify the selected immutable workload and CA mount, authenticated build/push, manifest digest read, and Buster evidence import. |
+| Kubernetes node/K3s | The generator produces `node.config` as JSON, which is also valid YAML. It contains registry routing, node CA paths, and credentials. | The platform owner must install it on every selected node, install matching CA bytes, perform the platform's reload/restart, and prove an uncached CRI pull of the selected digest. |
+| Mirror | Client generation routes `docker.io` to the optional selected cache. | Separately prove warm pull, cold pull, cache storage/retention, and the selected outage policy. |
+
+The [entrypoint creates and consumes the worker projections](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/docker/buster-runtime-entrypoint.sh#L11-L31).
+The [node example explicitly selects no registry or mirror and states the
+installation limit](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/k3s-registries.yaml#L1-L7).
+Local generation does not install a node configuration, provision its DNS,
+TLS, or authentication, or prove a cold pull. This repository supplies no
+complete node installation, restart, rollback, or uncached-pull procedure.
+Stop before node installation or new runtime deployment when the platform owner
+has not provided a versioned procedure for those steps. It must name each node,
+existing configuration backup, destination, CA authority, restart effect,
+immutable test image, cold-pull observation, rollback, and cleanup. This limit
+must be removed by a maintained node procedure and a recorded per-node cold
+pull; changing the generator alone does not remove it.
+
+After all platform prerequisites pass, use the healthy and recovery
+[Registry/BuildKit exercise](diagnose.md#registry-endpoint-unavailable-during-buildkit-push)
+to prove the runtime build path. Its receipt verifies push and manifest identity;
+retain a separate node pull result. Neither `/v2/` nor a cached pull proves the
+complete path. Before activation, recovery is to discard only the new local
+projection directory and retain the previous client configuration. After node
+activation, use the platform's exact prior configuration and restart procedure;
+reconcile a possibly completed push before another build.
+
+After retained proof or a safe stop, unset the injected registry credentials
+and remove only `$REGISTRY_PREP_DIR` through the credential owner's disposal
+policy. Confirm that directory is absent. Do not delete the reviewed render,
+registry data, image receipts, or existing node configuration as preparation
+cleanup.
+
+### Preserve image lifetime during collection
 
 Before garbage collection:
 
@@ -457,10 +621,10 @@ Capture the exact local scope before changing access:
 
 ```bash
 assert_cluster_binding
-kubectl --context "<context>" -n "<namespace>" get \
+kubectl --context "<context>" -n "$NAMESPACE" get \
   deploy,statefulset,daemonset,job,cronjob,svc,ingress,pvc,configmap,secret,serviceaccount,role,rolebinding,networkpolicy \
   -o name > "<evidence-dir>/namespaced-resources-before.txt"
-helm list -n "<namespace>" > "<evidence-dir>/helm-before.txt"
+helm list -n "$NAMESPACE" > "<evidence-dir>/helm-before.txt"
 ```
 
 Add cluster-scoped SPIRE registrations, admission policy, DNS, Tailnet, OAuth,
@@ -536,12 +700,8 @@ the command. Do not change the kubeconfig's current context here:
 ```bash
 assert_cluster_binding
 test "<context>" = "$EXPECTED_CONTEXT"
-if [[ ${NAMESPACE+x} ]]; then
-  test "$NAMESPACE" = "<namespace>"
-else
-  export NAMESPACE="<namespace>"
-fi
-readonly NAMESPACE
+test "$NAMESPACE" = "<namespace>"
+test "$PRISM_NAMESPACE" = "<prism-namespace>"
 assert_cluster_binding
 kubectl -n "$NAMESPACE" get pvc
 ```
@@ -555,8 +715,8 @@ After `teardown`, verify that no PVC remains and review the retained Secrets:
 
 ```bash
 assert_cluster_binding
-kubectl -n "<namespace>" get pvc
-kubectl -n "<namespace>" get secrets
+kubectl -n "$NAMESPACE" get pvc
+kubectl -n "$NAMESPACE" get secrets
 ```
 
 Run `teardown-all` only when final namespace deletion has separate explicit approval:
@@ -587,10 +747,10 @@ That command destroys the namespace and included state.
 ```bash
 assert_cluster_binding
 kubectl --context "<context>" get namespace "<namespace>" --ignore-not-found
-kubectl --context "<context>" -n "<namespace>" get \
+kubectl --context "<context>" -n "$NAMESPACE" get \
   deploy,statefulset,daemonset,job,cronjob,svc,ingress,pvc,serviceaccount,role,rolebinding,networkpolicy \
   --ignore-not-found
-helm list -n "<namespace>"
+helm list -n "$NAMESPACE"
 ```
 
 For `teardown-all`, expected namespace output is empty. For a narrower command,

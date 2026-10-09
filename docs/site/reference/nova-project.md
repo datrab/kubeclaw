@@ -5,7 +5,7 @@ Audience: project operator, pipeline author
 Owner: Nova project compiler
 Evidence: skills/nova/project/compiler.ts; skills/nova/project/source.ts; skills/nova/project/coverage.ts; skills/nova/project/demo.ts; skills/nova/project/cli.ts
 Applies to: `nova-project.v2`
-Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
+Last verified: 2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
 
 ## Purpose and compiler boundary
 
@@ -77,9 +77,9 @@ than these four option/value pairs fails before the command writes output.
 > **Claim:** Import mode requires four value pairs, validates the converted
 > runtime graph, and creates the output without replacing an existing file.
 >
-> **Implementation:** [entry-point dispatch](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/cli.ts#L14-L17); [argument and output handling](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/legacy-import-cli.ts#L8-L27)
+> **Implementation:** [entry-point dispatch](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/cli.ts#L14-L17); [argument and output handling](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/legacy-import-cli.ts#L8-L27)
 >
-> **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
+> **Revision:** `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
 
 ## Root fields
 
@@ -248,10 +248,18 @@ their JSON array order. It then builds:
 5. `final-lint`, optional `final-review`, `final-test`, and `project-summary`.
 6. Optional `demo-candidate`, `demo-delivery`, and `demo-ready`.
 
-The resulting definition has `maxConcurrency: 1`. This is a deliberate single
-repository publication lane: checks complete before another implementation can
-advance shared `HEAD`. Provider plans can still execute their own nodes up to
-their declared and group limits.
+The resulting definition has `maxConcurrency: 1`, and module dependencies form
+one sequential repository lane. Provider plans can still execute their own nodes
+up to their declared and group limits.
+
+**Current technical inference:** Serialization keeps a later implementation from
+advancing shared `HEAD` before the earlier module's checks finish. Its cost is
+lower module throughput: independent modules wait for each other, and a slow or
+blocked stage delays the lane. The compiler proves the sequence, not the original
+reason for selecting it. The historical reason is unknown; the Nova project
+compiler owner owns that gap. Reconsider serialization only when parallel source
+publication, ownership isolation, gate-to-revision binding, and recovery have
+explicit contracts and overlapping-run tests.
 
 Module implementation owns repair budgets. Each lint, review, and test checker
 can request the implementation stage again. Current compilation gives two
@@ -288,7 +296,7 @@ contracts and grants only. A successful run is not by itself human acceptance.
 | `PROJECT_BASELINE_CHANGED`, `PROJECT_REPOSITORY_DIRTY` | New-run source no longer matches the declared clean baseline. |
 | `PROJECT_RECOVERY_*`, `RECOVERY_GRAPH_DIGEST_MISMATCH` | Supplied project cannot reconstruct the pinned graph. Use the original input. |
 | `LEGACY_A11Y_THRESHOLDS_RETIRED` | A project uses numeric accessibility thresholds instead of explicit rule, route, selector, reason, and expiry acceptances. Replace the threshold with the required acceptance records. |
-| `LEGACY_A11Y_TIMEOUT_INVALID` | The earlier accessibility timeout is not a positive integer. Move the supported timeout to the provider node and use a valid bounded value. |
+| `LEGACY_A11Y_TIMEOUT_INVALID` | The earlier accessibility timeout is not an integer from 1,000 through 120,000 ms. Move the supported timeout to the provider node and keep it within that range. |
 | `LEGACY_PERF_CONFIGURATION_RETIRED` | A project uses the earlier performance block or has no explicit `kubeclaw.lighthouse@1` node. Define named Lighthouse profiles and budgets in `.swarm/pipeline.json`. |
 | `LEGACY_VISUAL_CONFIGURATION_RETIRED` | A project uses the earlier visual block or has no explicit `kubeclaw.visual@1` node. Define reviewed baseline, profile, and provider nodes in `.swarm/pipeline.json`. |
 | `LEGACY_E2E_CONFIGURATION_RETIRED` | A project uses the earlier end-to-end block or has no explicit `kubeclaw.playwright@1` node. Add a project-owned Playwright configuration and an explicit provider node. |
@@ -300,10 +308,11 @@ definition; do not disable the check.
 
 > **Source evidence — unsupported project shapes fail at discovery**
 >
-> **Implementation:** [accessibility and performance guards](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L269-L403) ·
-> [visual, end-to-end, and security guards](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L403-L413).
+> **Implementation:** [accessibility guards](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L269-L290) ·
+> [performance guards](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L396-L401) ·
+> [visual, end-to-end, and security guards](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L402-L413).
 >
-> **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
+> **Revision:** `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
 
 > **Source evidence — compiler contract**
 >
@@ -311,14 +320,16 @@ definition; do not disable the check.
 >
 > The CLI validates the installed runtime before it creates compile output.
 >
-> **Implementation:** [requirements, plan binding, and module validation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/compiler.ts#L89-L134); [stable ordering and graph compilation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/compiler.ts#L137-L192)
+> **Implementation:** [requirements, plan binding, and module validation](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/compiler.ts#L89-L134); [stable ordering and graph compilation](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/compiler.ts#L137-L192)
 >
-> [Source admission](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/source.ts#L19-L66); [CLI behavior](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/cli.ts#L13-L59)
+> [Source admission](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/source.ts#L19-L66); [CLI behavior](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/cli.ts#L13-L59)
 >
-> **Contract or setting:** [coverage binding](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/coverage.ts#L11-L67); [demo binding](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/demo.ts#L3-L54)
+> **Contract or setting:** [coverage binding](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/coverage.ts#L11-L67); [demo binding](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/demo.ts#L3-L54)
 >
-> **Test evidence:** [deterministic graph shape and optional-stage behavior](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-project-compiler.mts#L80-L119); [dependency, ownership, and plan rejection checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-project-compiler.mts#L121-L130)
+> **Test evidence:** [deterministic graph shape and optional-stage behavior](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/contracts/check-project-compiler.mts#L80-L119); [dependency, ownership, and plan rejection checks](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/contracts/check-project-compiler.mts#L121-L130)
 >
-> **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node tests/verification/contracts/check-project-compiler.mts`: exit zero with both `legacy-authoring-import` and `source-launcher` reports `ok: true`, and zero executed stages.
+>
+> **Revision:** `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
 >
 > **Limit:** Static compilation does not execute providers, confirm endpoint reachability, or establish product acceptance.

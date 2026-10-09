@@ -5,7 +5,7 @@ Audience: platform operator, database operator, incident responder
 Owner: platform operations and data owners
 Evidence: charts/prism/files/prism-backup.sh; scripts/postgresql-recovery.sh; docs/status/open-issues.json
 Applies to: current selected runtime and state formats
-Last verified: 2026-09-21; no fresh live restore result is available
+Last verified: 2026-10-09; local group-identity and snippet guards only; no live restore result is available
 
 ## Objective
 
@@ -31,7 +31,9 @@ Before any cluster command on this page, complete
 [Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
 shell for the whole recovery task. Every raw `kubectl`, Helm, or
 `scripts/deploy.sh` command below must inherit its exported read-only
-`KUBECONFIG`; every shown `<context>` must equal `EXPECTED_CONTEXT`. Run
+`KUBECONFIG`, `NAMESPACE`, and `PRISM_NAMESPACE`. The binding section
+validates and freezes both namespace names before any command here; every shown
+`<context>` must equal `EXPECTED_CONTEXT`. Run
 `assert_cluster_binding` immediately before each command block. Stop on any
 mismatch, leave media and targets unchanged, and follow the binding section's
 recovery; never fall back to the default kubeconfig.
@@ -132,9 +134,9 @@ Run from the administration machine:
 ```bash
 assert_cluster_binding
 kubectl config current-context
-kubectl -n "<namespace>" get pvc
-kubectl -n "<namespace>" get cronjob,job
-kubectl -n "<namespace>" get events --sort-by=.metadata.creationTimestamp
+kubectl -n "$NAMESPACE" get pvc
+kubectl -n "$NAMESPACE" get cronjob,job
+kubectl -n "$NAMESPACE" get events --sort-by=.metadata.creationTimestamp
 ```
 
 Confirm destination free space before starting a manual backup.
@@ -204,12 +206,14 @@ The chart creates these scheduled resources:
 - `prism-backup-verification`.
 - `prism-restore-proof`.
 
-Inspect their last execution:
+Each verification and database-proof invocation selects latest independently.
+Use [Prism Restore](#prism-restore) to compare observable group identities and
+recognize the unbound database-smoke limit. Inspect their last execution:
 
 ```bash
 assert_cluster_binding
-kubectl -n "<namespace>" get cronjob prism-backup prism-backup-verification prism-restore-proof
-kubectl -n "<namespace>" get jobs -l app=prism-backup --sort-by=.metadata.creationTimestamp
+kubectl -n "$PRISM_NAMESPACE" get cronjob prism-backup prism-backup-verification prism-restore-proof
+kubectl -n "$PRISM_NAMESPACE" get jobs -l app=prism-backup --sort-by=.metadata.creationTimestamp
 ```
 
 The backup and artifact PVCs survive Helm removal through keep policy.
@@ -293,11 +297,11 @@ the following commands from the independently administered cluster context:
 
 ```bash
 assert_cluster_binding
-kubectl --context "<context>" -n "<namespace>" create job \
+kubectl --context "<context>" -n "$NAMESPACE" create job \
   --from=cronjob/litellm-postgresql-backup "litellm-backup-manual-<unique-id>"
-kubectl --context "<context>" -n "<namespace>" wait \
+kubectl --context "<context>" -n "$NAMESPACE" wait \
   --for=condition=complete "job/litellm-backup-manual-<unique-id>" --timeout=1860s
-kubectl --context "<context>" -n "<namespace>" logs \
+kubectl --context "<context>" -n "$NAMESPACE" logs \
   "job/litellm-backup-manual-<unique-id>"
 ```
 
@@ -312,7 +316,7 @@ uniquely named manual Job:
 
 ```bash
 assert_cluster_binding
-kubectl --context "<context>" -n "<namespace>" delete job \
+kubectl --context "<context>" -n "$NAMESPACE" delete job \
   "litellm-backup-manual-<unique-id>"
 ```
 
@@ -352,31 +356,118 @@ that missing prerequisite. Do not call a PVC copy a verified Redis restore.
 
 ## Prism Restore
 
-Use one matched `<backup-group>`. Do not combine a database dump and artifacts
-from different groups. The repository currently supports group creation,
-verification, and a same-PostgreSQL-server temporary-database proof:
+A Prism recovery point is one database dump and artifact set from the same
+immutable group. Never combine members from different groups. The current
+commands accept only `backup`, `verify`, or `database-proof`; they have no
+argument for a requested `<backup-group>`. Both checks independently select the
+lexically last `backup-*` directory when they run. The database proof prints
+its temporary database name, not the group it selected.
+
+Each invocation holds the shared backup-PVC lock while it runs. That lock does
+not bind separate Jobs to one group. `concurrencyPolicy: Forbid` prevents overlap
+within each CronJob, but does not stop another CronJob or manual Job from
+publishing a new group between commands. These are
+[the latest-group selection and database proof](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/prism/files/prism-backup.sh#L119-L154),
+[the per-invocation lock and accepted commands](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/prism/files/prism-backup.sh#L156-L169),
+and [the three separate CronJobs](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/prism/templates/backup.yaml#L9-L29).
+
+Use the following bounded procedure to create a group and observe which group
+verification actually checked. Start with the deployed Prism backup resources,
+healthy source database, available artifact and backup PVCs, enough capacity,
+and a private new `<evidence-dir>` outside those PVCs. Run in the bound
+administration shell. `<unique-id>` is a new lowercase DNS-label suffix for
+all three manual Job names. Do not reuse an existing Job. Normal immutable
+artifact publication can continue; fence administrative deletion, restoration,
+migration, and key rotation for the window. A new concurrent backup can make
+verification select a different group; treat that mismatch as a stop.
 
 ```bash
 assert_cluster_binding
-kubectl --context "<context>" -n "<namespace>" create job \
+export PRISM_BACKUP_EVIDENCE_DIR="<new-evidence-dir>"
+test ! -e "$PRISM_BACKUP_EVIDENCE_DIR"
+mkdir -m 0700 "$PRISM_BACKUP_EVIDENCE_DIR"
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" create job \
   --from=cronjob/prism-backup "prism-backup-manual-<unique-id>"
-kubectl --context "<context>" -n "<namespace>" wait \
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" wait \
   --for=condition=complete "job/prism-backup-manual-<unique-id>" --timeout=1860s
-kubectl --context "<context>" -n "<namespace>" create job \
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" logs \
+  "job/prism-backup-manual-<unique-id>" > "$PRISM_BACKUP_EVIDENCE_DIR/backup.log"
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" create job \
   --from=cronjob/prism-backup-verification "prism-verify-manual-<unique-id>"
-kubectl --context "<context>" -n "<namespace>" wait \
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" wait \
   --for=condition=complete "job/prism-verify-manual-<unique-id>" --timeout=1860s
-kubectl --context "<context>" -n "<namespace>" create job \
-  --from=cronjob/prism-restore-proof "prism-proof-manual-<unique-id>"
-kubectl --context "<context>" -n "<namespace>" wait \
-  --for=condition=complete "job/prism-proof-manual-<unique-id>" --timeout=1860s
-kubectl --context "<context>" -n "<namespace>" logs \
-  "job/prism-proof-manual-<unique-id>"
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" logs \
+  "job/prism-verify-manual-<unique-id>" > "$PRISM_BACKUP_EVIDENCE_DIR/verify.log"
+node - "$PRISM_BACKUP_EVIDENCE_DIR/backup.log" \
+  "$PRISM_BACKUP_EVIDENCE_DIR/verify.log" <<'NODE'
+const fs = require('node:fs');
+const paths = process.argv.slice(2).map(file => {
+  const groups = fs.readFileSync(file, 'utf8').split(/\r?\n/u)
+    .filter(line => /^\/backups\/backup-[^/\s]+$/u.test(line));
+  if (groups.length !== 1) throw new Error('one observed group path is required per Job');
+  return groups[0];
+});
+if (paths[0] !== paths[1]) throw new Error('verification selected a different latest group');
+console.log(JSON.stringify({ createdGroup: paths[0], verifiedGroup: paths[1],
+  scope: 'group-integrity-only' }));
+NODE
 ```
 
-Expected proof output starts with `PRISM_DATABASE_RESTORE_SMOKE_PASSED:`. Retain
-logs for all three Jobs, then delete only these uniquely named manual Jobs.
-Scheduled Job history and backup groups are not cleanup targets.
+Expected observation: both Jobs complete and their logs name the same exact
+`/backups/backup-*` path. Retain the comparison output with the two logs. A
+failed Job, missing path, or mismatch forbids acceptance of the created group's
+verification. Keep all media and failed evidence. Diagnose capacity, mounts,
+checksums, database access, or concurrent publication from the specific Job
+log; do not retry until that cause is understood. A later check still selects
+latest and can therefore check a different group.
+
+The available same-server database smoke test is a separate observation:
+
+```bash
+assert_cluster_binding
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" create job \
+  --from=cronjob/prism-restore-proof "prism-proof-manual-<unique-id>"
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" wait \
+  --for=condition=complete "job/prism-proof-manual-<unique-id>" --timeout=1860s
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" logs \
+  "job/prism-proof-manual-<unique-id>" > "$PRISM_BACKUP_EVIDENCE_DIR/database-proof.log"
+cat "$PRISM_BACKUP_EVIDENCE_DIR/database-proof.log"
+```
+
+Expected smoke output starts with `PRISM_DATABASE_RESTORE_SMOKE_PASSED:`. It
+shows that the internally selected latest dump restored into a temporary
+database on the source PostgreSQL service and that three core tables were
+queried. It does **not** identify the restored group, prove a requested-group
+restore, or establish original-application-reader acceptance. Even when the
+first two logs match, do not attribute this smoke result to that group.
+Requested-group native restore proof is **NOT PROVEN** by these Jobs.
+Stop before external restore or cutover.
+
+The Prism data owner and chart maintainer must supply an explicit group
+selection for verification and proof, expose that selected identity in the
+proof result, and test a newer group arriving between commands before this
+boundary can be removed. External recovery also requires the isolated database,
+artifact, application-reader, cutover, and rollback procedure below.
+
+Retain all three Job logs, Job and Pod UIDs, source/image versions, the observed
+group identities, checksum manifests, external copy receipt, and separate
+integrity and unbound database-smoke results. After evidence capture, remove
+only the manual Jobs that were actually created:
+
+```bash
+assert_cluster_binding
+kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" delete job \
+  "prism-backup-manual-<unique-id>" "prism-verify-manual-<unique-id>" \
+  "prism-proof-manual-<unique-id>" --ignore-not-found --wait=true
+for manual_job in "prism-backup-manual-<unique-id>" "prism-verify-manual-<unique-id>" \
+  "prism-proof-manual-<unique-id>"; do
+  test -z "$(kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" get job \
+    "$manual_job" --ignore-not-found -o name)"
+done
+```
+
+Scheduled Job history, backups, and PVCs are retained state. A failed cleanup
+is an open incident; it does not authorize namespace deletion or backup removal.
 
 The following sequence is the required design for external Prism recovery, but
 it is **not currently an executable supported restore** because no owned command

@@ -5,7 +5,7 @@ Audience: operator, incident responder
 Owner: platform operations
 Evidence: scripts/deploy.sh; skills/nova/core/telemetry/audit.ts
 Applies to: current runtime roles and durable pipeline state
-Last verified: 2026-09-21; no controlled failure result is available
+Last verified: 2026-10-09; local snippet checks and synthetic guards only; no live dependency failure result is available
 
 ## Objective
 
@@ -27,7 +27,9 @@ Before any cluster command on this page, complete
 [Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
 shell for the whole incident. Every raw `kubectl`, Helm, or
 `scripts/deploy.sh` command below must inherit its exported read-only
-`KUBECONFIG`; every shown `<context>` must equal `EXPECTED_CONTEXT`. Run
+`KUBECONFIG`, `NAMESPACE`, and `PRISM_NAMESPACE`. The binding section
+validates and freezes both namespace names before any command here; every shown
+`<context>` must equal `EXPECTED_CONTEXT`. Run
 `assert_cluster_binding` immediately before each command block. Stop on any
 mismatch and preserve it as incident evidence; never fall back to the default
 kubeconfig.
@@ -91,9 +93,9 @@ assert_cluster_binding
 kubectl config current-context
 kubectl get nodes -o wide
 ./scripts/deploy.sh status
-kubectl -n "<namespace>" get deploy,statefulset,pods,svc,pvc -o wide
-kubectl -n "<namespace>" get events --sort-by=.metadata.creationTimestamp
-helm list -n "<namespace>"
+kubectl -n "$NAMESPACE" get deploy,statefulset,pods,svc,pvc -o wide
+kubectl -n "$NAMESPACE" get events --sort-by=.metadata.creationTimestamp
+helm list -n "$NAMESPACE"
 ```
 
 Expected observation: the context matches the incident record.
@@ -108,9 +110,9 @@ Check one affected Pod before broad log collection:
 
 ```bash
 assert_cluster_binding
-kubectl -n "<namespace>" describe pod "<pod>"
-kubectl -n "<namespace>" logs "<pod>" -c "<container>" --since=30m --timestamps
-kubectl -n "<namespace>" logs "<pod>" -c "<container>" --previous --timestamps
+kubectl -n "$NAMESPACE" describe pod "<pod>"
+kubectl -n "$NAMESPACE" logs "<pod>" -c "<container>" --since=30m --timestamps
+kubectl -n "$NAMESPACE" logs "<pod>" -c "<container>" --previous --timestamps
 ```
 
 The `--previous` output exists only after a container restart and before Pod replacement.
@@ -152,9 +154,9 @@ Check scheduling and filesystem signals separately:
 
 ```bash
 assert_cluster_binding
-kubectl -n "<namespace>" get resourcequota,limitrange
-kubectl -n "<namespace>" get pvc
-kubectl -n "<namespace>" top pods --containers
+kubectl -n "$NAMESPACE" get resourcequota,limitrange
+kubectl -n "$NAMESPACE" get pvc
+kubectl -n "$NAMESPACE" top pods --containers
 kubectl top nodes
 ```
 
@@ -267,6 +269,13 @@ Use a separate authorized connectivity check.
 
 ## Controlled Dependency Failure Exercises
 
+The implementation links below were inspected at revision
+`c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`. Bash and Node.js 24 syntax checks
+passed for the published command blocks. Synthetic local data exercised the
+OAuth fingerprint and cleanup guards, backup-group comparison, and compact
+Git receipt projection. These checks do not execute any dependency outage or
+prove a cluster, Tailnet, model, registry, or full pipeline result.
+
 This section is the command authority for the controlled Redis, Prism
 PostgreSQL, registry/BuildKit, Tailscale, LiteLLM, and Git dependency-failure
 procedures below.
@@ -289,8 +298,8 @@ only for the Tailscale exercise; never copy it into evidence.
 ```bash
 assert_cluster_binding
 set -euo pipefail
-export NAMESPACE="<namespace>"
-export PRISM_NAMESPACE="<prism-namespace>"
+test "$NAMESPACE" = "<namespace>"
+test "$PRISM_NAMESPACE" = "<prism-namespace>"
 export TAILSCALE_OPERATOR_NAMESPACE="tailscale"
 export PLATFORM_FILE="<platform.json>"
 export PROJECT_FILE="<project.json>"
@@ -315,8 +324,17 @@ write failure output to a file and record `$?` before displaying it.
 
 ### Redis Unavailable
 
-Precondition: `statefulset/redis-master` has one ready replica, its PVC is
-bound, and both role smoke checks pass. Scaling to zero stops the process but
+The [role health client bounds Redis connection and command waits](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/deployment.yaml#L797-L821),
+[uses `XADD` for the startup stream check](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/deployment.yaml#L825-L840),
+and [exits nonzero on a failed enabled check](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/deployment.yaml#L903-L929).
+The [audit reader rebuilds hash-verified durable events from filesystem state](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/telemetry/audit.ts#L14-L27).
+These mechanisms explain why Redis availability and readable Nova lifecycle
+state are separate observations. No Redis outage was executed for this page.
+
+Precondition: `statefulset/redis-master` has a positive ready replica count,
+its PVC is bound, and both role smoke checks pass. Both roles must have Redis
+health checks enabled; Nova must also have its Redis stream startup check
+enabled. Confirm these conditions in the reviewed render before the fault. Scaling to zero stops the process but
 does not delete its PVC. Record the original replica count so restoration does
 not assume one.
 
@@ -415,6 +433,15 @@ PVC.
 
 ### Prism PostgreSQL Unavailable
 
+The [Prism smoke command probes Control, Worker, gateway, and the Prism
+database separately](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/deploy.sh#L1802-L1811).
+[Control readiness queries PostgreSQL](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/control-server.ts#L145-L149),
+and [the Worker bounds its private nonce-database connection and query waits](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/worker-readiness.ts#L32-L50).
+The [LiteLLM deployment consumes its own Secret configuration and database
+startup state](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/litellm-deployment.yaml#L32-L63).
+These sources define the consumers checked here; the two live outage windows
+remain unexecuted for this page.
+
 This exercise targets Prism PostgreSQL only. Precondition: `prism-smoke` passes,
 LiteLLM and its separate `statefulset/postgresql` are ready, and no Prism write
 or database backup is in progress. Record the selected project and operation
@@ -500,7 +527,7 @@ assert_cluster_binding
 litellm_embedding_probe() {
   probe_text="$1"
   kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
-    env KUBECLAW_PROBE_TEXT="$probe_text" node -e '
+    env KUBECLAW_PROBE_TEXT="$probe_text" node --input-type=module -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
   method: "POST",
   headers: { authorization: `Bearer ${process.env.LITELLM_API_KEY}`, "content-type": "application/json" },
@@ -563,6 +590,14 @@ both database PVC identities are unchanged. Never cross-restore or copy
 credentials between the two PostgreSQL releases.
 
 ### Registry Endpoint Unavailable During BuildKit Push
+
+The [deploy command selects the maintained Nova-to-Buster BuildKit proof](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/deploy.sh#L2036-L2042).
+That proof [requires completed remote work, matching imported evidence, and a
+digest-qualified image output](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/nova-buildkit-production-preflight.mts#L88-L109)
+before it [emits `registryPushVerified`, `manifestVerified`, and the immutable
+image receipt](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/nova-buildkit-production-preflight.mts#L117-L127).
+A `/v2/` response is only a reachability observation. It does not replace those
+assertions or a node pull. This live proof was not run for this page.
 
 This lab-profile exercise requires the selected writable Service to be
 `registry-local` and the mirror to be `registry-mirror`. For another production
@@ -654,7 +689,7 @@ process.exit((value.subsets ?? []).some(item => (item.addresses ?? []).length > 
   sleep 2
 done
 test "$registry_endpoints_drained" -eq 1
-kubectl -n "$NAMESPACE" exec deployment/agent-buster -c kubeclaw -- node -e '
+kubectl -n "$NAMESPACE" exec deployment/agent-buster -c kubeclaw -- node --input-type=module -e '
 const r = await fetch("http://registry-mirror:5000/v2/", { signal: AbortSignal.timeout(5000) });
 if (!r.ok) process.exit(1);
 '
@@ -723,6 +758,14 @@ cache as incident cleanup.
 
 ### Tailscale Authentication Rejected
 
+The [maintained fixture explicitly allocates a Kubernetes lease, creates its
+Tailscale exposure, and probes the new HTTP route](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/nova-tailscale-production-preflight.mts#L126-L145).
+Its [receipt assertions bind exposure, lease, namespace, and imported evidence](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/nova-tailscale-production-preflight.mts#L174-L204).
+The [deployment wrapper waits for both cluster objects to disappear](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/deploy.sh#L2552-L2578).
+These are functional route and cleanup checks; this page does not claim they
+ran against a Tailnet. The OAuth rejection check below classifies recorded
+operator output. It fails if that output lacks a recognizable rejection.
+
 Precondition: the official operator is ready, `IngressClass/tailscale` exists,
 the digest-pinned probe image is pullable, the secure OAuth source file is
 available, and the healthy production preflight passes. Existing routes may
@@ -758,7 +801,7 @@ NODE
 tailscale_secret_fingerprints() {
   kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get secret/operator-oauth -o json \
     | node --input-type=module -e '
-const crypto = require("node:crypto");
+import crypto from "node:crypto";
 let input = ""; process.stdin.setEncoding("utf8");
 for await (const chunk of process.stdin) input += chunk;
 const secret = JSON.parse(input); const names = Object.keys(secret.data ?? {}).sort();
@@ -884,7 +927,9 @@ replacement lease while the first lease outcome is uncertain.
 
 Restore the Secret from its external authority without printing its contents,
 restart the operator, then remove only the failed fixture recorded above. The
-cleanup uses Kubernetes UID and resource-version preconditions. It stops if a
+cleanup uses Kubernetes UID and resource-version preconditions. The
+[controller requires its ownership labels to match the exact lease](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/cmd/buster-namespace-controller/main.go#L788-L806).
+The snippet applies that boundary and refuses an unguarded deletion. It stops if a
 lease with the captured name has a different UID, or if the namespace does not
 carry all three ownership labels for that lease. It then waits for both exact
 objects to be absent and writes the cleanup result before the rollback trap can
@@ -907,10 +952,10 @@ while [ "$tailscale_proxy_attempt" -lt 100 ]; do
   sleep 0.1
 done
 test -n "$tailscale_proxy_port"
-node - "http://127.0.0.1:$tailscale_proxy_port" "$NAMESPACE" \
+node --input-type=module - "http://127.0.0.1:$tailscale_proxy_port" "$NAMESPACE" \
   "$EVIDENCE_DIR/tailscale-new-lease.json" \
   "$EVIDENCE_DIR/tailscale-fault-cleanup.json" <<'NODE'
-const fs = require('node:fs');
+import fs from 'node:fs';
 const [origin, leaseNamespace, identityFile, outputFile] = process.argv.slice(2);
 const identity = JSON.parse(fs.readFileSync(identityFile, 'utf8'));
 const [group, version, extra] = String(identity.apiVersion ?? '').split('/');
@@ -1034,6 +1079,14 @@ credential from shell history if the local shell records commands.
 
 ### LiteLLM Upstream Timeout
 
+The [deployed model route names `gemini-embedding-001` and its Vertex
+provider](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/litellm-config.yaml#L1-L11).
+The [deployment distinguishes liveliness and readiness probes](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/litellm-deployment.yaml#L47-L63).
+The [secured policy separates database egress from world egress](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/network-policies.yaml#L248-L270).
+The temporary denial and observer below test those boundaries. Their 70-second
+outer deadline and cause classification are exercise rules, not a claim about
+LiteLLM's inner retry settings. No live upstream-denial result is available.
+
 This exercise requires the secured Cilium profile. The temporary
 `CiliumNetworkPolicy` denies only world egress from the LiteLLM Pod; cluster
 egress to its PostgreSQL remains available. A different CNI must use its
@@ -1043,7 +1096,7 @@ boundary. First prove gateway readiness and a real embedding.
 ```bash
 assert_cluster_binding
 kubectl -n "$NAMESPACE" rollout status deployment/litellm --timeout=120s
-kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node -e '
+kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
   method: "POST",
   headers: { authorization: `Bearer ${process.env.LITELLM_API_KEY}`, "content-type": "application/json" },
@@ -1069,7 +1122,7 @@ console.log(JSON.stringify({ generation: value.metadata.generation, readyReplica
 '
 }
 litellm_readiness_probe() {
-  kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node -e '
+  kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
 const endpoint = new URL("/health/readiness", process.env.LITELLM_URL);
 const r = await fetch(endpoint, { signal: AbortSignal.timeout(5000) });
 if (!r.ok) process.exit(1);
@@ -1097,7 +1150,7 @@ restore_litellm_policy() {
       acceptance-litellm-upstream-timeout --ignore-not-found --wait=true
     test -z "$(kubectl -n "$NAMESPACE" get ciliumnetworkpolicy \
       acceptance-litellm-upstream-timeout --ignore-not-found -o name)"
-    kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node -e '
+    kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
   method: "POST",
   headers: { authorization: `Bearer ${process.env.LITELLM_API_KEY}`, "content-type": "application/json" },
@@ -1130,7 +1183,7 @@ litellm_workload_ready > "$EVIDENCE_DIR/litellm-workload-ready-during-fault.json
 litellm_readiness_probe > "$EVIDENCE_DIR/litellm-readiness-during-fault-before.json"
 litellm_pod_identity > "$EVIDENCE_DIR/litellm-pods-during-fault-before.json"
 set +e
-kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node -e '
+kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
 const expectedStatus = new Set([500, 502, 503, 504]);
 const rejectedCause = /auth|unauthori[sz]ed|forbidden|credential|api.?key|configuration|database|postgres|invalid[^\n]*model|model[^\n]*(?:not found|unknown|invalid)|quota|rate.?limit/iu;
 const upstreamCause = /timed?\s*out|timeout|connect|connection|network|unreachable|socket|\bdns\b|name resolution|egress/iu;
@@ -1190,7 +1243,7 @@ embedding from the end consumer. Gateway readiness alone is not recovery.
 ```bash
 assert_cluster_binding
 restore_litellm_policy
-kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node -e '
+kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
   method: "POST",
   headers: { authorization: `Bearer ${process.env.LITELLM_API_KEY}`, "content-type": "application/json" },
@@ -1207,10 +1260,22 @@ trap - EXIT HUP INT TERM
 
 ### Git Revision Unavailable
 
+The [project compiler records the architecture ref and inserts mandatory
+source admission before sync](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/source.ts#L33-L65).
+The [subject reader resolves the declared ref without substituting HEAD](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/sdk/src/review-subject.ts#L50-L75).
+The [source stage maps a read failure to `blocked` with
+`source_preflight.invalid`](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/preflight-contract/src/source-stage.ts#L20-L40).
+The [source-prefix regression checks prevent downstream implementation after
+failed admission](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/reliability/project-source.test.mjs#L37-L53).
+Those checks cover the source/Git prefix, not a full live Buster run. This
+unavailable-revision exercise and its later successful run are not recorded as
+executed here.
+
 Use a disposable registered `nova-project.v2` project whose repository and
 immutable release ref are owned by the acceptance operator. Its compact Buster
 plan must finish without another human wait so this exercise can distinguish
-the Git failure from later behavior. Do not rewrite a production ref or edit
+the Git failure from later behavior. Its `test.plan.execute` results must fit
+within the 16 KiB inline-audit result limit for the receipt check below. Do not rewrite a production ref or edit
 the original project descriptor. Create two descriptor copies outside the
 project repository: one distinct failed-run identity with an unavailable
 architecture revision and one distinct successful-run identity with the exact
@@ -1382,9 +1447,12 @@ if (run.runId !== process.env.GIT_SUCCESS_RUN_ID || run.status !== 'succeeded'
 }
 const requests = audit.events.filter(event => event.type === 'effect.requested'
   && event.payload?.capability === 'test.plan.execute');
-const decisions = requests.map(request => audit.events.find(event =>
-  event.type === 'effect.completed' && event.identity?.effectId === request.identity?.effectId)?.payload?.result)
-  .filter(result => result?.schemaVersion === 'test-gate-decision.v2'
+const results = requests.map(request => audit.events.find(event =>
+  event.type === 'effect.completed' && event.identity?.effectId === request.identity?.effectId)?.payload?.result);
+if (results.some(result => result?.schemaVersion === 'effect-result-summary.v1')) {
+  throw new Error('AUDIT_RESULT_EXTERNALIZED: compact inline receipt proof is unavailable; stop');
+}
+const decisions = results.filter(result => result?.schemaVersion === 'test-gate-decision.v2'
     && result.runId === run.runId && result.state === 'passed'
     && result.coverage?.policy?.baseRevision === process.env.RELEASE_COMMIT
     && /^git:[a-f0-9]{40}$/.test(result.coverage?.sourceRevision ?? '')
@@ -1413,6 +1481,18 @@ git -C "$PROJECT_REPOSITORY" cat-file -e "$BUSTER_SOURCE_COMMIT^{commit}"
 git -C "$PROJECT_REPOSITORY" merge-base --is-ancestor \
   "$RELEASE_COMMIT" "$BUSTER_SOURCE_COMMIT"
 ```
+
+The [coverage contract derives source revision, tree, archive digest, plan,
+and stage identity from the verified remote job](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/contracts/pipeline-test-gate/v1/src/coverage-result.ts#L17-L27).
+The [effect journal projection binds completed results to effect IDs](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine-runtime.ts#L53-L82).
+That projection summarizes results larger than 16 KiB as
+`effect-result-summary.v1`. The snippet stops on such a summary. A summary's
+content digest does not prove the projected source receipt. The release/runtime
+owner must provide a documented read of the original verified result, including
+its binding checks, before this exercise can accept an externalized result.
+Preserve the summary and audit unchanged; do not reconstruct the decision from
+counts or edit the journal. This is a current operator boundary, not a missing
+receipt that can be ignored.
 
 The final ancestry check allows the governed project stages to produce a later
 candidate while proving that Buster received a source descended from the exact

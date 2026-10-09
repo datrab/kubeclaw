@@ -133,6 +133,8 @@ from a repeated external effect.
 >
 > **Test evidence:** [project compiler rejection cases](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-project-compiler.mts#L99-L130)
 >
+> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran `node tests/verification/contracts/check-project-compiler.mts` against implementation revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`: exit zero. Both the legacy authoring-import check and the source-launcher check returned `ok: true`; the source-launcher reported two modules and zero executed stages. This is local compiler admission evidence. It does not establish runtime execution, deployment readiness or live delivery.
+>
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 >
 > **Limit:** Error prefixes classify local rejection. They do not by themselves prove whether an earlier external effect occurred.

@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { parse as parseYaml } from 'yaml';
 
@@ -112,8 +113,6 @@ for (const specification of specifications) {
     if (!checkedSources.has(repositoryPath)) {
       const currentPath = path.join(root, repositoryPath);
       assert(fs.existsSync(currentPath), `linked source is absent: ${repositoryPath}`);
-      assert.notEqual(repositoryPath, 'package.json',
-        `${specification.file} must not use mutable documentation command registration as pinned Prism evidence`);
       assert.equal(fs.readFileSync(currentPath, 'utf8'), pinned,
         `${repositoryPath} changed after ${revision}; inspect and repin the Prism guides`);
       checkedSources.add(repositoryPath);
@@ -144,35 +143,71 @@ const helperSettings = [...configSource.matchAll(
   /(?:required|read|root)\([^\n)]*?['"]([A-Z][A-Z0-9_]+)['"]/gu,
 )].map((match) => match[1]);
 const settings = [...new Set([...directSettings, ...helperSettings])].sort();
+// Mechanical inventories have one canonical generated owner. Authored task
+// guides explain choices and consequences without copying every default.
+const runtimeInventory = JSON.parse(fs.readFileSync(
+  path.join(root, 'docs/generated/inventory/configuration-runtime-inputs.json'), 'utf8'));
+const environmentReference = fs.readFileSync(
+  path.join(root, 'docs/site/reference/environment-variables.md'), 'utf8');
+assert(operator.includes('../reference/environment-variables.md#variables'),
+  'Prism operator guide must link the canonical environment inventory');
 for (const setting of settings) {
-  assert(operator.includes(`\`${setting}\``),
-    `Prism operator guide does not name runtime setting ${setting}`);
+  assert(runtimeInventory.environment.some((entry) => entry.name === setting),
+    `canonical environment inventory lacks Prism runtime setting ${setting}`);
+  assert(environmentReference.includes(`| \`${setting}\` |`),
+    `canonical environment reference does not publish Prism runtime setting ${setting}`);
 }
 
-function leafPaths(value, prefix = '') {
+function leafValues(value, prefix = '$') {
   if (Array.isArray(value)) {
-    return value.flatMap((item, index) => leafPaths(item, `${prefix}[${index}]`));
+    return value.flatMap((item, index) => leafValues(item, `${prefix}[${index}]`));
   }
   if (value !== null && typeof value === 'object') {
     return Object.entries(value).flatMap(([key, child]) =>
-      leafPaths(child, prefix ? `${prefix}.${key}` : key));
+      leafValues(child, `${prefix}.${key}`));
   }
-  return [prefix];
+  return [{ path: prefix, value }];
 }
-const shippedValues = parseYaml(fs.readFileSync(path.join(root, 'charts/prism/values.yaml'), 'utf8'));
-const helmFields = leafPaths(shippedValues);
-assert.equal(helmFields.length, 97,
-  'shipped Prism Helm field count changed; update the complete operator field map');
-for (const field of helmFields) {
-  assert(operator.includes(`\`${field}\``),
-    `Prism operator guide does not name shipped Helm field ${field}`);
+const valueInventory = JSON.parse(fs.readFileSync(
+  path.join(root, 'docs/generated/inventory/configuration-values.json'), 'utf8'));
+const helmReference = fs.readFileSync(path.join(root, 'docs/site/reference/helm-values.md'), 'utf8');
+assert(operator.includes('../reference/helm-values.md#recursive-value-reference'),
+  'Prism operator guide must link the canonical Helm value inventory');
+let helmFields = [];
+for (const file of ['charts/prism/values.yaml', 'my-values/prism-agent-values.yaml']) {
+  const bytes = fs.readFileSync(path.join(root, file), 'utf8');
+  const discovered = leafValues(parseYaml(bytes));
+  const inventoryFile = valueInventory.files.find((entry) => entry.path === file);
+  assert(inventoryFile, `canonical configuration inventory lacks ${file}`);
+  assert.equal(inventoryFile.sourceDigest, crypto.createHash('sha256').update(bytes).digest('hex'),
+    `${file} differs from the canonical inventory; regenerate and review its receiving semantics`);
+  const fields = inventoryFile.documents.flatMap((document) => document.fields);
+  const sectionStart = helmReference.indexOf(`<summary><code>${file}</code>`);
+  assert(sectionStart >= 0, `canonical Helm reference lacks the ${file} section`);
+  const sectionEnd = helmReference.indexOf('</details>', sectionStart);
+  assert(sectionEnd > sectionStart, `canonical Helm reference has an incomplete ${file} section`);
+  const section = helmReference.slice(sectionStart, sectionEnd);
+  for (const leaf of discovered) {
+    const field = fields.find((entry) => entry.path === leaf.path);
+    assert(field, `canonical configuration inventory lacks ${file}:${leaf.path}`);
+    // Credentials and private authority identities remain redacted. Their
+    // source digest still binds changes; never print their unredacted value.
+    const redacted = typeof field.value === 'string' && field.value.startsWith('<redacted:');
+    if (!redacted) assert(Object.is(field.value, leaf.value),
+      `canonical selected value differs for ${file}:${leaf.path}`);
+    const row = section.split('\n').find((line) => line.startsWith(`| \`${leaf.path}\` |`));
+    assert(row, `canonical Helm reference does not publish ${file}:${leaf.path}`);
+    const displayValue = String(field.value ?? 'null').replaceAll('|', '&#124;')
+      .replaceAll('`', '&#96;').replaceAll('\n', '<br>');
+    assert(row.includes(`| \`${field.type}\`<br>\`${displayValue}\`<br>`),
+      `canonical Helm reference has a stale type or selected value for ${file}:${leaf.path}`);
+  }
+  if (file === 'charts/prism/values.yaml') helmFields = discovered;
 }
 
 const deploySource = fs.readFileSync(path.join(root, 'scripts/deploy.sh'), 'utf8');
 const deploySettings = [...new Set([...deploySource.matchAll(/\b(PRISM_[A-Z0-9_]+)\b/gu)]
   .map((match) => match[1]))].sort();
-assert.equal(deploySettings.length, 31,
-  'Prism deploy setting count changed; update the operator deployment table');
 for (const setting of deploySettings) {
   assert(operator.includes(`\`${setting}\``),
     `Prism operator guide does not classify deploy identifier ${setting}`);

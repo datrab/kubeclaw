@@ -5,7 +5,7 @@ Audience: operator, pipeline author, maintainer
 Owner: platform operations
 Evidence: skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts; skills/nova/core/test-gates/resolver.ts; tests/verification/e2e/support/platform-config.ts; charts/prism/templates/workloads.yaml
 Applies to: current pipeline, project, chart, host, and Prism configuration
-Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
+Last verified: 2026-10-09 at source revision `68fec9f604a116d67fde83206fcb4016fdb503e3`
 
 ## The governing rule
 
@@ -26,15 +26,65 @@ Use this sequence to find an effective value:
 | Family | Lowest to highest precedence | Important boundary |
 | --- | --- | --- |
 | Pipeline platform | Schema-required value → optional consumer default (`effectLockTtlMs` only) | One `--platform` file; no second file or project merge. Relative paths resolve from its canonical directory. |
-| Explicit pipeline graph | Registration schema defaults → exact `stage.config`/`stage.input` values in the one loaded definition | `pipeline-definition.v2` fields do not inherit from `nova-project.v2`; the compiler materializes a new graph. |
+| Explicit pipeline graph | Exact `stage.config`/`stage.input` values → defaults or derived values implemented by that stage | Stage validation does not insert schema defaults. `pipeline-definition.v2` fields do not inherit from `nova-project.v2`; the compiler materializes a new graph. |
 | Nova project | Compiler constants → optional project fields → compiler-derived repository/source bindings | Array order does not control module order. The topological graph and ID tie-break do. |
 | `.swarm/pipeline.json` test nodes | Suite template → suite exclusion/override/add → direct scope nodes → matrix values → provider schema defaults → resolver policy defaults/caps | Scope concurrency may narrow a suite ceiling, never widen it. Provider plan output is resolved data, not another authoring layer. |
 | Coupled `.swarm` files | Committed generation selected by `.scaffold-publication/current.json` | When publication metadata exists, loose `progress.json` and `pipeline.json` must match it. No fallback on damage. |
 | Helm | Chart defaults → supplied values files/CLI values in Helm's order → rendered manifest | The running process sees only the rendered result. GitOps can reapply its declared source after manual cluster edits. |
-| Kubernetes environment | Literal rendered value or selected ConfigMap/Secret key → process loader default only when the variable is absent | A pod does not reload most environment values. Secret changes require rollout unless a component explicitly watches files. |
+| Kubernetes environment | Literal rendered value or selected ConfigMap/Secret key → fallback under the exact process loader condition | An empty value selects a fallback for `||` and shell `:-`, but stays explicit for `??` and shell `-`. A pod does not reload most environment values. Secret changes require rollout unless a component explicitly watches files. |
 | Compact swarm profile | Standard profile → recursive `overrides` → runtime-derived `project`, `repo_root`, `paths`, `run_id` → template substitution | Applies only to callers of the compact expander; it is not the pipeline-platform authority. |
-| Prism | Prism Helm values → rendered environment/files → loader defaults for absent variables → root-owned native pool policy for aggregate capacity | Environment cannot override host cgroup capacity. SPIFFE mode changes which credential variables are authoritative. |
-| Plugin configuration | Registration schema defaults → exact platform/stage/provider config supplied to that registration | Unknown fields and types fail; grants remain separate and cannot be created by plugin config. |
+| Prism | Prism Helm values → rendered environment/files → defaults under each loader's empty-value rule → root-owned native pool policy for aggregate capacity | Environment cannot override host cgroup capacity. SPIFFE mode changes which credential variables are authoritative. |
+| Plugin configuration | Exact supplied stage/observer/adapter config → that consumer's implemented fallback; test-provider authored values → schema-default resolution → provider fallback | The registry validates stages, observers, and adapters without inserting defaults. Its test-provider resolver clones values and inserts schema defaults. Grants remain separate and cannot be created by plugin config. |
+
+## Where defaults are applied
+
+A schema `default` is an annotation. It becomes an effective value only when a
+consumer inserts it or implements the same fallback itself. Stage, observer,
+and adapter validation leaves omitted optional fields absent. The stage executor
+passes `definition.config` unchanged, and adapter startup returns the validated
+configuration unchanged. The test-provider resolver instead clones its input
+and validates that clone with default insertion enabled.
+
+For example, the human-approval schema advertises `timeoutMinutes: 60`. The
+registry leaves an omitted timeout absent. The approval parser then applies
+`config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES`, whose constant is
+60. An explicit valid integer wins. An empty string fails schema validation,
+and zero fails the minimum of 1. A schema annotation therefore does not prove
+that the registry applied this timeout.
+
+Collections can also have effective defaults and conditions. The direct-command
+provider uses `args: []`, `workingDirectory: "."`, and `environment: {}` when
+those fields are absent. It then inserts `CI: "true"`. Empty arguments remain
+empty; an empty environment map still produces the CI entry. `reports: []` is
+valid only with `resultMode: "exit-code"`; `"junit-required"` requires a report.
+The shipped common command-runner rejects any command environment payload, so
+this provider needs a compatible executor before it can run through that
+boundary. The [plugin configuration reference](plugin-configuration.md) records
+these conditions beside the affected fields.
+
+Environment defaults also depend on the exact operator. Buster's generated
+runtime file uses `Number(process.env.BUSTER_V2_MAX_ACTIVE_JOBS || 2)`. Both an
+absent value and an empty string select 2. The non-empty string `"0"` selects
+numeric zero; it does not select the fallback. Do not replace this behavior
+with an absent-only rule.
+
+> **Source evidence — default application**
+>
+> **Claim:** Registration validation preserves authored values; test-provider resolution inserts schema defaults in a clone; individual consumers apply their own fallbacks and collection rules.
+>
+> **Implementation:** [stage, observer, and adapter validation](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugin-runtime/foundation/registry/configuration.ts#L48-L81); [test-provider resolution](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121); [validation and cloned default insertion](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugin-runtime/foundation/registry/schema.ts#L94-L113)
+>
+> [Stage configuration handoff](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/execution/stage-executor.ts#L70-L74); [adapter configuration handoff](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/execution/adapter-startup.ts#L50-L53); [approval timeout fallback](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/plugins/human-approval/src/approval.ts#L67-L80)
+>
+> [Command defaults and report-mode conditions](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/buster/plugins/direct-command/src/provider.js#L58-L84); [common command-runner environment rejection](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugins/command-runner/src/adapter.ts#L54-L59); [Buster empty-string fallback](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/docker/buster-runtime-entrypoint.sh#L178-L187)
+>
+> **Contract or setting:** [approval timeout type and range](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/plugins/human-approval/schemas/config.schema.json#L24-L29)
+>
+> **Test evidence:** [platform configuration contract checks](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65) passed locally with Node 24.21.0. This contract check does not execute a deployed plugin.
+>
+> **Revision:** `68fec9f604a116d67fde83206fcb4016fdb503e3`
+>
+> **Limit:** Source evidence establishes default selection and the executor incompatibility. It does not establish successful direct-command execution through the shipped common command-runner.
 
 ## Absence, empty, null, and false
 
@@ -87,14 +137,14 @@ retain its source name/key. Hashing a low-entropy token is not safe redaction.
 >
 > **Claim:** Platform paths resolve from one canonical file, test scopes have an explicit template/project/policy resolution order, and compact profile overrides can change only known paths.
 >
-> **Implementation:** [platform load and path base](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/platform.ts#L36-L69); [suite expansion and lowest requested concurrency](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/resolver.ts#L304-L353)
+> **Implementation:** [platform load and path base](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/common/plugin-runtime/foundation/config/platform.ts#L36-L69); [suite expansion and lowest requested concurrency](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/test-gates/resolver.ts#L304-L353)
 >
-> [Suite overrides, direct nodes, and project concurrency](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/test-gates/resolver.ts#L354-L393); [known-path compact overrides](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/e2e/support/platform-config.ts#L98-L129)
+> [Suite overrides, direct nodes, and project concurrency](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/test-gates/resolver.ts#L354-L393); [known-path compact overrides](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/tests/verification/e2e/support/platform-config.ts#L98-L129)
 >
-> **Contract or setting:** [runtime records the effective authority subset](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-runtime.ts#L29-L42)
+> **Contract or setting:** [runtime records the effective authority subset](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/skills/nova/core/execution/engine-runtime.ts#L29-L42)
 >
-> **Test evidence:** [platform configuration contract checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65)
+> **Test evidence:** [platform configuration contract checks](https://github.com/datrab/kubeclaw/blob/68fec9f604a116d67fde83206fcb4016fdb503e3/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65)
 >
-> **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
+> **Revision:** `68fec9f604a116d67fde83206fcb4016fdb503e3`
 >
 > **Limit:** This precedence map does not replace Helm's own multi-file ordering or an external GitOps controller's declared reconciliation policy.

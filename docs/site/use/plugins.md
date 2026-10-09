@@ -5,7 +5,7 @@ Audience: platform operator, security operator, pipeline operator
 Owner: platform configuration owner
 Evidence: skills/common/plugin-runtime/foundation/config/platform.schema.json; skills/common/plugin-runtime/foundation/registry/activation.ts; skills/common/plugin-runtime/foundation/packages/install.ts
 Applies to: `pipeline-platform.v2` at the recorded source revision
-Last verified: 2026-09-21; the inventory check passed and no live external plugin result is available
+Last verified: 2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`; no live external plugin activation was executed
 
 ## Purpose
 
@@ -265,15 +265,22 @@ Distinguish failures before changing anything:
 | Duplicate ID or provider ambiguity | Registry selection | Select one exact registration; do not depend on order |
 | Missing grant or denied resource | Authority policy | Confirm intended need; do not widen the grant merely to pass |
 | Missing secret name | Secret configuration | Provision through its owner, then retry validation |
-| Adapter readiness/startup error | Dependency or adapter configuration | Repair the named dependency; activation is transactional |
+| Registration import error | Enabled module or isolation admission | Reject the candidate; inspect the named module and its import audit |
 | Project requests uninstalled stage | Project/package mismatch | Correct the project or select an approved package |
 
 ### 3. Activate and prove health
 
-Activation occurs while Nova prepares the runtime for a compile or run. It is
-fail-closed: a failed registration or adapter startup must not be treated as a
-partially healthy registry. After the non-mutating compile, start the controlled
-project only during its approved window:
+Compilation imports enabled registration modules and checks their configuration,
+trust, and grants. It does not call adapter factories or adapter `ready()`, create
+a run, or prove a dependency. Treat compilation as code admission: approved plugin
+modules are loaded even though no pipeline work starts.
+
+A run then starts adapters in dependency order and awaits each adapter's
+`ready()` result. Startup failure revokes the started contexts and attempts
+bounded shutdown; no partially started adapter set becomes the usable runtime.
+This startup transaction cannot reverse an external effect already accepted by
+a service. After compile succeeds, start the controlled project only during its
+approved window:
 
 ```bash
 npm run pipeline -- \
@@ -284,7 +291,14 @@ npm run pipeline -- \
   --audit "<run-id>"
 ```
 
-Take `<run-id>` from the first command. Expected observation: the selected
+Take `<run-id>` from the first command. Stop on adapter startup or readiness failure. Retain the adapter ID, dependency,
+configuration digest, and shutdown outcome. Restore the dependency through its
+owner and reconcile any uncertain external effect before retry. A process start
+proves only that the process exists; adapter readiness proves its declared
+startup checks; the controlled project's terminal result proves the selected
+business operation.
+
+Expected observation: the selected
 registration appears in the resolved graph and attempt evidence, its functional
 result succeeds, and audit state agrees with the terminal command output.
 Registry activation alone is not health; the controlled functional result is
@@ -345,10 +359,12 @@ replacement proof, cleanup result, and exact blocked step.
 ## Source Authority
 
 The platform schema defines operator-owned [installation roots, trust, providers,
-and grants](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L54)
-and [adapters, observers, and storage](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/platform.schema.json#L55-L94). Activation
-[rechecks package integrity and loads only enabled registrations](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
-External package code [validates policy, digest, manifest, limits, and modules](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/packages/install.ts#L154-L177)
-before [atomically publishing the package](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/packages/install.ts#L180-L218),
+and grants](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L54)
+and [adapters, observers, and storage](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/foundation/config/platform.schema.json#L55-L94). Activation
+[rechecks package integrity and loads only enabled registrations](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
+External package code [validates policy, digest, manifest, limits, and modules](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/foundation/packages/install.ts#L154-L177)
+before [atomically publishing the package](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/foundation/packages/install.ts#L180-L218),
 while removal accepts only a direct child of the installation root
-([implementation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/packages/install.ts#L220-L234)).
+([implementation](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/foundation/packages/install.ts#L220-L234)).
+
+Compilation [prepares and validates the admitted registry](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine.ts#L18-L22), including [enabled module imports](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine-runtime.ts#L29-L41). Run startup [publishes the adapter set only after startup succeeds](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/adapters.ts#L34-L49); the starter [orders dependencies, calls factories and readiness, and rolls back a failure](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/adapter-startup.ts#L25-L61). These sources were inspected at `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`; no live external plugin activation was executed for this page.

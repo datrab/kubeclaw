@@ -4,9 +4,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import os from 'node:os';
+import { pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import ts from 'typescript';
 import YAML from 'yaml';
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 import { assertYamlAuthorityRegistry, yamlAuthorityFile, yamlAuthorityPaths, yamlFieldAuthority } from './docs-yaml-field-authorities.mjs';
 import {
   assertLocalHelmAuthorityRegistry, localHelmAuthorityFile, localHelmAuthorityPaths, localHelmFieldAuthority,
@@ -44,6 +48,8 @@ const SCHEMA_CONSTRAINTS = [
   'const', 'enum', 'format', 'pattern', 'minimum', 'maximum', 'exclusiveMinimum',
   'exclusiveMaximum', 'multipleOf', 'minLength', 'maxLength', 'minItems', 'maxItems',
   'uniqueItems', 'minProperties', 'maxProperties', 'additionalProperties',
+  'propertyNames', 'dependentRequired', 'dependentSchemas', 'contains', 'minContains', 'maxContains',
+  'required', 'allOf', 'anyOf', 'oneOf', 'if', 'then', 'else', 'not',
 ];
 
 function exists(relativePath) {
@@ -971,10 +977,16 @@ function sha256(text) {
   return crypto.createHash('sha256').update(text).digest('hex');
 }
 
+const priorInventoryCache = new Map();
 function priorInventory(name) {
+  if (priorInventoryCache.has(name)) return priorInventoryCache.get(name);
   const target = path.join(outputDirectory, name);
-  if (!fs.existsSync(target)) return null;
-  try { return JSON.parse(fs.readFileSync(target, 'utf8')); } catch { return null; }
+  let inventory = null;
+  if (fs.existsSync(target)) {
+    try { inventory = JSON.parse(fs.readFileSync(target, 'utf8')); } catch { /* Invalid prior output supplies no semantic authority. */ }
+  }
+  priorInventoryCache.set(name, inventory);
+  return inventory;
 }
 
 function yamlClass(relativePath) {
@@ -2534,7 +2546,9 @@ function buildYamlInventory() {
   };
 }
 
+let registeredSchemaAuthorityCache = null;
 function registeredSchemaAuthorities() {
+  if (registeredSchemaAuthorityCache) return registeredSchemaAuthorityCache;
   const authorities = new Map();
   const add = (key, authority) => {
     const current = authorities.get(key);
@@ -2563,7 +2577,8 @@ function registeredSchemaAuthorities() {
       visit(JSON.parse(read(manifest)));
     }
   }
-  return [...authorities.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([key, authority]) => ({ key, ...authority }));
+  registeredSchemaAuthorityCache = [...authorities.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([key, authority]) => ({ key, ...authority }));
+  return registeredSchemaAuthorityCache;
 }
 
 function schemaSources() {
@@ -2672,8 +2687,14 @@ function schemaNamedSegments(fieldPath) {
 }
 
 function schemaAcceptedValues(field) {
+  if (field.type === 'never') return 'no value is accepted at this location';
   if (field.presence === 'forbidden') return `field must be absent when ${field.branches.join(' > ')} matches`;
-  const rules = field.constraints.map((constraint) => `${constraint.name}=${JSON.stringify(constraint.value)}`);
+  const rules = field.constraints.map((constraint) => {
+    if (constraint.name === 'propertyNames') return `every property name must match ${JSON.stringify(constraint.value)}`;
+    if (constraint.name === 'dependentRequired') return `when a listed property is present, its paired properties are required: ${JSON.stringify(constraint.value)}`;
+    if (constraint.name === 'contains') return `the array must contain matching items: ${JSON.stringify(constraint.value)} (minContains defaults to 1 unless declared)`;
+    return `${constraint.name}=${JSON.stringify(constraint.value)}`;
+  });
   const branch = field.branches.length ? `; branch ${field.branches.join(' > ')}` : '';
   const accepted = `${field.type}${rules.length ? ` with ${rules.join(', ')}` : ' with no narrower scalar constraint'}${branch}`;
   return field.negated ? `any value except (${accepted})` : accepted;
@@ -2690,6 +2711,38 @@ const SCHEMA_RUNTIME_FALLBACK_AUTHORITIES = new Map(Object.entries({
   'skills/buster/plugins/size-budget/schemas/config.schema.json::$.format': ['auto', 'skills/buster/plugins/size-budget/src/provider.js', "value.format ?? 'auto'"],
 }));
 
+// Each effective fallback is bound to an exact consumer expression. Schema
+// annotations alone are never used to establish runtime default insertion.
+for (const [plugin, source, fields] of [
+  ['artifact-store', 'adapter', { maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES'], maximumRecords: [100000, 'context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS'] }],
+  ['state-store', 'adapter', { maxEntryBytes: [1048576, 'context.config.maxEntryBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES'], maximumRecords: [100000, 'context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS'] }],
+  ['wait-store', 'adapter', { maxEntryBytes: [1048576, 'context.config.maxEntryBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? 256 * 1024 * 1024'], maximumRecords: [100000, 'context.config.maximumRecords ?? 100_000'] }],
+  ['telemetry-store', 'adapter', { maxRecordBytes: [1048576, 'context.config.maxRecordBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? 256 * 1024 * 1024'], maximumRecords: [100000, 'context.config.maximumRecords ?? 100_000'] }],
+  ['operator-messaging', 'config', { maximumDeliveryBytes: [268435456, 'config.maximumDeliveryBytes ?? 256 * 1024 * 1024'], maximumDeliveryRecords: [100000, 'config.maximumDeliveryRecords ?? 100_000'] }],
+  ['transport-publisher', 'adapter', { maximumDeliveryBytes: [268435456, "storeLimit(config.maximumDeliveryBytes, 256 * 1024 * 1024"], maximumDeliveryRecords: [100000, "storeLimit(config.maximumDeliveryRecords, 100_000"] }],
+  ['network-http', 'adapter', { allowedHeaders: [['accept', 'content-type', 'idempotency-key'], "config.allowedHeaders ?? ['accept', 'content-type', 'idempotency-key']"], allowedMethods: [['GET'], "config.allowedMethods as string[] | undefined ?? ['GET']"], maxRequestBytes: [1048576, "positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576)"], maxResponseBytes: [1048576, "positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576)"], timeoutMs: [30000, "positiveInteger(config.timeoutMs, 'timeoutMs', 30_000)"] }],
+  ['openclaw-agent-events', 'ingress-queue', { maxQueueEvents: [256, 'maxQueueEvents: 256'], maxQueueBytes: [1048576, 'maxQueueBytes: 1024 * 1024'], drainTimeoutMs: [5000, 'drainTimeoutMs: 5000'] }],
+]) for (const [field, [value, anchor]] of Object.entries(fields)) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(
+  `skills/common/plugins/${plugin}/schemas/config.schema.json::$.${field}`,
+  [value, `skills/common/plugins/${plugin}/src/${source}.ts`, anchor],
+);
+for (const [field, value, anchor] of [
+  ['workingDirectory', '.', "value.workingDirectory ?? '.'"],
+  ['args', [], 'value.args ?? []'],
+  ['environment', {}, 'value.environment === undefined ? {}'],
+]) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`skills/buster/plugins/direct-command/schemas/config.schema.json::$.${field}`, [value, 'skills/buster/plugins/direct-command/src/provider.js', anchor]);
+SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/nova/plugins/human-approval/schemas/config.schema.json::$.timeoutMinutes', [60, 'skills/nova/plugins/human-approval/src/approval.ts', 'config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES']);
+SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/nova/plugins/buster-quality-gate/schemas/config.schema.json::$.testAgentEnabled', [true, 'skills/nova/plugins/buster-quality-gate/src/stage.ts', 'context.contract.config.testAgentEnabled !== false']);
+for (const field of ['includeDebt', 'includeExperimental']) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`skills/nova/plugins/lint/schemas/config.schema.json::$.${field}`, [false, 'skills/nova/plugins/lint/src/stage.ts', `context.contract.config.${field} === true`]);
+for (const [field, value] of Object.entries({ pollMs: 1000, maxPollMs: 15000, maxPolls: 1800, sessionTimeoutMs: 1800000, spawnIntervalMs: 1500, maxPromptBytes: 900000, maxInputTokens: 120000, maxOutputTokens: 6000, maxContextTokens: 128000 })) {
+  const schemaPath = 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json';
+  const sourcePath = 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts';
+  const numeral = String(value).replace(/\B(?=(\d{3})+(?!\d))/gu, '_');
+  SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`${schemaPath}::$.targets.{*}.${field}`, [value, sourcePath, `numberValue(raw.${field}, ${numeral})`]);
+}
+SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::$.targets.{*}.collectorMode', [false, 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts', 'raw.collectorMode === true']);
+SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::$.targets.{*}.tokenizerEncoding', ['o200k_base', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts', "value === undefined ? 'o200k_base'"]);
+
 function schemaRuntimeValueMatchesType(value, declaredType) {
   return declaredType.split('|').some((type) => {
     if (type === 'any' || type === 'unspecified') return true;
@@ -2702,11 +2755,108 @@ function schemaRuntimeValueMatchesType(value, declaredType) {
   });
 }
 
+for (const [schemaPath, fieldPath, value, sourcePath, anchor] of [
+  ['skills/common/plugins/operator-messaging/schemas/config.schema.json', '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.format', 'json', 'skills/common/plugins/operator-messaging/src/config.ts', "raw.format ?? 'json'"],
+  ['skills/common/plugins/operator-messaging/schemas/config.schema.json', '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.maxPayloadBytes', 65536, 'skills/common/plugins/operator-messaging/src/config.ts', 'value ?? 65_536'],
+  ['skills/common/plugins/runtime-dispatch/schemas/config.schema.json', '$.targets.{*}.authentication', 'hmac', 'skills/common/plugins/runtime-dispatch/src/adapter.ts', "value.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'hmac'"],
+  ['skills/common/plugins/runtime-dispatch/schemas/config.schema.json', '$.targets.{*}.maxRequestBytes', 1048576, 'skills/common/plugins/runtime-dispatch/src/adapter.ts', 'boundedInteger(value.maxRequestBytes, 1_048_576'],
+  ['skills/common/plugins/runtime-dispatch/schemas/config.schema.json', '$.targets.{*}.maxResponseBytes', 1048576, 'skills/common/plugins/runtime-dispatch/src/adapter.ts', 'boundedInteger(value.maxResponseBytes, 1_048_576'],
+  ['skills/common/plugins/transport-publisher/schemas/config.schema.json', '$.targets.{*}.maxPayloadBytes', 262144, 'skills/common/plugins/transport-publisher/src/adapter.ts', 'positiveInteger(rawTarget.maxPayloadBytes, DEFAULT_MAX_PAYLOAD_BYTES)'],
+  ['skills/nova/plugins/review/schemas/config.schema.json', '$.profile', 'gate', 'skills/nova/plugins/review/src/stage.ts', "value.profile === undefined ? 'gate' : value.profile"],
+  ['skills/nova/plugins/review/schemas/repository-audit-config.schema.json', '$.profile', 'audit', 'skills/nova/plugins/review/src/repository-audit-stage.ts', "configText(value.profile, 'audit')"],
+  ['skills/nova/plugins/review/schemas/repository-audit-config.schema.json', '$.reviewerAgentId', 'codex', 'skills/nova/plugins/review/src/repository-audit-stage.ts', "configText(value.reviewerAgentId, 'codex')"],
+  ['skills/nova/plugins/review/schemas/repository-audit-config.schema.json', '$.reviewerThinking', 'high', 'skills/nova/plugins/review/src/repository-audit-stage.ts', "configText(value.reviewerThinking, 'high')"],
+  ['skills/nova/plugins/review/schemas/repository-audit-config.schema.json', '$.reviewerRuntime', 'subagent', 'skills/nova/plugins/review/src/repository-audit-stage.ts', "value.reviewerRuntime === undefined ? 'subagent' : value.reviewerRuntime"],
+]) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`${schemaPath}::${fieldPath}`, [value, sourcePath, anchor]);
+
+const schemaStaticSourceCache = new Map();
+function schemaStaticFallback(sourcePath, anchor) {
+  let parsed = schemaStaticSourceCache.get(sourcePath);
+  if (!parsed) {
+    const source = ts.createSourceFile(sourcePath, read(sourcePath), ts.ScriptTarget.Latest, true);
+    const bindings = new Map(); const functions = new Map();
+    const visit = (node) => {
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) bindings.set(node.name.text, node.initializer);
+      if (ts.isFunctionDeclaration(node) && node.name) functions.set(node.name.text, node);
+      ts.forEachChild(node, visit);
+    };
+    visit(source); parsed = { source, bindings, functions }; schemaStaticSourceCache.set(sourcePath, parsed);
+  }
+  const { source, bindings, functions } = parsed;
+  const unknown = Symbol('not statically proven');
+  const evaluate = (node, stack = new Set()) => {
+    if (!node) return unknown;
+    if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) return evaluate(node.expression, stack);
+    if (ts.isNumericLiteral(node)) return Number(node.text.replaceAll('_', ''));
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
+    if (node.kind === ts.SyntaxKind.TrueKeyword) return true;
+    if (node.kind === ts.SyntaxKind.FalseKeyword) return false;
+    if (node.kind === ts.SyntaxKind.NullKeyword) return null;
+    if (ts.isIdentifier(node) && bindings.has(node.text) && !stack.has(node.text)) return evaluate(bindings.get(node.text), new Set([...stack, node.text]));
+    if (ts.isArrayLiteralExpression(node)) {
+      const values = node.elements.map((item) => evaluate(item, stack)); return values.includes(unknown) ? unknown : values;
+    }
+    if (ts.isObjectLiteralExpression(node)) {
+      const entries = [];
+      for (const property of node.properties) {
+        if (!ts.isPropertyAssignment(property)) return unknown;
+        const value = evaluate(property.initializer, stack); if (value === unknown) return unknown;
+        entries.push([property.name.getText(source).replace(/^['"]|['"]$/gu, ''), value]);
+      }
+      return Object.fromEntries(entries);
+    }
+    if (ts.isBinaryExpression(node)) {
+      const left = evaluate(node.left, stack); const right = evaluate(node.right, stack);
+      if (typeof left !== 'number' || typeof right !== 'number') return unknown;
+      switch (node.operatorToken.kind) {
+        case ts.SyntaxKind.PlusToken: return left + right;
+        case ts.SyntaxKind.MinusToken: return left - right;
+        case ts.SyntaxKind.AsteriskToken: return left * right;
+        case ts.SyntaxKind.SlashToken: return left / right;
+      }
+    }
+    return unknown;
+  };
+  const matches = [];
+  const visit = (node) => {
+    if (node.getText(source).includes(anchor)) {
+      let value = unknown;
+      if (ts.isBinaryExpression(node)) {
+        if (node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken) value = evaluate(node.right);
+        // These exact boolean expressions deliberately select the result for
+        // undefined. Validation decides whether other authored values are legal.
+        if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken && node.right.kind === ts.SyntaxKind.TrueKeyword) value = false;
+        if (node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken && node.right.kind === ts.SyntaxKind.FalseKeyword) value = true;
+      }
+      if (ts.isConditionalExpression(node) && /===\s*undefined/u.test(node.condition.getText(source))) value = evaluate(node.whenTrue);
+      else if (ts.isConditionalExpression(node) && ts.isBinaryExpression(node.condition)
+        && node.condition.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken
+        && ts.isStringLiteral(node.condition.right)) value = evaluate(node.whenFalse);
+      if (ts.isPropertyAssignment(node)) value = evaluate(node.initializer);
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+        const definition = functions.get(node.expression.text);
+        const fallbackIndex = definition?.parameters.findIndex((parameter) => parameter.name.getText(source) === 'fallback') ?? -1;
+        if (fallbackIndex < 0 && node.expression.text === 'integer' && sourcePath.includes('/security-providers/')) {
+          assert(read('skills/buster/plugins/security-providers/src/common.js').includes('const result = value ?? fallback;'), 'CONFIG_SCHEMA_DEFAULT_AUTHORITY: security integer helper changed');
+          value = evaluate(node.arguments[1]);
+        }
+        if (fallbackIndex >= 0 && definition.body && /(?:\?\?\s*fallback|===\s*undefined\s*\?\s*fallback)/u.test(definition.body.getText(source))) value = evaluate(node.arguments[fallbackIndex]);
+      }
+      if (value !== unknown) matches.push({ value, length: node.end - node.pos });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source); matches.sort((a, b) => a.length - b.length);
+  assert(matches.length > 0, `CONFIG_SCHEMA_DEFAULT_AUTHORITY: ${sourcePath} ${anchor} has no supported source-derived fallback expression`);
+  return matches[0].value;
+}
+
 function schemaRuntimeFallback(authorityPath, field) {
   const authorityKey = `${authorityPath}::${field.path}`;
   const authority = SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.get(authorityKey);
   if (!authority) return null;
-  const [value, sourcePath, anchor] = authority;
+  const [, sourcePath, anchor] = authority;
+  const value = schemaStaticFallback(sourcePath, anchor);
   assert(schemaRuntimeValueMatchesType(value, field.type),
     `${authorityKey}: runtime fallback ${JSON.stringify(value)} does not match schema type ${field.type}`);
   const text = read(sourcePath);
@@ -2715,21 +2865,33 @@ function schemaRuntimeFallback(authorityPath, field) {
   return { value, evidence: `${sourcePath}:${lineAt(text, index)}` };
 }
 
+function schemaUsesProviderDefaults(authorityPath) {
+  const registration = registeredSchemaAuthorities().find((authority) => authority.key === authorityPath);
+  return registration?.registrations.length > 0 && registration.registrations.every((item) => item.pointer.startsWith('$.testProviders['));
+}
+
 function schemaDefaultBehavior(authorityPath, field, runtimeFallback) {
   if (field.presence === 'forbidden') return `The field must be omitted when ${field.branches.join(' > ')} matches.`;
-  if (field.default !== '<none>') {
-    if (schemaAuthorityPath(authorityPath) === 'skills/common/plugin-runtime/foundation/config/platform.schema.json') {
-      return `The schema annotates ${JSON.stringify(field.default)} as the default. The platform-file loader validates without default insertion, so the caller must supply or derive it.`;
-    }
-    return `The plugin registry clones the supplied configuration and inserts the schema default ${JSON.stringify(field.default)} before it invokes the registration.`;
+  const annotation = field.default !== '<none>' ? `The schema advertises ${JSON.stringify(field.default)} as a default. ` : 'The schema declares no default. ';
+  if (field.default !== '<none>' && schemaUsesProviderDefaults(authorityPath)) {
+    return `${annotation}The test-provider resolver clones the authored values and applies schema defaults before provider invocation (skills/common/plugin-runtime/foundation/registry/configuration.ts:102; schema.ts:108). Explicit values, including permitted empty collections, remain unchanged.`;
   }
-  if (field.required) return 'The immediate parent requires this field. Omitting it is invalid.';
-  if (runtimeFallback) return `The schema has no default. When the field is absent, the linked runtime uses ${JSON.stringify(runtimeFallback.value)} (${runtimeFallback.evidence}).`;
-  return 'The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value.';
+  if (field.required) return `${annotation}The immediate parent requires this field. Validation without default insertion rejects omission.`;
+  if (runtimeFallback) return `${annotation}When the field is absent, the linked runtime uses ${JSON.stringify(runtimeFallback.value)} (${runtimeFallback.evidence}). Stage, observer, and adapter validation does not insert defaults.`;
+  return `${annotation}Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value.`;
 }
 
 function schemaEmptyBehavior(field) {
   const constraints = new Map(field.constraints.map((constraint) => [constraint.name, constraint.value]));
+  if (field.type === 'array') {
+    if (Number(constraints.get('minItems') ?? 0) > 0) return 'An empty array is invalid because minItems requires at least one item.';
+    if (constraints.has('contains') && Number(constraints.get('minContains') ?? 1) > 0) return 'An empty array is invalid because contains requires a matching item.';
+    return 'The local array constraints permit zero items. Apply every listed conditional constraint and the linked consumer rules before using an empty array.';
+  }
+  if (field.type === 'object') {
+    if (Number(constraints.get('minProperties') ?? 0) > 0 || (constraints.get('required') ?? []).length > 0) return 'An empty object is invalid because this object requires properties.';
+    return 'The local object constraints permit zero properties. Apply every listed conditional constraint and the linked consumer rules before using an empty object.';
+  }
   if (field.type.includes('string')) {
     if (Number(constraints.get('minLength') ?? 0) > 0) return 'An empty string is invalid.';
     if (constraints.has('const') && constraints.get('const') !== '') return 'An empty string does not match the required constant.';
@@ -3283,6 +3445,17 @@ for (const schemaPath of [
   }
 }
 
+for (const [field, anchor] of Object.entries({
+  endpoint: 'endpointValue(raw.endpoint)', tokenSecret: 'text(raw.tokenSecret)', runtime: "runtime: raw.runtime",
+  agentId: 'idValue(raw.agentId', agentRole: 'idValue(raw.agentRole', model: 'text(raw.model)', thinking: 'text(raw.thinking',
+  controllerSessionKey: 'controllerSessionKey(raw.controllerSessionKey', cwd: 'absolute(raw.cwd)', repositoryRoot: 'absolute(raw.repositoryRoot)',
+  workspaceRoot: 'raw.workspaceRoot === undefined', resultPathPrefix: 'prefixValue(raw.resultPathPrefix)', resultEndpoint: 'optionalUrl(raw.resultEndpoint)', resultTokenSecret: 'optionalText(raw.resultTokenSecret)',
+  collectorMode: 'raw.collectorMode === true', tokenizerEncoding: 'encodingValue(raw.tokenizerEncoding)',
+})) SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::$.targets.{*}.${field}`, ['skills/common/plugins/runtime-dispatch/src/openclaw-config.ts', anchor]);
+for (const [key, [value, sourcePath, anchor]] of SCHEMA_RUNTIME_FALLBACK_AUTHORITIES) {
+  if (key.startsWith('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::')) SCHEMA_IMPLEMENTATION_AUTHORITIES.set(key, [sourcePath, anchor]);
+}
+
 function explicitSchemaImplementationEvidence(authorityPath, fieldPath) {
   const authority = SCHEMA_IMPLEMENTATION_AUTHORITIES.get(`${authorityPath}::${fieldPath}`);
   if (!authority) return null;
@@ -3326,6 +3499,131 @@ function schemaImplementationEvidence(authorityPath, fieldPath) {
   return scored[0] ?? null;
 }
 
+// Collections are public configuration too. Each entry binds the whole map or
+// selection list to the implementation that consumes it, including empty input.
+const SCHEMA_COLLECTION_AUTHORITIES = new Map();
+function collectionAuthority(schemaPath, paths, sourcePath, anchor, purpose, omission = null, empty = null) {
+  for (const fieldPath of paths) {
+    SCHEMA_COLLECTION_AUTHORITIES.set(`${schemaPath}::${fieldPath}`, { sourcePath, anchor, purpose, omission, empty });
+    SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::${fieldPath}`, [sourcePath, anchor]);
+  }
+}
+const busterSchema = (plugin) => `skills/buster/plugins/${plugin}/schemas/config.schema.json`;
+const busterSource = (plugin) => `skills/buster/plugins/${plugin}/src/provider.js`;
+collectionAuthority(busterSchema('direct-command'), ['$.args'], busterSource('direct-command'), 'const args = value.args ?? []',
+  'Supplies the ordered arguments passed to the selected executable.', 'The provider uses an empty argument list when omitted.', 'An empty array passes no arguments.');
+collectionAuthority(busterSchema('direct-command'), ['$.environment'], busterSource('direct-command'), 'environment: { ...environment, CI:',
+  'Supplies permitted command environment entries. The provider sets CI to the string true after these entries.', 'Omission uses an empty authored map, then inserts CI=true.', 'An empty object still produces CI=true. Protected environment names, invalid names, NUL values, or more than 64 entries are rejected. The shipped common command-runner rejects every payload.environment, including this injected CI entry, with COMMAND_ENVIRONMENT_DENIED. This provider therefore needs an executor that explicitly supports its environment payload; the common command-runner does not execute this request.');
+SCHEMA_COLLECTION_AUTHORITIES.get(`${busterSchema('direct-command')}::$.environment`).secondaryAuthorities = [
+  ['skills/common/plugins/command-runner/src/adapter.ts', "request.payload.environment !== undefined"],
+];
+for (const kind of ['reports', 'coverage', 'artifacts']) {
+  collectionAuthority(busterSchema('direct-command'), [`$.${kind}`, `$.${kind}[]`], busterSource('direct-command'), `const ${kind} = declarations(value.${kind}`,
+    `Declares the ${kind} copied from repository-relative output files. Identifiers and paths must be unique across all three evidence collections.`,
+    'The declarations parser uses an empty list when omitted.', kind === 'reports'
+      ? 'An empty list is required for resultMode=exit-code and forbidden for resultMode=junit-required.'
+      : 'An empty list declares no output of this kind.');
+}
+collectionAuthority(busterSchema('container-build'), ['$.definition.buildArgs'], busterSource('container-build'), "buildArgs = object(definition.buildArgs",
+  'Maps Docker build-argument names to values sent to the immutable image build.', 'Omission leaves the initial buildArgs map empty.', 'An empty map supplies no build arguments.');
+collectionAuthority(busterSchema('demo-auth-smoke'), ['$.assertions', '$.assertions[]'], 'skills/buster/plugins/demo-auth-smoke/src/protocol.js', 'Array.isArray(value.assertions)',
+  'Selects protected-response business assertions in addition to the authenticated username check.', 'The protocol requires assertions; omission is invalid.', 'An empty list is rejected with DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED.');
+for (const plugin of ['axe', 'lighthouse']) collectionAuthority(busterSchema(plugin), ['$.acceptances', '$.acceptances[]'], busterSource(plugin), 'config.acceptances ?? []',
+  `Declares expiring exceptions for exact ${plugin} findings.`, 'Omission uses an empty acceptance list.', 'An empty list suppresses no finding.');
+for (const [field, anchor, purpose, omission, empty] of [
+  ['image', 'value.image === undefined ? object', 'Selects the immutable image reference and digest for a Kubernetes deployment lease.', 'Omission selects exactly one image input; no config image and no input is rejected. Supplying both is ambiguous.', 'An empty image object lacks the required matching reference and digest and is rejected.'],
+  ['retention', 'value.retention === undefined ? {}', 'Controls whether the isolated deployment is deleted or retained and sets its lease lifetime.', 'Omission uses an empty policy, then mode=delete and seconds=1800.', 'An empty object uses mode=delete and seconds=1800.'],
+  ['testCredentials', 'value.testCredentials === undefined ? null', 'Requests generation of isolated demo credentials under one declared Secret name.', 'Omission disables credential generation.', 'An empty object lacks mode=generate and a valid secretName and is rejected.'],
+]) collectionAuthority(busterSchema('kubernetes-fixture'), [`$.${field}`], busterSource('kubernetes-fixture'), anchor, purpose, omission, empty);
+for (const [field, anchor, purpose] of [
+  ['headers', 'header: selected.headers ?? {}', 'Maps HTTP request-header names to values for one selected OpenAPI operation.'],
+  ['query', 'query: selected.query ?? {}', 'Maps declared query-parameter names to scalar request values for one selected OpenAPI operation.'],
+  ['pathParameters', 'path: selected.pathParameters ?? {}', 'Maps OpenAPI route placeholders to scalar values encoded into the request path.'],
+  ['expectedStatuses', 'selected.expectedStatuses.includes(response.status)', 'Selects the response status codes accepted for one operation in addition to the response-schema checks.'],
+]) collectionAuthority(busterSchema('openapi'), [`$.operations[].${field}`], busterSource('openapi'), anchor, purpose,
+  field === 'expectedStatuses' ? 'Omission performs no additional expectedStatuses membership check.' : 'Omission uses an empty supplied parameter map. Required OpenAPI parameters must still be satisfied.',
+  field === 'expectedStatuses' ? 'An empty array is invalid under minItems.' : 'An empty map supplies no parameter of this kind. The loaded OpenAPI document can require parameters that make it invalid.');
+for (const provider of ['dependency', 'headers', 'image', 'kubernetes-policy', 'kubernetes-runtime']) {
+  const schemaPath = `skills/buster/plugins/security-providers/schemas/${provider}.schema.json`;
+  collectionAuthority(schemaPath, ['$.policy'], 'skills/buster/plugins/security-providers/src/common.js', 'item.profile !== POLICY.profile',
+    'Selects the strict-v1 security decision policy and its time-bounded finding exceptions.', 'Omission is invalid: the policy object and strict-v1 profile are required.', 'An empty object lacks profile=strict-v1 and is rejected.');
+  collectionAuthority(schemaPath, ['$.policy.acceptances', '$.policy.acceptances[]'], 'skills/buster/plugins/security-providers/src/common.js', 'acceptances: acceptances(item.acceptances)',
+    'Declares exact finding identifiers whose suppression ends at expiresAt; each entry requires a reason and a unique findingId.', 'The acceptance parser uses an empty list when omitted.', 'An empty list suppresses no finding.');
+}
+for (const [field, anchor, purpose] of [
+  ['rules', 'const value = overrides === undefined ? {}', 'Supplies removals, additions, and replacements for the selected built-in security-header rule profile.'],
+  ['rules.remove', 'base.filter((item) => !remove.includes(item.id))', 'Selects built-in security-header rule identifiers to remove from the active rule list.'],
+]) collectionAuthority('skills/buster/plugins/security-providers/schemas/headers.schema.json', [`$.${field}`], 'skills/buster/plugins/security-providers/src/headers.js', anchor, purpose);
+collectionAuthority(busterSchema('size-budget'), ['$.matchingFiles', '$.matchingFiles[]'], busterSource('size-budget'), 'const matchingFiles = value.matchingFiles ?? []',
+  'Declares named glob rules with a maximum aggregate byte count for each matched file set.', 'Omission uses an empty matching-rule list.', 'An empty list adds no matching-file check. At least one total, count, growth, or matching-file limit is still required.');
+for (const [field, anchor, purpose, omission, empty] of [
+  ['masks', 'config.masks ?? []', 'Declares CSS selector masks for selected screenshot targets.', 'Omission uses an empty mask list.', 'An empty list masks no element.'],
+  ['masks[]', 'config.masks ?? []', 'Binds one selector list to a target already present in targets.', null, 'An empty object lacks a target and selector list and is rejected.'],
+  ['overrides', 'config.overrides ?? {}', 'Overrides named thresholds in the selected visual comparison profile.', 'Omission uses an empty override map.', 'An empty map keeps every selected comparison-profile threshold.'],
+]) collectionAuthority(busterSchema('visual'), [`$.${field}`], busterSource('visual'), anchor, purpose, omission, empty);
+const platformSchema = 'skills/common/plugin-runtime/foundation/config/platform.schema.json';
+const engineRuntime = 'skills/nova/core/execution/engine-runtime.ts';
+for (const [paths, anchor, purpose, empty] of [
+  [['$.activeAdapters'], 'platform.activeAdapters.forEach', 'Selects adapter registrations to activate; configuration alone does not activate an adapter.', 'An empty list activates no adapter directly. Required capability dependencies still govern admission.'],
+  [['$.adapters', '$.adapters.{*}'], 'adapters: objectMap(platform.adapters)', 'Maps adapter registration identifiers to their exact activation configuration.', 'An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema.'],
+  [['$.observers', '$.observers.{*}'], 'observers: objectMap(platform.observers)', 'Maps enabled observer registration identifiers to their exact configuration.', 'An empty map enables no observer.'],
+  [['$.externalTrust', '$.externalTrust.allowedSourceDigests', '$.externalTrust.allowedSourceDigests.{*}'], 'platform.externalTrust.allowedSourceDigests', 'Selects allowed external package digests for each canonical source reference.', 'An empty digest map permits no source by digest allowlisting; an empty per-source list permits no digest for that source.'],
+  [['$.externalTrust.verifiedAttestations'], 'platform.externalTrust.verifiedAttestations', 'Maps external package digests to verified attestation digests used by package admission.', 'An empty map provides no verified attestation admission.'],
+  [['$.providers'], 'new Map(Object.entries(platform.providers))', 'Selects one adapter registration for each configured capability identifier.', 'An empty map selects no capability providers. Registrations that require capabilities can fail admission.'],
+  [['$.grants', '$.grants.{*}', '$.grants.{*}.{*}'], 'grants: nestedMap(platform.grants)', 'Maps registration identifiers and capability identifiers to their resource-scoped grants.', 'An empty grant map grants no capability at that level. Configuration cannot create permission outside this policy.'],
+]) collectionAuthority(platformSchema, paths, engineRuntime, anchor, purpose, 'The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints.', empty);
+collectionAuthority(platformSchema, ['$.administrativeDecisionIssuers', '$.administrativeDecisionIssuers[]'], 'skills/nova/core/execution/engine-admin.ts', 'administrativeDecisionIssuers.some',
+  'Selects the operator or administrator identities allowed to reopen a run.', 'The platform schema requires this list.', 'An empty list denies every administrative reopen principal. An empty entry lacks type and id and is invalid.');
+collectionAuthority(platformSchema, ['$.isolation'], 'skills/common/plugin-runtime/foundation/config/platform.ts', 'config.isolation ? { isolation:',
+  'Selects the cgroup root passed to plugin activation after resolution relative to the platform file.', 'Omission supplies no isolation override.', 'An empty object lacks cgroupRoot and is invalid.');
+collectionAuthority('skills/common/plugins/command-runner/schemas/config.schema.json', ['$.executableCatalog'], 'skills/common/plugins/command-runner/src/adapter.ts', 'catalogFrom(context.config.executableCatalog)',
+  'Maps stable logical executable identifiers to canonical executable paths added to the command allowlist. propertyNames constrains every identifier.', 'Omission uses an empty catalog; allowedExecutables remains a separate allowlist.', 'An empty map adds no executable path.');
+collectionAuthority('skills/common/plugins/secret-resolver/schemas/config.schema.json', ['$.environment'], 'skills/common/plugins/secret-resolver/src/adapter.ts', 'const mapping = context.config.environment',
+  'Maps allowed secret identifiers to process environment-variable names. It controls which confidential requests can resolve a value.', 'Omission is rejected as a missing environment mapping.', 'An empty object resolves no secret identifier; lookup returns SECRET_DENIED.');
+collectionAuthority('skills/common/plugins/notification-observer/schemas/config.schema.json', ['$.stageLabels'], 'skills/common/plugins/notification-observer/src/observer.ts', 'const stageLabels = context.contract.config.stageLabels',
+  'Maps stage identifiers to bounded labels in lifecycle notifications.', 'Omission supplies no configured stage labels; notification presentation uses its built-in stage identity or agent-role label.', 'An empty map overrides no stage label.');
+const operatorTargetPath = '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}';
+collectionAuthority('skills/common/plugins/operator-messaging/schemas/config.schema.json', [operatorTargetPath], 'skills/common/plugins/operator-messaging/src/config.ts', "exactKeys(raw, TARGET_KEYS",
+  'Selects one closed operator-message target: a direct endpoint with a token, or a secret endpoint paired with its public origin.');
+for (const [schemaName, sourceName, anchor] of [
+  ['config', 'adapter', 'Object.entries(raw.targets)'],
+  ['openclaw-config', 'openclaw-config', 'Object.entries(raw.targets)'],
+]) collectionAuthority(`skills/common/plugins/runtime-dispatch/schemas/${schemaName}.schema.json`, ['$.targets', '$.targets.{*}'], `skills/common/plugins/runtime-dispatch/src/${sourceName}.ts`, anchor,
+  schemaName === 'config' ? 'Maps target identifiers to generic dispatcher endpoints and authentication policy.' : 'Maps target identifiers to OpenClaw session configuration, token budgets, result import, and polling limits.');
+for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {
+  collectionAuthority(schemaPath, ['$.policy'], 'skills/nova/plugins/review/src/review-policy-resolver.ts', "candidates.push(['settings_file', validated(input.settingsFile",
+    'Supplies a complete replacement review policy. The resolver validates the built-in policy first, then selects this settings policy as a whole; it does not merge individual fields.',
+    'Omission selects the built-in policy named by profile. The stage applies its own default profile when profile is also absent.',
+    'An empty object is invalid because the complete review-policy fields are required.');
+  for (const [section, purpose] of Object.entries({
+    blocking: 'Selects blocking finding priorities and categories and their diff/evidence conditions. P0 and correctness, security, and contract cannot be omitted.',
+    limits: 'Sets bounded finding, bundle, context, expansion, and advisory capacities.',
+    scope: 'Selects what happens to outside-scope, unknown-scope, and pre-existing findings.',
+    verification: 'Selects semantic verification and the action for insufficient evidence or an unverified requirement.',
+    simplification: 'Selects simplification rules, confidence, and recommendation capacity. Enabled policies need rules and positive capacity; disabled policies require neither.',
+    ranking: 'Sets priority, category, diff, and evidence weights used to order finding clusters.',
+    followUp: 'Selects retained follow-up priorities and their capacity. follow_up actions require both non-empty priorities and positive capacity.',
+    governor: 'Sets repair-cycle and growth budgets used to stop further repairs.',
+  })) collectionAuthority(schemaPath, [`$.policy.${section}`], 'skills/nova/plugins/review/src/review-policy-parser.ts', `section(input, '${section}')`, purpose);
+  for (const category of ['priority', 'category']) collectionAuthority(schemaPath, [`$.policy.ranking.${category}Weights`], 'skills/nova/plugins/review/src/review-policy-parser.ts', `weights(value.${category}Weights`,
+    `Maps each known ${category} to the non-negative weight used to rank finding clusters.`);
+}
+
+function schemaCollectionAuthority(authorityPath, field) {
+  const authority = SCHEMA_COLLECTION_AUTHORITIES.get(`${authorityPath}::${field.path}`);
+  if (!authority) return null;
+  const text = read(authority.sourcePath);
+  const index = text.indexOf(authority.anchor);
+  assert(index >= 0, `${authorityPath}::${field.path}: missing collection authority ${authority.sourcePath} ${authority.anchor}`);
+  const additionalImplementationEvidence = (authority.secondaryAuthorities ?? []).map(([sourcePath, anchor]) => {
+    const source = read(sourcePath); const sourceIndex = source.indexOf(anchor);
+    assert(sourceIndex >= 0, `${authorityPath}::${field.path}: secondary implementation authority changed`);
+    return `${sourcePath}:${lineAt(source, sourceIndex)}`;
+  });
+  return { ...authority, evidence: `${authority.sourcePath}:${lineAt(text, index)}`, additionalImplementationEvidence };
+}
+
+let priorSchemaAuthorityKeys = null;
 function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
   const authorityKey = `${authorityPath}::${field.path}`;
   if (field.type === 'recursive-reference') {
@@ -3346,7 +3644,7 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       consumerEvidence,
     };
   }
-  if (field.path === '$' || ['object', 'array'].includes(field.type)) {
+  if (field.path === '$' || field.branches.includes('definition')) {
     return {
       authorityKey,
       status: 'structural-container',
@@ -3356,7 +3654,7 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       implementationEvidence: null,
       acceptedValues: schemaAcceptedValues(field),
       defaultBehavior: schemaDefaultBehavior(authorityPath, field, null),
-      emptyBehavior: 'Not applicable to a structural container.',
+      emptyBehavior: schemaEmptyBehavior(field),
       changeImpact: 'Child fields, not the container row, define runtime changes.',
       failureMeaning: 'Container shape and child constraints determine validation failure.',
       blockerOwner: null,
@@ -3365,8 +3663,9 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
   }
   const context = schemaRuntimeContext(authorityPath);
   const priorSchema = priorInventory('configuration-schemas.json');
-  const priorAuthorityKeys = new Set((priorSchema?.files ?? []).flatMap((file) =>
-    (file.fields ?? []).map((candidate) => candidate.meaning?.authorityKey ?? `${file.path}::${candidate.path}`)));
+  priorSchemaAuthorityKeys ??= new Set((priorSchema?.files ?? []).flatMap((file) =>
+    (file.fields ?? []).map((candidate) => `${file.path}::${candidate.path}`)));
+  const priorAuthorityKeys = priorSchemaAuthorityKeys;
   const previouslyInventoried = priorSchema === null || priorAuthorityKeys.has(authorityKey);
   const inheritedThroughLocalReference = (field.resolvedReferences ?? []).length > 0;
   const authoredDescription = field.description?.trim() || null;
@@ -3375,13 +3674,14 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
   // unrelated provider. Existing rows are drift-controlled, while referenced
   // leaves inherit their identity from the resolved local schema definition.
   const permitsInferredAuthority = previouslyInventoried || inheritedThroughLocalReference || Boolean(authoredDescription);
-  const purpose = context && permitsInferredAuthority ? schemaSpecificPurpose(authorityPath, field.path, context) : null;
+  const collection = schemaCollectionAuthority(authorityPath, field);
+  const purpose = collection?.purpose ?? (context && permitsInferredAuthority ? schemaSpecificPurpose(authorityPath, field.path, context) : null);
   const implementation = permitsInferredAuthority ? schemaImplementationEvidence(authorityPath, field.path) : null;
   const runtimeFallback = schemaRuntimeFallback(authorityPath, field);
   const describedPurpose = authoredDescription || purpose;
   const acceptedValues = schemaAcceptedValues(field);
-  const defaultBehavior = schemaDefaultBehavior(authorityPath, field, runtimeFallback);
-  const emptyBehavior = schemaEmptyBehavior(field);
+  const defaultBehavior = collection?.omission ?? schemaDefaultBehavior(authorityPath, field, runtimeFallback);
+  const emptyBehavior = collection?.empty ?? schemaEmptyBehavior(field);
   if (describedPurpose && implementation) {
     const changeImpact = `Changing ${field.path} changes this exact configured behavior when ${context} next loads it: ${describedPurpose}`;
     const failureMeaning = `Schema validation rejects ${field.path} when it violates ${acceptedValues}. The linked consumer at ${implementation.path}:${implementation.line} owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.`;
@@ -3392,6 +3692,12 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       evidence: `${implementation.path}:${implementation.line}`,
       schemaEvidence: schemaAuthorityPath(authorityPath),
       implementationEvidence: `${implementation.path}:${implementation.line}`,
+      additionalImplementationEvidence: [...new Set([
+        ...(collection?.additionalImplementationEvidence ?? []),
+        ...(runtimeFallback ? [runtimeFallback.evidence] : []),
+        ...(field.default !== '<none>' && schemaUsesProviderDefaults(authorityPath)
+          ? ['skills/common/plugin-runtime/foundation/registry/configuration.ts:102', 'skills/common/plugin-runtime/foundation/registry/schema.ts:106'] : []),
+      ])].filter((evidence) => evidence !== `${implementation.path}:${implementation.line}`),
       runtimeDefault: runtimeFallback?.value ?? null,
       runtimeDefaultEvidence: runtimeFallback?.evidence ?? null,
       acceptedValues,
@@ -3442,6 +3748,34 @@ function schemaType(schema) {
   return 'unspecified';
 }
 
+const SUPPORTED_SCHEMA_KEYWORDS = new Set([
+  ...SCHEMA_CONSTRAINTS, '$schema', '$id', '$ref', '$defs', 'definitions', '$comment',
+  'title', 'description', 'default', 'examples', 'deprecated', 'readOnly', 'writeOnly',
+  'type', 'properties', 'patternProperties', 'items', 'prefixItems',
+]);
+
+function assertSupportedSchemaRules(schema, fieldPath = '$') {
+  if (typeof schema === 'boolean') return;
+  assert(schema && typeof schema === 'object' && !Array.isArray(schema), `CONFIG_SCHEMA_UNSUPPORTED_KEYWORD: invalid schema at ${fieldPath}`);
+  for (const keyword of Object.keys(schema)) assert(SUPPORTED_SCHEMA_KEYWORDS.has(keyword),
+    `CONFIG_SCHEMA_UNSUPPORTED_KEYWORD: ${fieldPath} ${keyword}; add extraction and semantic tests before publishing this validation rule`);
+  for (const keyword of ['properties', 'patternProperties', '$defs', 'definitions', 'dependentSchemas']) {
+    for (const [name, child] of Object.entries(schema[keyword] ?? {})) assertSupportedSchemaRules(child, `${fieldPath}.${keyword}.${name}`);
+  }
+  for (const keyword of ['additionalProperties', 'items', 'contains', 'propertyNames', 'if', 'then', 'else', 'not']) {
+    if (schema[keyword] !== undefined) assertSupportedSchemaRules(schema[keyword], `${fieldPath}.${keyword}`);
+  }
+  for (const keyword of ['allOf', 'anyOf', 'oneOf', 'prefixItems']) {
+    (schema[keyword] ?? []).forEach((child, index) => assertSupportedSchemaRules(child, `${fieldPath}.${keyword}[${index}]`));
+  }
+}
+
+function schemaPublishedValue(fieldPath, value) {
+  // Token counts and tokenizer identities are public validation metadata, not
+  // credentials. Preserve their finite schema defaults and allowed constants.
+  return /(?:Tokens|tokenizerEncoding)$/u.test(fieldPath) ? value : redactValue(fieldPath, value);
+}
+
 function schemaConstraints(schema, fieldPath) {
   if (!schema || typeof schema !== 'object') return [];
   const constraints = [];
@@ -3451,9 +3785,10 @@ function schemaConstraints(schema, fieldPath) {
     if (key === 'additionalProperties' && typeof value === 'object') value = '<schema>';
     constraints.push({
       name: key,
-      value: key === 'const' || key === 'enum' ? redactValue(fieldPath, value) : value,
+      value: key === 'const' || key === 'enum' ? schemaPublishedValue(fieldPath, value) : value,
     });
   }
+  if (typeof schema.items === 'boolean') constraints.push({ name: 'items', value: schema.items });
   if (schema.$ref) constraints.push({ name: '$ref', value: schema.$ref });
   if (schema.deprecated === true) constraints.push({ name: 'deprecated', value: true });
   return constraints;
@@ -3471,12 +3806,17 @@ function resolveLocalSchemaReference(rootSchema, reference) {
 }
 
 function flattenSchema(schema, fieldPath = '$', required = true, branches = [], output = [], rootSchema = schema, referenceStack = [], resolvedReferences = [], negated = false, forbiddenPresence = false) {
+  if (output.length === 0) assertSupportedSchemaRules(rootSchema);
   if (typeof schema === 'boolean') {
     output.push({ path: fieldPath, type: schemaType(schema), required: negated ? false : required, presence: forbiddenPresence ? 'forbidden' : 'allowed', negated, default: '<none>', constraints: [], branches, resolvedReferences, ownerRole: 'unknown', consumers: ['schema validator; runtime consumer not proven by schema'] });
     return output;
   }
+  for (const keyword of Object.keys(schema)) {
+    assert(SUPPORTED_SCHEMA_KEYWORDS.has(keyword), `CONFIG_SCHEMA_UNSUPPORTED_KEYWORD: ${fieldPath} ${keyword}; add recursive extraction and semantic tests before publishing this validation rule`);
+  }
   if (schema.$ref) {
     const resolved = resolveLocalSchemaReference(rootSchema, schema.$ref);
+    assert(resolved, `CONFIG_SCHEMA_UNSUPPORTED_REFERENCE: ${fieldPath} ${schema.$ref}; bind a finite local definition before publishing recursive configuration`);
     if (resolved) {
       if (referenceStack.includes(schema.$ref)) {
         output.push({
@@ -3497,14 +3837,10 @@ function flattenSchema(schema, fieldPath = '$', required = true, branches = [], 
       }
       const siblings = { ...schema };
       delete siblings.$ref;
-      const merged = Object.keys(siblings).length === 0 ? resolved : {
-        ...resolved,
-        ...siblings,
-        properties: resolved.properties || siblings.properties
-          ? { ...(resolved.properties ?? {}), ...(siblings.properties ?? {}) }
-          : undefined,
-        required: [...new Set([...(resolved.required ?? []), ...(siblings.required ?? [])])],
-      };
+      const validationSiblings = Object.keys(siblings).some((keyword) => !['title', 'description', 'default', 'examples', '$comment', 'deprecated', 'readOnly', 'writeOnly'].includes(keyword));
+      // A reference and its validation siblings are conjunctive. Merging their
+      // maps can overwrite a pattern, a bound, or a condition from the referent.
+      const merged = validationSiblings ? { allOf: [resolved, siblings] } : { ...resolved, ...siblings };
       return flattenSchema(merged, fieldPath, required, branches, output, rootSchema,
         [...referenceStack, schema.$ref], [...resolvedReferences, schema.$ref], negated, forbiddenPresence);
     }
@@ -3515,7 +3851,7 @@ function flattenSchema(schema, fieldPath = '$', required = true, branches = [], 
     required: negated ? false : required,
     presence: forbiddenPresence ? 'forbidden' : 'allowed',
     negated,
-    default: 'default' in schema ? redactValue(fieldPath, schema.default) : '<none>',
+    default: 'default' in schema ? schemaPublishedValue(fieldPath, schema.default) : '<none>',
     description: schema.description ?? '',
     constraints: [
       ...schemaConstraints(schema, fieldPath),
@@ -3826,7 +4162,7 @@ function buildSchemaInventory() {
       ownerRole: owner.component,
       ownerEvidence: owner.evidence,
       consumers: consumerEvidence,
-      meaning: schemaFieldMeaning(authority.path, field, consumerEvidence),
+      meaning: schemaFieldMeaning(authority.key, field, consumerEvidence),
     }));
     return {
       path: sourcePath,
@@ -3865,14 +4201,14 @@ function buildSchemaInventory() {
     };
   }
   const allSchemaFields = files.flatMap((file) => file.fields);
-  const publicSchemaLeaves = allSchemaFields.filter((field) => field.path !== '$' && !['object', 'array'].includes(field.type) && !field.branches.includes('definition'));
-  assert.equal(publicSchemaLeaves.filter((field) => !field.meaning?.text || !field.meaning?.evidence || !field.meaning?.status).length, 0,
-    'quality gate: every public schema leaf needs authored meaning or an explicit owned documentation blocker');
+  const publicSchemaFields = allSchemaFields.filter((field) => field.path !== '$' && !field.branches.includes('definition'));
+  assert.equal(publicSchemaFields.filter((field) => !field.meaning?.text || !field.meaning?.evidence || !field.meaning?.status).length, 0,
+    'quality gate: every public schema field needs authored meaning or an explicit owned documentation blocker');
   const schemaMeaningBlockers = files.flatMap((file) => file.fields
-    .filter((field) => field.path !== '$' && !['object', 'array'].includes(field.type) && !field.branches.includes('definition') && /blocker/u.test(field.meaning.status))
+    .filter((field) => field.path !== '$' && !field.branches.includes('definition') && /blocker/u.test(field.meaning.status))
     .map((field) => `${file.path}::${field.path}`));
-  if (schemaMeaningBlockers.length) {
-    throw new Error(`CONFIG_SEMANTIC_GAP: public schema leaves lack qualified field-path and consumer authority: ${schemaMeaningBlockers.slice(0, 12).join(', ')}. A same-named field in another provider is not evidence.`);
+  if (!allowSemanticGaps && schemaMeaningBlockers.length) {
+    throw new Error(`CONFIG_SEMANTIC_GAP: public schema fields lack qualified field-path and consumer authority: ${schemaMeaningBlockers.slice(0, 12).join(', ')}. A same-named field in another provider is not evidence.`);
   }
   const schemaByPath = new Map(files.map((file) => [file.path, file]));
   const securityTimeoutCases = [
@@ -3976,9 +4312,11 @@ function buildSchemaInventory() {
       unknownRuntimeOwner: swarm?.fields.filter((field) => field.runtimeOwner === 'unknown').length ?? 0,
       unknownConsumer: allSchemaFields.filter((field) => field.consumers.includes('unknown')).length + (swarm?.fields.filter((field) => field.consumers.includes('unknown')).length ?? 0),
       conditionalOrUnknownRequired: swarm?.fields.filter((field) => field.required === 'conditional-or-unknown').length ?? 0,
-      publicSchemaLeaves: publicSchemaLeaves.length,
-      schemaAndRuntimeAuthorities: publicSchemaLeaves.filter((field) => field.meaning.status === 'schema-and-runtime-authority').length,
-      qualifiedRuntimeAuthorities: publicSchemaLeaves.filter((field) => field.meaning.status === 'qualified-runtime-authority').length,
+      publicSchemaLeaves: publicSchemaFields.filter((field) => !['object', 'array'].includes(field.type)).length,
+      publicSchemaFields: publicSchemaFields.length,
+      publicSchemaCollectionFields: publicSchemaFields.filter((field) => ['object', 'array'].includes(field.type)).length,
+      schemaAndRuntimeAuthorities: publicSchemaFields.filter((field) => field.meaning.status === 'schema-and-runtime-authority').length,
+      qualifiedRuntimeAuthorities: publicSchemaFields.filter((field) => field.meaning.status === 'qualified-runtime-authority').length,
       schemaMeaningBlockers: schemaMeaningBlockers.length,
     },
   };
@@ -5844,10 +6182,10 @@ function buildRuntimeInputInventory(yamlInventory) {
     });
   }
   secrets.push(...helmTemplateSecretFacts());
-  for (const sourcePath of ['my-values/setup-secrets.sh', 'scripts/deploy.sh']) {
+  for (const sourcePath of runtimeTextSources().filter((sourcePath) => sourcePath.endsWith('.sh'))) {
     if (!exists(sourcePath)) continue;
     const text = read(sourcePath);
-    secrets.push(...shellSecretFacts(sourcePath, text));
+    secrets.push(...shellSecretFacts(sourcePath, maskQuotedShellHeredocs(text)));
   }
   enrichSecretFacts(secrets);
   const shellSecretFactsForEvidence = secrets.filter((fact) => fact.kind === 'declared-keys-in-script');
@@ -5911,7 +6249,7 @@ function buildRuntimeInputInventory(yamlInventory) {
   const classifiedCliFlags = classifyCliFacts(cliFlags);
   return {
     generatedBy: 'scripts/docs-configuration-inventory.mjs',
-    discovery: { roots: RUNTIME_SCAN_ROOTS, excludedSegments: [...EXCLUDED_SEGMENTS].sort() },
+    discovery: { roots: RUNTIME_SCAN_ROOTS, textExtensions: [...TEXT_EXTENSIONS].sort(), excludedSegments: [...EXCLUDED_SEGMENTS].sort(), shellSecretRule: 'every .sh source below the declared runtime roots, excluding quoted heredoc bodies; discover direct kubectl create secret commands and shell command arrays, and reject any discovered Secret without semantic authority' },
     environment: [...groupedEnvironment.values()].sort((a, b) => a.name.localeCompare(b.name)),
     cliFlags: classifiedCliFlags,
     secrets: secrets.sort((a, b) => a.path.localeCompare(b.path) || String(a.name).localeCompare(String(b.name)) || String(a.key ?? '').localeCompare(String(b.key ?? ''))),
@@ -5953,7 +6291,109 @@ function buildRuntimeInputInventory(yamlInventory) {
   };
 }
 
+async function verifyConfigurationSchemaSemantics() {
+  const ajv = new Ajv2020({ strict: false, allErrors: true }); addFormats(ajv);
+  const ruleCase = (schema, examples, expectedKeywords) => {
+    const fields = flattenSchema(schema);
+    const projected = structuredClone(schema);
+    for (const keyword of expectedKeywords) {
+      const constraint = fields[0].constraints.find((item) => item.name === keyword);
+      assert.deepEqual(constraint?.value, schema[keyword], `recursive rule ${keyword} was lost or changed`);
+      projected[keyword] = constraint.value;
+    }
+    const validator = ajv.compile(projected);
+    for (const [value, expected] of examples) assert.equal(validator(value), expected,
+      `recursive rule validation differs for ${JSON.stringify(value)}: ${JSON.stringify(validator.errors)}`);
+  };
+  const commandSchema = JSON.parse(read('skills/common/plugins/command-runner/schemas/config.schema.json'));
+  ruleCase(commandSchema.properties.executableCatalog,
+    [[{ node: '/usr/bin/node' }, true], [{ 'invalid key': '/usr/bin/node' }, false]], ['propertyNames']);
+  const dispatchSchema = JSON.parse(read('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'));
+  const paired = dispatchSchema.properties.targets.additionalProperties;
+  ruleCase({ type: 'object', properties: paired.properties, dependentRequired: paired.dependentRequired },
+    [[{}, true], [{ resultEndpoint: 'https://result.invalid', resultTokenSecret: 'result-token' }, true],
+      [{ resultEndpoint: 'https://result.invalid' }, false], [{ resultTokenSecret: 'result-token' }, false]], ['dependentRequired']);
+  for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {
+    const blocking = JSON.parse(read(schemaPath)).properties.policy.properties.blocking.properties;
+    ruleCase(blocking.priorities, [[['P0'], true], [['P1'], false], [[], false]], ['allOf']);
+    ruleCase(blocking.categories, [[['correctness', 'security', 'contract'], true], [['correctness', 'security'], false]], ['allOf']);
+    const branch = flattenSchema(blocking.priorities).find((field) => field.branches.includes('allOf[0]'));
+    assert.deepEqual(branch?.constraints.find((item) => item.name === 'contains')?.value, { const: 'P0' });
+  }
+  ruleCase({ type: 'array', items: { type: 'integer' }, contains: { const: 7 }, minContains: 2, maxContains: 3 },
+    [[[7, 7], true], [[7, 7, 7], true], [[7], false], [[7, 7, 7, 7], false], [[], false]], ['contains', 'minContains', 'maxContains']);
+  assert.throws(() => flattenSchema({ type: 'object', propertyNames: { unsupportedValidation: true } }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);
+  assert.throws(() => flattenSchema({ type: 'array', unevaluatedItems: false }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);
+  const referenceSiblings = flattenSchema({ $defs: { value: { type: 'string', pattern: '^A' } }, $ref: '#/$defs/value', pattern: 'Z$' });
+  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === '^A')));
+  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === 'Z$')));
+  assert.throws(() => flattenSchema({ $ref: 'https://unbound.invalid/schema' }), /CONFIG_SCHEMA_UNSUPPORTED_REFERENCE/u);
+  assert.equal(schemaPublishedValue('$.targets.{*}.maxInputTokens', 120000), 120000);
+  assert.equal(schemaPublishedValue('$.targets.{*}.tokenizerEncoding', 'o200k_base'), 'o200k_base');
+
+
+  const registry = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href);
+  const schemaApi = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href);
+  const approvalPath = fs.realpathSync(path.join(root, 'skills/nova/plugins/human-approval/schemas/config.schema.json'));
+  const approvalValidator = schemaApi.validateReferencedSchema(read('skills/nova/plugins/human-approval/schemas/config.schema.json'), approvalPath);
+  const stage = { type: 'approval', config: { target: 'operator', issuerId: 'authorized-operator' } };
+  const entry = { package: { root: path.dirname(path.dirname(approvalPath)), manifest: { id: 'fixture' } }, registration: { id: 'approval', configSchema: 'schemas/config.schema.json' } };
+  const snapshot = { stages: new Map([['approval', entry]]), observers: new Map(), adapters: new Map(), schemas: new Map([[approvalPath, approvalValidator]]) };
+  registry.validateRuntimeRegistrationConfiguration(snapshot, new Set(['fixture:approval']), { stages: [stage], observers: new Map(), adapters: new Map() });
+  assert.equal(Object.hasOwn(stage.config, 'timeoutMinutes'), false, 'stage validation inserted a schema default');
+  const approval = await import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href);
+  assert.equal(approval.parseApprovalConfig(stage.config).timeoutMinutes, 60);
+  assert.equal(approval.parseApprovalConfig({ ...stage.config, timeoutMinutes: 5 }).timeoutMinutes, 5);
+  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: '' }), { code: 'REGISTRY_RESULT_INVALID' });
+  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: 0 }), { code: 'REGISTRY_RESULT_INVALID' });
+  for (const family of ['observers', 'adapters']) {
+    const familySnapshot = { ...snapshot, stages: new Map(), [family]: new Map([['fixture:approval', entry]]) };
+    const config = { ...stage.config }; const configured = { stages: [], observers: new Map(), adapters: new Map(), [family]: new Map([['fixture:approval', config]]) };
+    registry.validateRuntimeRegistrationConfiguration(familySnapshot, new Set(['fixture:approval']), configured);
+    assert.equal(Object.hasOwn(config, 'timeoutMinutes'), false, `${family} validation inserted a default`);
+  }
+  const providerSchemaPath = 'fixture-provider-schema';
+  const providerValidator = schemaApi.validateReferencedSchema(JSON.stringify({ type: 'object', properties: { enabled: { type: 'boolean', default: true }, selections: { type: 'array', items: { type: 'string' }, default: ['default'] } } }), providerSchemaPath);
+  const providerSnapshot = { schemas: new Map([[providerSchemaPath, providerValidator]]), testProviderContracts: new Map([['fixture@1', { configSchemaPath: providerSchemaPath, configSchemaDigest: 'sha256:fixture' }]]) };
+  const input = {}; const resolved = registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', input);
+  assert.deepEqual(resolved.values, { enabled: true, selections: ['default'] }); assert.deepEqual(input, {});
+  assert.deepEqual(registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', { enabled: false, selections: [] }).values, { enabled: false, selections: [] });
+  const defaultField = { path: '$.timeoutMinutes', type: 'integer', required: false, default: 60, constraints: [], branches: [] };
+  const runtimeDefault = schemaRuntimeFallback('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField);
+  assert.equal(runtimeDefault.value, approval.parseApprovalConfig(stage.config).timeoutMinutes);
+  assert.doesNotMatch(schemaDefaultBehavior('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField, runtimeDefault), /registry.*inserts/iu);
+
+  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-config-semantics-'));
+  try {
+    fs.mkdirSync(path.join(fixtureRoot, 'repository')); fs.mkdirSync(path.join(fixtureRoot, 'evidence'));
+    const direct = await import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href);
+    const invocation = { configuration: { values: { executable: 'node', resultMode: 'exit-code' } }, limits: { logBytes: 4096, processes: 4, memoryBytes: 1048576, cpuMillis: 1000, artifactFiles: 8, artifactBytes: 4096 }, timeoutMs: 1000, workspace: { repository: 'repository', evidence: 'evidence' } };
+    let payload; const context = { workspaceRoot: fixtureRoot, signal: new AbortController().signal, log() {}, async invoke(capability, request) { assert.equal(capability, 'command.execute'); payload = request.payload; return { exitCode: 0, signal: null, records: [] }; } };
+    assert.equal((await direct.provider().execute(invocation, context)).outcome, 'passed');
+    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' }); assert.equal(payload.workingDirectory, path.join(fixtureRoot, 'repository'));
+    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: [], environment: {} } } }, context);
+    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' });
+    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: ['--version'], environment: { PUBLIC: 'value' } } } }, context);
+    assert.deepEqual(payload.args, ['--version']); assert.deepEqual(payload.environment, { PUBLIC: 'value', CI: 'true' });
+    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { executable: 'node', resultMode: 'junit-required', reports: [] } } }, context), /DIRECT_COMMAND_REPORT_REQUIRED/u);
+    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, reports: [{ id: 'report', path: 'result.xml', mediaType: 'application/junit+xml', format: 'junit' }] } } }, context), /DIRECT_COMMAND_REPORTS_FORBIDDEN/u);
+    const runner = await import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href);
+    const instance = runner.activate({ config: { allowedExecutables: [process.execPath], allowedWorkingRoots: [path.join(fixtureRoot, 'repository')], executableCatalog: { node: process.execPath }, maxOutputBytes: 4096, maxExecutionMs: 1000, terminationGraceMs: 10 } });
+    await assert.rejects(() => instance.invoke({ request: { capability: 'command.execute', operation: 'run', resource: { type: 'command.executable', canonicalId: 'catalog:node' }, payload }, signal: context.signal, fence: { assertCurrent() {} } }), /COMMAND_ENVIRONMENT_DENIED/u);
+    await instance.shutdown();
+  } finally { fs.rmSync(fixtureRoot, { recursive: true, force: true }); }
+  const newSecret = enrichSecretFacts(shellSecretFacts('scripts/new-secret-source.sh', 'kubectl create secret generic unowned-semantic-secret --from-literal=opaque=fixture\n'));
+  assert.equal(newSecret.length, 1); assert.deepEqual(newSecret[0].keys, ['opaque']); assert.equal(newSecret[0].semanticStatus, 'secret-authority-blocker');
+  console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');
+}
+
+if (argv.includes('--check-schema-semantics-only')) {
+  await verifyConfigurationSchemaSemantics();
+  process.exit(0);
+}
+
 export function buildConfigurationInventories() {
+  if (argv.includes('--schemas-only')) return new Map([['configuration-schemas.json', buildSchemaInventory()]]);
   const yaml = buildYamlInventory();
   return new Map([
     ['configuration-values.json', yaml],
