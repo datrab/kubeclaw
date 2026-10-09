@@ -324,7 +324,7 @@
       "owner": "Prism product and platform operations",
       "implementationAuthorities": ["charts/prism", "skills/prism", "scripts/deploy.sh"],
       "supportedStartState": "Selected Prism release and prepared cluster dependencies",
-      "productLimits": ["Current Prism deploy verification has an open stale assertion", "Same-server database proof is not external restore"],
+      "productLimits": ["Local deployment contract verification does not prove live Prism deployment or workload trust", "Same-server database proof is not external restore"],
       "procedure": {
         "supportedStartStateAndVersion": ["docs/site/use/prism-studio.md#canonical-prism-and-studio-procedure", "docs/site/use/prism-studio.md#before-you-start"],
         "executionLocation": ["docs/site/use/prism-studio.md#canonical-prism-and-studio-procedure"],

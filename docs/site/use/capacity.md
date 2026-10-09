@@ -94,21 +94,78 @@ oldest and newest retained item, and the same measurements from at least one
 earlier point. Calculate the observed growth rate and exhaustion time outside
 the target workload. Do not infer free space from a PVC request.
 
-| Store | Measurement authority | Retention boundary |
-| --- | --- | --- |
-| Node image/filesystem | Node and container-runtime operator | KubeClaw has no node cleanup command |
-| Registry and BuildKit | Registry/BuildKit administration | Stop writers before product-native garbage collection |
-| Nova durable root | Filesystem plus Nova audit | No supported run-deletion CLI; retained state protects replay and effect reconciliation |
-| Buster job/evidence roots | Buster records and filesystem | Do not remove accepted jobs, receipts, or uncertain cleanup evidence |
-| Redis | Redis owner and configured persistence mode | No repository-wide cleanup rule |
-| LiteLLM PostgreSQL | Database owner | No repository-wide row-retention rule |
-| Prism database/artifacts | PostgreSQL and immutable artifact store | Authoritative revisions and baselines are not age-only cleanup candidates |
-| Prism backups | `prism-backups` PVC and backup-group metadata | No automatic group expiry is implemented |
-| Ops and telemetry | Their storage owners | Keep incident and access evidence for the assigned policy |
+### Complete the service-budget record
 
-Set a warning threshold below the time needed to expand storage, stop writers,
-or copy a verified backup. If that lead time is unknown, retention is not ready
-for unattended operation.
+Create `<evidence-dir>/service-budgets.md` outside workload storage. Inventory every
+selected workload and store, including optional services that this release enables.
+Add a row for every discovered service. A fixed list does not prove completeness.
+Mark an absent service `not deployed`, with its release or inventory evidence.
+Do not omit a service because its measurements are unavailable.
+
+For each active service, create one record per limiting resource. Storage bytes,
+inodes, memory, CPU, queue length, and request rate have different units and limits.
+Use the same unit and observation window for a metric's readings and thresholds.
+The following record is a template, not a measured result:
+
+| Field | Required value |
+| --- | --- |
+| Service and resource | Exact workload or store identity, namespace, release, and metric. |
+| Measurement method | Owning tool or query, its version, execution location, permissions, and concrete selector. |
+| Evidence | Output path and collection time for each reading. Exclude credentials. |
+| Unit and window | Bytes, inodes, cores, requests/second, or the owner's defined unit; record the sampling window. |
+| Previous reading | Measured value and time `t0`. |
+| Current reading | Measured value and later time `t1`. |
+| Effective capacity | Real usable capacity or configured limit, with its authority. A PVC request is insufficient. |
+| Growth | `(current - previous) / (t1 - t0)`, in resource units per second. |
+| Warning boundary | Owner-approved value, comparison direction, reason, and approval date. |
+| Stop boundary | Owner-approved value, comparison direction, reason, and approval date. |
+| Response lead time | Measured or owner-approved time to finish the selected response, including a safety margin. |
+| Forecast | Time until warning and stop at the observed positive growth rate; otherwise state that no positive growth was observed. |
+| Owner and responder | Named data or service owner, on-call contact, and person authorized to execute the response. |
+| Warning action | Exact owned observation or expansion procedure and expected result. |
+| Stop action | Exact admission-stop or escalation procedure, affected work, and safe recovery condition. |
+| Retention boundary | Disposable object criteria, reference protection, receipt, and recovery authority; otherwise record that deletion is unsupported. |
+
+The required service coverage starts with the selected release's inventory:
+
+| Service or store | Measurement authority and response boundary |
+| --- | --- |
+| Node filesystems and image store | Node/container-runtime owner measures usable bytes and inodes; KubeClaw supplies no node cleanup command. |
+| Registry storage | Registry owner measures stored data and capacity; stop writers before owned garbage collection. |
+| BuildKit cache and worker | BuildKit owner measures cache, worker resources, and backlog; use its supported cache controls after draining builds. |
+| Nova process and durable root | Measure workload resources plus filesystem usage; protect run journals, effects, and audit evidence. No run-deletion CLI exists. |
+| Buster process, jobs, and evidence | Measure workload resources, jobs, and stored bytes; retain accepted jobs, receipts, and uncertain cleanup evidence. |
+| Redis | Redis owner measures memory, persistence storage, and client pressure; no repository-wide cleanup rule exists. |
+| LiteLLM | Service owner measures request rate, concurrency, failures, and process resources; record the configured provider limits separately. |
+| LiteLLM PostgreSQL | Database owner measures database growth and usable storage; no repository-wide row-retention rule exists. |
+| Prism Control, Studio, and ingestion | Record each active workload separately, including process resources, request rate, and any bounded queue. |
+| Prism Worker and native host | Record worker/native-host resources and admission limits separately; use the native-pool owner for host measurements. |
+| Prism agent | Record process resources and external model-route limits; the model-route owner supplies those limits. |
+| Prism PostgreSQL and artifacts | Database/artifact owners measure separate stores; authoritative revisions and baselines are not age-only cleanup candidates. |
+| Prism backups | Measure the backup PVC and retained groups; read configured limits from the generated reference. No automatic group expiry exists. |
+| SPIRE, Cilium/Hubble, and Tailscale | Record each selected workload and its owned stores; their operators supply resource, request, and retention limits. |
+| Ops and other telemetry | Record each active service and store separately; retain incident/access evidence according to its owner's policy. |
+
+For a growing usage metric, use `warning < stop <= effective capacity`.
+Compute `seconds to stop = (stop - current) / growth` only when growth is positive.
+A zero or negative growth observation does not guarantee future capacity.
+For free-space metrics, the comparison direction reverses; record that direction explicitly.
+
+Choose boundaries that leave enough time for the approved response before the
+stop limit. Use the shortest applicable forecast when bytes, inodes, or another
+resource can exhaust first. Explain any owner-defined relation that differs
+from the usage formula above.
+
+**Stop conditions:** An active service with a missing reading, owner, method,
+warning value, stop value, or response has no complete budget. Stop this procedure
+before retention mutation and do not enable unattended cleanup or new admission.
+If the stop boundary is already crossed, invoke the recorded owning-layer stop
+or escalation action. An undefined forecast or an unavailable metric requires
+owner review; it is not a zero-use result.
+
+Retain the completed records and owner approval with both measurement outputs.
+The repository defines no universal production thresholds. Do not substitute
+invented values for measured budgets or owner-approved limits.
 
 ### 3. Select a supported response
 

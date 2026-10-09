@@ -75,6 +75,33 @@ export function validateStatus(data, identities = loadIdentities()) {
   if (integrationIds.length !== 5 || new Set(integrationIds).size !== 5 || s.additional_integration_locally_verified !== integrationIds.length) {
     throw new Error('Integration closure counts disagree with stable identity data');
   }
+  const additional = identities.additional_findings ?? [];
+  const additionalIds = new Set();
+  for (const finding of additional) {
+    if (additionalIds.has(finding.id) || originalIds.has(finding.id) || integrationIds.includes(finding.id)) {
+      throw new Error(`${finding.id}: duplicate or reclassified additional finding identity`);
+    }
+    additionalIds.add(finding.id);
+    const issue = data.issues.find(entry => entry.id === finding.id);
+    if (finding.disposition === 'Locally verified') {
+      const closure = finding.closure;
+      if (issue || !closure || !/^[a-f0-9]{40}$/u.test(closure.revision ?? '')
+        || !validDate(closure.observed_at) || closure.observed_at > data.updated_at
+        || closure.exit !== 0 || !closure.command || !closure.environment || !closure.reason || !closure.limits
+        || !/^[a-f0-9]{64}$/u.test(closure.log_sha256 ?? '')
+        || !closure.source_evidence?.startsWith(`https://github.com/datrab/kubeclaw/blob/${closure.revision}/`)) {
+        throw new Error(`${finding.id}: additional closure requires revision-bound successful execution provenance`);
+      }
+    } else if (!Object.hasOwn(statusNames, finding.disposition) || issue?.status !== statusNames[finding.disposition]) {
+      throw new Error(`${finding.id}: additional issue state disagrees with disposition data`);
+    }
+  }
+  for (const issue of data.issues.filter(entry => entry.origin !== 'original-154')) {
+    if (!additionalIds.has(issue.id)) throw new Error(`${issue.id}: additional issue lacks stable identity`);
+  }
+  if (additional.filter(item => item.disposition === 'Locally verified').length !== s.additional_followups_locally_verified) {
+    throw new Error('Additional closure counts disagree with stable identity data');
+  }
 }
 
 const cell = value => String(value).replaceAll('|', '\\|').replaceAll('\n', ' ');

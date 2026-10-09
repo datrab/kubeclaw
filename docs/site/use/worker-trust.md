@@ -1,11 +1,11 @@
 # Operate Worker Trust
 
-Status: source-backed procedure; current Prism deployment verification fails and no fresh live cluster proof is claimed
+Status: source-backed procedure; local Prism deployment verification passes; live trust validation remains unproved
 Audience: Kubernetes operator, security operator
 Owner: platform operations and workload-identity owner
 Evidence: scripts/deploy.sh; tests/verification/live/worker-trust-cluster-e2e.sh
 Applies to: the exact selected release, SPIRE trust domain, and recorded cluster
-Last verified: 2026-09-21; the Prism preflight failed and no live cluster result is available
+Last verified: 2026-10-09; local Prism deployment contract passed; no live trust result is available
 
 ## Purpose
 
@@ -64,15 +64,15 @@ npm run verify:prism:deploy-script
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```
 
-Expected observation is zero from each command. At source revision
-`1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`, the Prism command instead fails at
-the canonical-schema prompt assertion. Stop there and retain the output; do not
-claim the source preflight or Worker Trust live procedure passed. The tracked
-status is [tracked as an open deployment-check issue](../status/open-issues.md#prism-deployment-source-check-is-stale-after-prompt-ownership-moved).
+Expected observation is zero from each command. On 2026-10-09, the Prism
+deployment source check passed at `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61`
+with Node.js `v24.21.0`. The other checks and live Worker Trust exercise have no
+new execution result here. Run all three checks for your selected checkout.
+Stop on any nonzero exit; a local source check does not prove live peer authorization.
 
 ### 2. Observe the installed identity chain
 
-After all source checks pass at a later source revision, capture the chain:
+After all source checks pass for the selected source, capture the chain:
 
 ```bash
 assert_cluster_binding
@@ -93,8 +93,6 @@ These observations prove dependencies, not peer authorization.
 
 ```bash
 assert_cluster_binding
-export NAMESPACE="<namespace>"
-export PRISM_NAMESPACE="<prism-namespace>"
 kubectl --context "<context>" config current-context
 npm run verify:worker-core:trust:live
 ```

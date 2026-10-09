@@ -67,9 +67,8 @@ Observe the four levels in order:
 
    ```bash
    assert_cluster_binding
-   export NAMESPACE="<namespace>"
-   ./scripts/deploy.sh smoke-agent nova
-   ./scripts/deploy.sh smoke-agent buster
+   bound_deploy smoke-agent nova
+   bound_deploy smoke-agent buster
    ```
 
    Expected observation: each command exits zero after rollout, Pod readiness,

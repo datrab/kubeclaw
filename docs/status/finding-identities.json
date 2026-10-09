@@ -640,6 +640,50 @@
       "id": "INT-DEPENDENCY-OWNER001",
       "disposition": "[6967d056](https://github.com/datrab/kubeclaw/commit/6967d056e2ae1eaa8277f51fd95394a1ef8df83d)"
     }
+  ],
+  "additional_findings": [
+    {
+      "id": "GITHUB-7",
+      "disposition": "Open"
+    },
+    {
+      "id": "DOC-AP03-GITOPS-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "DOC-AP04-PREFERENCE-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "DOC-AP07-PRISM-CHECK-001",
+      "disposition": "Locally verified",
+      "closure": {
+        "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+        "observed_at": "2026-10-09",
+        "command": "npm run verify:prism:deploy-script",
+        "exit": 0,
+        "environment": "Node.js v24.21.0; detached worktree at exact reviewed revision; local source contract and Bash syntax only",
+        "reason": "The check follows AgentJobRunner into agentPrompt and checks the generated canonical-schema/fixture prompt. Current bootstrap, backup and parsed policy assertions pass.",
+        "source_evidence": "https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/tests/verification/contracts/check-deploy-prism-command.mts#L51-L67",
+        "log_sha256": "bd217d905375388f6949b6ebd4965a0978ae3217480f3c3fcfb46401e72eab13",
+        "limits": "No live deployment, peer trust or Studio-to-Nova journey was executed."
+      }
+    },
+    {
+      "id": "DOC-AP08-BOUNDARY-CHECK-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "DOC-AP08-EFFECT-RECONCILIATION-002",
+      "disposition": "Open"
+    },
+    {
+      "id": "DOC-AP08-RUNTIME-CHECKS-003",
+      "disposition": "Open"
+    },
+    {
+      "id": "DOC-AP08-PRISM-TOOL-LIMITS-004",
+      "disposition": "Open"
+    }
   ]
 }
-

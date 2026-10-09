@@ -330,9 +330,10 @@ npm run verify:prism:deploy-script
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```
 
-The Prism source check currently stops at a stale prompt-ownership assertion.
-[The Prism deployment source-check issue](../status/open-issues.md#prism-deployment-source-check-is-stale-after-prompt-ownership-moved) tracks that exact repair.
-Do not report the Prism preflight as passed until the unchanged command exits with status zero.
+On 2026-10-09, `npm run verify:prism:deploy-script` passed at revision `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61` with Node.js `v24.21.0`.
+It checks workflow YAML, the deployment contract, and deployment-script syntax.
+This local result does not establish successful cluster deployment.
+Run every source check above for your selected checkout and stop on a nonzero exit.
 
 Render each selected role before mutation:
 
@@ -687,7 +688,7 @@ The smoke commands check the gateway, startup state, readiness, skills, and runt
 >
 > **Contract or setting:** [The release materializer binds role values to the selected runtime receipt and code bundle](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/updates/materialize-release.mjs#L5-L40).
 >
-> **Test evidence:** [The deployment release test exercises render and fail-closed selection paths](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/deployment-release.test.mjs#L48-L80). No recent result is available for that test. The deployment truth check passed on 2026-09-16. [The Prism deployment source check](../status/open-issues.md#prism-deployment-source-check-is-stale-after-prompt-ownership-moved) records the failed Prism command. No Prism test success is claimed.
+> **Test evidence:** [The deployment release test exercises render and fail-closed selection paths](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/deployment-release.test.mjs#L48-L80). No recent result is available for that test. The deployment truth check passed on 2026-09-16. The Prism deployment source check passed on 2026-10-09 at `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61`. No live Prism deployment is established.
 >
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`.
 >

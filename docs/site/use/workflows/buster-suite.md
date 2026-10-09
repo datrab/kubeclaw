@@ -353,8 +353,9 @@ one.
 
 ```bash
 set -euo pipefail
-export NAMESPACE="<namespace>"
-export PRISM_NAMESPACE="<prism-namespace>"
+assert_cluster_binding
+: "${NAMESPACE:?Complete the installation cluster binding first}"
+: "${PRISM_NAMESPACE:?Complete the installation cluster binding first}"
 export PLATFORM_FILE="<absolute-path>/platform.json"
 export PROJECT_FILE="<absolute-path>/nova-project.v2.json"
 export SOURCE_REF="<immutable-release-ref>"

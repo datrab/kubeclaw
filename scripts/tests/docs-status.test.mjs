@@ -17,7 +17,7 @@ test('each open finding retains actionable work and an evidence boundary in the 
   const data = load();
   const page = renderStatus(data);
   for (const issue of data.issues) {
-    assert.ok(page.includes(`**${issue.title}**`));
+    assert.ok(page.split('\n').includes(`## ${issue.title}`));
     for (const field of ['problem', 'impact', 'current_state', 'live_validation']) assert.ok(page.includes(issue[field]));
     for (const field of ['remaining_work', 'reproduction', 'acceptance_criteria']) {
       for (const value of issue[field]) assert.ok(page.includes(value));
@@ -123,4 +123,27 @@ test('the five inherited integration closures cannot become an invented count', 
   const data = load();
   data.scope.additional_integration_locally_verified = 999;
   assert.throws(() => validateStatus(data), /Integration closure counts/);
+});
+
+test('an additional issue cannot disappear through count changes alone', () => {
+  const data = load();
+  const issue = data.issues.find(entry => entry.origin !== 'original-154');
+  data.issues = data.issues.filter(entry => entry.id !== issue.id);
+  data.scope.additional_open--;
+  data.scope.total_open--;
+  assert.throws(() => validateStatus(data), /additional issue state disagrees/);
+});
+
+test('additional closure keeps successful revision-bound evidence and its execution limits', () => {
+  for (const mutation of [
+    closure => { closure.exit = 1; },
+    closure => { delete closure.limits; },
+    closure => { closure.source_evidence = closure.source_evidence.replace(closure.revision, 'b'.repeat(40)); },
+    closure => { closure.observed_at = '2099-01-01'; },
+  ]) {
+    const identities = loadIdentities();
+    const finding = identities.additional_findings.find(entry => entry.disposition === 'Locally verified');
+    mutation(finding.closure);
+    assert.throws(() => validateStatus(load(), identities), /successful execution provenance/);
+  }
 });

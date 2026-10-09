@@ -5510,7 +5510,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L261"
     },
@@ -5565,7 +5584,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L262"
     },
@@ -5620,11 +5658,32 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-INSTALL-ORDER",
         "A98-QUALITY-OPTIONAL-ARGO",
-        "A98-QUALITY-REGISTRY-PREPARATION"
+        "A98-QUALITY-REGISTRY-PREPARATION",
+        "A98-R2-NAMESPACE-CONTINUITY",
+        "A98-R2-PRISM-CURRENT-STATUS"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L263"
     },
@@ -5682,8 +5741,30 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
-      "openFindingIds": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
+      "openFindingIds": [
+        "A98-R2-NAMESPACE-CONTINUITY",
+        "A98-R2-PRISM-RESUME-AUTHORITY"
+      ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L264"
     },
     {
@@ -5739,7 +5820,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L265"
     },
@@ -5793,7 +5893,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-NAMESPACE",
         "A98-READER-ESM",
@@ -5852,7 +5971,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-BACKUP-GROUP"
       ],
@@ -5910,7 +6048,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-NAMESPACE",
         "A98-QUALITY-REGISTRY-PREPARATION"
@@ -5967,8 +6124,29 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
-      "openFindingIds": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
+      "openFindingIds": [
+        "A98-R2-SERVICE-BUDGET-RECORD"
+      ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L269"
     },
     {
@@ -6063,10 +6241,30 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-OBSERVER-REDIS",
-        "A98-QUALITY-COMPILE-STARTUP"
+        "A98-QUALITY-COMPILE-STARTUP",
+        "A98-R2-PLUGIN-DEPENDENCY-TRUTH"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L271"
     },
@@ -6120,7 +6318,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-OBSERVER-REDIS",
         "A98-QUALITY-COMPILE-STARTUP"
@@ -6178,7 +6395,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-OBSERVER-REDIS",
         "A98-QUALITY-COMPILE-STARTUP"
@@ -6238,7 +6474,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-OBSERVER-REDIS",
         "A98-QUALITY-COMPILE-STARTUP"
@@ -6297,10 +6552,30 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-READER-OBSERVER-REDIS",
-        "A98-QUALITY-COMPILE-STARTUP"
+        "A98-QUALITY-COMPILE-STARTUP",
+        "A98-R2-PLUGIN-DEPENDENCY-TRUTH"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L275"
     },
@@ -6352,7 +6627,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L276"
     },
@@ -6406,7 +6700,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
@@ -6464,7 +6777,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-DECISION-REASONS"
       ],
@@ -6520,7 +6852,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
@@ -6577,7 +6928,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
@@ -6668,11 +7038,31 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-SOURCE-SCHEMA-CONTAINERS",
         "A98-SOURCE-RECURSIVE-CONSTRAINTS",
-        "A98-SOURCE-REGISTRY-DEFAULTS"
+        "A98-SOURCE-REGISTRY-DEFAULTS",
+        "A98-R2-SCHEMA-EMPTY-AND-RUNTIME-LIMITS"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L282"
     },
@@ -6728,7 +7118,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
@@ -6785,7 +7194,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-SOURCE-PRISM-REPLICAS"
       ],
@@ -6846,9 +7274,31 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
-        "A98-QUALITY-DUPLICATE-FACTS"
+        "A98-QUALITY-DUPLICATE-FACTS",
+        "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
+        "A98-R2-PRISM-CURRENT-STATUS",
+        "A98-R2-PRISM-DUPLICATE-DEFAULTS"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L285"
     },
@@ -6903,8 +7353,29 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
-      "openFindingIds": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
+      "openFindingIds": [
+        "A98-R2-RUNTIME-CONSUMER-CONTRACTS"
+      ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L286"
     },
     {
@@ -6956,7 +7427,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L287"
     },
@@ -7011,11 +7501,31 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS",
         "A98-SOURCE-REGISTRY-DEFAULTS",
-        "A98-SOURCE-EMPTY-PRECEDENCE"
+        "A98-SOURCE-EMPTY-PRECEDENCE",
+        "A98-R2-RUNTIME-CONSUMER-CONTRACTS"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L288"
     },
@@ -7071,7 +7581,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
@@ -7131,7 +7660,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
@@ -7227,10 +7775,30 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "FAIL",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-PUBLICATION-PROJECT",
-        "A98-QUALITY-DECISION-REASONS"
+        "A98-QUALITY-DECISION-REASONS",
+        "A98-R2-PUBLICATION-CORRUPTION-RECOVERY"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L292"
     },
@@ -7286,7 +7854,26 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_source_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "UNPROVEN",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_reader_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_quality_review_round2",
+          "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+          "verdict": "PASS",
+          "scope": "role-specific bounded review; no global acceptance"
+        }
+      ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
@@ -13277,6 +13864,169 @@
       "authority": "charts/prism/templates/workloads.yaml:1-7; charts/prism/values.schema.json worker.replicas",
       "correction": "Correct explicit field contracts; verify local render pass and rejection cases.",
       "state": "open-pending-correction-and-fresh-review"
+    },
+    {
+      "id": "A98-R2-NAMESPACE-CONTINUITY",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "docs/site/use/operate.md",
+        "docs/site/use/worker-trust.md",
+        "docs/site/use/workflows/buster-suite.md"
+      ],
+      "catalogueIds": [
+        "OPR-003",
+        "OPR-004"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-04",
+        "A98-13"
+      ],
+      "description": "Frozen bound shell makes NAMESPACE and PRISM_NAMESPACE readonly; later exports abort. Root corrected three actual continuations; separate three-fixture checks passed; independent reacceptance pending."
+    },
+    {
+      "id": "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "scripts/docs-configuration-inventory.mjs",
+        "docs/site/reference/environment-variables.md"
+      ],
+      "catalogueIds": [
+        "CFG-010",
+        "CFG-011",
+        "CFG-013"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "123actual-reader variables lack consumer contracts;100injected/runtime names require full qualification audit. Classification must not exempt discovered reader pairs."
+    },
+    {
+      "id": "A98-R2-PLUGIN-DEPENDENCY-TRUTH",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "scripts/docs-publication.mjs",
+        "scripts/plugin-source-closure.mjs",
+        "docs/site/use/plugins.md"
+      ],
+      "catalogueIds": [
+        "OPL-001",
+        "OPL-005"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-10",
+        "A98-11",
+        "A98-13"
+      ],
+      "description": "Dictionary/pattern/conditional/ref fields missing; workspace clients not traced; package names/substrings invent remote dependencies."
+    },
+    {
+      "id": "A98-R2-SCHEMA-EMPTY-AND-RUNTIME-LIMITS",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "scripts/docs-configuration-inventory.mjs",
+        "docs/site/reference/plugin-configuration.md"
+      ],
+      "catalogueIds": [
+        "CFG-007"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-13"
+      ],
+      "description": "18unspecified/branch rows falsely reject empty strings; actual operational URL/secret limits need source-specific explanation."
+    },
+    {
+      "id": "A98-R2-PUBLICATION-CORRUPTION-RECOVERY",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "docs/site/reference/project-pipeline-publication.md"
+      ],
+      "catalogueIds": [
+        "CFG-017"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Malformed loose progress JSON prevents scaffold apply; same immutable corrupt generation is create-only. Advertised general republication recovery is incomplete."
+    },
+    {
+      "id": "A98-R2-PRISM-CURRENT-STATUS",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/install.md",
+        "docs/site/use/worker-trust.md",
+        "docs/operator-tasks.json"
+      ],
+      "catalogueIds": [
+        "OPR-003",
+        "CFG-010"
+      ],
+      "acceptanceIds": [
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Frozen deploy contract nowpasses at exact snapshot. Current failure statements and registry support state stale; live deployment still unproved."
+    },
+    {
+      "id": "A98-R2-SERVICE-BUDGET-RECORD",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "docs/site/use/capacity.md"
+      ],
+      "catalogueIds": [
+        "OPR-009"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Per-service budget record missing measured values/warn/stop/growth/owner/response. Root added operator-populated complete template; actual measurements not claimed; independent acceptance pending."
+    },
+    {
+      "id": "A98-R2-PRISM-DUPLICATE-DEFAULTS",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "CFG-010"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Manual deployment defaults table duplicates canonical generated environment contracts."
+    },
+    {
+      "id": "A98-R2-PRISM-RESUME-AUTHORITY",
+      "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "open-under-correction-pending-new-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-004"
+      ],
+      "acceptanceIds": [
+        "A98-05",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Diagnosis calls restricted CLI normal authenticated path despite unsigned/self-asserted issuer signal; distinguish access restriction from envelope authentication."
     }
   ],
   "checks": [
@@ -13362,10 +14112,12 @@
       "state": "terminal",
       "exitCode": 0,
       "result": "18/18 passed",
-      "log": "/tmp/kubeclaw-a98-reference-impact.log",
-      "logSha256": "850045578abdd4bc39aa4372772c3fb7f9c61f491b61dbc0ec484c95281afb09",
+      "log": "/tmp/kubeclaw-a98-qualified-impact.log",
+      "logSha256": "a858b47eae8e367380071cd7696dbefbc20c9cfd13008d6f3233bedde97ae286",
       "sourceState": "integrated-uncommitted-corrections-on-68fec9f604a116d67fde83206fcb4016fdb503e3",
-      "scope": "local fixture/contract evidence; not independent acceptance or live validation"
+      "scope": "local fixture/contract evidence; not independent acceptance or live validation",
+      "priorIncorrectLog": "/tmp/kubeclaw-a98-reference-impact.log",
+      "qualification": "Original working entry referenced initial failed log in error. Correct artifact shows18 tests18pass0fail; unused tar binding warning present. Scope remains local tests only."
     },
     {
       "command": "pipeline graph contract",
@@ -13519,18 +14271,206 @@
         "AP08 two reviewed pages changed; AP09.6 four reviewed lint pages changed; AP09.7 platform/communication/data pages changed. Revision difference requires impact review, not automatic semantic failure.",
         "Historical writer prose and default evidenceValidated=false checks do not establish independent acceptance."
       ]
+    },
+    {
+      "agent": "/root/a98_source_review_round2",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "reviewedRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "completed-rejection",
+      "requirementVerdicts": {
+        "CFG-001": "PASS",
+        "CFG-002": "UNPROVEN",
+        "CFG-003": "PASS",
+        "CFG-004": "PASS",
+        "CFG-005": "PASS",
+        "CFG-007": "FAIL",
+        "CFG-008": "UNPROVEN",
+        "CFG-009": "UNPROVEN",
+        "CFG-010": "FAIL",
+        "CFG-011": "FAIL",
+        "CFG-012": "UNPROVEN",
+        "CFG-013": "FAIL",
+        "CFG-014": "UNPROVEN",
+        "CFG-015": "UNPROVEN",
+        "CFG-017": "FAIL",
+        "CFG-018": "UNPROVEN",
+        "OPL-001": "FAIL",
+        "OPL-002": "UNPROVEN",
+        "OPL-003": "UNPROVEN",
+        "OPL-004": "UNPROVEN",
+        "OPL-005": "FAIL",
+        "OPR-001": "PASS",
+        "OPR-002": "PASS",
+        "OPR-003": "UNPROVEN",
+        "OPR-004": "PASS",
+        "OPR-005": "PASS",
+        "OPR-006": "UNPROVEN",
+        "OPR-007": "PASS",
+        "OPR-008": "UNPROVEN",
+        "OPR-009": "FAIL"
+      },
+      "gateVerdicts": {
+        "A98-01": "PASS",
+        "A98-02": "FAIL",
+        "A98-03": "PASS",
+        "A98-04": "PASS",
+        "A98-05": "PASS",
+        "A98-06": "UNPROVEN",
+        "A98-07": "PASS",
+        "A98-08": "PASS",
+        "A98-09": "PASS",
+        "A98-10": "FAIL",
+        "A98-11": "FAIL",
+        "A98-12": "FAIL",
+        "A98-13": "FAIL",
+        "A98-14": "FAIL"
+      },
+      "scopeLimit": "All30 requirements and14 gates have individual dispositions. Large generated/implementation surfaces not exhaustively certified; UNPROVEN is not PASS. No package closure or Astra acceptance."
+    },
+    {
+      "agent": "/root/a98_reader_review_round2",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "reviewedRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "completed-rejection",
+      "requirementVerdicts": {
+        "CFG-001": "PASS",
+        "CFG-002": "PASS",
+        "CFG-003": "PASS",
+        "CFG-004": "PASS",
+        "CFG-005": "PASS",
+        "CFG-007": "UNPROVEN",
+        "CFG-008": "PASS",
+        "CFG-009": "UNPROVEN",
+        "CFG-010": "PASS",
+        "CFG-011": "UNPROVEN",
+        "CFG-012": "UNPROVEN",
+        "CFG-013": "PASS",
+        "CFG-014": "PASS",
+        "CFG-015": "PASS",
+        "CFG-017": "FAIL",
+        "CFG-018": "PASS",
+        "OPL-001": "UNPROVEN",
+        "OPL-002": "PASS",
+        "OPL-003": "PASS",
+        "OPL-004": "PASS",
+        "OPL-005": "UNPROVEN",
+        "OPR-001": "PASS",
+        "OPR-002": "PASS",
+        "OPR-003": "FAIL",
+        "OPR-004": "FAIL",
+        "OPR-005": "PASS",
+        "OPR-006": "PASS",
+        "OPR-007": "PASS",
+        "OPR-008": "PASS",
+        "OPR-009": "PASS"
+      },
+      "gateVerdicts": {
+        "A98-01": "PASS",
+        "A98-02": "FAIL",
+        "A98-03": "PASS",
+        "A98-04": "FAIL",
+        "A98-05": "PASS",
+        "A98-06": "PASS",
+        "A98-07": "PASS",
+        "A98-08": "PASS",
+        "A98-09": "PASS",
+        "A98-10": "UNPROVEN",
+        "A98-11": "UNPROVEN",
+        "A98-12": "PASS",
+        "A98-13": "FAIL",
+        "A98-14": "UNPROVEN"
+      },
+      "scopeLimit": "All30 requirements and14 gates have individual dispositions. Large generated/implementation surfaces not exhaustively certified; UNPROVEN is not PASS. No package closure or Astra acceptance."
+    },
+    {
+      "agent": "/root/a98_quality_review_round2",
+      "role": "quality",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "reviewedRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
+      "state": "completed-rejection",
+      "requirementVerdicts": {
+        "CFG-001": "PASS",
+        "CFG-002": "PASS",
+        "CFG-003": "PASS",
+        "CFG-004": "PASS",
+        "CFG-005": "PASS",
+        "CFG-007": "UNPROVEN",
+        "CFG-008": "PASS",
+        "CFG-009": "UNPROVEN",
+        "CFG-010": "FAIL",
+        "CFG-011": "UNPROVEN",
+        "CFG-012": "UNPROVEN",
+        "CFG-013": "PASS",
+        "CFG-014": "PASS",
+        "CFG-015": "PASS",
+        "CFG-017": "PASS",
+        "CFG-018": "PASS",
+        "OPL-001": "UNPROVEN",
+        "OPL-002": "UNPROVEN",
+        "OPL-003": "UNPROVEN",
+        "OPL-004": "UNPROVEN",
+        "OPL-005": "UNPROVEN",
+        "OPR-001": "PASS",
+        "OPR-002": "PASS",
+        "OPR-003": "PASS",
+        "OPR-004": "FAIL",
+        "OPR-005": "PASS",
+        "OPR-006": "PASS",
+        "OPR-007": "PASS",
+        "OPR-008": "PASS",
+        "OPR-009": "PASS"
+      },
+      "gateVerdicts": {
+        "A98-01": "PASS",
+        "A98-02": "FAIL",
+        "A98-03": "PASS",
+        "A98-04": "FAIL",
+        "A98-05": "FAIL",
+        "A98-06": "PASS",
+        "A98-07": "PASS",
+        "A98-08": "PASS",
+        "A98-09": "PASS",
+        "A98-10": "UNPROVEN",
+        "A98-11": "UNPROVEN",
+        "A98-12": "FAIL",
+        "A98-13": "FAIL",
+        "A98-14": "UNPROVEN"
+      },
+      "scopeLimit": "All30 requirements and14 gates have individual dispositions. Large generated/implementation surfaces not exhaustively certified; UNPROVEN is not PASS. No package closure or Astra acceptance."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 source integration; independent acceptance remains open",
+    "stage": "AP09.8 third parallel correction round; all package acceptance remains open",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Commit integrated sources, regenerate against full source SHA in separate commit, then new source/reader/quality fresh-context Sol reviews and current full mutation suite. Preserve original live baseline handle 17726.",
+    "next": "Finish full consumer/dependency/Prism/publication corrections, integrate sources and generators separately, run required gates to terminal and new exhaustive fresh-context independent reviews. No parity masswork or AP09.8 closure yet.",
     "environmentConstraints": [],
     "qualifiedEnvironment": "Task-local Alpine packages under /tmp: GNU flock 2.42.3, GNU tar 1.35, coreutils 9.11 and PRoot bindings; native plugin-sandbox built locally. No target-image or live-cluster validation claimed.",
     "agentsCompleted": [
       "/root/a98_operator_writer",
       "/root/a98_config_writer",
+      "/root/a98_reference_writer"
+    ],
+    "currentMutationSession": 35062,
+    "currentMutationLog": "/tmp/kubeclaw-a98-current-config-mutations.log",
+    "currentMutationSnapshot": "b35311ad8db0946f44286b4a26a99e8676f44de4",
+    "agents": [
+      "/root/a98_config_writer",
+      "/root/a98_dependency_writer_round3",
       "/root/a98_reference_writer"
     ]
   },
