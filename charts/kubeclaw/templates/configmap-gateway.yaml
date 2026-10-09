@@ -10,6 +10,8 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 data:
+  reset-managed-plugin-projects.mjs: |
+{{ .Files.Get "files/reset-managed-plugin-projects.mjs" | indent 4 }}
   openclaw.json: |
     {
       "meta": {

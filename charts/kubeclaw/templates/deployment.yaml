@@ -598,6 +598,10 @@ spec:
                   rm -rf /tmp/openclaw-plugin-npm-cache
                   mkdir -p /tmp/openclaw-plugin-npm-cache
                   cp -a /opt/openclaw-plugin-home/npm-cache/. /tmp/openclaw-plugin-npm-cache/
+                  # Managed npm roots retain package locks across image upgrades. Reset
+                  # them before an offline reseed so they cannot request tarballs from
+                  # an older dependency graph that the new authoritative cache omits.
+                  node /init-config/reset-managed-plugin-projects.mjs /config/npm/projects
                   for plugin_spec in{{- range .Values.pluginSeed.specs }} {{ . | quote }}{{- end }}; do
                     echo "    Installing pinned official plugin ${plugin_spec} from offline cache"
                     HOME=/home/node \

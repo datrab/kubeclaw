@@ -224,8 +224,8 @@ assert.match(
 );
 assert.match(
   chart,
-  /PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*for plugin_spec in\{\{- range \.Values\.pluginSeed\.specs \}\}[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --accept-capabilities/,
-  'the setup container must preserve official plugin provenance while installing from the offline image cache',
+  /PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*reset-managed-plugin-projects\.mjs \/config\/npm\/projects[\s\S]*for plugin_spec in\{\{- range \.Values\.pluginSeed\.specs \}\}[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --accept-capabilities/,
+  'the setup container must reset stale managed locks before installing official plugins from the authoritative offline cache',
 );
 for (const plugin of ['acpx', 'discord']) {
   assert.ok(values.includes(`"npm:@openclaw/${plugin}@${expectedOpenClawVersion}"`),
