@@ -156,6 +156,9 @@ const workspaces = {
   'ops/pod': {
     entry: ['test/*.test.mjs'],
     project: ['test/**/*.mjs'],
+    // The smoke test executes the package's installed .bin/codex shim rather
+    // than importing its JavaScript entrypoint, which Knip cannot infer.
+    ignoreDependencies: ['@openai/codex'],
   },
   'tools/ops-mcp': {
     entry: ['src/server.mjs', 'test/*.test.mjs'],

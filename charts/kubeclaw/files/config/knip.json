@@ -100,6 +100,9 @@
       ],
       "project": [
         "test/**/*.mjs"
+      ],
+      "ignoreDependencies": [
+        "@openai/codex"
       ]
     },
     "skills/buster/engine": {
