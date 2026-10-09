@@ -1,37 +1,9 @@
 name: Docs Checks
 on:
-  pull_request:
-    paths:
-      - docs/**
-      - scripts/docs-*.mjs
-      - scripts/tests/docs-status.test.mjs
-      - scripts/deploy.sh
-      - package.json
-      - package-lock.json
-      - .github/workflows/**
-      - my-values/**
-      - charts/kubeclaw/**
-      - deploy/**
-      - docker/**
-      - tests/**
-      - skills/**
+  pull_request: null
   push:
     branches:
       - main
-    paths:
-      - docs/**
-      - scripts/docs-*.mjs
-      - scripts/tests/docs-status.test.mjs
-      - scripts/deploy.sh
-      - package.json
-      - package-lock.json
-      - .github/workflows/**
-      - my-values/**
-      - charts/kubeclaw/**
-      - deploy/**
-      - docker/**
-      - tests/**
-      - skills/**
   workflow_dispatch: null
 permissions:
   contents: read
@@ -51,6 +23,8 @@ jobs:
           node-version: "24"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
+      - name: Check docs workflow trigger coverage
+        run: node scripts/check-workflow-yaml.mjs .github/workflows/docs-checks.yaml && node --test tests/verification/contracts/workflow-trust-split.test.mjs
       - name: Check canonical open-issue register and generated view
         run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
       - name: Regenerate docs
@@ -99,6 +73,8 @@ jobs:
           node-version: "24"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
+      - name: Check docs workflow trigger coverage
+        run: node scripts/check-workflow-yaml.mjs .github/workflows/docs-checks.yaml && node --test tests/verification/contracts/workflow-trust-split.test.mjs
       - name: Check canonical open-issue register and generated view
         run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
       - name: Regenerate docs

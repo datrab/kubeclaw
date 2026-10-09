@@ -4,8 +4,22 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
+import {
+  markdownAnchors as sharedMarkdownAnchors,
+  markdownInlineLinks,
+  markdownReferenceLinks,
+  stripMarkdownCodeAndRawHtml,
+  stripFencedCodeAndComments,
+} from './lib/docs-markdown-anchors.mjs';
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docsRoot = path.join(root, 'docs');
+const gitObjectFormat = execFileSync('git', ['rev-parse', '--show-object-format'], {
+  cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+}).trim();
+if (!['sha1', 'sha256'].includes(gitObjectFormat)) throw new Error(`unsupported Git object format ${gitObjectFormat}`);
+const gitObjectLength = gitObjectFormat === 'sha256' ? 64 : 40;
+const gitObjectCapture = `([0-9a-f]{${gitObjectLength}})`;
 
 const repoPathPrefixes = [
   '.github/',
@@ -73,14 +87,6 @@ function docsToScan() {
   });
 }
 
-function stripFencedCode(text) {
-  return text.replace(/```[\s\S]*?```/g, '\n');
-}
-
-function stripHtmlComments(text) {
-  return text.replace(/<!--[\s\S]*?-->/g, '\n');
-}
-
 function markdownDestination(raw) {
   const value = raw.trim();
   if (value.startsWith('<')) {
@@ -90,39 +96,8 @@ function markdownDestination(raw) {
   return value.split(/\s+["']/u, 1)[0];
 }
 
-function githubHeadingText(raw) {
-  return raw
-    .replace(/\s+#+\s*$/u, '')
-    .replace(/!\[([^\]]*)\]\([^)]*\)/gu, '$1')
-    .replace(/\[([^\]]+)\]\([^)]*\)/gu, '$1')
-    .replace(/<[^>]+>/gu, '')
-    .replace(/[`*_~]/gu, '')
-    .trim();
-}
-
-function githubSlug(value) {
-  return value.toLocaleLowerCase('en-US')
-    .replace(/[^\p{Letter}\p{Number}\p{Mark}\s_-]/gu, '')
-    .replace(/\s/gu, '-');
-}
-
 function markdownAnchors(filePath) {
-  if (anchorCache.has(filePath)) return anchorCache.get(filePath);
-  const source = stripFencedCode(stripHtmlComments(fs.readFileSync(filePath, 'utf8')));
-  const anchors = new Set();
-  const counts = new Map();
-  for (const match of source.matchAll(/^ {0,3}#{1,6}\s+(.+)$/gmu)) {
-    const base = githubSlug(githubHeadingText(match[1]));
-    if (!base) continue;
-    const count = counts.get(base) ?? 0;
-    counts.set(base, count + 1);
-    anchors.add(count === 0 ? base : `${base}-${count}`);
-  }
-  for (const match of source.matchAll(/<(?:a|[A-Za-z][A-Za-z0-9:-]*)\b[^>]*(?:id|name)=["']([^"']+)["'][^>]*>/gu)) {
-    anchors.add(match[1]);
-  }
-  anchorCache.set(filePath, anchors);
-  return anchors;
+  return sharedMarkdownAnchors(filePath, anchorCache);
 }
 
 function normalizeReference(raw) {
@@ -130,6 +105,7 @@ function normalizeReference(raw) {
   if (!ref) return null;
   if (ref.startsWith('<') && ref.endsWith('>')) ref = ref.slice(1, -1);
   if (/^(https?:|mailto:|tel:|#)/.test(ref)) return null;
+  ref = ref.replace(/\\([!"#$%&'()*+,\-./:;<=>?@[\]^_`{|}~])/gu, '$1');
   ref = ref.split('#')[0];
   ref = ref.replace(/^[`'"]+|[`'",.;)]+$/g, '');
   ref = ref.split(/\s+/)[0];
@@ -167,21 +143,53 @@ function existsRepoReference(ref) {
 }
 
 function checkMarkdownLinks(filePath, text) {
-  text = text.replace(/`[^`\n]*`/gu, '');
-  const linkRe = /!?(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g;
-  for (const match of text.matchAll(linkRe)) {
-    const destination = markdownDestination(match[1]);
+  const links = markdownInlineLinks(text)
+    .map((link) => ({ destination: markdownDestination(link.destination), raw: link.raw }));
+  links.push(...markdownReferenceLinks(text).map((link) => ({
+    destination: markdownDestination(link.destination),
+    raw: `${link.raw} -> ${link.destination}`,
+  })));
+  for (const link of links) {
+    const { destination } = link;
     if (/^(https?:|mailto:|tel:)/u.test(destination)) continue;
-    const [rawPath, rawFragment] = destination.split('#', 2);
+    const hashIndex = destination.indexOf('#');
+    const rawPath = hashIndex < 0 ? destination : destination.slice(0, hashIndex);
+    const rawFragment = hashIndex < 0 ? undefined : destination.slice(hashIndex + 1);
     const target = normalizeReference(rawPath || rel(filePath));
     if (!target) continue;
+    let decodedTarget;
+    try { decodedTarget = decodeURI(target); }
+    catch {
+      errors.push(`${rel(filePath)} links to an invalid encoded local path: ${link.raw}`);
+      continue;
+    }
+    if (rawPath && (path.posix.isAbsolute(decodedTarget) || path.win32.isAbsolute(decodedTarget))) {
+      errors.push(`${rel(filePath)} links to an absolute local path: ${link.raw}`);
+      continue;
+    }
     const resolved = rawPath
-      ? path.resolve(path.dirname(filePath), decodeURI(target))
+      ? path.resolve(path.dirname(filePath), decodedTarget)
       : filePath;
+    const relativeToRoot = path.relative(root, resolved);
+    if (relativeToRoot === '..' || relativeToRoot.startsWith(`..${path.sep}`) || path.isAbsolute(relativeToRoot)) {
+      errors.push(`${rel(filePath)} links outside the repository: ${link.raw}`);
+      continue;
+    }
     if (rel(resolved).startsWith('docs/archive/')) continue;
     scanCounts.markdownLinks += 1;
     if (!fs.existsSync(resolved)) {
-      errors.push(`${rel(filePath)} links to missing local path: ${match[1]}`);
+      errors.push(`${rel(filePath)} links to missing local path: ${link.raw}`);
+      continue;
+    }
+    let cursor = path.resolve(root);
+    let unsafeLink = null;
+    for (const component of path.relative(root, resolved).split(path.sep).filter(Boolean)) {
+      cursor = path.join(cursor, component);
+      const entry = fs.lstatSync(cursor);
+      if (entry.isSymbolicLink()) { unsafeLink = cursor; break; }
+    }
+    if (unsafeLink) {
+      errors.push(`${rel(filePath)} links through a symbolic link: ${link.raw}`);
       continue;
     }
     if (rawFragment && resolved.endsWith('.md') && rel(filePath).startsWith('docs/site/')) {
@@ -189,7 +197,7 @@ function checkMarkdownLinks(filePath, text) {
       try { fragment = decodeURIComponent(rawFragment); } catch { fragment = rawFragment; }
       scanCounts.markdownAnchors += 1;
       if (!markdownAnchors(resolved).has(fragment)) {
-        errors.push(`${rel(filePath)} links to missing Markdown anchor: ${match[1]}`);
+        errors.push(`${rel(filePath)} links to missing Markdown anchor: ${link.raw}`);
       }
     }
   }
@@ -223,9 +231,7 @@ function checkRepoRefs(filePath, text) {
 }
 
 const linkParserProbe = '[valid](target.md) and \\[a-z\\](?:not-a-link)';
-const linkParserMatches = [...linkParserProbe.matchAll(
-  /!?(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g,
-)].map((match) => match[1]);
+const linkParserMatches = markdownInlineLinks(linkParserProbe).map((link) => link.destination);
 if (JSON.stringify(linkParserMatches) !== JSON.stringify(['target.md'])) {
   throw new Error('reference link parser must retain valid links and ignore escaped schema regex syntax');
 }
@@ -252,11 +258,11 @@ function checkSourceCalloutRevisions(filePath, text) {
     }
     index -= 1;
     const value = block.join('\n');
-    const declared = value.match(/\*\*Revision:\*\* `([0-9a-f]{40})`/u)?.[1];
+    const declared = value.match(new RegExp(`\\*\\*Revision:\\*\\* \`${gitObjectCapture}\``, 'u'))?.[1];
     if (!declared) continue;
-    const linked = [...value.matchAll(
-      /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\//gu,
-    )].map((match) => match[1]);
+    const linked = [...value.matchAll(new RegExp(
+      `https:\\/\\/github\\.com\\/datrab\\/kubeclaw\\/blob\\/${gitObjectCapture}\\/`, 'gu',
+    ))].map((match) => match[1]);
     const other = [...new Set(linked.filter((revision) => revision !== declared))];
     if (other.length) {
       errors.push(`${rel(filePath)}:${startLine} source callout declares ${declared} but links ${other.join(', ')}`);
@@ -292,7 +298,8 @@ function pinnedObject(revision, sourcePath) {
 
 function pinnedLinkErrors(text) {
   const findings = [];
-  const linkPattern = /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^#)\s>"']+)(?:#L(\d+)(?:-L(\d+))?)?/gu;
+  const linkPattern = new RegExp(`https:\\/\\/github\\.com\\/datrab\\/kubeclaw\\/blob\\/${gitObjectCapture}`
+    + `\\/([^#)\\s>"']+)(?:#L(\\d+)(?:-L(\\d+))?)?`, 'gu');
   for (const match of text.matchAll(linkPattern)) {
     scanCounts.pinnedSourceLinks += 1;
     const [, revision, encodedPath, rawStart, rawEnd] = match;
@@ -327,7 +334,7 @@ scanCounts.pinnedSourceLinks = 0;
 
 for (const filePath of docsToScan()) {
   const raw = fs.readFileSync(filePath, 'utf8');
-  const text = stripHtmlComments(stripFencedCode(raw));
+  const text = stripFencedCodeAndComments(raw);
   checkMarkdownLinks(filePath, text);
   checkRepoRefs(filePath, text);
   if (rel(filePath).startsWith('docs/site/')) {

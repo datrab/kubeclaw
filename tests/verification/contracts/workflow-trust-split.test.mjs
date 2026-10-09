@@ -20,6 +20,11 @@ function enabled(job,event,ref){
 }
 const trusted=(event,ref)=>['push','workflow_dispatch'].includes(event)&&ref==='refs/heads/main';
 
+test('docs checks run for every pull request and main-branch push',()=>{
+  assert.equal(docs.on.pull_request,null);
+  assert.deepEqual(docs.on.push,{branches:['main']});
+});
+
 test('parsed job guards keep PRs and non-main dispatches read-only',()=>{
   for(const workflow of [ops,docs]){
     assert.deepEqual(workflow.permissions,{contents:'read'});

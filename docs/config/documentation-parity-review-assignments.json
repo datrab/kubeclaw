@@ -1,0 +1,1748 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-review-assignments.v1",
+  "assignments": [
+    {
+      "assignmentId": "parity-assignment:2a89b7a6f320481b570f4a31208dbfbfadec1bc78814e2326a7143dcc8c23dfb",
+      "originalPath": "docs/architecture/buster-v2-runtime.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:890e320fe9abf336f6352bfa109655244fccb413dec46e2d8e9d6d5af5a8ab63",
+      "originalPath": "docs/architecture/capability-provider-routing.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:25a116c5bd7e5cf5565684354a28960b60649e93bb2483aea528c503a37bc2f6",
+      "originalPath": "docs/architecture/echo-review-governance-implementation-plan.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:6c12d0e89f2caf4e3542e3d7c51a2e57177578179b6f5c50b7ff23baabb4448d",
+      "originalPath": "docs/architecture/echo-review-phase-1-baseline.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2e509d55bd5725e2be3f57013ad7d316c9c3344fb3c58dd5b03f8e83c58931b1",
+      "originalPath": "docs/architecture/echo-review-phase-2-design.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:023442d8c04dc27246365f1809e27982fd2b06f0c1e4a61b44cbf64910b03c6c",
+      "originalPath": "docs/architecture/echo-review-phase-3-design.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:55573afd49080965a1ae01fb9b61bdd03b4f498599879abe94bef5f17ef646a5",
+      "originalPath": "docs/architecture/echo-review-phase-4-design.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:36f57d91803a3bec5f76ce84980e106a2f646e289c40dd4af4240f2374c37c2f",
+      "originalPath": "docs/architecture/echo-review-phase-4-plan.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d7136bd703969f1a7965213550393fed397d5e1c61541bf4a28375d1ce373166",
+      "originalPath": "docs/architecture/echo-review-phase-5-design.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:31e4c6f807014558e60278587dd43d93f2c90570461309cfa3166c1adcc186be",
+      "originalPath": "docs/architecture/echo-review-phase-5-plan.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:ec9356196bb7fcc4eaefce96d7754816644991efddcad7e339a53922383dd936",
+      "originalPath": "docs/architecture/echo-review-phase-6-design.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1a32d4cc438bbf09d5b23a39a5973cb196686030d92087f7693f0913ef97ca54",
+      "originalPath": "docs/architecture/echo-review-phase-6-plan.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d70e1eea17d42f67969527e77b806f89f0637890556c78e71f6f633be150acae",
+      "originalPath": "docs/architecture/echo-review-phase-7-design.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:4955ede8ac0bb2d76151b0069fede28a0731ffb8ddf854031fc7c108f4cef078",
+      "originalPath": "docs/architecture/echo-review-phase-7-plan.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:486987101083c45550b3cdbeb444393418089cf845293db6757819e9708ecb2c",
+      "originalPath": "docs/architecture/echo-review-phase-8-design.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:abbfa83ed2510d9dc6a5a8d331d088e32e0146024cfac87ffd47f8c22618ee04",
+      "originalPath": "docs/architecture/echo-review-phase-8-plan.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:edcd79b5662b873147c2e65037569b9abc238f415629c09a941619904f935e2e",
+      "originalPath": "docs/architecture/echo-review-phase-9-evaluation.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b94e8f6b4bc6333eb187148fa79ed4fd2c8b90086969d6f7e7863c7fd6611c30",
+      "originalPath": "docs/architecture/echo-review-phase-9-hardening.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2f16fd644b95f51bf3cfeaea1ca0b0ce06e96d96db36fdee4a7e1138ca5c26d2",
+      "originalPath": "docs/architecture/echo-review-roadmap.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:08e4f3ad11a60b20ae3c57946e2e9b37183c18742c1a96c823c8f2aa19e1bdda",
+      "originalPath": "docs/architecture/echo-review-scalability-plan.md",
+      "authorId": "parity-author:echo",
+      "reviewerId": "parity-reviewer:echo",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e6d4f498d8d86ea30e1501dccdb0331825d04cf68f5f54750808122683701cd4",
+      "originalPath": "docs/architecture/lifecycle-and-state.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f61907a7fa20b6c36011435f69c0684fbbce08c72eac4a99e52440ee0e695623",
+      "originalPath": "docs/architecture/nova-project-runtime.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d5e014bd20970932f3a727e5a67597d2a1bf3299df7273bb4f8d09bf76f8a9e8",
+      "originalPath": "docs/architecture/ops-pod.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:8d2c4a316c0a9af072a43b60d7fcbfc9de1f354d2679bfd40eaa69f614448bab",
+      "originalPath": "docs/architecture/pipeline-observability-phase-5-7-a-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1bf5dfb639b18c385d0e1fb53c606f0685424832773d39a10fd820ed181f2637",
+      "originalPath": "docs/architecture/pipeline-observability-phase-5-7-b-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:c9c99ca1c356b428a6ee1eaf60050ef278b68552f1d2a696d4f05158e32a7d6c",
+      "originalPath": "docs/architecture/pipeline-observability-phase-5-7-c-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:9a687fc8501a28f96685b5b468b5f2cd06481f15632eb5f8c3f5568ca6e6aa0c",
+      "originalPath": "docs/architecture/pipeline-observability-phase-5-7-d-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:7f68b1f21fa496a7fe110a31c13dda42bd1a6d0e2996402946d83ef5b42e8e07",
+      "originalPath": "docs/architecture/pipeline-observability-phase-5-7-e-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:5f79ce43f969db072281547a27a8d1134b311c3652f8fa84d91caa3b086fa48e",
+      "originalPath": "docs/architecture/pipeline-observability-phase-5-7-f-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:ccab948c89260c865df6d0bbb5988592658ec8d5b7252852291ed67fa735ae1f",
+      "originalPath": "docs/architecture/pipeline-observability-phase-5-7-final-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:04f63315ba009266ecf7e62529bde03a098e3183be4e5645e0a3cbdf95ff2b9e",
+      "originalPath": "docs/architecture/pipeline-reliability-remediation.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d85621ab09108634af7d7cc245a6697202082996200c908901c6c0753377b925",
+      "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-a-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:db1f19a1df76b54d91028636d2cf5ded9942ea89775f3b6ff90b8bcad7e0986a",
+      "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-b-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e74fffa431feea006ecf78a6adbe983d6f294b9f266c5fcc54c024270ce39f87",
+      "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-c-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:15130e014d13b0572f33bb596631e1403d045fd09c4fa049ac86e44696e94a72",
+      "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-d-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d042390d78fcefb8843ed54a50e65520bfa6a6f7918eb7f06b5ee7573cd81936",
+      "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-e-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:954c3acaa56009c8c703bedb93c78832e919eb56741d72aa24ef7ccebf559e49",
+      "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-f-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:90c2712feb9b66788566e04781d7cd49d78ad618ebfedf8a7cb07077fb4d8c29",
+      "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md",
+      "authorId": "parity-author:observability-packaging-and-reliability",
+      "reviewerId": "parity-reviewer:observability-packaging-and-reliability",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1af31b77fc7d93bb099a8a75595da2222915c55f84c71ce9b071cca06476481a",
+      "originalPath": "docs/architecture/pipeline-test-gate-a11y-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-accessibility",
+      "reviewerId": "parity-reviewer:buster-suite-accessibility",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d69ce3ba29d02e84eda16e3d318ed3c8bbfe57d474a0f35f19e4e478c38a33f5",
+      "originalPath": "docs/architecture/pipeline-test-gate-a11y-cutover-plan.md",
+      "authorId": "parity-author:buster-suite-accessibility",
+      "reviewerId": "parity-reviewer:buster-suite-accessibility",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:c5d62a51fdf75486a7738640cfe81c40474f20d5fe5359c06b513771020f0b71",
+      "originalPath": "docs/architecture/pipeline-test-gate-a11y-error-reference.md",
+      "authorId": "parity-author:buster-suite-accessibility",
+      "reviewerId": "parity-reviewer:buster-suite-accessibility",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e8598457c3b58f5bedeba1cc5e76ed49552f9a864ad9b52adbf33b2287096043",
+      "originalPath": "docs/architecture/pipeline-test-gate-a11y-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-accessibility",
+      "reviewerId": "parity-reviewer:buster-suite-accessibility",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:0783e8ea5d29e6cfed7c9234007231a550e87f1fdd0f792f77d940f62e9b2b59",
+      "originalPath": "docs/architecture/pipeline-test-gate-a11y-operator-guide.md",
+      "authorId": "parity-author:buster-suite-accessibility",
+      "reviewerId": "parity-reviewer:buster-suite-accessibility",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b27ff20f8a9067d00846942f25542a5fdb00dce8a0cddb33def266902f61fdaf",
+      "originalPath": "docs/architecture/pipeline-test-gate-a11y-parity-plan.md",
+      "authorId": "parity-author:buster-suite-accessibility",
+      "reviewerId": "parity-reviewer:buster-suite-accessibility",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2c279edd5e0321d25a565c81610be3168b3c6f59965446e30df940c10d3dcca6",
+      "originalPath": "docs/architecture/pipeline-test-gate-a11y-security-model.md",
+      "authorId": "parity-author:buster-suite-accessibility",
+      "reviewerId": "parity-reviewer:buster-suite-accessibility",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:9a4a103947cc80fe93c401d431891367ff5a174b585262e2788a20a5da24ddd7",
+      "originalPath": "docs/architecture/pipeline-test-gate-a11y-user-guide.md",
+      "authorId": "parity-author:buster-suite-accessibility",
+      "reviewerId": "parity-reviewer:buster-suite-accessibility",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:c235c92b2eb3a567dbf18da44e9f898bef8a6998ba1dbe3ad97d79e0208752e2",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:49879ab8d7a7edf6c203d3f1069bc2bccd7b4113fbf6d39d11edcba9f86ea875",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-cutover-plan.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:fe39e4d4fb10df6f6ed5bc82d49bdae42bad6b00b174f1935e079144630cd756",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-error-reference.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:3881aeaa3eca4f16540f7a01e7fda1b8c8a0e88099188f3f2929521bd0ba15aa",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:c55c03477536318e535f1fffc6f1995464e7267a64cc3532fa4e573f57b8394f",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-operator-guide.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:cffdad610b94e83b2b88236a5597a5bf87ef18d38c8ba83abb596175e1ddfcd0",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-parity-plan.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:0702c305b65d779608c6bb22570a2326d6095509317d42951b1c94079beadd2b",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-security-model.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:ab198f63c993e64f3e0dbb00e63182cef5686a058c1320e6d4a0cadac8947edf",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-three-phase-audit.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:6cedd32dfe4f57f5746c835be4ecf9cf8f97c3ebdaae474e34c26310a3fe948b",
+      "originalPath": "docs/architecture/pipeline-test-gate-api-user-guide.md",
+      "authorId": "parity-author:buster-suite-api",
+      "reviewerId": "parity-reviewer:buster-suite-api",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:c592affd186e218464260b77dc83e122cc39f0e0dd056e2cd39a14b521a32121",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:60719b6ac7a6a101156d56216aab1035a88da377fffcbeee086f4e01b968ae5d",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-cutover-final-audit.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:49eac249ad5b9aea9c849c102de2cadb2291049b5d467c6a6afbbfcc6aad024e",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-cutover-plan.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:470f058e1b614ea6c4bec3ff31926f2aa232a43a16e1a0027b1305027c54c72b",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-error-reference.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:beaf3d883a37da3dfa56497a39b6694dbe6dc718d569d8d803568dd7b0fcec57",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-implementation-final-audit.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:cf01b2a4845b84361a42276beedc2cfa33e5c8a03df1dfa2de85bb4dc142ba9f",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e8a4d2e51257a2e1cd2813c5384930c72fcb6fbd6257f47a9aa7790bb578017f",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-operator-guide.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:5fc817fc83dc7c5e8baddb442b44c55f7dc630ee7d7abc564cc73a4eb6e4f6d5",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-parity-final-audit.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1deb78cd3c156a422d817dd1a475c0c807f3cd8fc3615cf593dacc27d6c9e0b2",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-parity-plan.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:03ac9b2f70d766124d0c46c68e6a1c6e79edd8b93d08fe2bcae8c6f5f17c14ba",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-security-model.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:4a3a309cdb3ed9316355a76d0985bc85f8b187ddd13ea2ae0943f7c115d57a4e",
+      "originalPath": "docs/architecture/pipeline-test-gate-container-build-user-guide.md",
+      "authorId": "parity-author:buster-suite-container-build",
+      "reviewerId": "parity-reviewer:buster-suite-container-build",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:267bccb8b20f6e3f503276f01318975ef523959e426ca6c4f7877b07b5601dc6",
+      "originalPath": "docs/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-end-to-end",
+      "reviewerId": "parity-reviewer:buster-suite-end-to-end",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:5560d91fb366b63d3b9b232fd2ee2167ad3ef4a672a2ae0e05b44851559eb32f",
+      "originalPath": "docs/architecture/pipeline-test-gate-e2e-error-reference.md",
+      "authorId": "parity-author:buster-suite-end-to-end",
+      "reviewerId": "parity-reviewer:buster-suite-end-to-end",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:0e078ddc5b906385e4d386de094ecadfdb588746c56e64edd004d106fe66e0ef",
+      "originalPath": "docs/architecture/pipeline-test-gate-e2e-operator-guide.md",
+      "authorId": "parity-author:buster-suite-end-to-end",
+      "reviewerId": "parity-reviewer:buster-suite-end-to-end",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:71d97158a290934c743fb33f975985f2e7567f5b26b22960f2c1a2e838262d6b",
+      "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-10-cutover-plan.md",
+      "authorId": "parity-author:buster-suite-end-to-end",
+      "reviewerId": "parity-reviewer:buster-suite-end-to-end",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:4e93dd3cd3b67e77dd469ae3bca3b28d2d092903a9a159fd15e43f2956f7c9e4",
+      "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-8-plan.md",
+      "authorId": "parity-author:buster-suite-end-to-end",
+      "reviewerId": "parity-reviewer:buster-suite-end-to-end",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:11473c5417db5e15e481423dba8b3dba4501a3f8b66286a6765b5e53484111b3",
+      "originalPath": "docs/architecture/pipeline-test-gate-e2e-phase-9-parity-plan.md",
+      "authorId": "parity-author:buster-suite-end-to-end",
+      "reviewerId": "parity-reviewer:buster-suite-end-to-end",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:266e818e1e8b7bfd4b0fd0dde73aa5ae0725b2ab0814accdb78912aa3ed61396",
+      "originalPath": "docs/architecture/pipeline-test-gate-e2e-security-model.md",
+      "authorId": "parity-author:buster-suite-end-to-end",
+      "reviewerId": "parity-reviewer:buster-suite-end-to-end",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d34634e95dd0ec02fc2f48729fbef4011f1bc55b0ae828bbf019e64bc60226f1",
+      "originalPath": "docs/architecture/pipeline-test-gate-e2e-user-guide.md",
+      "authorId": "parity-author:buster-suite-end-to-end",
+      "reviewerId": "parity-reviewer:buster-suite-end-to-end",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f6772deedfe705a7e6f1cb90d5ef2963694cd9b425600511d0a0f9a6cbbc6077",
+      "originalPath": "docs/architecture/pipeline-test-gate-http-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-http",
+      "reviewerId": "parity-reviewer:buster-suite-http",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e0502033ce929f23efec262eaabe623f4d66c8180af19c6118c5e31e86a887af",
+      "originalPath": "docs/architecture/pipeline-test-gate-http-cutover-final-audit.md",
+      "authorId": "parity-author:buster-suite-http",
+      "reviewerId": "parity-reviewer:buster-suite-http",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:814a7a5f158b16943b388e3c52ef51033971284193477cb6ffb771b2dcc8564e",
+      "originalPath": "docs/architecture/pipeline-test-gate-http-error-reference.md",
+      "authorId": "parity-author:buster-suite-http",
+      "reviewerId": "parity-reviewer:buster-suite-http",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:19d83afd4d19ddb1cd428a1c5fe16ce64303447d2faf2eb08e9bde280c8de608",
+      "originalPath": "docs/architecture/pipeline-test-gate-http-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-http",
+      "reviewerId": "parity-reviewer:buster-suite-http",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:75ac3d77123f1518ba729d71303954ac9dc9e299834e343b2806323ce9f28ac2",
+      "originalPath": "docs/architecture/pipeline-test-gate-http-operator-guide.md",
+      "authorId": "parity-author:buster-suite-http",
+      "reviewerId": "parity-reviewer:buster-suite-http",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e9e71f8ffac17ef0f7a43eb0fc3c0b3869509d684e17a3a5d8bc3a15694d1289",
+      "originalPath": "docs/architecture/pipeline-test-gate-http-parity-final-audit.md",
+      "authorId": "parity-author:buster-suite-http",
+      "reviewerId": "parity-reviewer:buster-suite-http",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:66525823a7a17ed53b96d01c7eb0d4ad071fac125a288aa34393f01ba1982b08",
+      "originalPath": "docs/architecture/pipeline-test-gate-http-security-model.md",
+      "authorId": "parity-author:buster-suite-http",
+      "reviewerId": "parity-reviewer:buster-suite-http",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b47892bdd39dac515e603801c51eef91b865dcf7f415246c8136711ae34ecde8",
+      "originalPath": "docs/architecture/pipeline-test-gate-http-user-guide.md",
+      "authorId": "parity-author:buster-suite-http",
+      "reviewerId": "parity-reviewer:buster-suite-http",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:088f72a49ebdd35a825cf682d5d812c41714e819b443b66ea6186072243eca26",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:7b0b102cad67b8ad083b28669f6921ffe43358a2840575e9732a80c212bc512c",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:a73df415d6684c162fdb326a96e4bc755f2c32dd03dfab5df8f6986633037502",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:cac0e43dc939c54615d7d983ddd039069438fad86e9e78f43d25e38a400f4edc",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:a86ccf2625be58578b750e783d1d9305bc69353174c2180a790349670d52e51d",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:9d1f62a04b7f623401d64a562453757bad5f4e7e760da8529720f88e0910923b",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:583fa52240bd3e46c312e9c1e92c943f25adb20f16a78ed1d3730feaf63ffbb2",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-parity-final-audit.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:bbd2de0f93dba037443ffab83ab9cfe5fc183b8859f7ab958ec9277338c2190a",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:191173c1db1c34ebd5012078d2e8221037c058c45c4a442103c5844bf2f625ed",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:fe0b34745c3bb23e0bf5cd75f2f7a1575985c2e5eaff8320b7b5da23a6e7aeac",
+      "originalPath": "docs/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md",
+      "authorId": "parity-author:buster-suite-kubernetes-fixture",
+      "reviewerId": "parity-reviewer:buster-suite-kubernetes-fixture",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b03ed5f860b48184a31b139357bd8a0cfeaea8fca0d148164f8c682b200a860e",
+      "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-lighthouse",
+      "reviewerId": "parity-reviewer:buster-suite-lighthouse",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:13e232036037ca1ab5aecbd6fc0c57e77cf011f15f680e4e51f1b947efa1ec18",
+      "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-cutover-plan.md",
+      "authorId": "parity-author:buster-suite-lighthouse",
+      "reviewerId": "parity-reviewer:buster-suite-lighthouse",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:79230d6da12c7ee1fad44c60b47deede9e60acb71efdac7ac96b281de2e3d6a4",
+      "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-error-reference.md",
+      "authorId": "parity-author:buster-suite-lighthouse",
+      "reviewerId": "parity-reviewer:buster-suite-lighthouse",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:a4af4fa477bef4e55d56ca27d245fad7f0a461dd4451615473de7e2db858c07d",
+      "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-lighthouse",
+      "reviewerId": "parity-reviewer:buster-suite-lighthouse",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:de6b2fc64a8d86fd8975583c4575d5f632d466027e9947e87f3f1321497ce48c",
+      "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-operator-guide.md",
+      "authorId": "parity-author:buster-suite-lighthouse",
+      "reviewerId": "parity-reviewer:buster-suite-lighthouse",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b3a651c6c421214189dd70455a743244a6815d8e83678ee70438e9188bc759d9",
+      "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-parity-plan.md",
+      "authorId": "parity-author:buster-suite-lighthouse",
+      "reviewerId": "parity-reviewer:buster-suite-lighthouse",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:78d7c55e2a7a578f0f35ff6079878489849405f1ab17b32c17d5ad65aba892bf",
+      "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-security-model.md",
+      "authorId": "parity-author:buster-suite-lighthouse",
+      "reviewerId": "parity-reviewer:buster-suite-lighthouse",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:5e87b330ef496a7cb86a774f79b50365ceda0636bc368a06b826333ec4a2d1c7",
+      "originalPath": "docs/architecture/pipeline-test-gate-lighthouse-user-guide.md",
+      "authorId": "parity-author:buster-suite-lighthouse",
+      "reviewerId": "parity-reviewer:buster-suite-lighthouse",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:fe7a5fb469d8e6b9f6f498a4c786f2877b8194490e006c1639e4c5c65ff655ef",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-6-a-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f87b9213ccaf682e856d0f97d5dcddbea2bbf3c523361d83754c5b882ad5edc8",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-6-b-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d94e55035307cb6c1f6d6baedc9d490efa4436814ef4ea247b3025e76b335942",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-6-c-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:0c3b345be639f78c91291513a3840ed18b024c7becdffcfe09a0de56e0b69b46",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-6-d-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:6a09e69904ce98b4eae1d2d9036a9012f10e50394074b961e23855017ff79b56",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-6-e-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:c5931818965a2adf019fb8a74c639a50e7abe031efd21d168d6fa3244fc6b1cd",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-6-final-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2a8836b5c14218d9cba418a645305d056c2d0fc09c33228305de368e46de10a9",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-7-a-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:a3b60167b93012784de3d86b83209d46aad009ac415b206aa04b2058a816498c",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-7-b-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d550947944c193687cb1100f73aa285a50cad6a6dd5a84f2cf73b9f60d8cd978",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-7-c-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:bbb86ff9c568151300d32cd8516328bdeb079c0bea89fac4224f7a39dedcd21e",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-7-closeout.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:53c501cd29d8f3b41e15cd36dc802f109d884f040d92824b14877e4d3685ab0e",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-7-d-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1565f79d5ec74a37593c9f5540fa0ea0c8dc04e8dfef2fb572d85c3549fb3b80",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-7-e-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2fd6bdd47bf1766a7d6f89c6781ad48aebe3ae7f7ff07f641dbd16360799f4d3",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-7-f-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e1cd77c34b9eb7d3a3ade91ff2c3a500ef40fb7d5fb532512045d638c4cac22a",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-7-final-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:c477d5720cefbdd0566bd9af4b2fbc997a6873b3b7d55aca58aabba93dd6e59a",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-8-final-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f6850c10dcb1ab7e8ebb11b63ad7b3e9520023eb33727559ca8408b1a49a7a10",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-9-comparison.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:54851b9c82c1a7049657cb96cbce3ce9ef71d623e8ef2b09aae50392129ebb93",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-9-final-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:fb369792f2b9e36699058459cfec05db230de6daf2f6a607069c4f06bb406b07",
+      "originalPath": "docs/architecture/pipeline-test-gate-security-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-security",
+      "reviewerId": "parity-reviewer:buster-suite-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:5c0b3ce11f69680bbfabb6d8a5b57d2d5a2589431125416ddfc791b6bd380eee",
+      "originalPath": "docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "authorId": "parity-author:buster-suite-security",
+      "reviewerId": "parity-reviewer:buster-suite-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d662850d8b67d82ead9a4f4321102512ca623837d6266f51cdfb95bfdd349bf5",
+      "originalPath": "docs/architecture/pipeline-test-gate-security-operator-guide.md",
+      "authorId": "parity-author:buster-suite-security",
+      "reviewerId": "parity-reviewer:buster-suite-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:628529c89792d8424453d1ca7c2b9d00b49c9d6bab54ca1190125035b490d1a1",
+      "originalPath": "docs/architecture/pipeline-test-gate-security-phase-10-cutover-plan.md",
+      "authorId": "parity-author:buster-suite-security",
+      "reviewerId": "parity-reviewer:buster-suite-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2be81e3a6b8b65b37f38939da0181e91b755750dc1c3746f43f0c2790051a20a",
+      "originalPath": "docs/architecture/pipeline-test-gate-security-phase-8-plan.md",
+      "authorId": "parity-author:buster-suite-security",
+      "reviewerId": "parity-reviewer:buster-suite-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:0f2c6d1cecb35edcb34c9ff26826446d7e9f9b6ed59ee4ef2053e963dbbab77c",
+      "originalPath": "docs/architecture/pipeline-test-gate-security-phase-9-parity-plan.md",
+      "authorId": "parity-author:buster-suite-security",
+      "reviewerId": "parity-reviewer:buster-suite-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:47986d34d4f7ad6918f11a0e8721f41a1b16df8eaf858d2977f5a0670184c945",
+      "originalPath": "docs/architecture/pipeline-test-gate-security-security-model.md",
+      "authorId": "parity-author:buster-suite-security",
+      "reviewerId": "parity-reviewer:buster-suite-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e8d74579015833d5e1c90153b15a2b98dc8fcf4b3675b75d1bb18a99a0cf5b3a",
+      "originalPath": "docs/architecture/pipeline-test-gate-security-user-guide.md",
+      "authorId": "parity-author:buster-suite-security",
+      "reviewerId": "parity-reviewer:buster-suite-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:72f983ea15e0856715e330556de031ffe676b2c01f49fff197062320598a32d8",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:4097b8e38828b25519d7216cff43dd2e63f10cce252a1270169db5457fbb88d2",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-cutover-final-audit.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:c0929a73efe348e02b36851c9ab1ae2f06340f8bcfe7698f9df756e11ae0c54b",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-cutover-plan.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b5460932b30ac70529ca29ec8c277b4688d92c7551f3f774eba5ebd8ae99afc8",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-error-reference.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d8ab71d032eff10758b322963141967a5a214dc29add71c6ee9c6fd83ba5322d",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b991b88270d2c9d7eb395cb859858d2a60cfcdd17e75101347ca28f9d7d46fc1",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:dd6f7483b0ae27530257622a52673127f04f23d1d3c7f64d0167cba616729c9e",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-operator-guide.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f73dae007d9a90bfb057c1e510faad4583ed30a03844029adfa78a3b4afe332c",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-final-audit.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f5888e8ea9c82b99b295039130cd7615748549a4e0858f81fa470ea1125a9b17",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-plan.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:7c2ea9cb90f3dd5ee73673f10f2fc10c8f1343788f64e0209deda6c32b959ec6",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-parity-report.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:05feec76c1a4173fd96915d12aefb35e2b8270cca8872213197c1da8ccf0c414",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-security-model.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:700bd8325f76fcf923834fbdd3d16e6611df0c83e3d438621b12bb5ce862f8e0",
+      "originalPath": "docs/architecture/pipeline-test-gate-size-budget-user-guide.md",
+      "authorId": "parity-author:buster-suite-size-budget",
+      "reviewerId": "parity-reviewer:buster-suite-size-budget",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:9f1742b12777ee630783e0913aff84d91d7bc4b5252ee5f27e804d2fccb84d7e",
+      "originalPath": "docs/architecture/pipeline-test-gate-suite-migration-workflow-v2-final-audit.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:459fc6ae59a0ee215c2f74989718022d9ba52d0684fee879d307768728707f12",
+      "originalPath": "docs/architecture/pipeline-test-gate-suites-8-13-state-and-issues.md",
+      "authorId": "parity-author:buster-core-and-shared-migration",
+      "reviewerId": "parity-reviewer:buster-core-and-shared-migration",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f822a5a42434e5e982972fd0d07329971de1658543de86abe6c1d682e24dcf02",
+      "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-tailscale-exposure",
+      "reviewerId": "parity-reviewer:buster-suite-tailscale-exposure",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:5b62bfa5ae930c95a4fa62bc6b100cda201bd543e44149859cd7bd6503a834ac",
+      "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-error-reference.md",
+      "authorId": "parity-author:buster-suite-tailscale-exposure",
+      "reviewerId": "parity-reviewer:buster-suite-tailscale-exposure",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:0390022c4ac3492eab505619a2ab626cc9780d38578b370ce1434fdcbdcde4d0",
+      "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-tailscale-exposure",
+      "reviewerId": "parity-reviewer:buster-suite-tailscale-exposure",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f38ea86dbccd23f1cd54ea75dcceca4093b271175e76805ddd7dbbf8b58c7071",
+      "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md",
+      "authorId": "parity-author:buster-suite-tailscale-exposure",
+      "reviewerId": "parity-reviewer:buster-suite-tailscale-exposure",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f899cd57a8c01d3668236ceacca3df653190cfc693e58ddf76cc63301ef6637d",
+      "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-three-phase-audit.md",
+      "authorId": "parity-author:buster-suite-tailscale-exposure",
+      "reviewerId": "parity-reviewer:buster-suite-tailscale-exposure",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:0237765646bb868b108e200e8915c6db8e6d184001c6fd002365e40ff01533df",
+      "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md",
+      "authorId": "parity-author:buster-suite-tailscale-exposure",
+      "reviewerId": "parity-reviewer:buster-suite-tailscale-exposure",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:232bb4a0e20c23d42666dfb195d3d84ae3f50adadb55ec4ed2831ec581eba955",
+      "originalPath": "docs/architecture/pipeline-test-gate-visual-configuration-reference.md",
+      "authorId": "parity-author:buster-suite-visual",
+      "reviewerId": "parity-reviewer:buster-suite-visual",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:3de6261931b976a9c5976c1db7308aecb8e75e960b90570c3396a22b2245efbf",
+      "originalPath": "docs/architecture/pipeline-test-gate-visual-cutover-plan.md",
+      "authorId": "parity-author:buster-suite-visual",
+      "reviewerId": "parity-reviewer:buster-suite-visual",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:0330b6f85794b764f2eb5feea341893aaeb875759cd534c9008be6af6081856f",
+      "originalPath": "docs/architecture/pipeline-test-gate-visual-error-reference.md",
+      "authorId": "parity-author:buster-suite-visual",
+      "reviewerId": "parity-reviewer:buster-suite-visual",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:a24b8e2d11d7f6987b0a8e2e16fc99c33009ce83fae7926a4d6c2551c8deb359",
+      "originalPath": "docs/architecture/pipeline-test-gate-visual-implementation-plan.md",
+      "authorId": "parity-author:buster-suite-visual",
+      "reviewerId": "parity-reviewer:buster-suite-visual",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:535c4cc28ff38d7f42b84ff5310400572eb3d9c4370797ab92b36d5f19813c85",
+      "originalPath": "docs/architecture/pipeline-test-gate-visual-operator-guide.md",
+      "authorId": "parity-author:buster-suite-visual",
+      "reviewerId": "parity-reviewer:buster-suite-visual",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:664e23e42ca4b1d443e1088fb45271c1c2f822954d5720c2695a845f21cb2e64",
+      "originalPath": "docs/architecture/pipeline-test-gate-visual-parity-plan.md",
+      "authorId": "parity-author:buster-suite-visual",
+      "reviewerId": "parity-reviewer:buster-suite-visual",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e59cf660f92de2dd0eb1c6aabf9ebe0d8d29ca9d9892d5b86b75ecf3853d1292",
+      "originalPath": "docs/architecture/pipeline-test-gate-visual-security-model.md",
+      "authorId": "parity-author:buster-suite-visual",
+      "reviewerId": "parity-reviewer:buster-suite-visual",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:42800f74d18027d8a5c17d6019d8e320ff9d0ef3ce374644ac2e60e75cf910ba",
+      "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-audit.md",
+      "authorId": "parity-author:worker-core",
+      "reviewerId": "parity-reviewer:worker-core",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1a76d1e41d0a6a90be09cef22fb0851b49759cb1ab15b43f77b7663aace74cb7",
+      "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-c-audit.md",
+      "authorId": "parity-author:worker-core",
+      "reviewerId": "parity-reviewer:worker-core",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:8c9cab9eca94013a1e7f0bfbd5588db7c008c0fc7e428a85e03b26afb4080fed",
+      "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-d-audit.md",
+      "authorId": "parity-author:worker-core",
+      "reviewerId": "parity-reviewer:worker-core",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b61591c64bcb68bc481da5aa3ec3b9cba161e4fc471afb999d40caa99127747e",
+      "originalPath": "docs/architecture/plugin-system-implementation-plan.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:26d2da44875418fea08d416a6a5f61c573d918df16f5e19fd362704c8e28950c",
+      "originalPath": "docs/architecture/plugin-system-phase10-changelog.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2b06d61ce177a20c5146b0b266df9fe5e030b6b7386516cccbbeb4174ab306ef",
+      "originalPath": "docs/architecture/plugin-system-phase10-observer-assessment.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:20df08263da8154a3af107360fd584e02e8460098aff8b213732937802cbb13b",
+      "originalPath": "docs/architecture/plugin-system-phase12-changelog.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:94f52eac408233ce1cf50eba6e1ba5b51b4d88ab45b9bc5cd13c5d2f75b38191",
+      "originalPath": "docs/architecture/plugin-system-phase9-changelog.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:50faa838c5175f101bffe32cfae5bd5db5d083c7f632f757f281a77344545be2",
+      "originalPath": "docs/architecture/plugin-system-phase9-extension-assessment.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:9f84d9238aecca06e3e0245416831e7f299d47d520912aea37531f54eb73c73b",
+      "originalPath": "docs/architecture/plugin-system-vision.md",
+      "authorId": "parity-author:nova-core-and-plugin-runtime",
+      "reviewerId": "parity-reviewer:nova-core-and-plugin-runtime",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:6c8d33956ed45db802409e81374dc0e27c059a1cab273ef0f981e4f848177376",
+      "originalPath": "docs/architecture/prism-baseline-bundle-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:238ecddedf004420af8dc8aa531fa0efd3516aa673b96cfa1107542eedd5df3f",
+      "originalPath": "docs/architecture/prism-corpus-ingestion-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:68f1b624e9121cd218ed0323d8de92d7594d5130d8f405c8e9513325ea2e2623",
+      "originalPath": "docs/architecture/prism-design-document-v1-review.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:598a824f5eb23b67ebad1647164b89a66d8144470984b91c6a53e1bf308fe4b4",
+      "originalPath": "docs/architecture/prism-design-engine-architecture.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e119811900c60da43c73d80211ce0a5775335cb93ff47f733dd2106a2d112456",
+      "originalPath": "docs/architecture/prism-design-engine-contract-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:7c8e081f9e83a5269726ff5c47a95d9cfef61d8bfa3b7b4a6038de50b1ab6eaf",
+      "originalPath": "docs/architecture/prism-helm-deployment-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:9ba38b26092d91cdd552ac4ec3f841147df9f6b4d9e761c517711ebbaa4e27c1",
+      "originalPath": "docs/architecture/prism-openclaw-runtime.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:006a221b6c5dc95515d669b8e5af8af501bc9cef7daa234f82db388175edda9c",
+      "originalPath": "docs/architecture/prism-pipeline-fidelity-adapter-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:753c5905b5543c7a282e145c707dddb4665ccc102ebd8d1e74d731b24281aa9f",
+      "originalPath": "docs/architecture/prism-preference-learning-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:48c7dceebef5d99c63861491ab5d57ed80f4aee566b577ab62e7ba420a8e2d7a",
+      "originalPath": "docs/architecture/prism-prototype-runtime-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1d4c64997f783ccbcbf60ff0ecc804faeef463f92506c4758c2b3016f6bf8f23",
+      "originalPath": "docs/architecture/prism-quality-gates-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:416ee2d255c6bbbc9c8b9c8630a9c04cceaddd27a998bdcb6adfc53284839d26",
+      "originalPath": "docs/architecture/prism-recovery-observability-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b346d068a2a523f83fc6a200c1a31c78e661e79a2a86d913ad95d2d786fad3a9",
+      "originalPath": "docs/architecture/prism-retrieval-ranking-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:643a0b4fd38621cc43ed607827963f9e292346b6e698da22d496111c7380766b",
+      "originalPath": "docs/architecture/prism-storage-model-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e92f0d7c27353f35108022d7772487278c900467ea2a315258788b313afaffab",
+      "originalPath": "docs/architecture/prism-studio-interaction-v1.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:9a374fae41c8c3f3d390917440341125c82b98349c6658ae91dfd213a748dae9",
+      "originalPath": "docs/architecture/README.md",
+      "authorId": "parity-author:project-navigation-and-status",
+      "reviewerId": "parity-reviewer:project-navigation-and-status",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d2c83b3a9dbaa25ce4fcfa2d08b25611154b4d0754a49b6798f06bb7b9c2ec11",
+      "originalPath": "docs/architecture/security-model.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:ad93a1daf07a8cc865a82ae7de9827e608c0a9ead582d29ab10825c5166aefeb",
+      "originalPath": "docs/CONTRIBUTING.md",
+      "authorId": "parity-author:project-navigation-and-status",
+      "reviewerId": "parity-reviewer:project-navigation-and-status",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:9e37355c77289418588104058ab60970d05fbd530254e0da92536174e9b74e89",
+      "originalPath": "docs/deployment/agent-deployments.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d6c65352bbfb799ababf95bfe216ecb3209aba24c0a08bbcb5264f1fec372b7a",
+      "originalPath": "docs/deployment/continuous-gitops.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b46dd355be30c27b37deda845c90e8f7c6453a4190a4533d841e655338913ddb",
+      "originalPath": "docs/deployment/deployment-verification.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:3567c67f9dbe4305be9c6d68ef48ff38971c35ba35ff3a1327de6036fdd052a2",
+      "originalPath": "docs/deployment/infrastructure.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:bbd32a76263016b455fbe78f38653b1f2f6644e577d008a472b159175f9d96ee",
+      "originalPath": "docs/deployment/litellm.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:bf150961144387ce44bb16ef8c24fff2fc660fc54e8b050bfb4a69c964cc1c89",
+      "originalPath": "docs/deployment/README.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2f390fdbeb95f2199a3ada45e6b5da93bcf7accd9fd08277eca1937324b6441b",
+      "originalPath": "docs/deployment/secrets.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:fe9db96f79f6331d1cae52c07b5f6c355846a81b74f2763c4482c19cff58f74e",
+      "originalPath": "docs/deployment/setup-flow.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:4c6c238e3bca811316d13f2c6b960d81bcbe66e6feff599c94df6481e3e48e0f",
+      "originalPath": "docs/deployment/tailscale-operator.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:02f8544c6a42032f2441081ab84141560504db8af87a2ebf0b746822f46ab90a",
+      "originalPath": "docs/developers/adding-verification.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:cc5cf87f6b1008036ad0a9147633d12a1085110a0fb92484d1f336ef32b8f730",
+      "originalPath": "docs/developers/authoring-plugin-observers.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:68a2fb517db95bc0cb892e16ea82c11a4f60fa9701fc4549560034436c638298",
+      "originalPath": "docs/developers/authoring-plugin-pipelines.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:2c1cbc85e8c1969a615bd7a8f2238edfad6bd445c8059b2d4dc06b2615e8421d",
+      "originalPath": "docs/developers/contributing.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:3018c0843964f1f5f14a2964e981c02122ec7817c2669b19e6e3bfecdabdc8c1",
+      "originalPath": "docs/developers/documentation-conventions.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:458e6f91f72aa00e591dffc225112c6c6423a58806e90e6099f7f0fd7fa16c95",
+      "originalPath": "docs/developers/hooks-and-plugins.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:717ea71530005960721e219f9efb3773a060822bb23c50df7439974482ced0a7",
+      "originalPath": "docs/developers/migrating-pipeline-plugins.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:70b7105a120b9307cfcfe33309bd8b997b6ae7d9204a0342a40295cf67615b88",
+      "originalPath": "docs/developers/README.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:07f39997a2adae445c19a2c802061f161f0f3f69945bb09b33e0b2b70f5e3df2",
+      "originalPath": "docs/developers/replacing-agent-runtime.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:91cde94f475e091cee364ef6c4e325d25197845e2a3027b3e5cf65598e8a8508",
+      "originalPath": "docs/developers/templates/architecture-page.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:a1f4dc17c8819b54345eaf83f0d55fd437bdf32d9c1a86a809c9007205cb806b",
+      "originalPath": "docs/developers/templates/deployment-component.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e7b1d70e0e7edc55f48bbb79eaf04b5e3a144a5f903832db61e07960785ee61f",
+      "originalPath": "docs/developers/templates/operator-task.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:bcf4587f0c35b44dcb94adfa1257c0a2551dcc3abb6b9303bafeaae0ce9e0dda",
+      "originalPath": "docs/developers/templates/reference-page.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:89d09cf7d78143cd04de185d93e125b2222ff08adad97a290ea56725751a4f81",
+      "originalPath": "docs/developers/templates/runbook.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:3a75bb6a6fe886ba9591eb0df3eb15a8cf3a524f9846c1228ceb7847c348d5c4",
+      "originalPath": "docs/developers/templates/troubleshooting-entry.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:12fb52222abada1dab5b8ce7ce77b33a43a6aab439cdeca38653b882ab4aba75",
+      "originalPath": "docs/developers/testing-and-ci.md",
+      "authorId": "parity-author:developer-and-extension-sources",
+      "reviewerId": "parity-reviewer:developer-and-extension-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:047138e56f2602495419d4cc7b9cbcfc0ee55ce07ba5f1a704ae240bb93247f7",
+      "originalPath": "docs/diagrams/deployment-topology.svg",
+      "authorId": "parity-author:architecture-diagrams",
+      "reviewerId": "parity-reviewer:architecture-diagrams",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:3f4d7d48453e226b3e448e5ca870fe05c4255c09105e9862670327509e7dbaa9",
+      "originalPath": "docs/diagrams/failure-recovery-decision-flow.svg",
+      "authorId": "parity-author:architecture-diagrams",
+      "reviewerId": "parity-reviewer:architecture-diagrams",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:7bdb61a1bdb3e7500ddef9b73664d07ae6acbb50f058504248805be93383a70d",
+      "originalPath": "docs/diagrams/final-preview-tailscale-flow.svg",
+      "authorId": "parity-author:architecture-diagrams",
+      "reviewerId": "parity-reviewer:architecture-diagrams",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:3a72e6ac886c3f324a7e53262eb6d09925b7209c25757c2f230e7051b7396f2c",
+      "originalPath": "docs/diagrams/infrastructure-dependencies.svg",
+      "authorId": "parity-author:architecture-diagrams",
+      "reviewerId": "parity-reviewer:architecture-diagrams",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1987c3bf6d60af51a2630677a9d0c2fec6f2902aad4275f66466f7ea4a26f492",
+      "originalPath": "docs/diagrams/pipeline-runtime-flow.svg",
+      "authorId": "parity-author:architecture-diagrams",
+      "reviewerId": "parity-reviewer:architecture-diagrams",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d2e6e2d13eb7b76dcf1332dd9384c244bd9b6601a84bbd7d1c3b79da4100d00a",
+      "originalPath": "docs/diagrams/secret-flow.svg",
+      "authorId": "parity-author:architecture-diagrams",
+      "reviewerId": "parity-reviewer:architecture-diagrams",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:aa3694146adc547f121a90ee3b3e5536718ed7412cccddbcff517124c252999d",
+      "originalPath": "docs/DOCUMENTATION_TOPIC_MAP.md",
+      "authorId": "parity-author:project-navigation-and-status",
+      "reviewerId": "parity-reviewer:project-navigation-and-status",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:a754275b0cef31944a32edf1a65727c6f69edd98a515cc8fcdfa78c809c8f49b",
+      "originalPath": "docs/operations/automatic-runtime-deployments.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:444de3e35531c9d1631c906e5bbdd8334bf4ec653db6f0db195d013d178dc19c",
+      "originalPath": "docs/operations/ax41-rollout.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:108f1ace1496b245dc8cb634ee8cf2f575f659702b9482fae567e186c9fb78bb",
+      "originalPath": "docs/operations/data-plane-mtls.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:ae99fdb5f5f328dc447eeede83d2b4e47c239e9ba5c7b1bc4d2ff6a0cb169125",
+      "originalPath": "docs/operations/litellm-postgresql-recovery.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d482e0e78ad3cdc6981789eefe617589f8a390a0891e479e3fc9751613e5fbb6",
+      "originalPath": "docs/operations/local-image-vulnerability-scan.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:eb68453e617044eb255b39d7d0d150f6cd5078fd89e25794c8401c174d52ec20",
+      "originalPath": "docs/operations/native-worker-host-pools.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:6e2177844ba1e22afd53fe842ce046a36ce87eae6e6746ca7adc83dec9088dfb",
+      "originalPath": "docs/operations/observability-retention.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f12561526292c5d51d9f9bdd9dcf340a7b77961be4f24feea6b5ca3e7efa4c67",
+      "originalPath": "docs/operations/postgresql-migration.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:42013b4e6ae9a77b4ce21a3dde96e8c7273e5a3d0c4bfdd22ad3ed760d617c7d",
+      "originalPath": "docs/operations/prism-database-transitions.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f5895bb69fd859b0b9a5a95700ab08bdcb40f36282990b6dcaa9807c99a3933c",
+      "originalPath": "docs/operations/prism-operator-guide.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:8bf35ec9e9cde4ec60ebfe2af59f0dd06a8105250809be80c756104220236be0",
+      "originalPath": "docs/operations/prism-product-decisions.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d0803eafc2c100e8a7fcf5c5a1b32bddb005bacc814c4fe2dbc94774d9852519",
+      "originalPath": "docs/operations/redis-migration.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:53ccbe8549f9d9706bc10c4905ad6f0544f6118554f0a27c2e4b7b35a91f67a9",
+      "originalPath": "docs/operations/registry-clients.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:a7b9d9e451ac6d1c3531cf28bdfe4964cbc5cd57a5e66a77aef13f1c6edac3b7",
+      "originalPath": "docs/operations/runtime-versions-and-images.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f074fd17aea948deac30a6071fb04269ad15dc8cd960bbdccfdc9d32ab28262a",
+      "originalPath": "docs/operations/stateful-infrastructure-upgrades.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:5c002a3fd254fd4d0a26da769a94ae75f2ba037eb9e9acb95e9c56796db6f9d7",
+      "originalPath": "docs/operations/worker-trust-runbook.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f74761cd6b7fe1511ef55344d5ec14a33380cc6189b3d479e9e0772deb4e24b8",
+      "originalPath": "docs/operators/external-pipeline-plugins.md",
+      "authorId": "parity-author:operator-handbook-sources",
+      "reviewerId": "parity-reviewer:operator-handbook-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:1658d4ae43c6c56dbf90b24d52f6ad1f143acd60fbfb18a544180a20f989673a",
+      "originalPath": "docs/operators/final-preview-tailscale.md",
+      "authorId": "parity-author:operator-handbook-sources",
+      "reviewerId": "parity-reviewer:operator-handbook-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:fbae9c8a7158201948d96191b8479b9494e7dd57dfd224757c8a690ce8fc16dd",
+      "originalPath": "docs/operators/plugin-observers.md",
+      "authorId": "parity-author:operator-handbook-sources",
+      "reviewerId": "parity-reviewer:operator-handbook-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:5a375cd7b0b4d015f6cb286c665f08176526e041b0f6744304f67721c22419c4",
+      "originalPath": "docs/operators/plugin-pipeline-lifecycle.md",
+      "authorId": "parity-author:operator-handbook-sources",
+      "reviewerId": "parity-reviewer:operator-handbook-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:be1c31c6913ff08a6fd943e811418e9f6432ee727bef87545f998506406f690a",
+      "originalPath": "docs/operators/README.md",
+      "authorId": "parity-author:operator-handbook-sources",
+      "reviewerId": "parity-reviewer:operator-handbook-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:89f5185371ec338a2759993e038c6c6607f066697164e589f7add3e5db71bf76",
+      "originalPath": "docs/operators/recovery-runbook.md",
+      "authorId": "parity-author:operator-handbook-sources",
+      "reviewerId": "parity-reviewer:operator-handbook-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d840fd3c8e9da6216cc9f5c24d45de0c16910e8cdc4f66a8d049b037095b57b3",
+      "originalPath": "docs/operators/running-the-pipeline.md",
+      "authorId": "parity-author:operator-handbook-sources",
+      "reviewerId": "parity-reviewer:operator-handbook-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:4cab820fb1341980185c16077a94065d4602f2f51719ba912a6795d3b0a5ebce",
+      "originalPath": "docs/ops/ops-pod.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:6c0697d9763ba2d2ee3b6c5d51e8b0cbcc4092ca71b5508798fc92c112ed8202",
+      "originalPath": "docs/pipeline/architecture.md",
+      "authorId": "parity-author:reference-and-pipeline-sources",
+      "reviewerId": "parity-reviewer:reference-and-pipeline-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:8732c86181ae387970b445d8dda58ea4ac5f214cffc15476899f0e94d3910dcc",
+      "originalPath": "docs/reference/cli.md",
+      "authorId": "parity-author:reference-and-pipeline-sources",
+      "reviewerId": "parity-reviewer:reference-and-pipeline-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:d7321b6be2f85259b19c075f17adca717bae1e6070dbc879ecdf317f23a467ec",
+      "originalPath": "docs/reference/environment-variables.md",
+      "authorId": "parity-author:reference-and-pipeline-sources",
+      "reviewerId": "parity-reviewer:reference-and-pipeline-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:16d0f6cabe57d19365d41bd3b674d3a50f5e04770fb60b52f59815221897442c",
+      "originalPath": "docs/reference/helm-values.md",
+      "authorId": "parity-author:reference-and-pipeline-sources",
+      "reviewerId": "parity-reviewer:reference-and-pipeline-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:339afab147cc4af2731f87fee27f6ec23690783b1f0289c5dea84cbfcd3bce0c",
+      "originalPath": "docs/reference/openclaw-config.md",
+      "authorId": "parity-author:reference-and-pipeline-sources",
+      "reviewerId": "parity-reviewer:reference-and-pipeline-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:58b135e88ca8ad9dce57ac4d70c45deeed7becaac18b660b53ae97e061d27061",
+      "originalPath": "docs/reference/secrets.md",
+      "authorId": "parity-author:reference-and-pipeline-sources",
+      "reviewerId": "parity-reviewer:reference-and-pipeline-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:f986de5076af3b0a9a4753cc4b25b7bdbc15f82e4e2f76e28b508ff9aa523cdc",
+      "originalPath": "docs/reference/verification-commands.md",
+      "authorId": "parity-author:reference-and-pipeline-sources",
+      "reviewerId": "parity-reviewer:reference-and-pipeline-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:b5502166d394b4afb51c56fd3bfb3cd86a128e87da298bc9acf5cf960d115587",
+      "originalPath": "docs/reference/workflows.md",
+      "authorId": "parity-author:reference-and-pipeline-sources",
+      "reviewerId": "parity-reviewer:reference-and-pipeline-sources",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:7388495cba1478cc32e2321092f981d5f75494d96017d97b3486adb89dfc1bf8",
+      "originalPath": "docs/ROADMAP.md",
+      "authorId": "parity-author:project-navigation-and-status",
+      "reviewerId": "parity-reviewer:project-navigation-and-status",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:171898d811897735610732f0a0ba4e22f1e1412b93135ae63ca0f267482cec7a",
+      "originalPath": "docs/runbooks/prism-recovery.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:e895ff4b02d07b6993c6edfea0bbdca0b2f1fbbd507cb52bc18b88040bcdf731",
+      "originalPath": "docs/security/prism-threat-model.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:8a6722e74871288c237b4963f8d39f3b0dc83e23e7240b34d6b79664fe56af66",
+      "originalPath": "docs/security/worker-trust.md",
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "reviewerId": "parity-reviewer:platform-deployment-operations-and-security",
+      "issuedBy": "documentation-governance"
+    },
+    {
+      "assignmentId": "parity-assignment:40c400d31d894a3c63a55f8d41bfeddbe9f61e42fa8b3c38295e968c385f28a3",
+      "originalPath": "docs/user-guides/prism-studio.md",
+      "authorId": "parity-author:prism",
+      "reviewerId": "parity-reviewer:prism",
+      "issuedBy": "documentation-governance"
+    }
+  ]
+}

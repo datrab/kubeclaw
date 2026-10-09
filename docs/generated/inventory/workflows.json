@@ -145,21 +145,7 @@
         "push",
         "workflow_dispatch"
       ],
-      "pathFilters": [
-        "docs/**",
-        "scripts/docs-*.mjs",
-        "scripts/tests/docs-status.test.mjs",
-        "scripts/deploy.sh",
-        "package.json",
-        "package-lock.json",
-        ".github/workflows/**",
-        "my-values/**",
-        "charts/kubeclaw/**",
-        "deploy/**",
-        "docker/**",
-        "tests/**",
-        "skills/**"
-      ],
+      "pathFilters": [],
       "schedules": [],
       "jobs": [
         "validate",
@@ -168,6 +154,7 @@
       "commandAndActionRefs": [
         "git diff --check",
         "node --test tests/verification/deployment/docs-reference-scope.test.mjs",
+        "node scripts/check-workflow-yaml.mjs .github/workflows/docs-checks.yaml && node --test tests/verification/contracts/workflow-trust-split.test.mjs",
         "node scripts/docs-check.mjs",
         "npm ci --ignore-scripts",
         "npm run docs:check:coverage",

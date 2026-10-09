@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-batches.v1",
+  "purpose": "Assigns each immutable legacy extraction source to one coherent authoring and independent-review batch.",
+  "sourceSetAuthorityRevision": "00705ed30c40649267ce5ef4a06c714ae16cbc76",
+  "sourceSetAuthoritySha256": "6c49560a6dc1688a86f571ee10204db91ef12cd0aaab945b702a90f152beb3a7",
+  "batches": [
+    {
+      "id": "project-navigation-and-status",
+      "owner": "documentation-governance",
+      "patterns": [
+        "^docs/(CONTRIBUTING|DOCUMENTATION_TOPIC_MAP|ROADMAP)\\.md$",
+        "^docs/architecture/README\\.md$"
+      ]
+    },
+    {
+      "id": "nova-core-and-plugin-runtime",
+      "owner": "nova-runtime",
+      "patterns": [
+        "^docs/architecture/(capability-provider-routing|lifecycle-and-state|nova-project-runtime|plugin-system-[^/]+)\\.md$"
+      ]
+    },
+    {
+      "id": "echo",
+      "owner": "echo-runtime",
+      "patterns": [
+        "^docs/architecture/echo-review-[^/]+\\.md$"
+      ]
+    },
+    {
+      "id": "prism",
+      "owner": "prism-runtime",
+      "patterns": [
+        "^docs/architecture/prism-[^/]+\\.md$",
+        "^docs/(operations/prism-[^/]+|runbooks/prism-recovery|security/prism-threat-model|user-guides/prism-studio)\\.md$"
+      ]
+    },
+    {
+      "id": "observability-packaging-and-reliability",
+      "owner": "runtime-reliability",
+      "patterns": [
+        "^docs/architecture/pipeline-(observability|runtime-packaging|reliability)-[^/]+\\.md$"
+      ]
+    },
+    {
+      "id": "worker-core",
+      "owner": "worker-runtime",
+      "patterns": [
+        "^docs/architecture/pipeline-worker-core-[^/]+\\.md$"
+      ]
+    },
+    {
+      "id": "buster-core-and-shared-migration",
+      "owner": "buster-runtime",
+      "patterns": [
+        "^docs/architecture/buster-v2-runtime\\.md$",
+        "^docs/architecture/pipeline-test-gate-(phase-[^/]+|suite-migration-[^/]+|suites-[^/]+)\\.md$"
+      ]
+    },
+    {
+      "id": "buster-suite-accessibility",
+      "owner": "buster-accessibility",
+      "patterns": ["^docs/architecture/pipeline-test-gate-a11y-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-api",
+      "owner": "buster-api",
+      "patterns": ["^docs/architecture/pipeline-test-gate-api-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-container-build",
+      "owner": "buster-container-build",
+      "patterns": ["^docs/architecture/pipeline-test-gate-container-build-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-end-to-end",
+      "owner": "buster-end-to-end",
+      "patterns": ["^docs/architecture/pipeline-test-gate-e2e-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-http",
+      "owner": "buster-http",
+      "patterns": ["^docs/architecture/pipeline-test-gate-http-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-kubernetes-fixture",
+      "owner": "buster-kubernetes",
+      "patterns": ["^docs/architecture/pipeline-test-gate-kubernetes-fixture-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-lighthouse",
+      "owner": "buster-lighthouse",
+      "patterns": ["^docs/architecture/pipeline-test-gate-lighthouse-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-security",
+      "owner": "buster-security",
+      "patterns": ["^docs/architecture/pipeline-test-gate-security-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-size-budget",
+      "owner": "buster-size-budget",
+      "patterns": ["^docs/architecture/pipeline-test-gate-size-budget-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-tailscale-exposure",
+      "owner": "buster-demo-delivery",
+      "patterns": ["^docs/architecture/pipeline-test-gate-tailscale-exposure-[^/]+\\.md$"]
+    },
+    {
+      "id": "buster-suite-visual",
+      "owner": "buster-visual",
+      "patterns": ["^docs/architecture/pipeline-test-gate-visual-[^/]+\\.md$"]
+    },
+    {
+      "id": "platform-deployment-operations-and-security",
+      "owner": "platform-operations",
+      "patterns": [
+        "^docs/architecture/(ops-pod|security-model)\\.md$",
+        "^docs/(deployment|operations|ops|security)/(?!prism-)[^/]+\\.md$"
+      ]
+    },
+    {
+      "id": "operator-handbook-sources",
+      "owner": "platform-operations",
+      "patterns": [
+        "^docs/operators/[^/]+\\.md$"
+      ]
+    },
+    {
+      "id": "developer-and-extension-sources",
+      "owner": "developer-experience",
+      "patterns": [
+        "^docs/developers/.+\\.md$"
+      ]
+    },
+    {
+      "id": "reference-and-pipeline-sources",
+      "owner": "documentation-governance",
+      "patterns": [
+        "^docs/(reference|pipeline)/[^/]+\\.md$"
+      ]
+    },
+    {
+      "id": "architecture-diagrams",
+      "owner": "architecture",
+      "patterns": [
+        "^docs/diagrams/[^/]+\\.svg$"
+      ]
+    }
+  ]
+}
