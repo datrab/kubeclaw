@@ -81,7 +81,7 @@ test('the actual pinned Codex CLI accepts the installed MCP config and exposes p
     copyFileSync(join(repo, 'ops/pod/config.toml'), join(dir, '.codex/config.toml'));
     const env = { PATH: process.env.PATH, HOME: dir, KUBECLAW_MCP_TOKEN: 'test-only-' + 'x'.repeat(32) };
     const run = a => execFileSync(codex, a, { env, encoding: 'utf8', timeout: 15000 });
-    const pinnedVersion = JSON.parse(readFileSync(join(repo, 'ops/pod/package.json'), 'utf8')).dependencies['@openai/codex'];
+    const pinnedVersion = JSON.parse(readFileSync(join(repo, 'versions.json'), 'utf8')).codex.version;
     assert.equal(run(['--version']).trim(), `codex-cli ${pinnedVersion}`);
     assert.match(run(['remote-control', '--help']), /pair/);
     assert.match(run(['remote-control', 'start', '--help']), /daemon/);

@@ -4,7 +4,13 @@ import test from 'node:test';
 import YAML from 'yaml';
 
 const read = name => YAML.parse(fs.readFileSync(`.github/workflows/${name}.yaml`, 'utf8'));
-const main = read('build-images'), pr = read('role-images');
+const main = read('build-images'), pr = read('role-images'), updates = read('update-checks');
+
+test('update checks validate previous release selections while replacements build', () => {
+  const run = updates.jobs.policy.steps.find(step => step.name === 'Check generated versions and release receipt validation').run;
+  assert.match(run, /materialize-release\.mjs --check --check-selected-source(?: --family=ops)?/u);
+  assert.match(run, /materialize-release\.mjs --check --check-selected-source --family=ops/u);
+});
 
 test('each runtime is built once per event and PR builds cannot publish', () => {
   assert.equal(Object.values(main.jobs).some(job => job.uses?.endsWith('/role-images.yaml')), false);
