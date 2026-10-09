@@ -29,13 +29,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-37933425783-1/nova-3254339ec59bd2fc7345feddba6fb5b821bd3356.tgz
-  expectedCommit: 3254339ec59bd2fc7345feddba6fb5b821bd3356
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-37939029761-1/nova-8daca84d45b5e5e2a2121b9229c5c23fd588cacd.tgz
+  expectedCommit: 8daca84d45b5e5e2a2121b9229c5c23fd588cacd
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: de9e88a8d0a457b935b951a22fce524f3d26efdbde45def5909dbae721414f73
+  sha256: 264fc49ab2eabcbf2a0b105545c6fde677183396be02890909e1728b706fffd4
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-nova
@@ -63,7 +63,7 @@ commands:
 agent:
   project: clawdeck
   model:
-    primary: openai/gpt-6-astra
+    primary: openai/gpt-6.1-sol
     fallbacks:
       - openai/gpt-5.5
   git:
