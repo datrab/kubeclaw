@@ -1,16 +1,19 @@
 # Glossary
 
-Status: implemented for the architecture track
+Status: shared architecture and operator terminology; recovery and workload-credential definitions are source-backed
 Audience: all readers
 Owner: documentation
-Evidence: docs/site/understand/components-and-authority.md; docs/site/understand/request-state-recovery.md; docs/site/understand/deployment-and-trust.md
+Evidence: docs/site/understand/components-and-authority.md; docs/site/understand/request-state-recovery.md; docs/site/understand/deployment-and-trust.md; my-values/infra/spire-values.yaml; charts/prism/templates/configmap-worker-trust.yaml; skills/worker/core/worker/trust.ts
 Applies to: KubeClaw platform terminology
-Last verified: 2026-09-15
+Last verified: 2026-10-09 for RPO, RTO, and SVID definitions; bounded source review only
 
 ## Purpose
 
 This glossary gives one plain meaning to each KubeClaw term.
-The architecture pages use these meanings consistently.
+The architecture and operator pages use these meanings consistently.
+Use the same full name and definition at the first operational use of RPO, RTO,
+or SVID, and link that use to its canonical section below. Keep target values,
+measured results, identity verification, and application permission distinct.
 
 | Term | Plain meaning |
 | --- | --- |
@@ -59,16 +62,78 @@ The architecture pages use these meanings consistently.
 | Resume signal | A typed, attributable, and idempotent answer that permits Nova to continue a stored wait. |
 | Retry | Another attempt after a retryable technical result. It is different from product repair. |
 | Role bundle | The declared packages, plugins, entry point, and external capabilities for one runtime purpose. |
+| [RPO](#rpo) | Recovery point objective: the owner-approved maximum data-loss time window. |
+| [RTO](#rto) | Recovery time objective: the owner-approved maximum recovery duration. |
 | SDK | Shared types and helper functions used by Core, plugins, adapters, and specialist integrations. |
 | SPIFFE | The workload identity standard used to identify protected Kubernetes workloads. |
 | SPIRE | The identity service that issues short-lived SPIFFE certificates to attested workloads. |
 | Specialist | A bounded worker identity that performs one type of delegated work, such as Forge or Echo. |
 | Stage | One declared unit in the pipeline graph. It has an owner, input, limits, and dependencies. |
+| [SVID](#svid) | SPIFFE Verifiable Identity Document: a workload credential that proves a SPIFFE identity. |
 | Terminal state | The final run state: succeeded, failed, blocked, or cancelled. |
 | Typed result | A result that must match the declared versioned schema before Core uses it. |
 | Uncertain effect | An external request that might have succeeded, although no trustworthy receipt is available. |
 | Wait | A durable pause that needs a matching signal, approval, orchestrator action, or cooldown. |
 | Worker Core | The neutral layer that controls worker attempts, claims, capacity, limits, cancellation, resources, recovery, and result binding. |
+
+## RPO
+
+The recovery point objective (RPO) is the maximum data-loss time window that the
+data owner approves. It is a target. Actual data loss is the measured gap between
+the last accepted source data and the verified restored data. Record the source
+and restored points used for that measurement, then compare the gap with the
+approved target. A backup schedule alone does not prove this result.
+
+## RTO
+
+The recovery time objective (RTO) is the maximum recovery duration that the
+service owner approves. It is a target. Actual recovery time is the measured
+elapsed time from the recovery start to the verified restoration of service.
+Record those start and end conditions with the measurement, then compare the
+duration with the approved target.
+
+Keep each target `undecided` until its owner approves it. Keep an absent actual
+result `not measured`. An approved target and a completed measurement are
+different records. The [backup and recovery procedure](../use/recovery.md#define-a-backup-set)
+requires both records; it supplies no target values or measured platform result.
+
+## SVID
+
+A SPIFFE Verifiable Identity Document (SVID) is a workload credential that proves
+a SPIFFE identity. On the deployed KubeClaw paths described in
+[Worker Trust](../use/worker-trust.md#canonical-worker-trust-procedure), it is a
+short-lived X.509 certificate that contains the workload's SPIFFE identity.
+SPIRE issues the credential, the CSI driver delivers the Workload API socket,
+and Envoy uses that identity for mutual TLS. Successful identity verification
+does not grant application permission. The receiving application's allowlist
+must also permit that identity.
+
+> **Source evidence — deployed identity and application permission**
+>
+> **Claim:** The selected SPIRE configuration assigns namespace and ServiceAccount
+> identities and disables JWT-SVID support. The deployed proxy uses certificates
+> and exact SPIFFE URI matching. Worker Core checks application permission after
+> it reads the verified peer identity.
+>
+> **Implementation:** [`clusterSPIFFEIDs` and `jwtSVIDSupport`](https://github.com/datrab/kubeclaw/blob/082db288f7bc5e686e47306d60cf4db7d8ba8cfc/my-values/infra/spire-values.yaml#L27-L40) ·
+> [CSI socket volume](https://github.com/datrab/kubeclaw/blob/082db288f7bc5e686e47306d60cf4db7d8ba8cfc/charts/kubeclaw/templates/deployment.yaml#L1637-L1640) ·
+> [Prism certificate delivery and URI checks](https://github.com/datrab/kubeclaw/blob/082db288f7bc5e686e47306d60cf4db7d8ba8cfc/charts/prism/templates/configmap-worker-trust.yaml#L17-L40) ·
+> [`authorizeSpiffePeer`](https://github.com/datrab/kubeclaw/blob/082db288f7bc5e686e47306d60cf4db7d8ba8cfc/skills/worker/core/worker/trust.ts#L31-L41).
+>
+> **Contract or setting:** The selected `workerTrust.spiffe` values choose the
+> active identity path. Check the certificate lifetime with the SPIRE issuance
+> authority; this page supplies no fixed lifetime.
+>
+> **Test evidence:** [The parser and allowlist contract checks accepted and denied
+> peers](https://github.com/datrab/kubeclaw/blob/082db288f7bc5e686e47306d60cf4db7d8ba8cfc/tests/verification/contracts/check-worker-trust-spiffe.mts#L14-L36).
+> The local parser and allowlist contract passed on 2026-10-09. It does not prove
+> live authorization.
+>
+> **Revision:** `082db288f7bc5e686e47306d60cf4db7d8ba8cfc`.
+>
+> **Limit:** No fixed certificate lifetime, expiry exercise, or independent SPIRE
+> restore result is established here. Follow the
+> [certificate and SPIRE rotation boundary](../use/maintenance.md#certificate-and-spire-rotation).
 
 ## Similar Terms
 

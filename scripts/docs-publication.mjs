@@ -137,7 +137,30 @@ const guidanceById = new Map(guidance.records.map((item) => [item.id, item]));
 const localVerification = readJson(path.join(root, 'docs', 'blueprint', 'AP08-local-verification.json'));
 const localVerificationById = new Map(localVerification.groups.flatMap((group) =>
   group.packages.map((id) => [id, { result: group.result, reason: group.reason }])));
-const sourceBase = `${remoteBase()}/blob/${guidance.evidenceRevision}`;
+const sourceRevision = readJson(path.join(root, 'docs/generated/inventory/documentation-source-revision.json')).revision;
+if (!/^[0-9a-f]{40}$/u.test(sourceRevision)) throw new Error('documentation source revision must be a full Git commit SHA');
+git('cat-file', '-e', `${sourceRevision}^{commit}`);
+const sourceBase = `${remoteBase()}/blob/${sourceRevision}`;
+const pinnedSources = new Map();
+function sourceEvidenceLink(item) {
+  const relative = rel(item.file);
+  if (relative.startsWith('../') || path.isAbsolute(relative)) throw new Error(`Source evidence escapes repository: ${relative}`);
+  if (!pinnedSources.has(relative)) {
+    const entry = git('ls-tree', sourceRevision, '--', relative);
+    if (!/^(?:100644|100755) blob [0-9a-f]{40}\t/u.test(entry)) throw new Error(`Source evidence is not a tracked regular file at ${sourceRevision}: ${relative}`);
+    const pinned = execFileSync('git', ['-C', root, 'show', `${sourceRevision}:${relative}`], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+    const current = fs.readFileSync(item.file, 'utf8');
+    if (pinned !== current) throw new Error(`Source evidence differs from documentation source revision ${sourceRevision}: ${relative}`);
+    const lines = pinned.split('\n');
+    if (pinned.endsWith('\n')) lines.pop();
+    pinnedSources.set(relative, lines);
+  }
+  const end = item.endLine ?? item.line;
+  if (!Number.isSafeInteger(item.line) || !Number.isSafeInteger(end) || item.line < 1 || end < item.line || end - item.line >= 60 || end > pinnedSources.get(relative).length) {
+    throw new Error(`Invalid pinned source evidence range: ${relative}:${item.line}-${end}`);
+  }
+  return `[${relative}:${item.line}${end === item.line ? '' : `-${end}`}](${sourceBase}/${relative}#L${item.line}-L${end})`;
+}
 
 const pluginFiles = [
   ...walk(path.join(root, 'skills'))
@@ -249,7 +272,7 @@ function pluginPage(plugin) {
     'Owner: plugin-foundation',
     `Evidence: ${rel(file)}; ${rel(guide)}`,
     `Applies to: ${manifest.apiVersion}; package ${manifest.packageVersion}`,
-    `Last verified: see the separate verification record; source evidence revision ${guidance.evidenceRevision}`,
+    `Last verified: see the separate verification record; generated source evidence revision ${sourceRevision}; authored guidance evidence revision ${guidance.evidenceRevision}`,
     '',
     '## Authored Guidance',
     '',
@@ -460,14 +483,20 @@ function registrationDependencyFacts(plugin, registration) {
   const moduleIsFile = modulePath && fs.existsSync(modulePath) && fs.statSync(modulePath).isFile();
   const closure = pluginSourceClosure(moduleIsFile ? modulePath : null, root);
   const invocation = pluginInvocationFacts(closure, registration.export);
-  const boundary = invocationDependencyBoundaries(invocation, root, { ...registration, manifestFile: rel(plugin.file) });
+  const routes = registration.kind === 'test provider' ? busterDependencyRoutes : [];
+  const boundary = invocationDependencyBoundaries(invocation, root, { ...registration, manifestFile: rel(plugin.file), routes });
   const implementation = [...invocation.selectedSources.values()].join('\n');
-  const evidenceLink = (item) => `[${rel(item.file)}:${item.line}](${sourceBase}/${rel(item.file)}#L${item.line}-L${item.line})`;
+  const evidenceLink = sourceEvidenceLink;
   const evidence = [...new Set(invocation.evidence.map(evidenceLink))].join(', ')
     || (moduleIsFile ? sourceLink(`${registration.export ?? 'Host entrypoint'} in ${rel(modulePath)}`, modulePath) : sourceLink('Host manifest', plugin.file));
   const called = [...new Set(invocation.evidence.filter((item) => item.kind === 'capability').map((item) => item.name))].sort();
   const direct = [...new Set(invocation.evidence.filter((item) => ['client', 'client-owner'].includes(item.kind)).map((item) => item.name))].sort();
-  const namespace = registration.kind === 'test provider' ? 'Buster resolved-plan runtime routes' : 'Nova platform grants and adapter selection';
+  const roles = plugin.mechanical?.includedRoles ?? [];
+  const namespace = plugin.openclaw ? 'OpenClaw host activation and tool configuration'
+    : plugin.codex ? 'Codex host MCP connection'
+      : ['test provider', 'report adapter'].includes(registration.kind) || roles.length === 1 && roles[0] === 'buster' ? 'Buster resolved-plan runtime routes'
+        : roles.length === 1 && roles[0] === 'nova' ? 'Nova platform grants and adapter selection'
+          : 'selected pipeline runtime capability binding';
   // A capability identifies an authority boundary. It does not identify the
   // configured provider instance or prove that its remote target is reachable.
   const delegated = called.filter((name) => !['artifacts.read', 'artifacts.write', 'state.read', 'state.append', 'secrets.read', 'signal.wait', 'report.evidence.read', 'test.plan.evidence'].includes(name));
@@ -480,7 +509,7 @@ function registrationDependencyFacts(plugin, registration) {
   });
   const diagnostics = [...schema.diagnostics, ...boundary.diagnostics];
   const boundaryEvidence = (item) => item.evidence.map(evidenceLink).join(', ');
-  const service = direct.length || delegated.length || boundary.records.some((item) => ['remote-command', 'selected-program', 'host-tools'].includes(item.scope));
+  const service = direct.length || delegated.length || boundary.records.some((item) => ['remote-command', 'selected-program', 'host-tools', 'runtime-client'].includes(item.scope));
   const noExternalProof = moduleIsFile && !service && !diagnostics.length && !endpoints.length && !secrets.length;
   const serviceText = [
     ...boundary.records.map((item) => `${item.service} ${boundaryEvidence(item)}.`),
@@ -510,25 +539,34 @@ function registrationDependencyFacts(plugin, registration) {
     ...predicates.map((item) => `${markdownInlineCode(item.path)}: ${item.conditions.length ? `applies ${schemaConditions(item.conditions)}; ` : ''}${schemaConstraint(item.keyword, item.value)}`),
   ])].join('<br>');
   let endpoint = endpoints.length ? [...new Set(endpoints.map(renderField)), schemaContract, `The runtime request and selected configuration supply the concrete instance. ${evidence}.`].filter(Boolean).join('<br>')
-    : service ? `The invocation or delegated runtime binding supplies the target; no plugin-local endpoint field. ${evidence}.`
-      : noExternalProof ? `No plugin-local endpoint: the resolved registration reads local or host-owned data. ${evidence}.` : `Endpoint authority is blocked by unresolved invocation analysis. ${evidence}.`;
+    : boundary.records.length && !diagnostics.length ? ''
+      : service ? `The invocation or delegated runtime binding supplies the target; no plugin-local endpoint field. ${evidence}.`
+      : !diagnostics.length ? `No plugin-local endpoint: the resolved registration uses local or host-owned inputs. ${evidence}.` : `Endpoint authority is blocked by unresolved invocation analysis. ${evidence}.`;
   let secret = secrets.length ? [...new Set(secrets.map(renderField)), schemaContract, called.includes('secrets.read') ? `Credential names resolve through ${namespace} and secrets.read. Secret projection and rotation belong to the selected runtime authority.` : plugin.openclaw ? 'The OpenClaw deployment owns sensitive configuration, process environment, credential projection, and rotation.' : 'The linked runtime consumer owns the declared credential value or reference.'].filter(Boolean).join('<br>')
-    : called.includes('secrets.read') ? `The invocation resolves secrets.read through ${namespace}; inspect its linked request for the actual credential selector. ${evidence}.`
+    : boundary.records.length && !diagnostics.length ? ''
+      : called.includes('secrets.read') ? `The invocation resolves secrets.read through ${namespace}; inspect its linked request for the actual credential selector. ${evidence}.`
       : service ? `The delegated provider or target may require credentials; this registration declares no plugin-local Secret field. Verify its selected binding.`
-        : noExternalProof ? `No credential selector in the resolved invocation. ${evidence}.` : `Credential authority is blocked by unresolved invocation analysis. ${evidence}.`;
+        : !diagnostics.length ? `No schema-declared credential field or secrets.read call; environment inputs and qualified consumers below retain their own authority. ${evidence}.` : `Credential authority is blocked by unresolved invocation analysis. ${evidence}.`;
+  for (const input of invocation.environmentInputs) {
+    const chain = input.provenance.map((item) => `${markdownInlineCode(item.name)} derives from ${markdownInlineCode(item.expression)} (${evidenceLink(item)})`).join('; ');
+    secret += `${secret ? '<br>' : ''}Environment input: ${markdownInlineCode(input.expression)}${input.dynamic ? '; the environment name is computed at runtime' : ''}. ${chain ? `${chain}. ` : ''}The process owner supplies and rotates environment values; an environment read alone does not classify the value as a credential. ${evidenceLink(input)}.`;
+  }
+  const qualifiedOwners = boundary.records.map((item) => `${item.dataOwner} ${boundaryEvidence(item)}.`);
   let dataOwner = direct.length ? `The selected client target owns service data. This registration owns only the request/result and local state declared by its consumer. ${evidence}.`
     : called.length ? `Each invoked capability retains its own artifact, state, repository, message, or remote-service authority. The caller owns only its contract-defined result. ${evidence}.`
-      : noExternalProof ? `The registration transforms its host input or local files; no remote data owner is established. ${evidence}.` : `Data ownership requires the unresolved runtime authority above.`;
-  let reachability = service ? `Run a bounded operation through the selected ${namespace} binding and verify its expected result. Direct client or provider code availability proves no configured endpoint or reachability. Retain failure, timeout, and cancellation results separately. ${evidence}.`
-    : noExternalProof ? `No direct network preflight for this invocation. Verify local store and artifact/capability access using the registration's contract. ${evidence}.` : 'A complete dependency preflight requires qualification of the unresolved invocation authority above.';
+      : qualifiedOwners.length ? ''
+        : !diagnostics.length ? `The registration transforms its host input or local files; no remote data owner is established. ${evidence}.` : `Data ownership requires the unresolved runtime authority above.`;
+  let reachability = boundary.records.some((item) => ['runtime-client', 'host-tools', 'credential-provider'].includes(item.scope)) && !diagnostics.length ? ''
+    : service ? `Run a bounded operation through the selected ${namespace} binding and verify its expected result. Direct client or provider code availability proves no configured endpoint or reachability. Retain failure, timeout, and cancellation results separately. ${evidence}.`
+    : !diagnostics.length ? `No direct network preflight for this invocation. Verify local store and artifact/capability access using the registration's contract. ${evidence}.` : 'A complete dependency preflight requires qualification of the unresolved invocation authority above.';
   for (const item of boundary.records) {
     const proof = `${boundaryEvidence(item)}.`;
-    endpoint += `<br>${item.endpoint} ${proof}`;
-    secret += `<br>${item.secret} ${proof}`;
-    dataOwner += `<br>${item.dataOwner} ${proof}`;
-    reachability += `<br>${item.check} ${proof}`;
+    endpoint += `${endpoint ? '<br>' : ''}${item.endpoint} ${proof}`;
+    secret += `${secret ? '<br>' : ''}${item.secret} ${proof}`;
+    dataOwner += `${dataOwner ? '<br>' : ''}${item.dataOwner} ${proof}`;
+    reachability += `${reachability ? '<br>' : ''}${item.check} ${proof}`;
   }
-  const digest = crypto.createHash('sha256').update(JSON.stringify(schema).replaceAll(root, '$ROOT')).update(implementation).update(JSON.stringify({ called, direct, diagnostics, required, provided, boundaries: boundary.records }).replaceAll(root, '$ROOT')).digest('hex');
+  const digest = crypto.createHash('sha256').update(JSON.stringify(schema).replaceAll(root, '$ROOT')).update(implementation).update(JSON.stringify({ called, direct, diagnostics, required, provided, environmentInputs: invocation.environmentInputs, boundaries: boundary.records }).replaceAll(root, '$ROOT')).digest('hex');
   const facts = { required, provided, serviceText, endpoint, secret, dataOwner, reachability, diagnostics, digest };
   dependencyAnalysisCache.set(key, facts);
   return facts;

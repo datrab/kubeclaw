@@ -82,7 +82,12 @@ Stop if the environment depends on an item in the second list and no operator ow
 | Registry, mirror, and BuildKit | Required showcase services | Authenticated push, uncached pull, cache behavior, storage, isolation, and garbage collection |
 | DNS and Tailscale | Required showcase access and exposure layers | Positive and negative identity checks plus independent recovery |
 | Monitoring | Optional platform evidence layer | Metric retention, log delivery, dashboard access, capacity, and recovery |
-| SPIRE | Required showcase workload-identity service | Server persistence, agents, CSI, SVID, and expiry ownership |
+| SPIRE | Required showcase workload-identity service | Server persistence, agents, CSI, [SVID](../reference/glossary.md#svid) issuance, and expiry ownership |
+
+An SVID (SPIFFE Verifiable Identity Document) is a workload credential. On these
+deployed paths, it is a short-lived X.509 certificate that contains the workload's
+SPIFFE identity. Successful identity verification does not grant application
+permission; the receiving application's allowlist must also permit that identity.
 
 Use the [GitOps operation](maintenance.md#gitops-operation) when Argo owns deployment.
 Use [Registry and BuildKit maintenance](maintenance.md#registry-and-buildkit-maintenance) for client preparation.
@@ -696,16 +701,31 @@ The smoke commands check the gateway, startup state, readiness, skills, and runt
 
 ### 5. Install Prism When Selected
 
-Use the [canonical Prism and Studio procedure](prism-studio.md#canonical-prism-and-studio-procedure).
-It owns render, deployment, health, Studio, wait/resume, recovery routing, and
-evidence. Do not continue to Worker Trust until its source and deployment gates
-pass.
+Complete the [Prism deployment phase](prism-studio.md#deploy-prism): render,
+platform and Secret setup, deployment, and status and smoke checks. Do not
+continue to Worker Trust until the selected-checkout source checks and these
+deployment and health checks pass. The deployment phase does not require a Nova
+approval wait or a Studio design session.
+
+After installation and Worker Trust verification, use
+[the complete Studio journey](prism-studio.md#the-complete-studio-journey) for
+human design and approval. That later phase requires a successful Nova
+architecture dispatch and its durable `prism.approval.resolved` wait. Stop if
+the dispatch result is missing or uncertain; do not invent a project or wait to
+complete installation.
+
+The [Prism stage dispatches the architecture before it creates the approval
+wait](https://github.com/datrab/kubeclaw/blob/082db288f7bc5e686e47306d60cf4db7d8ba8cfc/skills/nova/plugins/prism-design/src/stage.ts#L21-L34).
+This is source evidence; no live dispatch result is established here.
 
 ### 6. Prove Worker Trust
 
 Use the [canonical Worker Trust procedure](worker-trust.md#canonical-worker-trust-procedure).
-It currently stops at the failing Prism source check; do not claim a live proof
-until all its gates pass.
+Run all three source checks there for the selected checkout and stop on the
+first actual nonzero exit. The recorded local Prism source check passed; it does
+not prove live trust. After source and deployment prerequisites pass, run and
+retain the separate positive and negative live trust exercise. Do not claim live
+peer authorization without both results.
 
 ### 7. Record the First Verification
 

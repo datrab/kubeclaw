@@ -14863,10 +14863,10 @@
     }
   ],
   "continuation": {
-    "stage": "AP09.8 config reference rendering and tracked-source corrections verified in scoped checks; plugin Source audit found additional material defects; package acceptance open",
+    "stage": "AP09.8 independent Source/Quality/Reader material findings corrected; integrated link/boundary/helper checks passed; source commit and shared generation next; fresh acceptance still open",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Integrate exclusive writer changes, run focused checks, commit source separately and regenerate against its SHA. Re-run references/publication/reader-boundary gates. Recover full mutation proof with a new immutable run only after confirmed former handles are missing. Complete fresh Source/Reader/Quality reviews and Astra package acceptance before parity work.",
+    "next": "Commit verified authored/source changes only; generate against exact newsource SHA with separate generated commit; all applicable freshness/publication/config/mutation gates to terminal. New fresh Source/Reader/Quality reviews required after correction, followed by Astra only when complete Sol evidence. No parity/deletion before AP09.8 acceptance.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -14878,10 +14878,7 @@
     "currentMutationSession": 35062,
     "currentMutationLog": "/tmp/kubeclaw-a98-current-config-mutations.log",
     "currentMutationSnapshot": "b35311ad8db0946f44286b4a26a99e8676f44de4",
-    "agents": [
-      "/root/a98_dependency_source_audit_current",
-      "/root/a98_plugin_matrix_accuracy_writer"
-    ],
+    "agents": [],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
     "currentMutationState": "unproven-process-handle-missing-on-resumption",
@@ -14979,6 +14976,50 @@
         "exitCode": 0,
         "passed": 4,
         "log": "/tmp/kubeclaw-a98-resumed-refs-parser-tests.log"
+      },
+      "regeneratedConfigCheck": {
+        "command": "npm run docs:inventory:config:check",
+        "exitCode": 0,
+        "sourceRevision": "082db288f7bc5e686e47306d60cf4db7d8ba8cfc",
+        "log": "/tmp/kubeclaw-a98-082-config-check.log"
+      },
+      "readerBoundary": {
+        "command": "npm run docs:site-boundary:check",
+        "exitCode": 0,
+        "log": "/tmp/kubeclaw-a98-082-boundary-check.log",
+        "scope": "Generated working output against082 source before plugin corrections, not final package acceptance"
+      },
+      "sourceReferences": {
+        "command": "npm run docs:check:refs",
+        "exitCode": 0,
+        "log": "/tmp/kubeclaw-a98-082-links-check.log",
+        "scope": "Generated working output;3813 local links,1721 anchors,6622 repository paths,20343 pinned links; not semantic acceptance"
+      },
+      "prismDeploySource": {
+        "command": "npm run verify:prism:deploy-script",
+        "exitCode": 0,
+        "sourceRevision": "082db288f7bc5e686e47306d60cf4db7d8ba8cfc",
+        "log": "/tmp/kubeclaw-a98-082-prism-deploy-check.log",
+        "scope": "Workflow YAML, Prism command source contract, Bash syntax. No live cluster result."
+      },
+      "integratedCorrections": {
+        "commands": [
+          "npm run docs:check:refs",
+          "npm run docs:site-boundary:check",
+          "node --test scripts/tests/plugin-source-closure.test.mjs scripts/tests/plugin-dependency-boundaries.test.mjs scripts/tests/plugin-schema-dependencies.test.mjs"
+        ],
+        "exitCodes": [
+          0,
+          0,
+          0
+        ],
+        "helperTestsPassed": 38,
+        "logs": [
+          "/tmp/kubeclaw-a98-integrated-operator-links.log",
+          "/tmp/kubeclaw-a98-integrated-operator-boundary.log",
+          "/tmp/kubeclaw-a98-integrated-plugin-tests.log"
+        ],
+        "scope": "Integrated authored/source working changes before source commit; generated plugin matrix still awaits shared generation. Not package acceptance."
       }
     },
     "pluginSourceOpenFindings": [
@@ -14986,7 +15027,78 @@
       "Resolved invocations falsely described as unresolved data authority",
       "Current line numbers combined with historical source revision produce wrong package-lock citations",
       "Dynamic process.env credential selector in secret-resolver omitted"
-    ]
+    ],
+    "resumedIndependentSource": {
+      "agent": "/root/a98_dependency_source_audit_current",
+      "role": "Source",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "revision": "c613fbcac2b0daf2f36047372ebc4680be3d4339",
+      "generatedPageSha256": "dfc4eccaeb5a3ef1f8114f9031e632c03f205c8c9e2dbe466e420f1a64376084",
+      "result": "FAIL",
+      "catalogueResults": {
+        "OPL-001": "UNPROVEN",
+        "OPL-002": "UNPROVEN",
+        "OPL-003": "FAIL",
+        "OPL-004": "FAIL",
+        "OPL-005": "FAIL"
+      },
+      "rowsWithConcreteFailure": 20,
+      "rowsUnproven": 50,
+      "helperTestsPassed": 30,
+      "report": "/tmp/a98-independent-source-current/report.md",
+      "reportSha256": "2756397f3571caf929111100fa661d1b95ccccc1509e743b850b81b82a19adfd",
+      "scopeLimit": "Exhaustive70row inventory/link/invocation projection; no exhaustive transitive function semantics or functional operator proof. No package acceptance."
+    },
+    "operatorQualityReportedOpenFindings": [
+      "Install guide line707 falsely says Prism source check fails despite linked current recorded PASS",
+      "Prism sole procedure requires Nova waiting as precondition before first deployment; phase preconditions and install delegation need separation"
+    ],
+    "resumedIndependentQuality": {
+      "agent": "/root/a98_operator_quality_fresh",
+      "role": "Quality",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "revision": "082db288f7bc5e686e47306d60cf4db7d8ba8cfc",
+      "result": "FAIL",
+      "passedIds": [
+        "OPR-001",
+        "OPR-002",
+        "OPR-004",
+        "OPR-005",
+        "OPR-009",
+        "CFG-017"
+      ],
+      "failedIds": [
+        "OPR-003",
+        "OPR-006",
+        "OPR-007",
+        "OPR-008"
+      ],
+      "report": "/tmp/a98-operator-quality-fresh/report.md",
+      "reportSha256": "68836d8c148b9f4fe0438079fe1dea4279292992ff20d6d42bd980834be264c8",
+      "correctionState": "Q1-Q4 corrected by author/root; complete affected Quality review with fresh context still required"
+    },
+    "resumedIndependentReader": {
+      "agent": "/root/a98_prism_reader_resumed_fresh",
+      "role": "Reader",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "revision": "082db288f7bc5e686e47306d60cf4db7d8ba8cfc",
+      "result": "FAIL",
+      "failedIds": [
+        "OPR-010"
+      ],
+      "failedGatePartitions": [
+        "A98-12 Prism portion",
+        "A98-13 Prism portion"
+      ],
+      "report": "/tmp/a98-prism-reader-resumed/report.md",
+      "reportSha256": "43b9bc94ad77ad1778d568877f7f1c4a3ec2b1d2c8f95aac063d823c25dc4470",
+      "actualChecks": "17 linked contracts,3config, originalControl/PGlite HTTP and evaluation reservation; deploy source.9Bash syntax only; materialization expected ENOENT. No full bootstrap/browser/live acceptance.",
+      "correctionState": "History API vs UI, data URLs and supporting failure range corrected; fresh full affected Reader review required"
+    },
+    "pluginSourceCorrectionState": "Author implemented F1-F6 and38helper tests; all70rows retained. Current pin, host namespaces, credential selector, boundary owners,11runtime consumer routes and9GNUflock dependencies corrected. Full fresh independent semantic Source review still required;0diagnostics is not acceptance."
   },
   "productBoundaries": [
     {

@@ -20,10 +20,15 @@ identities cannot. This page is the only canonical Worker Trust procedure.
 Start after the [canonical installation](install.md#canonical-install-and-preflight-procedure)
 has created the application, `spire-server`, and `spire-system` namespaces and
 deployed the exact selected Nova, Buster, and Prism workloads. Run commands from
-`<repository-root>` on the independent administration machine. SPIRE owns SVID
-issuance, the CSI driver owns socket delivery, Envoy owns peer authentication,
+`<repository-root>` on the independent administration machine. An
+[SVID (SPIFFE Verifiable Identity Document)](../reference/glossary.md#svid) is a
+workload credential. These deployed paths use a short-lived X.509 certificate
+that contains the workload's SPIFFE identity. SPIRE owns SVID issuance,
+the CSI driver owns socket delivery, Envoy owns peer authentication,
 application allowlists own authorization, and the selected source owns the
 expected identities and test path.
+Successful identity verification does not grant application permission. The
+receiving application's allowlist must also permit that identity.
 
 Before any cluster command on this page, complete
 [Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound

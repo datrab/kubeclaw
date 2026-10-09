@@ -136,6 +136,8 @@ export function pluginSourceClosure(entry, repositoryRoot) {
 export function pluginInvocationFacts(closure, exportName) {
   const evidence = [];
   const externalInterfaces = [];
+  const environmentInputs = [];
+  const capabilityRequests = [];
   const selectedSources = new Map();
   const selectedNodes = new Map();
   const visited = new Set();
@@ -213,12 +215,111 @@ export function pluginInvocationFacts(closure, exportName) {
     if (wanted && declarations.has(wanted)) roots.push(declarations.get(wanted));
     if (wanted && !roots.length && !forwarded) diagnostics.add(`${file}: export ${wanted} cannot be resolved`);
     const seenNodes = new Set();
+    const pendingRequests = [];
+    function unwrap(node) {
+      while (node && (ts.isAsExpression(node) || ts.isParenthesizedExpression(node) || ts.isNonNullExpression(node))) node = node.expression;
+      return node;
+    }
+    // Keep expressions and their lexical initializers, never their runtime
+    // values. A computed environment name is authority input even when its
+    // configuration field has no token/password/secret word in its name.
+    function lexicalDeclaration(node) {
+      for (let scope = node.parent; scope; scope = scope.parent) {
+        if (ts.isFunctionLike(scope)) {
+          const parameter = scope.parameters.find((item) => ts.isIdentifier(item.name) && item.name.text === node.text);
+          if (parameter) return parameter;
+        }
+        if (ts.isBlock(scope) || ts.isSourceFile(scope)) {
+          for (const statement of scope.statements) {
+            if (ts.isFunctionDeclaration(statement) && statement.name?.text === node.text) return statement;
+            if (ts.isVariableStatement(statement)) {
+              const declaration = statement.declarationList.declarations.find((item) => ts.isIdentifier(item.name) && item.name.text === node.text);
+              if (declaration) return declaration;
+            }
+          }
+        }
+        if (ts.isForOfStatement(scope) && ts.isVariableDeclarationList(scope.initializer)) {
+          const declaration = scope.initializer.declarations.find((item) => ts.isIdentifier(item.name) && item.name.text === node.text);
+          if (declaration) return { ...declaration, initializer: scope.expression };
+        }
+      }
+    }
+    function processEnvironment(node, seen = new Set()) {
+      node = unwrap(node);
+      if (!node || seen.has(node)) return false;
+      seen.add(node);
+      if ((ts.isPropertyAccessExpression(node) && node.name.text === 'env'
+        || ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression) && node.argumentExpression.text === 'env')
+        && ts.isIdentifier(node.expression) && node.expression.text === 'process' && !lexicalDeclaration(node.expression)) return true;
+      return ts.isIdentifier(node) && processEnvironment(lexicalDeclaration(node)?.initializer, seen);
+    }
+    function provenance(node, seen = new Set(), out = []) {
+      if (!node || seen.has(node) || ts.isTypeNode(node)) return out;
+      seen.add(node);
+      if (ts.isIdentifier(node) && !(ts.isPropertyAccessExpression(node.parent) && node.parent.name === node)) {
+        const declaration = lexicalDeclaration(node);
+        if (declaration?.initializer && !seen.has(declaration.initializer)) {
+          const initializer = declaration.initializer;
+          out.push({ name: node.text, expression: initializer.getText(source), file,
+            line: source.getLineAndCharacterOfPosition(initializer.getStart(source)).line + 1,
+            endLine: source.getLineAndCharacterOfPosition(initializer.end - 1).line + 1 });
+          provenance(initializer, seen, out);
+        }
+      }
+      ts.forEachChild(node, (child) => { provenance(child, seen, out); });
+      return out;
+    }
+    function requestOperations(node, seen = new Set()) {
+      node = unwrap(node);
+      if (!node || seen.has(node)) return [null];
+      seen = new Set(seen).add(node);
+      if (ts.isObjectLiteralExpression(node)) {
+        const operation = node.properties.find((item) => ts.isPropertyAssignment(item) && item.name.getText(source).replaceAll(/["']/gu, '') === 'operation')?.initializer;
+        return operation && ts.isStringLiteralLike(operation) ? [operation.text] : [null];
+      }
+      if (ts.isConditionalExpression(node)) return [...requestOperations(node.whenTrue, seen), ...requestOperations(node.whenFalse, seen)];
+      if (ts.isIdentifier(node)) {
+        const declaration = lexicalDeclaration(node);
+        if (declaration?.initializer) return requestOperations(declaration.initializer, seen);
+        if (declaration && ts.isParameter(declaration) && ts.isFunctionDeclaration(declaration.parent) && declaration.parent.name) {
+          const owner = declaration.parent;
+          const index = owner.parameters.indexOf(declaration);
+          const escaped = [...seenNodes].some((item) => ts.isIdentifier(item) && item !== owner.name && lexicalDeclaration(item) === owner
+            && !(ts.isPropertyAccessExpression(item.parent) && item.parent.name === item)
+            && !(ts.isCallExpression(item.parent) && item.parent.expression === item));
+          if (escaped || owner.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword)) return [null];
+          const callers = [...seenNodes].filter((item) => ts.isCallExpression(item) && ts.isIdentifier(item.expression) && lexicalDeclaration(item.expression) === owner);
+          return callers.length ? callers.flatMap((item) => requestOperations(item.arguments[index], seen)) : [null];
+        }
+      }
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+        const owner = lexicalDeclaration(node.expression);
+        if (owner && ts.isFunctionDeclaration(owner) && owner.body) {
+          const returns = [];
+          function returned(item) {
+            if (ts.isReturnStatement(item)) { returns.push(item.expression); return; }
+            if (ts.isFunctionLike(item)) return;
+            ts.forEachChild(item, returned);
+          }
+          returned(owner.body);
+          return returns.length ? returns.flatMap((item) => requestOperations(item, seen)) : [null];
+        }
+      }
+      return [null];
+    }
     function scan(node) {
       if (seenNodes.has(node)) return;
       seenNodes.add(node);
       if (ts.isTypeNode(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) return;
       const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
       const add = (kind, name) => evidence.push({ kind, name, file, line });
+      if ((ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) && processEnvironment(node.expression)) {
+        const selector = ts.isElementAccessExpression(node) ? node.argumentExpression : node.name;
+        environmentInputs.push({ expression: node.getText(source), selector: selector.getText(source),
+          dynamic: ts.isElementAccessExpression(node) && !ts.isStringLiteralLike(selector),
+          file, line, endLine: source.getLineAndCharacterOfPosition(node.end - 1).line + 1,
+          provenance: ts.isElementAccessExpression(node) ? provenance(selector) : [] });
+      }
       if (ts.isIdentifier(node)) {
         if (declarations.has(node.text)) scan(declarations.get(node.text));
         const binding = bindings.get(node.text);
@@ -264,7 +365,10 @@ export function pluginInvocationFacts(closure, exportName) {
         }
         if (ts.isPropertyAccessExpression(expression) && ['invoke', 'invokeConfidential', 'invokeCapability'].includes(expression.name.text)
           && /(?:context|reader)$/iu.test(expression.expression.getText(source))) {
-          if (node.arguments?.[0] && ts.isStringLiteralLike(node.arguments[0])) add('capability', node.arguments[0].text);
+          if (node.arguments?.[0] && ts.isStringLiteralLike(node.arguments[0])) {
+            add('capability', node.arguments[0].text);
+            pendingRequests.push({ capability: node.arguments[0].text, request: node.arguments[1], file, line });
+          }
           else {
             let parent = node.parent;
             while (parent && !ts.isArrowFunction(parent) && !ts.isFunctionExpression(parent) && !ts.isFunctionDeclaration(parent)) parent = parent.parent;
@@ -280,6 +384,10 @@ export function pluginInvocationFacts(closure, exportName) {
       ts.forEachChild(node, scan);
     }
     for (const node of roots) scan(node);
+    for (const item of pendingRequests) for (const operation of new Set(requestOperations(item.request))) {
+      const { request: _request, ...location } = item;
+      capabilityRequests.push({ ...location, operation });
+    }
     // A module can be reached through several named exports. Retain the union;
     // a later utility export must not erase an earlier executable owner.
     const selected = selectedNodes.get(file) ?? new Set();
@@ -290,7 +398,8 @@ export function pluginInvocationFacts(closure, exportName) {
   if (closure.entryFile) visit(closure.entryFile, exportName);
   else diagnostics.add('Registration has no executable entrypoint');
   if (evidence.some((item) => item.kind === 'forwarder') && !evidence.some((item) => item.kind === 'capability')) diagnostics.add('Forwarded capability has no resolved caller authority');
-  return { evidence: [...new Map(evidence.map((item) => [`${item.file}:${item.line}:${item.kind}:${item.name}`, item])).values()], externalInterfaces, selectedSources, diagnostics: [...diagnostics].sort() };
+  const unique = (items) => [...new Map(items.map((item) => [`${item.file}:${item.line}:${item.expression ?? `${item.capability}:${item.operation}`}`, item])).values()];
+  return { evidence: [...new Map(evidence.map((item) => [`${item.file}:${item.line}:${item.kind}:${item.name}`, item])).values()], externalInterfaces, environmentInputs: unique(environmentInputs), capabilityRequests: unique(capabilityRequests), selectedSources, diagnostics: [...diagnostics].sort() };
 }
 
 // Interpret the actual host routing calls, not a package-name approximation of

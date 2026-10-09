@@ -12,8 +12,16 @@ Last verified: 2026-10-09; local group-identity and snippet guards only; no live
 Protect every authoritative state before loss and restore it without broken references.
 Finish only after application readers verify the restored data.
 
-This page does not declare an environment-wide RPO or RTO.
-Those targets lack complete measured evidence.
+The [recovery point objective (RPO)](../reference/glossary.md#rpo) is the maximum
+data-loss time window that the data owner approves. The
+[recovery time objective (RTO)](../reference/glossary.md#rto) is the maximum
+recovery duration that the service owner approves. These are targets. Actual
+data loss and elapsed recovery time are separate measurements from a recovery
+exercise or incident. Compare those measurements with the approved targets;
+a target alone does not prove recovery performance.
+
+This page supplies no environment-wide target values or measured proof that
+those targets can be met. Record owner decisions and execution results separately.
 
 ## Canonical Backup and Restore Procedure
 <!-- operator-task: backup-restore -->
@@ -120,8 +128,12 @@ For each state owner, record:
 - Integrity check and application restore check.
 - Last successful restore proof.
 
-Mark RPO and RTO as `undecided` until a measured restore proves them.
-Do not derive an RPO from a CronJob schedule alone.
+Record the owner-approved RPO and RTO targets, their scope, and the owner's
+decision. If the owner has not approved a target, mark that target `undecided`.
+Record actual data loss and elapsed recovery time separately. Mark each missing
+measurement `not measured`, and record whether a completed restore met each
+approved target. A measured result does not set the target, and a CronJob
+schedule alone does not prove the actual data-loss window.
 
 ## Procedure
 
@@ -556,12 +568,17 @@ The operator records any measured data loss and recovery time.
 
 ## Verification
 
-Verify each restored layer through its original consumer:
+Verify each restored layer through its original consumer. A
+[SPIFFE Verifiable Identity Document (SVID)](../reference/glossary.md#svid) is a
+workload credential. These deployed identity paths use a short-lived X.509
+certificate that contains the workload's SPIFFE identity. Verify that identity,
+then check application permission separately; a valid credential alone does
+not authorize the request.
 
 | Layer | Required check |
 | --- | --- |
 | Cluster | API, DNS, CNI, scheduling, and PVC mount |
-| Identity | Expected SVID succeeds and wrong identity fails |
+| Identity | Expected SVID passes identity verification and the intended application request succeeds; a wrong identity is denied |
 | Database | Native integrity plus application query |
 | Artifacts | Digest verification plus application reader |
 | Nova | Audit projection and legal recovery decision |
@@ -610,6 +627,7 @@ At the irreversible point, record:
 - Group metadata, checksums, tool versions, and destination identity.
 - Restore commands and isolated target identity.
 - Native and application verification results.
-- RPO and RTO measurements, or explicit `undecided` values.
+- Owner-approved RPO and RTO targets, or explicit `undecided` targets.
+- Actual data loss and elapsed recovery time, or explicit `not measured` results, plus comparison with each approved target.
 - Cutover and irreversible-point record.
 - Failed restore evidence and retained original media.

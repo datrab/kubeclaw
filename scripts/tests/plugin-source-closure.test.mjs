@@ -162,3 +162,66 @@ test('the evidence registration reads artifacts and verified local imports witho
   assert.ok(!facts.evidence.some((item) => item.kind === 'client' || item.kind === 'client-owner'));
   assert.ok([...facts.selectedSources.values()].some((text) => text.includes('class FileNovaGateImportStore')));
 });
+
+test('computed environment selectors retain lexical mapping provenance without executing or guessing values', (t) => {
+  const root = fixture(t, {
+    'entry.ts': `export function activate(context) {
+  const mapping = context.config.environment;
+  const names = Object.freeze({ ...mapping });
+  return { invoke(request) {
+    const variable = names[request.resource.canonicalId];
+    const environment = process.env;
+    return environment[variable];
+  } };
+}
+export function unused() { return process.env.UNUSED_SECRET; }`,
+  });
+  const facts = pluginInvocationFacts(pluginSourceClosure(path.join(root, 'entry.ts'), root), 'activate');
+  assert.equal(facts.environmentInputs.length, 1);
+  const input = facts.environmentInputs[0];
+  assert.equal(input.expression, 'environment[variable]');
+  assert.equal(input.dynamic, true);
+  assert.deepEqual(input.provenance.map((item) => [item.name, item.expression]), [
+    ['variable', 'names[request.resource.canonicalId]'], ['names', 'Object.freeze({ ...mapping })'], ['mapping', 'context.config.environment'],
+  ]);
+  assert.equal(input.line, 7);
+  assert.ok(!JSON.stringify(input).includes('UNUSED_SECRET'));
+});
+
+test('environment facts distinguish literal inputs, loop-selected allowlists and default-parameter aliases', (t) => {
+  const root = fixture(t, { 'entry.ts': `export function read(environment = process.env) {
+  const keys = ['PATH', 'SSH_AUTH_SOCK'];
+  for (const key of keys) consume(process.env[key]);
+  return [process.env.CONTROL_URL, environment['PASSWORD']];
+}` });
+  const inputs = pluginInvocationFacts(pluginSourceClosure(path.join(root, 'entry.ts'), root), 'read').environmentInputs;
+  assert.equal(inputs.length, 3);
+  assert.deepEqual(inputs.map((item) => item.dynamic), [true, false, false]);
+  assert.deepEqual(inputs[0].provenance.map((item) => item.expression), ['keys', "['PATH', 'SSH_AUTH_SOCK']"]);
+  assert.ok(inputs.every((item) => !Object.hasOwn(item, 'credential')));
+});
+
+test('capability requests retain literal operation authority and mark computed operations unresolved', (t) => {
+  const root = fixture(t, { 'entry.ts': `export function read(context, operation) {
+  context.invoke('security.scan', { operation: 'image', payload: {} });
+  context.invoke('security.scan', { operation, payload: {} });
+}` });
+  const requests = pluginInvocationFacts(pluginSourceClosure(path.join(root, 'entry.ts'), root), 'read').capabilityRequests;
+  assert.deepEqual(requests.map((item) => item.operation), ['image', null]);
+});
+
+test('request constructors and local forwarding calls preserve each finite operation and fail closed after escape', (t) => {
+  const root = fixture(t, { 'entry.ts': `function constructed() { return { operation: 'prepare' }; }
+export function execute(context) {
+  function send(request) { return context.invoke('network.http', request); }
+  send({ operation: 'request' }); send({ operation: 'websocket' });
+  context.invoke('kubernetes.fixture', constructed());
+}
+export function escaped(context, external) {
+  function send(request) { return context.invoke('network.http', request); }
+  send({ operation: 'request' }); external(send);
+}` });
+  const closure = pluginSourceClosure(path.join(root, 'entry.ts'), root);
+  assert.deepEqual(pluginInvocationFacts(closure, 'execute').capabilityRequests.map((item) => item.operation), ['request', 'websocket', 'prepare']);
+  assert.deepEqual(pluginInvocationFacts(closure, 'escaped').capabilityRequests.map((item) => item.operation), [null]);
+});

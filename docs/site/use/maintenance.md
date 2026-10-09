@@ -422,8 +422,14 @@ The current design needs a maintenance window.
 
 ## Certificate and SPIRE Rotation
 
-Observe SVID and CA expiry before the maintenance window.
+An [SVID (SPIFFE Verifiable Identity Document)](../reference/glossary.md#svid)
+is a workload credential. These deployed paths use a short-lived X.509
+certificate that contains the workload's SPIFFE identity. Observe its expiry
+and the certificate authority (CA) expiry before the maintenance window.
 Verify SPIRE server persistence and CSI readiness.
+After rotation, verify identity and application permission separately. A valid
+SVID does not grant application permission; retain both the positive authorized
+request and the negative wrong-identity result.
 
 Use the [Worker Trust runbook](worker-trust.md) for the detailed sequence.
 

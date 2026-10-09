@@ -1519,7 +1519,13 @@ Use [Back Up and Recover](recovery.md) for data corruption or loss.
 ## Worker Trust Diagnosis
 
 Use the fixed failure order in [Worker Trust](worker-trust.md).
-Check context, namespace, CSI, SPIRE, SVID, Envoy, Service, policy, allowlist, and signing keys.
+An [SVID (SPIFFE Verifiable Identity Document)](../reference/glossary.md#svid)
+is a workload credential. These deployed paths use a short-lived X.509
+certificate that contains the workload's SPIFFE identity. Check context,
+namespace, CSI, SPIRE, SVID, Envoy, Service, policy, allowlist, and signing keys.
+Distinguish a failed identity check from an application denial: successful
+identity verification does not grant application permission. The receiving
+application must also allow that identity.
 
 Do not disable mTLS to make a protected path pass.
 That action changes the security contract instead of diagnosing it.
