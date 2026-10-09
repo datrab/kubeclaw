@@ -7,7 +7,7 @@ import { versionOutputs } from '../versions.mjs';
 const source = process.cwd();
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'updater-upstream-'));
 try {
-  for (const file of ['versions.json', 'ops/pod/kubectl-build/go.mod', ...versionOutputs(source).keys()]) {
+  for (const file of ['versions.json', 'ops/pod/package-lock.json', 'ops/pod/kubectl-build/go.mod', ...versionOutputs(source).keys()]) {
     fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
     fs.copyFileSync(file, path.join(root, file));
   }

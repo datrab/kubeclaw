@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { syncVersions } from '../versions.mjs';
 import { updateRuntimeToolLocks } from '../runtime-tool-locks.mjs';
+import { syncCodexLock } from '../sync-codex-lock.mjs';
 
 // Mounted read-only from the trusted default-branch checkout, never from a bot PR.
 const root = process.cwd();
@@ -61,6 +62,11 @@ async function imageDigest(reference) {
 if (next.openclaw.version !== before.openclaw.version) {
   for (const plugin of ['acpx', 'discord']) await get(`https://registry.npmjs.org/@openclaw%2f${plugin}/${next.openclaw.version}`);
   next.openclaw.digest = await imageDigest(`ghcr.io/openclaw/openclaw:${next.openclaw.version}`);
+}
+const codexChanged = next.codex.version !== before.codex.version;
+if (codexChanged) {
+  const release = await (await get(`https://registry.npmjs.org/@openai%2fcodex/${next.codex.version}`)).json();
+  if (release.name !== '@openai/codex' || release.version !== next.codex.version) throw new Error(`Codex release unavailable: ${next.codex.version}`);
 }
 for (const section of ['buildArgs', 'infrastructure', 'automation']) {
   for (const [key, value] of Object.entries(next[section] ?? {})) {
@@ -128,5 +134,6 @@ if (next.buildArgs.GH_VERSION !== before.buildArgs.GH_VERSION) {
 try {
   fs.writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`);
   console.log(JSON.stringify(syncVersions(root, false)));
+  console.log(JSON.stringify(syncCodexLock(root, codexChanged)));
   console.log(JSON.stringify(updateRuntimeToolLocks(root)));
 } catch (error) { fs.writeFileSync(file, original); throw error; }

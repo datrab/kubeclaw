@@ -37,7 +37,7 @@ Pod itself is unreachable; this design does not replace that path.
 
 | Component | Persistent state | Normal access |
 | --- | --- | --- |
-| Codex CLI 0.153.4 | Home/auth/config (2 GiB), workspace (20 GiB) | Local MCP; GitHub using your separately authenticated identity |
+| Codex CLI 0.162.0 | Home/auth/config (2 GiB), workspace (20 GiB) | Local MCP; GitHub using your separately authenticated identity |
 | Ops MCP | None | Read-only Kubernetes observer, exact discovered namespaces; nodes and global Cilium policies |
 | Optional Tailscale | Separate 1 GiB PVC | Outbound SOCKS5 on localhost:1055, subject to tailnet grants |
 
@@ -183,8 +183,10 @@ that dependency.
 
 ## Maintenance and removal
 
-Update the pinned Codex package and lockfile together, run `npm ci && npm test`
-in `ops/pod` with Helm installed, and let CI build and smoke-test the actual image.
+Update `codex.version` in `versions.json`, run `npm run versions:sync`, then run
+`npm ci && npm test` in `ops/pod` with Helm installed. The sync command updates
+the generated package declaration, npm integrity lock, chart metadata and current
+operator documentation. Let CI build and smoke-test the actual image.
 The image currently pins kubectl v1.34.1; check client/server version skew before
 using it against a differently versioned cluster. Deploy new image digests with
 the same helper. Auth, configuration and workspace survive Pod/image replacement.
