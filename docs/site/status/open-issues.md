@@ -1183,7 +1183,7 @@ Ordinary locked dependency and Chromium installation does not prepare these two 
 - Prism preview-isolation spike
 - Prism maintainers: browser test configuration and supported verification environment
 
-At source revision ec2a42ed215a2fa7dbd3172ef70ef446084963a9, the fixed path remains in both configurations. Independent local execution completed locked bootstrap and all three package-local browser installations, then still failed before browser launch: twelve mobile tests and three preview tests. No supported browser-path override is implemented.
+At source revision ec2a42ed215a2fa7dbd3172ef70ef446084963a9, the fixed path remains in both configurations. Independent local execution completed locked bootstrap and all three package-local browser installations, then still failed before browser launch: twelve mobile tests and three preview tests. The implementation provides no supported browser-path override.
 
 ### Remaining work
 
@@ -1268,7 +1268,7 @@ At revision 9d085bb20af0cc70201cc41801011b63c626301c, no maximum is enforced by 
 
 ### Separate environment acceptance
 
-Existing evidence is an original-source local loader and synthetic-adapter probe. No pipeline recovery, live adapter shutdown, deployed environment or external-operation cleanup was performed.
+Existing evidence is an original-source local loader and synthetic-adapter probe. The probe did not perform pipeline recovery, live adapter shutdown, deployed-environment checks, or cleanup of external operations.
 
 ### Dependencies
 
@@ -1303,7 +1303,7 @@ Do not rely on these two objects as proof of workload isolation or Hubble UI ing
 - Cilium deployment maintainers: selected controller version and policy status
 - Network policy maintainers: default-deny policy intent and traffic acceptance
 
-The deployment script selects Cilium 1.20.1 and applies the policy file at revision 9d085bb20af0cc70201cc41801011b63c626301c. The corresponding immutable Cilium implementation rejects a rule when all four rule lists are empty; both CNP and CCNP parsers call that validation. No Go parser, Kubernetes admission, controller status or traffic enforcement was executed.
+The deployment script selects Cilium 1.20.1 and applies the policy file at revision 9d085bb20af0cc70201cc41801011b63c626301c. The corresponding immutable Cilium implementation rejects a rule when all four rule lists are empty; both CNP and CCNP parsers call that validation. The checks did not execute a Go parser, Kubernetes admission, controller-status inspection, or traffic enforcement.
 
 ### Remaining work
 
@@ -1315,11 +1315,11 @@ The deployment script selects Cilium 1.20.1 and applies the policy file at revis
 
 - Inspect the selected version in scripts/deploy-cilium.sh and the two named objects in my-values/infra/cilium-cluster-policies.yaml.
 - Against Cilium commit 7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc, inspect Rule.Sanitize and the CNP/CCNP Parse calls. The empty-rule rejection precedes default-deny processing. This is a source reproduction, not an executed Go test.
-- In a separately authorized representative target environment, inspect controller admission/status for both objects and run explicit positive and negative traffic cases for the intended workload and Hubble UI coverage.
+- In a separately authorized representative target environment, inspect admission and controller status for both objects. Run positive and negative traffic cases for the intended workload and Hubble UI coverage.
 
 ### Completion criteria
 
-- Both policy objects parse and are accepted by the actual selected controller with status retained.
+- Both policy objects parse, and the selected controller accepts them. Retain their controller status.
 - Negative traffic cases demonstrate the intended ingress/egress denial and positive cases demonstrate each required exception.
 - Observed behavior is attributable to the corrected policies, with competing policies and selected endpoint labels recorded.
 - Deployment instructions, generated configuration reference and policy intent match the validated implementation and controller revision.

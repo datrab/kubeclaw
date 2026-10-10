@@ -45,7 +45,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 22,
+          "line": 23,
           "path": "scripts/docs-generate.mjs"
         }
       ],
@@ -56,7 +56,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 22,
+      "line": 23,
       "name": "--allow-detached-source-root",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-generate.mjs",
@@ -121,7 +121,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 241,
+          "line": 254,
           "path": "scripts/docs-local-helm-authorities.mjs"
         }
       ],
@@ -132,7 +132,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 241,
+      "line": 254,
       "name": "--allow-local-helm-authority-maintenance",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-local-helm-authorities.mjs",
@@ -919,7 +919,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 21,
+          "line": 22,
           "path": "scripts/docs-generate.mjs"
         }
       ],
@@ -930,7 +930,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 21,
+      "line": 22,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-generate.mjs",
@@ -1261,7 +1261,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 14,
+          "line": 15,
           "path": "scripts/generate-local-helm-authorities.mjs"
         }
       ],
@@ -1272,7 +1272,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 14,
+      "line": 15,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/generate-local-helm-authorities.mjs",
@@ -1831,7 +1831,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 6661,
+          "line": 7165,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1842,7 +1842,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 6661,
+      "line": 7165,
       "name": "--check-environment-coverage-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -1869,7 +1869,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 6682,
+          "line": 7186,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1880,7 +1880,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 6682,
+      "line": 7186,
       "name": "--check-payload-delivery-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -1945,7 +1945,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 6656,
+          "line": 7160,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1956,7 +1956,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 6656,
+      "line": 7160,
       "name": "--check-runtime-consumer-semantics-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -1983,7 +1983,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 6666,
+          "line": 7170,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1994,7 +1994,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 6666,
+      "line": 7170,
       "name": "--check-schema-semantics-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -3541,7 +3541,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 6672,
+          "line": 7176,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -3552,7 +3552,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 6672,
+      "line": 7176,
       "name": "--runtime-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -3617,7 +3617,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 6673,
+          "line": 7177,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -3628,7 +3628,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 6673,
+      "line": 7177,
       "name": "--schemas-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -4035,7 +4035,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 23,
+          "line": 24,
           "path": "scripts/docs-generate.mjs"
         }
       ],
@@ -4046,7 +4046,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 23,
+      "line": 24,
       "name": "--update-source-revision",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-generate.mjs",
@@ -4449,6 +4449,76 @@
   ],
   "configurationConsumerSources": [
     {
+      "materialization": {
+        "mode": "byte-for-byte copy; ignored build output is not source authority",
+        "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "runtimePath": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts"
+      },
+      "path": "contracts/agent-observability/v1/src/complexity.ts",
+      "purpose": "tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection",
+      "sourceDigest": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60"
+    },
+    {
+      "materialization": {
+        "mode": "byte-for-byte copy; ignored build output is not source authority",
+        "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "runtimePath": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/constants.ts"
+      },
+      "path": "contracts/agent-observability/v1/src/constants.ts",
+      "purpose": "tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection",
+      "sourceDigest": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924"
+    },
+    {
+      "materialization": {
+        "mode": "byte-for-byte copy; ignored build output is not source authority",
+        "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "runtimePath": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/index.ts"
+      },
+      "path": "contracts/agent-observability/v1/src/index.ts",
+      "purpose": "tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection",
+      "sourceDigest": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3"
+    },
+    {
+      "materialization": {
+        "mode": "byte-for-byte copy; ignored build output is not source authority",
+        "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "runtimePath": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/mapping.ts"
+      },
+      "path": "contracts/agent-observability/v1/src/mapping.ts",
+      "purpose": "tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection",
+      "sourceDigest": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592"
+    },
+    {
+      "materialization": {
+        "mode": "byte-for-byte copy; ignored build output is not source authority",
+        "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "runtimePath": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts"
+      },
+      "path": "contracts/agent-observability/v1/src/routing.ts",
+      "purpose": "tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection",
+      "sourceDigest": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d"
+    },
+    {
+      "materialization": {
+        "mode": "byte-for-byte copy; ignored build output is not source authority",
+        "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "runtimePath": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/types.ts"
+      },
+      "path": "contracts/agent-observability/v1/src/types.ts",
+      "purpose": "tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection",
+      "sourceDigest": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96"
+    },
+    {
+      "materialization": {
+        "mode": "byte-for-byte copy; ignored build output is not source authority",
+        "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "runtimePath": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/validation.ts"
+      },
+      "path": "contracts/agent-observability/v1/src/validation.ts",
+      "purpose": "tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection",
+      "sourceDigest": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e"
+    },
+    {
       "path": "skills/buster/plugins/api-flow/src/provider.js",
       "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
       "sourceDigest": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
@@ -4664,6 +4734,11 @@
       "sourceDigest": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
     },
     {
+      "path": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "purpose": "tracked producer of observer runtime contract copies from contracts/agent-observability/v1/src",
+      "sourceDigest": "9cf81c81f0fa85ea740e578d6a3e10bcf86c7d85dec3c1ea287f3e7bab7d9fab"
+    },
+    {
       "path": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
       "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
       "sourceDigest": "1617f4937214a1b601b66d2525309a780c9202e54666a4ac3ff9135e3216297c"
@@ -4672,41 +4747,6 @@
       "path": "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
       "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
       "sourceDigest": "4957fc2f8b2dab174f7aaa7cac5ddc94ae42ea3cf83caf2b414553396a0b5719"
-    },
-    {
-      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/complexity.ts",
-      "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
-      "sourceDigest": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60"
-    },
-    {
-      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/constants.ts",
-      "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
-      "sourceDigest": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924"
-    },
-    {
-      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/index.ts",
-      "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
-      "sourceDigest": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3"
-    },
-    {
-      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/mapping.ts",
-      "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
-      "sourceDigest": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592"
-    },
-    {
-      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/routing.ts",
-      "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
-      "sourceDigest": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d"
-    },
-    {
-      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/types.ts",
-      "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
-      "sourceDigest": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96"
-    },
-    {
-      "path": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/validation.ts",
-      "purpose": "candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection",
-      "sourceDigest": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e"
     },
     {
       "path": "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
@@ -8083,7 +8123,8 @@
       "ops",
       "tools",
       "cmd",
-      "packaging"
+      "packaging",
+      "contracts/agent-observability/v1/src"
     ],
     "shellSecretRule": "every .sh source below the declared runtime roots, excluding quoted heredoc bodies; discover direct kubectl create secret commands and shell command arrays, and reject any discovered Secret without semantic authority",
     "textExtensions": [
@@ -24025,7 +24066,7 @@
           "failure": "The tool exits with an error when the stated input or consistency check fails.",
           "impact": "Changes whether this development tool accepts --root different from the current Git worktree root.",
           "invalidBehavior": "Any other token leaves permission disabled. A --root different from the current Git worktree root is rejected unless both opt-ins are present; the value does not bypass revision validation.",
-          "line": 41,
+          "line": 42,
           "owner": "scripts/docs-generate.mjs",
           "owningSurface": "scripts/docs-generate.mjs:development tool process environment",
           "path": "scripts/docs-generate.mjs",
@@ -24061,7 +24102,7 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 41,
+          "line": 42,
           "path": "scripts/docs-generate.mjs"
         },
         {
@@ -24076,7 +24117,7 @@
       "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
       "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
       "meaning": "The meaning of KUBECLAW_DOCS_ISOLATED_MUTATION differs by receiving process. Use the contract attached to the exact consumer source.",
-      "meaningEvidence": "scripts/docs-generate.mjs:41",
+      "meaningEvidence": "scripts/docs-generate.mjs:42",
       "meaningStatus": "authored-consumer-specific-contracts",
       "name": "KUBECLAW_DOCS_ISOLATED_MUTATION",
       "precedence": [
@@ -24093,7 +24134,7 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 41,
+          "line": 42,
           "path": "scripts/docs-generate.mjs"
         },
         {
@@ -63837,7 +63878,7 @@
     "cliFlags": 117,
     "cliInvocations": 0,
     "cliOccurrences": 134,
-    "configurationConsumerSources": 274,
+    "configurationConsumerSources": 275,
     "derivedValues": 47,
     "environmentConsumers": 879,
     "environmentMeaningBlockers": 0,

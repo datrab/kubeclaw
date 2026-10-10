@@ -5,9 +5,9 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/pipeline-review/plugin.json; skills/nova/plugins/pipeline-review/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb
+Last verified: source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
-## Authored Guidance
+## Purpose
 
 Run the pipeline review stage and retrieve its bounded review evidence.
 
@@ -26,7 +26,7 @@ Its stage and evidence adapter share one review-specific contract.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -35,12 +35,12 @@ the contract and lifecycle rules that apply to this package.
 - [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)
 - [Host and engine boundaries](../host-and-engine.md)
 
-## Generated Package Facts
+## Package Reference
 
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.pipeline-review@1.0.0`.
 - Runtime-role manifest inclusion: `nova`
-- Manifest: [skills/nova/plugins/pipeline-review/plugin.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/plugin.json)
+- Manifest: [skills/nova/plugins/pipeline-review/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/plugin.json)
 
 ## Boundaries
 
@@ -66,16 +66,16 @@ Required capabilities: `runtime.dispatch`, `artifacts.write`, `report.evidence.r
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 - `agent` (string; required; minLength `1`)
 - `agentRole` (string; optional; minLength `1`)
 
-Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/schemas/input.schema.json)
+Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/schemas/input.schema.json)
 
-Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/schemas/result.schema.json)
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/schemas/result.schema.json)
 
 Declared manifest facts:
 
@@ -99,7 +99,7 @@ Required capabilities: `artifacts.read`
 
 Provided capabilities: `report.evidence.read`
 
-Configuration schema: [schemas/evidence-config.schema.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json)
+Configuration schema: [schemas/evidence-config.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -131,11 +131,11 @@ The evidence reader binds snapshots to a run identity, checks for source changes
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
-Nova or Buster records a bounded failure without giving the package lifecycle authority.
+The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
-## Verification Record
+## Package Checks
 
-Catalogue status: `content-written`.
 Recorded local command result on 2026-09-16: `unavailable`.
 
 The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
@@ -154,20 +154,15 @@ Exact package test script (run from the package directory):
 node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
 ```
 
-The catalogue status does not claim live host or cluster acceptance.
+Local package checks do not prove live host or cluster readiness.
 The result above states the exact local limit. Run the package command in the target environment before activation.
 
 ## Source Evidence
 
-- Manifest: [skills/nova/plugins/pipeline-review/plugin.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/plugin.json)
-- Authored package guide: [skills/nova/plugins/pipeline-review/README.md](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/README.md)
-- Module for `review`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/src/stage.ts)
-- Module for `evidence`: [src/evidence-adapter.ts](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/src/evidence-adapter.ts)
-- Test: [skills/nova/plugins/pipeline-review/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/tests/live-function.test.ts)
-- Test: [skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs)
-- Test: [skills/nova/plugins/pipeline-review/tests/protocol.test.mjs](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/nova/plugins/pipeline-review/tests/protocol.test.mjs)
-
-Generated facts come from the manifest, package metadata, runtime-role inventory,
-schemas, and test-file discovery. Maintained guidance data owns the purpose,
-use, exclusion, and limit text. Publication can refresh facts without inventing or
-silently replacing those explanations.
+- Manifest: [skills/nova/plugins/pipeline-review/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/plugin.json)
+- Package implementation guide: [skills/nova/plugins/pipeline-review/README.md](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/README.md)
+- Module for `review`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/src/stage.ts)
+- Module for `evidence`: [src/evidence-adapter.ts](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/src/evidence-adapter.ts)
+- Test: [skills/nova/plugins/pipeline-review/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/tests/live-function.test.ts)
+- Test: [skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs)
+- Test: [skills/nova/plugins/pipeline-review/tests/protocol.test.mjs](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/nova/plugins/pipeline-review/tests/protocol.test.mjs)

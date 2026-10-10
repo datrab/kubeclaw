@@ -5,9 +5,9 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: plugins/kubeclaw-ops/.codex-plugin/plugin.json; plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md
 Applies to: codex-plugin; package 0.2.0
-Last verified: see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb
+Last verified: source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
-## Authored Guidance
+## Purpose
 
 Guide read-only diagnosis across Kubernetes, Argo CD, logs, and Hubble evidence.
 
@@ -26,7 +26,7 @@ The plugin supplies a skill, but it does not supply the external read-only tools
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -35,13 +35,13 @@ the contract and lifecycle rules that apply to this package.
 - [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)
 - [Host and engine boundaries](../host-and-engine.md)
 
-## Generated Package Facts
+## Package Reference
 
 - Host: `codex`.
 - Package identity: `kubeclaw-ops@0.2.0`.
 - Runtime-role manifest inclusion: No runtime role.
 - Additional packaging path: Codex installs this package separately; KubeClaw runtime-role manifests do not contain it.
-- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
+- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
 
 ## Boundaries
 
@@ -88,9 +88,8 @@ The package supplies instructions and a read-only interface, not an MCP server. 
 An absent plugin prevents skill discovery. Missing external tools prevent the diagnostic workflow, not discovery.
 The current package has no package-local automated acceptance test.
 
-## Verification Record
+## Package Checks
 
-Catalogue status: `content-written`.
 Recorded local command result on 2026-09-16: `not-run`.
 
 The Codex package declares no package-local automated test; connected-tool and missing-tool reader exercises remain required.
@@ -101,16 +100,11 @@ No package-local automated command is declared.
 
 Package test files found: 0. This is file discovery, not an executed test count.
 
-The catalogue status does not claim live host or cluster acceptance.
+Local package checks do not prove live host or cluster readiness.
 The result above states the exact local limit. Run the package command in the target environment before activation.
 
 ## Source Evidence
 
-- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
-- Authored package guide: [plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
-- Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/plugins/kubeclaw-ops/skills)
-
-Generated facts come from the manifest, package metadata, runtime-role inventory,
-schemas, and test-file discovery. Maintained guidance data owns the purpose,
-use, exclusion, and limit text. Publication can refresh facts without inventing or
-silently replacing those explanations.
+- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
+- Package implementation guide: [plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
+- Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/plugins/kubeclaw-ops/skills)

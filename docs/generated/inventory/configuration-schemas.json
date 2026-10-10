@@ -27102,13 +27102,15 @@
           "description": "",
           "meaning": {
             "acceptedValues": "array with uniqueItems=true",
-            "additionalImplementationEvidence": [],
+            "additionalImplementationEvidence": [
+              "skills/common/plugin-runtime/foundation/registry/capabilities.ts:149"
+            ],
             "authorityKey": "skills/common/plugin-runtime/foundation/config/platform.schema.json::$.activeAdapters",
             "blockerOwner": null,
-            "changeImpact": "Changing $.activeAdapters changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Selects adapter registrations to activate; configuration alone does not activate an adapter.",
+            "changeImpact": "Changing $.activeAdapters changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Selects the initially enabled adapter registrations. Observer and stage registrations also enter the initial enabled set; required capabilities then recursively enable their selected provider adapters. Configuration alone does not activate an adapter.",
             "closureCondition": null,
             "defaultBehavior": "The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints.",
-            "emptyBehavior": "An empty list activates no adapter directly. Required capability dependencies still govern admission.",
+            "emptyBehavior": "An empty list enables no adapter directly through this field. Dependencies of enabled observers and stages can still enable and start provider adapters.",
             "evidence": "skills/nova/core/execution/engine-runtime.ts:45",
             "failureMeaning": "Schema validation rejects $.activeAdapters when it violates array with uniqueItems=true. The linked consumer at skills/nova/core/execution/engine-runtime.ts:45 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/nova/core/execution/engine-runtime.ts:45",
@@ -27116,7 +27118,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Selects adapter registrations to activate; configuration alone does not activate an adapter. Accepted values: array with uniqueItems=true. Omission: The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints. Empty value: An empty list activates no adapter directly. Required capability dependencies still govern admission. Change effect: Changing $.activeAdapters changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Selects adapter registrations to activate; configuration alone does not activate an adapter. Failure: Schema validation rejects $.activeAdapters when it violates array with uniqueItems=true. The linked consumer at skills/nova/core/execution/engine-runtime.ts:45 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Selects the initially enabled adapter registrations. Observer and stage registrations also enter the initial enabled set; required capabilities then recursively enable their selected provider adapters. Configuration alone does not activate an adapter. Accepted values: array with uniqueItems=true. Omission: The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints. Empty value: An empty list enables no adapter directly through this field. Dependencies of enabled observers and stages can still enable and start provider adapters. Change effect: Changing $.activeAdapters changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Selects the initially enabled adapter registrations. Observer and stage registrations also enter the initial enabled set; required capabilities then recursively enable their selected provider adapters. Configuration alone does not activate an adapter. Failure: Schema validation rejects $.activeAdapters when it violates array with uniqueItems=true. The linked consumer at skills/nova/core/execution/engine-runtime.ts:45 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugin-runtime/foundation/package.json",
@@ -27143,22 +27145,27 @@
           "default": "<none>",
           "description": "",
           "meaning": {
-            "acceptedValues": "string with minLength=1",
-            "additionalImplementationEvidence": [],
+            "acceptedValues": "string with minLength=1; An existing adapter registration identifier. This list is the explicit initial set; required capabilities of enabled adapters, observers and stages recursively enable their selected provider adapters",
+            "additionalImplementationEvidence": [
+              "skills/nova/core/execution/engine-runtime.ts:47",
+              "skills/common/plugin-runtime/foundation/registry/capabilities.ts:149",
+              "skills/common/plugin-runtime/foundation/registry/configuration.ts:59",
+              "skills/common/plugin-runtime/foundation/registry/configuration.ts:75"
+            ],
             "authorityKey": "skills/common/plugin-runtime/foundation/config/platform.schema.json::$.activeAdapters[]",
             "blockerOwner": null,
-            "changeImpact": "Changing $.activeAdapters[] changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Lists the adapter registration IDs that one Pipeline Core plugin-platform activation starts; configured but inactive adapters receive no calls.",
+            "changeImpact": "Changing $.activeAdapters[] changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Lists the adapter registration IDs initially enabled in one Pipeline Core plugin-platform activation. Required capabilities can recursively enable provider adapters beyond this list. A configured adapter receives no calls only if it remains outside the complete enabled set.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission.",
-            "emptyBehavior": "An empty string is invalid.",
+            "emptyBehavior": "An empty identifier does not name a registered adapter. Removing every item removes only this initial adapter set; required provider adapters can still become enabled.",
             "evidence": "skills/nova/core/execution/engine-runtime.ts:45",
-            "failureMeaning": "Schema validation rejects $.activeAdapters[] when it violates string with minLength=1. The linked consumer at skills/nova/core/execution/engine-runtime.ts:45 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
+            "failureMeaning": "An unknown enabled identifier or an unavailable required capability prevents registry admission. An enabled adapter can then fail its registered configuration schema or startup. Configuration for a disabled adapter is not schema-validated, but its configured identifier must still exist.",
             "implementationEvidence": "skills/nova/core/execution/engine-runtime.ts:45",
             "runtimeDefault": null,
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Lists the adapter registration IDs that one Pipeline Core plugin-platform activation starts; configured but inactive adapters receive no calls. Accepted values: string with minLength=1. Omission: The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission. Empty value: An empty string is invalid. Change effect: Changing $.activeAdapters[] changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Lists the adapter registration IDs that one Pipeline Core plugin-platform activation starts; configured but inactive adapters receive no calls. Failure: Schema validation rejects $.activeAdapters[] when it violates string with minLength=1. The linked consumer at skills/nova/core/execution/engine-runtime.ts:45 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Lists the adapter registration IDs initially enabled in one Pipeline Core plugin-platform activation. Required capabilities can recursively enable provider adapters beyond this list. A configured adapter receives no calls only if it remains outside the complete enabled set. Accepted values: string with minLength=1; An existing adapter registration identifier. This list is the explicit initial set; required capabilities of enabled adapters, observers and stages recursively enable their selected provider adapters. Omission: The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission. Empty value: An empty identifier does not name a registered adapter. Removing every item removes only this initial adapter set; required provider adapters can still become enabled. Change effect: Changing $.activeAdapters[] changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Lists the adapter registration IDs initially enabled in one Pipeline Core plugin-platform activation. Required capabilities can recursively enable provider adapters beyond this list. A configured adapter receives no calls only if it remains outside the complete enabled set. Failure: An unknown enabled identifier or an unavailable required capability prevents registry admission. An enabled adapter can then fail its registered configuration schema or startup. Configuration for a disabled adapter is not schema-validated, but its configured identifier must still exist."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugin-runtime/foundation/package.json",
@@ -27186,10 +27193,13 @@
           "description": "",
           "meaning": {
             "acceptedValues": "object with additionalProperties=\"<schema>\"",
-            "additionalImplementationEvidence": [],
+            "additionalImplementationEvidence": [
+              "skills/common/plugin-runtime/foundation/registry/configuration.ts:59",
+              "skills/common/plugin-runtime/foundation/registry/configuration.ts:76"
+            ],
             "authorityKey": "skills/common/plugin-runtime/foundation/config/platform.schema.json::$.adapters",
             "blockerOwner": null,
-            "changeImpact": "Changing $.adapters changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Maps adapter registration identifiers to their exact activation configuration.",
+            "changeImpact": "Changing $.adapters changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started.",
             "closureCondition": null,
             "defaultBehavior": "The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints.",
             "emptyBehavior": "An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema.",
@@ -27200,7 +27210,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Maps adapter registration identifiers to their exact activation configuration. Accepted values: object with additionalProperties=\"<schema>\". Omission: The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints. Empty value: An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema. Change effect: Changing $.adapters changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Maps adapter registration identifiers to their exact activation configuration. Failure: Schema validation rejects $.adapters when it violates object with additionalProperties=\"<schema>\". The linked consumer at skills/nova/core/execution/engine-runtime.ts:39 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started. Accepted values: object with additionalProperties=\"<schema>\". Omission: The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints. Empty value: An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema. Change effect: Changing $.adapters changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started. Failure: Schema validation rejects $.adapters when it violates object with additionalProperties=\"<schema>\". The linked consumer at skills/nova/core/execution/engine-runtime.ts:39 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugin-runtime/foundation/package.json",
@@ -27228,10 +27238,13 @@
           "description": "",
           "meaning": {
             "acceptedValues": "object with additionalProperties=true",
-            "additionalImplementationEvidence": [],
+            "additionalImplementationEvidence": [
+              "skills/common/plugin-runtime/foundation/registry/configuration.ts:59",
+              "skills/common/plugin-runtime/foundation/registry/configuration.ts:76"
+            ],
             "authorityKey": "skills/common/plugin-runtime/foundation/config/platform.schema.json::$.adapters.{*}",
             "blockerOwner": null,
-            "changeImpact": "Changing $.adapters.{*} changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Maps adapter registration identifiers to their exact activation configuration.",
+            "changeImpact": "Changing $.adapters.{*} changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started.",
             "closureCondition": null,
             "defaultBehavior": "The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints.",
             "emptyBehavior": "An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema.",
@@ -27242,7 +27255,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Maps adapter registration identifiers to their exact activation configuration. Accepted values: object with additionalProperties=true. Omission: The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints. Empty value: An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema. Change effect: Changing $.adapters.{*} changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Maps adapter registration identifiers to their exact activation configuration. Failure: Schema validation rejects $.adapters.{*} when it violates object with additionalProperties=true. The linked consumer at skills/nova/core/execution/engine-runtime.ts:39 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started. Accepted values: object with additionalProperties=true. Omission: The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints. Empty value: An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema. Change effect: Changing $.adapters.{*} changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started. Failure: Schema validation rejects $.adapters.{*} when it violates object with additionalProperties=true. The linked consumer at skills/nova/core/execution/engine-runtime.ts:39 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugin-runtime/foundation/package.json",
@@ -28318,22 +28331,28 @@
           "default": "<none>",
           "description": "",
           "meaning": {
-            "acceptedValues": "integer with minimum=1",
-            "additionalImplementationEvidence": [],
+            "acceptedValues": "integer with minimum=1; The schema requires an integer of at least 1 and sets no maximum. Use 1 through 2,147,483,647 milliseconds for the current Node timers: a larger delay becomes 1 millisecond rather than a longer deadline. [Node 24.21.0 timer contract](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args)",
+            "additionalImplementationEvidence": [
+              "skills/nova/core/execution/adapters.ts:79",
+              "skills/nova/core/execution/adapter-support.ts:17",
+              "skills/nova/core/execution/adapter-support.ts:21",
+              "skills/nova/core/execution/adapter-startup.ts:153",
+              "skills/nova/core/execution/adapter-startup.ts:162"
+            ],
             "authorityKey": "skills/common/plugin-runtime/foundation/config/platform.schema.json::$.shutdownTimeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.shutdownTimeoutMs changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Limits graceful drain and shutdown for one Pipeline Core plugin-platform activation before remaining work is forced closed.",
+            "changeImpact": "Changing $.shutdownTimeoutMs changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Sets the timer delay used for adapter activation, readiness and shutdown. Some paths reject at the deadline; cleanup paths that only pass an abort signal can remain pending if the adapter does not settle.",
             "closureCondition": null,
-            "defaultBehavior": "The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission.",
-            "emptyBehavior": "A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well.",
+            "defaultBehavior": "The platform schema requires the field and supplies no default. The loader does not insert one.",
+            "emptyBehavior": "Null, an empty string and zero fail the integer/minimum constraint. A schema-valid delay above the Node timer range is still an unsafe deadline input.",
             "evidence": "skills/nova/core/execution/engine-runtime.ts:84",
-            "failureMeaning": "Schema validation rejects $.shutdownTimeoutMs when it violates integer with minimum=1. The linked consumer at skills/nova/core/execution/engine-runtime.ts:84 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
+            "failureMeaning": "Adapter activation and readiness race their operation against a timer and can reject with ADAPTER_START_TIMEOUT. Overall shutdown races against ADAPTER_SHUTDOWN_TIMEOUT. These rejections and abort signals do not prove that the underlying adapter work stopped. Readiness teardown, rollback and late activation cleanup pass an abort signal but still await the shutdown promise; an adapter that ignores cancellation can keep that cleanup pending. Stop before declaring cleanup complete or replaying an uncertain effect.",
             "implementationEvidence": "skills/nova/core/execution/engine-runtime.ts:84",
             "runtimeDefault": null,
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits graceful drain and shutdown for one Pipeline Core plugin-platform activation before remaining work is forced closed. Accepted values: integer with minimum=1. Omission: The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission. Empty value: A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well. Change effect: Changing $.shutdownTimeoutMs changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Limits graceful drain and shutdown for one Pipeline Core plugin-platform activation before remaining work is forced closed. Failure: Schema validation rejects $.shutdownTimeoutMs when it violates integer with minimum=1. The linked consumer at skills/nova/core/execution/engine-runtime.ts:84 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the timer delay used for adapter activation, readiness and shutdown. Some paths reject at the deadline; cleanup paths that only pass an abort signal can remain pending if the adapter does not settle. Accepted values: integer with minimum=1; The schema requires an integer of at least 1 and sets no maximum. Use 1 through 2,147,483,647 milliseconds for the current Node timers: a larger delay becomes 1 millisecond rather than a longer deadline. [Node 24.21.0 timer contract](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args). Omission: The platform schema requires the field and supplies no default. The loader does not insert one. Empty value: Null, an empty string and zero fail the integer/minimum constraint. A schema-valid delay above the Node timer range is still an unsafe deadline input. Change effect: Changing $.shutdownTimeoutMs changes this exact configured behavior when one Pipeline Core plugin-platform activation next loads it: Sets the timer delay used for adapter activation, readiness and shutdown. Some paths reject at the deadline; cleanup paths that only pass an abort signal can remain pending if the adapter does not settle. Failure: Adapter activation and readiness race their operation against a timer and can reject with ADAPTER_START_TIMEOUT. Overall shutdown races against ADAPTER_SHUTDOWN_TIMEOUT. These rejections and abort signals do not prove that the underlying adapter work stopped. Readiness teardown, rollback and late activation cleanup pass an abort signal but still await the shutdown promise; an adapter that ignores cancellation can keep that cleanup pending. Stop before declaring cleanup complete or replaying an uncertain effect."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugin-runtime/foundation/package.json",
@@ -49673,9 +49692,9 @@
         "meaning": {
           "blockerOwner": null,
           "closureCondition": null,
-          "evidence": "charts/kubeclaw/files/config/swarm.config.json",
+          "evidence": "charts/kubeclaw/files/config/swarm.config.json:1",
           "status": "structural-container",
-          "text": "Structural container. Child leaf rows define configurable behavior."
+          "text": "YAML document envelope."
         },
         "ownerComponent": "Helm chart charts/kubeclaw",
         "ownerEvidence": "charts/kubeclaw/Chart.yaml",
@@ -49692,7 +49711,7 @@
         "sourceLine": 1,
         "sourceLineSha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
         "type": "object",
-        "value": "<object>"
+        "value": "<object: 5 entries; see child rows>"
       },
       {
         "blockerOwner": "OpenClaw/swarm loader contract owner",
@@ -49746,6 +49765,18 @@
         "blockerOwner": null,
         "changeImpact": "Changes the base runtime swarm configuration after the chart rematerializes the file.",
         "closureCondition": null,
+        "collection": {
+          "childPaths": [
+            "$.features.buster",
+            "$.features.discord_alerts",
+            "$.features.observability"
+          ],
+          "empty": false,
+          "entries": 3,
+          "mergeBehavior": "This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence.",
+          "receiverClass": "source-loader",
+          "rejectedHelmBinding": null
+        },
         "constraints": [],
         "consumers": [
           {
@@ -49767,9 +49798,9 @@
         "meaning": {
           "blockerOwner": null,
           "closureCondition": null,
-          "evidence": "charts/kubeclaw/files/config/swarm.config.json",
+          "evidence": "charts/kubeclaw/files/config/swarm.config.json:1",
           "status": "structural-container",
-          "text": "Structural container. Child leaf rows define configurable behavior."
+          "text": "Groups the nested fields `$.features.buster`, `$.features.discord_alerts`, `$.features.observability`. It has no separately proved whole-collection receiver. Accepted keys and item variants are those defined by the nested schema and consumer contracts; this row does not authorize arbitrary new keys. This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence."
         },
         "ownerComponent": "Helm chart charts/kubeclaw",
         "ownerEvidence": "charts/kubeclaw/Chart.yaml",
@@ -49786,7 +49817,7 @@
         "sourceLine": 1,
         "sourceLineSha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
         "type": "object",
-        "value": "<object>"
+        "value": "<object: 3 entries; see child rows>"
       },
       {
         "blockerOwner": "OpenClaw/swarm loader contract owner",
@@ -49936,6 +49967,14 @@
         "blockerOwner": null,
         "changeImpact": "Changes the base runtime swarm configuration after the chart rematerializes the file.",
         "closureCondition": null,
+        "collection": {
+          "childPaths": [],
+          "empty": true,
+          "entries": 0,
+          "mergeBehavior": "This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence.",
+          "receiverClass": "source-loader",
+          "rejectedHelmBinding": null
+        },
         "constraints": [],
         "consumers": [
           {
@@ -49955,11 +49994,11 @@
         "effectiveValueProof": "charts/kubeclaw/files/config/swarm.config.json -> charts/kubeclaw/templates/configmap-swarm-config.yaml:14 -> charts/kubeclaw/templates/deployment.yaml:674",
         "failureMeaning": "Invalid JSON stops materialization; a loader-rejected field prevents or degrades gateway startup.",
         "meaning": {
-          "blockerOwner": null,
-          "closureCondition": null,
-          "evidence": "charts/kubeclaw/files/config/swarm.config.json",
-          "status": "structural-container",
-          "text": "Structural container. Child leaf rows define configurable behavior."
+          "blockerOwner": "Helm chart charts/kubeclaw",
+          "closureCondition": "Add an exact collection authority for charts/kubeclaw/files/config/swarm.config.json#$.overrides, including new keys or items, accepted forms, empty/omitted/null behavior, receiver and failure effect.",
+          "evidence": "charts/kubeclaw/files/config/swarm.config.json:1",
+          "status": "collection-meaning-blocker",
+          "text": "This empty object has no exact collection contract. This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence."
         },
         "ownerComponent": "Helm chart charts/kubeclaw",
         "ownerEvidence": "charts/kubeclaw/Chart.yaml",
@@ -49976,7 +50015,7 @@
         "sourceLine": 1,
         "sourceLineSha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
         "type": "object",
-        "value": "<object>"
+        "value": "{}"
       },
       {
         "blockerOwner": "OpenClaw/swarm loader contract owner",
@@ -50030,6 +50069,21 @@
         "blockerOwner": null,
         "changeImpact": "Changes the base runtime swarm configuration after the chart rematerializes the file.",
         "closureCondition": null,
+        "collection": {
+          "childPaths": [
+            "$.tuning.alerts",
+            "$.tuning.checks",
+            "$.tuning.determinism",
+            "$.tuning.logs",
+            "$.tuning.retention",
+            "$.tuning.safety_margins"
+          ],
+          "empty": false,
+          "entries": 6,
+          "mergeBehavior": "This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence.",
+          "receiverClass": "source-loader",
+          "rejectedHelmBinding": null
+        },
         "constraints": [],
         "consumers": [
           {
@@ -50051,9 +50105,9 @@
         "meaning": {
           "blockerOwner": null,
           "closureCondition": null,
-          "evidence": "charts/kubeclaw/files/config/swarm.config.json",
+          "evidence": "charts/kubeclaw/files/config/swarm.config.json:1",
           "status": "structural-container",
-          "text": "Structural container. Child leaf rows define configurable behavior."
+          "text": "Groups the nested fields `$.tuning.alerts`, `$.tuning.checks`, `$.tuning.determinism`, `$.tuning.logs`, `$.tuning.retention`, `$.tuning.safety_margins`. It has no separately proved whole-collection receiver. Accepted keys and item variants are those defined by the nested schema and consumer contracts; this row does not authorize arbitrary new keys. This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence."
         },
         "ownerComponent": "Helm chart charts/kubeclaw",
         "ownerEvidence": "charts/kubeclaw/Chart.yaml",
@@ -50070,7 +50124,7 @@
         "sourceLine": 1,
         "sourceLineSha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
         "type": "object",
-        "value": "<object>"
+        "value": "<object: 6 entries; see child rows>"
       },
       {
         "blockerOwner": "OpenClaw/swarm loader contract owner",

@@ -430,7 +430,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "openclaw-plugin; package 0.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
         "skills/common/plugins/openclaw-agent-observer/README.md"
@@ -449,7 +449,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "codex-plugin; package 0.2.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
         "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
@@ -468,7 +468,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "openclaw-plugin; package 0.1.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/prism/openclaw-plugin/openclaw.plugin.json",
         "skills/prism/openclaw-plugin/README.md"
@@ -487,7 +487,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/agent-observability/plugin.json",
         "skills/common/plugins/agent-observability/README.md"
@@ -506,7 +506,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/api-flow/plugin.json",
         "skills/buster/plugins/api-flow/README.md"
@@ -525,7 +525,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/architecture-validator/plugin.json",
         "skills/nova/plugins/architecture-validator/README.md"
@@ -544,7 +544,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/artifact-store/plugin.json",
         "skills/common/plugins/artifact-store/README.md"
@@ -563,7 +563,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/axe/plugin.json",
         "skills/buster/plugins/axe/README.md"
@@ -582,7 +582,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/blueprint-sync/plugin.json",
         "skills/nova/plugins/blueprint-sync/README.md"
@@ -601,7 +601,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/buster-quality-gate/plugin.json",
         "skills/nova/plugins/buster-quality-gate/README.md"
@@ -620,7 +620,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/case-study/plugin.json",
         "skills/nova/plugins/case-study/README.md"
@@ -639,7 +639,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/command-runner/plugin.json",
         "skills/common/plugins/command-runner/README.md"
@@ -658,7 +658,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/container-build/plugin.json",
         "skills/buster/plugins/container-build/README.md"
@@ -677,7 +677,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/coverage-budget/plugin.json",
         "skills/buster/plugins/coverage-budget/README.md"
@@ -696,7 +696,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/delivery-lint/plugin.json",
         "skills/nova/plugins/delivery-lint/README.md"
@@ -715,7 +715,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/demo-auth-smoke/plugin.json",
         "skills/buster/plugins/demo-auth-smoke/README.md"
@@ -734,7 +734,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/demo-handoff/plugin.json",
         "skills/nova/plugins/demo-handoff/README.md"
@@ -753,7 +753,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/direct-command/plugin.json",
         "skills/buster/plugins/direct-command/README.md"
@@ -772,7 +772,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/git-workspace/plugin.json",
         "skills/common/plugins/git-workspace/README.md"
@@ -791,7 +791,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/http/plugin.json",
         "skills/buster/plugins/http/README.md"
@@ -810,7 +810,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/human-approval/plugin.json",
         "skills/nova/plugins/human-approval/README.md"
@@ -829,7 +829,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/implementation-agent/plugin.json",
         "skills/nova/plugins/implementation-agent/README.md"
@@ -848,7 +848,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/junit-report-adapter/plugin.json",
         "skills/buster/plugins/junit-report-adapter/README.md"
@@ -867,7 +867,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/kubernetes-fixture/plugin.json",
         "skills/buster/plugins/kubernetes-fixture/README.md"
@@ -886,7 +886,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/lighthouse/plugin.json",
         "skills/buster/plugins/lighthouse/README.md"
@@ -905,7 +905,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/lint/plugin.json",
         "skills/nova/plugins/lint/README.md"
@@ -924,7 +924,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/network-http/plugin.json",
         "skills/common/plugins/network-http/README.md"
@@ -943,7 +943,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.1.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/notification-observer/plugin.json",
         "skills/common/plugins/notification-observer/README.md"
@@ -962,7 +962,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/openapi/plugin.json",
         "skills/buster/plugins/openapi/README.md"
@@ -981,7 +981,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/openclaw-agent-events/plugin.json",
         "skills/common/plugins/openclaw-agent-events/README.md"
@@ -1000,7 +1000,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/operator-messaging/plugin.json",
         "skills/common/plugins/operator-messaging/README.md"
@@ -1019,7 +1019,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/pipeline-review/plugin.json",
         "skills/nova/plugins/pipeline-review/README.md"
@@ -1038,7 +1038,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/playwright/plugin.json",
         "skills/buster/plugins/playwright/README.md"
@@ -1057,7 +1057,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/preflight-contract/plugin.json",
         "skills/nova/plugins/preflight-contract/README.md"
@@ -1076,7 +1076,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/prism-design/plugin.json",
         "skills/nova/plugins/prism-design/README.md"
@@ -1095,7 +1095,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/project-summary/plugin.json",
         "skills/nova/plugins/project-summary/README.md"
@@ -1114,7 +1114,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/redis-transport/plugin.json",
         "skills/common/plugins/redis-transport/README.md"
@@ -1133,7 +1133,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/remote-test-gate/plugin.json",
         "skills/nova/plugins/remote-test-gate/README.md"
@@ -1152,7 +1152,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/repository-adapter/plugin.json",
         "skills/nova/plugins/repository-adapter/README.md"
@@ -1171,7 +1171,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/nova/plugins/review/plugin.json",
         "skills/nova/plugins/review/README.md"
@@ -1190,7 +1190,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/runtime-dispatch/plugin.json",
         "skills/common/plugins/runtime-dispatch/README.md"
@@ -1209,7 +1209,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/secret-resolver/plugin.json",
         "skills/common/plugins/secret-resolver/README.md"
@@ -1228,7 +1228,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/security-providers/plugin.json",
         "skills/buster/plugins/security-providers/README.md"
@@ -1247,7 +1247,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/size-budget/plugin.json",
         "skills/buster/plugins/size-budget/README.md"
@@ -1266,7 +1266,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/state-store/plugin.json",
         "skills/common/plugins/state-store/README.md"
@@ -1285,7 +1285,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/tailscale-exposure/plugin.json",
         "skills/buster/plugins/tailscale-exposure/README.md"
@@ -1304,7 +1304,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/telemetry-observer/plugin.json",
         "skills/common/plugins/telemetry-observer/README.md"
@@ -1323,7 +1323,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/telemetry-store/plugin.json",
         "skills/common/plugins/telemetry-store/README.md"
@@ -1342,7 +1342,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/transport-publisher/plugin.json",
         "skills/common/plugins/transport-publisher/README.md"
@@ -1361,7 +1361,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/buster/plugins/visual/plugin.json",
         "skills/buster/plugins/visual/README.md"
@@ -1380,7 +1380,7 @@
       "audience": "plugin author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2; package 1.0.0",
-      "lastVerified": "see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb",
+      "lastVerified": "source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.",
       "sourceDependencies": [
         "skills/common/plugins/wait-store/plugin.json",
         "skills/common/plugins/wait-store/README.md"
@@ -1399,7 +1399,7 @@
       "audience": "extension author, operator, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "pipeline-plugin-v2, OpenClaw extensions, Codex plugins, Worker engines, runtime roles",
-      "lastVerified": "source and focused local checks on 2026-09-16",
+      "lastVerified": "source and focused local checks on 2026-10-10; no live host result",
       "sourceDependencies": [
         "scripts/verify-plugin-packages.mjs",
         "skills/common/plugin-runtime/foundation/registry",
@@ -1614,10 +1614,25 @@
       "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
       "sourceDependencies": [
         "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
         "skills/nova/project/recovery.ts",
         "skills/common/plugin-runtime/foundation/config/published-pair.ts",
         "skills/prism/server/control-config.ts",
-        "skills/prism/config/native-worker.ts"
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/control/product-decisions.ts",
+        "charts/kubeclaw/values.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/prism/values.schema.json",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/gitops/templates/applications.yaml"
       ],
       "checks": [
         "npm run docs:inventory:config:check",
@@ -1697,7 +1712,17 @@
         "skills/nova/core/execution/engine-runtime.ts",
         "skills/nova/core/test-gates/resolver.ts",
         "tests/verification/e2e/support/platform-config.ts",
-        "charts/prism/templates/workloads.yaml"
+        "tests/verification/e2e/support/config-profiles/standard.json",
+        "tests/verification/e2e/real-run-workspace.mjs",
+        "charts/kubeclaw/values.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "charts/kubeclaw/templates/_helpers.tpl",
+        "charts/prism/values.schema.json",
+        "charts/prism/ci-values.yaml",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/prism/templates/workloads.yaml",
+        "charts/gitops/templates/applications.yaml"
       ],
       "checks": [
         "npm run docs:inventory:config:check",
@@ -1737,7 +1762,7 @@
       "audience": "operator, security operator, developer",
       "owner": "the source component listed for each route or connection",
       "appliesTo": "discovered inbound routes and outbound network calls in shipped runtime sources",
-      "lastVerified": "generated from revision `1c0c780211a98fd2ebf9beffb1ace937fe079c04`",
+      "lastVerified": "generated from revision `6fa4830a48244d29655104a5be58957d5fa87d2f`",
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
         "docs/generated/inventory/platform-surfaces.json",
@@ -1783,14 +1808,20 @@
       "audience": "all readers",
       "owner": "documentation",
       "appliesTo": "KubeClaw platform terminology",
-      "lastVerified": "2026-10-09 for RPO, RTO, and SVID definitions; bounded source review only",
+      "lastVerified": "2026-10-09 for RPO, RTO, and SVID; 2026-10-10 for Prism request protection, job fence, ARIA, and approval definitions; source definitions checked, deployment and live behavior unverified",
       "sourceDependencies": [
         "docs/site/understand/components-and-authority.md",
         "docs/site/understand/request-state-recovery.md",
         "docs/site/understand/deployment-and-trust.md",
         "my-values/infra/spire-values.yaml",
         "charts/prism/templates/configmap-worker-trust.yaml",
-        "skills/worker/core/worker/trust.ts"
+        "skills/worker/core/worker/trust.ts",
+        "skills/prism/server/internal-auth.ts",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/engine/render-operation.ts",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/core/execution/engine-run.ts"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2008,11 +2039,24 @@
       "audience": "platform operator, pipeline operator, plugin author",
       "owner": "plugin runtime and Nova Core",
       "appliesTo": "`pipeline-platform.v2`",
-      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "lastVerified": "2026-10-10 at source revision `94fd165ae8177ec37bb16798bfed63cb8923f413`",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/config/platform.schema.json",
         "skills/common/plugin-runtime/foundation/config/platform.ts",
-        "skills/nova/core/execution/engine-runtime.ts"
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/lifecycle/wait-request.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/common/plugin-runtime/foundation/registry/digest.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+        "skills/nova/core/execution/adapter-startup.ts"
       ],
       "checks": [
         "npm run docs:inventory:config:check",
@@ -2228,7 +2272,7 @@
       "audience": "maintainer, operator, contributing agent",
       "owner": "platform-maintainers",
       "appliesTo": "source baseline ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
-      "lastVerified": "2026-10-09; each issue states its available evidence and remaining validation",
+      "lastVerified": "2026-10-10; each issue states its available evidence and remaining validation",
       "sourceDependencies": [
         "docs/status/open-issues.json"
       ],
@@ -2991,15 +3035,16 @@
       "page": "docs/site/use/prism-studio.md",
       "route": "/use/prism-studio/",
       "contentKind": "authored",
-      "status": "local deploy-script verification passed; absent runtime release selection blocks deployment; no live journey result",
+      "status": "local deploy-script verification passed; fixed spike browser path blocks complete local checks; absent runtime release selection blocks deployment; no live journey result",
       "audience": "Prism operator, designer, incident responder, platform maintainer",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage",
-      "lastVerified": "2026-10-09; local deploy-script, Control configuration, and interruption checks passed; no browser recovery or live journey result is available",
+      "lastVerified": "2026-10-10 against source revision `733b7417992c1bafaf5848d421c80ff76b73a9e4`; historical executed checks retain their own revisions below; no live journey result",
       "sourceDependencies": [
         "skills/prism",
         "skills/nova/plugins/prism-design",
         "charts/prism",
+        "charts/kubeclaw",
         "scripts/deploy.sh"
       ],
       "checks": [

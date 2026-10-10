@@ -5,9 +5,9 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/http/plugin.json; skills/buster/plugins/http/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: see the separate verification record; generated source evidence revision 1c0c780211a98fd2ebf9beffb1ace937fe079c04; authored guidance evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb
+Last verified: source facts revision 6fa4830a48244d29655104a5be58957d5fa87d2f; package behavior sources revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb. Local command results and their limits appear under Package Checks.
 
-## Authored Guidance
+## Purpose
 
 Run one bounded HTTP request as a Buster provider.
 
@@ -26,7 +26,7 @@ Network reach and request behavior remain inside the resolved provider plan.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/buster/plugins/http/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/plugins/http/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -35,12 +35,12 @@ the contract and lifecycle rules that apply to this package.
 - [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)
 - [Host and engine boundaries](../host-and-engine.md)
 
-## Generated Package Facts
+## Package Reference
 
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.http@1.0.0`.
 - Runtime-role manifest inclusion: `buster`
-- Manifest: [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/buster/plugins/http/plugin.json)
+- Manifest: [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/plugins/http/plugin.json)
 
 ## Boundaries
 
@@ -65,7 +65,7 @@ Required capabilities: `network.http`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/buster/plugins/http/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/plugins/http/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -114,11 +114,11 @@ The provider validates the capability response and evaluates explicit HTTP expec
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
-Nova or Buster records a bounded failure without giving the package lifecycle authority.
+The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
-## Verification Record
+## Package Checks
 
-Catalogue status: `locally-verified`.
 Recorded local command result on 2026-09-16: `passed`.
 
 The package-local command completed with exit code 0.
@@ -137,16 +137,11 @@ Exact package test script (run from the package directory):
 node ../../../../tests/verification/integration/http-provider-live.test.ts
 ```
 
-The catalogue status does not claim live host or cluster acceptance.
+Local package checks do not prove live host or cluster readiness.
 The result above states the exact local limit. Run the package command in the target environment before activation.
 
 ## Source Evidence
 
-- Manifest: [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/buster/plugins/http/plugin.json)
-- Authored package guide: [skills/buster/plugins/http/README.md](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/buster/plugins/http/README.md)
-- Module for `request`: [src/provider.js](https://github.com/datrab/kubeclaw/blob/1c0c780211a98fd2ebf9beffb1ace937fe079c04/skills/buster/plugins/http/src/provider.js)
-
-Generated facts come from the manifest, package metadata, runtime-role inventory,
-schemas, and test-file discovery. Maintained guidance data owns the purpose,
-use, exclusion, and limit text. Publication can refresh facts without inventing or
-silently replacing those explanations.
+- Manifest: [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/plugins/http/plugin.json)
+- Package implementation guide: [skills/buster/plugins/http/README.md](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/plugins/http/README.md)
+- Module for `request`: [src/provider.js](https://github.com/datrab/kubeclaw/blob/6fa4830a48244d29655104a5be58957d5fa87d2f/skills/buster/plugins/http/src/provider.js)
