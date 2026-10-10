@@ -15854,6 +15854,18 @@
         "A98-11"
       ],
       "description": "Actual resource roots are suppressed by apiProductSelection visit boundary&&actual.length. Root is an actual selected request object, not an unused optional upstream field. Canonical renderer filters this root out and introduces only GVK+contexts. Mechanical audit38registeredGVK29resolvingroot factories/9missing selected roots: Pod, DeleteOptions, TokenReview, Prometheus, PrometheusRule, ServiceMonitor, ClusterSPIFFEID, MutatingWebhookConfiguration, ValidatingWebhookConfiguration. Six independently flagged workload/node root prototypes are supported but not selected. Need actual-root selection, source-backed missing root contracts, checks and independent acceptance; no blanket unused exclusion."
+    },
+    {
+      "id": "A98-ROOT-POD-REQUEST-CONTRACT-CORRECTION",
+      "state": "source-correction-awaiting-selection-and-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Actual v1 Pod root now has an authored selected receiver contract for disposable BuildKit preflight submission, null/empty/invalid body, narrow stored-Pod update/recovery and canonical metadata/TypeMeta delegation. Authenticated core ValidatePodCreate5601-5617 and required containers4025-4029 support the root facts; existing Pod route sources retained. New field identity adds root only, not generic Kubernetes alternatives. Root selection and remaining eight missing root factories still open; no canonical publication/full acceptance claimed."
     }
   ],
   "checks": [
@@ -16757,6 +16769,11 @@
       "command": "Root read apiProductSelection304-429 and renderApiResourceReference111-197; pure registered-GVK productApiReceiverRecords(api,kind,[root]) audit",
       "state": "terminal-fail-scope-gaps-observed",
       "scope": "Session29598 terminal exit0;38GVKs enumerated29root factoriesresolve9reject. Private resource-root-scope-root/root-factory-audit.json and summary.json. Process completion is not a passing completeness gate; no current publication or semantic acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Pod root candidate13PASS0FAIL0SKIP session68876 including actualBuildKit shelloutput, actualregistry transformedJob selections and immutable legacyidentities. Actualroot$ selection stillnotactivated, remaining8missingrootfactories nothidden or accepted. New770workloadrecords requirefreshscope/semanticsreview."
     }
   ],
   "reviewAssignments": [

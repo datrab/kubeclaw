@@ -539,6 +539,16 @@ function appendExpanded(kind,fieldPath,facts) {
  const key=`${kind}:${fieldPath}`;if(records.has(key))throw Error(`duplicate ${key}`);records.set(key,record);
 }
 // Do not copy Deployment ownership/rollout/parent cases into a different kind.
+appendExpanded('Pod','$',{
+ purpose:'Submit the disposable BuildKit preflight Pod as a complete API object.',
+ omitted:'Without a request object, this operation cannot create the preflight Pod.',
+ nullValue:'A null request supplies no valid Pod metadata or container spec. It cannot create the required preflight Pod.',
+ emptyValue:'An empty object has no containers and cannot pass normal Pod creation validation.',
+ invalidValue:'The decoded Pod must pass metadata and spec validation. API acceptance does not establish placement, container startup, readiness or a successful build.',
+ changeImpact:podChange,
+ crossFieldConditions:['This is a directly submitted Pod, not a controller template. Root apiVersion, kind and metadata have their own canonical contracts. The command and readiness check remain separate from successful execution of a later production build.'],
+ evidence:[source('pkg/apis/core/validation/validation.go','5601-5617','Normal Pod create validates metadata and spec and adds create-only constraints.'),source('pkg/apis/core/validation/validation.go','4025-4029','A Pod container list with zero entries is rejected as required.')],
+});
 const deploymentContext=/Deployment|ReplicaSet|deployment\/|structured-merge|strategicpatch|merge\/update|fieldmanager|kubectl|gitops-engine|Whole|whole.*coverage|complete.*1389|Operation applicability|registry-local|LiteLLM|registry-mirror|GitOps|Argo|SSA|CSA|managedfields|endpoints\/handlers\/patch/;
 const qualifyText=(text,kind)=>{
  const result=text.replaceAll('Deployment template',kind==='Pod'?'Pod request':`${kind} Pod template`).replaceAll('Deployment',kind==='Pod'?'Pod request':`${kind} Pod template`);
