@@ -15999,6 +15999,19 @@
         "A98-14"
       ],
       "description": "Current fresh Source findings distinguish lifecycle hook/probe descriptions, failed PostStart kill attempts and ignored NotFound stop errors; CSI fsGroup capability selection now separated from actual NodePublishVolume argument-transfer evidence. Immutable reviewed failures remain; current actual-output applicability and new full affected fresh review required."
+    },
+    {
+      "id": "A98-STATEFUL-NAME-PROJECTION-POD-STATUS-CORRECTION",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "FE07-SOURCE-003/004/005 preserved as historical failures. Correct StatefulSet create DNS1123-label grammar, historical update distinction and prefix helper; remove top-level volume exclusivity from projected Secret/ConfigMap clones; add narrow actual Pod StatusREST installation evidence. Fresh complete affected review still required."
     }
   ],
   "checks": [
@@ -17023,6 +17036,17 @@
       "state": "terminal-pass",
       "scope": "Session3706: apps1285records/77changed, workload770/4changed, node277/13changed; identities and counts unchanged. Changed dimensions confined to lifecycle/grace claims and three CSI evidence lists. All other exported records byte-equivalent. Declared installed-dependency loader qualification; no immutable producer or whole-source semantic acceptance.",
       "proof": "/home/node/Documents/Codex/a98-evidence/lifecycle-csi-root-correction-audit.json"
+    },
+    {
+      "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs scripts/tests/node-root-metadata-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Root session78066:18PASS0FAIL0SKIP. Bounded regressions only, not Source/Reader/Quality acceptance."
+    },
+    {
+      "command": "Root direct export audit: StatefulSet metadata grammar, projected ConfigMap conditions, Pod status source windows",
+      "state": "terminal-pass",
+      "scope": "34 StatefulSet metadata records,26 projected ConfigMap records across apps/workload exports,34 Pod metadata records; no independent semantic or whole-package acceptance.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/metadata-projection-root-correction-audit.json"
     }
   ],
   "reviewAssignments": [
@@ -20327,6 +20351,27 @@
         "Current structural guide gate terminal FAIL for stale platform inventory; it cannot prove semantic or Reader acceptance even after regeneration."
       ],
       "remaining": "Complete current Source/Reader/Quality individual evidence and final Astra review against AP09.7 contract; reuse valid current content and checks after impact review."
+    },
+    "metadataProjectionCorrection": {
+      "baseline": "159f637414ca63804ba28f62d7a88ba7d139b16d",
+      "historicalReviewBinding": "fe07fc0848521ff40d6ca22c99cc948fddd476d6",
+      "state": "candidate-pending-fresh-independent-source-review",
+      "findings": [
+        "FE07-SOURCE-003",
+        "FE07-SOURCE-004",
+        "FE07-SOURCE-005"
+      ],
+      "proof": "/home/node/Documents/Codex/a98-evidence/metadata-projection-root-correction-audit.json"
+    },
+    "producerV4BoundedJoin": {
+      "state": "terminal-structural-pass-not-global-producer-acceptance",
+      "contexts": 1140,
+      "gvkGroups": 39,
+      "selectedPaths": 2124,
+      "missing": 0,
+      "selectionErrors": 0,
+      "sha256": "c7c64711c77f8b59f46b51176742aac460f02879e08fb0804b7638ab562db7fc",
+      "remaining": "Writer found unqualified process.stderr.write and console.error channels; next immutable overlay required before full producer review."
     }
   }
 }

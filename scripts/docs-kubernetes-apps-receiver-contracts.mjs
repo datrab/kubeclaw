@@ -640,7 +640,7 @@ for(const branch of ['secret','configMap']) {
   if(suffix==='.defaultMode'||suffix==='.secretName')continue;
   const q=base+suffix;
   if(records.has(q))continue;
-  add(q,record.purpose,record.omitted,record.emptyValue,record.invalidValue,[...record.evidence,validation('1159-1214','Projected Secret/ConfigMap names are required; item key/path/mode validation and explicit path collision checks apply.'),projRuntime],{nullValue:record.nullValue,crossFieldConditions:[...record.crossFieldConditions,'The projection item permits at most one source branch; per-item mode overrides projected.defaultMode. Explicit checked paths cannot conflict across checked source items.'],qualificationLimits:record.qualificationLimits});
+  add(q,record.purpose,record.omitted,record.emptyValue,record.invalidValue,[...record.evidence,validation('1159-1214','Projected Secret/ConfigMap names are required; item key/path/mode validation and explicit path collision checks apply.'),projRuntime],{nullValue:record.nullValue,crossFieldConditions:[...record.crossFieldConditions.filter(condition=>condition!=='This source must be the only source in the volume.'),'The projection item permits at most one source branch; per-item mode overrides projected.defaultMode. Explicit checked paths cannot conflict across checked source items.'],qualificationLimits:record.qualificationLimits});
  }
  refine(base,{emptyValue:'{} lacks the required source name and is rejected.',invalidValue:'A nonempty source name is required. Each selected item must pass key/path/mode validation, and explicit paths must not conflict across checked projection sources.'},[validation('1159-1214','Projection Secret/ConfigMap validation requires a name and checks items and duplicate explicit paths.')]);
 }
