@@ -15633,6 +15633,20 @@
         "A98-11"
       ],
       "description": "FreshCilium reviewer found OPEN SHARED METADATA PROOF marker missed byrenderer regex. Guardnow rejectsactualmarker, adversarial testadded toexistingproofnote test;5renderertestsPASS includinghonestproductlimits permitted. Noabsenceofworklanguage/globalpublicationapproval."
+    },
+    {
+      "id": "A98-STATUS-CACHE-RETRY-STOP-CORRECTED-CANDIDATE",
+      "state": "corrected-pending-new-complete-independent-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Frozen3e61283a SourceF01/F02/F03/F04 corrected acrosscc430/current source: actualApplyidentitycallee, decodercaption, variable/schema/compiler/mapping/skippedcontext cases, eventhandlercachegate/shutdown/queueForget/noattemptcap/defaultdelayrules.15status147cases78captionpairs,54originalprimarylibraryfiles Gitblob/SHAverified. F05 completepublicinventorygeneration remainsblockedbyremainingmetadata/otheravailable-sourcegaps. New fullSource needed forunchanged+corrected+introducederrors; noReaderQualityAstra approval.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/admission-status-root/report.md",
+      "evidenceSha256": "cc49a2ba6e4b405ca6201efec6f526af4f0d1df047568cf7542978d6e0d063a6"
     }
   ],
   "checks": [
@@ -17589,6 +17603,15 @@
       "forkTurns": "none",
       "state": "running",
       "scope": "Exclusive newcanonicalmetadata module: actualremaining246schemaentries, resource-v-Podtemplate-v-PVCtemplate contexts plusimplicitCRDObjectMeta integration; noduplicate10rootidentity records."
+    },
+    {
+      "agent": "/root/a98_admission_status_complete_source_fresh",
+      "role": "source-reviewer",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "terminal-fail",
+      "scope": "Immutable3e61283a15status111cases65captions;225dimensiondecisions;51freshprimarysources;75artifactsealrootverified. F01-F05;37metadata/envelope mandatorypaths fail.9sharedtestsPASS,actualinventory/renderinputFAIL. Rootcorrectionsnotcoveredbythisverdict."
     }
   ],
   "continuation": {
