@@ -19707,6 +19707,15 @@
       "sources": "Authenticated batchvalidation889-900/170-188; Jobstrategy221-282; corevalidation4663-4720",
       "checks": "13 workload integration checksPASS0FAIL0SKIP; final source-range addition is citation-only",
       "limits": "No live execution, current source-stable all-producer join, independent full Source PASS, Reader/Quality/Astra or package closure."
+    },
+    "selectorMapNullCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-complete-source-review",
+      "findingOrigin": "/root/workload_node_complete_source_fresh F19 frozen5d PDB; Root actual-current inspection found same defect in StatefulSet",
+      "scope": "Two exact selector.matchLabels string map members retain their key with value empty string on fresh typed null; they add an equality-to-empty condition rather than remove the equality key. Cases and source evidence corrected; all768 workload identities preserved.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/selector-map-null-correction-root",
+      "checks": "13 focused integration checks PASS0FAIL0SKIP; two original authority files hash-verified; exact export diff2records only nullValue/cases/evidence",
+      "limits": "No live API decoding, source-stable complete producer join, independent full Source PASS, Reader/Quality/Astra or package closure."
     }
   }
 }
