@@ -2,6 +2,7 @@
  * only. These source-derived outcomes require independent review and do not report
  * an executed API request, controller reconciliation or storage-driver operation. */
 import { apiResourceFieldBoundaries } from './docs-api-schema-authorities.mjs';
+import { kubernetesMetadataMechanisms } from './docs-kubernetes-metadata-receiver-contracts.mjs';
 const revision = '66452049f3d692768c39c797b21b793dce80314e';
 const source = (path, lines, claim) => ({url:`https://github.com/kubernetes/kubernetes/blob/${revision}/${path}#L${String(lines).replace('-', '-L')}`,claim});
 const v = (lines, claim) => source('pkg/apis/core/validation/validation.go',lines,claim);
@@ -27,7 +28,7 @@ function define(kind,path,purpose,omitted,emptyValue,invalidValue,evidence,optio
  definitions.set(key,{purpose,omitted,emptyValue,invalidValue,...options,evidence:[...evidence,...(options.evidence??[])]});
 }
 const all=(path,...args)=>{for(const k of kinds)define(k,path,...args);};
-const scope='Kubernetes v1.35.0 core/v1 fresh typed JSON create; ordinary typed update and named status/finalize subresources where stated. Decoding precedes defaults, preparation and validation. Omission and null below describe a present immediate parent at that typed boundary; they are not patch instructions.';
+const scope='Kubernetes v1.35.0 core/v1 fresh complete JSON create/replacement body; named status/finalize and selected Apply/patch differences are stated separately. Decoding precedes defaults, field management, preparation and validation. Omission and null describe a present immediate parent at fresh typed decode; replacement then uses the live object and strategy. They are not patch deletion instructions or controller completion results.';
 const limits=['Pinned source expectations are not a performed API request, live authorization check, admission chain, persistence check or controller/runtime test. The operator must inspect the stored object and relevant dependencies before relying on the result.', 'Apply and GitOps first construct a patch or resulting object. Ownership, current state and patch type determine whether an omitted field is retained or deleted; these typed create statements do not determine that winner. Read the actual object and managedFields before a retry. An interrupted request requires an object read before repeating an external effect.'];
 const recovery='Read the stored object after the request, especially after an interrupted response. Correct the named validation or dependency failure, then retry with current resourceVersion and field ownership. A stored intent does not prove that its consumer has converged.';
 for(const k of kinds){
@@ -105,7 +106,7 @@ const namespaceDeletionEvidence=[
 for(const p of ['$.spec','$.spec.finalizers','$.spec.finalizers[]'])define('Namespace',p,p==='$.spec'?'Set namespace finalization intent.':p.endsWith('[]')?'Add one namespace cleanup finalizer.':'List namespace cleanup finalizers.',p.endsWith('[]')?'No item is contributed by absence; create still ensures kubernetes.':'Create inserts kubernetes if it is not present.','{} spec or [] list receives kubernetes on create. A retained empty string finalizer is invalid.','A retained finalizer must be a qualified name or recognized standard legacy name. Ordinary update cannot alter this list; use the finalize subresource.',nsEvidence,{changeImpact:'A finalize update can release the namespace for removal. Inspect remaining namespaced content and its cleanup failures before removing a finalizer.',qualificationLimits:['The deletion controller processes the resources returned by discovery and the operations it can use. Unsupported listing cannot establish that a collection is empty. Namespace absence does not prove external storage cleanup or application recovery.'],crossFieldConditions:namespaceDeletionConditions,cases:namespaceDeletionCases,evidence:namespaceDeletionEvidence});
 const pvcEvidence=[v('2462-2530','PVC spec requires access modes and positive storage; checks selector, class, mode and data-source combinations.'),v('2539-2621','PVC update compares spec after bounded volumeName/class/bound-request exceptions; volumeMode is immutable and shrinking is restricted.')];
 const pvcConditions=['A claim needs at least one access mode and a positive resources.requests.storage value.','The ordinary endpoint preserves stored status; bound status determines the allowed request-size and volume-attributes exceptions.','PVC spec is immutable except the exact update branches for one-time volumeName, storage-class upgrades, bound storage requests and volume attributes. A change permitted by API validation is not proof that storage expansion or data population succeeds.'];
-const pvcLimits=['The pinned core controller can select/bind or start provision operations, but the selected StorageClass, external provisioner, snapshot/clone/populator, ReferenceGrant authority, CSI driver, attach/mount, filesystem resize and application recovery are separate consumers. Their exact deployed versions and state are not established here. Available-source documentation gaps must be resolved for the selected storage route; a valid or Bound PVC does not prove healthy data or successful backup/restore.'];
+const pvcLimits=['Pinned core binding, CSI attach/mount/resize, and the conditional SMB chart 1.20.0 provisioner/resizer/driver paths below are source expectations. Actual StorageClass/PV driver, image overrides, enabled features, credentials, server data and application recovery must be observed separately; valid or Bound does not prove healthy data or backup/restore.', 'Available-source documentation gap: a selected custom populator, snapshot controller, non-SMB driver or application recovery implementation has no complete receiving contract here. The provisioner handoff and SMB unsupported snapshot path are qualified; another selected implementation must supply its pinned consumer behavior before its effect is relied on. This is not a product-limit waiver.'];
 define('PersistentVolumeClaim','$.spec','Request a persistent volume and optional data population.','The zero spec is rejected for no access mode and no storage request.','{} is rejected for those requirements.','Invalid mode, access-mode combination, selector, storage quantity or data-source combination rejects the spec.',pvcEvidence,{crossFieldConditions:pvcConditions,qualificationLimits:pvcLimits,changeImpact:'Accepted claims enter the volume-binding/provisioning workflow. Most spec changes are forbidden after create. Observe phase, events, selected PV and driver state before retry or migration.'});
 for(const p of ['$.spec.accessModes','$.spec.accessModes[]'])define('PersistentVolumeClaim',p,'Request supported volume access modes.',p.endsWith('[]')?'An absent item contributes no mode; the list must remain nonempty.':'No modes is rejected.','[] is invalid for the required list. A retained empty string is unsupported.','Only ReadWriteOnce, ReadOnlyMany, ReadWriteMany and ReadWriteOncePod are supported. ReadWriteOncePod cannot be combined with other supported modes.',[v('2464-2491','Access-mode presence, supported values and ReadWriteOncePod exclusion are validated.')],{crossFieldConditions:pvcConditions,qualificationLimits:pvcLimits,changeImpact:'Access-mode changes fail immutable-spec update comparison; selecting a mode does not prove driver enforcement.'});
 for(const [field,omitted,empty,invalid,evidence] of [
@@ -137,7 +138,7 @@ for(const ref of ['dataSource','dataSourceRef']){
 }
 const svcEvidence=[v('6570-6777','Service validation checks its type-dependent ports, selector, affinity, IP fields and traffic policies.'),d('106-163','Service defaulting supplies affinity/type/protocol/targetPort and applicable traffic policies/node-port allocation/ipMode.')];
 const svcConditions=['ClusterIP is the default type. ExternalName requires a DNS name and empty clusterIPs/ipFamilies/ipFamilyPolicy.','Normal create clears status and normal update preserves stored status. Status writes use the status subresource and retain spec.','A successful Service write does not prove EndpointSlices, kube-proxy rules, external-address routing, DNS or a load balancer have converged.'];
-const svcLimits=['The installed EndpointSlice controller, kube-proxy mode, cluster DNS and load-balancer controller/implementation must be checked for the target cluster. Available-source documentation gaps: exact consumer routing, health checks, address announcement, class selection, affinity enforcement and traffic-distribution behavior require their immutable consumer sources; no network probe or live load-balancer acceptance is proved.'];
+const svcLimits=['Pinned EndpointSlice, shared kube-proxy selection, named iptables/IPVS/nftables rules, health-check, conditional CoreDNS v1.13.1 and default cloud-controller paths below are source expectations. Actual controller images/features, selected dataplane/DNS, kernel rules and external resources remain separate observations; no network probe or live load-balancer result is proved.', 'Available-source documentation gap: the selected load-balancer provider or class controller, including address announcement, port-error/condition production and external filtering, has no complete pinned implementation contract here. The default controller handoff and kube-proxy VIP filtering do not establish that provider behavior. A different dataplane or DNS implementation also needs its own selected authority.'];
 define('Service','$.spec','Describe service addressing, backend selection and traffic policy.','Zero spec defaults to ClusterIP/None but lacks required ports.','{} is invalid for required ports except a declared headless or ExternalName route.','Invalid ports, type, IP-family combinations, selector or type-dependent fields reject validation.',svcEvidence,{crossFieldConditions:svcConditions,qualificationLimits:svcLimits});
 for(const [field,omitted,empty,invalid,evidence] of [
  ['type','The empty scalar defaults to ClusterIP.','Empty string defaults to ClusterIP.','Only ClusterIP, NodePort, LoadBalancer and ExternalName are accepted.',[v('6676-6691','Type is required/supported and ClusterIP forbids nonzero node ports.')]],
@@ -313,6 +314,247 @@ for(const [key,def] of definitions){
   def.evidence.push(source('staging/src/k8s.io/apimachinery/pkg/apis/meta/v1/helpers.go','295-304','FieldsV1 custom decoder copies any non-null JSON bytes without field-set validation.'));
  }
  if(['$.metadata.resourceVersion','$.metadata.uid','$.metadata.creationTimestamp','$.metadata.generateName'].includes(path))def.qualificationLimits=(def.qualificationLimits??[]).filter(x=>!x.includes('generic store lifecycle initialization'));
+}
+
+// Qualify common mechanisms against these concrete typed REST strategies.
+for(const [key,def] of definitions){
+ const [kind,path]=[key.slice(0,key.indexOf(':')),key.slice(key.indexOf(':')+1)];
+ const attach=(mechanism)=>{def.crossFieldConditions=[...(def.crossFieldConditions??[]),...mechanism.conditions];def.evidence.push(...mechanism.evidence);};
+ if(path==='$.metadata'||path.startsWith('$.metadata.ownerReferences')){
+  attach(kubernetesMetadataMechanisms.ownership);
+  def.crossFieldConditions.push(kind==='Namespace'?'This dependent is cluster scoped. GC cannot resolve a namespaced owner for it.':'This dependent is namespaced. A namespaced owner is looked up in this dependent namespace; cluster-scoped owners are resolved without a namespace.');
+  def.qualificationLimits=(def.qualificationLimits??[]).filter(x=>!x.includes('owner graph')&&!x.includes('garbage-collector graph'));
+  if(path==='$.metadata.ownerReferences')def.cases=[...(def.cases??[]),
+   {name:'owner-name-reused-with-new-uid',condition:'The referenced owner name exists with a different UID.',sourceOutcome:'GC classifies the old reference as dangling; a reused name is a different owner lifetime.'},
+   {name:'blocking-reference-permission',condition:'OwnerReferencesPermissionEnforcement is enabled and a new reference requests blockOwnerDeletion:true.',sourceOutcome:'Admission requires update permission on each mapped owner finalizers subresource or the wildcard finalizers grant. Owner mapping or authorization failure can reject the request.'}];
+ }
+ if(path==='$.metadata'||path.startsWith('$.metadata.managedFields')){
+  attach(kubernetesMetadataMechanisms.fieldManagement);
+  def.crossFieldConditions.push('These are typed built-ins. Fresh null decodes managedFields to nil; [] remains a nonnil empty slice and [{}] remains one zero entry. Root non-apply field management selects reset for []/[{}], while omission/null falls back to live ownership. With a live UID and empty ownership, the installed skip wrapper skips tracking; reset does not immediately record the replacing manager. On create, the default wrapper tracks with probability 1. Status/finalize field management selects live ownership instead of request entries.');
+  const strategy=strategyNames[kind];
+  const resetRanges={ConfigMap:'51-58',Namespace:'56-64',PersistentVolumeClaim:'55-65',Service:'56-68'};
+  def.evidence.push(kind==='ConfigMap'?source('pkg/registry/core/configmap/storage/storage.go','37-58','ConfigMap storage supplies no resource-specific reset-fields strategy or status route.'):source(`pkg/registry/core/${strategy}/strategy.go`,resetRanges[kind],'The concrete root strategy exposes its field-manager reset-field set.'),source('staging/src/k8s.io/apiserver/pkg/endpoints/installer.go','702-723','REST installation constructs the field manager with available strategy reset fields and the selected subresource.'));
+  def.qualificationLimits=(def.qualificationLimits??[]).filter(x=>!x.includes('field-manager')&&!x.includes('field manager consumes')&&!x.includes('reset-field transfer'));
+  if(path==='$.metadata.managedFields'){
+   def.omitted='Fresh decode supplies nil ownership. Root non-apply handling falls back to live ownership; create starts from an empty live object. This does not reset an existing object ownership list.';
+   def.nullValue='Fresh JSON null produces nil ownership, like omission. Root non-apply handling falls back to live ownership; null is not the []/[{}] reset sentinel.';
+   def.emptyValue='For this typed root non-apply route, [] or exactly [{}] selects empty ownership. An existing live UID then makes the skip wrapper return without tracking this update. Create has default tracking probability 1. Subresources use live ownership instead of either sentinel.';
+   def.invalidValue='Incompatible typed tokens fail decoding. A syntactically decoded ownership list can fail field-set decoding: non-apply handling falls back to live ownership, while Apply reports invalid live ownership and rejects authored nonnil managedFields. Metadata entry validation applies to the resulting object, not necessarily the original request entries.';
+   def.cases=[...(def.cases??[]),{name:'typed-reset-skips-current-replacement-manager',condition:'An ordinary replacement of an existing typed object supplies [] or exactly [{}] in managedFields.',sourceOutcome:'The request selects empty ownership. Because the live object has a UID, the skip wrapper does not track this replacement. A later first Apply initializes before-first-apply ownership before merging its fields.'},{name:'subresource-ignores-authored-ownership',condition:'A status or Namespace finalize update supplies authored ownership entries.',sourceOutcome:'The named subresource field manager selects live ownership; its manager identity and reset-field exclusions remain distinct from the root route.'}];
+  }else if(path==='$.metadata.managedFields[]'){
+   def.emptyValue='{} or retained null is one zero entry at typed decode. If it is the only list entry, root non-apply handling recognizes [{}] as reset before metadata validation. Otherwise failed ownership decoding can fall back to live ownership; direct validation of a retained zero entry rejects its operation.';
+  }else if(path.startsWith('$.metadata.managedFields[].')){
+   def.invalidValue+=' This is the child decoder/direct metadata check. Non-apply ownership decoding can replace the authored entries with live ownership before validation; Apply uses live entries and rejects nonnil authored managedFields.';
+  }
+ }
+ if(path==='$.metadata'||path.startsWith('$.metadata.deletion')||path.startsWith('$.metadata.finalizers')){
+  attach(kubernetesMetadataMechanisms.deletion);
+  def.crossFieldConditions.push('ConfigMap, PVC and Service use ordinary non-graceful resource strategies: metadata grace does not select a Pod-like termination interval. Namespace has a separate DELETE implementation and two finalizer lists. Its first DELETE checks UID/version, stores Terminating and deletionTimestamp, and returns pending; later removal requires empty spec.finalizers as well as generic metadata-finalizer checks.');
+  def.evidence.push(source('pkg/registry/core/namespace/storage/storage.go','146-170','Namespace DELETE fills/checks UID and checks an explicit resource-version precondition.'),source('pkg/registry/core/namespace/storage/storage.go','174-202','First Namespace DELETE stores deletionTimestamp and Terminating under storage preconditions.'),source('pkg/registry/core/namespace/storage/storage.go','247-264','Namespace DELETE returns pending and later delegates only with no spec finalizers; delete-during-update also requires their absence.'));
+  def.qualificationLimits=(def.qualificationLimits??[]).filter(x=>!x.includes('generic deletion')&&!x.includes('deletion-grace'));
+ }
+ if(kind==='Namespace'&&path==='$.metadata.namespace'){
+  def.omitted='The cluster-scoped request normalizes metadata.namespace to empty before validation.';
+  def.emptyValue='Empty is retained for cluster scope; an authored nonempty namespace is cleared by request-scope normalization.';
+  def.invalidValue='Incompatible typed tokens fail decode. The actual cluster-scoped REST helper clears an authored nonempty namespace before validation; direct cluster-scoped metadata validation alone would forbid it.';
+  def.evidence.push(source('staging/src/k8s.io/apiserver/pkg/registry/rest/meta.go','45-77','Scope matching clears an authored namespace for a cluster-scoped request; unequal nonempty namespaced scope is rejected.'));
+ }
+ if(path==='$.metadata.creationTimestamp')def.invalidValue='Malformed RFC3339 fails typed decoding. Create wipes and replaces a valid authored time; replacement restores an existing nonzero stored creation time before immutable validation.';
+ if(path==='$.metadata.uid')def.invalidValue='Incompatible typed tokens fail decoding. Create wipes an authored UID and initializes a fresh one. Replacement fills an omitted UID from storage and rejects a different nonempty UID.';
+ if(path==='$.metadata.generation')def.crossFieldConditions=[...(def.crossFieldConditions??[]),'BeforeUpdate restores the stored generation before the selected strategy runs; the body cannot select a generation change. These four strategies do not use Deployment-style spec-change generation increments.'];
+ if(['$.metadata.uid','$.metadata.creationTimestamp','$.metadata.deletionTimestamp','$.metadata.deletionGracePeriodSeconds','$.metadata.generation'].includes(path))def.evidence.push(source('staging/src/k8s.io/apiserver/pkg/registry/rest/update.go','126-153','BeforeUpdate restores generation, fills omitted UID and preserves stored nonzero creation/deletion times and absent deletion grace before validation.'),source('staging/src/k8s.io/apiserver/pkg/endpoints/handlers/create.go','164-175','Create wipes client system metadata before later storage initialization.'));
+}
+
+// Later consumers. A selected route is conditional on its actual component/version.
+const externalSource=(repo,rev,path,lines,claim)=>({url:`https://github.com/${repo}/blob/${rev}/${path}#L${String(lines).replace('-', '-L')}`,claim});
+const provisioner=(path,lines,claim)=>externalSource('kubernetes-csi/external-provisioner','986812da302189f395030a72c3099dc7302b4899',path,lines,claim);
+const resizer=(path,lines,claim)=>externalSource('kubernetes-csi/external-resizer','665104f4a4eb88b48edd185d2b5544a5c850ac17',path,lines,claim);
+const smb=(path,lines,claim)=>externalSource('kubernetes-csi/csi-driver-smb','1bd5463f965be7b173ff1e7fc3c9a3c29972539c',path,lines,claim);
+const dns=(path,lines,claim)=>externalSource('coredns/coredns','1db4568df6aaacda6ebbce87717156bd855f8103',path,lines,claim);
+const qualifies=(def,conditions,evidence)=>{def.crossFieldConditions=[...(def.crossFieldConditions??[]),...conditions];def.evidence.push(...evidence);};
+const sourceRouteEvidence=[smb('charts/v1.20.0/csi-driver-smb/values.yaml','1-14','SMB chart 1.20.0 defaults to driver v1.20.0, provisioner v6.0.0 and resizer v2.0.0. Image overrides select another receiving authority.')];
+const pvcSourceConditions=[
+ 'The conditional SMB chart 1.20.0 route below uses its default driver v1.20.0, external-provisioner v6.0.0 and external-resizer v2.0.0. It does not infer that every PVC selects SMB or that these images are deployed. Read the claim class, StorageClass provisioner, PV driver and actual image versions before using this route.',
+ 'The selected external-provisioner prefers dataSource over dataSourceRef, defaults a local source namespace to the claim namespace and rejects an explicit source namespace when its CrossNamespaceVolumeDataSource gate is off. For another namespace it lists ReferenceGrants there. A grant must permit a core PersistentVolumeClaim from the claim namespace and the target group/kind plus absent, empty or matching target name. Failure stops source resolution; API admission alone does not authorize source access.',
+ 'This provisioner handles PVC clones and snapshot.storage.k8s.io VolumeSnapshot sources. Another kind produces an IgnoredError and an event saying an external populator is expected; it does not create a populated volume itself. A nonnil claim selector is rejected for dynamic CSI provisioning, even if the core binding controller can match an existing PV with that selector.',
+ 'A clone source must be Bound, not deleting, have class and volume identity, and fit the requested size. Its PV must use the destination class provisioner, have the exact source claim UID/namespace/name, be Bound and have the same Block/Filesystem mode. A snapshot source must not be deleting, must have bound content with matching UID/namespace/name and driver, ReadyToUse true and a snapshot handle. Requested capacity must cover restoreSize when present; enabled mode-conversion protection checks the snapshot-content permission annotation.',
+ 'SMB v1.20.0 rejects Block capability. Its snapshot RPCs are Unimplemented and its content-copy route rejects a snapshot source; a valid PVC snapshot reference cannot establish snapshot restore on SMB. Its PVC-clone route copies from the source SMB volume. Copy, SMB access and application consistency are separate from core binding.',
+];
+const pvcSourceEvidence=[...sourceRouteEvidence,
+ provisioner('pkg/controller/controller.go','1951-1996','The provisioner resolves source precedence/namespace and checks cross-namespace grants.'),
+ provisioner('pkg/controller/util.go','12-55','IsGranted matches the source-namespace grant, core claim From identity and target group/kind/optional name; otherwise it returns an access error.'),
+ provisioner('pkg/controller/controller.go','589-632','Provisioning selects clone/snapshot capability, leaves other kinds to a populator and rejects a nonnil selector.'),
+ provisioner('pkg/controller/controller.go','1065-1089','Clone source lookup requires Bound/non-deleting state, source/destination classes and sufficient destination requested size.'),
+ provisioner('pkg/controller/controller.go','1092-1137','Clone PV lookup checks CSI driver, exact claim identity, Bound state and matching volume mode.'),
+ provisioner('pkg/controller/controller.go','1154-1186','Snapshot resolution checks non-deleting/bound snapshot, exact content reference identity, driver and readiness.'),
+ provisioner('pkg/controller/controller.go','1191-1239','Snapshot restore requires a handle, adequate restore size and permitted mode conversion when that protection is enabled.'),
+ smb('pkg/smb/controllerserver.go','326-335','SMB snapshot RPCs return Unimplemented.'),
+ smb('pkg/smb/controllerserver.go','419-428','SMB content copy rejects snapshot sources and dispatches volume clones to copyFromVolume.'),
+ smb('pkg/smb/controllerserver.go','560-570','SMB capability validation rejects Block volumes.'),
+];
+const pvcResizeConditions=[
+ 'When the PVC resize admission plugin is enabled, an increase requires an old Bound claim and the same nonempty old/new class whose StorageClass explicitly sets allowVolumeExpansion:true. Missing class, class lookup failure or a nil/false expansion flag rejects the increase. Core immutable-spec validation and driver support remain separate checks.',
+ 'The core expand controller requires matching PV claim namespace/UID and acts when the request exceeds observed capacity or a pre-resize annotation exists. A CSI-migrated or external-driver route waits for the external resizer; a core ExpandablePlugin runs its selected operation. Waiting here is not a successful controller expansion.',
+ 'The selected external-resizer records resize progress before calling the driver, updates PV capacity after a successful RPC, then records either FileSystemResizePending or completed PVC capacity. Failure after the RPC or PV write can leave partial progress. Recovery uses allocatedResources.storage and allocatedResourceStatuses.storage; controller-infeasible states use the slow retry path. Read request, allocation, PV/PVC capacity and events before changing the target.',
+ 'SMB ControllerExpandVolume validates volume ID and capacity-range presence, then returns the requested capacity without changing the SMB server quota and without requiring node expansion. NodeExpandVolume is Unimplemented. A successful PVC size observation on this route is not proof of increased server space, application capacity or successful data recovery.',
+];
+const pvcResizeEvidence=[...sourceRouteEvidence,
+ source('plugin/pkg/admission/storage/persistentvolume/resize/admission.go','94-130','Enabled resize admission requires old Bound state and matching classes with an explicit allowVolumeExpansion flag.'),
+ source('pkg/controller/volume/expand/expand_controller.go','223-237','Expansion checks PV claim namespace/UID and requested/observed size or a pre-resize annotation.'),
+ source('pkg/controller/volume/expand/expand_controller.go','245-286','CSI-migrated and external expansion branches wait for an external resizer; an expandable core plugin dispatches expand.'),
+ resizer('pkg/controller/controller.go','463-499','Legacy resize records progress, dispatches volume resize and chooses pending filesystem versus completed status; failures emit VolumeResizeFailed.'),
+ resizer('pkg/controller/controller.go','505-535','The resizer calls its driver and updates PV capacity before returning successful resized size.'),
+ resizer('pkg/controller/expand_and_recover.go','50-100','Recovery reads allocation and resize status to choose the next target.'),
+ resizer('pkg/controller/expand_and_recover.go','157-195','Recovery can delay a retry, marks progress and calls the plugin; failures produce warning events.'),
+ smb('pkg/smb/controllerserver.go','311-324','SMB controller expansion returns requested bytes after input-presence validation and performs no quota-changing call.'),
+ smb('pkg/smb/nodeserver.go','423-427','SMB node expansion is Unimplemented.'),
+];
+const pvcConditionEvidence=[
+ source('pkg/volume/util/resize_util.go','134-165','Core helpers produce Resizing True and controller-progress allocation observations.'),
+ source('pkg/volume/util/resize_util.go','185-205','Filesystem waiting produces FileSystemResizePending True and optional NodeResizePending.'),
+ source('pkg/volume/util/resize_util.go','216-257','Resize completion records capacity, clears the storage allocation status and removes known resize conditions.'),
+ source('pkg/volume/util/resize_util.go','261-320','Node failure helpers produce NodeResizeError True with the concrete error message; infeasible adds NodeResizeInfeasible.'),
+ source('pkg/volume/util/resize_util.go','391-429','Resize-condition merge preserves unrelated conditions and, for equal Status, retains the whole old matching condition rather than replacing its message/time.'),
+ resizer('pkg/modifycontroller/modify_status.go','36-80','Modification progress/error writes status, target class, ModifyingVolume/ModifyVolumeError conditions and a resource-version-checked claim patch.'),
+ resizer('pkg/modifycontroller/modify_status.go','85-123','Modification completion updates PV class before PVC current class, clears modification status/conditions and returns either write error.'),
+];
+for(const [key,def] of definitions){
+ const kind=key.slice(0,key.indexOf(':')),path=key.slice(key.indexOf(':')+1);
+ if(kind==='PersistentVolumeClaim'){
+  if(path==='$.spec'||/^\$\.spec\.(dataSource|dataSourceRef|selector|storageClassName|volumeMode|accessModes|volumeAttributesClassName|resources\.requests)/.test(path))qualifies(def,pvcSourceConditions,pvcSourceEvidence);
+  if(path==='$.spec.resources'||path.startsWith('$.spec.resources.requests')||path==='$.spec.storageClassName'||path.startsWith('$.status'))qualifies(def,pvcResizeConditions,pvcResizeEvidence);
+  if(path==='$.status'||path.startsWith('$.status.conditions')||path.startsWith('$.status.allocated')||path.startsWith('$.status.modifyVolumeStatus')||path==='$.status.currentVolumeAttributesClassName'){
+   qualifies(def,['The core resize writer owns Resizing, FileSystemResizePending, ControllerResizeError and NodeResizeError conditions. Its merge leaves unrelated types unchanged and retains the whole old equal-Status condition, including old reason/message/time. Node error messages come from the failed expansion. These helpers do not require a nonempty Reason or lastProbeTime.',
+    'The selected external-resizer modification writer keeps conditions unchanged for Pending. Other progress writes ModifyingVolume True with lastProbeTime; an RPC error adds ModifyVolumeError True with gRPC code/message. Completion writes the PV class first, then the PVC current class, clears modifyVolumeStatus and removes both modification condition types. A PVC patch failure after the PV patch leaves a partial observation; inspect both objects.'],pvcConditionEvidence);
+   def.qualificationLimits=(def.qualificationLimits??[]).filter(x=>!x.includes('complete condition producers'));
+  }
+  if(path==='$.spec')def.cases=[...(def.cases??[]),{name:'csi-selector-versus-existing-pv',condition:'A claim with a retained selector has no matching existing PV and enters the selected CSI provisioner.',sourceOutcome:'Dynamic provisioning rejects the nonnil selector; earlier API validity does not establish that a new volume can be created.'},{name:'external-populator-required',condition:'The selected provisioner receives a source kind other than PVC or VolumeSnapshot.',sourceOutcome:'It emits the populator expectation and returns IgnoredError. The selected custom populator, if any, must supply a separate source contract; no population success is inferred.'}];
+  if(path==='$.spec.dataSourceRef')def.cases=[...(def.cases??[]),{name:'cross-namespace-source-denied',condition:'The provisioner feature is enabled, but no source-namespace ReferenceGrant matches the claim From and target To identity.',sourceOutcome:'Source resolution returns the concrete access error before CreateVolume; a core API-accepted reference is not sufficient.'}];
+  if(path==='$.status.conditions')def.cases=[...(def.cases??[]),{name:'resize-error-message-with-unchanged-status',condition:'Core MergeResizeConditionOnPVC receives a matching condition type with the same Status and a new error message.',sourceOutcome:'It keeps the old full condition. The newly supplied message/time does not replace it; use current events and driver observations when diagnosing the attempt.'}];
+  if(path==='$.spec.resources.requests')def.cases=[...(def.cases??[]),{name:'smb-capacity-is-not-server-quota',condition:'SMB v1.20.0 ControllerExpandVolume receives a nonempty volume ID and capacity range.',sourceOutcome:'It returns the requested capacity without changing SMB quota; this cannot prove increased external storage capacity.'}];
+ }
+}
+
+const endpointConditions=[
+ 'The pinned EndpointSlice controller skips ExternalName and a nil selector. For a nonnil selector, including {}, it selects Pods in the Service namespace. Core selector validation and actual matching Pods remain distinct: {} can select every Pod in that namespace on this retained typed route.',
+ 'Endpoint conversion sets Serving from Pod Ready and Terminating from its deletion timestamp. Ready is publishNotReadyAddresses OR (Serving AND NOT Terminating). Publishing not-ready addresses therefore changes downstream ready selection; it is not a Pod-health repair. Service port name/protocol/appProtocol are copied, and targetPort is resolved for each Pod. A missing named target port skips that Service port for that Pod.',
+ 'Enabled valid trafficDistribution produces zone/node hints only when the topology annotation does not select the older hints path. kube-proxy uses hints only when ready endpoints have the required hints and at least one matches its node/zone; otherwise it falls back. Local traffic policy selects local endpoints separately. A preference is not a guaranteed isolation rule.',
+];
+const endpointEvidence=[
+ source('pkg/controller/endpointslice/endpointslice_controller.go','395-415','EndpointSlice reconciliation skips ExternalName and nil selector, otherwise lists matching Pods in the Service namespace.'),
+ source('staging/src/k8s.io/endpointslice/utils.go','38-69','Pod conversion produces Ready/Serving/Terminating conditions and endpoint identity/topology.'),
+ source('staging/src/k8s.io/endpointslice/utils.go','76-101','Endpoint ports copy Service name/protocol/appProtocol and skip unresolved target ports.'),
+ source('staging/src/k8s.io/endpointslice/utils.go','381-409','FindPort resolves named target ports against regular containers and restartable init containers, or returns the integer target.'),
+ source('staging/src/k8s.io/endpointslice/reconciler.go','79-94','Traffic distribution values are considered only with the corresponding reconciler gates.'),
+ source('staging/src/k8s.io/endpointslice/reconciler.go','302-348','Topology annotations choose the older hints path ahead of trafficDistribution.'),
+ source('pkg/proxy/topology.go','57-81','Cluster endpoint selection prefers ready endpoints with usable hints, then serving terminating fallback if no ready endpoints remain.'),
+ source('pkg/proxy/topology.go','99-127','Local endpoint selection uses local ready endpoints, otherwise local serving terminating endpoints.'),
+ source('pkg/proxy/topology.go','164-220','Node/zone hints are used only when all ready endpoints carry the needed hints and a matching endpoint exists.'),
+];
+const proxyConditions=[
+ 'The pinned kube-proxy ServicePort receiver separates address families, ports, nodePort, session affinity/timeout and internal/external policies. It includes only matching-family external IPs and VIP-mode LoadBalancer ingress IPs; hostname-only or Proxy-mode ingress does not create a VIP rule. appProtocol is copied to EndpointSlice but is not used here to select an application protocol handler.',
+ 'These dataplane branches apply only to the selected kube-proxy mode. iptables uses recent endpoint rules with the configured ClientIP timeout before random endpoint selection; IPVS uses persistent service flags and that timeout. nftables creates per-endpoint source-IP sets with that timeout, updates them on the endpoint chain and checks them before ordinary endpoint selection. The actual kernel rules, connection tracking and client address seen by the node determine later traffic. An accepted affinity value is not a measured sticky session.',
+ 'For the iptables route, Local internal/external policy with no usable local endpoint can leave traffic without a local destination even when remote endpoints exist. LoadBalancer source ranges filter VIP traffic through the firewall chain; NodePort traffic is not covered by those VIP source-range rules. The Service health-check HTTP route returns 200 only with a nonzero local-ready endpoint count and healthy kube-proxy; otherwise it returns 503. An external balancer must actually use that health check.',
+];
+const proxyEvidence=[
+ source('pkg/proxy/serviceport.go','175-214','ServicePort extracts addresses/ports/policies/affinity and family-matched source ranges; a zero CIDR means allow any.'),
+ source('pkg/proxy/serviceport.go','216-240','ServicePort keeps matching-family VIP ingress IPs and the required health-check node port.'),
+ source('pkg/proxy/iptables/proxier.go','938-984','iptables distinguishes Cluster and Local internal/external endpoints and no-local-endpoint cases.'),
+ source('pkg/proxy/iptables/proxier.go','1108-1134','VIP source-range handling does not apply to NodePort traffic.'),
+ source('pkg/proxy/iptables/proxier.go','1541-1583','iptables emits ClientIP recent-timeout rules before probabilistic endpoint selection.'),
+ source('pkg/proxy/ipvs/proxier.go','1043-1047','IPVS sets the persistent flag and configured timeout for ClientIP.'),
+ source('pkg/proxy/nftables/proxier.go','1648-1680','nftables constructs per-endpoint source-IP affinity sets with the configured timeout.'),
+ source('pkg/proxy/nftables/proxier.go','1719-1727','Endpoint chains update the source-IP affinity set.'),
+ source('pkg/proxy/nftables/proxier.go','1857-1879','nftables checks source-IP affinity sets before ordinary endpoint selection.'),
+ source('pkg/proxy/healthcheck/service_health.go','223-243','Service health response requires local-ready endpoints and healthy kube-proxy for HTTP 200; otherwise it reports 503.'),
+];
+const dnsConditions=[
+ 'The pinned Kubernetes CoreDNS addon selects CoreDNS v1.13.1. The following DNS results apply to that Kubernetes plugin and its configured zone, cache and options; a different DNS deployment needs its own authority. DNS publication is separate from API address allocation and packet forwarding.',
+ 'CoreDNS converts EndpointSlices using the service-name label and namespace, retaining ready endpoints (nil Ready is treated as ready). A normal ClusterIP Service returns its cluster addresses. A headless Service or endpoint-specific query returns matching endpoint addresses/ports. ExternalName builds a DNS alias from externalName only for a matching ordinary service query, without port/protocol/endpoint qualifiers; it does not create a proxy destination.',
+ 'With ignore empty_service enabled, a non-headless/non-ExternalName Service without endpoints can return no service match. In-zone name errors return SERVFAIL before the Kubernetes cache synchronizes, then NXDOMAIN after synchronization unless fallthrough is configured. A DNS answer/cache TTL is not an end-to-end propagation deadline or proof of application reachability.',
+];
+const dnsEvidence=[
+ source('cluster/addons/dns/coredns/coredns.yaml.base','133-140','The pinned addon image selects CoreDNS v1.13.1.'),
+ dns('plugin/kubernetes/object/endpoint.go','55-60','EndpointSlice indexing uses service-name label and namespace.'),
+ dns('plugin/kubernetes/object/endpoint.go','86-118','DNS endpoint conversion includes ready endpoints and treats nil readiness as ready.'),
+ dns('plugin/kubernetes/kubernetes.go','456-483','Optional empty-service handling and ExternalName alias construction use distinct paths.'),
+ dns('plugin/kubernetes/kubernetes.go','487-539','Headless/endpoint queries use endpoint addresses; ordinary ClusterIP queries use cluster addresses.'),
+ dns('plugin/kubernetes/handler.go','65-76','Name errors can fall through; unsynchronized cache returns SERVFAIL and synchronized missing name returns NXDOMAIN.'),
+];
+const lbConditions=[
+ 'The pinned default cloud Service controller handles LoadBalancer only with nil loadBalancerClass; a present class selects another controller. The default controller adds its cleanup finalizer before EnsureLoadBalancer, checks nonnil returned status, then patches the returned loadBalancer observation. A provider ImplementedElsewhere response transfers responsibility and is not provider creation proof.',
+ 'Cleanup calls provider GetLoadBalancer and EnsureLoadBalancerDeleted before removing the cleanup finalizer. A later status patch error can leave provider work complete but observations stale; a non-NotFound error retries. Provider RetryError supplies its delay; other errors use the rate-limited queue. Read provider resources, finalizers and status after an interrupted or partial attempt.',
+ 'This source qualifies default controller sequencing and the provider interface boundary. Address announcement, assigned hostname/IP, port errors, source-range enforcement and mixed-protocol support are owned by the selected cloud/class implementation. An external address in status cannot by itself prove those effects or authorization.',
+];
+const lbConsumerEvidence=[
+ source('staging/src/k8s.io/cloud-provider/controllers/service/controller.go','862-865','The default controller wants LoadBalancer only when loadBalancerClass is nil.'),
+ source('staging/src/k8s.io/cloud-provider/controllers/service/controller.go','374-398','Cleanup checks provider state, deletes the balancer and removes its finalizer only after that sequence.'),
+ source('staging/src/k8s.io/cloud-provider/controllers/service/controller.go','403-438','Ensure adds a finalizer before provider work, handles ImplementedElsewhere/nil status and patches returned status with bounded NotFound handling.'),
+ source('staging/src/k8s.io/cloud-provider/controllers/service/controller.go','284-304','Provider RetryError uses its requested delay; other errors are rate-limited and success clears retry state.'),
+ source('staging/src/k8s.io/cloud-provider/controllers/service/controller.go','977-987','Default status publication patches only the LoadBalancer status and skips unchanged observations.'),
+];
+for(const [key,def] of definitions){
+ const kind=key.slice(0,key.indexOf(':')),path=key.slice(key.indexOf(':')+1);
+ if(kind!=='Service')continue;
+ if(path.startsWith('$.status.conditions')){
+  def.qualificationLimits=(def.qualificationLimits??[]).filter(x=>!x.includes('complete condition producers'));
+  def.qualificationLimits.push(...svcLimits);
+  qualifies(def,['The default cloud-controller status path changes only status.loadBalancer and leaves status.conditions unchanged. It does not produce a condition transition for these fields. A selected provider/class condition writer must define its type, reason, message, observedGeneration and transition-time rules separately; the status validator is not that writer.'],[source('staging/src/k8s.io/cloud-provider/controllers/service/controller.go','977-987','Default cloud-controller status patch changes only LoadBalancer observations and does not set conditions.')]);
+ }
+ if(path==='$.spec'||/^\$\.spec\.(selector|ports|type|clusterIP|ipFamilies|publishNotReadyAddresses|trafficDistribution)/.test(path))qualifies(def,endpointConditions,endpointEvidence);
+ if(path==='$.spec'||/^\$\.spec\.(type|ports|clusterIP|ipFamilies|externalIPs|sessionAffinity|internalTrafficPolicy|externalTrafficPolicy|healthCheckNodePort|loadBalancerSourceRanges)/.test(path)||path.startsWith('$.status.loadBalancer.ingress'))qualifies(def,proxyConditions,proxyEvidence);
+ if(path==='$.spec'||/^\$\.spec\.(type|externalName|clusterIP|ports|publishNotReadyAddresses)/.test(path))qualifies(def,dnsConditions,dnsEvidence);
+ if(path==='$.spec'||/^\$\.spec\.(type|loadBalancer|allocateLoadBalancerNodePorts|externalTrafficPolicy|healthCheckNodePort|ports)/.test(path)||path==='$.status'||path.startsWith('$.status.loadBalancer')||path.startsWith('$.status.conditions')||path.startsWith('$.metadata.finalizers'))qualifies(def,lbConditions,lbConsumerEvidence);
+ if(path==='$.spec.selector')def.cases=[...(def.cases??[]),{name:'retained-empty-selector-selects-all',condition:'A complete typed Service body retains a nonnil empty selector and the selected EndpointSlice controller handles it.',sourceOutcome:'The nil-selector skip does not apply. The empty selector lists all Pods in the Service namespace; inspect the stored representation and resulting endpoints before relying on this choice.'}];
+ if(path==='$.spec.ports')def.cases=[...(def.cases??[]),{name:'named-target-port-unresolved',condition:'A selected Pod lacks the named targetPort with the matching protocol.',sourceOutcome:'Endpoint port construction skips that Service port for that Pod. A valid ServicePort does not prove a backend endpoint port exists.'}];
+ if(path==='$.spec.publishNotReadyAddresses')def.cases=[...(def.cases??[]),{name:'unready-pod-published-ready',condition:'publishNotReadyAddresses is true for a Pod selected by the EndpointSlice controller.',sourceOutcome:'Endpoint Ready is true even when the Pod is unready or terminating; Serving/Terminating still record those separate Pod observations.'}];
+ if(path==='$.spec.trafficDistribution')def.cases=[...(def.cases??[]),{name:'topology-annotation-precedes-distribution',condition:'The old topology hints annotation is enabled along with a valid enabled trafficDistribution.',sourceOutcome:'The reconciler selects the annotation hint path and does not reconcile the trafficDistribution hints in that pass.'}];
+ if(path==='$.spec.externalName')def.cases=[...(def.cases??[]),{name:'dns-alias-without-service-proxy',condition:'The selected CoreDNS plugin receives an ordinary matching query for an ExternalName Service.',sourceOutcome:'It constructs the external DNS alias; the EndpointSlice controller skips the Service and no cluster forwarding destination follows from that alias.'}];
+ if(path==='$.spec.sessionAffinityConfig')def.cases=[...(def.cases??[]),{name:'affinity-mode-receiving-boundary',condition:'A ClientIP Service reaches the pinned iptables or IPVS kube-proxy mode.',sourceOutcome:'iptables emits recent rules with the configured timeout; IPVS sets a persistent service with that timeout. Neither source check proves the actual repeated client requests or kernel state.'}];
+ if(path==='$.status.loadBalancer')def.cases=[...(def.cases??[]),{name:'provider-completed-status-publication-failed',condition:'Provider EnsureLoadBalancer succeeds but the later non-NotFound status patch fails.',sourceOutcome:'The controller returns an error for retry. Actual provider resources can exist while API status remains stale; inspect both before recovery.'}];
+ if(path==='$.status.loadBalancer.ingress[].ipMode')def.cases=[...(def.cases??[]),{name:'proxy-mode-is-not-a-vip-rule',condition:'An ingress IP has ipMode Proxy rather than VIP.',sourceOutcome:'The kube-proxy ServicePort receiver excludes it from LoadBalancer VIP rules; provider forwarding remains a separate implementation.'}];
+}
+
+for(const [key,def] of definitions){
+ const kind=key.slice(0,key.indexOf(':')),path=key.slice(key.indexOf(':')+1);
+ if(path.startsWith('$.metadata.managedFields[].')){
+  const route='At direct fresh entry decode/validation, '+def.omitted+' On a complete non-apply request, field management can fall back to live ownership or ignore request entries on a subresource before validation; this child is not an independent ownership instruction.';
+  def.omitted=route;
+  def.emptyValue='At direct fresh entry decode/validation, '+def.emptyValue+' Non-apply field management can replace authored entries with live ownership before this check; a subresource uses live entries. The effective returned ownership must be read.';
+ }
+ if(kind==='PersistentVolumeClaim'&&path==='$.spec.resources.requests[<exact-key>]')def.crossFieldConditions.push('The sizing/provisioning/resize consumers above read the exact storage key. These size effects do not apply to a different request-map key. The PVC spec validator still requires requests.storage.');
+ if(['$.metadata.generation','$.metadata.selfLink','$.metadata.deletionTimestamp','$.metadata.deletionGracePeriodSeconds'].includes(path)){
+  def.qualificationLimits=(def.qualificationLimits??[]).filter(x=>!x.includes('generic store lifecycle initialization'));
+  def.evidence.push(source('staging/src/k8s.io/apiserver/pkg/endpoints/handlers/create.go','164-175','Create wipes client system metadata before store initialization.'),source('staging/src/k8s.io/apiserver/pkg/registry/rest/meta.go','29-42','System wiping clears lifecycle fields/selfLink and store initialization supplies creation time/UID.'));
+ }
+ if(path==='$.metadata.generation')def.invalidValue='Incompatible or overflowing int64 tokens fail typed decode. A retained negative create generation fails common validation; BeforeUpdate replaces authored generation with the stored value before strategy/validation.';
+ if(path==='$.metadata.deletionTimestamp')def.invalidValue='Malformed Time fails typed decoding. Create wipes a decoded time. Replacement restores an existing nonzero stored deletion time; a different effective value that survives preparation fails immutable validation. Use DELETE to request deletion.';
+ if(path==='$.metadata.deletionGracePeriodSeconds')def.invalidValue='Incompatible or overflowing integer tokens fail typed decode. Create wipes this field. Replacement fills an absent pointer from old grace; a different effective supplied pointer is rejected by immutable validation. DELETE uses its separate DeleteOptions.';
+ if(kind==='ConfigMap'&&(path.startsWith('$.data')||path.startsWith('$.binaryData')||path==='$.immutable')){
+  qualifies(def,['ConfigMap manager Get performs an API GET for each read. Cache uses a one-minute default TTL with a Node TTL override; first/new Pod references add a cache reference, and removing the last reference drops the item. Watch supplies a local list/watch result and stops watching after observing immutable:true. No manager changes an application environment or guarantees a refresh deadline.',
+   'Projected ConfigMap volumes also fetch in the Pod namespace, allow optional NotFound and use ConfigMap MakePayload. Payload contains both text and binary bags for an unfiltered mount; selected absent keys fail unless optional. Publication and application reads remain separate.'],[
+   source('pkg/kubelet/configmap/configmap_manager.go','65-67','Get manager performs a direct namespace-local ConfigMap GET.'),
+   source('pkg/kubelet/configmap/configmap_manager.go','111-131','Caching ConfigMap manager uses one-minute default TTL and the supplied Node TTL function.'),
+   source('pkg/kubelet/util/manager/cache_based_manager.go','132-154','Cache TTL can come from the Node TTL annotation.'),
+   source('pkg/kubelet/util/manager/cache_based_manager.go','223-251','Pod registration adds references only for a new Pod or newly referenced objects.'),
+   source('pkg/kubelet/util/manager/cache_based_manager.go','117-128','Removing the last reference removes the cache item.'),
+   source('pkg/kubelet/util/manager/watch_based_manager.go','338-358','A watch-cache read stops watching after observing an immutable object.'),
+   source('pkg/volume/projected/projected.go','286-313','Projected ConfigMap fetch handles optional NotFound and delegates payload construction to ConfigMap MakePayload.'),
+   source('pkg/volume/configmap/configmap.go','263-304','Payload projection reads both data bags or named item mappings; missing nonoptional keys fail.'),
+  ]);
+  def.qualificationLimits=(def.qualificationLimits??[]).filter(x=>!x.includes('ConfigMap manager cache/watch'));
+  if(path==='$.immutable')def.cases=[...(def.cases??[]),{name:'immutable-watch-stops',condition:'The watch-based manager observes immutable:true.',sourceOutcome:'It stops watching that cache item. Changed data needs a new ConfigMap lifetime/reference and consumer verification; metadata edit acceptance is not resumed data tracking.'}];
+ }
+ if(kind==='PersistentVolumeClaim'&&(path==='$.spec'||path==='$.spec.volumeName'||path==='$.spec.accessModes'||path==='$.spec.volumeMode'||path==='$.status.phase'))qualifies(def,[
+  'After Bound/PV UID checks, CSI attach/mount is another receiving route. CSIDriver attachRequired:false skips attach; otherwise the controller creates/observes VolumeAttachment and Kubelet checks attachment. NodeStage runs only if the driver advertises STAGE_UNSTAGE_VOLUME; NodePublish receives read-only intent, mode, mount options and secrets. An RPC error can be uncertain, and an error after successful publication can leave the volume mounted.',
+  'For SMB v1.20.0, persistent NodePublish binds the staging path to the container target, adding ro when requested. It can return success for an already-mounted target. Access to the actual SMB share, credentials, server data and application read/write checks remain necessary; Bound or successful mount is not a backup/restore proof.',
+ ],[source('pkg/volume/csi/csi_plugin.go','858-874','CSI attach can be skipped only through a CSIDriver attachRequired:false result; missing driver or lookup failure follows its explicit path.'),source('pkg/volume/csi/csi_attacher.go','107-132','Attach creates the VolumeAttachment and waits for its observed attachment result.'),source('pkg/volume/csi/csi_attacher.go','353-406','Node staging is conditional on capability and returns RPC errors with finished-operation cleanup.'),source('pkg/volume/csi/csi_mounter.go','300-329','NodePublish receives the resolved volume inputs; RPC errors propagate and a post-publication SELinux check can return uncertain progress.'),smb('pkg/smb/nodeserver.go','75-106','Persistent SMB NodePublish binds the staging path with optional ro, handles an already mounted target and reports mount/cleanup errors.')]);
+ if(kind==='PersistentVolumeClaim'&&(path.startsWith('$.metadata.finalizers')||path==='$.metadata.deletionTimestamp'))qualifies(def,[
+  'The PVC protection controller removes kubernetes.io/pvc-protection only from a deletion candidate not used by a qualifying scheduled Pod. It first checks the informer, then a live Pod list cached for the current batch. Listing or update errors retain the finalizer and retry; removing protection does not execute PV reclaim or server data deletion.',
+ ],[source('pkg/controller/volume/pvcprotection/pvc_protection_controller.go','257-275','Protection checks use before removing its finalizer; an older non-deleting PVC can gain the token.'),source('pkg/controller/volume/pvcprotection/pvc_protection_controller.go','306-326','Protection first uses informer evidence and falls back to a per-batch cached live Pod list.'),source('pkg/controller/volume/pvcprotection/pvc_protection_controller.go','382-395','Protection counts qualifying scheduled Pod claim or matching ephemeral claim references.')]);
+ if(kind==='PersistentVolumeClaim'&&path.startsWith('$.status.conditions'))qualifies(def,[
+  'The selected external-resizer MergePVCConditions differs from the core resize helper: it changes lastTransitionTime when Reason or Status changes, otherwise preserves it, and initializes a new condition transition from lastProbeTime. Do not apply the core equal-Status rule to this external modification writer.',
+ ],[resizer('pkg/util/util.go','93-129','External modification condition merge uses Reason/Status changes to select a new transition time and preserves the old time otherwise.')]);
 }
 
 // Go declaration table transcribed from the pinned primary types; no schema prose is receiver evidence.
