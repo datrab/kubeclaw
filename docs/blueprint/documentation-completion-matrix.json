@@ -15479,6 +15479,38 @@
       "description": "Released9c30639e module joins272 complete schema identities acrossConfigMap42/Namespace49/PVC89/Service92;49authorartifacts verified. Nine known proofgapgroups affect200boundaries; fieldmanager/GC/delete/conditionproducers/configmapenv/storage/Serviceeffectiveconsumers remaindocumentation failures. No Source acceptance, and readerproofguard blocks gapmarkers.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/core-api-receiver-writer/report.md",
       "evidenceSha256": "a44df4b414b71672c590eac2c37184e63b1f14a37c252edbcbcaa351c1f7c720"
+    },
+    {
+      "id": "A98-NETWORK-NB06-01",
+      "state": "corrected-pending-new-full-independent-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Fresh Source review at3d5f85cd found11 inaccurate evidence appearances across NetworkPolicy root and10 port records. Root verified original pinned validator bytes and corrected ranges to188-192 and70-104. All707 semantic case outcomes were supported; the two corrected captions still require new full independent review. Admission132 SPEC records/929 cases passed only their selected Source scope.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/network-admission-complete-source-after-bypass-fresh/report.md",
+      "evidenceSha256": "f016089f52d06fb08f09f8495dbeda04d3e8f7b861032a2e926c7a1c2a4007eb",
+      "artifactManifestSha256": "ac5ccad3abb46ac75ad030a40610ac72779c554dcb3940575257ac1bb1d07169",
+      "rootVerifiedArtifacts": 5711
+    },
+    {
+      "id": "A98-APPS-C01-C15-CORRECTED-CANDIDATE",
+      "state": "authored-pending-new-full-independent-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Released candidate dfeefe8f preserves all1285 records and7712 original case identities, revises all47 failed cases and adds738 cases for8450 total. Root verified51 sealed artifacts. Writer checks do not grant Source, Reader, Quality, Astra or package acceptance. Metadata remains a separate mandatory scope.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/apps-receiver-correction2-writer/report.md",
+      "evidenceSha256": "4725a966f915c30979ab4c2a7516a9fff4f9878489070b5376fdcc0aee9e5313",
+      "artifactManifestSha256": "c3fe9f6a8879996a8d29b99cdc5077b13aee6906c5454ed48eecb3264dcc6c73",
+      "rootVerifiedArtifacts": 51
     }
   ],
   "checks": [
@@ -16299,6 +16331,13 @@
       "authorityMutationVariants": 19,
       "sessionId": 33040,
       "scope": "Added internal openproof publication rejection without excluding honest productlimits. Mechanical only."
+    },
+    {
+      "command": "node --test scripts/tests/api-schema-boundaries.test.mjs scripts/tests/api-receiver-coverage.test.mjs scripts/tests/api-reference.test.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "tests": 14,
+      "scope": "Current Apps correction and Network evidence range source candidate. Helper and renderer checks only; no global or runtime acceptance."
     }
   ],
   "reviewAssignments": [
@@ -17383,7 +17422,7 @@
       "model": "gpt-6.1-sol",
       "freshContext": true,
       "forkTurns": "none",
-      "state": "running",
+      "state": "delivered-ownership-released-pending-independent-review",
       "scope": "Exclusive Apps module all15 C01–C15 full-source correction groups; no inherited review acceptance."
     },
     {
@@ -17394,6 +17433,15 @@
       "forkTurns": "none",
       "state": "running",
       "scope": "Exclusive newCilium module; fullCNP/CCNP1716baseline schema paths, actualpinnedCilium1.20.1 receivingimplementation."
+    },
+    {
+      "agent": "/root/a98_network_admission_complete_source_after_bypass_fresh",
+      "role": "source-reviewer",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "terminal-fail",
+      "scope": "Frozen3d5f85cd selected Network122/707 and Admission132/929; shared helpers/renderer. NB06-01 affects11 evidence appearances. Separate public missing paths not waived."
     }
   ],
   "continuation": {
