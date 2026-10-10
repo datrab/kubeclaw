@@ -93,7 +93,7 @@ const baseConditions = [
   'The status controller skips type checking when metadata.generation is less than or equal to status.observedGeneration. It uses an informer snapshot and can publish observations of an earlier generation.',
   'The warning producer checks validation expressions and their nonempty messageExpression fields. It first compiles the policy variables into each checked expression environment. This warning list is not an execution result for a resource request or proof that a binding enforces the policy.',
   'Type checking can skip resource kinds after mapper or schema-resolution failures. A parameter schema failure leaves no parameter declaration. Compiler-construction failures also skip that kind. An observed generation and empty warnings therefore do not prove that every matching kind was checked. Inspect controller logs, discovery and schema availability before relying on these diagnostics.',
-  'Workers start only after the registered policy event handler reports synchronization. Failed synchronization or controller cancellation stops this run; cancellation shuts down the queue and waits for workers. Add and update events enqueue policy names. A missing policy and successful reconciliation are forgotten; returned lookup or apply errors are retried.',
+  'Workers start only after the registered policy event handler reports synchronization. Failed synchronization returns before workers start. Cancellation shuts down the queue and waits for workers. Ready queue items can still reach synchronous type checking until the queue is empty; the worker does not check cancellation before that call. TypeChecker.Check has no context parameter. ApplyStatus receives the cancelled context, so this path does not establish a successful write. Delayed additions stop at shutdown. Run has no timeout for its worker wait. Add and update events enqueue policy names. A missing policy and successful reconciliation are forgotten; returned lookup or apply errors are retried.',
   'Returned errors use per-item exponential retry delay with a 5ms base and 1000s cap, combined with a shared 10qps bucket with burst100. The greater child delay applies. This is a delay cap, not a retry-count cap; this worker does not check a maximum attempt count. Success clears retry state. Inspect persistent errors and their causes rather than treating repeated attempts as recovery.',
 ];
 const records = [];
@@ -195,7 +195,42 @@ add('$.status.typeChecking.expressionWarnings[].warning','string','Provides the 
   'The fresh empty string is rejected as required.',
   'An empty string is rejected; whitespace-only text is nonempty and is not trimmed by this validator.',
   'Wrong JSON types fail decoding. The shown warning validator imposes no warning-text length bound beyond requiring nonempty text.',warningEvidence);
+const selectionCondition = 'For the controller-produced observedGeneration and typeChecking fields, type selection counts nonempty mapper results separately for each usable resource rule. maxTypesToCheck is 10. A duplicate result increases the count even when the kind is already in the set. When one rule reaches 10 results, selection returns the entire accumulated set, including earlier rules, and skips remaining candidates. This is not a policy-wide limit of ten distinct kinds. These selection rules do not populate conditions.';
+const diagnosticCondition = 'For controller-produced warnings, compiling variables first does not produce a separate variable-field diagnostic list. CompileAndStoreVariables discards each returned result while storing it and declaring its field. A failed variable compile with no output type declares a dynamic type. CheckExpression appends only the later target expression error; Check indexes it to the validation expression or messageExpression. The type-checking compiler does not enforce the expected output type or initialize a program. Empty warnings do not establish that every variable compiled, the target returns the required type, or evaluation succeeds. These diagnostic rules do not populate conditions.';
+const selectionEvidence = [
+  checker(45,45,'The type-selection counter threshold maxTypesToCheck is 10.'),
+  checker(272,289,'Type selection resets the nonempty mapper-result counter for each usable resource rule.'),
+  checker(312,323,'Each nonempty mapper result increments the counter, including duplicate kinds; reaching 10 returns the entire accumulated kind set.'),
+];
+const cancellationEvidence = [
+  controller(59,74,'Cancellation reaches deferred queue shutdown and worker wait; this Run supplies no timeout for that wait.'),
+  controller(112,133,'An active worker takes ready items and reconciles them without a preceding context cancellation check.'),
+  checker(104,109,'TypeChecker.Check receives the policy without a context parameter.'),
+  source('staging/src/k8s.io/client-go/util/workqueue/queue.go',265,283,'Get returns ready items after shutdown and returns the shutdown signal only when the ready queue is empty.'),
+  source('staging/src/k8s.io/client-go/util/workqueue/queue.go',304,319,'ShutDown rejects new additions and wakes workers; ready queued items remain available to workers.'),
+  source('staging/src/k8s.io/client-go/util/workqueue/delaying_queue.go',240,266,'Delayed queue shutdown stops its waiting loop and heartbeat; AddAfter rejects additions when shutdown has begun.'),
+  source('staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue.go',136,140,'AddRateLimited delegates retry scheduling to the delayed queue AddAfter operation.'),
+];
+const diagnosticEvidence = [
+  source('staging/src/k8s.io/apiserver/pkg/admission/plugin/cel/composition.go',89,99,'Variable compilation discards each standalone return while recording its result and declaring its output type.'),
+  source('staging/src/k8s.io/apiserver/pkg/admission/plugin/cel/composition.go',126,128,'A variable field is declared from the compiled output type through convertCelTypeToDeclType.'),
+  source('staging/src/k8s.io/apiserver/pkg/admission/plugin/cel/composition.go',236,239,'A nil compiled variable output type becomes a dynamic declaration type.'),
+  checker(214,223,'After storing variables, CheckExpression appends only errors returned by the target expression compilation.'),
+  checker(453,483,'The type-checking compiler compiles the target and records its output type without enforcing the expected return type or initializing a program.'),
+];
+const selectionCases = [
+  {name:'One rule reaches ten mapper results',condition:'A usable resource rule resolves ten nonempty mapper results; later candidates or rules remain.',sourceOutcome:'The tenth result triggers an early return of the sorted accumulated kind set. Remaining candidates and rules are not selected by this call; selected kinds still need schema resolution before expression checking.'},
+  {name:'Repeated resolved kinds reach the counter threshold',condition:'One usable rule resolves the same nonempty kind ten times.',sourceOutcome:'Each result increments the rule counter, but the set stores that kind once. Selection returns at the tenth result; the rule need not add ten distinct kinds.'},
+  {name:'Earlier rule kinds survive the selection return',condition:'An earlier usable rule adds nine distinct kinds without reaching ten results. A later rule resolves ten other distinct nonempty kinds.',sourceOutcome:'The later rule resets its own counter, then returns the whole accumulated set at ten results. All nineteen distinct kinds remain selected; there is no global ten-distinct-kind cap.'},
+];
+const cancellationCase = {name:'Cancellation with ready queued policy work',condition:'Workers have started. The controller context is cancelled while a ready policy name remains queued; lookup succeeds and its generation requires checking.',sourceOutcome:'Queue shutdown still permits an active worker to take the ready item. Synchronous TypeChecker.Check can run without a cancellation check or context parameter. ApplyStatus receives the cancelled context; successful publication is not established. Delayed retry additions stop, and Run waits for workers without a timeout here.'};
+const diagnosticCases = [
+  {name:'Standalone variable compilation fails',condition:'A selected kind has a schema and compiler. A policy variable compile returns an error with no output type, but the subsequent target expression compiles without an error.',sourceOutcome:'Composition stores the failed result and declares the variable with a dynamic type. The standalone return is discarded. CheckExpression appends no diagnostic for that variable failure or for this successful target compile; empty warnings do not prove that the variable compiled.'},
+  {name:'Target compilation fails after variable compilation',condition:'After variables are stored, the target validation expression or nonempty messageExpression returns a compilation error, including an error involving a variable dependency.',sourceOutcome:'CheckExpression appends the target error for this kind. Check indexes the warning to spec.validations[i].expression or spec.validations[i].messageExpression. It does not append a separate spec.variables[i] diagnostic or establish that every failed dependency produces a target error.'},
+  {name:'Target compiles with an undesired return type',condition:'A selected kind has a schema and compiler. The target expression compiles without issues, but its output type differs from the type required for the validation or message expression.',sourceOutcome:'The type-checking compiler records the output type and returns no error solely for that mismatch. It initializes no program. This kind contributes no warning for the undesired return type; no evaluation or policy enforcement result is established.'},
+];
 for(const record of records) {
+  record.evidence.push(...cancellationEvidence);
   record.evidence.push(checker(141,175,'Context construction skips resource kinds whose schemas cannot be resolved, can omit the parameter declaration and retains policy variables.'),checker(198,226,'Each resolved kind compiles policy variables before the target expression; compiler-construction failures skip the kind.'),checker(266,284,'Type selection skips rules without usable concrete group, version or resource entries.'),checker(299,323,'Mapper resolution retries after at most one refresh per policy and can skip failures; collecting the maximum count returns early.'),checker(336,368,'Wildcard groups or versions yield no candidates for that rule; wildcard and subresource entries are skipped in resource extraction.'));
   if(['$.status','$.status.observedGeneration','$.status.typeChecking','$.status.typeChecking.expressionWarnings'].includes(record.fieldPath)) {
     record.cases.push(
@@ -209,6 +244,18 @@ for(const record of records) {
       {name:'Repeated returned apply error',condition:'ApplyStatus repeatedly returns an error while the controller and queue remain active.',sourceOutcome:'The worker logs each returned error and calls AddRateLimited without an attempt-count check. Per-item delay can reach its cap; the combined limiter can select a greater bucket delay. No successful status write or recovery is established.'},
       {name:'Diagnostics skipped then generation observed',condition:'A check produces no diagnostics after skipping candidate kinds, the status apply succeeds, and a later informer observation has observedGeneration at least metadata.generation.',sourceOutcome:'The later reconciliation returns at the generation guard before another check. An empty diagnostic result is not an automatic retry trigger for the skipped kinds.'},
     );
+  }
+  if(['$.status','$.status.observedGeneration','$.status.typeChecking','$.status.typeChecking.expressionWarnings'].includes(record.fieldPath)) {
+    record.evidence.push(...selectionEvidence);
+    record.crossFieldConditions.push(selectionCondition);
+    record.cases.push(...selectionCases,cancellationCase);
+    record.qualificationLimits.push('For these controller observations, the selection threshold counts mapper results per rule, not distinct kinds for the policy. Cancellation can leave ready work in progress; this Run does not bound its worker wait or establish publication with a cancelled context.');
+  }
+  if(['$.status','$.status.observedGeneration','$.status.typeChecking'].includes(record.fieldPath) || record.fieldPath.startsWith('$.status.typeChecking.expressionWarnings')) {
+    record.evidence.push(...diagnosticEvidence);
+    record.crossFieldConditions.push(diagnosticCondition);
+    record.cases.push(...diagnosticCases);
+    record.qualificationLimits.push('These producer diagnostics report target expression compile errors. They do not provide a complete standalone variable report, enforce the expected target return type, initialize a program, or prove evaluation and admission enforcement. A failed variable can have a dynamic declaration; its failure is not necessarily a target compile error.');
   }
   if(record.fieldPath.startsWith('$.status.typeChecking.expressionWarnings')) {
     record.evidence.push(source('pkg/generated/openapi/zz_generated.openapi.go',2372,2384,'The generated v1 TypeChecking model declares expressionWarnings with list type atomic.'));
