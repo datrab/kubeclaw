@@ -5,7 +5,7 @@ Audience: operator, pipeline author
 Owner: buster
 Evidence: skills/buster/plugins/kubernetes-fixture/src/provider.js; skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
 Applies to: kubeclaw.kubernetes-fixture@1; package 1.0.0; configured Kubernetes fixture capability
-Last verified: source inspection at 28e4f1b6a2e736dc936b48847cf422dcc0a25da2
+Implementation revision: `28e4f1b6a2e736dc936b48847cf422dcc0a25da2`
 
 
 The supported entry point is a resolved Buster fixture node. Its provider calls

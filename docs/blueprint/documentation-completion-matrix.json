@@ -16012,6 +16012,17 @@
         "A98-14"
       ],
       "description": "FE07-SOURCE-003/004/005 preserved as historical failures. Correct StatefulSet create DNS1123-label grammar, historical update distinction and prefix helper; remove top-level volume exclusivity from projected Secret/ConfigMap clones; add narrow actual Pod StatusREST installation evidence. Fresh complete affected review still required."
+    },
+    {
+      "id": "A98-READER-SOURCE-INSPECTION-BOOKKEEPING",
+      "state": "source-corrected-generated-output-pending",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-14"
+      ],
+      "description": "Reader-site check terminal FAIL on nine source-inspection bookkeeping occurrences. Corrected three host lifecycle table cells, Kubernetes fixture heading metadata, issue-register generator input, and two configuration-inventory failure strings. Generated helm-values/status pages require revision-bound regeneration; independent Reader/Quality acceptance still open."
     }
   ],
   "checks": [
@@ -17047,6 +17058,11 @@
       "state": "terminal-pass",
       "scope": "34 StatefulSet metadata records,26 projected ConfigMap records across apps/workload exports,34 Pod metadata records; no independent semantic or whole-package acceptance.",
       "proof": "/home/node/Documents/Codex/a98-evidence/metadata-projection-root-correction-audit.json"
+    },
+    {
+      "command": "npm run docs:site-boundary:check",
+      "state": "terminal-fail",
+      "scope": "Root session76337: nine source-inspection bookkeeping findings across reader pages and issue-register input. Corrections prepared; generated pages remain stale until separate generated commit."
     }
   ],
   "reviewAssignments": [
