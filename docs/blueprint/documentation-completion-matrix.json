@@ -6200,13 +6200,23 @@
           "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
           "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
           "scope": "Full canonical page; browser limitation now passes bounded exercise; CSI prerequisite contradiction requires correction/re-review"
+        },
+        {
+          "agent": "/root/a98_prism_trust_source_fresh",
+          "role": "source",
+          "verdict": "FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/prism-trust-source-fresh/report.md",
+          "reportSha256": "6fa6496fdb250b16330e0ff4cd339bb070b097533540330fa1f958213e68b7cb",
+          "reviewedRevision": "187df367ba1009c8f08b2b7704174201c90fceaa",
+          "scope": "Full Prism/glossary SOURCE partition only; Reader/Quality/global/machine/live unproven"
         }
       ],
       "openFindingIds": [
         "A98-QUALITY-PRISM-WORK-LANGUAGE",
         "A98-QUALITY-DUPLICATE-FACTS",
         "A98-PRISM-SPIKE-BROWSER-PATH-MISMATCH",
-        "A98-PRISM-CSI-UNCONDITIONAL-PREREQUISITE"
+        "A98-PRISM-CSI-UNCONDITIONAL-PREREQUISITE",
+        "A98-PRISM-REASONING-EMBEDDING-ROUTES"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L270"
     },
@@ -6739,10 +6749,23 @@
           "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
           "verdict": "PASS",
           "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_platform_activation_source_fresh",
+          "role": "source",
+          "verdict": "FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
+          "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
+          "reviewedRevision": "371b84654b877ec11a6b04d43f74e17e2e04edb3",
+          "scope": "Full pipeline-platform authored SOURCE page only; recursive inventory/Reader/Quality/live unproven"
         }
       ],
       "openFindingIds": [
-        "A98-QUALITY-TEST-STATUS"
+        "A98-QUALITY-TEST-STATUS",
+        "A98-PLATFORM-PROVIDER-SELECTION",
+        "A98-PLATFORM-EXTERNAL-TRUST-KEY",
+        "A98-PLATFORM-EXTERNAL-EXECUTION-BOUNDARY",
+        "A98-PLATFORM-ROOT-GRANT-CONSTRAINTS"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L277"
     },
@@ -14837,7 +14860,7 @@
       "report": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md",
       "reportSha256": "1c0b1e98f2183a3e396ec8867ad2885e6b4dd4e1fa9fbd913a730ec2787c9890",
       "reportedBy": "/root/a98_precedence_timer_source_fresh",
-      "state": "root-corrected-pending-new-full-affected-source-review",
+      "state": "correction-source-verified-partition-only-other-platform-findings-open",
       "pages": [
         "docs/site/reference/pipeline-platform.md"
       ],
@@ -14849,14 +14872,15 @@
         "A98-11"
       ],
       "description": "activeAdapters initial roots are expanded recursively with required capability provider adapters; empty roots do not guarantee no adapterstarts.",
-      "author": "/root"
+      "author": "/root",
+      "verificationReport": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md"
     },
     {
       "id": "A98-PLATFORM-DISABLED-ADAPTER-VALIDATION",
       "report": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md",
       "reportSha256": "1c0b1e98f2183a3e396ec8867ad2885e6b4dd4e1fa9fbd913a730ec2787c9890",
       "reportedBy": "/root/a98_precedence_timer_source_fresh",
-      "state": "root-corrected-pending-new-full-affected-source-review",
+      "state": "correction-source-verified-partition-only-other-platform-findings-open",
       "pages": [
         "docs/site/reference/pipeline-platform.md"
       ],
@@ -14868,7 +14892,104 @@
         "A98-11"
       ],
       "description": "All configured adapter IDs must exist; schemas are validated only for enabled adapters. Invalid disabled configuration can become a later activation error.",
-      "author": "/root"
+      "author": "/root",
+      "verificationReport": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md"
+    },
+    {
+      "id": "A98-PRISM-REASONING-EMBEDDING-ROUTES",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-trust-source-fresh/report.md",
+      "reportSha256": "6fa6496fdb250b16330e0ff4cd339bb070b097533540330fa1f958213e68b7cb",
+      "reportedBy": "/root/a98_prism_trust_source_fresh",
+      "state": "author-correction-active",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "LiteLLM memory-search embedding secret/endpoint must be separate from managed OpenAI/Codex reasoning and direction completion.",
+      "author": "/root/a98_prism_model_route_writer"
+    },
+    {
+      "id": "A98-PLATFORM-PROVIDER-SELECTION",
+      "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
+      "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
+      "reportedBy": "/root/a98_platform_activation_source_fresh",
+      "state": "author-correction-active",
+      "pages": [
+        "docs/site/reference/pipeline-platform.md"
+      ],
+      "catalogueIds": [
+        "CFG-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "All configured provider entries validate; only required capabilities select and enable adapters.",
+      "author": "/root/a98_platform_conditions_writer"
+    },
+    {
+      "id": "A98-PLATFORM-EXTERNAL-TRUST-KEY",
+      "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
+      "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
+      "reportedBy": "/root/a98_platform_activation_source_fresh",
+      "state": "author-correction-active",
+      "pages": [
+        "docs/site/reference/pipeline-platform.md"
+      ],
+      "catalogueIds": [
+        "CFG-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Exact local:<canonical package root> digest key and builtin/digest/attestation precedence absent.",
+      "author": "/root/a98_platform_conditions_writer"
+    },
+    {
+      "id": "A98-PLATFORM-EXTERNAL-EXECUTION-BOUNDARY",
+      "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
+      "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
+      "reportedBy": "/root/a98_platform_activation_source_fresh",
+      "state": "author-correction-active",
+      "pages": [
+        "docs/site/reference/pipeline-platform.md"
+      ],
+      "catalogueIds": [
+        "CFG-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Admitted external adapters remain unavailable; external stages/observers require invocation-time bounded isolation and delegated cgroup.",
+      "author": "/root/a98_platform_conditions_writer"
+    },
+    {
+      "id": "A98-PLATFORM-ROOT-GRANT-CONSTRAINTS",
+      "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
+      "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
+      "reportedBy": "/root/a98_platform_activation_source_fresh",
+      "state": "author-correction-active",
+      "pages": [
+        "docs/site/reference/pipeline-platform.md"
+      ],
+      "catalogueIds": [
+        "CFG-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Canonical duplicate/missing roots and disabled/unrequested grants plus closed capability consumer shapes need explicit error and reader path.",
+      "author": "/root/a98_platform_conditions_writer"
     }
   ],
   "checks": [
@@ -16091,6 +16212,57 @@
         "A98-10-named-source-semantics": "PASS",
         "A98-11-two-page-source": "PASS"
       }
+    },
+    {
+      "agent": "/root/a98_prism_trust_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "completed-rejection",
+      "reviewedRevision": "187df367ba1009c8f08b2b7704174201c90fceaa",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-trust-source-fresh/report.md",
+      "reportSha256": "6fa6496fdb250b16330e0ff4cd339bb070b097533540330fa1f958213e68b7cb",
+      "scopeLimit": "Full Prism/glossary SOURCE partition only; Reader/Quality/global/machine/live unproven",
+      "gateVerdicts": {
+        "OPR-010": "FAIL",
+        "A98-02-source": "FAIL",
+        "A98-04-source": "PASS",
+        "A98-06-source": "PASS",
+        "A98-12-source": "FAIL",
+        "A98-13-source": "FAIL",
+        "glossary-source": "PASS"
+      }
+    },
+    {
+      "agent": "/root/a98_platform_activation_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "completed-rejection",
+      "reviewedRevision": "371b84654b877ec11a6b04d43f74e17e2e04edb3",
+      "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
+      "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
+      "scopeLimit": "Full pipeline-platform authored SOURCE page only; recursive inventory/Reader/Quality/live unproven",
+      "gateVerdicts": {
+        "CFG-002-source": "FAIL",
+        "A98-10-source-platform": "FAIL",
+        "A98-11-source-platform": "FAIL"
+      }
+    },
+    {
+      "agent": "/root/a98_api_collection_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "reviewedRevision": "94fd165ae8177ec37bb16798bfed63cb8923f413",
+      "scopeLimit": "Current API collections/actual receiver/generator/helper SOURCE semantics; generated archived old output explicitly stale, private generation required; no whole-package/Reader/Quality/live acceptance"
     }
   ],
   "continuation": {
