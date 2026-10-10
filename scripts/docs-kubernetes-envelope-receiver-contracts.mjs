@@ -28,6 +28,10 @@ const resources = [
   ['networking.k8s.io/v1','NetworkPolicy'],
   ['admissionregistration.k8s.io/v1','ValidatingAdmissionPolicy'],
   ['admissionregistration.k8s.io/v1','ValidatingAdmissionPolicyBinding'],
+  ['rbac.authorization.k8s.io/v1','ClusterRole'],
+  ['rbac.authorization.k8s.io/v1','ClusterRoleBinding'],
+  ['networking.k8s.io/v1','IngressClass'],
+  ['apiextensions.k8s.io/v1','CustomResourceDefinition'],
 ];
 export const receiverContracts = resources.flatMap(([apiVersion,kind]) => ['apiVersion','kind'].map(field => ({
   kind,fieldPath:`$.${field}`,authoritySelector:{apiVersion,kind,fieldPath:`$.${field}`},
@@ -59,3 +63,11 @@ export const receiverContracts = resources.flatMap(([apiVersion,kind]) => ['apiV
 })));
 
 receiverContracts.forEach(qualifyAuthoredDeploymentOperation);
+
+// CRD registration is itself a typed built-in object. Custom-resource instances
+// use the separate unstructured TypeMeta provider; do not borrow that branch.
+for (const record of receiverContracts.filter(record => ['ClusterRole','ClusterRoleBinding','IngressClass','CustomResourceDefinition'].includes(record.kind))) {
+ record.crossFieldConditions[3] = 'These are typed built-in root identity records, including CustomResourceDefinition registration. Instances registered by that CRD use a separate unstructured receiver; endpoint defaulting here does not establish their identity behavior.';
+ record.crossFieldConditions.push('These resources are cluster-scoped. TypeMeta identifies the object representation; metadata name and the endpoint identify its stored lifetime. Labels, release namespace and body kind/version do not grant permissions.');
+ if (record.kind === 'CustomResourceDefinition') record.evidence.push(source('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresourcedefinition/etcd.go',42,64,'CRD registration storage constructs typed CustomResourceDefinition objects and installs its built-in create/update/reset strategies.'));
+}

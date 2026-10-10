@@ -37,7 +37,8 @@ identity, the source revision, and its execution time.
 
 The [Buster suite workflow](workflows/buster-suite.md) is the canonical Buster
 suite procedure. It is not the authority for a human demo decision or the full
-Prism journey.
+Prism journey. Use [Prepare and release a Kubernetes fixture](workflows/kubernetes-fixture.md)
+for the fixture entry point, storage policy, observations and cleanup boundaries.
 
 ## Shared Operating Contract
 

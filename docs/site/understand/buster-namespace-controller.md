@@ -351,7 +351,7 @@ mismatch stops deletion of that namespace, but the controller can remove the
 lease finalizer because it must not delete another owner's resource.
 Deletion can remove workload data and PVCs inside the namespace. Backing-volume
 retention still depends on the StorageClass and volume reclaim policy; use the
-[fixture plugin guide](../extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md)
+[fixture storage procedure](../use/workflows/kubernetes-fixture.md#choose-fixture-storage)
 for storage choices. Removing the lease is not proof that every external copy,
 Discord message or retained backing volume disappeared.
 
@@ -444,7 +444,7 @@ has this different error contract. Reconciliation uses current server state afte
 restart, rather than trusting the caller's previous response. Do not infer
 successful deletion from a timed-out client call.
 
-Use [the fixture guide](../extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md)
+Use [the fixture procedure](../use/workflows/kubernetes-fixture.md#prepare-observe-and-release)
 for prepare/release tasks and [Demo Delivery](../use/demo-delivery.md) for verified
 handoff, status, acceptance and extension tasks. Provider extensions use the
 [Buster runtime capability reference](../reference/buster-runtime-configuration.md);

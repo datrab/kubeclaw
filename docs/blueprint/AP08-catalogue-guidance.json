@@ -194,7 +194,7 @@
       "useWhen": "Use it when a test requires a bounded temporary Kubernetes deployment.",
       "avoidWhen": "Do not use it for permanent application deployment.",
       "criticalLimit": "Fixture ownership and cleanup apply only to the resolved test plan scope.",
-      "operationNote": "Preparation returns deployment evidence and, when requested, credential provenance. Cleanup calls release and requires a successful response. Provider-level tests do not prove deletion in a real cluster."
+      "operationNote": "Preparation returns deployment evidence and, when requested, credential provenance. Cleanup calls release and requires a successful response. Provider-level tests do not prove deletion in a real cluster. Use [Prepare and release a Kubernetes fixture](../../use/workflows/kubernetes-fixture.md) for the supported Buster entry point, required authorities, expected outputs, retention and failure recovery."
     },
     {
       "id": "kubeclaw.lighthouse",

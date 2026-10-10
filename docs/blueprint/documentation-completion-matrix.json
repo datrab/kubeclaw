@@ -19001,5 +19001,52 @@
       ],
       "limits": "FullSource report not yet terminal; preliminary reviewerGo/compiler results not final accepted evidence; no Liveclaims."
     }
+  },
+  "latestRootIntegration": {
+    "state": "candidate-not-package-acceptance",
+    "baseRevision": "28e4f1b6a2e736dc936b48847cf422dcc0a25da2",
+    "clusterMetadata": {
+      "author": "/root/cluster_rbac_ingress_registration_writer",
+      "metadataRecords": 136,
+      "envelopeRecords": 8,
+      "authorReportSha256": "f5f97cb92041494386b7dd41d0b3c330665084415a74d060c8c1ee2f166a32e5",
+      "rootChecks": "18 focused tests PASS, no skips; prior518metadata/26envelope/136implicitcontracts/4implicitreferences byte-equivalent;137source spans within archived originals. These are integration checks, not independent semantic acceptance."
+    },
+    "freshSource355": {
+      "reviewer": "/root/lease_namespace_auth_corrected_complete_source_fresh",
+      "revision": "28e4f1b6a2e736dc936b48847cf422dcc0a25da2",
+      "reportSha256": "fad689dc1683b36fee9456a58fc6492b9f33d3d8a6d022d47e033c75fe7dae63",
+      "recordsReviewed": 355,
+      "pending": 0,
+      "semanticVerdict": "PASS within assigned Source scope",
+      "surfaceVerdict": "FAIL",
+      "findings": [
+        "F01 three missing generated reference anchors; generation/publication pending",
+        "F02 promised fixture-storage task absent at reviewed revision; current authored procedure and direct navigation are unaccepted correction candidates"
+      ],
+      "boundedCriteria": {
+        "A98-02": "FAIL",
+        "A98-06": "PASS",
+        "A98-10": "FAIL",
+        "A98-11": "PASS",
+        "A98-13": "FAIL",
+        "CFG009": "FAIL"
+      },
+      "evidenceIntegrity": "Root verified197SHA256SUMS entries; actual20focusedPASS/fullcontrollerGoPASS/compiledworkflow positive and wrongportnegative PASS. No live/Reader/Quality/Astra/global acceptance."
+    },
+    "historicalSource150": {
+      "reviewer": "/root/buster_all_fields_source_after_ports_fresh",
+      "reportSha256": "d871cfc1e68dd4bbcbc45c099f24d42bfb8c99b1394c5ef12d43dd553c1db028",
+      "verdict": "FAIL at frozen reviewed revision; all150reviewed,144PASS/6purposeFAIL plus guide/checker findings. Corrections were subsequently reviewed in fresh355; historical FAIL retained."
+    },
+    "fixtureTask": {
+      "owner": "/root",
+      "canonicalPage": "docs/site/use/workflows/kubernetes-fixture.md",
+      "state": "authored-correction-pending-fresh-review",
+      "scope": "supported Buster entry point, caller/controller authority, actual checked-manifest PVC restrictions and counting, observations, retention and uncertain cleanup",
+      "generatedCatalogueLink": "authored AP08-catalogue-guidance updated; publication regeneration pending source-bound generated commit",
+      "rootChecks": "Buster guide check PASS:9pages/12suites/19providers; docs:check:refs FAIL solely3known missing generated Buster anchors, no new fixture/navigation failures. Full gates remain pending."
+    },
+    "remaining": "Generator/output discovery and exact receiver coverage, source-bound publication, full mutations/gates, fresh Source/Reader/Quality and Astra, then parity transition and remaining packages. No AP09.8 closure."
   }
 }
