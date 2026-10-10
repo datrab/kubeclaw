@@ -25,6 +25,7 @@ import { receiverContracts as deploymentReceiverContracts } from './docs-kuberne
 import { receiverContracts as coreReceiverContracts } from './docs-kubernetes-core-receiver-contracts.mjs';
 import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver-contracts.mjs';
 import { receiverContracts as ciliumReceiverContracts } from './docs-cilium-receiver-contracts.mjs';
+import { receiverContracts as envelopeReceiverContracts } from './docs-kubernetes-envelope-receiver-contracts.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
@@ -2741,11 +2742,11 @@ function completeYamlCollection(row, context, value, fields) {
 // and field paths match.
 const versionedApiReceiverRegistries = new Map([
   ['v1', coreReceiverContracts],
-  ['apps/v1', deploymentReceiverContracts],
+  ['apps/v1', [...deploymentReceiverContracts, ...envelopeReceiverContracts.filter(record => record.authoritySelector.apiVersion === 'apps/v1')]],
   ['argoproj.io/v1alpha1', argoReceiverContracts],
   ['cilium.io/v2', ciliumReceiverContracts],
-  ['networking.k8s.io/v1', networkingReceiverContracts],
-  ['admissionregistration.k8s.io/v1', [...admissionReceiverContracts, ...admissionStatusReceiverContracts]],
+  ['networking.k8s.io/v1', [...networkingReceiverContracts, ...envelopeReceiverContracts.filter(record => record.authoritySelector.apiVersion === 'networking.k8s.io/v1')]],
+  ['admissionregistration.k8s.io/v1', [...admissionReceiverContracts, ...admissionStatusReceiverContracts, ...envelopeReceiverContracts.filter(record => record.authoritySelector.apiVersion === 'admissionregistration.k8s.io/v1')]],
 ]);
 
 function buildApiResourceInventory(files) {

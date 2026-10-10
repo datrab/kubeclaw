@@ -59,6 +59,7 @@ test('unpinned implementation links and empty cases cannot become publication ev
 
 test('internal open-proof notes cannot be published as product limitations', () => {
   for (const note of ['OPEN DOCUMENTATION PROOF: inspect source',
+    'OPEN SHARED METADATA PROOF: qualify the implicit metadata receiver',
     'Available-source documentation gap: missing consumer proof',
     'An unclosed source-proof obligation remains']) {
     const resources=fixture();resources[0].rows[0].receiverContract.qualificationLimits.push(note);

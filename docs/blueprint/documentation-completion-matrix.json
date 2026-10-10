@@ -15608,6 +15608,31 @@
       "description": "Complete fresh8fd Source report inspected in full;5659 artifactbytes/symlinktargets rootverified. Selected Network122/707PASS;Admission123recordsPASS9FAIL CRF01/02,929casesPASS separate. All8253captionappearancesPASS.146publicmissingpaths retained. Root807ff corrects9dimensions/adds18cases but current acceptance not inherited.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/network-admission-complete-source-corrected-ranges-fresh/report.md",
       "artifactManifestSha256": "6e909924107cddb5f990f92b0428fa5ccda5f21566db337746889b384bc2158b"
+    },
+    {
+      "id": "A98-BUILTIN-IDENTITY-CANDIDATE",
+      "state": "authored-pending-independent-full-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "10 previouslymissing API identity fields authored forDeployment/Ingress/NetworkPolicy/VAP/VAPBinding;40sourcecases defaultidentity vsdiscovery andtypederrors. Actualpinnedinterpreter/defaultserializer/RESTcreateupdateoriginals Gitblobverified. Paths/bounds checked; newModule exactversionregistries noCRD inheritance. Remaining246schemaentries andimplicitCRDmetadata mandatory; noSource acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/builtin-envelope-root/report.md"
+    },
+    {
+      "id": "A98-CILIUM-SHARED-PROOF-PUBLICATION-GUARD",
+      "state": "corrected-pending-fresh-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "FreshCilium reviewer found OPEN SHARED METADATA PROOF marker missed byrenderer regex. Guardnow rejectsactualmarker, adversarial testadded toexistingproofnote test;5renderertestsPASS includinghonestproductlimits permitted. Noabsenceofworklanguage/globalpublicationapproval."
     }
   ],
   "checks": [
@@ -17555,6 +17580,15 @@
       "forkTurns": "none",
       "state": "running",
       "scope": "Immutable3e61283a complete15status111cases65caption pairs; independent original implementation/provider/manager/decoder review. No global or metadata acceptance."
+    },
+    {
+      "agent": "/root/a98_shared_metadata_receiver_writer",
+      "role": "writer",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "running",
+      "scope": "Exclusive newcanonicalmetadata module: actualremaining246schemaentries, resource-v-Podtemplate-v-PVCtemplate contexts plusimplicitCRDObjectMeta integration; noduplicate10rootidentity records."
     }
   ],
   "continuation": {

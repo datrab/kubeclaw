@@ -56,7 +56,7 @@ export function renderApiResourceReference(resources, sourceLink) {
         ...(receiver.evidence ?? []).map(item => item.claim)];
       // Explicit authoring obligations belong in internal evidence, never in
       // the product reference. Real product limits remain publishable prose.
-      assert(!prose.some(value => /OPEN DOCUMENTATION PROOF|Available-source documentation gap|unclosed source-proof obligation/iu.test(String(value))),
+      assert(!prose.some(value => /OPEN (?:DOCUMENTATION|SHARED METADATA) PROOF|Available-source documentation gap|unclosed source-proof obligation/iu.test(String(value))),
         `API_REFERENCE_UNRESOLVED_PROOF: ${key} ${row.fieldPath}`);
       for (const name of ['purpose', 'receiver', 'operationScope', 'omitted', 'nullValue', 'emptyValue', 'invalidValue', 'changeImpact']) {
         assert(typeof receiver[name] === 'string' && receiver[name].trim(),
