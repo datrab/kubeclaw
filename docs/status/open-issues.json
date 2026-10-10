@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-09",
+  "updated_at": "2026-10-10",
   "source_baseline": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
   "purpose": "Single machine-readable authority for currently incomplete technical work. The status generator creates the reader-facing page from this file.",
   "scope": {
     "original_total": 154,
     "original_locally_verified": 141,
     "original_incomplete": 13,
-    "additional_open": 7,
+    "additional_open": 8,
     "additional_integration_locally_verified": 5,
-    "total_open": 20,
+    "total_open": 21,
     "counting_policy": "Original IDs are unchanged. GitHub #7 and later source follow-ups are separate. Pending live acceptance does not reopen a locally closed finding.",
     "additional_followups_locally_verified": 1
   },
@@ -1399,6 +1399,89 @@
           "commit": "4ccb21b79cd45d205163692f43e4940e60e28a19",
           "url": "https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md",
           "scope": "Finding D08 records the corrected documentation claim and evidence boundary."
+        }
+      ]
+    },
+    {
+      "id": "PRISM-SPIKE-BROWSER-PATH-001",
+      "origin": "source-follow-up",
+      "title": "Prism spike tests require an unavailable fixed browser path",
+      "severity": "medium",
+      "status": "open",
+      "problem": "The mobile-editor and preview-isolation Playwright configurations require the absolute Chromium headless-shell build 1228 path. Their locked Playwright 1.55.0 installations select build 1187. The root Prism Playwright 1.62.1 installation selects build 1234. Neither spike configuration selects the installed package browser or accepts a path override.",
+      "impact": "Ordinary locked dependency and Chromium installation does not prepare these two browser test suites. The complete local Prism checks stop at the mobile spike; downstream checks in the same aggregate do not run. This failure does not establish a runtime Studio defect.",
+      "components": [
+        "Prism mobile-editor spike",
+        "Prism preview-isolation spike",
+        "Prism maintainers: browser test configuration and supported verification environment"
+      ],
+      "current_state": "At source revision ec2a42ed215a2fa7dbd3172ef70ef446084963a9, the fixed path remains in both configurations. Independent local execution completed locked bootstrap and all three package-local browser installations, then still failed before browser launch: twelve mobile tests and three preview tests. No supported browser-path override is implemented.",
+      "remaining_work": [
+        "Prism maintainers must replace the fixed path with a supported browser selection or provide and validate a compatible immutable managed browser installation.",
+        "Until a supported installation exists, stop when the required executable is absent. Preserve the command, source revision and launch error; do not substitute a different browser build through a symlink.",
+        "Keep individual checks that can run separate from failed aggregate results. Do not classify this local launch failure as deferred live validation."
+      ],
+      "reproduction": [
+        "From a clean checkout at the stated revision, run npm ci and npm run bootstrap:prism:tests using the documented prerequisites.",
+        "Install Chromium with the local Playwright CLI in skills/prism, spikes/prism/mobile-editor and spikes/prism/preview-isolation. Record each package version and selected browser build.",
+        "Run npm run verify --prefix spikes/prism/mobile-editor and npm run verify --prefix spikes/prism/preview-isolation. If the fixed 1228 executable is absent, both fail before launch despite completed installation.",
+        "Run npm run verify:prism. Its spike stage fails before later aggregate stages. verify:prism:repository and verify:prism:production begin with that same aggregate."
+      ],
+      "acceptance_criteria": [
+        "A clean documented supported environment resolves a compatible executable for each spike without ad hoc path aliases or configuration edits.",
+        "Both original spike verifiers pass with their locked dependency trees and selected browser versions recorded.",
+        "The original verify:prism and verify:prism:repository aggregates complete successfully; preserve stage results so unrelated later failures remain visible.",
+        "The supported installation, host prerequisites, browser selection and failure procedure agree with the current configuration."
+      ],
+      "live_validation": "This is a local browser-test setup defect. Its closure does not prove a live deployment, native evaluation or the full Studio-to-Nova journey. Those retain their separate environment acceptance requirements.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "Observed on 2026-10-10 at the pinned revision with unchanged product sources. Locked installs and Chromium downloads completed; the two spike launches still failed at the fixed missing path. Host library compatibility is a separate prerequisite.",
+        "prior_verification": "Twelve mobile and three preview browser-launch failures after package-local Chromium installation. No successful spike browser execution or aggregate completion is claimed.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "path": "spikes/prism/mobile-editor/playwright.config.mjs",
+          "commit": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+          "url": "https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/spikes/prism/mobile-editor/playwright.config.mjs#L1-L9",
+          "scope": "Fixed executable path without an override."
+        },
+        {
+          "path": "spikes/prism/preview-isolation/playwright.config.mjs",
+          "commit": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+          "url": "https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/spikes/prism/preview-isolation/playwright.config.mjs#L1-L10",
+          "scope": "Fixed executable path without an override."
+        },
+        {
+          "path": "spikes/prism/mobile-editor/package.json",
+          "commit": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+          "url": "https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/spikes/prism/mobile-editor/package.json#L18-L22",
+          "scope": "Locked package declaration selects Playwright 1.55.0."
+        },
+        {
+          "path": "spikes/prism/preview-isolation/package.json",
+          "commit": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+          "url": "https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/spikes/prism/preview-isolation/package.json#L9-L11",
+          "scope": "Package declaration selects Playwright 1.55.0."
+        },
+        {
+          "path": "skills/prism/package.json",
+          "commit": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+          "url": "https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/package.json#L40-L49",
+          "scope": "Prism package browser tooling uses Playwright 1.62.1."
+        },
+        {
+          "path": "package.json",
+          "commit": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+          "url": "https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/package.json#L28-L41",
+          "scope": "Spike and local aggregate command order."
+        },
+        {
+          "path": "package.json",
+          "commit": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+          "url": "https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/package.json#L277-L279",
+          "scope": "Repository and production aggregates depend on the local aggregate."
         }
       ]
     }
