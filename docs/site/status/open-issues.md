@@ -1397,7 +1397,7 @@ No dependency on another entry in this register is established.
 
 Current source shows the unsupported authored field and fixed namespace quota/limit settings. Unknown-field validation/pruning and actual client versions are separate receiving boundaries; this finding does not assume the executable or installed CRD of a previous run.
 
-- **Observed behavior:** Source inspection only for this issue record. No live request or storage result is established.
+- **Observed behavior:** Live request acceptance and stored values remain unconfirmed.
 - **implementation commit:** Not established.
 
 ### Sources
