@@ -18887,7 +18887,7 @@
         "actual namespace RoleBindings reference ClusterRoles"
       ],
       "owner": "/root/buster_owned_lease_receiver_writer",
-      "correctionState": "Author correction running; full fresh affected-scope review required. All150boundaries present and8Node testsPASS do not prove semantic correctness.",
+      "correctionState": "Correction committed at7d0ad00b82839b977d232e3463240dd21a4d96ef; full fresh Source review running under /root/buster_complete_source_corrected_fresh. No acceptance yet.",
       "correctionCandidate": {
         "state": "authored-not-independently-accepted",
         "author": "/root/buster_owned_lease_receiver_writer",
@@ -18904,6 +18904,36 @@
       "actions": "Setup Helm v4 and Go v5 exact Gitcommitpins; cache disabledforGo",
       "checks": "actual edited workflowYAML and7trustsplit testsPASS",
       "limits": "Not an observed CI run or full productgenerationPASS."
+    },
+    "selectedServiceScriptPrecedenceSourceReview": {
+      "revision": "46177330100bf1c5309296e19e822a5aed16fef1",
+      "reviewer": "/root/service_script_precedence_complete_source_fresh",
+      "freshContext": true,
+      "verdict": "FAIL bounded F01",
+      "reportSha256": "86aaa187711e405102f3c0899aa82a35a66fe4d0d424b8e8a0943756e8e72ea7",
+      "rootChecks": "Full report read and SHA256SUMS verified exit0. Canonical NAMESPACE authority contradicts forced prompt and explicitly empty presence behavior. Generator author owns correction; new generation and fresh review required."
+    },
+    "namespaceIsolationReceiverCandidate": {
+      "state": "authored-not-independently-accepted",
+      "author": "/root/namespace_isolation_builtin_receiver_writer",
+      "kinds": [
+        "ResourceQuota",
+        "LimitRange",
+        "Role",
+        "RoleBinding"
+      ],
+      "rootChanges": "Added typed identity and 136 ObjectMeta contracts; retained all382 existing contracts byte-equivalent and implicit references unchanged. New generation cases do not claim strategy initialization or increments.",
+      "checks": "Five focused Node tests PASS; original source provenance verified. Fresh independent Source/Reader/Quality and full discovery/generation/gates remain."
+    },
+    "authDeleteReceiverCandidate": {
+      "state": "authored-not-independently-accepted",
+      "author": "/root/tokenreview_deleteoptions_receiver_writer",
+      "kinds": [
+        "TokenReview",
+        "DeleteOptions"
+      ],
+      "checks": "Root3focused testsPASS including original production Go HTTP branches with test doubles, no skips, Go1.26.3; module/test seals and all original provenance verified. No live Kubernetes acceptance.",
+      "integrationRequirement": "Route-specific API identity; no stored-resource ObjectMeta inference; Namespace UID default distinguished from generic deletion preconditions. Fresh Source/Reader/Quality and full discovery/generation/gates remain."
     }
   }
 }
