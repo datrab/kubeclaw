@@ -18510,7 +18510,8 @@
       "cluster212": "Complete fresh Source PASS212/1240cases; full fixture SOURCE PASS; publicationFAIL; evidence seal verified",
       "identity253": "Complete fresh Source PASS253/1283cases, publicationFAIL3anchors; evidence verified113entries",
       "outputDiscovery": "Complete SourceFAIL8; correction author owns discovery/registry/existingapi-reference tests",
-      "runtimeDefaults": "Root source candidate5focusedPASS; full fresh independent review pending"
+      "runtimeDefaults": "Complete bounded independentSourcePASS,48actualcontexts/42Service/72Containerprobes; Sourcebound no globalacceptance",
+      "monitoring185": "Fresh full Source ongoing at9ab; total185 inclusivemetadata39 and6TypeMeta (notadditional)"
     }
   },
   "productBoundaries": [
@@ -19423,6 +19424,22 @@
       "freshFullOriginals": 65,
       "qualifiedTests": "15PASS; initial missing yaml failure preserved",
       "qualification": "No whole producer inventory, global CFG009, package, Reader/Quality or live acceptance. Previous202FAIL remains unchanged."
+    },
+    "actualRuntimeDefaultsFreshSource": {
+      "reviewer": "/root/actual_runtime_defaults_source_fresh",
+      "revision": "9ab29fbda348b35059227b5222a131950720fd51",
+      "report": "/home/node/Documents/Codex/a98-evidence/actual-runtime-defaults-source-fresh/REPORT.md",
+      "reportSha256": "dc21010bd1befed68e902033b1e9113d67f1981759f5da17f67633aff57ffb76",
+      "rootVerifiedSealEntries": 17,
+      "verdict": "PASS-assigned-default-selection-only",
+      "tests": "5PASS0SKIP",
+      "actualHelmContexts": 48,
+      "actualReceiverMissing": 0,
+      "independentServiceProbes": 42,
+      "independentContainerProbes": 72,
+      "authenticatedPrimaryFiles": 6,
+      "generatedProtocolSourceRanges": 18,
+      "qualification": "F07 bounded correction independently passes; other producer closure, whole CFG009/AP09, publication, Reader/Quality and live acceptance remain open"
     }
   }
 }
