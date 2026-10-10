@@ -7283,7 +7283,9 @@
         "A98-HELM-COLLECTION-FIELD-LOSS",
         "A98-HELM-DEFAULT-AND-CONSTRAINT-SEMANTICS",
         "A98-ARGO-RESOURCE-WHITELIST-SOURCE-RANGE",
-        "A98-BUSTER-EMPTY-CRD-ENUM"
+        "A98-BUSTER-EMPTY-CRD-ENUM",
+        "A98-ARGO-TRACKING-CONTROLLER-VERSION",
+        "A98-API-UNKNOWN-VENDOR-SCHEMA-KEYWORD"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L284"
     },
@@ -7366,7 +7368,8 @@
         "A98-QUALITY-DUPLICATE-FACTS",
         "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
         "A98-R2-PRISM-CURRENT-STATUS",
-        "A98-R2-PRISM-DUPLICATE-DEFAULTS"
+        "A98-R2-PRISM-DUPLICATE-DEFAULTS",
+        "A98-ARGO-TRACKING-CONTROLLER-VERSION"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L285"
     },
@@ -14924,7 +14927,7 @@
       "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
       "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
       "reportedBy": "/root/a98_platform_activation_source_fresh",
-      "state": "author-correction-active",
+      "state": "author-corrected-bounded-checks-passed-pending-full-fresh-independent-reviews",
       "pages": [
         "docs/site/reference/pipeline-platform.md"
       ],
@@ -14936,14 +14939,16 @@
         "A98-11"
       ],
       "description": "All configured provider entries validate; only required capabilities select and enable adapters.",
-      "author": "/root/a98_platform_conditions_writer"
+      "author": "/root/a98_platform_conditions_writer",
+      "candidatePageSha256": "cbba5c3944352ce4f03996816898a2fbf0067142391b921342a412a18b36a2d1",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/platform-conditions-writer/report.md"
     },
     {
       "id": "A98-PLATFORM-EXTERNAL-TRUST-KEY",
       "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
       "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
       "reportedBy": "/root/a98_platform_activation_source_fresh",
-      "state": "author-correction-active",
+      "state": "author-corrected-bounded-checks-passed-pending-full-fresh-independent-reviews",
       "pages": [
         "docs/site/reference/pipeline-platform.md"
       ],
@@ -14955,14 +14960,16 @@
         "A98-11"
       ],
       "description": "Exact local:<canonical package root> digest key and builtin/digest/attestation precedence absent.",
-      "author": "/root/a98_platform_conditions_writer"
+      "author": "/root/a98_platform_conditions_writer",
+      "candidatePageSha256": "cbba5c3944352ce4f03996816898a2fbf0067142391b921342a412a18b36a2d1",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/platform-conditions-writer/report.md"
     },
     {
       "id": "A98-PLATFORM-EXTERNAL-EXECUTION-BOUNDARY",
       "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
       "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
       "reportedBy": "/root/a98_platform_activation_source_fresh",
-      "state": "author-correction-active",
+      "state": "author-corrected-bounded-checks-passed-pending-full-fresh-independent-reviews",
       "pages": [
         "docs/site/reference/pipeline-platform.md"
       ],
@@ -14974,14 +14981,16 @@
         "A98-11"
       ],
       "description": "Admitted external adapters remain unavailable; external stages/observers require invocation-time bounded isolation and delegated cgroup.",
-      "author": "/root/a98_platform_conditions_writer"
+      "author": "/root/a98_platform_conditions_writer",
+      "candidatePageSha256": "cbba5c3944352ce4f03996816898a2fbf0067142391b921342a412a18b36a2d1",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/platform-conditions-writer/report.md"
     },
     {
       "id": "A98-PLATFORM-ROOT-GRANT-CONSTRAINTS",
       "report": "/home/node/Documents/Codex/a98-evidence/platform-activation-source-fresh/report.md",
       "reportSha256": "9272f60d455bc2086eaf1b8e00f15801158eafdda7ed48774a33e561151ca72a",
       "reportedBy": "/root/a98_platform_activation_source_fresh",
-      "state": "author-correction-active",
+      "state": "author-corrected-bounded-checks-passed-pending-full-fresh-independent-reviews",
       "pages": [
         "docs/site/reference/pipeline-platform.md"
       ],
@@ -14993,7 +15002,9 @@
         "A98-11"
       ],
       "description": "Canonical duplicate/missing roots and disabled/unrequested grants plus closed capability consumer shapes need explicit error and reader path.",
-      "author": "/root/a98_platform_conditions_writer"
+      "author": "/root/a98_platform_conditions_writer",
+      "candidatePageSha256": "cbba5c3944352ce4f03996816898a2fbf0067142391b921342a412a18b36a2d1",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/platform-conditions-writer/report.md"
     },
     {
       "id": "A98-ARGO-RESOURCE-WHITELIST-SOURCE-RANGE",
@@ -15031,6 +15042,42 @@
       "description": "Empty CRD enum is not deny-all in the pinned Kubernetes validator: enum validation runs only for nonempty lists. Correct controller fallback vs fence deny-all vs CRD no enum restriction; other schema/admission conditions remain. Null still unsupported, no live proof.",
       "author": "/root",
       "evidence": "/home/node/Documents/Codex/a98-evidence/buster-empty-enum-root-authorities.json"
+    },
+    {
+      "id": "A98-ARGO-TRACKING-CONTROLLER-VERSION",
+      "reportedBy": "/root/a98_api_collection_source_fresh",
+      "state": "root-corrected-pending-inventory-and-new-source-review",
+      "pages": [
+        "docs/site/reference/helm-values.md"
+      ],
+      "catalogueIds": [
+        "CFG-009",
+        "CFG-010"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "External scalar application.resourceTrackingMethod incorrectly called chart10.8.0 an ArgoCD productversion. Now explicitly attributes accepted methods to controller selected by pinnedchart; existingexactchartauthoritypreserved.",
+      "author": "/root"
+    },
+    {
+      "id": "A98-API-UNKNOWN-VENDOR-SCHEMA-KEYWORD",
+      "reportedBy": "/root/a98_api_collection_source_fresh",
+      "state": "root-corrected-bounded-positive-negative-controls-passed-pending-fresh-source",
+      "pages": [
+        "docs/site/reference/helm-values.md"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Prefix wildcard accepted arbitrary x-kubernetes constraints after legitimate schema relock. Explicit12observedpinnedextension keys replace wildcard. Current real PodSpec baseline preserved; unknown ordinary/vendor keys now reject with exactdiagnostic.",
+      "author": "/root",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/api-root-keyword-control/results.json"
     }
   ],
   "checks": [
@@ -16735,6 +16782,23 @@
       "scope": "Correct exact Argo399\u2013418 function pin and Buster CRDemptyenum actualnonemptyvalidator semantics; no product/test obligation changes",
       "reviewedArchive": "94fd165ae8177ec37bb16798bfed63cb8923f413",
       "acceptance": false
+    },
+    "platformConditionsAuthor": {
+      "agent": "/root/a98_platform_conditions_writer",
+      "pageSha256": "cbba5c3944352ce4f03996816898a2fbf0067142391b921342a412a18b36a2d1",
+      "report": "/home/node/Documents/Codex/a98-evidence/platform-conditions-writer/report.md",
+      "reportSha256": "025c77ad4efe10993974066db462b786c3f2f19da677dfdc31f9879736d864b8",
+      "state": "released-author-only",
+      "rootVerifiedArtifacts": 31,
+      "acceptance": false
+    },
+    "fullConfigurationMutation": {
+      "sessionId": 52712,
+      "state": "running",
+      "revision": "25a0d2f2f2d7824b83928ca851c5df6c25cc88e8",
+      "worktree": "/home/node/Documents/Codex/a98-evidence/config-mutations-25a0d2f2",
+      "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-25a0d2f2.log",
+      "provenance": "Immutable tracked source plus explicitly selected installed node_modules symlink; no clean dependency-install proof; suite independently generates its baseline. Subsequent helper text/keyword corrections not this execution candidate."
     }
   },
   "productBoundaries": [

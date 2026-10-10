@@ -306,10 +306,19 @@ function apiSchemaNodeContract(schema) {
   // Properties and items are exposed through the named child/item boundaries.
   // Unknown keywords cannot silently disappear from an "exact" contract.
   const structural = ['properties', 'items'];
+  // This vocabulary is qualified against the pinned Kubernetes and Cilium
+  // authorities. A new vendor keyword needs an explicit contract review;
+  // accepting an arbitrary prefix would hide a newly introduced constraint.
+  const kubernetesKeywords = ['x-kubernetes-action', 'x-kubernetes-embedded-resource',
+    'x-kubernetes-group-version-kind', 'x-kubernetes-int-or-string',
+    'x-kubernetes-list-map-keys', 'x-kubernetes-list-type', 'x-kubernetes-map-type',
+    'x-kubernetes-patch-merge-key', 'x-kubernetes-patch-strategy',
+    'x-kubernetes-preserve-unknown-fields', 'x-kubernetes-unions',
+    'x-kubernetes-validations'];
   for (const key of Object.keys(schema)) assert(keywords.includes(key) || structural.includes(key)
-    || key.startsWith('x-kubernetes-'), `API_SCHEMA_COLLECTION_KEYWORD_UNQUALIFIED: ${key}`);
+    || kubernetesKeywords.includes(key), `API_SCHEMA_COLLECTION_KEYWORD_UNQUALIFIED: ${key}`);
   return { ...Object.fromEntries(Object.entries(schema).filter(([key]) => keywords.includes(key)
-    || key.startsWith('x-kubernetes-'))), observedSchemaKeywords: [...new Set([
+    || kubernetesKeywords.includes(key))), observedSchemaKeywords: [...new Set([
       ...Object.keys(schema).filter((key) => !['schemaReferenceChain', 'referencedContract'].includes(key)),
       ...(schema.schemaReferenceChain ? ['$ref'] : []),
     ])].sort() };
