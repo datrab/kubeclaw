@@ -6191,12 +6191,22 @@
           "reportSha256": "a7bac982457eb745684f7d83050c4b81a67bc7fd20f275aa2cd98483295f6590",
           "reviewedRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
           "scope": "whole canonical page Reader partition; local procedure fails, health/recovery/intended journey assigned partitions pass"
+        },
+        {
+          "agent": "/root/a98_prism_reader_after_browser_fresh",
+          "role": "reader",
+          "verdict": "FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+          "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+          "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+          "scope": "Full canonical page; browser limitation now passes bounded exercise; CSI prerequisite contradiction requires correction/re-review"
         }
       ],
       "openFindingIds": [
         "A98-QUALITY-PRISM-WORK-LANGUAGE",
         "A98-QUALITY-DUPLICATE-FACTS",
-        "A98-PRISM-SPIKE-BROWSER-PATH-MISMATCH"
+        "A98-PRISM-SPIKE-BROWSER-PATH-MISMATCH",
+        "A98-PRISM-CSI-UNCONDITIONAL-PREREQUISITE"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L270"
     },
@@ -7552,13 +7562,22 @@
           "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
           "verdict": "PASS",
           "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_precedence_source_fresh",
+          "role": "source",
+          "verdict": "FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
+          "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b",
+          "scope": "Complete canonical page frozen by exact candidate hash"
         }
       ],
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS",
         "A98-SOURCE-REGISTRY-DEFAULTS",
         "A98-SOURCE-EMPTY-PRECEDENCE",
-        "A98-R2-RUNTIME-CONSUMER-CONTRACTS"
+        "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
+        "A98-COMPACT-OVERRIDE-AND-RAW-ROOT"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L288"
     },
@@ -7632,10 +7651,19 @@
           "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
           "verdict": "PASS",
           "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/a98_precedence_source_fresh",
+          "role": "source",
+          "verdict": "FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
+          "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b",
+          "scope": "Complete canonical page frozen by exact candidate hash"
         }
       ],
       "openFindingIds": [
-        "A98-QUALITY-TEST-STATUS"
+        "A98-QUALITY-TEST-STATUS",
+        "A98-PLATFORM-TIMEOUT-PINNING-CLASS"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L289"
     },
@@ -12690,6 +12718,15 @@
           "reportSha256": "a7bac982457eb745684f7d83050c4b81a67bc7fd20f275aa2cd98483295f6590",
           "reviewedRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
           "scope": "Assigned Prism partition only; no whole-gate acceptance"
+        },
+        {
+          "agent": "/root/a98_prism_reader_after_browser_fresh",
+          "role": "reader",
+          "verdict": "FAIL-Prism-partition",
+          "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+          "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+          "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+          "scope": "Assigned Prism partition only"
         }
       ],
       "readerFixtureIds": [],
@@ -12723,6 +12760,15 @@
           "reportSha256": "a7bac982457eb745684f7d83050c4b81a67bc7fd20f275aa2cd98483295f6590",
           "reviewedRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
           "scope": "Assigned Prism partition only; no whole-gate acceptance"
+        },
+        {
+          "agent": "/root/a98_prism_reader_after_browser_fresh",
+          "role": "reader",
+          "verdict": "PASS-Prism-partition",
+          "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+          "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+          "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+          "scope": "Assigned Prism partition only"
         }
       ],
       "readerFixtureIds": [
@@ -12760,6 +12806,15 @@
           "reportSha256": "a7bac982457eb745684f7d83050c4b81a67bc7fd20f275aa2cd98483295f6590",
           "reviewedRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
           "scope": "Assigned Prism partition only; no whole-gate acceptance"
+        },
+        {
+          "agent": "/root/a98_prism_reader_after_browser_fresh",
+          "role": "reader",
+          "verdict": "PASS-Prism-partition",
+          "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+          "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+          "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+          "scope": "Assigned Prism partition only"
         }
       ],
       "readerFixtureIds": [
@@ -12833,7 +12888,15 @@
       "automaticFailure": "Zwei Quellen k\u00f6nnen denselben Wert setzen, ohne dass der Gewinner beweisbar ist.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/a98_precedence_source_fresh",
+          "role": "source",
+          "verdict": "FAIL-two-page-partition",
+          "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
+          "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b"
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": [],
       "partitionReviews": [
@@ -12864,6 +12927,15 @@
           "reportSha256": "a7bac982457eb745684f7d83050c4b81a67bc7fd20f275aa2cd98483295f6590",
           "reviewedRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
           "scope": "Assigned Prism partition only; no whole-gate acceptance"
+        },
+        {
+          "agent": "/root/a98_prism_reader_after_browser_fresh",
+          "role": "reader",
+          "verdict": "FAIL-Prism-partition",
+          "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+          "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+          "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+          "scope": "Assigned Prism partition only"
         }
       ],
       "readerFixtureIds": [],
@@ -12887,6 +12959,15 @@
           "reportSha256": "a7bac982457eb745684f7d83050c4b81a67bc7fd20f275aa2cd98483295f6590",
           "reviewedRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
           "scope": "Assigned Prism partition only; no whole-gate acceptance"
+        },
+        {
+          "agent": "/root/a98_prism_reader_after_browser_fresh",
+          "role": "reader",
+          "verdict": "FAIL-Prism-partition",
+          "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+          "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+          "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+          "scope": "Assigned Prism partition only"
         }
       ],
       "readerFixtureIds": [
@@ -14385,7 +14466,7 @@
       "id": "A98-PRISM-SPIKE-BROWSER-PATH-MISMATCH",
       "reportedAtRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
       "reportedBy": "/root/a98_prism_reader_ec2_fresh",
-      "state": "open-author-correction-in-progress",
+      "state": "correction-passed-fresh-reader-browser-partition-not-global-acceptance",
       "pages": [
         "docs/site/use/prism-studio.md"
       ],
@@ -14400,16 +14481,94 @@
       "description": "Both spikes declare/lock/install/execute Playwright1.55.0 and select1187; root/skillsPrism1.62.1 selects1234. Two configs hardcode1228 with no override. Independent Reader observed12 mobile and3 preview launch failures after all installs. Local-check A98-02/13 FAIL; journey A98-12 assigned partition PASS. Complete unsupported boundary, owner, STOP and closure required; no fake symlink/live deferral.",
       "productIssueId": "PRISM-SPIKE-BROWSER-PATH-001",
       "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-ec2-fresh/READER-REPORT.md",
-      "reportSha256": "a7bac982457eb745684f7d83050c4b81a67bc7fd20f275aa2cd98483295f6590"
+      "reportSha256": "a7bac982457eb745684f7d83050c4b81a67bc7fd20f275aa2cd98483295f6590",
+      "correctionReview": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md"
+    },
+    {
+      "id": "A98-MUTATION-HELM-SECRET-DIAGNOSTIC-PREEMPTED",
+      "reportedAtRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+      "reportedBy": "/root",
+      "state": "open-author-correction-in-progress",
+      "pages": [
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/check-configuration-drift-mutations.mjs"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-14"
+      ],
+      "description": "New Secret-key reference also creates an unqualified environment receiving pair. Early runtime environment diagnostic prevents the full Secret authority gap diagnostic required by the mutation contract. Preserve both qualified-environment and complete-Secret enforcement; collect comprehensive diagnostics before failing.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/config-mutations-ec2a42ed.log",
+      "logSha256": "9a508e5e9df114c6aadf3925ccee6ad202854f1ef079c3d13542a30ac807165c"
+    },
+    {
+      "id": "A98-COMPACT-OVERRIDE-AND-RAW-ROOT",
+      "reportedAtRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+      "reportedBy": "/root/a98_precedence_source_fresh",
+      "state": "open-author-correction-in-progress",
+      "pages": [
+        "docs/site/reference/configuration-precedence.md"
+      ],
+      "catalogueIds": [
+        "CFG-013"
+      ],
+      "acceptanceIds": [
+        "A98-11"
+      ],
+      "description": "The compact expander inserts raw runtime-derived context BEFORE validated overrides; supported overrides win existing context keys. Placeholder substitution independently uses original raw repo_root, which can differ from effective overridden repo_root.",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
+      "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b"
+    },
+    {
+      "id": "A98-PLATFORM-TIMEOUT-PINNING-CLASS",
+      "reportedAtRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+      "reportedBy": "/root/a98_precedence_source_fresh",
+      "state": "open-author-correction-in-progress",
+      "pages": [
+        "docs/site/reference/configuration-change-impact.md"
+      ],
+      "catalogueIds": [
+        "CFG-014"
+      ],
+      "acceptanceIds": [
+        "A98-11"
+      ],
+      "description": "Platform shutdownTimeoutMs/effectLockTtlMs are captured in runtime objects but omitted from recorded runtime subset; recovery recreates objects from current platform while retaining run identity. Timeout-only New run requirement is not implemented. Preserve stop/effect/recovery safety and distinguish operational policy from source enforcement.",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
+      "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b"
+    },
+    {
+      "id": "A98-PRISM-CSI-UNCONDITIONAL-PREREQUISITE",
+      "reportedAtRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+      "reportedBy": "/root/a98_prism_reader_after_browser_fresh",
+      "state": "author-corrected-pending-fresh-full-reader-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Before You Start incorrectly conditioned CSI on Worker trust while maintained deploy guard1759/helper974\u2013981 always checks CSIDriver/csi.spiffe.io. Root now states unconditional driver registration and distinguishes socket/identity proof with adjacent exact source links. No product guard changed.",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+      "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+      "author": "/root"
     }
   ],
   "checks": [
     {
       "command": "npm run docs:drift:config:mutations",
-      "state": "running",
+      "state": "historical-terminal-pass-claim-original-log-unavailable",
       "sessionId": 17726,
       "log": "/tmp/kubeclaw-a98-config-mutations.log",
-      "revision": "c8987b18b450bc27571d5037cb6ce3fb26e0cbd0"
+      "revision": "c8987b18b450bc27571d5037cb6ce3fb26e0cbd0",
+      "evidenceBoundary": "Earlier continuation records a completed older-source run. Original /tmp log unavailable after runtime resumption; not current-source acceptance or a live process."
     },
     {
       "command": "npm run docs:operator-tasks:check",
@@ -14594,14 +14753,15 @@
     {
       "command": "npm run docs:drift:config:mutations",
       "sessionId": 17726,
-      "state": "terminal",
+      "state": "historical-terminal-pass-claim-original-log-unavailable",
       "exitCode": 0,
       "result": "passed",
       "log": "/tmp/kubeclaw-a98-config-mutations.log",
       "logSha256": "c0b24d1377e6e6d67c8da99156550b073645e178341553a079017d9d067803ca",
       "sourceState": "c8987b18b450bc27571d5037cb6ce3fb26e0cbd0 original frozen mutation snapshot",
       "authorIdentity": "/root",
-      "scope": "Full original configuration drift suite observed through final PASS; this does not validate later consumer/dependency source corrections."
+      "scope": "Full original configuration drift suite observed through final PASS; this does not validate later consumer/dependency source corrections.",
+      "evidenceBoundary": "Earlier continuation records a completed older-source run. Original /tmp log unavailable after runtime resumption; not current-source acceptance or a live process."
     },
     {
       "command": "seven actual CLI republish admission fixtures",
@@ -14797,6 +14957,17 @@
       "result": "passed",
       "log": "/home/node/Documents/Codex/a98-evidence/clean-mutation-fixture-schema-semantics.log",
       "scope": "Author isolated clean7c snapshot with only corrected runner; canonical sync, runtime semantics and schema semantics, no full mutation suite."
+    },
+    {
+      "command": "npm run docs:drift:config:mutations",
+      "state": "terminal-fail",
+      "sessionId": 24012,
+      "exitCode": 1,
+      "revision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+      "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-ec2a42ed.log",
+      "logSha256": "9a508e5e9df114c6aadf3925ccee6ad202854f1ef079c3d13542a30ac807165c",
+      "failure": "helm-secret-key-reference:add: environment semantic gap occurs before the complete required Helm Secret authority diagnostic; no finalPASS",
+      "scope": "Immutable clean ec2 snapshot; preceding named mutations passed only. Correct complete fail-closed diagnostics, not regex/contract weakening."
     }
   ],
   "reviewAssignments": [
@@ -15232,7 +15403,7 @@
       "freshContext": true,
       "readOnly": true,
       "reviewedRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
-      "state": "running",
+      "state": "completed-rejection",
       "scope": [
         "configuration-precedence.md complete current content",
         "configuration-change-impact.md complete current content"
@@ -15242,11 +15413,49 @@
         "docs/site/reference/configuration-change-impact.md": "e03f58f3b3a3e1cdb23377aa6b401d18826a3c7731f15b86b0d61ed058287e26"
       },
       "artifactDirectory": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh",
-      "scopeLimit": "Uncommitted pages frozen by exact hash, immutable ec2 product snapshot; no global acceptance"
+      "scopeLimit": "Whole338/173line pages read;24Helm and17observer tests plus compact probes PASS. Source-backed timeout subset finding, full altered-timeout recovery not executed. No global or complete inventory acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
+      "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b",
+      "requirementVerdicts": {
+        "CFG-013": "FAIL",
+        "CFG-014": "FAIL"
+      },
+      "gateVerdicts": {
+        "A98-10": "UNPROVEN-inventory-outside-scope",
+        "A98-11": "FAIL-two-page-source-partition"
+      }
+    },
+    {
+      "agent": "/root/a98_prism_reader_after_browser_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+      "state": "completed-rejection",
+      "scope": [
+        "Whole corrected Prism canonical page and all affected linked setup/health/recovery/journey/local procedure partitions"
+      ],
+      "artifactDirectory": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh",
+      "scopeLimit": "Complete1759-line page and all13 interruption operations. Browser boundary PASS scoped; one contradictory CSI prerequisite FAIL.21fixture+7session/artifact tests PASS; initialnamespacefixture FAIL, nativePG SKIP, explicitdefault rerun PASS. No aggregate/browser/native/live success.",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+      "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+      "requirementVerdicts": {
+        "OPR-010": "FAIL"
+      },
+      "gateVerdicts": {
+        "A98-02": "FAIL-Prism-partition",
+        "A98-04": "PASS-Prism-partition",
+        "A98-06": "PASS-Prism-partition",
+        "A98-12": "FAIL-Prism-partition",
+        "A98-13": "FAIL-Prism-partition"
+      }
     }
   ],
   "continuation": {
-    "stage": "Helm semantic generator writer active; precedence pages released for independent Source review; fresh Prism Reader completed FAIL and browser-boundary writer correcting page",
+    "stage": "Two authors correcting Helm semantic diagnostics and fullprecedence/impactSourceFAIL; Prism corrected fe426 freshReader running; ec2 fullmutation observedFAIL",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
     "next": "Commit checked authored/source corrections; preserve frozen Helm source scope. Regenerate in separate commit against source SHA after scope release, run required gates and full mutation suite from clean corrected snapshot. Fix Helm collection/default/constraint findings; new full affected Source/Reader/Quality reviews and Astra still required.",
@@ -15263,12 +15472,12 @@
     "currentMutationSnapshot": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
     "agents": [
       "/root/a98_helm_collection_semantics_writer",
-      "/root/a98_prism_browser_boundary_writer",
-      "/root/a98_precedence_source_fresh"
+      "/root/a98_helm_precedence_doc_writer",
+      "/root/a98_prism_reader_after_browser_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
-    "currentMutationState": "live verified; initial runtime/schema and YAML/Helm mutations passed; no final status yet",
+    "currentMutationState": "observed-terminal-fail-exit1-at-helm-secret-key-reference:add",
     "consumerWriterFinished": {
       "agent": "/root/a98_config_writer",
       "paths": [
@@ -15533,6 +15742,34 @@
         "A98-13": "FAIL"
       },
       "scope": "Prism assigned partitions only; no whole gate/global acceptance or live success"
+    },
+    "currentMutationExitCode": 1,
+    "currentMutationLogSha256": "9a508e5e9df114c6aadf3925ccee6ad202854f1ef079c3d13542a30ac807165c",
+    "prismBrowserWriterCompleted": {
+      "agent": "/root/a98_prism_browser_boundary_writer",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-browser-boundary-writer/report.md",
+      "sourceCommit": "8fef90b1",
+      "generatedIssueCommit": "fe426bd7",
+      "rootIntegration": "Replaced raw issue ID with reader title; named concrete config/script behavior; preserved failed execution and actual historical source identities. References and site-boundary PASS after generated issue refresh.",
+      "accepted": false
+    },
+    "precedenceSourceCompleted": {
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
+      "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b",
+      "verdict": "FAIL",
+      "sourceRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+      "newFindings": [
+        "A98-COMPACT-OVERRIDE-AND-RAW-ROOT",
+        "A98-PLATFORM-TIMEOUT-PINNING-CLASS"
+      ],
+      "authorCorrectionAssigned": "/root/a98_helm_precedence_doc_writer"
+    },
+    "prismReaderSecondCompleted": {
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
+      "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
+      "verdict": "FAIL-one-CSI-prerequisite",
+      "sourceRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
+      "correction": "Root corrected exact prerequisite; new fresh full affected Reader required"
     }
   },
   "productBoundaries": [

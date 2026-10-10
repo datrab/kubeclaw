@@ -148,7 +148,7 @@ You need all of the following items:
 2. A Kubernetes cluster with the required Prism namespace and image-pull Secret.
 3. PostgreSQL storage and artifact storage with sufficient capacity.
 4. The native worker host policy and its generated Prism values.
-5. SPIFFE CSI support when the selected deployment enables worker trust.
+5. A registered SPIFFE CSI driver (`csi.spiffe.io`). The maintained Prism deploy command requires it for every deployment: the [unconditional guard](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/scripts/deploy.sh#L1757-L1760) calls the [driver-registration check](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/scripts/deploy.sh#L974-L981). Registration alone does not prove the [socket delivery or workload identity](worker-trust.md#preconditions).
 6. The Tailscale access configuration when Tailscale exposure is enabled. Verify actual private Studio access after deployment.
 7. `gatewayToken-prism` in `openclaw-shared-secrets`.
 8. A valid Prism code bundle URL and a commit that matches the selected runtime receipt.
