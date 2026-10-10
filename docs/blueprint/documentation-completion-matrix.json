@@ -15974,6 +15974,18 @@
         "A98-11"
       ],
       "description": "Corrected frozen Source F53 identifies14 source rejection cases missing StatefulSet matching-VCT-name substitution. All45 existing StatefulSet volume records now qualify authored source outcomes/cases to nonmatching names and explicitly cover matching volume replacement after successful typed decoding. Validation removes all matching authored volumes; controller inserts ordinal PVC/readOnly false. Other template requirements and decoding errors remain enforced. Immediate defaults are distinguished from effective matching source. No new unused upstream fields or historical verdicts changed."
+    },
+    {
+      "id": "A98-IMAGEPULL-EMPTY-NAME-RUNTIME-QUALIFICATION",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Corrected frozen reviewer F54 repeats old item-null omission; current da40 already retained zero reference and enabled Pod ServiceAccount admission behavior. This correction adds direct kubelet runtime evidence1067–1084: empty names are skipped before Secret lookup, so retained item contributes no pull credential. Empty-object/empty-name descriptions also cover this effect; enabled admission remains a later Pod-create boundary, separate from template storage. Historical frozen FAILs remain unchanged."
     }
   ],
   "checks": [
@@ -16962,6 +16974,11 @@
       "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs",
       "state": "terminal-pass",
       "scope": "Session48604:13PASS0FAIL0SKIP. Direct current content audit verifies Pod invalid case equality plus45 existing StatefulSet volume rows with matching/nonmatching route case. Author/source integration only; no independent current acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs; four latest imagePullSecrets[] content lookups",
+      "state": "terminal-pass",
+      "scope": "Session94436:13PASS0FAIL0SKIP after runtime/source addition; final empty-value enabled-admission wording clarified after imports loaded. Direct final lookup verifies four Job/CronJob/StatefulSet/Pod retained-null runtime descriptions, enabled-admission empty-object boundary and exact primary citation. No live API or independent acceptance."
     }
   ],
   "reviewAssignments": [
@@ -20175,6 +20192,15 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/resource-root-scope-root/pod-policy-stateful-volume-corrections.json",
       "sources": "Authenticated original corevalidation4072–4084/4648–4652;appsvalidation101–114/193–214;Statefulstorage390–405/411–433.",
       "next": "Freeze newestRootcommit+stableproducer6overlays;fulljoin/tests and independentcurrentreviews."
+    },
+    "imagePullEmptyNameRuntime": {
+      "author": "/root",
+      "state": "candidate-not-independent-acceptance",
+      "baseRevision": "788394e56985946c4e40f11bad43dd91e60fb345",
+      "sourceInspection": "Authenticated original Kubernetes66452049f3d692768c39c797b21b793dce80314e kubelet_pods.go1067–1084; recorded SHA matched before inspection. Prior Core4248–4259 and ServiceAccount155–171 evidence retained.",
+      "checks": "13PASS0FAIL0SKIP + four final current content lookups",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/resource-root-scope-root/imagepull-empty-runtime-correction.json",
+      "next": "Await producer alias/fs-alias fix stable release; integrate/regenerate then independent current review."
     }
   }
 }
