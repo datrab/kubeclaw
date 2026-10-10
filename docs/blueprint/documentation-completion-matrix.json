@@ -18436,6 +18436,43 @@
       "rootIntegration": "Canonical API object update page linked from reference index; removed internal review/test-structure commentary from reader prose. Source-linked operation/runtime evidence distinctions retained.",
       "checks": "Author17focusedtests/syntax/ranges/structuraljoin/syntheticrender PASS; root133artifact/exactsubjects verified. Actual whole refs exit0:4905local links,2802anchors,7607repository paths,28307pinned links. No semantic/independent acceptance.",
       "accepted": false
+    },
+    "statusCompleteSourceAfterF12": {
+      "reviewer": "/root/a98_status_complete_source_after_f12_fresh",
+      "revision": "f44ac3df1a2acd486e54f8d99d6de2ca86bc8ea0",
+      "boundedVerdict": "PASS-complete-status-semantics",
+      "wholeVerdict": "FAIL-required-F05-integration-and-mutations-unproved",
+      "report": "/home/node/Documents/Codex/a98-evidence/status-complete-source-after-f12-fresh/REPORT.md",
+      "verifiedArtifacts": 90,
+      "records": 15,
+      "cases": 218,
+      "dimensions": 180,
+      "exactCaptions": 104,
+      "crossConditions": 290,
+      "qualifications": 75,
+      "accepted": false
+    },
+    "deploymentRetainKeysAuthorCandidate": {
+      "author": "/root",
+      "state": "author-corrected-pending-complete-fresh-source",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/root-current-operation-corrections",
+      "scope": "Correct genericCSAnever-applied omission claim for selected DeploymentstrategyretainKeys directive; canonicalpage explains deletion of live rollingUpdate and invalid directive.",
+      "addedCases": 1,
+      "verifiedOriginalFiles": 3,
+      "checks": "Syntax/12focusedtestsPASS; freshprimary/treeGitblob identities checked.",
+      "accepted": false
+    },
+    "isolatedIntegratedGenerationF0": {
+      "sourceRevision": "f0e3759e867eb9ac224a047b710f9397c16af22b",
+      "worktree": "/home/node/Documents/Codex/a98-evidence/integrated-generation-f0e3759e",
+      "inventoryGeneration": "terminal-PASS",
+      "readerGeneration": "terminal-FAIL-API_REFERENCE_UNRESOLVED_PROOF-argoproj.io/v1alpha1/Application-$",
+      "logs": [
+        "/home/node/Documents/Codex/a98-evidence/integrated-generation-f0e3759e-inventory.log",
+        "/home/node/Documents/Codex/a98-evidence/integrated-generation-f0e3759e-render-qualified.log"
+      ],
+      "qualification": "Private dependency symlink excluded only through per-commandGitconfig; initial untracked-symlink failure retained. No main generated outputs copied and no publication waiver.",
+      "accepted": false
     }
   },
   "productBoundaries": [
