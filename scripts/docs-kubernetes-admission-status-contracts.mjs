@@ -300,4 +300,9 @@ for(const record of records) {
     record.evidence.push(source('pkg/generated/openapi/zz_generated.openapi.go',2797,2806,'The generated v1 status model declares conditions as a map list keyed by type.'));
   }
 }
+const conditionTypeRecord = records.find(record => record.fieldPath === '$.status.conditions[].type');
+conditionTypeRecord.cases.push(
+  {name:'Condition type name length boundary',condition:'An otherwise valid condition uses an unqualified name consisting of 63 ASCII letters, then a name consisting of 64 ASCII letters.',sourceOutcome:'The named hand-validator accepts the 63-byte name and rejects the 64-byte name. This source-derived result does not establish API or storage success.'},
+  {name:'Condition type qualified name grammar',condition:'Otherwise valid conditions compare example.com/Ready with /Ready, Example.com/Ready, example.com/Ready/Extra and a lowercase ASCII prefix of 254 bytes followed by /Ready.',sourceOutcome:'The named hand-validator accepts example.com/Ready. It rejects the empty prefix, uppercase prefix, extra slash and overlong prefix. The accepted name can contain uppercase ASCII letters; the prefix cannot.'}
+);
 export const receiverContracts=Object.freeze(records.map(record=>Object.freeze(record)));

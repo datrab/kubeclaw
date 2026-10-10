@@ -18381,8 +18381,28 @@
       "state": "author-corrected-pending-complete-fresh-source",
       "evidence": "/home/node/Documents/Codex/a98-evidence/status-label-key-root",
       "field": "$.status.conditions[].type",
-      "scope": "Explicit optional DNS prefix/name grammar, name63-byte and prefix253-byte limits, no invented separate prefix-part length restriction.",
+      "scope": "Explicit optional DNS prefix/name grammar, name63-byte and prefix253-byte limits, no invented separate prefix-part length restriction. Two otherwise-valid source-derived cases cover63/64-byte names,empty/uppercase/254-byte prefixes,and extra slash.",
       "checks": "Fresh primary bytes match reviewer originals; syntax and8 API-reference tests PASS.",
+      "accepted": false,
+      "addedCases": 2
+    },
+    "statusCompleteSourceAfterF09F11": {
+      "reviewer": "/root/a98_status_complete_source_after_f09_f11_fresh",
+      "revision": "e78ec5e65c2e6b5a32f06cd369f4101fe90987fb",
+      "verdict": "FAIL-F12-bounded-F05-required-integration",
+      "report": "/home/node/Documents/Codex/a98-evidence/status-complete-source-after-f09-f11-fresh/REPORT.md",
+      "verifiedArtifacts": 94,
+      "scope": "15records180dimensions216cases104captions290conditions individually reviewed; assertion-support PASS;type invalidValue completeness FAIL.",
+      "accepted": false
+    },
+    "metadataRefreshPathsCandidate": {
+      "author": "/root",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/metadata-path-consumers-root",
+      "state": "author-only-independent-review-open",
+      "verifiedOriginalFiles": 3,
+      "recordsPreserved": 382,
+      "addedCases": 2,
+      "scope": "Manifest-generate-paths parsing,hydration override,webhook revision/repository predicates,empty paths/files fallback,queue versus completed work.",
       "accepted": false
     }
   },
