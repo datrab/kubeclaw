@@ -16268,6 +16268,19 @@
       ],
       "description": "Static computed object keys and delete explicitlyunsupported; declaredgrammar gap",
       "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "id": "A98-A511-ACTUAL-SELECTION-70",
+      "state": "open-independent-source-finding-fresh-provenance-review-running",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Complete422 content clarification FAIL70: actual field-selection assertions require independent per-record output provenance. All70 normalized paths occur in author v8 replay; membership alone does not close finding.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-a511-full422-source-selection-clarification/report.md"
     }
   ],
   "checks": [
@@ -17352,6 +17365,12 @@
       "state": "terminal-pass-author-only",
       "scope": "25uniquePASS0FAIL0SKIP in terminal groups. Initial7066/83725 missing with no terminal outcome; explicitly not successful. Independent Source pending.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-validation-correction-writer/checks.json"
+    },
+    {
+      "command": "Root complete clarification manifest integrity and exact70 author-replay field membership",
+      "state": "terminal-pass-integrity-and-membership-only",
+      "scope": "All14 supplement artifacts match sealed manifest; all70 exact field paths present in author v8 selected paths. Neither integrity nor author membership establishes independent source acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-daemon-exact70-author-v8-membership-root.json"
     }
   ],
   "reviewAssignments": [
@@ -18666,13 +18685,13 @@
     {
       "agent": "/root/stateful_pdb_422_corrected_source_fresh",
       "role": "Source",
-      "state": "running-full422-current",
+      "state": "sealed-complete-content-fail70-typed-source-pass",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
       "revision": "a511753e24cd51c569a1da60bbdc1dead7661863",
-      "scope": "Full422records2731cases at a511; independently verify complete current claims, unchanged376proof and corrected46. No globalacceptance.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-corrected-source-binding.json"
+      "scope": "Full422: clarified352PASS70FAIL. Conditional typed behavior PASS; 62StatefulSet and8DaemonSet literal actual-selection assertions lack independent provenance. Original report preserved; supplement controls complete-content verdict.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-a511-full422-source-selection-clarification/report.md"
     },
     {
       "agent": "/root/producer_c770_eight_findings_correction_writer",
@@ -18684,13 +18703,24 @@
       "revision": "a511753e24cd51c569a1da60bbdc1dead7661863",
       "scope": "Full P01–P08 correction families, no blanket native syntax exemptions, maintainable operation/consumer qualification; complete162/20/19author audit; terminal fulltests/roles/actualjoin needed. No selfacceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "agent": "/root/actual_selection_70_complete_source_fresh",
+      "role": "Source",
+      "state": "running-exact70-current-output-provenance",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "d8dec69cfbb3d13687c153d3c80b907455afcd18",
+      "scope": "All62StatefulSet and8DaemonSet literal actual-selection assertions. Independent actual output/profile provenance, selection dependency equivalence, field normalization and wording semantics. No producer-family or global acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-complete-source-fresh"
     }
   ],
   "continuation": {
-    "stage": "AP09.8: new fresh corrected receiver Source review and immutable producer-v5 verification; no package acceptance",
+    "stage": "AP09.8: producer eight-family corrections and independent exact70 selection provenance; package not accepted",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Observe producer-v5 suite38839/role39891/join50655 to terminal via owner; integrate stable six files only after bound evidence; independent producer Source review next. Complete fresh corrected receiver Source and remaining workload full Source. Regenerate stale configuration outputs, mandatory full mutation, then separate Reader/Quality/Astra. No mass parity before AP09.8 acceptance.",
+    "next": "Complete producer P01–P08 corrections and terminal checks; independently resolve all70 literal selection assertions. Seal historical950 Source and reconcile its findings against current corrections. Then stable-source generation, required mutations and separate Reader/Quality/Astra. No parity before AP09.8 acceptance.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -18703,9 +18733,9 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/producer_closure_eight_findings_writer",
-      "/root/workload_current_fe07_source_fresh",
-      "/root/node_current_fe07_source_fresh"
+      "/root/producer_c770_eight_findings_correction_writer",
+      "/root/workload_838_full_source_fresh",
+      "/root/actual_selection_70_complete_source_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -19416,6 +19446,27 @@
       "revision": "c770cf5d63f42b508d616b6b8c0dba79497beed7",
       "remoteVerified": true,
       "next": "Complete independent producer Source; integrate source-verified workload corrections on released ownership; fresh complete changed-union Source; stable Source then separate canonical generation."
+    },
+    "historical838SourceCheckpoint": {
+      "revision": "838949cc25755cf7abfb1b3944094d5ef3552ce8",
+      "cases": {
+        "PASS": 4743,
+        "FAIL": 339,
+        "N/A": 40,
+        "UNREVIEWED": 0
+      },
+      "captions": {
+        "PASS": 877,
+        "FAIL": 1
+      },
+      "dimensions": {
+        "PASS": 14320,
+        "FAIL": 430,
+        "UNREVIEWED": 63
+      },
+      "applicability": "950UNREVIEWED; no exact historical producer join receipt",
+      "state": "reviewer-reported-complete-conditional-semantics-seal-pending",
+      "qualification": "Historical revision only; current corrections require explicit reconciliation. Remaining63 dimensions are literal actual-selection assertions."
     }
   },
   "productBoundaries": [
