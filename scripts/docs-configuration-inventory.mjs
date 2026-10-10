@@ -24,6 +24,7 @@ import { receiverContracts as admissionStatusReceiverContracts } from './docs-ku
 import { receiverContracts as deploymentReceiverContracts } from './docs-kubernetes-apps-receiver-contracts.mjs';
 import { receiverContracts as coreReceiverContracts } from './docs-kubernetes-core-receiver-contracts.mjs';
 import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver-contracts.mjs';
+import { receiverContracts as ciliumReceiverContracts } from './docs-cilium-receiver-contracts.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
@@ -2742,6 +2743,7 @@ const versionedApiReceiverRegistries = new Map([
   ['v1', coreReceiverContracts],
   ['apps/v1', deploymentReceiverContracts],
   ['argoproj.io/v1alpha1', argoReceiverContracts],
+  ['cilium.io/v2', ciliumReceiverContracts],
   ['networking.k8s.io/v1', networkingReceiverContracts],
   ['admissionregistration.k8s.io/v1', [...admissionReceiverContracts, ...admissionStatusReceiverContracts]],
 ]);
