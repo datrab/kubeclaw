@@ -11,6 +11,12 @@ const metaTypes = (start, end, claim) => source('staging/src/k8s.io/apimachinery
 const controller = (start, end, claim) => source('pkg/controller/validatingadmissionpolicystatus/controller.go', start, end, claim);
 const checker = (start, end, claim) => source('staging/src/k8s.io/apiserver/pkg/admission/plugin/policy/validating/typechecking.go', start, end, claim);
 const applyEvidence = [
+  source('cmd/kube-apiserver/app/config.go',79,84,'The Kubernetes server passes its generated OpenAPI definitions to control-plane generic configuration.'),
+  source('pkg/controlplane/apiserver/config.go',175,181,'Control-plane configuration wraps the generated definitions for feature enablement and supplies them to its OpenAPI v3 configuration.'),
+  source('staging/src/k8s.io/apiserver/pkg/server/config.go',523,530,'The OpenAPI v3 configuration stores the definition provider and builds its definitions with component schema references.'),
+  source('staging/src/k8s.io/apiserver/pkg/util/openapi/enablement.go',34,53,'The provider wrapper returns generated definitions after restoring disabled enum features.'),
+  source('staging/src/k8s.io/apiserver/pkg/util/openapi/enablement.go',56,82,'Disabled enum restoration removes enum descriptions and enum values, without changing list relationship extensions.'),
+  source('pkg/generated/openapi/zz_generated.openapi.go',140,147,'The generated definition map includes the v1 TypeChecking, policy and policy status models.'),
   source('staging/src/k8s.io/apiserver/pkg/server/genericapiserver.go',1034,1064,'The generic server builds resource OpenAPI models and creates a type converter without preserving unknown fields; configuration and construction errors are returned.'),
   source('staging/src/k8s.io/apiserver/pkg/server/genericapiserver.go',791,804,'Resource installation assigns the supplied converter to the API group version before installing REST endpoints.'),
   source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/typeconverter.go',45,71,'The converter constructs a typed parser from OpenAPI models, selects by group/version/kind and decodes structured or unstructured objects.'),
@@ -105,7 +111,7 @@ function add(path, shape, purpose, omitted, emptyValue, invalidValue, evidence, 
     qualificationLimits:[
       'These are pinned-source expectations. No API request, CEL evaluation, controller process, informer synchronization or live status update was executed.',
       'Actual controller selection, discovery schemas, permissions and server apply ownership determine whether a status write succeeds. On controller errors inspect its logs and access before changing the policy; retries do not prove recovery.',
-      'Available-source documentation gap: the client, endpoint, manager wrappers, generic type-converter construction and list-schema conversion routes are qualified above. The Kubernetes server configuration that supplies these generated OpenAPI definitions still requires an exact source link before the full route and field-removal outcomes can be accepted.',
+      'The source route describes the pinned Kubernetes server. It does not establish the version, served models or managed fields of a running server. Before a corrective status write, inspect its discovery information, current status and manager entries. A successful merge calculation alone does not prove that authorization, admission, storage or response delivery succeeded.',
     ],
   };
   records.push(record);

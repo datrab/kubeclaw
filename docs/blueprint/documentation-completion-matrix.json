@@ -15539,6 +15539,20 @@
       "description": "Original status store/installer reset filter chain, all selected Apply wrappers and generic OpenAPI type/list conversion qualified;41 primary Gitblob verified files. Exact Kubernetes generated OpenAPI model-provider configuration still open. No field-removal or independent final acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/admission-status-root/report.md",
       "evidenceSha256": "ea4ccf4e55dd22fb13f58181552f6bd721535a8a4978505161efe42be6bc9db0"
+    },
+    {
+      "id": "A98-STATUS-OPENAPI-PROVIDER-QUALIFIED-CANDIDATE",
+      "state": "authored-pending-full-independent-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Original Kubernetes generated model provider through feature wrapper/OpenAPI v3/generic resource converter qualified.15 status contracts111cases65caption ranges;49 primary original files Gitblob/SHA256 verified. Source-gap marker removed after actual route evidence, no independent field-removal/global/Reader/Quality/Astra acceptance. Full policy metadata/envelope37paths remains open.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/admission-status-root/report.md",
+      "evidenceSha256": "f37ce80fe00473dfe0a80ac8090266ca685f76bdb507495d1cdb1909ff440789"
     }
   ],
   "checks": [
