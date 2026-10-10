@@ -19576,6 +19576,93 @@
       "recordsChanged": 2,
       "scope": "spec and restartPolicy actualAlwaysrequirement appsvalidation217-219, not generaltemplatevalidator58-79; Rootactualoriginalreread",
       "historicalReview": "Originalfrozen5dcontinues with sourcecaptiondefects; d8freshreviewmustretainimmutableverdict, newcorrectionnotretroactiveacceptance"
+    },
+    "pvMatchingConditionalCaptionCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-complete-independent-source-review",
+      "frozenFinding": "workload_node_complete_source_fresh caption50 at5d",
+      "authorityRevision": "66452049f3d692768c39c797b21b793dce80314e",
+      "scope": "FindMatchingVolume availability/selector/class291-305; conditionalnodeaffinity256-266; conditionalaccessmodes307-313. No universal node/access checks asserted by this helper. No claim matchingruntimeiswrong.",
+      "coreEvidenceRecordsChanged": 30,
+      "inheritedWorkloadEvidenceRecordsChanged": 8,
+      "allRecordIdentitiesPreserved": true,
+      "allNonEvidenceDimensionsPreserved": true,
+      "evidence": "/home/node/Documents/Codex/a98-evidence/pv-matching-conditional-caption-root"
+    },
+    "statefulSetImmediatePVCDefaultsCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-full-source-review",
+      "scope": "StatefulSetgeneratedvisitor1345-1352 invokesPVC/PVCSpecdefaults immediately for storedtemplate (volumeModeFilesystem); ordinaryPVCadmission/defaultStorageClass/binding occurslater forordinalPVC. Selectionreasonsandreceivercasespreservetimeboundary.",
+      "workloadRecordsChanged": 8,
+      "actualSource": "Authenticated66452049appszz_generateddefaults1345-1352/coredefaults294-304",
+      "qualification": "No PVCAPI/admission/runtimeexecution claimed"
+    },
+    "manualJobSelectorCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-full-source-review",
+      "scope": "JobmanualSelectortrue bypassesgeneratedlabelchecks andselector generation; selector validity/template match remain. CronJobtrue remainsforbidden.",
+      "recordsChanged": 2,
+      "source": "batchvalidation101-105; jobstrategy221-224; ordinaryJobvalidation170-293",
+      "findingOrigin": "workload_node_corrected_complete_source_fresh atd8"
+    },
+    "podUpdateValidationCaptionCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-complete-independent-source-review",
+      "scope": "All workload parent preparationcaptions restricted to preparation. Explicit normalValidateUpdate authority added foreachkind: Pod141-148;Job297-305;CronJob143-149;StatefulSet159-165;PDB112-117. Sourcefullyreread.",
+      "findingOrigin": "workload_node_complete_source_fresh caption641 at5d"
+    },
+    "sleepZeroOptionCaptionCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-full-source-review",
+      "scope": "Withnonnullgrace Sleepzero permitted withzerooption,otherwise strictlypositive; upperboundgrace appliesboth. Source3376-3393notdurationconversionboundproof.",
+      "findingOrigin": "workload_node_complete_source_fresh caption314 at5d"
+    },
+    "legacySnapshotQualification": {
+      "scope": "Originalfirst598fieldidentities remainimmutableSHA snapshot. Prose/evidence nowcorrectable after sourcefindings, independentfullSource review remainsrequired. No receiverpresence/default/authority/version/failclosedtest removed.",
+      "reason": "Freezingincorrecthistoricalprose prevents mandatedsourcecorrections; record identity preservation validatesinventory rather than falseimmutablecontent.",
+      "checks": "20focusedtestsPASS0SKIP;13workloadtestsPASSafterSleep/manualproofadditions; latestqualified11defaulttests ongoing"
+    },
+    "jobDerivedSelectorSelectionCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-source-review",
+      "scope": "Job absentselector selected fromactualPrepareForCreate221-276 whenmanualSelectorfalse(defaultfalse); true skipsgeneration. Derivedownership distinctschema/typeddefault. CronJobnestedselector notgenerated.",
+      "checks": "PrivateJobfalse/true selection boundary probesPASS, notAPIexecution",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/pv-matching-conditional-caption-root/selection-boundary-probes.json"
+    },
+    "presentProbeDefaultSelectionCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-source-review",
+      "scope": "FourzerovalueProbe defaults timeout1/period10/success1/failure3 underpresentactualProbes across6Kubernetesreceivingkinds; absentProbe nevermaterialized, exactcontainerinstancebound; nilscalarJSON treatedzero aftertypeddecode",
+      "checks": "Sixkindpresent/absentProbe/otherContainer boundariesPASS;54generatedvisitorcallguardscheckedagainsthashauthenticatedoriginals",
+      "knownScopeFinding": "FrozenJobreadinessProbe3materialomissions wereexcluded atd8; registryGCProbeandportshape12falsepositives areseparateproducerwriterfix",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/pv-matching-conditional-caption-root/probe-default-selection-probes.json"
+    },
+    "additionalInheritedSourceCaptionCorrections": {
+      "state": "candidate-pending-new-independent-source-review",
+      "scope": [
+        "NoNewPrivilegesinversionincluded143-191",
+        "DaemonSetenvcreationactualstrategy117-121replacesReplicaSet111-116",
+        "StatefulSetvisitor1027-1038captionlimitedtoactualentry/initialvolume delegation, notwholevisitorabsence",
+        "RecoveryCronJob63-84completeconstructedbodynegativePodresourceClaimsproof"
+      ],
+      "qualification": "Behavior/sourceproofcorrectionsonly; noliveexecution"
+    },
+    "cronJobUpdateCompatibilityCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-source-review",
+      "scope": "timeZonevalidatedcreate/changedvalue, unchangedoldvalue skip; scheduleTZembedding updatecompatible onlyoldSchedulecontainsTZ andtimeZoneisnil; ParseCronSchedule stillapplies",
+      "source": "batchvalidation788-792/799-801/833-846",
+      "qualification": "Compatibilitynotguaranteedcontrollerinterpretationorwholeupdateacceptance"
+    },
+    "known1199ReplayQualification": {
+      "state": "FAIL-mismatched-source-bound-producer-tuple-not-restarted-or-bypassed",
+      "scope": "Frozen d8contexts reselectedagainstmutablecurrentproducer candidate correctlyrejectedArgoinstall dependencyDigest drift. No coveragePASS. Must rediscover source-stablecurrentcontexts afterproducerrelease.",
+      "qualification": "Private failure retained; boundedfixtureselection probes independent."
+    },
+    "latestQualifiedWorkloadCorrectionChecks": {
+      "state": "PASS-focused-integration-checks-not-independent-acceptance",
+      "checks": "24testsPASS0FAIL0SKIP including sourcehash-verifiedProbe/Job/DaemonSet sourcecontracts; 20coverage/workload/Service checksPASS beforelatestadditionalcaptions, sixkindProbe-boundaryprobesPASS,54authenticatedgeneratedProbevisitorcallranges verified",
+      "limits": "No current source-stableallproducerjoinPASS (oldfrozend8tuple mismatch rightlyrejected); no API/liveexecution; fullSource stillongoing; noReader/Quality/Astra/packageclosure"
     }
   }
 }

@@ -67,7 +67,21 @@ function runtimeDefaultApplicability(kind, fieldPath, parent, resource, record) 
   const claimPath=claimTemplate?fieldPath.replace('$.spec.volumeClaimTemplates[].spec.','$.spec.'):fieldPath;
   const claimRecord=claimTemplate?coreReceiverContracts.find(row=>row.kind==='PersistentVolumeClaim'&&row.fieldPath===claimPath):record;
   const pvc = relevantRuntimeOmission(claimTemplate?'PersistentVolumeClaim':kind, claimPath, claimRecord);
-  if (pvc) return pvc;
+  if (pvc) {
+    if (!claimTemplate) return pvc;
+    const immediate=claimPath==='$.spec.volumeMode';
+    return {...pvc,
+      reason:immediate?'The StatefulSet typed default visitor applies PVCSpec defaults to each present volume claim template before storing it; nil volumeMode becomes Filesystem.':'The stored StatefulSet template does not receive ordinary PVC admission. On later ordinal PVC creation, admission or the binding controller can choose a default StorageClass.',
+      evidence:[...pvc.evidence,defaultEvidence('pkg/apis/apps/v1/zz_generated.defaults.go','1345-L1352','Each present StatefulSet volume claim template receives PVC/PVCSpec and ResourceList defaults.'),...(!immediate?[defaultEvidence('pkg/controller/statefulset/stateful_set_utils.go','386-L407','The controller deep-copies each template into a separately named ordinal PVC.')]:[])],
+    };
+  }
+  if(kind==='Job'&&fieldPath==='$.spec.selector'&&resource.spec?.manualSelector!==true) {
+    return {
+      reason:'Job create preparation derives Pod ownership from the Job identity when manualSelector is false; nil manualSelector defaults to false before this preparation.',
+      omission:'PrepareForCreate generates the missing selector and controller-UID labels. This is derived create preparation, not a stored schema default or a client-rendered selector.',
+      evidence:[defaultEvidence('pkg/apis/batch/v1/defaults.go','71-L73','Nil manualSelector defaults to false.'),defaultEvidence('pkg/registry/batch/job/strategy.go','94-L99','Job create preparation invokes selector generation before clearing status.'),defaultEvidence('pkg/registry/batch/job/strategy.go','221-L224','Selector generation runs only when manualSelector is false.'),defaultEvidence('pkg/registry/batch/job/strategy.go','227-L276','Generation derives template labels and the selector from Job name and UID without replacing an already authored controller-UID key.')],
+    };
+  }
   const core = (lines, omission, materializes) => ({ reason: 'The typed Kubernetes defaulting function applies to this present object. Inspect the stored object and subsequent consumer separately.', omission,
     evidence: [defaultEvidence('pkg/apis/core/v1/defaults.go', lines, omission)], ...(materializes ? { materializes } : {}) });
   if (kind === 'Deployment') {
@@ -196,6 +210,17 @@ function runtimeDefaultApplicability(kind, fieldPath, parent, resource, record) 
   const member = fieldPath.slice(podSpecPrefix.length + 1);
   if (!fieldPath.startsWith(`${podSpecPrefix}.`)) return null;
   if (/^(containers|initContainers|ephemeralContainers)\[\]\./u.test(member)) {
+    const probe=member.match(/^(containers|initContainers|ephemeralContainers)\[\]\.(livenessProbe|readinessProbe|startupProbe)\.(timeoutSeconds|periodSeconds|successThreshold|failureThreshold)$/u);
+    if(probe) {
+      const [,containerGroup,probeKind,field]=probe;
+      const [lines,value]={timeoutSeconds:['233-L236',1],periodSeconds:['237-L239',10],successThreshold:['240-L242',1],failureThreshold:['243-L245',3]}[field];
+      // Exact generated visitor calls; an absent Probe is never materialized.
+      const [group,firstCalls]={Pod:['core',[398,324,472]],Deployment:['apps',[564,490,638]],DaemonSet:['apps',[237,163,311]],StatefulSet:['apps',[1218,1144,1292]],Job:['batch',[578,504,652]],CronJob:['batch',[242,168,316]]}[kind];
+      const call=firstCalls[['containers','initContainers','ephemeralContainers'].indexOf(containerGroup)]+12*['livenessProbe','readinessProbe','startupProbe'].indexOf(probeKind);
+      const result=core(lines,`A present ${probeKind} with zero ${field} defaults to ${value}. The receiving visitor does not create an absent Probe.`);
+      result.evidence.push(defaultEvidence(`pkg/apis/${group}/v1/zz_generated.defaults.go`,`${call-1}-L${call}`,`This receiving route calls SetDefaults_Probe only for a nonnil ${probeKind}.`));
+      return {...result,explicitZeroValues:[0,null]};
+    }
     if (member.endsWith('.ports[].protocol')) {
       const routes = {
         Pod: ['core', ['375-L379', '301-L305', '449-L453']],

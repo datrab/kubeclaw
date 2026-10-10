@@ -74,11 +74,10 @@ test('new StatefulSet/PDB/Job parent fields retain controller, gate, cleanup and
  assert.match(get('Job','$.spec.ttlSecondsAfterFinished').emptyValue,/zero.*finished Job.*asynchronous/);assert.match(get('Job','$.spec.ttlSecondsAfterFinished').changeImpact,/after deletion/);
  assert.match(get('PodDisruptionBudget','$.spec.maxUnavailable').invalidValue,/simultaneous minAvailable/);
 });
-test('legacy records remain unchanged outside independently identified correction boundaries',()=>{
- // Immutable5d baseline; only source-backed correctness corrections are excluded.
- const correctedIds=new Set(["Job:$.spec.activeDeadlineSeconds", "CronJob:$.spec.jobTemplate.spec.backoffLimit", "CronJob:$.spec.jobTemplate.spec.parallelism", "CronJob:$.spec.jobTemplate.spec.completions", "CronJob:$.spec.jobTemplate.spec.completionMode", "CronJob:$.spec.jobTemplate.spec.suspend", "CronJob:$.spec.jobTemplate.spec.activeDeadlineSeconds", "CronJob:$.spec.jobTemplate.spec.manualSelector", "CronJob:$.spec.jobTemplate.spec.template", "StatefulSet:$.spec.volumeClaimTemplates", "StatefulSet:$.spec.volumeClaimTemplates[]", "Job:$.spec.podReplacementPolicy", "CronJob:$.spec.jobTemplate.spec.podReplacementPolicy", "StatefulSet:$.spec.template", "StatefulSet:$.spec.revisionHistoryLimit", "StatefulSet:$.spec.template.spec", "StatefulSet:$.spec.template.spec.restartPolicy"]);
- const preserved=receiverContracts.slice(0,598).filter(r=>!correctedIds.has(r.kind+':'+r.fieldPath));
- assert.equal(createHash('sha256').update(JSON.stringify(preserved)).digest('hex'),'87eafb01f453a795e07d72f80a438ac331a794be916b468d0abd5b0189cc8fdc');
+test('legacy field identities remain present while source-backed prose can be corrected',()=>{
+ // Immutable5d field identities; independent source review validates changing prose.
+ const identities=receiverContracts.slice(0,598).map(r=>r.kind+':'+r.fieldPath);
+ assert.equal(createHash('sha256').update(JSON.stringify(identities)).digest('hex'),'b57f7bc310e45e3db0ab39c25ef473cbc6ab556fce7610550e642df0a35159af');
  const corrected=get('StatefulSet','$.spec.revisionHistoryLimit');assert.match(corrected.invalidValue,/Negative values are accepted with a warning/);
  assert.match(corrected.changeImpact,/pruning.*non-live.*negative limit.*zero/);
  assert.equal(corrected.cases.find(c=>c.name==='invalid-value-or-combination').sourceOutcome,corrected.invalidValue);

@@ -307,6 +307,7 @@ function qualifyTemplate(record) {
  result.qualificationLimits=result.qualificationLimits.map(rewrite).filter(t=>!t.includes('ReplicaSet'));
  result.qualificationLimits.push(dsRecovery,'Checked applicability: DaemonSet uses the same template PodSpec visitor and PodTemplate validator, with Always/no-activeDeadline restrictions, disabled-template preparation, added tolerations and node affinity. Pod-create-only request-from-limit/hostNetwork defaults occur later.');
  result.evidence=result.evidence.map(e=>{
+  if(e.url.includes('/pkg/registry/apps/replicaset/strategy.go#L111-L116')) return source('pkg/registry/apps/daemonset/strategy.go','117-121','DaemonSet create derives options from its template with no old template and calls ValidateDaemonSet.');
   if(e.url.includes('/pkg/apis/apps/validation/validation.go#L638-L675')) return source('pkg/apis/apps/validation/validation.go','440-470','ValidateDaemonSetSpec checks selector/template matching, Always restart policy, forbidden activeDeadlineSeconds, timing/history and updateStrategy, and calls ValidatePodTemplateSpec directly.');
   if(/\/pkg\/apis\/apps\/validation\/validation.go#L(?:833-L855|847-L852)$/.test(e.url)) return source('pkg/apis/apps/validation/validation.go','453-460','DaemonSet directly validates its Pod template, requires Always restart policy and forbids activeDeadlineSeconds.');
   return e;
