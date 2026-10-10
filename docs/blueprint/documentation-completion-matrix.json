@@ -18373,6 +18373,17 @@
       "scope": "ApplicationSet generated Application metadata preservation/replacement, ignored differences and write errors, event filtering, finalizer prefixes and invalid-destination removal, controller-name child lookup and complete owner-list clearing.",
       "checks": "17 focused tests PASS; syntax and original record/case preservation PASS; fresh primary Gitblob/SHA256 checks. Complete Argo/Cilium consumer discovery remains open; publication guard retained.",
       "accepted": false
+    },
+    "statusF12LabelKeyCandidate": {
+      "author": "/root",
+      "reviewer": "/root/a98_status_complete_source_after_f09_f11_fresh",
+      "reviewedRevision": "e78ec5e65c2e6b5a32f06cd369f4101fe90987fb",
+      "state": "author-corrected-pending-complete-fresh-source",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/status-label-key-root",
+      "field": "$.status.conditions[].type",
+      "scope": "Explicit optional DNS prefix/name grammar, name63-byte and prefix253-byte limits, no invented separate prefix-part length restriction.",
+      "checks": "Fresh primary bytes match reviewer originals; syntax and8 API-reference tests PASS.",
+      "accepted": false
     }
   },
   "productBoundaries": [
