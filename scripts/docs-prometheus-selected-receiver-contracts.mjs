@@ -316,7 +316,7 @@ for(const [kind,file,start] of [
   evidence:[source(`example/prometheus-operator-crd/${file}`,start,start+2,'The original served root schema requires spec and declares an object.'),k('staging/src/k8s.io/apimachinery/pkg/runtime/serializer/json/json.go',164,190,'Unstructured decoding reads actual body identity and rejects missing kind.'),...body.evidence],
   selectedSchemaConstraints:{type:'object'},
   selectedContexts:body.selectedContexts.map(({selectedValue,...context})=>({...context,fieldPath:'$',reason:'authored-resource-root',derivedFromFieldPath:'$.spec'})),
-  qualificationLimits:[...body.qualificationLimits,'Root contexts identify the enclosing authenticated objects with selected spec; they assert no independently captured root value. Root envelope coverage does not expand unused optional schema alternatives.']
+  qualificationLimits:[...body.qualificationLimits,'The request envelope and its spec have separate validation rules. These descriptions cover the monitoring objects used by KubeClaw; consult the upstream reference for unused optional alternatives.']
  }));
 }
 export const receiverContracts=Object.freeze(records);

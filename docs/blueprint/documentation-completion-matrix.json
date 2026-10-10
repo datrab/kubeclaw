@@ -15890,6 +15890,18 @@
         "A98-11"
       ],
       "description": "All nine formerly missing root factories now authored: Pod in b238c9e1, TokenReview/DeleteOptions in e2010e93, and monitoring3/webhook2/ClusterSPIFFEID in this candidate. apiProductSelection now selects present authored root boundary with authored-resource-root reason. Root envelope is an actual selected object, not unused generic Kubernetes field scope. Monitoring roots bind original served required-spec/object lines and separate admission from scrape/rule/workload effects; webhook roots distinguish invalid empty envelope from valid named empty-handler configuration; ClusterSPIFFEID root distinguishes unstructured identity/schema from later registration/issuance. New root contracts require independent Source/Reader/Quality review, actual global producer join, generated publication and remaining gates. Historical bounded approvals cover only prior field records."
+    },
+    {
+      "id": "A98-READER-QUALIFICATION-LANGUAGE-CORRECTION",
+      "state": "candidate-pending-canonical-generation-and-independent-reader-quality-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Workload, namespace-isolation, webhook and monitoring qualification prose now describes product scope and execution limits without internal source/reader/quality acceptance statements. Existing unresolved source-proof notes remain publication blockers; they were not removed. Root workload omission/null cases now identify request-body boundaries separately from child present-parent rules. Renderer rejects explicit internal documentation acceptance statements while permitting product review stages and honest lack of live evidence. No product outcomes, authorities, schema or field identities changed; semantic review state remains in this matrix outside the reader tree."
     }
   ],
   "checks": [
@@ -16823,6 +16835,16 @@
       "command": "Deep equality of preexisting field records against e2010e93 modules",
       "state": "terminal-pass",
       "scope": "All46webhook+18ClusterSPIFFEID+185monitoring prior records byte-structurally equal after root additions; 6root records added. This limits accidental existing-record drift, not independent semantic acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/api-reference-reader-language.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/namespace-isolation-receiver.test.mjs scripts/tests/webhook-selected-receiver.test.mjs scripts/tests/prometheus-selected-receiver.test.mjs",
+      "state": "terminal-pass-with-explicit-skip",
+      "scope": "Session61701 terminal23PASS0FAIL1SKIP; skipped webhook authentic-context evidence absent. Initial16312 had20PASS1FAIL1SKIP because reworded execution limit no longer matched existing no-live assertion; final prose preserves explicit no-live statement and same existing test passes. New renderer guard tests internal acceptance rejection, product review-stage inclusion, honest execution limits and existing unresolved-proof rejection. No current complete package/publication acceptance."
+    },
+    {
+      "command": "Structural receiver impact comparison against e70ddd3d",
+      "state": "terminal-pass",
+      "scope": "Private resource-root-scope-root/reader-language-impact.json:770workload+45namespace-isolation+48webhook+188monitoring records retain identical identities/schema/source/effect/outcome data; only qualification wording and root-case/parent conditions differ. Root cross-field conditions deliberately excluded from this comparison and require independent semantic review."
     }
   ],
   "reviewAssignments": [
@@ -20000,6 +20022,13 @@
       "focusChecks": "22PASS0FAIL1SKIP",
       "broadCheck": "38PASS1FAIL1SKIP; author raw-shell sink qualification open",
       "next": "Observe producer author stable release, rerun complete actual discovery/root joins, generate revision-bound canonical output, then fresh independent Source/Reader/Quality."
+    },
+    "readerQualificationLanguage": {
+      "author": "/root",
+      "state": "candidate-not-reader-quality-acceptance",
+      "focusTests": "23PASS0FAIL1explicitSKIP",
+      "publicationPolicy": "Explicit documentation acceptance language fails; source-proof gaps still fail; product review stages remain allowed.",
+      "next": "Generate actual stable integrated source output and perform fresh independent Reader/Quality reviews."
     }
   }
 }

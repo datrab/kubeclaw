@@ -31,6 +31,8 @@ function renderReceiverContract(receiver, key, fieldPath) {
   // the product reference. Real product limits remain publishable prose.
   assert(!prose.some(value => /OPEN (?:DOCUMENTATION|SHARED METADATA) PROOF|Available-source documentation gap|unclosed source-proof obligation|open source-audit obligation/iu.test(String(value))),
     `API_REFERENCE_UNRESOLVED_PROOF: ${key} ${fieldPath}`);
+  assert(!prose.some(value => /No independent source, reader or quality acceptance|(?:semantic|global documentation) acceptance|reader exercise or quality review is established/iu.test(String(value))),
+    `API_REFERENCE_INTERNAL_REVIEW_LANGUAGE: ${key} ${fieldPath}`);
   for (const name of ['purpose', 'receiver', 'operationScope', 'omitted', 'nullValue', 'emptyValue', 'invalidValue', 'changeImpact']) {
     assert(typeof receiver[name] === 'string' && receiver[name].trim(),
       `API_REFERENCE_RECEIVER_INCOMPLETE: ${key} ${fieldPath} ${name}`);
