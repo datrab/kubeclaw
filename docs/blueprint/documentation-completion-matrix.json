@@ -16106,6 +16106,34 @@
       ],
       "description": "Independent WORKLOAD-838-SRC-002 found PDB34 inherited path/name.go25–75 beyond68-line source. Root corrects shared caption to25–68 and explicitly distinguishes name versus prefix checks. Dynamic entire affected union is102records:34Role,34RoleBinding,34PDB; all evidence-only, no identity or case changes. Initial Root audit expected34 and rejected larger102union; expanded actual delta retained. Historical838FAIL unchanged.",
       "proof": "/home/node/Documents/Codex/a98-evidence/pdb-path-name-caption-root-correction.json"
+    },
+    {
+      "id": "A98-STATEFUL-OLD-SPEC-TEMPLATE-VALIDATION-COMPATIBILITY",
+      "state": "candidate-pending-new-independent-complete-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Two independent fresh Source readers prove StatefulSet update238–254 selects SkipValidatePodTemplateSpec after any old-spec error. Generic template rejection clauses were unconditional. All273 StatefulSet body records now carry exact operation scope, independent checks and compatibility case. Relevant template/PVC/serviceName null/empty/invalid clauses are explicitly conditional on their named validator running; create omission outcomes retained. Ordinary update serviceName/PVC validation skips remain constrained by immutability. New Pod/PVC admission separate; no API/live claim.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/stateful-compatibility-helper-root-export-audit.json"
+    },
+    {
+      "id": "A98-HUGEPAGE-HELPER-CAPTION-VALIDATION-SCOPE",
+      "state": "candidate-pending-new-independent-complete-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Fresh462 reviewer found helper predicate caption still claiming mandatory divisibility. Corrected to exact helper43–54 boolean predicate, without implying validation must call it. Entire helper evidence union54records:22Deployment,8Job,8CronJob,8StatefulSet,8DaemonSet. Combined with273StatefulSet operation correction, total319changedrecords; no added or removed identities.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/stateful-compatibility-helper-root-export-audit.json"
     }
   ],
   "checks": [
@@ -20572,6 +20600,16 @@
       "fieldIdentitiesUnchanged": true,
       "implicitContractsAndReferencesUnchanged": true,
       "rootAudit": "/home/node/Documents/Codex/a98-evidence/pdb-path-name-caption-root-correction.json"
+    },
+    "statefulCompatibilityAndHelper": {
+      "baseRevision": "737984ddd40cb6d97725b5831881ec08ae738538",
+      "state": "candidate-not-independent-acceptance",
+      "changedRecords": 319,
+      "entireStatefulSetBodyRecords": 273,
+      "helperCaptionRecords": 54,
+      "rootChecks": "13workload/expandedPASS before widenedStateful operation scope;6workloadPASS after widening; exact export identity counts preserved and319changedrecords recorded. Byte inventory not semantic acceptance.",
+      "rootAudit": "/home/node/Documents/Codex/a98-evidence/stateful-compatibility-helper-root-export-audit.json",
+      "pending": "New fresh full319Source after correction; existing462review remains immutable historical candidate."
     }
   }
 }

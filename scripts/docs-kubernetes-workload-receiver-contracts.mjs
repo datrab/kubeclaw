@@ -789,6 +789,21 @@ for(const r of records.values())if(r.kind==='StatefulSet'&&/^\$\.spec\.template\
  r.cases.push({name:'matching-claim-template-volume-replacement',condition:'Successfully decoded volume name matches a volumeClaimTemplate name; the remaining StatefulSet and template meet their requirements.',sourceOutcome:replacement});
  r.evidence.push(av('101-114','StatefulSet validation constructs PVC volumes keyed by claim-template name.'),av('193-214','StatefulSet validation removes all authored volumes with matching names from the template copy before validation.'),source('pkg/controller/statefulset/stateful_set_utils.go','390-405','Claim templates receive ordinal claim identity.'),source('pkg/controller/statefulset/stateful_set_utils.go','411-433','Controller replaces matching authored volumes with generated PVC references and readOnly false.'));
 }
+// Ordinary StatefulSet updates can skip the generic Pod-template validator.
+// Typed decoding/defaulting and the independent StatefulSet checks still run.
+for(const r of records.values())if(r.kind==='StatefulSet'){
+ const compatibility='On ordinary StatefulSet update, the server validates the old StatefulSetSpec with its update compatibility options. Any error from that old-spec check enables SkipValidatePodTemplateSpec for the new template. That skips the generic Pod-template validator, including resource checks. Selector matching, labels, annotations, Pod-specific annotations, StatefulSet spec checks, Always restartPolicy, the activeDeadlineSeconds prohibition and the allowed update-field checks still apply. Ordinary updates also allow an existing invalid serviceName and skip volumeClaimTemplate spec validation; those fields remain immutable. New StatefulSets validate these fields under their create rules. Typed decoding and defaulting still run. New Pods and PVCs created by the controller have their own admission and validation.';
+ r.operationScope += ' '+compatibility;
+ r.crossFieldConditions.push(compatibility);
+ const scope='The following validation rejections apply only when their named validator runs; typed decoding and defaulting remain separate: ';
+ if(r.fieldPath==='$.spec.template'||/^\$\.spec\.template\.spec(?:$|\.)/.test(r.fieldPath)||/^\$\.spec\.volumeClaimTemplates(?:$|\[|\.)/.test(r.fieldPath)||r.fieldPath==='$.spec.serviceName'){
+  const outcomes=new Map();
+  for(const field of ['nullValue','emptyValue','invalidValue']){const old=r[field];r[field]=scope+old;outcomes.set(old,r[field]);}
+  r.cases=r.cases.map(c=>c.name==='omitted-at-create'?c:{...c,sourceOutcome:outcomes.get(c.sourceOutcome)??c.sourceOutcome});
+ }
+ r.cases.push({name:'old-invalid-spec-update-compatibility',condition:'An ordinary StatefulSet update reaches the parent validator and validation of the stored old StatefulSetSpec reports an error.',sourceOutcome:compatibility});
+ r.evidence.push(av('238-254','Ordinary StatefulSet update selects compatibility options and skips generic Pod-template validation when old-spec validation reports an error.'),av('58-79','StatefulSet template validation conditionally calls the generic Pod-template validator while retaining selector matching and label/annotation checks.'),av('217-222','StatefulSet always requires Always restartPolicy and forbids activeDeadlineSeconds.'),av('258-268','StatefulSet update masks allowed changes before comparing the remaining spec fields for immutability.'),av('164-177','StatefulSet conditionally validates claim-template specs and nonempty serviceName; numeric spec checks still run.'));
+}
 export const receiverContracts=[...records.values()];
 export function workloadReceiverContracts(apiVersion,kind,exactBoundaries) {
  if(workloadVersions[kind]!==apiVersion)return [];
