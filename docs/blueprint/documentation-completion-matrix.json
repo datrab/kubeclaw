@@ -19010,7 +19010,17 @@
       "metadataRecords": 136,
       "envelopeRecords": 8,
       "authorReportSha256": "f5f97cb92041494386b7dd41d0b3c330665084415a74d060c8c1ee2f166a32e5",
-      "rootChecks": "18 focused tests PASS, no skips; prior518metadata/26envelope/136implicitcontracts/4implicitreferences byte-equivalent;137source spans within archived originals. These are integration checks, not independent semantic acceptance."
+      "rootChecks": "18 focused tests PASS, no skips; prior518metadata/26envelope/136implicitcontracts/4implicitreferences byte-equivalent;137source spans within archived originals. These are integration checks, not independent semantic acceptance.",
+      "currentReviewFindings": [
+        {
+          "reviewer": "/root/cluster_metadata_fixture_source_fresh",
+          "frozenRevision": "bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b",
+          "finding": "F2 clusterbody genericnull implied removal semantics for retainedzero listobject elements",
+          "correction": "ExplicitzeroItem validation for rules[],subjects[],versions[],additionalPrinterColumns[] and distinct freshrootnull versusabsentbody",
+          "state": "candidate-pending-new-full-fresh-review",
+          "rootChecks": "13focusedcluster/commontestsPASS,noSKIP; checkedoriginaldecode988-1004 andRBAC103-125; checks not semantic acceptance"
+        }
+      ]
     },
     "freshSource355": {
       "reviewer": "/root/lease_namespace_auth_corrected_complete_source_fresh",

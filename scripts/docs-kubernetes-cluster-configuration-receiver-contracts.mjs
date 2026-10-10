@@ -33,7 +33,15 @@ const strategy = {
 const records = [];
 function add(kind, fieldPath, purpose, omitted, emptyValue, invalidValue, evidence, extra = {}) {
  const apiVersion = apiVersions[kind];
- const nullValue = extra.nullValue ?? `In a fresh complete typed object, null leaves this scalar/struct at zero or this list/pointer nil. ${omitted} This is not a patch deletion rule.`;
+ const retainedNullItems = {
+  '$.rules[]': 'A retained null list item decodes to a zero PolicyRule, not removal of that rule. Its empty verbs fail policy-rule validation; a resource rule also lacks required apiGroups and resources.',
+  '$.subjects[]': 'A retained null list item decodes to a zero Subject, not removal of that subject. Empty kind and name fail subject validation.',
+  '$.spec.versions[]': 'A retained null list item decodes to a zero CustomResourceDefinitionVersion, not removal of that version. Empty version name and missing required schema fail validation; the complete versions list must also select exactly one storage version.',
+  '$.spec.versions[].additionalPrinterColumns[]': 'A retained null list item decodes to a zero CustomResourceColumnDefinition, not removal of that column. Empty name, type and jsonPath fail printer-column validation.',
+ };
+ const nullValue = extra.nullValue ?? retainedNullItems[fieldPath] ?? (fieldPath === '$'
+  ? 'A submitted null body leaves the allocated fresh typed object at zero. This is distinct from an absent body. Endpoint type identity and system metadata preparation do not supply the missing required object name or resource-specific fields, so fresh create validation fails. Patch null and retained-object decoder reuse are separate operations.'
+  : `In a fresh complete typed object, null leaves this scalar/struct at zero or this list/pointer nil. ${omitted} This is not a patch deletion rule.`);
  const changeImpact = extra.changeImpact ?? effects[kind];
  records.push({kind, fieldPath, authoritySelector: {apiVersion, kind, fieldPath}, purpose,
   receiver: `Kubernetes ${apiVersion} ${kind} typed defaulting, registry strategy, validation and named consumers`,
