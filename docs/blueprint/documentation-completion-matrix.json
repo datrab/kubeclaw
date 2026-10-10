@@ -16050,6 +16050,20 @@
       ],
       "description": "New fresh Source finding on965: all34ResourceQuota rootmetadata captions used strategy127–129 WarningsOnUpdate for unconditional update. Corrected pinned window130–132 AllowUnconditionalUpdate; factual behavior unchanged. Historical reviewed failure remains; new complete affected Source verification required.",
       "proof": "/home/node/Documents/Codex/a98-evidence/resourcequota-unconditional-root-correction.json"
+    },
+    {
+      "id": "A98-DAEMONSET-ROOT-NAME-CAPTION-CORRECTION",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "965-SOURCE002 historical failure retained. DaemonSet root metadata shared caption split into actual name alias537–540 and separate namespaced ObjectMeta create caller371–375. All34rootrecords retain both narrow direct authorities. No runtime behavior changed; fresh complete affected Source review required.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/daemonset-root-name-caption-correction.json"
     }
   ],
   "checks": [
