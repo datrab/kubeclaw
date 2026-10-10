@@ -20,6 +20,8 @@ Use [Configure and Operate](operate.md) to start a governed run.
 
 - Use a clean KubeClaw checkout.
 - Install Node.js major version 24 and its supplied npm version.
+- Install Go and make `go` available on `PATH`. The generated-documentation
+  checks use it to inspect Go producers.
 - Run commands from the repository root.
 - Use the npm registry and credentials selected by the repository or host package
   authority. Keep network and DNS access to that registry when the package cache
@@ -30,7 +32,8 @@ Use [Configure and Operate](operate.md) to start a governed run.
 ## Supported Versions
 
 Use the [shared version rules](README.md#version-and-tool-boundary).
-This portable quickstart requires Node.js 24.
+This portable quickstart requires Node.js 24 and Go.
+The repository does not declare an accepted Go version range; record `go version`.
 It does not require Kubernetes, Helm, kubectl, or a delegated cgroup.
 
 ## Locked Dependency Installation
@@ -99,6 +102,8 @@ git status --short
 git rev-parse HEAD
 node --version
 npm --version
+command -v go
+go version
 ```
 
 3. Check generated documentation and the installed plugin inventory.

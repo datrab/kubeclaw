@@ -16281,6 +16281,27 @@
       ],
       "description": "Independent d8 actual Helm outputs and receiver-default selection prove bounded all70 membership. Reviewer established blanket each-class wording FAIL62Stateful/PASS8Daemon. Root corrected62Stateful scopes plus shared PDB maxUnavailable scope; cases and other770 record properties unchanged. Original complete70+supplemental5 review seal pending; corrected content requires new fresh reviewer.",
       "proof": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-a511-full422-source-selection-clarification/report.md"
+    },
+    {
+      "id": "A98-STATEFUL-MAXUNAVAILABLE-NOTFOUND",
+      "state": "author-correction-pending-new-fresh-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Fresh Source at c1c295 established retained crossfield incorrectly said all deletion errors stop. Root distinguishes NotFound continued deletion count/CurrentReplicas decrement, adds817–826pinned sourcecaption. Full original63review continues; correction unaccepted.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/stateful-notfound-root-author-complete-record-delta.json"
+    },
+    {
+      "id": "A98-EARLY-READER-CORRECTIONS",
+      "state": "author-five-corrections-pending-new-full-fresh-reader-review",
+      "catalogueIds": [],
+      "acceptanceIds": [],
+      "description": "OriginalReader6ff findings: stale demoHEAD, missingGo prerequisite, offlineHelm classification, pendingactivation cleanup and unsupportedpublication repair. Root corrected canonicalpages/checker; original completeReader mapping pending. Additionalservice-routing binding andthree readerfileclassifications remain open.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/root-source-reader-corrections-author-report.json"
     }
   ],
   "checks": [
@@ -17401,6 +17422,12 @@
       "state": "terminal-pass-integrity-only",
       "scope": "All116artifacts match manifest d67fed80825b356af51b9530190bbd5b1fb3ff681614a79e580039ee38036005. Originald8 verdict preserved; no corrected approval.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-supplemental5-root-integrity.json"
+    },
+    {
+      "command": "Root Source/Reader correction checks",
+      "state": "mixed-terminal-author-only",
+      "scope": "Workload6PASS; isolatedoperator mutations terminal0 including literalofflinepositive andclusternegative fixtures. FulloperatorFAIL(service-routing binding);demo package1PASS2FAIL(OpenSSLabsent). No fullgate/Reader/Source acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/root-source-reader-corrections-author-report.json"
     }
   ],
   "reviewAssignments": [

@@ -118,7 +118,7 @@ Use two separate administration locations.
 
 | Location | Purpose | Required access |
 | --- | --- | --- |
-| Existing administration machine | First install, cluster recovery, and lockout recovery | Repository, `kubectl`, `helm`, Node.js, npm, and cluster bootstrap rights |
+| Existing administration machine | First install, cluster recovery, and lockout recovery | Repository, `kubectl`, `helm`, Node.js, npm, Go for source checks, and cluster bootstrap rights |
 | Ops Pod | Routine observation and reviewed Git changes | Running cluster, its PVCs, and configured observer rights |
 
 The Ops Pod is not an independent recovery path.
@@ -333,9 +333,14 @@ It must not return an unexpected environment with the same name.
 
 This section makes no cluster change. First complete the canonical
 [Locked Dependency Installation](quickstart.md#locked-dependency-installation)
-in this disposable checkout. Then run the source checks:
+in this disposable checkout. Install Go and make `go` available on `PATH`;
+the generated-documentation checks use it to inspect Go producers. The repository
+does not declare an accepted Go version range. Record the observed version before
+running the source checks:
 
 ```bash
+command -v go
+go version
 npm run versions:check
 npm run docs:check:generated
 npm run verify:prism:deploy-script

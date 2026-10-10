@@ -4,8 +4,8 @@ Status: reproducible local contract rehearsal; no complete live demo-delivery jo
 Audience: product operator, acceptance participant, incident responder
 Owner: product operations
 Evidence: skills/nova/plugins/demo-handoff/tests; skills/nova/project/demo.ts
-Applies to: source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
-Last verified: 2026-09-21; compiler contract passed locally, full package test stopped because OpenSSL was absent; no live demo or human decision is claimed
+Applies to: the selected KubeClaw source checkout; record its full commit SHA for each rehearsal
+Last verified: 2026-10-10 at source revision `96929f456d81cefa56a30ac50a2ba5aa27718ac9`; compiler contract passed locally, full package test failed because OpenSSL was absent; no live demo or human decision is claimed
 
 ## Purpose
 
@@ -21,7 +21,7 @@ result may be presented. They do not mean that a human accepted it.
 
 ### Supported start state, version, location, and authority
 
-The executable start point is a clean checkout at the revision above with
+The executable start point is a clean checkout of the selected source revision with
 Node.js 24, its paired npm, Go, and OpenSSL available on the administration
 machine. Run the local rehearsal from `<repository-root>`. It does not require
 an operator-created platform file, project file, cluster, provider credential,
@@ -55,12 +55,16 @@ The project compiler requires a blocking `kubeclaw.demo-auth-smoke`,
 Create a new evidence directory outside project storage. Complete the canonical
 [Locked Dependency Installation](quickstart.md#locked-dependency-installation)
 in the disposable checkout, using a separate new access-restricted directory
-for its sanitized output. Then verify the revision, clean checkout, and required tools:
+for its sanitized output. Replace `<source-commit>` with the full commit SHA
+selected for this rehearsal, before running the commands. It must identify the
+checkout you intend to test. The source links below identify the implementation
+used by the examples; they do not require checking out that historical commit.
+Then verify the selected revision, clean checkout, and required tools:
 
 ```bash
 set -euo pipefail
 umask 077
-test "$(git rev-parse HEAD)" = "1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de"
+test "$(git rev-parse HEAD)" = "<source-commit>"
 test -z "$(git status --porcelain)"
 command -v node
 command -v npm
@@ -125,7 +129,7 @@ The checked-in handoff test implements the terminal and reconciliation checks
 These are protocol rejection and effect-reconciliation checks. They are not a
 human rejection, a pipeline wait/resume exercise, or deployed access proof.
 
-The 2026-09-21 verification environment lacked `openssl`; the unchanged full
+The 2026-10-10 verification environment lacked `openssl`; the full
 command therefore reported one pass and two `spawnSync openssl ENOENT`
 failures. That result is retained as a prerequisite failure, not reported as a
 successful rehearsal. With OpenSSL available, any nonzero exit, skipped test,

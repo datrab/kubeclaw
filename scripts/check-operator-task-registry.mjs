@@ -119,6 +119,19 @@ const usePages = markdownFiles(useRoot);
 
 const discoveredTasks = new Map();
 const discoveredVariants = new Map();
+function containsRawClusterCommand(body) {
+  return body.replace(/\\\r?\n/gu, ' ').split('\n').some((line) => {
+      if (!/^\s*(?:sudo\s+)?(?:kubectl|helm|\.\/scripts\/deploy\.sh)\b/u.test(line)) return false;
+      // Literal local rendering does not contact the Kubernetes API.
+      // Server validation, opaque post-renderers and dynamic arguments
+      // retain the cluster-binding requirement.
+      const localTemplate = /^\s*(?:sudo\s+)?helm\s+template\b/u.test(line)
+        && !/[\$`;|&]/u.test(line)
+        && !/--validate\b(?!=(?:false|False|FALSE|0|f|F)(?=[\s;|&]|$))|--dry-run[=\s'"]+server\b|--post-renderer\b/u.test(line);
+      return !localTemplate;
+    });
+}
+
 for (const filePath of usePages) {
   const relativePage = `docs/site/use/${path.relative(useRoot, filePath).split(path.sep).join('/')}`;
   const markdown = fs.readFileSync(filePath, 'utf8');
@@ -134,8 +147,7 @@ for (const filePath of usePages) {
 
   for (const body of shellFences(markdown)) {
     if (body.includes('assert_cluster_binding() {')) continue;
-    const hasRawClusterCommand = body.split('\n').some((line) =>
-      /^\s*(?:sudo\s+)?(?:kubectl|helm|\.\/scripts\/deploy\.sh)\b/u.test(line));
+    const hasRawClusterCommand = containsRawClusterCommand(body);
     if (!hasRawClusterCommand) continue;
     const firstCommand = body.split('\n').find((line) => line.trim() && !line.trim().startsWith('#'))?.trim();
     assert.equal(firstCommand, 'assert_cluster_binding',
@@ -187,8 +199,7 @@ for (const filePath of markdownFiles(checkedSiteRoot)) {
   const markdown = fs.readFileSync(filePath, 'utf8');
   for (const body of shellFences(markdown)) {
     if (body.includes('assert_cluster_binding() {')) continue;
-    const hasRawClusterCommand = body.split('\n').some((line) =>
-      /^\s*(?:sudo\s+)?(?:kubectl|helm|\.\/scripts\/deploy\.sh)\b/u.test(line));
+    const hasRawClusterCommand = containsRawClusterCommand(body);
     if (!hasRawClusterCommand) continue;
     const firstCommand = body.split('\n').find((line) => line.trim() && !line.trim().startsWith('#'))?.trim();
     assert.equal(firstCommand, 'assert_cluster_binding',

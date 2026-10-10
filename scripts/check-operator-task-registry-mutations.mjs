@@ -60,6 +60,12 @@ try {
     ['list.md', '- ```bash\n  kubectl get pods\n  ```\n'],
     ['deep-indented.md', '        ~~~sh\n        helm list\n        ~~~\n'],
     ['reference/secrets.md', '```bash\n./scripts/deploy.sh status\n```\n'],
+    ['template-validate.md', '```bash\nhelm template example charts/kubeclaw --validate\n```\n'],
+    ['template-server.md', '```bash\nhelm template example charts/kubeclaw --dry-run=server\n```\n'],
+    ['template-compound.md', '```bash\nhelm template example charts/kubeclaw; kubectl get pods\n```\n'],
+    ['template-validate-true.md', '```bash\nhelm template example charts/kubeclaw --validate=TRUE\n```\n'],
+    ['template-dynamic.md', '```bash\nhelm template example charts/kubeclaw $FLAGS\n```\n'],
+    ['template-post-renderer.md', '```bash\nhelm template example charts/kubeclaw --post-renderer ./render.sh\n```\n'],
   ]);
   for (const [relative, contents] of fenceCases) {
     const fixtureSiteRoot = path.join(temporaryRoot, `site-${relative.replaceAll('/', '-')}`);
@@ -70,6 +76,15 @@ try {
       OPERATOR_TASK_SITE_ROOT: fixtureSiteRoot,
     }, /cluster-capable fenced block must begin with assert_cluster_binding/u);
   }
+
+  const localTemplateRoot = path.join(temporaryRoot, 'local-template');
+  fs.mkdirSync(localTemplateRoot);
+  fs.writeFileSync(path.join(localTemplateRoot, 'render.md'),
+    '```bash\nhelm template precedence-example charts/kubeclaw --namespace default -f example-dir/base.yaml > example-dir/base-render.yaml\n```\n');
+  execFileSync(process.execPath, [path.join(root, 'scripts/check-operator-task-registry.mjs'), '--check'], {
+    cwd: root, env: { ...process.env, OPERATOR_TASK_SITE_ROOT: localTemplateRoot },
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
 
   const transitiveRoot = path.join(temporaryRoot, 'transitive-npm-ci');
   const transitiveSite = path.join(transitiveRoot, 'site');

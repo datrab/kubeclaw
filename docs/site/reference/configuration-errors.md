@@ -34,7 +34,7 @@ load.
 | `PIPELINE_STAGE_OWNER_MISSING:<type>` | No trusted discovered stage registration owns the type. | Check exact stage spelling, installation roots, package manifest, and trust digest. |
 | Provider or grant resolution error | Required capability has no unambiguous selected provider or resource grant. | Compare enabled registration requirements with `providers` and `grants`. Do not broaden unrelated grants. |
 | Registration configuration error | A stage, adapter, observer, or provider object violates its own schema. | Use the named registration reference. Distinguish schema defaults from caller-inserted values. |
-| Activation/startup failure | Schema passed but an adapter dependency, secret, path, or endpoint failed. | Treat startup rollback as bounded; inspect the original cause and do not assume partial adapters remained active. |
+| Activation/startup failure | Schema passed but an adapter dependency, secret, path, or endpoint failed. | Inspect the original cause and stop new admission. Cleanup can remain pending if an adapter ignores its shutdown signal; earlier adapter contexts may not yet be revoked. Preserve adapter identity and unresolved cleanup state. Follow [startup and cleanup limits](../use/plugins.md#3-activate-and-prove-health). |
 
 ## Project compiler errors
 
@@ -95,8 +95,7 @@ do not agree. `CHANGED` detects a concurrent or substituted path.
 generation identity but differ.
 
 Do not delete the publication directory to force loose-file fallback. Preserve
-it for diagnosis, correct the scaffold, and run supported `--apply` publication
-again.
+it for diagnosis. Follow [bounded republish admission](project-pipeline-publication.md#bounded-republish-of-an-intact-generation) before any supported `--apply` retry. The CLI cannot repair malformed loose `progress.json` or replace conflicting immutable generation bytes. Keep execution stopped and follow [unsupported corruption repair](project-pipeline-publication.md#unsupported-corruption-repair) with the project-setup and storage owners for those cases.
 
 ## Recovery and Prism errors
 
