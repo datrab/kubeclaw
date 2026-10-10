@@ -19716,6 +19716,26 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/selector-map-null-correction-root",
       "checks": "13 focused integration checks PASS0FAIL0SKIP; two original authority files hash-verified; exact export diff2records only nullValue/cases/evidence",
       "limits": "No live API decoding, source-stable complete producer join, independent full Source PASS, Reader/Quality/Astra or package closure."
+    },
+    "workloadNodeSemanticScopeCheckpoint": {
+      "reviewer": "/root/workload_node_complete_source_fresh",
+      "revision": "5d4324872f076af5a11e56420e60c217122ea69a",
+      "state": "PASS-bounded-scope-decisions-only-not-complete-source-acceptance",
+      "mechanicalExclusions": 239,
+      "individuallyQualifiedSemanticExclusions": 234,
+      "materialPublicationFailures": [
+        29,
+        117,
+        118,
+        120,
+        121
+      ],
+      "scope": "197 missing-ancestor plus37 individually assessed present-parent/internal-prototype/covered-consumer/unused-variant decisions. No blanket generic-zero expansion. Five genuinely missing Job selector/readiness obligations stay FAIL at frozen5d; Root candidate corrections require fresh independent acceptance.",
+      "sealedManifest": "/home/node/Documents/Codex/a98-evidence/workload-node-complete-source-fresh/scope-sealed-manifest.json",
+      "sealedManifestSHA256": "51c33383a3f487da7d2a6fac78daef2d1b20a43b28455695b5e02d67c0e143df",
+      "rootVerifiedSealedFiles": 12,
+      "rootVerification": "/home/node/Documents/Codex/a98-evidence/selector-map-null-correction-root/scope-manifest-verification.json",
+      "limits": "Root verified sealed file bytes/digests and distinct identities; 234 semantic exclusions apply only to frozen5d scope. Entire Source/Reader/Quality/Astra acceptance remains incomplete."
     }
   }
 }
