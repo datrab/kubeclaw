@@ -323,7 +323,7 @@ test('Go constructor additions, changed map fields and malformed syntax fail ind
 
 import { execFileSync } from 'node:child_process';
 import { discoverExternalChartApiOutputs } from '../docs-api-output-discovery.mjs';
-import { assertProducerAdapterAuthority } from '../docs-api-output-discovery.mjs';
+import { assertProducerAdapterAuthority,producerAdapterOperationRecipe,shellRawOutputSinks } from '../docs-api-output-discovery.mjs';
 
 test('new active external Application binds authenticated chart output and rejects changed pins or malformed bindings',()=> {
   sourceFixture({'chart/Chart.yaml':'apiVersion: v2\nname: external\nversion: 0.1.0\n','chart/values.yaml':'immutable: false\n','chart/templates/config.yaml':'apiVersion: v1\nkind: ConfigMap\nmetadata: {name: external}\nimmutable: {{ .Values.immutable }}\n',
@@ -465,10 +465,10 @@ test('the exact unsupported Prism field retains its dedicated contract without b
 test('changed installer flags, transform pipelines and a new Helm producer stop before stale adapters can rebind',()=> {
  const source='#!/bin/bash\nhelm upgrade --install actual example/chart --version 1.0.0\nnode scripts/render-reviewed.mjs input.yaml\n';
  sourceFixture({'scripts/install.sh':source},root=> {
-  const registry={version:1,owner:'fixture adapter author',closureCondition:'Review changed operation and refresh adapter proof.',sources:{'scripts/install.sh':{sha256:createHash('sha256').update(source).digest('hex'),operation:'Reviewed fixture installer and transform caller.'}}};fs.writeFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),JSON.stringify(registry));
+  const registry={version:1,owner:'fixture adapter author',closureCondition:'Review changed operation and refresh adapter proof.',sources:{'scripts/install.sh':{operationRecipe:producerAdapterOperationRecipe('scripts/install.sh',source),sha256:createHash('sha256').update(source).digest('hex'),operation:'Reviewed fixture installer and transform caller.',operationDigest:createHash('sha256').update(source).digest('hex'),invocations:source.trim().split('\n').slice(1)}}};fs.writeFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),JSON.stringify(registry));
   assertProducerAdapterAuthority(root,['scripts/install.sh']);
-  fs.writeFileSync(path.join(root,'scripts/install.sh'),source.replace('--version 1.0.0','--version 1.0.0 --set newPublicFlag=true'));assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_ADAPTER_AUTHORITY_DRIFT/);
-  fs.writeFileSync(path.join(root,'scripts/install.sh'),source.replace('render-reviewed.mjs','render-unreviewed.mjs'));assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_ADAPTER_AUTHORITY_DRIFT/);
+  fs.writeFileSync(path.join(root,'scripts/install.sh'),source.replace('--version 1.0.0','--version 1.0.0 --set newPublicFlag=true'));assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_ADAPTER_(?:AUTHORITY|INVOCATION|OPERATION)_DRIFT/);
+  fs.writeFileSync(path.join(root,'scripts/install.sh'),source.replace('render-reviewed.mjs','render-unreviewed.mjs'));assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_ADAPTER_(?:AUTHORITY|INVOCATION|OPERATION)_DRIFT/);
   fs.writeFileSync(path.join(root,'scripts/install.sh'),source);fs.writeFileSync(path.join(root,'scripts/new-install.sh'),'helm install new new/chart --version 1.0.0\n');assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_ADAPTER_OPERATION_UNCLASSIFIED/);
   fs.writeFileSync(path.join(root,'scripts/new-install.sh'),'args=(upgrade --install new new/chart)\nhelm "${args[@]}"\n');assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_ADAPTER_OPERATION_UNCLASSIFIED/);
  });
@@ -510,4 +510,277 @@ test('selected Pod workload records retain the Pod receiving route and reject ne
   }
   assert.throws(()=>productApiReceiverRecords('v1','Pod',['$.spec.unknownNewProducerField']),/EXPANDED_WORKLOAD_RECEIVER_GAP: v1\/Pod/);
   assert.equal(productApiReceiverRecords('apps/v1','Pod',fields).filter(record=>record.kind==='Pod').length,0);
+});
+
+test('published computed updates resolve and conditional updates reject qualification',()=> {
+ sourceFixture({'bin/new.mjs':"const body={apiVersion:'v1',kind:'ConfigMap',metadata:{name:'new'}};body['immutable']=true;console.log(JSON.stringify(body));"},root=>{
+   assert.equal(discoverScriptApiOutputs(root)[0].value.immutable,true);
+   const file=path.join(root,'bin/new.mjs');fs.writeFileSync(file,fs.readFileSync(file,'utf8').replace("body['immutable']=true","if(process.env.FLAG)body['immutable']=true"));
+   assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_MUTATION_BRANCH_UNQUALIFIED/);
+   fs.renameSync(file,path.join(root,'bin/renamed.mjs'));assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_MUTATION_BRANCH_UNQUALIFIED/);
+   fs.rmSync(path.join(root,'bin/renamed.mjs'));assert.deepEqual(discoverScriptApiOutputs(root),[]);
+ });
+});
+test('dynamic serialized API templates and shell transforms fail closed',()=> {
+ sourceFixture({'bin/new.mjs':'process.stdout.write(`apiVersion: v1\nkind: ${process.env.KIND}\nmetadata: {name: new}\n`);'},root=>assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_(?:SERIALIZED_OUTPUT|OUTPUT_ROLE)_UNQUALIFIED/));
+ sourceFixture({'bin/new.sh':'kubectl create configmap new --from-literal=a=b --dry-run=client -o yaml | sed s/ConfigMap/Secret/ | kubectl apply -f -\n'},root=>assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_SHELL_PIPELINE_UNQUALIFIED/));
+});
+test('actual Python secret functions retain supported offline conditional witnesses',()=> {
+ const outputs=discoverScriptApiOutputs(path.resolve(import.meta.dirname,'../..')).filter(output=>output.context.producer==='python-offline-original');
+ assert(outputs.some(output=>output.value.stringData?.token==='synthetic-token'));
+ assert(outputs.some(output=>output.value.stringData?.authkey==='synthetic-safe-payload'));
+ assert(outputs.some(output=>output.value.type==='kubernetes.io/dockerconfigjson'&&output.value.data['.dockerconfigjson']));
+ assert(!outputs.some(output=>output.context.profile==='retained'));
+ assert(!outputs.some(output=>output.context.profile==='copy-disabled'&&output.value.metadata.name==='ghcr-secret'));
+});
+
+import { discoverTransformedApiOutputs } from '../docs-api-output-discovery.mjs';
+test('actual returned continuous transform publishes the selected directory source',()=> {
+ const outputs=discoverTransformedApiOutputs(path.resolve(import.meta.dirname,'../..'));
+ const app=outputs.find(output=>output.context.profile==='continuous-bootstrap'&&output.value.kind==='Application');assert(app);
+ assert.deepEqual(app.value.spec.source,{repoURL:'https://example.invalid/discovery.git',targetRevision:'main',path:'gitops/production/apps',directory:{include:'applications.yaml'}});
+ assert.equal(app.context.publicOutput,'gitops/production/bootstrap.yaml');assert(app.context.inputs.includes('scripts/gitops.mjs'));
+});
+test('refreshing source hashes alone cannot authorize an altered installer invocation',()=> {
+ const source='helm upgrade --install cilium cilium/cilium --version 1.20.1 --namespace cilium --values my-values/infra/cilium-values.yaml\n';
+ const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+ const record={operationRecipe:producerAdapterOperationRecipe('scripts/deploy-cilium.sh',source),sha256:sha(source),operationDigest:sha(source),operation:'Fixture installer',invocations:[source.trim()]};
+ sourceFixture({'scripts/deploy-cilium.sh':source,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify({version:1,sources:{'scripts/deploy-cilium.sh':record}})},root=>{
+ assertProducerAdapterAuthority(root,['scripts/deploy-cilium.sh']);const changed=source.trim()+' --set hubble.relay.enabled=false\n';
+ fs.writeFileSync(path.join(root,'scripts/deploy-cilium.sh'),changed);record.sha256=sha(changed);record.operationDigest=sha(changed);
+ fs.writeFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),JSON.stringify({version:1,sources:{'scripts/deploy-cilium.sh':record}}));
+ assert.throws(()=>assertProducerAdapterAuthority(root,['scripts/deploy-cilium.sh']),/API_PRODUCT_ADAPTER_INVOCATION_DRIFT/);
+ });
+});
+test('new unsupported public emitter languages fail qualification rather than vanish',()=> {
+ sourceFixture({'packaging/new.rb':"puts 'apiVersion: v1\\nkind: Secret'"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED/));
+ sourceFixture({'tools/renamed.py':"def output():\n return {'apiVersion':'v1','kind':'Secret'}\n"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_PYTHON_(?:PRODUCER|SERIALIZED_OUTPUT_ROLE)_UNQUALIFIED/));
+});
+test('an authenticated caller rewrite cannot reuse a stale transform positional recipe',()=> {
+ const root=path.resolve(import.meta.dirname,'../..');const source=fs.readFileSync(path.join(root,'scripts/deploy.sh'),'utf8');
+ sourceFixture({'scripts/deploy.sh':source.replace('"$INFRA_DIR/litellm-config.yaml" "$INFRA_DIR/litellm-deployment.yaml")','"$INFRA_DIR/litellm-other.yaml" "$INFRA_DIR/litellm-deployment.yaml")')},fixture=>{
+ assert.throws(()=>discoverTransformedApiOutputs(fixture),/API_PRODUCT_ADAPTED_RECIPE_INVOCATION_DRIFT/);
+ });
+});
+test('original Python producer changes and module environment initialization alter offline emitted Secrets',()=> {
+ const root=path.resolve(import.meta.dirname,'../..');const producer=fs.readFileSync(path.join(root,'ops/pod/bootstrap.py'),'utf8');
+ sourceFixture({'ops/pod/bootstrap.py':producer,'scripts/deploy-ops-pod.sh':'python3 ops/pod/bootstrap.py secrets\n'},fixture=>{
+ const before=discoverScriptApiOutputs(fixture);assert(before.length);
+ fs.writeFileSync(path.join(fixture,'ops/pod/bootstrap.py'),producer.replace("'type': 'Opaque', 'stringData': values", "'type': 'Opaque', 'immutable': True, 'stringData': values").replace("os.environ.get('OPS_NAMESPACE', 'kubeclaw-ops')", "'changed-namespace'"));
+ const after=discoverScriptApiOutputs(fixture);assert(after.some(output=>output.value.immutable===true));assert(after.every(output=>output.value.metadata.namespace==='changed-namespace'));assert.notEqual(after[0].context.outputDigest,before[0].context.outputDigest);
+ fs.renameSync(path.join(fixture,'ops/pod/bootstrap.py'),path.join(fixture,'ops/pod/renamed.py'));assert.throws(()=>discoverScriptApiOutputs(fixture),/API_PRODUCT_PYTHON_(?:PRODUCER|SERIALIZED_OUTPUT_ROLE)_UNQUALIFIED/);
+ fs.rmSync(path.join(fixture,'ops/pod/renamed.py'));assert.deepEqual(discoverScriptApiOutputs(fixture),[]);
+ });
+});
+import { discoverNonApiOutputClassifications } from '../docs-api-output-discovery.mjs';
+test('actual local kubeconfig sink is classified without ignoring API-shaped Config submissions',()=> {
+ const root=path.resolve(import.meta.dirname,'../..');const classifications=discoverNonApiOutputClassifications(root);
+ assert(classifications.some(item=>item.path==='docker/buster-runtime-entrypoint.sh'&&item.classification==='local-kubernetes-client-configuration'));
+ sourceFixture({'bin/new.sh':'kubectl apply -f - <<EOF\napiVersion: v1\nkind: Config\nclusters: []\nusers: []\ncontexts: []\ncurrent-context: example\nEOF\n'},fixture=>assert.throws(()=>discoverShellApiOutputs(fixture),/API_PRODUCT_CLIENT_CONFIG_SINK_UNQUALIFIED/));
+});
+test('terminal emitted JS binding excludes later updates and rejects multiple changed publications',()=> {
+ const source="const body={apiVersion:'v1',kind:'ConfigMap',metadata:{name:'new'}};console.log(JSON.stringify(body));body.immutable=true;";
+ sourceFixture({'bin/new.mjs':source},root=>{assert.equal(discoverScriptApiOutputs(root)[0].value.immutable,undefined);fs.appendFileSync(path.join(root,'bin/new.mjs'),'console.log(JSON.stringify(body));');assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_MULTIPLE_OUTPUT_VARIANTS_UNQUALIFIED/);});
+});
+
+test('markerless serialized stdout, aliases, files and public returns fail closed',()=>{
+ const variants=[
+  'process.stdout.write(JSON.stringify(JSON.parse(process.argv[2])));',
+  'const bytes=JSON.stringify(JSON.parse(process.argv[2]));process.stdout.write(bytes);',
+  "import fs from 'node:fs';fs.writeFileSync('public.json',JSON.stringify(JSON.parse(process.argv[2])));",
+  'export function emitted(){return JSON.stringify(JSON.parse(process.argv[2]));}',
+ ];
+ for(const [index,source]of variants.entries())sourceFixture({[`bin/docs-new-${index}.mjs`]:source},root=>{
+  assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED/);
+  const before=path.join(root,`bin/docs-new-${index}.mjs`),after=path.join(root,'bin/renamed.mjs');fs.renameSync(before,after);
+  assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED/);fs.rmSync(after);assert.deepEqual(discoverScriptApiOutputs(root),[]);
+ });
+ sourceFixture({'bin/diagnostic.mjs':"const value={schemaVersion:'diagnostic.v1',status:process.argv[2]};const bytes=JSON.stringify(value);console.log(bytes);"},root=>assert.deepEqual(discoverScriptApiOutputs(root),[]));
+});
+test('actual registry Job constructor retains original alias mutations and deletions',()=>{
+ const outputs=discoverScriptApiOutputs(path.resolve(import.meta.dirname,'../..'));
+ const job=outputs.find(output=>output.context.path==='scripts/render-registry-local.mjs'&&output.value.kind==='Job');assert(job);
+ const container=job.value.spec.template.spec.containers[0];assert(!Object.hasOwn(container,'ports'));assert(!Object.hasOwn(container,'readinessProbe'));assert(!Object.hasOwn(container,'livenessProbe'));
+ assert.equal(container.args[0],'garbage-collect');assert(container.volumeMounts.length>0);assert(container.resources.requests.cpu);
+});
+test('terminal identity mutations classify a former diagnostic as an API body',()=>{
+ sourceFixture({'bin/body.mjs':"const body={metadata:{name:'changed'}};body['apiVersion']='v1';body.kind='Secret';console.log(JSON.stringify(body));"},root=>{
+  const output=discoverScriptApiOutputs(root);assert.equal(output.length,1);assert.equal(output[0].value.kind,'Secret');
+  fs.writeFileSync(path.join(root,'bin/body.mjs'),"const body={status:'ok'};body[process.argv[2]]=process.argv[3];console.log(JSON.stringify(body));");
+  assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED/);
+ });
+});
+test('temporary file locations do not authorize unknown serialized API-capable values',()=>{
+ sourceFixture({'bin/temporary.mjs':"import fs from 'node:fs';import path from 'node:path';const directory=fs.mkdtempSync('/tmp/discovery-');fs.writeFileSync(path.join(directory,'body.json'),JSON.stringify(JSON.parse(process.argv[2])));"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED/));
+});
+
+import { classifySerializedOutputRoles } from '../docs-api-output-role-classification.mjs';
+test('native role operation tuples cannot be authorized by refreshed source hashes',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..');const source='scripts/prepare-native-worker-pools.mjs';
+ const original=fs.readFileSync(path.join(repository,source),'utf8');const registry=JSON.parse(fs.readFileSync(path.join(repository,'scripts/docs-api-producer-adapter-authorities.json'),'utf8'));
+ sourceFixture({[source]:original,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{
+  assert(classifySerializedOutputRoles(root,source,[source]).some(role=>role.basis==='validated-fixed-machine-id-file'));
+  const changed=original.replace("read('/etc/machine-id')",'JSON.parse(process.argv[2])');fs.writeFileSync(path.join(root,source),changed);
+  registry.sources[source]={sha256:createHash('sha256').update(changed).digest('hex'),operationDigest:createHash('sha256').update(changed).digest('hex')};fs.writeFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),JSON.stringify(registry));
+  assert(classifySerializedOutputRoles(root,source,[source]).some(role=>role.role==='unknown'&&role.expression==='`${machineId}\\n`'));
+ });
+});
+test('qualified canonical serializers still reject unknown actual caller payloads',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..');const source=fs.readFileSync(path.join(repository,'skills/nova/core/execution/engine-snapshots.ts'),'utf8');
+ const start=source.indexOf('export function canonicalJson('),end=source.indexOf('\n}',start)+2;const canonical=source.slice(start,end);
+ sourceFixture({'bin/canonical.ts':canonical+"\nprocess.stdout.write(canonicalJson(JSON.parse(process.argv[2])));"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED/));
+});
+
+test('markerless shell submissions and Python or Go serializers cannot disappear',()=>{
+ sourceFixture({'bin/new.sh':'kubectl apply -f - <<EOF\n${UNKNOWN_BODY}\nEOF\n'},root=>assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_SHELL_SUBMITTED_OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({'bin/new.py':'import json,sys\nprint(json.dumps(json.loads(sys.argv[1])))\n'},root=>{
+  assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED/);
+  fs.writeFileSync(path.join(root,'bin/new.py'),"import json\nprint(json.dumps({'status':'ok'}))\n");assert.deepEqual(discoverScriptApiOutputs(root),[]);
+ });
+ sourceFixture({'bin/new.go':'package main\nimport("encoding/json";"os")\nfunc main(){var body any;json.NewDecoder(os.Stdin).Decode(&body);json.NewEncoder(os.Stdout).Encode(body)}\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/API_PRODUCT_GO_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED/));
+});
+
+test('raw helper-call stdout and file outputs fail closed without serialization markers',()=>{
+ for(const body of ["function read(){return process.argv[2]}process.stdout.write(read());", "import fs from 'node:fs';function read(){return process.argv[2]}fs.writeFileSync('public.yaml',read());"])
+  sourceFixture({'bin/new.mjs':body},root=>assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED/));
+});
+
+test('public arrow serializer returns retain the markerless unknown-root rejection',()=>{
+ sourceFixture({'bin/new.mjs':'export const emitted=()=>JSON.stringify(JSON.parse(process.argv[2]));'},root=>assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('installer default values cannot rebind a stale recipe through hash-only refresh',()=>{
+ const source='NAMESPACE=${NAMESPACE:-original}\nhelm upgrade --install cilium cilium/cilium --namespace "$NAMESPACE" --version 1.20.1\n';
+ const digest=bytes=>createHash('sha256').update(bytes).digest('hex');const record={operation:'Fixture structured installer',sha256:digest(source),operationDigest:digest(source),invocations:[source.trim().split('\n')[1]],operationRecipe:producerAdapterOperationRecipe('scripts/deploy-cilium.sh',source)};
+ sourceFixture({'scripts/deploy-cilium.sh':source,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify({version:1,sources:{'scripts/deploy-cilium.sh':record}})},root=>{
+  assertProducerAdapterAuthority(root,['scripts/deploy-cilium.sh']);const changed=source.replace(':-original',':-changed');fs.writeFileSync(path.join(root,'scripts/deploy-cilium.sh'),changed);record.sha256=digest(changed);record.operationDigest=digest(changed);fs.writeFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),JSON.stringify({version:1,sources:{'scripts/deploy-cilium.sh':record}}));assert.throws(()=>assertProducerAdapterAuthority(root,['scripts/deploy-cilium.sh']),/API_PRODUCT_ADAPTER_RECIPE_DRIFT/);
+ });
+});
+test('markerless dynamic shell heredoc file bodies fail output-role qualification',()=>{
+ sourceFixture({'bin/new.sh':'cat > public.yaml <<EOF\n${UNKNOWN_BODY}\nEOF\n'},root=>assert.throws(()=>discoverShellApiOutputs(root),/API_PRODUCT_SHELL_EMITTED_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('a known kind cannot authorize an unknown API-version identity in a new emitter',()=>{
+ sourceFixture({'bin/new.mjs':"const body={apiVersion:JSON.parse(process.argv[2]).version,kind:'BusterNamespaceLease',metadata:{name:'unknown'},spec:{}};console.log(JSON.stringify(body));"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_IDENTITY_UNRESOLVED/));
+});
+
+test('markerless direct Kubernetes submissions fail without an actual adapted input contract',()=>{
+ sourceFixture({'bin/new.mjs':"import{execFileSync}from'node:child_process';execFileSync('kubectl',['apply','-f','-'],{input:JSON.stringify(JSON.parse(process.argv[2]))});"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+});
+
+test('markerless dynamic Kubernetes command arguments fail closed',()=>{
+ sourceFixture({'bin/new.mjs':"import{execFileSync}from'node:child_process';const args=JSON.parse(process.argv[2]);execFileSync('kubectl',args,{input:process.argv[3]});"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('aliased Kubernetes subprocess imports cannot hide dynamic arguments',()=>{
+ sourceFixture({'bin/new.mjs':"import{spawnSync as send}from'node:child_process';send('kubectl',JSON.parse(process.argv[2]));"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('changed native Kubernetes callers cannot reuse original read-only operation recipes',()=>{
+ const source='bin/native.mjs',original="import{execFileSync}from'node:child_process';function query(args){return execFileSync('kubectl',args);}query(['get','pods']);";
+ const registry={kubernetesCommandContracts:[{source,basis:'actual-get-only-caller',operations:[{source,recipeRef:source}]}],nativeRoleOperationTuples:{[source]:producerAdapterOperationRecipe(source,original).statements}};
+ sourceFixture({[source]:original,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{
+  assert.doesNotThrow(()=>discoverScriptApiOutputs(root));fs.writeFileSync(path.join(root,source),original.replace("['get','pods']","['apply','-f','-']"));assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/);
+ });
+});
+test('markerless direct Kubernetes HTTP submission cannot vanish',()=>{
+ sourceFixture({'bin/new.mjs':"fetch('/api/v1/namespaces',{method:'POST',body:JSON.stringify(JSON.parse(process.argv[2]))});"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('aliased native serializers and markerless Python stdout fail closed',()=>{
+ for(const [name,bytes]of Object.entries({'bin/new.py':"import json as j\nprint(j.dumps(j.loads(__import__('sys').argv[1])))\n",'bin/raw.py':"import sys\nprint(sys.argv[1])\n",'bin/new.go':'package main\nimport j "encoding/json"\nimport "os"\nfunc main(){v:=map[string]any{}; j.Unmarshal([]byte(os.Args[1]),&v); b,_:=j.Marshal(v);os.Stdout.Write(b)}\n'}))sourceFixture({[name]:bytes},root=>assert.throws(()=>name.endsWith('.go')?discoverGoApiOutputs(root):discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('markerless raw Go stdout cannot silently publish an unknown document',()=>{
+ sourceFixture({'bin/new.go':'package main\nimport "os"\nfunc main(){os.Stdout.WriteString(os.Args[1])}\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('local aliases of native stdout sinks retain fail-closed roles',()=>{
+ sourceFixture({'bin/new.py':"import sys\nwrite=sys.stdout.write\nwrite(sys.argv[1])\n"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({'bin/new.go':'package main\nimport "os"\nfunc main(){out:=os.Stdout;out.WriteString(os.Args[1])}\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('Go format-only raw streams and serializer trivia do not authorize unknown outputs',()=>{
+ for(const [name,bytes]of Object.entries({'bin/raw.go':'package main\nimport "fmt"\nimport "os"\nfunc main(){fmt.Printf("%s",os.Args[1])}\n','bin/encoder.go':'package main\nimport j "encoding/json"\nimport "os"\nfunc main(){j.NewEncoder /* trivia */ (os.Stdout).Encode(os.Args[1])}\n'}))sourceFixture({[name]:bytes},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('markerless Go files and dot-import format outputs fail closed',()=>{
+ for(const [name,bytes]of Object.entries({'bin/file.go':'package main\nimport "os"\nfunc main(){os.WriteFile("public.yaml",[]byte(os.Args[1]),0600)}\n','bin/dot.go':'package main\nimport . "fmt"\nimport "os"\nfunc main(){Printf("%s",os.Args[1])}\n'}))sourceFixture({[name]:bytes},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('markerless raw shell stdout, files, branches and literal API streams fail closed',()=>{
+ for(const bytes of ["printf '%s' \"$BODY\"\n","echo \"$BODY\" > public.yaml\n","if true;then printf '%s\\n' \"$BODY\";fi\n","cat public.yaml\n","printf '%s' '{\"apiVersion\":\"v1\",\"kind\":\"Secret\",\"metadata\":{\"name\":\"x\"}}'\n"])sourceFixture({'bin/new.sh':bytes},root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({'bin/new.sh':"BODY='{\"status\":\"ok\"}';printf '%s' \"$BODY\"\n"},root=>assert.doesNotThrow(()=>discoverShellApiOutputs(root)));
+});
+test('changing an original shell sink cannot reuse its source operation recipe',()=>{
+ const source='bin/native.sh',bytes="BODY=initial;printf '%s' \"$BODY\" | sed 's/x/y/'\n";
+ const registry={shellRawOutputContracts:[{source,role:'non-api',basis:'fixture native consumer',sinks:shellRawOutputSinks(source,bytes),operationRecipe:producerAdapterOperationRecipe(source,bytes)}]};
+ sourceFixture({[source]:bytes,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{
+  assert.doesNotThrow(()=>discoverShellApiOutputs(root));fs.writeFileSync(path.join(root,source),bytes.replace('s/x/y/','s/x/z/'));assert.throws(()=>discoverShellApiOutputs(root),/SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/);
+ });
+});
+test('markerless serialized roots in an unsupported public language fail qualification',()=>{
+ sourceFixture({'bin/new.rb':'require "json"\nputs JSON.generate(JSON.parse(ARGV[0]))\n'},root=>assert.throws(()=>discoverScriptApiOutputs(root),/PRODUCER_LANGUAGE_UNQUALIFIED/));
+});
+test('markerless root mutations retain identity through aliases and unsupported escapes',()=>{
+ const prefix="let root={status:'ok'};const alias=root;const third=alias;";
+ for(const operation of ["alias[process.argv[2]]=process.argv[3];","third[process.argv[2]]=process.argv[3];","delete third[process.argv[2]];","third.status+=process.argv[2];","root=JSON.parse(process.argv[2]);","Object.assign(third,JSON.parse(process.argv[2]));","Reflect.set(third,process.argv[2],process.argv[3]);","mutate(third);"]){sourceFixture({'bin/new.mjs':prefix+operation+"console.log(JSON.stringify(root));"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));}
+ sourceFixture({'bin/new.mjs':"let root={status:'ok'};console.log(JSON.stringify(root));root[process.argv[2]]=process.argv[3];"},root=>assert.doesNotThrow(()=>discoverScriptApiOutputs(root)));
+});
+test('static JavaScript stdout and file aliases retain unknown-root qualification',()=>{
+ for(const bytes of ["import {writeFileSync as write} from 'node:fs';write('public.yaml',JSON.stringify(JSON.parse(process.argv[2])));","import f from 'node:fs/promises';await f.writeFile('public.yaml',process.argv[2]);","const emit=console.log;emit(JSON.stringify(JSON.parse(process.argv[2])));","const out=process.stdout;const emit=out.write;emit(process.argv[2]);","import fs from 'node:fs';const out=fs.createWriteStream('public.yaml');out.write(process.argv[2]);"]){sourceFixture({'bin/new.mjs':bytes},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));}
+});
+test('static types and aliased native writer capabilities do not authorize unknown emitted roots',()=>{
+ for(const bytes of ["const body:string=JSON.parse(process.argv[2]);console.log(JSON.stringify(body));","interface Root{status:string};export function emit(body:Root){console.log(JSON.stringify(body));}","function relay(body:unknown):{status:string}{return body as {status:string}};console.log(JSON.stringify(relay(JSON.parse(process.argv[2]))));","const {writeFileSync:save}=require('fs');save('public.yaml',process.argv[2]);","import fs from 'node:fs';const save=fs.writeFileSync.bind(fs,'public.yaml');save(process.argv[2]);"]){sourceFixture({'bin/new.ts':bytes},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED|OUTPUT_IDENTITY_UNQUALIFIED/));}
+});
+test('literal API text forwarded through an original function is discovered',()=>{sourceFixture({'bin/new.ts':"function emit(body:string){console.log(body)};emit('apiVersion: v1\\nkind: Secret\\nmetadata: {name: x}');"},root=>assert(discoverScriptApiOutputs(root).some(output=>output.value.apiVersion==='v1'&&output.value.kind==='Secret'&&output.value.metadata.name==='x')));});
+test('native file utility aliases and bound calls retain unknown input rejection',()=>{
+ const source='scripts/native-store.mjs',bytes="import fs from'node:fs';export function store(file,value){fs.writeFileSync(file,JSON.stringify(value));}";
+ const operations=[{source,recipeRef:source}],registry={nativeRoleOperationTuples:{[source]:producerAdapterOperationRecipe(source,bytes).statements},nonApiOutputContracts:[{source,sink:'fs.writeFileSync',expression:'JSON.stringify(value)',role:'api-capable-utility',basis:'fixture generic native file capability',operations}],nativeFileWriterCapabilities:[{source,export:'store',inputParameter:'value',operations}]};
+ for(const call of ["const save=store;const third=save;third('public.yaml',JSON.parse(process.argv[2]));","const save=store.bind(null,'public.yaml');save(JSON.parse(process.argv[2]));","store.call(null,'public.yaml',JSON.parse(process.argv[2]));","store.apply(null,['public.yaml',JSON.parse(process.argv[2])]);"]){sourceFixture({[source]:bytes,'bin/new.mjs':"import{store}from'../scripts/native-store.mjs';"+call,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));}
+});
+test('reassigned stdout and file writer aliases reject unsupported publication operations',()=>{
+ for(const bytes of ["let emit=()=>{};emit=console.log;emit(JSON.parse(process.argv[2]));","import fs from'node:fs';let write=fs.writeFileSync;write=process.argv[2];write('public.yaml',{status:'ok'});","let write;write=require('fs').writeFileSync;write('public.yaml',process.argv[2]);"]){sourceFixture({'bin/new.mjs':bytes},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));}
+});
+test('unsupported writer prototype calls, containers and callback escapes cannot hide output',()=>{
+ for(const bytes of ["import fs from'node:fs';fs.writeFileSync.call(null,'public.yaml',process.argv[2]);","console.log.apply(null,[JSON.parse(process.argv[2])]);","import fs from'node:fs';const box={save:fs.writeFileSync};box.save('public.yaml',process.argv[2]);","invoke(console.log,JSON.parse(process.argv[2]));"]){sourceFixture({'bin/new.mjs':bytes},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));}
+});
+test('workspace package wildcard exports retain native writer input qualification',()=>{
+ const source='node_modules/@kubeclaw/fixture/native-store.mjs',bytes="import fs from'node:fs';export function store(file,value){fs.writeFileSync(file,JSON.stringify(value));}",operations=[{source,recipeRef:source}];
+ const registry={nativeRoleOperationTuples:{[source]:producerAdapterOperationRecipe(source,bytes).statements},nonApiOutputContracts:[{source,sink:'fs.writeFileSync',expression:'JSON.stringify(value)',role:'api-capable-utility',basis:'fixture generic native file capability',operations}],nativeFileWriterCapabilities:[{source,export:'store',inputParameter:'value',operations}]};
+ sourceFixture({[source]:bytes,'node_modules/@kubeclaw/fixture/package.json':JSON.stringify({name:'@kubeclaw/fixture',exports:{'./*':'./*.mjs'}}),'bin/new.mjs':"import{store}from'@kubeclaw/fixture/native-store';store('public.yaml',JSON.parse(process.argv[2]));",'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('diamond reexports and repeated writer calls keep independent input qualification',()=>{
+ const source='scripts/native-store.mjs',bytes="import fs from'node:fs';export function store(file,value){fs.writeFileSync(file,JSON.stringify(value));}",operations=[{source,recipeRef:source}],registry={nativeRoleOperationTuples:{[source]:producerAdapterOperationRecipe(source,bytes).statements},nonApiOutputContracts:[{source,sink:'fs.writeFileSync',expression:'JSON.stringify(value)',role:'api-capable-utility',basis:'fixture generic native file capability',operations}],nativeFileWriterCapabilities:[{source,export:'store',inputParameter:'value',operations}]};
+ const fixtures={[source]:bytes,'scripts/left.mjs':"export{store}from'./native-store.mjs';",'scripts/right.mjs':"export{store}from'./native-store.mjs';",'scripts/diamond.mjs':"export*from'./left.mjs';export*from'./right.mjs';",'bin/new.mjs':"import{store}from'../scripts/diamond.mjs';store('native.json',{status:'ok'});store('public.yaml',JSON.parse(process.argv[2]));",'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)};
+ sourceFixture(fixtures,root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({...fixtures,'bin/new.mjs':"import{store}from'../scripts/diamond.mjs';store('first.json',{status:'ok'});store('second.json',{status:'ok'});"},root=>assert.doesNotThrow(()=>discoverScriptApiOutputs(root)));
+});
+test('alternate public diagnostic channels retain unknown serialized root qualification',()=>{
+ for(const bytes of ["process.stderr.write(JSON.stringify(JSON.parse(process.argv[2])));","console.error(JSON.stringify(JSON.parse(process.argv[2])));","console.warn(JSON.stringify(JSON.parse(process.argv[2])));","console.info(JSON.stringify(JSON.parse(process.argv[2])));","const out=process.stderr;const emit=out.write;emit(process.argv[2]);"]){sourceFixture({'bin/new.mjs':bytes},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));}
+ sourceFixture({'bin/new.py':"import sys,json\nsys.stderr.write(json.dumps(json.loads(sys.argv[1])))\n"},root=>assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({'bin/new.go':'package main\nimport "os"\nimport "fmt"\nfunc main(){fmt.Fprintf(os.Stderr,"%s",os.Args[1])}\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('Go formatted file destinations retain unknown serialized input qualification',()=>{
+ for(const bytes of ['package main\nimport "os"\nimport "fmt"\nfunc main(){file,_:=os.Create("public.yaml");fmt.Fprintf(file,"%s",os.Args[1])}\n','package main\nimport "os"\nimport "fmt"\nfunc main(){file,_:=os.Create("public.yaml");out:=file;fmt.Fprintln(out,os.Args[1])}\n'])sourceFixture({'bin/new.go':bytes},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('original Go diagnostic consumer qualification rejects changed writer inputs',()=>{
+ const source='tools/native-worker-nri/main.go',bytes=fs.readFileSync(new URL('../..//'+source,import.meta.url),'utf8'),registry={nativeLanguageSerializationContracts:[{source,language:'Go',basis:'original native diagnostic fixture',operation:{syntax:bytes}}]};
+ sourceFixture({[source]:bytes,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{assert.doesNotThrow(()=>discoverGoApiOutputs(root));fs.writeFileSync(path.join(root,source),bytes.replace('fmt.Fprintln(os.Stderr, err)','fmt.Fprintf(os.Stderr,"%s",os.Args[1])'));assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/);});
+});
+test('Go output values bind lexical declarations and reject mutation or address escape',()=>{
+ for(const body of ['func first(){body:=os.Args[1];fmt.Fprintln(os.Stdout,body)}\nfunc other(){body:="safe";_=body}','func main(){body:=os.Args[1];{body:="safe";_=body};fmt.Fprintln(os.Stdout,body)}','func main(){body:=os.Args[1];fmt.Fprintln(os.Stdout,body);body="safe"}','func alter(body *string){*body=os.Args[1]}\nfunc main(){body:="safe";alter(&body);fmt.Fprintln(os.Stdout,body)}'])sourceFixture({'bin/new.go':'package main\nimport "os"\nimport "fmt"\n'+body+'\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({'bin/new.go':'package main\nimport "os"\nimport "fmt"\nfunc main(){body:="safe";fmt.Fprintln(os.Stdout,body)}\n'},root=>assert.doesNotThrow(()=>discoverGoApiOutputs(root)));
+});
+test('Go mutable writer aliases, callbacks and containers reject unsupported escapes',()=>{
+ for(const body of ['func other(...interface{})(int,error){return 0,nil}\nfunc main(){emit:=fmt.Println;emit=other;emit(os.Args[1])}','func relay(emit func(...interface{})(int,error),body string){emit(body)}\nfunc main(){relay(fmt.Println,os.Args[1])}','func main(){box:=struct{emit func(...interface{})(int,error)}{fmt.Println};box.emit(os.Args[1])}'])sourceFixture({'bin/new.go':'package main\nimport "os"\nimport "fmt"\n'+body+'\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('Go mutable serializer aliases and callback escapes remain unqualified',()=>{
+ for(const body of ['func other(any)([]byte,error){return nil,nil}\nfunc main(){emit:=json.Marshal;emit=other;emit(os.Args[1])}','func relay(emit func(any)([]byte,error),body string){emit(body)}\nfunc main(){relay(json.Marshal,os.Args[1])}','func main(){box:=struct{emit func(any)([]byte,error)}{json.Marshal};box.emit(os.Args[1])}'])sourceFixture({'bin/new.go':'package main\nimport "os"\nimport "encoding/json"\n'+body+'\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('Go capability references close dot-import, returned, late-bound and parenthesized calls',()=>{
+ const cases=['import . "fmt"\nfunc other(...interface{})(int,error){return 0,nil}\nfunc main(){emit:=Println;emit=other;emit(os.Args[1])}','import "fmt"\nfunc printer()func(...interface{})(int,error){return fmt.Println}\nfunc main(){printer()(os.Args[1])}','import "fmt"\nfunc main(){(fmt.Println)(os.Args[1])}','import "fmt"\nfunc other(...interface{})(int,error){return 0,nil}\nfunc main(){emit:=other;emit=fmt.Println;emit(os.Args[1])}','import "fmt"\nfunc main(){emit:=fmt.Println;ptr:=&emit;(*ptr)(os.Args[1])}','import "fmt"\nfunc main(){ch:=make(chan func(...interface{})(int,error),1);ch<-fmt.Println;emit:=<-ch;emit(os.Args[1])}'];
+ for(const body of cases)sourceFixture({'bin/new.go':'package main\nimport "os"\n'+body+'\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({'bin/new.go':'package main\nimport "fmt"\nfunc main(){emit:=(fmt.Println);emit("safe")}\n'},root=>assert.doesNotThrow(()=>discoverGoApiOutputs(root)));
+});
+test('Go raw stream copies, HTTP submissions and serializer variants qualify unknown inputs',()=>{
+ const cases=['import "io"\nfunc main(){io.Copy(os.Stdout,os.Stdin)}','import "io"\nfunc main(){file,_:=os.Create("public.yaml");copy:=io.Copy;copy(file,os.Stdin)}','import "net/http"\nimport "strings"\nfunc main(){http.Post(os.Args[1],"application/json",strings.NewReader(os.Args[2]))}','import "net/http"\nfunc main(){req,_:=http.NewRequest("POST",os.Args[1],os.Stdin);http.DefaultClient.Do(req)}','import "net/http"\nfunc main(){client:=&http.Client{};req,_:=http.NewRequest("POST",os.Args[1],os.Stdin);client.Do(req)}','import yaml "gopkg.in/yaml.v3"\nfunc main(){yaml.Marshal(os.Args[1])}'];
+ for(const body of cases)sourceFixture({'bin/new.go':'package main\nimport "os"\n'+body+'\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('Go dot-imported stream and submission capabilities keep the same grammar',()=>{
+ for(const body of ['import . "io"\nimport "os"\nfunc main(){Copy(os.Stdout,os.Stdin)}','import . "net/http"\nimport "os"\nfunc main(){Post(os.Args[1],"application/json",os.Stdin)}','import . "net/http"\nimport "os"\nfunc main(){req,_:=NewRequest("POST",os.Args[1],os.Stdin);DefaultClient.Do(req)}','import . "os"\nfunc main(){WriteFile("public.yaml",[]byte(Args[1]),0600)}','import . "encoding/json"\nimport "os"\nfunc main(){emit:=Marshal;emit(os.Args[1])}'])sourceFixture({'bin/new.go':'package main\n'+body+'\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+test('Go formatter qualification covers all arguments and unresolved interpolations',()=>{
+ for(const call of ['fmt.Print("a",os.Args[1])','fmt.Printf("a%s",os.Args[1])','fmt.Fprint(os.Stdout,"a",os.Args[1])','fmt.Printf("status: %s\\n",os.Args[1])','fmt.Print("api","Version: v1\\nkind: Secret\\n")'])sourceFixture({'bin/new.go':'package main\nimport "os"\nimport "fmt"\nfunc main(){'+call+'}\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({'bin/new.go':'package main\nimport "fmt"\nfunc main(){fmt.Print("native"," literal")}\n'},root=>assert.doesNotThrow(()=>discoverGoApiOutputs(root)));
 });

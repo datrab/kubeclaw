@@ -7,10 +7,45 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
 import ts from 'typescript';
+import { createSerializedOutputRoleClassifier } from './docs-api-output-role-classification.mjs';
 
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const syntheticDigest = 'a'.repeat(64);
+// Public product execution and extension roots. Tests/fixtures are synthetic;
+// dependency/vendor trees are external authorities; docs are publication inputs.
+// Experimental spikes are not supported deployment or extension entry points.
+const producerRoots=['scripts','skills','ops','tools','bin','cmd','docker','packaging','plugins','contracts'];
+function documentationToolSources(root) {
+  const file=path.join(root,'package.json');if(!fs.existsSync(file))return new Set();
+  const scripts=JSON.parse(fs.readFileSync(file,'utf8')).scripts??{};const result=new Set();const queue=[];
+  for(const [name,command]of Object.entries(scripts))if(name.startsWith('docs:')||name.startsWith('verify:docs:'))for(const match of command.matchAll(/\b(scripts\/docs-[A-Za-z0-9_-]+\.mjs)\b/gu))queue.push(match[1]);
+  while(queue.length){const source=queue.pop();if(result.has(source)||!fs.existsSync(path.join(root,source)))continue;result.add(source);const bytes=fs.readFileSync(path.join(root,source),'utf8');for(const helper of bytes.matchAll(/new URL\('\.\/(docs-[A-Za-z0-9_-]+\.(?:py|go))',import\.meta\.url\)/gu))result.add(path.posix.join(path.dirname(source),helper[1]));for(const match of bytes.matchAll(/(?:from\s*|import\s*\()(['"])(\.\.?\/[^'"]+)\1/gu)){const target=path.posix.normalize(path.posix.join(path.dirname(source),match[2]));if(/^scripts\/docs-[^/]+\.mjs$/u.test(target))queue.push(target);}}
+  return result;
+}
+function assertNativeSerializationRoles(root,source,bytes,language) {
+  const authority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
+  const contracts=fs.existsSync(authority)?JSON.parse(fs.readFileSync(authority,'utf8')).nativeLanguageSerializationContracts??[]:[];
+  const contract=contracts.find(record=>record.source===source&&record.language===language&&record.operation.syntax===bytes);
+  if(contract)return;
+  if(language==='Python'){
+    const parsed=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source),'--classify'],{encoding:'utf8',env:{PATH:process.env.PATH}});
+    assert.equal(parsed.status,0,`API_PRODUCT_PYTHON_SERIALIZATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);
+    assert(JSON.parse(parsed.stdout).every(output=>output.role==='non-api'),`API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
+  }else assert(!(/encoding\/json/u.test(bytes)&&/(?:\b\w+\.)?(?:Marshal|NewEncoder)\s*\(/u.test(bytes)),`API_PRODUCT_GO_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
+}
 const syntheticImage = `example.invalid/discovery@sha256:${syntheticDigest}`;
+export function producerAdapterOperationRecipe(source,bytes) {
+  if(source.endsWith('.sh')){
+    const parsed=spawnSync('python3',['-c',"import json,shlex,sys; lexer=shlex.shlex(sys.stdin.read(),posix=True,punctuation_chars=True); lexer.whitespace_split=True; print(json.dumps(list(lexer)))"],{input:bytes,encoding:'utf8',env:{PATH:process.env.PATH}});
+    assert.equal(parsed.status,0,`API_PRODUCT_ADAPTER_OPERATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);return {language:'Shell',tokens:JSON.parse(parsed.stdout)};
+  }
+  if(source.endsWith('.py')){
+    const parsed=spawnSync('python3',['-c',"import ast,json,sys; print(json.dumps(ast.dump(ast.parse(sys.stdin.read()),include_attributes=False)))"],{input:bytes,encoding:'utf8',env:{PATH:process.env.PATH}});
+    assert.equal(parsed.status,0,`API_PRODUCT_ADAPTER_OPERATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);return {language:'Python',ast:JSON.parse(parsed.stdout)};
+  }
+  const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true);assert(!tree.parseDiagnostics.length,`API_PRODUCT_ADAPTER_OPERATION_PARSE_FAILED: ${source}`);
+  return {language:'TypeScript',statements:tree.statements.map(node=>({kind:ts.SyntaxKind[node.kind],syntax:node.getText(tree)}))};
+}
 export function assertProducerAdapterAuthority(root,sources) {
   if(!sources.length)return;
   const file=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
@@ -20,6 +55,11 @@ export function assertProducerAdapterAuthority(root,sources) {
   for(const source of sources) {
     const record=authority.sources?.[source];
     assert(record?.sha256&&record.operation,`API_PRODUCT_ADAPTER_OPERATION_UNCLASSIFIED: ${source}; ${authority.owner}`);
+    const actualInvocations=fs.readFileSync(path.join(root,source),'utf8').replace(/\\\n/gu,' ').split('\n').map(line=>line.trim()).filter(line=>['helm ',"'helm'",'render-','continuousDocuments','bootstrapDocuments','infrastructure','charts/'].some(token=>line.includes(token))&&!line.startsWith('//')&&!line.startsWith('#'));
+    assert.deepEqual(actualInvocations,record.invocations,`API_PRODUCT_ADAPTER_INVOCATION_DRIFT: ${source}; current source invocation differs from the qualified adapter`);
+    assert(record.operationRecipe,`API_PRODUCT_ADAPTER_RECIPE_MISSING: ${source}`);
+    assert.deepEqual(producerAdapterOperationRecipe(source,fs.readFileSync(path.join(root,source),'utf8')),record.operationRecipe,`API_PRODUCT_ADAPTER_RECIPE_DRIFT: ${source}; actual structured operation differs from the adapter recipe`);
+    assert.equal(hash(fs.readFileSync(path.join(root,source))),record.operationDigest,`API_PRODUCT_ADAPTER_OPERATION_DRIFT: ${source}; an operation review and recipe binding are required`);
     assert.equal(hash(fs.readFileSync(path.join(root,source))),record.sha256,`API_PRODUCT_ADAPTER_AUTHORITY_DRIFT: ${source}; ${authority.owner}; ${authority.closureCondition}`);
   }
 }
@@ -296,16 +336,35 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
 // filename list. Every source position and every changed byte remain bound.
 export function discoverScriptApiOutputs(root) {
   const result=[];
-  const sources=walkProductSources(root,['scripts','skills','ops','tools'],file=>/\.(?:[cm]?js|ts)$/u.test(file)&&!/(?:^|\/)docs-[^/]+/u.test(file));
+  for(const source of walkProductSources(root,producerRoots,file=>!/\.(?:[cm]?js|ts|py|sh|go|ya?ml|json|md|txt|lua|toml|lock|pem|crt)$/u.test(file))) {
+    const bytes=fs.readFileSync(path.join(root,source),'utf8');
+    assert(!/apiVersion|kubectl[^\n]*(?:apply|create)|client\.(?:create|apply)|JSON\.(?:generate|dump)|json_encode\s*\(|serde_json::to_(?:string|writer)|writeValueAsString\s*\(|cJSON_Print\s*\(|json_dumps\s*\(/u.test(bytes),`API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED: ${source}`);
+  }
+  const documentationLanguageTools=documentationToolSources(root);
+  for(const source of walkProductSources(root,producerRoots,file=>/\.py$/u.test(file)&&!documentationLanguageTools.has(file))) {
+    const bytes=fs.readFileSync(path.join(root,source),'utf8');
+    if(source!=='ops/pod/bootstrap.py')assertNativeSerializationRoles(root,source,bytes,'Python');
+    if(!/apiVersion|kubectl[^\n]*(?:apply|create)|(?:apply|create)_secret/u.test(bytes))continue;
+    if(source==='scripts/verify-cilium-policies.py'){assertProducerAdapterAuthority(root,[source]);continue;}
+    assert(source==='ops/pod/bootstrap.py',`API_PRODUCT_PYTHON_PRODUCER_UNQUALIFIED: ${source}`);
+    const rendered=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source)],{encoding:'utf8',env:{PATH:process.env.PATH},maxBuffer:8*1024*1024});
+    assert.equal(rendered.status,0,`API_PRODUCT_PYTHON_ADAPTER_FAILED: ${source}: ${rendered.stderr}`);
+    JSON.parse(rendered.stdout).forEach((output,index)=>result.push({value:output.value,context:{apiVersion:output.value.apiVersion,kind:output.value.kind,path:source,document:index,sourceDigest:hash(bytes),producer:'python-offline-original',profile:output.profile,inputs:['scripts/deploy-ops-pod.sh'],inputDigest:hash(JSON.stringify({environment:output.environment,responses:output.inputs,caller:hash(fs.readFileSync(path.join(root,'scripts/deploy-ops-pod.sh'))),adapter:hash(fs.readFileSync(new URL('./docs-api-python-output-adapter.py',import.meta.url)))})),outputDigest:hash(JSON.stringify(output.value)),offlineInputs:output.inputs}}));
+  }
+  const documentationTools=documentationToolSources(root);
+  const sources=walkProductSources(root,producerRoots,file=>/\.(?:[cm]?js|ts)$/u.test(file)&&!documentationTools.has(file));
+  const classifyOutputRoles=createSerializedOutputRoleClassifier(root,sources);
   for(const source of sources) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
     if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
-    if(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes))continue;
+    const outputRoles=classifyOutputRoles(source);
+    for(const role of outputRoles)assert(role.role!=='unknown',`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
+    if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true);
     assert(!tree.parseDiagnostics.length,`API_PRODUCT_PRODUCER_PARSE_FAILED: ${source}`);
     const declarations=new Map();const assignments=[];const constructors=[];const serializedInputs=new Set();
-    const functions=[];const calls=[];const serializedPublications=[];
+    const functions=[];const calls=[];const serializedPublications=[];const unsupportedMutations=[];
     const scopeOf=node=>{for(let parent=node.parent;parent;parent=parent.parent)if(ts.isBlock(parent)||ts.isSourceFile(parent)||ts.isFunctionLike(parent))return parent;return tree;};
     function declarationFor(node) {
       const choices=declarations.get(node.text)??[];
@@ -316,9 +375,11 @@ export function discoverScriptApiOutputs(root) {
       return undefined;
     }
     function collect(node) {
+      if(ts.isDeleteExpression(node)||ts.isPostfixUnaryExpression(node)||ts.isPrefixUnaryExpression(node)&&[ts.SyntaxKind.PlusPlusToken,ts.SyntaxKind.MinusMinusToken].includes(node.operator)||ts.isBinaryExpression(node)&&node.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&node.operatorToken.kind<=ts.SyntaxKind.LastAssignment&&!(node.operatorToken.kind===ts.SyntaxKind.EqualsToken&&(ts.isPropertyAccessExpression(node.left)||ts.isElementAccessExpression(node.left))))unsupportedMutations.push(node);
       if(ts.isFunctionDeclaration(node)&&node.name)functions.push(node);
+      if(ts.isReturnStatement(node)&&node.expression)serializedPublications.push({arguments:[node.expression],parent:node.parent,getStart:()=>node.getStart(tree)});
       if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression))calls.push(node);
-      if(ts.isCallExpression(node)&&['console.log','process.stdout.write'].includes(node.expression.getText(tree)))serializedPublications.push(node);
+      if(ts.isCallExpression(node)&&['console.log','process.stdout.write','fs.writeFileSync','writeFileSync'].includes(node.expression.getText(tree)))serializedPublications.push(node);
       if(ts.isVariableDeclaration(node)&&ts.isIdentifier(node.name)&&node.initializer) {
         const values=declarations.get(node.name.text)??[];values.push({value:node.initializer,scope:scopeOf(node)});declarations.set(node.name.text,values);
       }
@@ -328,7 +389,7 @@ export function discoverScriptApiOutputs(root) {
         if(!ts.isIdentifier(element.name)||element.dotDotDotToken)continue;
         const values=declarations.get(element.name.text)??[];values.push({value:{__docsBindingExpression:node.initializer,__docsBindingKey:element.propertyName?.text??element.name.text,pos:element.pos},scope:scopeOf(node)});declarations.set(element.name.text,values);
       }
-      if(ts.isBinaryExpression(node)&&node.operatorToken.kind===ts.SyntaxKind.EqualsToken&&ts.isPropertyAccessExpression(node.left))assignments.push(node);
+      if(ts.isBinaryExpression(node)&&node.operatorToken.kind===ts.SyntaxKind.EqualsToken&&(ts.isPropertyAccessExpression(node.left)||ts.isElementAccessExpression(node.left)))assignments.push(node);
       if(ts.isObjectLiteralExpression(node)) {
         const names=node.properties.filter(ts.isPropertyAssignment).map(item=>item.name.getText(tree).replace(/^['"]|['"]$/gu,''));
         if(names.includes('apiVersion')&&names.includes('kind'))constructors.push(node);
@@ -336,6 +397,13 @@ export function discoverScriptApiOutputs(root) {
       ts.forEachChild(node,collect);
     }
     collect(tree);
+    // A fixed diagnostic root can become an API body through terminal identity
+    // assignments. Treat that final body as a constructor too.
+    for(const [name,choices]of declarations)for(const choice of choices)if(ts.isObjectLiteralExpression(choice.value)&&!constructors.includes(choice.value)) {
+      const identity=new Set(choice.value.properties.filter(ts.isPropertyAssignment).map(property=>property.name.getText(tree).replace(/^['"]|['"]$/gu,'')));
+      for(const assignment of assignments)if(ts.isIdentifier(assignment.left.expression)&&assignment.left.expression.text===name&&declarationFor(assignment.left.expression)===choice.value){let member=ts.isPropertyAccessExpression(assignment.left)?assignment.left.name.text:assignment.left.argumentExpression;if(typeof member!=='string'&&ts.isIdentifier(member))member=declarationFor(member);if(typeof member!=='string'&&member&&ts.isStringLiteralLike(member))member=member.text;if(typeof member==='string')identity.add(member);}
+      if(identity.has('apiVersion')&&identity.has('kind'))constructors.push(choice.value);
+    }
     const isExplicitSelfTestCall=call=>{
       for(let parent=call.parent;parent;parent=parent.parent)if(ts.isIfStatement(parent)&&call.pos>=parent.thenStatement.pos&&call.end<=parent.thenStatement.end) {
         const condition=parent.expression.getText(tree);
@@ -347,7 +415,7 @@ export function discoverScriptApiOutputs(root) {
       const invocations=calls.filter(call=>call.expression.text===fn.name.text);
       return invocations.length&&invocations.every(isExplicitSelfTestCall);
     }));
-    const opaque=new Map();
+    const opaque=new Map();let terminalPosition=Infinity;
     function evaluate(node,seen=new Set()) {
       if(!node)return null;
       if(node.__docsBindingExpression) {
@@ -386,7 +454,31 @@ export function discoverScriptApiOutputs(root) {
         const key=`${node.text}:${chosen?.pos??'parameter'}`;
         if(chosen&&!seen.has(key)) {
           const value=evaluate(chosen,new Set([...seen,key]));
-          for(const assignment of assignments.filter(item=>item.left.expression.getText(tree)===node.text&&scopeOf(item)===scopeOf(node)&&item.pos>chosen.pos))if(value&&typeof value==='object')value[assignment.left.name.text]=evaluate(assignment.right,new Set([...seen,key]));
+          let unqualifiedProjection=false;
+          function projection(expression,visited=new Set()) {
+            if(ts.isIdentifier(expression)) {
+              if(expression.text===node.text&&declarationFor(expression)===chosen)return [];
+              const alias=declarationFor(expression);if(!alias||visited.has(alias)||alias.pos<chosen.pos)return null;
+              return projection(alias,new Set([...visited,alias]));
+            }
+            if(ts.isPropertyAccessExpression(expression)||ts.isElementAccessExpression(expression)) {
+              const base=projection(expression.expression,visited);if(!base)return null;
+              const member=ts.isPropertyAccessExpression(expression)?expression.name.text:evaluate(expression.argumentExpression,seen);
+              if(typeof member!=='string'&&typeof member!=='number'){if(value?.apiVersion&&value?.kind)throw new Error(`API_PRODUCT_SCRIPT_MUTATION_KEY_UNQUALIFIED: ${source}`);unqualifiedProjection=true;return null;}
+              return [...base,member];
+            }
+            return null;
+          }
+          for(const mutation of unsupportedMutations.filter(item=>!ts.isDeleteExpression(item)&&item.pos>chosen.pos&&item.pos<terminalPosition)){const target=ts.isBinaryExpression(mutation)?mutation.left:mutation.operand;if(target&&projection(target)?.length){if(value?.apiVersion&&value?.kind)throw new Error(`API_PRODUCT_SCRIPT_MUTATION_UNQUALIFIED: ${source}`);unqualifiedProjection=true;}}
+          const mutations=[...assignments,...unsupportedMutations.filter(ts.isDeleteExpression)].filter(item=>item.pos>chosen.pos&&item.pos<terminalPosition).sort((left,right)=>left.pos-right.pos);
+          for(const mutation of mutations) {
+            const members=projection(ts.isDeleteExpression(mutation)?mutation.expression:mutation.left);if(!members?.length)continue;
+            for(let parent=mutation.parent;parent&&parent!==scopeOf(chosen);parent=parent.parent)assert(!ts.isIfStatement(parent)&&!ts.isIterationStatement(parent,false),`API_PRODUCT_SCRIPT_MUTATION_BRANCH_UNQUALIFIED: ${source}:${tree.getLineAndCharacterOfPosition(mutation.getStart(tree)).line+1}`);
+            let target=value;for(const member of members.slice(0,-1)){assert(target&&typeof target==='object'&&Object.hasOwn(target,member),`API_PRODUCT_SCRIPT_MUTATION_TARGET_UNQUALIFIED: ${source}`);target=target[member];}
+            assert(target&&typeof target==='object',`API_PRODUCT_SCRIPT_MUTATION_TARGET_UNQUALIFIED: ${source}`);
+            if(ts.isDeleteExpression(mutation))delete target[members.at(-1)];else target[members.at(-1)]=evaluate(mutation.right,new Set([...seen,key]));
+          }
+          if(unqualifiedProjection)return {__docsDynamicExpression:node.getText(tree)};
           return value;
         }
         if(!chosen&&!seen.has(key))for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionDeclaration(parent)&&parent.name) {
@@ -430,6 +522,7 @@ export function discoverScriptApiOutputs(root) {
         }
         if(name==='stringArray')return [{__docsDynamicExpression:node.getText(tree)}];
       }
+      if(ts.isElementAccessExpression(node)){const object=evaluate(node.expression,seen),member=evaluate(node.argumentExpression,seen);if(object&&typeof object==='object'&&(typeof member==='string'||typeof member==='number')&&Object.hasOwn(object,member))return object[member];}
       if(ts.isPropertyAccessExpression(node)) {
         // This checked-in renderer validates the required quantity members but
         // forwards the complete public policy.resources object. Selection must
@@ -444,22 +537,48 @@ export function discoverScriptApiOutputs(root) {
     }
     constructors.forEach((node,index)=>{
       for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){if(guardedTestFunctions.has(parent))return;break;}
-      opaque.clear();serializedInputs.clear();const value=evaluate(node);
-      if(value.kind==='BusterNamespaceLease'&&typeof value.apiVersion!=='string')value.apiVersion='kubeclaw.forgestack.ai/v1alpha1';
+      opaque.clear();serializedInputs.clear();const binding=ts.isVariableDeclaration(node.parent)&&ts.isIdentifier(node.parent.name)?node.parent.name:null;const publications=binding?serializedPublications.filter(publication=>{let found=false;const visit=part=>{if(ts.isIdentifier(part)&&declarationFor(part)===node)found=true;ts.forEachChild(part,visit);};publication.arguments.forEach(visit);return found;}):[];
+      terminalPosition=publications.length?Math.min(...publications.map(publication=>publication.getStart(tree))):Infinity;
+      assert(!publications.some(publication=>assignments.some(assignment=>assignment.left.expression.getText(tree)===binding?.text&&assignment.pos>terminalPosition&&assignment.pos<publication.getStart(tree))),`API_PRODUCT_SCRIPT_MULTIPLE_OUTPUT_VARIANTS_UNQUALIFIED: ${source}:${binding?.text}`);
+      const value=evaluate(binding??node);
+      if(binding) {
+        const name=binding.text;
+        assert(!unsupportedMutations.filter(mutation=>!ts.isDeleteExpression(mutation)).some(mutation=>new RegExp(`\\b${name}\\b`,'u').test(mutation.getText(tree))),`API_PRODUCT_SCRIPT_MUTATION_UNQUALIFIED: ${source}:${name}`);
+      }
+      let identityWitness;
+      if(value.kind==='BusterNamespaceLease'&&typeof value.apiVersion!=='string') {
+        const file=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):{};
+        const contract=registry.scriptIdentityProfiles?.find(record=>record.source===source&&record.kind===value.kind);
+        const property=node.properties?.find(property=>ts.isPropertyAssignment(property)&&property.name.getText(tree)==='apiVersion');
+        assert(contract&&property?.initializer.getText(tree)===contract.expression,`API_PRODUCT_SCRIPT_IDENTITY_UNRESOLVED: ${source}:${tree.getLineAndCharacterOfPosition(node.getStart(tree)).line+1}`);
+        assert.deepEqual(producerAdapterOperationRecipe(source,bytes),contract.operationRecipe,`API_PRODUCT_SCRIPT_IDENTITY_PROFILE_DRIFT: ${source}`);
+        const configured=YAML.parse(fs.readFileSync(path.join(root,contract.valuesSource),'utf8')).busterNamespaceBroker;
+        const authorityBytes=fs.readFileSync(path.join(root,contract.authoritySource),'utf8');
+        assert(/group: \{\{ \.Values\.busterNamespaceBroker\.leaseApiGroup \}\}/u.test(authorityBytes)&&/name: \{\{ \.Values\.busterNamespaceBroker\.leaseApiVersion \}\}/u.test(authorityBytes)&&/kind: BusterNamespaceLease/u.test(authorityBytes),'API_PRODUCT_SCRIPT_IDENTITY_AUTHORITY_UNQUALIFIED');
+        assert(typeof configured?.leaseApiGroup==='string'&&typeof configured?.leaseApiVersion==='string','API_PRODUCT_SCRIPT_IDENTITY_WITNESS_UNQUALIFIED');
+        value.apiVersion=`${configured.leaseApiGroup}/${configured.leaseApiVersion}`;
+        identityWitness={profile:'source-bound-chart-default-identity',parameters:{leaseApiGroup:configured.leaseApiGroup,leaseApiVersion:configured.leaseApiVersion},inputs:[contract.valuesSource,contract.authoritySource],inputDigest:hash(JSON.stringify([contract.valuesSource,hash(fs.readFileSync(path.join(root,contract.valuesSource))),contract.authoritySource,hash(authorityBytes)]))};
+      }
       const names=Object.keys(value);
       if(typeof value.apiVersion!=='string'&&names.every(name=>['apiVersion','kind','namespace','name'].includes(name))&&names.includes('name')&&names.includes('namespace'))return; // flattened resource identity index, not an API request body
       assert(typeof value.apiVersion==='string'&&typeof value.kind==='string',`API_PRODUCT_SCRIPT_IDENTITY_UNRESOLVED: ${source}:${tree.getLineAndCharacterOfPosition(node.getStart(tree)).line+1}`);
       if(!/(?:^|\/)v[0-9]/u.test(value.apiVersion))return;
       const line=tree.getLineAndCharacterOfPosition(node.getStart(tree)).line+1;
-      result.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,sourceDigest:hash(bytes),producer:'script-shape',line,
+      result.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,sourceDigest:hash(bytes),producer:'script-shape',line,...(identityWitness?{identityWitness}:{}),
         outputDigest:hash(JSON.stringify(value)),inputs:[...serializedInputs].sort(),inputDigest:hash(JSON.stringify([...serializedInputs].sort().map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]))),expressions:[...opaque.values()]}});
     });
     for(const publication of serializedPublications) {
+      terminalPosition=publication.getStart(tree);
       let guarded=false;
       for(let parent=publication.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){guarded=guardedTestFunctions.has(parent);break;}
       if(guarded)continue;
       for(const argument of publication.arguments) {
         const value=evaluate(argument);
+        if(value?.__docsDynamicExpression&&/apiVersion[\s\S]*kind|kind[\s\S]*apiVersion/u.test(value.__docsDynamicExpression))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_OUTPUT_UNQUALIFIED: ${source}`);
+        if(typeof value==='string'&&/^[\s]*[\[{]/u.test(value)) {
+          let parsed;try{parsed=JSON.parse(value);}catch{if(/apiVersion|"kind"/u.test(value))throw new Error(`API_PRODUCT_SCRIPT_SERIALIZED_JSON_INVALID: ${source}`);}
+          for(const resource of Array.isArray(parsed)?parsed:[parsed])if(resource?.apiVersion&&resource?.kind)result.push({value:resource,context:{apiVersion:resource.apiVersion,kind:resource.kind,path:source,document:constructors.length+result.filter(output=>output.context.path===source&&output.context.profile==='serialized-json-literal').length,sourceDigest:hash(bytes),producer:'script-shape',profile:'serialized-json-literal',line:tree.getLineAndCharacterOfPosition(publication.getStart(tree)).line+1,outputDigest:hash(JSON.stringify(resource)),inputs:[],inputDigest:hash('[]'),expressions:[]}});
+        }
         if(typeof value!=='string'||!/(?:^|\n)apiVersion:\s/u.test(value)||!/(?:^|\n)kind:\s/u.test(value))continue;
         const documents=YAML.parseAllDocuments(value);
         assert(documents.every(document=>!document.errors.length),`API_PRODUCT_SCRIPT_SERIALIZED_YAML_INVALID: ${source}`);
@@ -469,14 +588,19 @@ export function discoverScriptApiOutputs(root) {
         }
       }
     }
+    assert(!outputRoles.some(role=>role.role==='api')||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
   }
   return result;
 }
 
 const goOutputCache=new Map();
 export function discoverGoApiOutputs(root) {
-  const sources=walkProductSources(root,['cmd','tools','ops'],file=>/\.go$/u.test(file)&&!/_test\.go$/u.test(file));
+  const sources=walkProductSources(root,producerRoots,file=>/\.go$/u.test(file)&&!/_test\.go$/u.test(file));
   if(!sources.length)return [];
+  const documentationTools=documentationToolSources(root);
+  for(const source of sources)if(!documentationTools.has(source))assertNativeSerializationRoles(root,source,fs.readFileSync(path.join(root,source),'utf8'),'Go');
+  const nativeAuthority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const nativeContracts=fs.existsSync(nativeAuthority)?JSON.parse(fs.readFileSync(nativeAuthority,'utf8')).nativeLanguageSerializationContracts??[]:[];
+  const roles=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('./docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>({path:path.join(root,source),qualified:nativeContracts.some(record=>record.source===source&&record.language==='Go'&&record.operation.syntax===fs.readFileSync(path.join(root,source),'utf8'))}))),encoding:'utf8',maxBuffer:8*1024*1024});assert.equal(roles.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${roles.error?.message??roles.stderr}`);for(const role of JSON.parse(roles.stdout))assert(role.role==='non-api',`API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED: ${role.path}:${role.line}`);
   const helper=new URL('./docs-api-go-output-shapes.go',import.meta.url);
   const key=hash(JSON.stringify([root,hash(fs.readFileSync(helper)),sources.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   if(goOutputCache.has(key))return goOutputCache.get(key);
@@ -489,18 +613,38 @@ export function discoverGoApiOutputs(root) {
   goOutputCache.clear();goOutputCache.set(key,result);return result;
 }
 
+const nonApiOutputClassifications=new Map();
+export function discoverScriptOutputRoleClassifications(root) {
+  const documentationTools=documentationToolSources(root);
+  const sources=walkProductSources(root,producerRoots,file=>/\.(?:[cm]?js|ts)$/u.test(file)&&!documentationTools.has(file));
+  const classify=createSerializedOutputRoleClassifier(root,sources);
+  return sources.flatMap(source=>classify(source).map(role=>({...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))})));
+}
+export function discoverNonApiOutputClassifications(root) {discoverShellApiOutputs(root);return [...(nonApiOutputClassifications.get(root)??[]),...discoverScriptOutputRoleClassifications(root).filter(role=>role.role==='non-api')];}
+export function shellRawOutputSinks(source,bytes) {
+ const heredoc=/<<-?\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?[^\n]*\n([\s\S]*?)\n[ \t]*\1(?:\n|$)/gu;
+ const code=bytes.replace(heredoc,match=>match.slice(0,match.indexOf('\n'))+'\n'.repeat((match.match(/\n/gu)??[]).length));
+ const parsed=spawnSync('python3',['-c',"import json,shlex,sys;code=sys.stdin.read();lex=shlex.shlex(code,posix=True,punctuation_chars='();<>|&\\n');lex.whitespace=' \\t\\r';lex.whitespace_split=True;out=[]\nwhile True:\n token=lex.get_token()\n if token is None:break\n pos=lex.instream.tell();out.append([token,code.count('\\n',0,pos-(1 if pos and code[pos-1]=='\\n' else 0))+1])\nprint(json.dumps(out))"],{input:code,encoding:'utf8',env:{PATH:process.env.PATH}});
+ assert.equal(parsed.status,0,`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: ${parsed.stderr}`);
+ const tokens=JSON.parse(parsed.stdout),sinks=[];let boundary=true;
+ for(let index=0;index<tokens.length;index++){const [token,line]=tokens[index];if(/^[();<>|&\n]+$/u.test(token)||['then','do','else'].includes(token)){boundary=true;continue;}if(!boundary)continue;if(/^[A-Za-z_][A-Za-z0-9_]*=/u.test(token))continue;boundary=false;if(!['echo','printf','cat'].includes(token))continue;const args=[];for(let n=index+1;n<tokens.length&&!/^[();<>|&\n]+$/u.test(tokens[n][0]);n++)args.push(tokens[n][0]);const commandTail=[];for(let n=index+1;n<tokens.length&&!tokens[n][0].includes('\n');n++)commandTail.push(tokens[n][0]);if(commandTail.some(word=>word.includes('<<'))||commandTail.some((word,n)=>word==='>&'&&commandTail[n+1]==='2'))continue;const literalApi=args.some(arg=>/apiVersion/u.test(arg)&&/kind/u.test(arg));const opaque=literalApi||token==='cat'||token==='echo'&&/^\$/u.test(args.find(arg=>!arg.startsWith('-'))??'')||token==='printf'&&(/^\$/u.test(args[0]??'')||/^%[sb]/u.test(args[0]??'')&&args.slice(1).some(arg=>/^\$/u.test(arg)));if(opaque){const variable=(token==='echo'?args.find(arg=>!arg.startsWith('-')):args[1])?.match(/^\$(?:\{([A-Za-z_][A-Za-z0-9_]*)\}|([A-Za-z_][A-Za-z0-9_]*))$/u);const name=variable?.[1]??variable?.[2];const initial=name&&tokens[0]?.[0].startsWith(name+'=')?tokens[0][0].slice(name.length+1):null;const direct=initial!==null&&tokens.slice(1,index).every(([word])=>/^[;\n]+$/u.test(word))&&!/[$`]/u.test(initial);let constantNonApi=false;if(direct&&!commandTail.some(word=>word.includes('|'))){try{const values=YAML.parseAllDocuments(initial).map(document=>document.toJSON());constantNonApi=!values.some(value=>value&&typeof value==='object'&&'apiVersion'in value&&'kind'in value);}catch{}}if(!constantNonApi)sinks.push({line,command:token,args});}}
+ return sinks;
+}
 export function discoverShellApiOutputs(root) {
-  const outputs=[];
-  for(const source of walkProductSources(root,['scripts','ops','tools','my-values','skills','bin'],file=>/\.sh$/u.test(file))) {
+  const outputs=[];const classifications=[];nonApiOutputClassifications.set(root,classifications);
+  for(const source of walkProductSources(root,[...producerRoots,'my-values'],file=>/\.sh$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     if(/(?:^|\n)\s*helm\s/u.test(bytes)||/\bnode\b[^\n]*render-[A-Za-z0-9-]+\.mjs/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const sourceDigest=hash(bytes);
+    const rawSinks=shellRawOutputSinks(source,bytes);if(rawSinks.length){const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):{};const contract=(registry.shellRawOutputContracts??[]).find(record=>record.source===source&&JSON.stringify(record.sinks)===JSON.stringify(rawSinks)&&JSON.stringify(record.operationRecipe)===JSON.stringify(producerAdapterOperationRecipe(source,bytes)));assert(contract,`API_PRODUCT_SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED: ${source}:${rawSinks[0].line}`);classifications.push({source,sourceDigest,role:contract.role,basis:contract.basis,sinks:rawSinks,consumer:contract.consumer});}
     const scalarize=value=>value.replace(/\$\{[^}\n]+\}|\$[A-Za-z_][A-Za-z0-9_]*/gu,'discovery');
     let document=0;
     const add=(value,line,profile,request={})=>outputs.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:document++,sourceDigest,producer:'shell-shape',line,profile,...request,outputDigest:hash(JSON.stringify(value))}});
     const pattern=/<<-?\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?[^\n]*\n([\s\S]*?)\n[ \t]*\1(?:\n|$)/gu;
     for(const match of bytes.matchAll(pattern)) {
-      if(!/(?:^|\n)apiVersion:/u.test(match[2]))continue;
+      const header=bytes.slice(bytes.lastIndexOf('\n',match.index-1)+1,match.index+match[0].indexOf('\n'));
+      if(!/(?:^|\n)apiVersion:/u.test(match[2])){assert(!/\bkubectl\s+(?:apply|create|replace)\b/u.test(header),`API_PRODUCT_SHELL_SUBMITTED_OUTPUT_ROLE_UNQUALIFIED: ${source}:${header}`);assert(!/\bcat\b/u.test(header)||!/(?:^|\n)\s*\$(?:\{[A-Za-z_][A-Za-z0-9_]*\}|[A-Za-z_][A-Za-z0-9_]*)(?:\s*(?:\n|$)|:)/u.test(match[2]),`API_PRODUCT_SHELL_EMITTED_OUTPUT_ROLE_UNQUALIFIED: ${source}:${header}`);continue;}
+      assert(header.split('|').slice(1).every(part=>/^\s*kubectl\s+apply\b/u.test(part)),`API_PRODUCT_SHELL_PIPELINE_UNQUALIFIED: ${source}:${header}`);
       let content=match[2];
       // Expand source-authored multiline YAML fragments before replacing their
       // scalar variables. An unsupported dynamically computed fragment fails
@@ -518,7 +662,12 @@ export function discoverShellApiOutputs(root) {
       const invocation=preceding.slice(preceding.lastIndexOf('\n')+1).trim();
       const constructor=[...preceding.matchAll(/^\s*(?:function\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*\(\s*\)\s*\{/gmu)].at(-1)?.[1];
       const request=/^kubectl\s+apply(?:\s|$)/u.test(invocation)?{requestOperation:'kubectl-apply',requestInvocation:invocation,...(constructor?{requestConstructor:constructor}:{})}:{};
-      for(const item of documents) {const value=item.toJS();if(value?.apiVersion&&value?.kind)add(value,bytes.slice(0,match.index).split('\n').length+1,'heredoc',request);}
+      for(const item of documents) {const value=item.toJS();
+        if(value?.apiVersion==='v1'&&value?.kind==='Config') {
+          assert(/^cat\s+>\s*"\$kubeconfig"\s*$/u.test(invocation)&&value.clusters&&value.users&&value.contexts&&value['current-context']&&/KUBECONFIG="\$kubeconfig"/u.test(bytes),`API_PRODUCT_CLIENT_CONFIG_SINK_UNQUALIFIED: ${source}`);
+          classifications.push({path:source,sourceDigest,line:bytes.slice(0,match.index).split('\n').length+1,classification:'local-kubernetes-client-configuration',sink:invocation,consumer:'KUBECONFIG="$kubeconfig"',reason:'Local kubeconfig file selects client authentication and cluster connection. It is not submitted to a Kubernetes API resource endpoint.',outputDigest:hash(JSON.stringify(value))});continue;
+        }
+        if(value?.apiVersion&&value?.kind)add(value,bytes.slice(0,match.index).split('\n').length+1,'heredoc',request);}
     }
     const offsets=[];
     let logical='';
@@ -532,7 +681,10 @@ export function discoverShellApiOutputs(root) {
       assert(/^(?:namespace|configmap)\s|^secret\s+(?:generic|docker-registry)\s/u.test(constructor[1]),`API_PRODUCT_KUBECTL_CONSTRUCTOR_UNCLASSIFIED: ${source}:${bytes.slice(0,offsets[constructor.index]).split('\n').length} ${constructor[1]}`);
     }
     for(const match of logical.matchAll(/(?:^|[|;]\s*)[ \t]*kubectl\s+create\s+(secret\s+(?:generic|docker-registry)|configmap|namespace)\s+([^\n]+)/gmu)) {
-      const command=match[2];const kind={namespace:'Namespace',configmap:'ConfigMap','secret generic':'Secret','secret docker-registry':'Secret'}[match[1]];
+      const command=match[2];
+      const pipeline=command.split('|').slice(1).map(part=>part.trim());
+      assert(pipeline.every(part=>/^kubectl\s+apply\b/u.test(part)),`API_PRODUCT_SHELL_PIPELINE_UNQUALIFIED: ${source}:${bytes.slice(0,offsets[match.index]).split('\n').length} ${pipeline.join(' | ')}`);
+      const kind={namespace:'Namespace',configmap:'ConfigMap','secret generic':'Secret','secret docker-registry':'Secret'}[match[1]];
       const name=scalarize(command.match(/^(?:"([^"]+)"|'([^']+)'|([^\s]+))/u)?.slice(1).find(Boolean)??'discovery');
       const namespace=command.match(/(?:^|\s)(?:-n|--namespace)(?:=|\s+)(?:"([^"]+)"|'([^']+)'|([^\s|]+))/u)?.slice(1).find(Boolean);
       const value={apiVersion:'v1',kind,metadata:{name,...(namespace?{namespace:scalarize(namespace)}:{})}};
@@ -558,6 +710,20 @@ export function discoverTransformedApiOutputs(root) {
   const dependencyFiles=walkProductSources(root,['scripts','my-values/infra'],file=>/\.(?:mjs|ya?ml|json)$/u.test(file));
   const cacheKey=hash(JSON.stringify([root,dependencyFiles.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]),fs.existsSync(path.join(root,'versions.json'))?hash(fs.readFileSync(path.join(root,'versions.json'))):null]));
   if(transformOutputCache.has(cacheKey))return transformOutputCache.get(cacheKey);
+  const caller='scripts/deploy.sh';
+  if(fs.existsSync(path.join(root,caller))) {
+    const callerBytes=fs.readFileSync(path.join(root,caller),'utf8').replace(/\\\n[ \t]*/gu,' ');
+    const operations={
+      'render-litellm-deployment.mjs':'"$INFRA_DIR/litellm-config.yaml" "$INFRA_DIR/litellm-deployment.yaml"',
+      'render-postgresql-recovery.mjs':'--preflight "$NAMESPACE" "$INFRA_DIR/postgresql-recovery.yaml" "$POSTGRESQL_VALUES_FILE" "$INFRA_DIR/litellm-deployment.yaml" "$POSTGRESQL_RELEASE"',
+      'render-stateful-network-policies.mjs':'"$INFRA_DIR/network-policies.yaml" "$NAMESPACE" "$REDIS_RELEASE" "$REDIS_VALUES_FILE" "$POSTGRESQL_RELEASE" "$POSTGRESQL_VALUES_FILE"',
+      'render-registry-local.mjs':'"$KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG" serve "$registry_existing" "$registry_pvc"',
+    };
+    for(const [renderer,parameters]of Object.entries(operations)) {
+      const actual=[...callerBytes.matchAll(/node "[^"\n]*\/(render-[a-z-]+\.mjs)" ([^\n]*)/gu)].filter(match=>match[1]===renderer).map(match=>match[2].slice(0,match[2].indexOf(')"')).trim());
+      assert(actual.length&&actual.every(operation=>operation.replace(/\s+/gu,' ')===parameters),`API_PRODUCT_ADAPTED_RECIPE_INVOCATION_DRIFT: ${caller}:${renderer}; offline recipe positional input mapping must be reviewed`);
+    }
+  }
   const recipes=[
     ['scripts/render-litellm-deployment.mjs',['my-values/infra/litellm-config.yaml','my-values/infra/litellm-deployment.yaml']],
     ['scripts/render-postgresql-recovery.mjs',['default','my-values/infra/postgresql-recovery.yaml','my-values/infra/postgresql-values.yaml','my-values/infra/litellm-deployment.yaml','postgresql']],
@@ -576,6 +742,29 @@ export function discoverTransformedApiOutputs(root) {
     recipes.push([registry,[config,'serve',existing,pvc]],[registry,[config,'gc-dry-run',deployed,claim]],[registry,[config,'gc',deployed,claim]]);
   }
   const result=[];
+  const continuous='scripts/gitops-continuous.mjs';
+  if(fs.existsSync(path.join(root,continuous))) {
+    assertProducerAdapterAuthority(root,[continuous]);
+    const bytes=fs.readFileSync(path.join(root,continuous),'utf8');
+    const tree=ts.createSourceFile(continuous,bytes,ts.ScriptTarget.Latest,true);
+    const fn=tree.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='continuousDocuments');
+    assert(fn,`API_PRODUCT_CONTINUOUS_TRANSFORM_MISSING: ${continuous}`);
+    const environment=tree.statements.filter(ts.isVariableStatement).flatMap(node=>node.declarationList.declarations).find(node=>node.name.getText(tree)==='environment')?.initializer;
+    assert(environment&&ts.isStringLiteral(environment),'API_PRODUCT_CONTINUOUS_ENVIRONMENT_UNQUALIFIED');
+    const ancestry=['scripts/gitops.mjs','scripts/gitops-bundle.mjs'];
+    const bootstrapBytes=fs.readFileSync(path.join(root,ancestry[0]),'utf8');
+    const bootstrapTree=ts.createSourceFile(ancestry[0],bootstrapBytes,ts.ScriptTarget.Latest,true);
+    const bootstrap=bootstrapTree.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='bootstrapDocuments');
+    assert(bootstrap,'API_PRODUCT_CONTINUOUS_BOOTSTRAP_MISSING');
+    const helpers=ts.createSourceFile(ancestry[1],fs.readFileSync(path.join(root,ancestry[1]),'utf8'),ts.ScriptTarget.Latest,true).statements.filter(ts.isVariableStatement).flatMap(node=>node.declarationList.declarations).filter(node=>['gitOpsName','gitOpsClusterKinds'].includes(node.name.getText()));
+    assert.equal(helpers.length,2,'API_PRODUCT_CONTINUOUS_HELPERS_MISSING');
+    const controlled={groups:['buster','prism','nova'].map((role,index)=>({role,name:role,namespace:'discovery',path:`releases/gitops/discovery/${role}`,wave:index===2?1:0,helmReleases:[role],resources:[{apiVersion:'v1',kind:'ConfigMap',namespace:'discovery',name:role}]}))};
+    const body=`const environment=${JSON.stringify(environment.text)};${helpers.map(node=>`const ${node.getText()};`).join('')};const readCommittedBundle=()=>input;${bootstrap.getText(bootstrapTree).replace(/^export\s+/u,'')};${fn.getText(tree).replace(/^export\s+/u,'')};continuousDocuments(bootstrapDocuments('offline','releases/gitops/discovery','https://example.invalid/discovery.git','${syntheticDigest.slice(0,40)}','default'),'default')`;
+    const program=`import vm from 'node:vm'; const result=vm.runInNewContext(${JSON.stringify(body)},{input:${JSON.stringify(controlled)},structuredClone,URL},{timeout:1000}); process.stdout.write(JSON.stringify(result));`;
+    const rendered=spawnSync(process.execPath,['--input-type=module','-e',program],{cwd:temporary,env:{PATH:process.env.PATH},encoding:'utf8'});
+    assert.equal(rendered.status,0,`API_PRODUCT_CONTINUOUS_TRANSFORM_FAILED: ${rendered.stderr}`);
+    JSON.parse(rendered.stdout).forEach((value,index)=>result.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:continuous,document:index,producer:'script-render',profile:'continuous-bootstrap',sourceDigest:hash(bytes),inputs:ancestry,inputDigest:hash(JSON.stringify([controlled,ancestry.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])])),outputDigest:hash(YAML.stringify(value)),publicOutput:'gitops/production/bootstrap.yaml'}}));
+  }
   try { for(const [source,args] of recipes) {
     if(!fs.existsSync(path.join(root,source)))continue;
     const rendered=spawnSync(process.execPath,[source,...args],{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024});
@@ -597,6 +786,7 @@ const infrastructureOutputCache=new Map();
 export function discoverInfrastructureApiOutputs(root) {
   const source='scripts/infrastructure-release.mjs';
   if(!fs.existsSync(path.join(root,source)))return [];
+  assertProducerAdapterAuthority(root,['scripts/deploy.sh',source,'scripts/infrastructure-chart.mjs','scripts/infrastructure-image-renderer.mjs'].filter(file=>fs.existsSync(path.join(root,file))));
   const versionFile=path.join(root,'versions.json');
   const lock=JSON.parse(fs.readFileSync(versionFile,'utf8')).infrastructureCharts??{};
   const dependencyFiles=walkProductSources(root,['scripts','my-values/infra'],file=>/\.(?:mjs|ya?ml|json)$/u.test(file));
@@ -713,7 +903,38 @@ export function discoverExternalChartApiOutputs(root) {
     {path:'scripts/deploy.sh',chart:'spire-crds',version:'0.6.0',repository:'https://spiffe.github.io/helm-charts-hardened/',release:'spire-crds',namespace:'spire-server',inputs:[],args:[]},
   ];
   assertProducerAdapterAuthority(root,[...new Set(installerRecipes.map(recipe=>recipe.path).filter(source=>fs.existsSync(path.join(root,source))))]);
-  for(const recipe of installerRecipes)if(fs.existsSync(path.join(root,recipe.path)))recipes.push({...recipe,profile:`installer:${recipe.release}`});
+  for(const recipe of installerRecipes)if(fs.existsSync(path.join(root,recipe.path))) {
+    const source=fs.readFileSync(path.join(root,recipe.path),'utf8').replace(/\\\n[ \t]*/gu,' ');
+    const invocations=source.split('\n').filter(line=>/\bhelm upgrade --install\b/u.test(line));
+    const invocation=invocations.find(line=>line.includes(recipe.chart==='argo-cd'?'argo/argo-cd':recipe.chart==='cilium'?'cilium/cilium':`spiffe/${recipe.chart}`));
+    assert(invocation,`API_PRODUCT_INSTALLER_RECIPE_OPERATION_MISSING: ${recipe.path}:${recipe.chart}`);
+    const variables={REPO_DIR:root,INFRA_DIR:path.join(root,'my-values/infra')};
+    for(const line of source.split('\n')) {
+      const assignment=/^([A-Z_][A-Z0-9_]*)="([^"\n]*)"$/u.exec(line.trim());if(!assignment)continue;
+      let value=assignment[2].replace(/\$\{[A-Z_][A-Z0-9_]*:-([^}]*)\}/gu,'$1');
+      value=value.replace(/\$([A-Z_][A-Z0-9_]*)/gu,(match,key)=>variables[key]??match);
+      if(!/[`$]/u.test(value))variables[assignment[1]]=value;
+    }
+    const expanded=invocation.replace(/\$\{([A-Z_][A-Z0-9_]*)\}|\$([A-Z_][A-Z0-9_]*)/gu,(match,braced,plain)=>{const value=variables[braced??plain];assert(value!==undefined,`API_PRODUCT_INSTALLER_VARIABLE_UNQUALIFIED: ${recipe.path}:${match}`);return value;});
+    assert(!/[`$;|]/u.test(expanded),`API_PRODUCT_INSTALLER_INVOCATION_UNQUALIFIED: ${recipe.path}`);
+    const parsed=spawnSync('python3',['-c','import json,shlex,sys; print(json.dumps(shlex.split(sys.stdin.read())))'],{input:expanded,encoding:'utf8'});
+    assert.equal(parsed.status,0,`API_PRODUCT_INSTALLER_PARSE_FAILED: ${recipe.path}`);
+    const argv=JSON.parse(parsed.stdout);const install=argv.indexOf('--install');
+    assert(install>=0,`API_PRODUCT_INSTALLER_OPERATION_UNQUALIFIED: ${recipe.path}`);
+    recipe.release=argv[install+1];recipe.chart=argv[install+2].split('/').at(-1);recipe.args=[];recipe.inputs=[];
+    for(let index=install+3;index<argv.length;index++) {
+      const flag=argv[index];
+      if(['--wait','--create-namespace'].includes(flag))continue;
+      if(flag==='--timeout'){index++;continue;}
+      if(flag==='--version'){recipe.version=argv[++index];continue;}
+      if(['--namespace','-n'].includes(flag)){recipe.namespace=argv[++index];continue;}
+      if(['--values','-f'].includes(flag)){const input=argv[++index];assert(input.startsWith(root+'/'),`API_PRODUCT_INSTALLER_INPUT_UNQUALIFIED: ${input}`);recipe.inputs.push(path.relative(root,input));continue;}
+      if(['--set','--set-string','--set-file','--set-json','--set-literal'].includes(flag)) {const value=argv[++index];recipe.args.push(flag,value);if(flag==='--set-file'){const input=value.slice(value.indexOf('=')+1);assert(input.startsWith(root+'/'),`API_PRODUCT_INSTALLER_FILE_UNQUALIFIED: ${input}`);recipe.inputs.push(path.relative(root,input));}continue;}
+      throw new Error(`API_PRODUCT_INSTALLER_FLAG_UNQUALIFIED: ${recipe.path}:${flag}`);
+    }
+    recipe.repository=recipe.chart==='argo-cd'?variables.ARGOCD_HELM_REPO:recipe.chart.startsWith('spire')?variables.SPIFFE_HELM_REPO:recipe.repository;
+    recipes.push({...recipe,profile:`installer:${recipe.release}`});
+  }
   const cacheKey=hash(JSON.stringify([root,hash(manifestBytes),archives.map(archive=>[archive.path,hash(fs.readFileSync(path.join(root,archive.path)))]),recipes.map(recipe=>({...recipe,sourceDigest:hash(fs.readFileSync(path.join(root,recipe.path))),inputDigests:recipe.inputs.map(input=>[input,hash(fs.readFileSync(path.join(root,input)))])}))]));
   if(externalOutputCache.has(cacheKey))return externalOutputCache.get(cacheKey);
   const results=[];

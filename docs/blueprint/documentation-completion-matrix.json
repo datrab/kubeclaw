@@ -17196,6 +17196,12 @@
       "command": "Root verify authenticated ResourceQuota original130–132 and all34exported metadata citations",
       "state": "terminal-pass",
       "scope": "Narrow citation correction only; no independent Source acceptance. Frozen producer-v6 f4snapshot remains unchanged."
+    },
+    {
+      "command": "Producer v8 final source-bound author suite, roles and complete actual join",
+      "state": "terminal-pass-bounded-author-only",
+      "scope": "90PASS0FAIL0SKIP;425JS/TSroles0unknown;14shellsources72sinks;1140contexts39GVK2124selectedfields0missing0selection-or-receivererrors. Independent Source review pending.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/producer-closure-eight-findings-writer/RELEASE-SEAL.json"
     }
   ],
   "reviewAssignments": [
@@ -18447,6 +18453,17 @@
       "revision": "838949cc25755cf7abfb1b3944094d5ef3552ce8",
       "scope": "All68 quota/DaemonSet root metadata,433 cases,1543 dimensions,105 captions;34Quota FAIL narrow alias evidence,34DaemonSet PASS. Bounded v6 applicability; no Reader/Quality/Astra/global acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/quota-daemon-metadata-838-source-fresh/final-seal.json"
+    },
+    {
+      "agent": "/root/stateful_path_helper_a3_source_fresh",
+      "role": "Source",
+      "state": "sealed-FAIL-A3-SOURCE001-A3-SOURCE002",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "a3b47f9c4000a110df6bf15035616ffff84e8c1c",
+      "scope": "Complete421records:376PASS45FAIL;2726cases:2592PASS134FAIL; no assigned semantics unreviewed. Two volume-validation qualification findings remain.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-path-helper-a3-source-fresh/seal.json"
     }
   ],
   "continuation": {
@@ -20610,6 +20627,20 @@
       "rootChecks": "13workload/expandedPASS before widenedStateful operation scope;6workloadPASS after widening; exact export identity counts preserved and319changedrecords recorded. Byte inventory not semantic acceptance.",
       "rootAudit": "/home/node/Documents/Codex/a98-evidence/stateful-compatibility-helper-root-export-audit.json",
       "pending": "New fresh full319Source after correction; existing462review remains immutable historical candidate."
+    },
+    "producerV8": {
+      "state": "integrated-author-candidate-pending-independent-source",
+      "baseRevision": "a3b47f9c4000a110df6bf15035616ffff84e8c1c",
+      "ownedFiles": [
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-producer-adapter-authorities.json",
+        "scripts/tests/api-reference.test.mjs",
+        "scripts/docs-api-python-output-adapter.py",
+        "scripts/docs-api-output-role-classification.mjs",
+        "scripts/docs-api-go-output-role-adapter.go"
+      ],
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-v8-root-actual-join-verification.json",
+      "limitations": "External dependency contents pointer-bound with selected tool hashes, not newly fully authenticated; native isolation binary not rebuilt; controlled witnesses do not prove live deployment."
     }
   }
 }
