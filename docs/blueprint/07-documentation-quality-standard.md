@@ -19,6 +19,61 @@ Do not use promotional claims or unexplained abstractions.
 This standard adds acceptance requirements to the [work plan](documentation-work-plan.md).
 It does not prove that existing pages meet those requirements.
 
+## Product scope and upstream references
+
+Scope decision: The project owner approved this boundary on 2026-10-10.
+This section governs the meaning of completeness in the work plan, execution
+plan, acceptance contract, configuration inventories, generators, and reviews.
+It replaces an obligation to reproduce complete upstream Kubernetes schemas.
+
+Document all KubeClaw functions, supported interfaces, configuration inputs,
+and relationships between components. Preserve recursive coverage of
+KubeClaw-owned contracts, schemas, settings, and supported extension inputs.
+Include optional features that KubeClaw exposes, even when they are disabled
+in the default profile.
+
+For Kubernetes and other dependencies, document the configurations that
+KubeClaw manifests, charts, controllers, scripts, and supported procedures
+actually select or produce. Include conditional render branches, supported
+operator overrides, derived values, and relevant defaults or omissions.
+Do not limit discovery to one default render or to literal manifest keys.
+An omitted storage class, for example, can select a cluster default and affect
+where data persists. If the effective selection needs cluster information,
+state that dependency and the check required to determine it.
+
+Explain the purpose, selected value, responsible component, dependencies,
+permissions, operational consequences, relevant failure and recovery paths,
+and reason or explicitly labelled inference for each significant choice.
+Explain PVC use or absence, data lifetime, RBAC access, and relationships
+between workloads where these affect KubeClaw. Detail must support a reader
+question or a supported task.
+
+Link general Kubernetes field definitions and unused upstream alternatives to
+the applicable upstream reference. Do not reproduce every available field,
+variant, feature gate, controller path, or provider implementation solely
+because it is present in an upstream schema. An upstream alternative remains
+in scope when KubeClaw exposes it as a supported choice or it materially
+changes a documented task, safety condition, or selected configuration.
+Read and verify upstream evidence for the specific behaviour claimed.
+All claims that remain published must be correct, including retained general
+explanations. Scope reduction does not excuse a false statement.
+
+Record the boundary, discovery sources, and reasons for exclusions in the
+existing inventories and requirement records. No blanket exclusion may hide
+a KubeClaw option, conditional branch, security boundary, or reader task.
+Independent reviewers verify applicability as well as coverage. Old review
+failures stay tied to their original revision and scope; they do not become
+PASS because the scope changed.
+
+Maintenance checks must detect additions, changes, removals, and renames in
+KubeClaw configuration and interfaces, including newly selected upstream
+fields or options. Map each discovered surface to its canonical page, owner,
+source authority, and check. Use the existing mutation requirements to prove
+this detection. A pinned reference preserves evidence; it does not by itself
+prove that documentation drift will be detected. Generator and gate migration
+to this boundary requires observed checks and independent review before it
+can be reported as complete.
+
 ## English and ASD-STE100
 
 Use English for product documentation and reusable documentation-agent specifications.

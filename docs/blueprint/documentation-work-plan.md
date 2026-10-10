@@ -10,6 +10,15 @@ Die Bestandsprüfung vom 14.09.2026 bezog sich auf Commit `6979bced8e5bbca905682
 
 Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenstruktur und automatischen Prüfungen werden nicht ungeprüft übernommen.
 
+Verbindliche Umfangsänderung vom 10.10.2026: Die
+[Produktgrenze des Qualitätsstandards](07-documentation-quality-standard.md#product-scope-and-upstream-references)
+gilt für alle Anforderungen. KubeClaw-Funktionen, Zusammenhänge und tatsächlich
+verwendete oder unterstützte Kubernetes-Konfigurationen werden vollständig
+beschrieben. Allgemeine Kubernetes-Felder und ungenutzte Alternativen werden
+verlinkt. Rekursive Abdeckung eigener Produkteingaben, unabhängige Reviews und
+automatische Driftkontrolle bleiben Pflicht. Bestehende Abnahmen werden nicht
+rückwirkend geändert; die Anpassung der Generatoren und Gates ist noch zu prüfen.
+
 ## 2. Verbindliche Arbeitsregeln
 
 - Jede bestehende Dokumentationsdatei wird inhaltlich gelesen und einzeln entschieden. Automatische Erfassung oder Dateinamenklassifikation zählt nicht als Inhaltsprüfung.

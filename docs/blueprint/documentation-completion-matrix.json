@@ -18515,5 +18515,29 @@
       "authority": "docs/status/open-issues.json",
       "description": "Selected Cilium1.20.1 rejects both checked-in all-empty direction rules in source; no executedGo/admission/enforcement. No policy fix or proof of live isolation."
     }
-  ]
+  ],
+  "productScopeDecision": {
+    "approvedOn": "2026-10-10",
+    "authority": "docs/blueprint/07-documentation-quality-standard.md#product-scope-and-upstream-references",
+    "authorization": "Explicit project-owner instruction in the active session: document KubeClaw functions, relationships and actually used Kubernetes configurations; link general Kubernetes fields and adjust scope requirements.",
+    "coverage": "All KubeClaw-owned public interfaces and recursive configuration inputs; all authored, generated, conditionally selected or supported upstream configurations and relevant omissions/defaults.",
+    "excludedObligation": "Exhaustive authored duplication and case certification of unused general upstream Kubernetes fields and alternatives.",
+    "preservedRequirements": [
+      "Independent fresh-context reviews",
+      "Individual applicable requirement and acceptance findings",
+      "Source-to-page dependencies",
+      "Automatic add/change/remove drift mutations",
+      "Correctness of every retained published claim",
+      "No product runtime changes",
+      "Contractually gated parity and deletion"
+    ],
+    "transitionState": "governance-updated-generator-and-gate-migration-pending",
+    "openWork": [
+      "Audit discovery and rendering against the approved boundary without losing conditional product inputs",
+      "Classify upstream alternatives individually using actual source selection and supported reader tasks",
+      "Preserve historical frozen review results; obtain new independent reviews against the revised scope",
+      "Run affected drift gates and negative mutations before claiming scope migration complete"
+    ],
+    "acceptance": "Not accepted; scope approval is not a documentation or automation PASS."
+  }
 }

@@ -18,6 +18,15 @@ geprüfte Ausgangsstand ist 47 vollständig, 144 zu erweitern und 70 fehlend.
 Diese Zahlen werden aus dem Katalog maschinell geprüft. Ein grüner
 Struktur-, Link- oder Generatorcheck ändert keine inhaltliche Einstufung.
 
+Verbindliche Umfangsänderung vom 10.10.2026: Die
+[Produktgrenze des Qualitätsstandards](07-documentation-quality-standard.md#product-scope-and-upstream-references)
+gilt für alle Anforderungen. KubeClaw-Funktionen, Zusammenhänge und tatsächlich
+verwendete oder unterstützte Kubernetes-Konfigurationen werden vollständig
+beschrieben. Allgemeine Kubernetes-Felder und ungenutzte Alternativen werden
+verlinkt. Rekursive Abdeckung eigener Produkteingaben, unabhängige Reviews und
+automatische Driftkontrolle bleiben Pflicht. Bestehende Abnahmen werden nicht
+rückwirkend geändert; die Anpassung der Generatoren und Gates ist noch zu prüfen.
+
 ## 2. Verbindliches Ergebnis
 
 AP09 liefert den vollständigen zentralen Inhalt. Es löscht noch nicht pauschal

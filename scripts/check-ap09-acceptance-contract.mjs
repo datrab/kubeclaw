@@ -201,6 +201,20 @@ function sourceLink(value, revision, label) {
 
 function contract() {
   const source = fs.readFileSync(contractPath, 'utf8');
+  const scopeLink = '07-documentation-quality-standard.md#product-scope-and-upstream-references';
+  const quality = fs.readFileSync(p('docs/blueprint/07-documentation-quality-standard.md'), 'utf8');
+  assert(quality.includes('## Product scope and upstream references')
+    && quality.includes('Preserve recursive coverage of')
+    && quality.includes('Include optional features that KubeClaw exposes')
+    && quality.includes('Do not limit discovery to one default render')
+    && quality.includes('All claims that remain published must be correct')
+    && quality.includes('Maintenance checks must detect additions, changes, removals, and renames'),
+  'product scope must preserve recursive product inputs, conditional selection, correctness and drift detection');
+  for (const file of [contractPath, p('docs/blueprint/documentation-work-plan.md'),
+    p('docs/blueprint/AP09-execution-plan.md')]) {
+    assert(fs.readFileSync(file, 'utf8').includes(scopeLink),
+      `${path.relative(root, file)} does not bind the approved product scope`);
+  }
   const rows = [...source.matchAll(/^\| (A9\d{1,2}-\d{2}) \| (.+) \| (.+) \|$/gmu)]
     .map((match) => ({ id: match[1], pass: match[2], fail: match[3] }));
   unique(rows.map((row) => row.id), 'acceptance IDs');

@@ -19,6 +19,25 @@ sichere Stop-Regel, den Owner und die messbaren späteren Akzeptanzbedingungen
 nennen. Sie darf die fehlende Funktion nicht durch ein erfundenes Kommando oder
 eine unbewiesene Erfolgsaussage ersetzen.
 
+### Verbindliche Produktgrenze seit 10.10.2026
+
+Die vom Auftraggeber genehmigte [Produktgrenze](07-documentation-quality-standard.md#product-scope-and-upstream-references)
+gilt für alle Pakete, Katalog-IDs und Gates. Vollständigkeit umfasst alle
+KubeClaw-Funktionen, Zusammenhänge, eigenen öffentlichen Eingaben und tatsächlich
+verwendeten oder unterstützten Kubernetes-Konfigurationen. Allgemeine
+Kubernetes-Felddefinitionen und ungenutzte Alternativen werden auf passende
+Upstream-Referenzen verlinkt. Eine vollständige Kopie fremder Schemas ist kein
+Abnahmeziel. Bedingte Profile, unterstützte Overrides, relevante ausgelassene
+Felder und ihre effektiven Defaults bleiben im Umfang.
+
+Die Änderung ersetzt keine individuelle Abnahme: Umfangsentscheidungen werden
+begründet und unabhängig geprüft; falsche veröffentlichte Aussagen bleiben
+Fehler. Frühere FAIL-Befunde werden nicht rückwirkend bestanden. Discovery,
+Source-to-page-Zuordnung sowie Add-, Change- und Remove-Mutationen bleiben
+verbindlich. Die Umstellung von Generatoren und Prüfungen ist gesondert
+nachzuweisen und wird nicht durch diese Vertragsänderung als abgeschlossen
+behauptet.
+
 ## 2. Nicht verhandelbare Regeln gegen Scheinabnahmen
 
 Die folgenden Regeln gelten für jeden Punkt `A97-*` bis `A913-*`.
@@ -34,8 +53,12 @@ Die folgenden Regeln gelten für jeden Punkt `A97-*` bis `A913-*`.
 4. **Keine Proxy-Metriken:** Seitenzahl, Wortzahl, Überschriften, Linkzahl,
    Schema-Verweise und ein grüner Build beweisen weder Richtigkeit noch Tiefe.
 5. **Rekursive Vollständigkeit:** „Alle Felder“ bedeutet alle verschachtelten
-   Felder, Bedingungen, Varianten, Defaults, Grenzen, Präzedenzregeln und
-   Consumer. Eine Top-Level-Tabelle besteht diesen Vertrag nicht.
+   KubeClaw-eigenen Felder, Bedingungen, Varianten, Defaults, Grenzen,
+   Präzedenzregeln und Consumer innerhalb der verbindlichen Produktgrenze.
+   Tatsächlich verwendete oder unterstützte Kubernetes-Konfigurationen brauchen
+   ihre produktrelevante Bedeutung und passende Upstream-Referenzen; ungenutzte
+   allgemeine Kubernetes-Felder brauchen keinen eigenen vollständigen Katalog.
+   Eine Top-Level-Tabelle der KubeClaw-Konfiguration besteht diesen Vertrag nicht.
 6. **Ausführbare Aufgaben:** Ein Verfahren braucht Voraussetzungen, Ort,
    Berechtigungen, exakte Schritte, erwartete Beobachtungen, Exit- oder
    Stop-Regeln, Fehlerunterscheidung, Recovery, Cleanup und aufzubewahrende
@@ -262,7 +285,7 @@ Lifecycle, Konfiguration und produktbezogene Journeys getrennt geprüft.
 | A98-07 | Backup and restore documentation identifies the data scope, consistency point, encryption, credentials, retention, integrity check, empty-target assumptions, restore order, and functional verification. It separates implemented and verified paths from incomplete or unverified restore paths. A missing full-platform restore is an explicit product limitation, not a documentation blocker. | An unverified restore is presented as verified, an incomplete path is presented as supported, or the limitation has no safe boundary and follow-up condition. |
 | A98-08 | Upgrade und Rollback nennen Versionsmatrix, Preflight, irreversible Grenze, Datenmigration, Reihenfolge, Health-Gates, Abbruch, Rückkehrpfad und Evidenzaufbewahrung. | Rollback wird nach einer irreversiblen Migration versprochen oder nur Helm-Render geprüft. |
 | A98-09 | Stilllegung entfernt Workloads, Zugriff, Secrets, Daten, Artefakte und externe Ressourcen in sicherer Reihenfolge und nennt ausdrücklich aufzubewahrende Audit-/Recovery-Evidenz. | Cleanup verwendet ungebundene Globs oder löscht Daten vor der letzten Exportprüfung. |
-| A98-10 | Ein rekursives Konfigurationsinventar erfasst `swarm.config.json`, Helm Values, GitOps Values, Environment, Secrets, CLI-/Scriptflags und abgeleitete Werte mit Typ, Pflichtstatus, Default, Grenze, Owner und Consumer. | Eine Quelle oder ein verschachteltes Feld fehlt; README-Text gilt nicht als Authority. |
+| A98-10 | Ein rekursives Konfigurationsinventar erfasst innerhalb der verbindlichen Produktgrenze `swarm.config.json`, Helm Values, GitOps Values, Environment, Secrets, CLI-/Scriptflags und abgeleitete Werte mit Typ, Pflichtstatus, Default, Grenze, Owner und Consumer. Tatsächlich verwendete oder unterstützte Kubernetes-Konfigurationen einschließlich relevanter Defaults und Auslassungen sind zugeordnet; allgemeine Upstream-Felder werden verlinkt. | Eine Quelle oder ein verschachteltes Feld fehlt; README-Text gilt nicht als Authority. |
 | A98-11 | Für jeden effektiven Wert ist die vollständige Präzedenz vom authored input bis zum Runtime-Consumer erklärt; Konflikt-, leerer-Wert-, Secret- und ungültiger-Wert-Fälle sind getestet. | Zwei Quellen können denselben Wert setzen, ohne dass der Gewinner beweisbar ist. |
 | A98-12 | Prism/Studio and Demo Delivery documentation gives the complete intended journey from setup to separate human acceptance, including failure, abort, resume, and cleanup. Each step states whether it is implemented, verified, fixture-only, or currently unavailable. The absence of a reproducible live delivery route is an explicit product limitation, not a documentation blocker. | A mock, render, or synthetic provider run is presented as a live production journey, or an unavailable step has no clear boundary and follow-up condition. |
 | A98-13 | Every operator procedure is complete enough for a fresh-context technical reader to identify prerequisites, authority, commands, expected observations, safe-stop conditions, recovery boundaries, and unsupported capabilities without chat knowledge. Two independent live operator executions are recommended product validation, but they are not required for documentation completion. | A procedure depends on undocumented author knowledge, or the text claims successful execution that did not occur. |
@@ -350,7 +373,7 @@ Referenzen vollständig sind und ihre Vollständigkeit gegen Änderungen verteid
 | ID | PASS nur wenn | Automatisches FAIL |
 | --- | --- | --- |
 | A911-01 | Ein maschinenlesbares Quelleninventar definiert für Schema, Config, CLI, Contract, Event, Error, Endpoint, Store, Capability und Workflow jeweils Suchraum, Parser, Owner und Ausschlüsse. | Ein Generator scannt nur handverlesene Dateien ohne deklarierte Grenze. |
-| A911-02 | Jede Referenz ist rekursiv vollständig und bewahrt Varianten, Bedingungen, Defaults, Grenzen, Deprecated-Zustand, Consumer und Source-Position. | Verschachtelte Felder oder dynamische Familien fehlen. |
+| A911-02 | Jede Referenz ist innerhalb der verbindlichen Produktgrenze rekursiv vollständig und bewahrt Varianten, Bedingungen, Defaults, Grenzen, Deprecated-Zustand, Consumer und Source-Position. Allgemeine Kubernetes-Felder werden passend verlinkt; tatsächlich verwendete oder unterstützte Konfigurationen werden produktbezogen erklärt. | Verschachtelte Produkteingaben, tatsächlich verwendete oder unterstützte Konfigurationen oder dynamische Produktfamilien fehlen. |
 | A911-03 | Nova Grants, Buster Runtime Capabilities, Plugin Capabilities, Kubernetes RBAC und andere Namespaces sind getrennt und ihre Übersetzungsgrenzen erklärt. | Gleichnamige IDs werden in einer gemeinsamen, semantisch falschen Tabelle vermischt. |
 | A911-04 | Events enthalten Producer, Consumer, Schema/Version, Transport, Reihenfolge, Idempotenz, Persistenz, Retention und unbekannte Consumer. | Eventname und Payloadlink gelten als vollständig. |
 | A911-05 | Errors enthalten exakten Code/Familie, Throw-/Emit-Site, Trigger, Wirkung, Lifecycle-Zustand, Retry, sichere Aktion und dynamische Bildung. | Regex-Suche nach Stringliteralen gilt ohne dynamische Familien als vollständig. |
