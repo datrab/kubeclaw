@@ -17389,6 +17389,12 @@
       "state": "terminal-pass-integrity-and-coverage-only",
       "scope": "Actual70 all1451 sealed artifacts zero hasherrors. Historical950 record/5122case/14813dimension/878caption unique inventories and complete record-reference coverage match final expanded report. HistoricalFAIL retained; no corrected or package acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-root-seal-integrity.json"
+    },
+    {
+      "command": "Root full historical838 final seal artifact verification",
+      "state": "terminal-pass-integrity-only",
+      "scope": "All6135 sealed artifacts and report/primary/evidence manifests match; seal d3ec362357c029024a351a2c239c31a86f1c42a034d74c8b93c09090ee18dd08. HistoricalFAIL remains immutable; no current acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/workload-838-final-sealed-root-integrity.json"
     }
   ],
   "reviewAssignments": [
@@ -18734,6 +18740,17 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-complete-source-fresh",
       "supplementalScope": "After complete70: complete4 Job/CronJob resources parent records plus PDB maxUnavailable. Original immutable d8 review only; Root corrected wording must receive new fresh reviewer.",
       "boundedOriginal70Verdict": "Independent union membership70PASS; literal wording62FAIL8PASS at d8. Corrected content unaccepted."
+    },
+    {
+      "agent": "/root/stateful_selection_c1c295_complete63_source_fresh",
+      "role": "Source",
+      "state": "running-new-fresh-full-corrected63",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "c1c295b4aceb5199df608440355f70d7fa750477",
+      "scope": "All63 corrected records62Stateful+PDBmaxUnavailable,424cases1782captionoccurrences, retained typed/source dimensions and actual selection/default provenance. No checklist-only or global acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-selection-c1c295-new-fresh-source-task.md"
     }
   ],
   "continuation": {
@@ -18754,8 +18771,8 @@
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
       "/root/producer_c770_eight_findings_correction_writer",
-      "/root/workload_838_full_source_fresh",
-      "/root/actual_selection_70_complete_source_fresh"
+      "/root/actual_selection_70_complete_source_fresh",
+      "/root/stateful_selection_c1c295_complete63_source_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -19485,7 +19502,7 @@
         "UNREVIEWED": 63
       },
       "applicability": "950UNREVIEWED; no exact historical producer join receipt",
-      "state": "complete-expanded-historical-report-root-ledger-verified-seal-pending",
+      "state": "sealed-historical-fail-root-all6135-artifacts-verified",
       "qualification": "Historical revision only; current corrections require explicit reconciliation. Remaining63 dimensions are literal actual-selection assertions.",
       "additionalPVCComponents": 20,
       "reconciliation": "All20 current clauses changed and inside full422; 4other HugePages resource parent records outside422 assigned fresh supplemental Source review. No delta-only acceptance.",
@@ -19493,7 +19510,8 @@
         "PASS": 683,
         "FAIL": 248,
         "UNREVIEWED": 19
-      }
+      },
+      "evidence": "/home/node/Documents/Codex/a98-evidence/workload-current-candidate-full-source-fresh/final-full-950-source-20261010/report.md"
     }
   },
   "productBoundaries": [
