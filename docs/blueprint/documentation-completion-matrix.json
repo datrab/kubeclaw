@@ -16064,6 +16064,34 @@
       ],
       "description": "965-SOURCE002 historical failure retained. DaemonSet root metadata shared caption split into actual name alias537–540 and separate namespaced ObjectMeta create caller371–375. All34rootrecords retain both narrow direct authorities. No runtime behavior changed; fresh complete affected Source review required.",
       "proof": "/home/node/Documents/Codex/a98-evidence/daemonset-root-name-caption-correction.json"
+    },
+    {
+      "id": "A98-HUGEPAGES-OLD-PODSPEC-COMPATIBILITY",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Independent838 workload Source found unconditional huge-page divisibility claims. Root qualifies server-derived old-PodSpec AllowIndivisibleHugePagesValues and retains other resource and workload update checks. Entire changed export union:11 Deployment,30 workload,10 DaemonSet records. Historical838 FAIL retained. No product code change.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/hugepages-quota-root-correction-export-audit.json"
+    },
+    {
+      "id": "A98-RESOURCEQUOTA-DNS-ALIAS-DIRECT-EVIDENCE",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "QD838-SOURCE001 independently found all34 ResourceQuota captions missing direct DNS alias311 evidence. Root splits namespaced ObjectMeta call8068–8070 from alias311. All34 changed records differ only in evidence. Historical838FAIL retained.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/hugepages-quota-root-correction-export-audit.json"
     }
   ],
   "checks": [
@@ -18337,7 +18365,7 @@
       "reasoningEffort": "high",
       "freshContext": true,
       "forkTurns": "none",
-      "state": "running-current-source-review-no-acceptance",
+      "state": "sealed-FAIL-with-complete-conditional-source-and-unreviewed-applicability",
       "sourceRevision": "fe07fc0848521ff40d6ca22c99cc948fddd476d6",
       "scope": "Complete current277node records/cases/captions and shared app facts;DaemonSet/CSIDriver. Actual applicability not proved by obsolete discovery; independent current producer join pending. Read-only current immutable source."
     },
@@ -18350,12 +18378,33 @@
     {
       "agent": "/root/receiver_corrected_965_source_fresh",
       "role": "Source",
-      "state": "running-fresh-context-read-only",
+      "state": "sealed-FAIL-two-caption-findings-applicability-unreviewed",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
       "revision": "965d4a3b7bdb36250c1bff2337883c6515f649d7",
       "scope": "Complete dynamically derived affected receiver union: lifecycleCSI, StatefulSet names, projected Secret/ConfigMap qualifiers, Pod status and root annotation null-member cases. Individually bound Source semantics and separate actual applicability. Not Reader/Quality/global acceptance."
+    },
+    {
+      "agent": "/root/workload_838_full_source_fresh",
+      "role": "Source",
+      "state": "running-fresh-context-read-only-historical838",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "838949cc25755cf7abfb1b3944094d5ef3552ce8",
+      "scope": "Full770 workload body and180 delegated root records; authenticated193 primaries,950 resolved type paths; discovered old-PodSpec huge-page exception; unfinished predicates explicitly unreviewed."
+    },
+    {
+      "agent": "/root/quota_daemon_metadata_838_source_fresh",
+      "role": "Source",
+      "state": "sealed-FAIL-QD838-SOURCE001",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "838949cc25755cf7abfb1b3944094d5ef3552ce8",
+      "scope": "All68 quota/DaemonSet root metadata,433 cases,1543 dimensions,105 captions;34Quota FAIL narrow alias evidence,34DaemonSet PASS. Bounded v6 applicability; no Reader/Quality/Astra/global acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/quota-daemon-metadata-838-source-fresh/final-seal.json"
     }
   ],
   "continuation": {
@@ -20491,6 +20540,15 @@
       "records": 34,
       "newWindow": "130–132",
       "proof": "/home/node/Documents/Codex/a98-evidence/resourcequota-unconditional-root-correction.json"
+    },
+    "currentHugepagesQuotaCorrection": {
+      "baseRevision": "838949cc25755cf7abfb1b3944094d5ef3552ce8",
+      "state": "candidate-not-independent-acceptance",
+      "changedRecords": 85,
+      "identityCountsUnchanged": true,
+      "rootAudit": "/home/node/Documents/Codex/a98-evidence/hugepages-quota-root-correction-export-audit.json",
+      "initialTests": "Initial five-file run30PASS1FAIL due missing go ENOENT. Repeated failed six-test file with explicit existing Go binary terminal0:6PASS0FAIL0SKIP. Thus every test passed in a recorded run; not an all-suite/content acceptance.",
+      "producer": "v6 bounded join1140contexts39GVK2124paths zero missing/errors; v7 suite86PASS role425zeroUnknown, join deliberately terminated143 due4 concrete Go escape gaps. Corrected writer grammar still being audited; no final producer acceptance."
     }
   }
 }
