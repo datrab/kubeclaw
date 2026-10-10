@@ -18838,6 +18838,25 @@
       "rootSealVerifiedFiles": 5565,
       "reportSha256": "f9d31773743488970ee27929b4df09aa13bf6aed26a3553f4888290cd9a7819f",
       "rootFinding": "Report line spans for definitions do not match frozen page; reviewer rechecking all citation spans and resealing. PASS not integrated as final evidence."
+    },
+    "ownedBusterLeaseCandidate": {
+      "state": "authored-not-independently-accepted",
+      "author": "/root/buster_owned_lease_receiver_writer",
+      "boundaryCount": 150,
+      "reportSha256": "2da94a1aa7917045174e57773a72a1cae9e024ed58890c960cb7574a57b0968d",
+      "rootVerifiedArtifacts": 12,
+      "moduleSha256": "cc729dec9b90713a7d3a8422f5f7d497ffb41f461e3d5c5b454f955ac9856ee7",
+      "checks": "Root8focusedNode testsPASS exit0; author176originalcitationranges; generated anchors unresolved until new source-bound output",
+      "open": [
+        "Fresh independent Source/Reader/Quality review",
+        "Configured actual schema factory integration and generation",
+        "Actual controller Go/live checks not run by author"
+      ],
+      "productBoundaries": [
+        "Effective chart ClusterRoles differ from unused namespaceRole helper/test",
+        "Basic fixture Ready wait has no UID/generationcomparison",
+        "Bare resource wait/release cannot assume unambiguous multiple-group discovery"
+      ]
     }
   }
 }
