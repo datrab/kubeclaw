@@ -16148,6 +16148,126 @@
       ],
       "description": "Qualifies generic StatefulSet volume validation when validator runs and PDB ANY-old-selector-error update relaxation of expression values only;46record181case delta. Full affected prior review union422records2731cases must be assessed independently. Historical FAILs preserved.",
       "proof": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-validation-correction-writer/frozen-release.json"
+    },
+    {
+      "id": "A98-PRODUCER-C770-P01",
+      "state": "open-independent-source-finding-correction-running",
+      "catalogueIds": [
+        "CFG-009",
+        "GOV-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Python file-global lexical binding and container mutation miss actualAPI output",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "id": "A98-PRODUCER-C770-P02",
+      "state": "open-independent-source-finding-correction-running",
+      "catalogueIds": [
+        "CFG-009",
+        "GOV-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "JS native writer return/collection/callback capability escapes",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "id": "A98-PRODUCER-C770-P03",
+      "state": "open-independent-source-finding-correction-running",
+      "catalogueIds": [
+        "CFG-009",
+        "GOV-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Shell sed/awk/tee/unrecognized emitter family silent omissions",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "id": "A98-PRODUCER-C770-P04",
+      "state": "open-independent-source-finding-correction-running",
+      "catalogueIds": [
+        "CFG-009",
+        "GOV-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Go ReaderFrom/WriterTo/typealias HTTPclient/builtin output omissions",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "id": "A98-PRODUCER-C770-P05",
+      "state": "open-independent-source-finding-correction-running",
+      "catalogueIds": [
+        "CFG-009",
+        "GOV-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Refreshed whole-module native syntax bypass hides API; removeblanket exemptions and duplicateoperationfacts",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "id": "A98-PRODUCER-C770-P06",
+      "state": "open-independent-source-finding-correction-running",
+      "catalogueIds": [
+        "CFG-009",
+        "GOV-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "my-values executable-language root omitted",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "id": "A98-PRODUCER-C770-P07",
+      "state": "open-independent-source-finding-correction-running",
+      "catalogueIds": [
+        "CFG-009",
+        "GOV-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Actual package runtime exports/conditions/namespace native reexports silentlymissed",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
+    },
+    {
+      "id": "A98-PRODUCER-C770-P08",
+      "state": "open-independent-source-finding-correction-running",
+      "catalogueIds": [
+        "CFG-009",
+        "GOV-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Static computed object keys and delete explicitlyunsupported; declaredgrammar gap",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
     }
   ],
   "checks": [
@@ -18511,13 +18631,14 @@
     {
       "agent": "/root/producer_c770_complete_source_fresh",
       "role": "Source",
-      "state": "running",
+      "state": "sealed-FAIL-incomplete-P01-P08",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
       "revision": "c770cf5d63f42b508d616b6b8c0dba79497beed7",
-      "scope": "Complete S01–S11 producer and Go capability closure; independent mutations and original callers; bounded role, no gate acceptance.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/producer-c770-independent-source-binding.json"
+      "scope": "Complete criterion accounting S01/S02/S06 boundedPASS; S03/S04/S05/S07/S09/S10/S11FAIL; S08completejoinUNREVIEWED; native162contracts20callers notfullyreviewed; concrete executable silent-API omissions.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md",
+      "rootIntegrity": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh-root-integrity.json"
     },
     {
       "agent": "/root/stateful_pdb_validation_correction_writer",
@@ -18541,6 +18662,28 @@
       "scope": "Complete85 historicalrecords42PASS43FAIL;566cases556PASS10FAIL;1614dimensions1592PASS22FAIL. Quota34PASS; helper predicate and StatefulSet compatibility findings. Subsequent author fixes require current independent review, no historical seal upgraded.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/hugepages-quota-corrected-source-fresh/seal.json",
       "rootIntegrity": "/home/node/Documents/Codex/a98-evidence/hugepages-quota-corrected-source-fresh-root-integrity.json"
+    },
+    {
+      "agent": "/root/stateful_pdb_422_corrected_source_fresh",
+      "role": "Source",
+      "state": "running-full422-current",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "a511753e24cd51c569a1da60bbdc1dead7661863",
+      "scope": "Full422records2731cases at a511; independently verify complete current claims, unchanged376proof and corrected46. No globalacceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-corrected-source-binding.json"
+    },
+    {
+      "agent": "/root/producer_c770_eight_findings_correction_writer",
+      "role": "Author",
+      "state": "running-exclusive-six-producer-files",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "a511753e24cd51c569a1da60bbdc1dead7661863",
+      "scope": "Full P01–P08 correction families, no blanket native syntax exemptions, maintainable operation/consumer qualification; complete162/20/19author audit; terminal fulltests/roles/actualjoin needed. No selfacceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/producer-c770-complete-source-fresh/report.md"
     }
   ],
   "continuation": {
