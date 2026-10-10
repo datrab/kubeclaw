@@ -74,9 +74,11 @@ test('new StatefulSet/PDB/Job parent fields retain controller, gate, cleanup and
  assert.match(get('Job','$.spec.ttlSecondsAfterFinished').emptyValue,/zero.*finished Job.*asynchronous/);assert.match(get('Job','$.spec.ttlSecondsAfterFinished').changeImpact,/after deletion/);
  assert.match(get('PodDisruptionBudget','$.spec.maxUnavailable').invalidValue,/simultaneous minAvailable/);
 });
-test('legacy serialized records remain byte-equivalent except source-backed negative revision history correction',()=>{
- const preserved=receiverContracts.slice(0,598).filter(r=>!(r.kind==='StatefulSet'&&r.fieldPath==='$.spec.revisionHistoryLimit'));
- assert.equal(createHash('sha256').update(JSON.stringify(preserved)).digest('hex'),'da7b52a69bc4a12c4950b5e4df37d4f59cc62b7387babeebb70170f33f24da16');
+test('legacy records remain unchanged outside independently identified correction boundaries',()=>{
+ // Immutable5d baseline; only source-backed correctness corrections are excluded.
+ const correctedIds=new Set(["Job:$.spec.activeDeadlineSeconds", "CronJob:$.spec.jobTemplate.spec.backoffLimit", "CronJob:$.spec.jobTemplate.spec.parallelism", "CronJob:$.spec.jobTemplate.spec.completions", "CronJob:$.spec.jobTemplate.spec.completionMode", "CronJob:$.spec.jobTemplate.spec.suspend", "CronJob:$.spec.jobTemplate.spec.activeDeadlineSeconds", "CronJob:$.spec.jobTemplate.spec.manualSelector", "CronJob:$.spec.jobTemplate.spec.template", "StatefulSet:$.spec.volumeClaimTemplates", "StatefulSet:$.spec.volumeClaimTemplates[]", "Job:$.spec.podReplacementPolicy", "CronJob:$.spec.jobTemplate.spec.podReplacementPolicy", "StatefulSet:$.spec.template", "StatefulSet:$.spec.revisionHistoryLimit"]);
+ const preserved=receiverContracts.slice(0,598).filter(r=>!correctedIds.has(r.kind+':'+r.fieldPath));
+ assert.equal(createHash('sha256').update(JSON.stringify(preserved)).digest('hex'),'3fe7b3c53da9daaa55e280644fbffb4286f92e3910471c83ef3bd88187ce99c2');
  const corrected=get('StatefulSet','$.spec.revisionHistoryLimit');assert.match(corrected.invalidValue,/Negative values are accepted with a warning/);
  assert.match(corrected.changeImpact,/pruning.*non-live.*negative limit.*zero/);
  assert.equal(corrected.cases.find(c=>c.name==='invalid-value-or-combination').sourceOutcome,corrected.invalidValue);

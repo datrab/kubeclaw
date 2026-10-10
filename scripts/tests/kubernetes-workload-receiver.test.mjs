@@ -8,7 +8,7 @@ test('finite batch restart defaults fail and StatefulSet requires Always',()=>{
  assert.match(get('StatefulSet','$.spec.template.spec.restartPolicy').invalidValue,/other than Always/);
 });
 test('CronJob nested defaulting and selector prohibition differ from Job',()=>{
- assert.match(get('CronJob','$.spec.jobTemplate.spec.backoffLimit').omitted,/without running SetDefaults_Job/);
+ assert.match(get('CronJob','$.spec.jobTemplate.spec.backoffLimit').omitted,/SetDefaults_Job does not run on the stored template/);
  assert.match(get('CronJob','$.spec.jobTemplate').invalidValue,/selector.*manualSelector/);
  assert.match(get('Job','$.spec.selector').omitted,/prepare-for-create/);
 });

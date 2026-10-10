@@ -19550,6 +19550,25 @@
       "selectedUnreviewedAtCheckpoint": 555,
       "scopeDecisionsPending": 239,
       "qualification": "Fullreview ongoing, no retroactive acceptance after candidatecorrections. SystematicDS lineage/retainKeys/pause/producerclaims, deferredCronJob defaults and Jobzero deadline plus retaineditem issues. Counts provisional."
+    },
+    "daemonSetSemanticsCorrection": {
+      "author": "/root/daemonset_semantics_correction_writer",
+      "state": "author-candidate-pending-new-full-independent-source-review",
+      "records": 277,
+      "changed": 245,
+      "unchanged": 32,
+      "rootReleaseHashesVerified": 2,
+      "scope": "DirectdaemonPodlineage, noDeploymentretainKeys/pause/producerclaims; sourcequalifiedconditionalCSA/Argooperations; CSIlifecycleitemomission distinct from emptylist; actualDSvalidation440-470/453-460 replaces false inheritedDeployment/ReplicaSet captions",
+      "rootChecks": "3testsPASS0SKIP; authenticated immutableprimarysourceinspection not API execution",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/daemonset-semantics-correction-writer",
+      "qualification": "FullnewSource must reread every applicable record/case, not just earlier findings; ReaderQuality/Astra remainopen Author has not semantically audited all451 uniqueURL/caption pairs; independent fullreview required."
+    },
+    "statefulSetValidationStageCaptionCorrection": {
+      "state": "candidate-pending-independent-full-source-review",
+      "author": "/root",
+      "fieldPath": "StatefulSet:$.spec.template",
+      "scope": "Validator copies/clears hostname/subdomain/substitutesvolumeclaims for validation; controlleridentityassignment occurslater.58-79caption restricted toactualtemplatelabel/annotationsvalidation.193-223actualvalidationstageproof",
+      "checks": "13workloadtestsPASS0SKIP;583legacyrecords unchanged outsideexplicitcorrectionboundaries. Initial combined23run21PASS2FAIL staleblanketsnapshot/oldphrasing assertions preserved ascheckhistory, corrected scopedpreservation andboundaryassertion."
     }
   }
 }
