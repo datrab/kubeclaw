@@ -1,3 +1,4 @@
+import { qualifyAuthoredDeploymentOperation } from './docs-kubernetes-metadata-receiver-contracts.mjs';
 // Built-in API identity fields. CRD and nested-template metadata are separate receivers.
 const revision = '66452049f3d692768c39c797b21b793dce80314e';
 const source = (path, start, end, claim) => ({
@@ -48,3 +49,5 @@ export const receiverContracts = resources.flatMap(([apiVersion,kind]) => ['apiV
     'The actual server must serve the selected endpoint and version. Check discovery and the response before treating any create, replacement or migration as successful.',
   ],
 })));
+
+receiverContracts.forEach(qualifyAuthoredDeploymentOperation);

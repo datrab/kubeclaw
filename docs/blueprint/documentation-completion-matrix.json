@@ -18538,6 +18538,53 @@
       "Preserve historical frozen review results; obtain new independent reviews against the revised scope",
       "Run affected drift gates and negative mutations before claiming scope migration complete"
     ],
-    "acceptance": "Not accepted; scope approval is not a documentation or automation PASS."
+    "acceptance": "Not accepted; scope approval is not a documentation or automation PASS.",
+    "governanceReview": {
+      "reviewer": "/root/product_scope_governance_fresh_review",
+      "freshContext": true,
+      "revision": "143d3a74566dd5853463f33ea77348cf7809cf5a",
+      "verdict": "PASS governance only",
+      "reportSha256": "098e4f8d1a4e48d8747902148d6da62d459d0403136200b7533e3dd19ac0b2b3",
+      "observedChecks": [
+        "acceptance structure:89points/261requirements/122fixtures evidenceValidated=false",
+        "blueprint --check exit0"
+      ],
+      "limits": "No generator migration, content, mutation, clean-checkout or package acceptance."
+    },
+    "rootOperationCorrections": {
+      "state": "authored-candidate-not-independently-accepted",
+      "files": [
+        {
+          "path": "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+          "sha256": "f66c3a082b514d0db977d101275e763997a5bf58f17a8b2fe15e6adbbec03072"
+        },
+        {
+          "path": "scripts/docs-kubernetes-envelope-receiver-contracts.mjs",
+          "sha256": "991e870a57aa610b1e3d8df570d2126070ae9329fe300b3493db43746ded4ed2"
+        },
+        {
+          "path": "docs/site/reference/api-object-updates.md",
+          "sha256": "9a871abf0f2ebf3b95b9ad83eaa7ead6bd5687e443c5cab78289a56f0dda6e51"
+        }
+      ],
+      "evidenceDirectory": "/home/node/Documents/Codex/a98-evidence/deployment-shared-operations-root",
+      "reportSha256": "808de5ee607a4b94ab44904838078eb1675baa2d2df84d9c150a538388e919e1",
+      "sealSha256": "c170564e19d04a50d222e4e34c6fcc0476caf7de847a876b37006968fedc5f91",
+      "scope": "Selected authored Deployment update qualifications and canonical Argo options; exact replacement retry caption correction. Full upstream records are not publication scope."
+    },
+    "coreFrozenReviewUpdate": {
+      "revision": "07d3a25b8afeec5eaacbefe6440a615dfb6b0d65",
+      "reviewer": "/root/a98_core_complete_source_after_consumers_fresh",
+      "verdict": "FAIL frozen original scope",
+      "artifactsVerified": 142,
+      "boundedSemanticReview": "614caption propositions601PASS13FAIL;1467cases1458PASS9FAIL. Not full original exhaustive consumer completeness.",
+      "materialCurrentFindings": [
+        "CCF08 bound PVC loss/repair",
+        "CCF11 omitted StorageClass winner"
+      ],
+      "reviewReportCorrection": "Five frozen/current Prism/Ops templates conditionally omit empty storageClassName; report explicit-empty classification is contradicted by independently read source. Do not reuse that claim.",
+      "correctionEvidenceSha256": "94ead30d0e4edc3ea38e3689c9fe7af390d10087a5af9b229123cfd671f72a0a",
+      "acceptance": "No package or source-partition acceptance; corrections and revised-scope fresh reviews pending."
+    }
   }
 }
