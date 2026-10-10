@@ -15674,6 +15674,18 @@
         "A98-11"
       ],
       "description": "Root reconciled3freshAppsSourcefindings inoriginalinventorydescriptions: port-nameuniquenesspercontainer notPod, shownimagevalidator requiresnonemptylength notOCIgrammar/whitespace, genericprobeemptyscalarstatement nowexactfieldandpresentProbezero-defaultqualified. Originalvalidation2722-2738/3886-3891 anddefaults233-246 readwithfreshsourceSHAverified. CompleteAppsSource stillrunning; noinheritedapproval."
+    },
+    {
+      "id": "A98-CORE-NAMESPACE-DELETION-CONSUMER",
+      "state": "correction-candidate-pending-complete-fresh-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Three Namespace spec/finalizer records now qualify the actual pinned deletion consumer: discovery errors, unsupported operations and verification limits, background deletion, ordered Pods, grace/finalizer estimates, retained tokens, UID conflict retry and worker retries.24new cases;272schema boundary bijection remains. Root author evidence only; other core proof gaps remain."
     }
   ],
   "checks": [
@@ -16508,6 +16520,12 @@
       "exitCode": 0,
       "tests": 14,
       "scope": "After Admission item/scope correction and Cilium API registry integration. Original runtime/API/traffic not executed."
+    },
+    {
+      "command": "Namespace finalization export, schema bijection and exact source-range verification",
+      "state": "terminal-pass",
+      "scope": "272core identities;three selected records39cases34source/caption ranges. Original primary bytes Gitblob verified. No independent semantic or live acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/namespace-finalization-root/checks.json"
     }
   ],
   "reviewAssignments": [
