@@ -18948,6 +18948,35 @@
         "Full150field Source acceptance and per-field evidence incomplete; no structuralPASSsubstitution"
       ],
       "correctionCandidate": "Root workflow named-port fix and generator diagnostic override. Actual published validator executed with synthetic actual-port plan PASS and wrong-output negative rejected. Not resolved compilation/live execution. Fresh full Source/Reader/Quality still required."
+    },
+    "busterGuideCheckUpdate": {
+      "state": "source candidate; independent review required",
+      "changes": "Explicit inspected revisions and current substantive heading markers; all pinned links still whitelist-bound, git-resolved, current-byte compared and line-range checked. Broker field inventory checked at linked canonical Helm reference instead of duplicated understanding list. SPC008 current lease-flow marker retained.",
+      "checks": "Root whole check-buster-guides PASS:9pages12suites19providers1648pinnedlinks172revision-bound sources6requirements. This is source/structure checking, not semantic or reader acceptance."
+    },
+    "runtimeValuesPrecedenceCorrection": {
+      "state": "source candidate",
+      "changes": "Install guide removes nonexistent repository-values override stage; actual materializer consumes my-values while creating release-bound values, script applies generated values then private overlay then overrides. Existing missing-runtime-selection safe stop remains.",
+      "source": "materialize-release.mjs23-40;deploy.sh1409-1417 atf0995c544af41dcd5de5990820bc2c4e97bdafe3"
+    },
+    "clusterConfigurationReceiverCandidate": {
+      "state": "authored-not-independently-accepted",
+      "author": "/root/cluster_rbac_ingress_registration_writer",
+      "kinds": [
+        "ClusterRole",
+        "ClusterRoleBinding",
+        "IngressClass",
+        "CustomResourceDefinition"
+      ],
+      "recordCount": 53,
+      "reportSha256": "3106d5f4f49b6302cb23240cae43fae7a895409c65e3d31961ac62dab8e37ca0",
+      "rootChecks": "All41sealed artifacts verified;6Node testsPASS noSKIP. Author731selected bodyjoins across53contexts, not complete production discovery.",
+      "open": [
+        "Root shared metadata/envelope and generator integration",
+        "Fresh Source/Reader/Quality semantic reviews",
+        "Full actual-output generation and gates"
+      ],
+      "limits": "NoAPI/admission/controller execution; foreign CRDschema-language linked registration is distinct from recursively complete ownedBuster instance schema. ESLint authorfailed missingconfig, noPASSclaimed."
     }
   }
 }

@@ -303,9 +303,16 @@ The effective order for runtime role values is:
 
 1. Chart defaults.
 2. Source-bound generated release values.
-3. Role-specific repository values.
-4. Private operator overlay.
-5. Supported command overrides.
+3. Private operator overlay.
+4. Supported command overrides.
+
+The release materializer reads the role-specific `my-values` file and binds its
+images and code bundle to the selected release before it writes the generated
+values. That repository file is therefore an input to step 2. The deploy script
+does not apply it again as a separate override.
+[Release value construction](https://github.com/datrab/kubeclaw/blob/f0995c544af41dcd5de5990820bc2c4e97bdafe3/scripts/updates/materialize-release.mjs#L23-L40)
+and [the deploy script's values order](https://github.com/datrab/kubeclaw/blob/f0995c544af41dcd5de5990820bc2c4e97bdafe3/scripts/deploy.sh#L1409-L1417)
+define these stages.
 
 Do not select a different image in a private overlay.
 Image identity belongs to the reviewed release receipt.

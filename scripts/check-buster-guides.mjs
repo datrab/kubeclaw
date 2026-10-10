@@ -21,11 +21,15 @@ const specifications = [
       '**Rejected alternative:**', '**Cost:**'],
   },
   {
-    file: 'docs/site/understand/buster-namespace-controller.md', minimumLinks: 6, revision,
-    required: ['## Why The Broker Exists', '## Lease Flow', '## Lease Specification',
-      '## Access, Secrets, and Credentials', '## Status and Fencing',
-      '## Retention and Release', '### Complete shipped values', '## Failure Guide', '## Verification',
-      '**Rejected alternative:**', '**Cost:**'],
+    file: 'docs/site/understand/buster-namespace-controller.md', minimumLinks: 6,
+    revision: 'be78787633d774e9fd2a2ff401311499a555156d',
+    required: ['## Why a fixture requests a lease', '## From request to workload',
+      '## Choose a request and keep its authority stable', '## Access and credential boundaries',
+      '## Read each observation at its own level', '## Preview ownership and verified readiness',
+      '## Retention, decisions and cleanup', '## Configure and change the broker',
+      '## Diagnose failures and resume safely', '## Verification and limits',
+      'complete recursive lease reference', 'D-014 through D-019',
+      'It costs another reconciler', 'Reconsider this shape'],
   },
   {
     file: 'docs/site/reference/buster-suites.md', minimumLinks: 25, revision,
@@ -41,6 +45,7 @@ const specifications = [
   },
   {
     file: 'docs/site/use/workflows/buster-suite.md', minimumLinks: 6, revision,
+    additionalRevisions: ['d271cf712e1f882c0c64e0c6d9e8a5cd36f18508'],
     required: ['## Supported Execution Paths', '## Before You Start', '## 1. Start From The Maintained Example',
       'buster-fixture-matrix-report.pipeline.json', '## 2. Make The Decision Explicit',
       '## 3. Link Outputs Instead Of Sharing Paths', '## 4. Resolve Before You Run',
@@ -73,7 +78,8 @@ const specifications = [
       '## Common Failures', '## Verification'],
   },
   {
-    file: 'docs/site/reference/buster-error-codes.md', minimumLinks: 20, revision,
+    file: 'docs/site/reference/buster-error-codes.md', minimumLinks: 20,
+    revision: 'cebe61ef2046263e4e373732227ae5f03107c1f6',
     required: ['## How To Use This Reference', '## Unit Command And JUnit Report',
       '## API', '## Security', '## Errors Outside This Inventory'],
   },
@@ -110,10 +116,10 @@ for (const specification of specifications) {
   sourceLinks += links.length;
   for (const match of links) {
     const [, linkRevision, repositoryPath, firstValue, lastValue] = match;
-    assert.equal(linkRevision, specification.revision,
+    assert([specification.revision, ...(specification.additionalRevisions ?? [])].includes(linkRevision),
       `${specification.file} uses another revision for ${repositoryPath}`);
-    const pinned = execFileSync('git', ['-C', root, 'show', `${specification.revision}:${repositoryPath}`], { encoding: 'utf8' });
-    const sourceKey = `${specification.revision}:${repositoryPath}`;
+    const pinned = execFileSync('git', ['-C', root, 'show', `${linkRevision}:${repositoryPath}`], { encoding: 'utf8' });
+    const sourceKey = `${linkRevision}:${repositoryPath}`;
     if (!checkedSources.has(sourceKey)) {
       const currentPath = path.join(root, repositoryPath);
       assert(fs.existsSync(currentPath), `linked source is absent: ${repositoryPath}`);
@@ -240,6 +246,9 @@ assert(resolvedExample.nodes.some(node => node.id === 'unit/unit'
 
 const namespaceGuide = fs.readFileSync(
   path.join(root, 'docs/site/understand/buster-namespace-controller.md'), 'utf8');
+const helmReference = fs.readFileSync(path.join(root, 'docs/site/reference/helm-values.md'), 'utf8');
+assert(namespaceGuide.includes('[generated configuration reference](../reference/helm-values.md)'),
+  'namespace guide must link its canonical Helm configuration reference');
 for (const value of ['leaseClient.enabled', 'readyClient.enabled', 'leaseApiGroup', 'leaseApiVersion',
   'allowedPrefixes', 'defaultTtlSeconds', 'maxTtlSeconds', 'controller.productDecisions.enabled',
   'controller.readiness.enabled', 'controller.allowedAccess', 'controller.allowedSourceSecrets',
@@ -247,7 +256,8 @@ for (const value of ['leaseClient.enabled', 'readyClient.enabled', 'leaseApiGrou
   'controller.pollIntervalMs', 'controller.resources.requests.cpu',
   'controller.resources.requests.memory', 'controller.resources.limits.cpu',
   'controller.resources.limits.memory']) {
-  assert(namespaceGuide.includes(`\`${value}\``), `namespace guide omits Helm value ${value}`);
+  assert(helmReference.includes(`$.busterNamespaceBroker.${value}`),
+    `canonical configuration reference omits Helm value busterNamespaceBroker.${value}`);
 }
 
 const navigation = [
@@ -282,7 +292,7 @@ for (const id of ['SUR-SPC-04', 'SUR-SPC-05', 'SUR-DAT-03']) {
 
 const requirementMarkers = {
   'SPC-001': ['docs/site/understand/buster.md', '## Product Boundary'],
-  'SPC-008': ['docs/site/understand/buster-namespace-controller.md', '## Lease Flow'],
+  'SPC-008': ['docs/site/understand/buster-namespace-controller.md', '## From request to workload'],
   'CFG-006': ['docs/site/reference/buster-suites.md', '## Suite Inventory'],
   'FLW-011': ['docs/site/use/workflows/buster-suite.md', 'buster-fixture-matrix-report.pipeline.json'],
   'EXT-005': ['docs/site/extend/buster.md', '## Suite Templates'],
