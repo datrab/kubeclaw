@@ -15,6 +15,10 @@ const evidence = [
   source('vendor/sigs.k8s.io/json/internal/golang/encoding/json/decode.go',950,1003,'Custom literal decoders are selected first; null leaves an ordinary string at its fresh zero value.'),
 ];
 const resources = [
+  ['batch/v1','Job'],
+  ['batch/v1','CronJob'],
+  ['apps/v1','StatefulSet'],
+  ['policy/v1','PodDisruptionBudget'],
   ['apps/v1','Deployment'],
   ['networking.k8s.io/v1','Ingress'],
   ['networking.k8s.io/v1','NetworkPolicy'],

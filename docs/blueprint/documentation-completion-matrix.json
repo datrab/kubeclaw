@@ -18654,6 +18654,22 @@
         ],
         "rootFollowup": "Narrowed two over-wide source citations; distinguished name-template versus namespace-template token support against original external-provisioner source.",
         "acceptance": "No fresh Source/Reader/Quality/Astra or package acceptance; no live kubectl/storage operation."
+      },
+      "freshReaderReviewAfterRuntimeCorrection": {
+        "reviewer": "/root/pvc_runtime_complete_reader_fresh",
+        "freshContext": true,
+        "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+        "verdict": "PASS bounded reader slice only",
+        "reportSha256": "535c2a02666525238a47053a028e1722cc2f604e05f24f846ff74f0e80c7f64d",
+        "criteria": [
+          "A98-02 reader aspect",
+          "A98-06 reader aspect",
+          "A98-10 reader aspect",
+          "A98-11 reader aspect",
+          "A98-13 reader aspect"
+        ],
+        "observed": "16 supplemental synthetic reader exercises;215staticlinks/anchors;no live registered operator fixture/cluster/Secret/mount/deletion/recovery operation.",
+        "acceptance": "No global criteria, full Source/Quality/Astra, generator or package acceptance."
       }
     },
     "generatorSelectionFoundation": {
@@ -18741,6 +18757,51 @@
       "logSha256": "1127e5a16bfed061cf9b4053b934dc8f702ada0e83c22b74cb29297c288d9c69",
       "failure": "Baseline publication failed API_REFERENCE_UNRESOLVED_PROOF Application $.metadata after two PASS families. No full mutation PASS.",
       "isolation": "Detached frozen source worktree; existing host node_modules symlink, not clean dependency install."
+    },
+    "argoSelectedReceiverCorrection": {
+      "state": "author-candidate-not-independently-accepted",
+      "author": "/root/argo_product_selected_receiver_correction_writer",
+      "moduleSha256": "b3ff639fcd7757a6715bccc7337d82a255705073e202aeb62a17b5b0703fa66f",
+      "reportSha256": "5f1433e61bc90f23d8ed5e413521b0201afb47b5402c52428862caf43be1c3cc",
+      "rootVerifiedArtifacts": 76,
+      "coverage": "1900 identities preserved;113 boundedroutes qualified;61rawselectedspecpaths plus8chart-produced missing paths. Discovery still incomplete.",
+      "checks": "16 author tests; full raw and Argo-first discovered render fail Service $.spec, not accepted."
+    },
+    "supportedWorkloadReceiverCandidate": {
+      "state": "author-candidate-not-independently-accepted",
+      "author": "/root/supported_workload_receiver_writer",
+      "moduleSha256": "cbb07f9461b546dc33df16cceff5871738dc2bcc122edfa8274440eda1b58fce",
+      "reportSha256": "5b3b672600aef824f5667241b5cec52af8f2b35e145b2223e84b6160dfba0c97",
+      "rootVerifiedArtifacts": 6,
+      "coverage": "598 bounded contracts for actual Job/CronJob/StatefulSet/PDB outputs; no complete discovery or Source acceptance from count.",
+      "observedChecks": "Root dedicated tests6/6PASS; author91originalGitblobs compared.",
+      "openProofs": [
+        "Inherited env value and selected affinity/projected child proofs",
+        "Selected Job Helm/Argo hook lifecycle",
+        "Exact full generated missing-selected list and independent reviews"
+      ],
+      "rootEnvelopeMetadataCandidate": {
+        "state": "authored-not-independently-accepted",
+        "evidenceDirectory": "/home/node/Documents/Codex/a98-evidence/workload-envelope-metadata-root",
+        "changes": "Four kind-specific scope/generation/status/version/name/GC strategies and API identity providers; PDB rejects unconditional updates and uses path-segment names; Cron create52-character bound; Job batch/v1 defaults orphan.",
+        "regression": "246 earlier metadata contracts and all implicit references preserved after correcting array-order-dependent Deployment template source selection.",
+        "open": "Job hook annotations explicitly publication-blocked until their actual client consumers are qualified."
+      }
+    },
+    "selectedServiceSourceReview": {
+      "reviewer": "/root/core_product_service_source_fresh",
+      "freshContext": true,
+      "revision": "be78787633d774e9fd2a2ff401311499a555156d",
+      "verdict": "FAIL bounded Service documentation completeness",
+      "reportSha256": "29a1a8e8b4e6e1b771d503e60a42757b61dfff7eedd32f01df707587fe770204",
+      "openFindings": [
+        "Empty chart service.type actually renders null and defaults ClusterIP",
+        "LB cleanup needs provider-existence/ImplementedElsewhere qualifications",
+        "Per-producer path/default/ignoredoverride/selector/port/diagnosis mapping missing",
+        "External provider boundary needs concrete inputs/owner/stop/futureproof"
+      ],
+      "owner": "/root",
+      "limits": "Original conditional consumer assertions mostly PASS only in reviewed slice;21originals reverified, Helm renders not API/live proofs. No full Core acceptance."
     }
   }
 }
