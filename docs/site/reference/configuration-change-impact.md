@@ -441,6 +441,17 @@ retrying. A timeout does not prove that an external operation did not happen.
 
 ## PVC reclamation and retained data
 
+A PersistentVolumeClaim (PVC), also called a storage claim in this section,
+is an API request for storage. A PersistentVolume (PV) records the selected
+volume. The storage provisioner is the controller that requests volume creation
+or deletion from a driver. Container Storage Interface (CSI) is the protocol
+between Kubernetes storage components and that driver. Server Message Block
+(SMB) is the network file-sharing protocol used by the selected SMB driver.
+A finalizer is an object cleanup marker: Kubernetes delays object deletion until
+the responsible controller removes the marker. It does not itself erase data.
+The steps below distinguish these API objects and controllers from the actual
+files on the storage server.
+
 KubeClaw stores role configuration and workspaces on separate claims. Prism
 uses claims for PostgreSQL and artifacts. Their default chart values leave
 `storageClass` empty, and their templates omit `storageClassName` for that value.
@@ -557,6 +568,10 @@ error or interrupted response before deciding what can safely repeat.
 
 For a claim actually backed by SMB v1.20.0, a workload mount follows binding
 and uses the PV handle, source, subdirectory and node-stage credentials.
+The staging target is the path on the node where the driver first mounts the
+share. The later `NodePublish` operation makes that staged mount available at
+the workload's target path. Inspecting the staging target therefore differs from
+checking whether the container can use its own mount.
 A readable existing staging mount can be reused. An unreadable staging target
 can be unmounted and still return its read error. A new share mount runs through
 a 110-second wait that does not cancel the mount worker on timeout. The staging
