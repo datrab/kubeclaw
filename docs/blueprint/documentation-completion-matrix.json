@@ -14488,7 +14488,7 @@
       "id": "A98-MUTATION-HELM-SECRET-DIAGNOSTIC-PREEMPTED",
       "reportedAtRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
       "reportedBy": "/root",
-      "state": "open-author-correction-in-progress",
+      "state": "author-corrected-original-full-suite-and-independent-review-pending",
       "pages": [
         "scripts/docs-configuration-inventory.mjs",
         "scripts/check-configuration-drift-mutations.mjs"
@@ -14501,13 +14501,15 @@
       ],
       "description": "New Secret-key reference also creates an unqualified environment receiving pair. Early runtime environment diagnostic prevents the full Secret authority gap diagnostic required by the mutation contract. Preserve both qualified-environment and complete-Secret enforcement; collect comprehensive diagnostics before failing.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/config-mutations-ec2a42ed.log",
-      "logSha256": "9a508e5e9df114c6aadf3925ccee6ad202854f1ef079c3d13542a30ac807165c"
+      "logSha256": "9a508e5e9df114c6aadf3925ccee6ad202854f1ef079c3d13542a30ac807165c",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/helm-collection-semantics-writer/report.md",
+      "authorReportSha256": "fb382c88dfed014f6d27e0619e56a4e071799f27e616f99cd62e6b8ce59e1d53"
     },
     {
       "id": "A98-COMPACT-OVERRIDE-AND-RAW-ROOT",
       "reportedAtRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
       "reportedBy": "/root/a98_precedence_source_fresh",
-      "state": "open-author-correction-in-progress",
+      "state": "author-corrected-new-full-source-review-running",
       "pages": [
         "docs/site/reference/configuration-precedence.md"
       ],
@@ -14525,7 +14527,7 @@
       "id": "A98-PLATFORM-TIMEOUT-PINNING-CLASS",
       "reportedAtRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
       "reportedBy": "/root/a98_precedence_source_fresh",
-      "state": "open-author-correction-in-progress",
+      "state": "author-corrected-new-full-source-review-running",
       "pages": [
         "docs/site/reference/configuration-change-impact.md"
       ],
@@ -15452,10 +15454,39 @@
         "A98-12": "FAIL-Prism-partition",
         "A98-13": "FAIL-Prism-partition"
       }
+    },
+    {
+      "agent": "/root/a98_prism_reader_csi_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "scope": [
+        "Whole corrected Prism canonical page and setup/journey/health/interruption/local-check partitions"
+      ],
+      "scopeLimit": "Full affected critical fresh review; previous FAIL remains historical; no whole-package acceptance."
+    },
+    {
+      "agent": "/root/a98_precedence_source_corrected_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "scope": [
+        "Whole current corrected configuration-precedence.md",
+        "Whole current corrected configuration-change-impact.md"
+      ],
+      "scopeLimit": "Full affected critical fresh review; previous FAIL remains historical; no whole-package acceptance."
     }
   ],
   "continuation": {
-    "stage": "Two authors correcting Helm semantic diagnostics and fullprecedence/impactSourceFAIL; Prism corrected fe426 freshReader running; ec2 fullmutation observedFAIL",
+    "stage": "Six collection/diagnostic source files released and checked; commit source then immutable original mutation suite. Canonical precedence/impact candidates remain frozen for new Source review, which is investigating readiness cleanup bounds.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
     "next": "Commit checked authored/source corrections; preserve frozen Helm source scope. Regenerate in separate commit against source SHA after scope release, run required gates and full mutation suite from clean corrected snapshot. Fix Helm collection/default/constraint findings; new full affected Source/Reader/Quality reviews and Astra still required.",
@@ -15471,9 +15502,8 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-ec2a42ed.log",
     "currentMutationSnapshot": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
     "agents": [
-      "/root/a98_helm_collection_semantics_writer",
-      "/root/a98_helm_precedence_doc_writer",
-      "/root/a98_prism_reader_after_browser_fresh"
+      "/root/a98_prism_reader_csi_fresh",
+      "/root/a98_precedence_source_corrected_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -15770,6 +15800,24 @@
       "verdict": "FAIL-one-CSI-prerequisite",
       "sourceRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
       "correction": "Root corrected exact prerequisite; new fresh full affected Reader required"
+    },
+    "helmCollectionWriterCompleted": {
+      "agent": "/root/a98_helm_collection_semantics_writer",
+      "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-semantics-writer/report.md",
+      "reportSha256": "fb382c88dfed014f6d27e0619e56a4e071799f27e616f99cd62e6b8ce59e1d53",
+      "sourceHashes": {
+        "scripts/docs-configuration-inventory.mjs": "5663f5f44d43002c1c225a93f0ecea00f95d1de87dc1d0291b1341223cc0ec1b",
+        "scripts/docs-generate.mjs": "09721709ea829bbd1c09f6d2b0998d3dc526fd0a8027f50afaf7e4633ac4213a",
+        "scripts/generate-local-helm-authorities.mjs": "adda1f82b1711c75c94d66d391955dc6428eca9451bc269cba4aeae81385e109",
+        "scripts/docs-local-helm-authorities.mjs": "2aba990178947b35c232c7f044be7f36363c07d5a58c9d7079af7c81567edc42",
+        "scripts/docs-local-helm-field-authorities.json": "b8b6492fae1e90e9990090c836cd2503173a7774c0ca315ad3c423f15b58a190",
+        "scripts/docs-yaml-field-authorities.mjs": "ea19ac8729823fb8d42ee37c269443f71028a849b9a012358ae50580d4af2345"
+      },
+      "scope": "Author implementation verification only; no independent semantic acceptance or full mutation PASS",
+      "observedCollections": 1613,
+      "observedEmptyCollections": 35,
+      "registryEntries": 1091,
+      "accepted": false
     }
   },
   "productBoundaries": [

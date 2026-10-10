@@ -342,7 +342,10 @@ function renderHelmValues(configurationValues, configurationSchemas) {
   const consumerText = (field) => field.consumers.map((consumer) => {
     if (consumer === 'unknown') return 'Unknown';
     const location = consumer.path ? sourceLink(consumer.path, consumer.line ?? 1) : '`unresolved source`';
-    return `${location}${consumer.authority ? `<br>${consumer.authority}` : ''}`;
+    const condition = consumer.condition ? `<br>Condition: ${consumer.condition}` : '';
+    const defaults = consumer.defaultProof ? `<br>Default selection: ${consumer.defaultProof}` : '';
+    const receiver = consumer.receiver ? `<br>Receiver: ${consumer.receiver}` : '';
+    return `${location}${consumer.authority ? `<br>${consumer.authority}` : ''}${receiver}${condition}${defaults}`;
   }).join('<br>');
   const selectedValueType = (field) => {
     const labels = {
@@ -395,9 +398,9 @@ function renderHelmValues(configurationValues, configurationSchemas) {
   }
   const fieldSections = valueFiles.map((file) => {
     const fields = file.documents.flatMap((document) => document.fields)
-      .filter((field) => field.path !== '$' && field.type !== 'object' && field.type !== 'array');
+      .filter((field) => field.path !== '$');
     const links = sourceRangeLinks(file.path);
-    return `<details>\n<summary><code>${file.path}</code> — ${fields.length} discovered leaf fields</summary>\n\nSource evidence:\n\n${links}\n\n${table(['Field', 'Behavior', 'Type and selected value', 'Required state and limits', 'Source and runtime owner', 'Receiving source', 'Precedence and effective value', 'Change impact and failure'], fields.map((field) => [
+    return `<details>\n<summary><code>${file.path}</code> — ${fields.length} discovered fields, including lists and maps</summary>\n\nSource evidence:\n\n${links}\n\n${table(['Field', 'Behavior', 'Type and selected value', 'Required state and limits', 'Source and runtime owner', 'Receiving source', 'Precedence and effective value', 'Change impact and failure'], fields.map((field) => [
       `\`${field.path}\``,
       `${readerMeaning(field)}${literalKeyOverride(field, file.sourceClass)}`,
       `\`${field.type}\`<br>\`${String(field.value).replaceAll('`', '\\`')}\`<br>${selectedValueType(field)}`,
@@ -447,13 +450,15 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists every current leaf value in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.
+This page lists every current scalar, list, and map in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.
 
 ${generatedNotice(['docs/generated/inventory/configuration-values.json'])}
 ## Coverage
 
 ${table(['Class', 'Count', 'Meaning'], [
-  ['All discovered YAML leaves', configurationValues.totals.leafFields, 'Recursive discovery scope.'],
+  ['All discovered YAML leaves', configurationValues.totals.leafFields, 'Recursive scalar discovery scope.'],
+  ['Nonroot lists and maps', configurationValues.totals.collectionFields, 'Whole-collection contracts or explicitly grouped nested field contracts.'],
+  ['Empty lists and maps', configurationValues.totals.emptyCollectionFields, 'Empty collections retain their own schema, merge and receiving behavior.'],
   ['Kubernetes and Argo API fields', configurationValues.totals.kubernetesApiObjectLeaves, 'Versioned API admission and the named controller own these object fields.'],
   ['Operational Kubernetes and Argo fields', configurationValues.totals.kubernetesOperationalLeaves, 'Ports, images, replicas, source revisions, destinations, references, storage, policy, and other fields that change operation.'],
   ['Structural Kubernetes and Argo fields', configurationValues.totals.kubernetesStructuralLeaves, 'API identity and object structure that do not form a separate KubeClaw runtime option.'],
@@ -473,7 +478,7 @@ ${table(['File', 'Class', 'Documents', 'Recursive fields'], valueFiles.map((file
 
 ## Recursive Value Reference
 
-Each leaf row separates the checked-in source from the runtime receiver. It follows local Helm templates, Argo CD value-file bindings, and Kubernetes resource authorities. An external chart or Kubernetes API owns validation when its schema is outside this repository. A field with no active deployment binding is identified as inactive instead of being presented as an effective option.
+Each field row separates the checked-in source from the runtime receiver. It follows local Helm templates, Argo CD value-file bindings, and Kubernetes resource authorities. An external chart or Kubernetes API owns validation when its schema is outside this repository. A field with no active deployment binding is identified as inactive instead of being presented as an effective option.
 
 ${fieldSections}
 

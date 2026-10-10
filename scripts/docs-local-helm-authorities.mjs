@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { apiFieldSchemaAuthority } from './docs-api-schema-authorities.mjs';
 import { yamlFieldPathWithoutRoot } from './yaml-field-path.mjs';
 
 const registryUrl = new URL('./docs-local-helm-field-authorities.json', import.meta.url);
@@ -112,6 +113,18 @@ export function assertLocalHelmAuthorityRegistry(repositoryRoot = process.cwd(),
       assert.equal(authority.semanticAuthority, 'explicit-field-contract', `${sourcePath}#${fieldPath}: semantic authority was not explicitly approved`);
       for (const name of ['purpose', 'acceptedValues', 'emptyBehavior', 'impact', 'failure']) {
         assert(typeof authority[name] === 'string' && authority[name].length >= 20, `${sourcePath}#${fieldPath}: incomplete ${name}`);
+      }
+      if (authority.apiSchemaAuthority) {
+        const proof = authority.apiSchemaAuthority;
+        assert.deepEqual(proof, apiFieldSchemaAuthority(proof.apiVersion, proof.kind, proof.fieldPath), `${sourcePath}#${fieldPath}: pinned collection API schema changed`);
+      }
+      if (authority.chartSchemaContract) {
+        const proof = authority.chartSchemaContract;
+        assert.equal(proof.path, `${declaration.chartRoot}/values.schema.json`, `${sourcePath}#${fieldPath}: chart schema is outside the selected chart`);
+        assert.equal(proof.fieldPath, fieldPath, `${sourcePath}#${fieldPath}: schema contract belongs to another field`);
+        assert.match(proof.sourceSha256, /^[a-f0-9]{64}$/u, `${sourcePath}#${fieldPath}: chart schema digest is missing`);
+        assert(proof.schema && typeof proof.schema === 'object', `${sourcePath}#${fieldPath}: exact collection schema is missing`);
+        if (verifyBytes) assert.equal(sha256(fs.readFileSync(path.join(repositoryRoot, proof.path))), proof.sourceSha256, `${sourcePath}#${fieldPath}: chart schema bytes changed`);
       }
       assert(Array.isArray(authority.consumerProof) && authority.consumerProof.length > 0,
         `${sourcePath}#${fieldPath}: exact consumer proof is missing`);

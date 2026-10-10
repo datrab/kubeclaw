@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const semanticAuthorityPath = 'scripts/docs-yaml-field-authorities.mjs';
 const semanticAuthorityLines = fs.readFileSync(new URL('./docs-yaml-field-authorities.mjs', import.meta.url), 'utf8').split('\n');
@@ -680,6 +681,38 @@ special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[0].value
 special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[1].name', registryDeleteName, registryDeleteNameContract);
 special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[1].value', registryDeleteValue, registryDeleteValueContract);
 
+// These collection contracts have their own upstream proof; they do not reuse
+// leaf-only extracted snapshots as proof for an absent parent field.
+const spireSelectorCollectionContract = {
+  collectionOnly: true,
+  purpose: 'Adds namespace selector terms to the default ClusterSPIFFEID identity registration.',
+  acceptedValues: 'A Kubernetes LabelSelector map containing matchLabels and/or matchExpressions. SPIRE chart 0.30.0 copies it and, unless type is raw, appends its namespace inclusion or exclusion expression; this profile uses the default base type.',
+  emptyBehavior: 'An effective {} supplies no authored selector terms. It does not select all namespaces: the non-raw chart path still appends a NotIn expression excluding its server/system namespaces. Omission uses dig namespaceSelector dict; null has no separate supported disable contract and can fail map operations. Earlier keys survive a later {} Helm override.',
+  impact: 'Changes namespaces eligible for the registered worker SPIFFE IDs after chart and controller reconciliation; the separate Pod selector still narrows the workload set.',
+  failure: 'Invalid label selectors fail ClusterSPIFFEID admission or reconciliation. Overbroad terms can expand identity issuance; mismatched terms prevent intended workers from receiving identities.',
+  upstreamTemplateProof: {
+    archivePath: 'scripts/vendor/external-helm-charts/8e133a142915f4938328e2524f6262607e41f61e06f15cb06dc3d94f018be341.tgz',
+    archiveSha256: '8e133a142915f4938328e2524f6262607e41f61e06f15cb06dc3d94f018be341',
+    member: 'spire/charts/spire-server/templates/controller-manager-cluster-ids.yaml',
+    memberSha256: '7839bbc7f45a512d21f0d2276226f4b6405e4ce770f032fbd9527841e509bb2d',
+    lines: [87, 95, 138, 142],
+  },
+};
+const spireSelectorCollectionEvidence = semanticRangeBetween('const spireSelector' + 'CollectionContract = {', 'const spireSelector' + 'CollectionEvidence =');
+for (const sourcePath of [spire, directSpire]) special(sourcePath, '$.spire-server.controllerManager.identities.clusterSPIFFEIDs.default.namespaceSelector', spireSelectorCollectionContract, { evidence: spireSelectorCollectionEvidence, tokens: ['namespace selector', 'NotIn'] });
+
+const nodeRegistrySource = 'my-values/infra/k3s-registries.yaml';
+file(nodeRegistrySource, '9b9130095665189402be10b045b4c80cd6ef174c4c9c896f11c4257fbbb84c5f');
+for (const collection of ['configs', 'mirrors']) special(nodeRegistrySource, `$.${collection}`, {
+  collectionOnly: true,
+  sourceOnly: true,
+  purpose: collection === 'mirrors' ? 'Records optional registry-host mirror endpoint and rewrite maps in an operator-owned node configuration.' : 'Records optional registry-host authentication and TLS maps in an operator-owned node configuration.',
+  acceptedValues: collection === 'mirrors' ? 'A host-keyed map with endpoint URL lists and optional rewrite maps. The checked-in registry-client-config.mjs producer emits endpoint lists from its validated registry-clients.v1 input.' : 'A host-keyed map with optional auth and tls objects. registry-client-config.mjs emits credential references/material and ca_file from its validated registry-clients.v1 input; inspect-node-registry.mjs redacts authentication and TLS paths.',
+  emptyBehavior: 'The checked-in {} contains no selected host configuration. This repository file is not installed by the deployment path. Omission, {} and null produce no entries in the source-only inspector; this does not prove effective containerd defaults or disable its default registry endpoint.',
+  impact: 'Editing this source alone changes no proved node runtime. Generate and install an operator-owned node configuration through the declared registry-client contract, then separately verify the selected node runtime and an uncached CRI pull.',
+  failure: 'A malformed source can fail YAML parsing or the source-only inspector. Reachability, runtime-version compatibility and uncached CRI pulls remain unverified until the node configuration is installed and checked.',
+});
+
 export function yamlAuthorityFile(sourcePath) {
   return files.get(sourcePath) ?? null;
 }
@@ -749,7 +782,16 @@ export function assertYamlAuthorityRegistry(repositoryRoot = process.cwd(), { ve
     }
     const fieldSourcePath = key.slice(0, key.indexOf('#'));
     const externalChart = files.get(fieldSourcePath)?.externalChart;
-    if (externalChart) {
+    if (externalChart && entry.collectionOnly === true) {
+      const proof = entry.upstreamTemplateProof;
+      assert(proof && proof.archiveSha256 === externalChart.archiveSha256, `${key}: collection upstream archive differs from pinned chart`);
+      const archive = path.join(repositoryRoot, proof.archivePath);
+      assert.equal(crypto.createHash('sha256').update(fs.readFileSync(archive)).digest('hex'), proof.archiveSha256, `${key}: collection archive bytes changed`);
+      const extracted = spawnSync('tar', ['-xOzf', archive, proof.member], { encoding: 'utf8' });
+      assert.equal(extracted.status, 0, `${key}: collection upstream template cannot be extracted`);
+      assert.equal(crypto.createHash('sha256').update(extracted.stdout).digest('hex'), proof.memberSha256, `${key}: collection template bytes changed`);
+      for (const token of ['dig "namespaceSelector"', 'merge $namespaceSelector', 'append $namespaceSelector.matchExpressions', 'with $namespaceSelector']) assert(extracted.stdout.includes(token), `${key}: collection receiver contract changed`);
+    } else if (externalChart) {
       externalFieldCount += 1;
       const extracted = externalSnapshots.fields[key];
       assert(extracted, `${key}: content-addressed external Helm authority input is missing`);
@@ -773,7 +815,7 @@ export function assertYamlAuthorityRegistry(repositoryRoot = process.cwd(), { ve
   }
   assert.equal(Object.keys(externalSnapshots.fields).length, externalFieldCount,
     'external Helm extracted authority contains stale or missing field inputs');
-  assert.equal(indirectContractCount, 36,
+  assert.equal(indirectContractCount, 38,
     'indirect YAML semantic contract coverage changed; bind every generated field to its contract definition range');
   for (const declaration of files.values()) {
     if (verifyBytes) {

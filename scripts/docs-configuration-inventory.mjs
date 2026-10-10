@@ -41,7 +41,7 @@ const outputDirectory = path.resolve(
 );
 
 const SOURCE_ROOTS = ['charts', 'examples', 'gitops', 'my-values', 'releases/values'];
-const RUNTIME_SCAN_ROOTS = ['scripts', 'my-values', 'charts', 'gitops', 'skills', 'docker', 'ops', 'tools', 'cmd', 'packaging'];
+const RUNTIME_SCAN_ROOTS = ['scripts', 'my-values', 'charts', 'gitops', 'skills', 'docker', 'ops', 'tools', 'cmd', 'packaging', 'contracts/agent-observability/v1/src'];
 const TEXT_EXTENSIONS = new Set(['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts', '.sh', '.py', '.go', '.c', '.h', '.yaml', '.yml']);
 const EXCLUDED_SEGMENTS = new Set(['node_modules', 'dist', 'build', 'coverage', '.git', 'tests', 'test', 'fixtures']);
 const SENSITIVE_VALUE_NAME = /(?:pass(?:word)?|token|credential|private.?key|api.?key|oauth|webhook|client.?secret|allow.?from|approver|member|guild|channel.?id|role.?id|owner.?id|user(?:name|id|s)?|email|account)/i;
@@ -1004,6 +1004,7 @@ function helmValueLeafCatalog() {
     return 'charts/kubeclaw';
   };
   const visit = (value, tokens, leaves) => {
+    if (tokens.length) leaves.add(yamlFieldPath(tokens, { root: false }));
     if (Array.isArray(value)) {
       value.forEach((item) => visit(item, [...tokens, '[]'], leaves));
       return;
@@ -1191,7 +1192,7 @@ function chartConsumers() {
             if (access.suffix !== argumentName && !access.suffix.startsWith(`${argumentName}.`)) continue;
             const relative = access.suffix === argumentName ? '' : access.suffix.slice(argumentName.length + 1);
             const candidates = access.serialized && !relative
-              ? [...chartLeaves].filter((leafPath) => leafPath.startsWith(`${itemBase}.`) || leafPath.startsWith(`${itemBase}[]`))
+              ? [...chartLeaves].filter((leafPath) => leafPath === itemBase || leafPath.startsWith(`${itemBase}.`) || leafPath.startsWith(`${itemBase}[]`))
               : [`${itemBase}${relative ? `.${relative}` : ''}`];
             for (const exact of candidates) {
               if (!chartLeaves.has(exact)) continue;
@@ -1206,7 +1207,8 @@ function chartConsumers() {
             }
           }
         }
-        if (action.command === 'range' && /(?:^|[\s(,|])\.(?=$|[\s),|}])/u.test(bodyAction.expression)) {
+        if (action.command === 'range' && /(?:^|[\s(,|])\.(?=$|[\s),|}])/u.test(bodyAction.expression)
+          && ![...chartLeaves].some((fieldPath) => fieldPath.startsWith(`${itemBase}.`) || fieldPath.startsWith(`${itemBase}[]`))) {
           provedLeaf = true;
           add(itemBase, bodyAction, {
             bindingKind: 'range-scalar-item',
@@ -1223,7 +1225,7 @@ function chartConsumers() {
           });
         }
         if (/\b(?:toYaml|toJson)\s+\./u.test(bodyAction.expression)) for (const leafPath of chartLeaves) {
-          if (leafPath.startsWith(`${itemBase}.`) || leafPath.startsWith(`${itemBase}[]`)) {
+          if (leafPath === itemBase || leafPath.startsWith(`${itemBase}.`) || leafPath.startsWith(`${itemBase}[]`)) {
             provedLeaf = true;
             add(leafPath, bodyAction, {
               bindingKind: `${action.command}-serialized-item-leaf`,
@@ -1298,7 +1300,7 @@ function chartConsumers() {
         for (const [variable, pattern] of environment) {
           if (pattern === '<map-key>') continue;
           const escaped = variable.replace(/\$/gu, '\\$');
-          const uses = [...item.expression.matchAll(new RegExp(`${escaped}(?:\\.([A-Za-z_][A-Za-z0-9_.-]*))?`, 'gu'))];
+          const uses = [...item.expression.matchAll(new RegExp(`${escaped}(?![A-Za-z0-9_])(?:\\.([A-Za-z_][A-Za-z0-9_.-]*))?`, 'gu'))];
           for (const use of uses) {
             const suffix = use[1] ?? '';
             const descendants = /\b(?:dict|append|toYaml|toJson)\b/u.test(item.expression) && Boolean(suffix);
@@ -1328,9 +1330,11 @@ function chartConsumers() {
         for (const name of names) {
           const valuePath = canonicalHelmPath(`${name}.${match[1]}`);
           const dynamicLine = lines[lineAt(text, match.index) - 1] ?? '';
-          const targets = chartLeaves.has(valuePath) ? [valuePath]
-            : /\b(?:toYaml|toJson)\b/u.test(dynamicLine)
-              ? [...chartLeaves].filter((leafPath) => leafPath.startsWith(`${valuePath}.`) || leafPath.startsWith(`${valuePath}[]`)) : [];
+          const targets = [...new Set([
+            ...(chartLeaves.has(valuePath) ? [valuePath] : []),
+            ...(/\b(?:toYaml|toJson)\b/u.test(dynamicLine)
+              ? [...chartLeaves].filter((leafPath) => leafPath.startsWith(`${valuePath}.`) || leafPath.startsWith(`${valuePath}[]`)) : []),
+          ])];
           for (const target of targets) add(target, { index: match.index, line: lineAt(text, match.index) }, {
             kind: 'helm-template-dynamic-index',
             bindingKind: target === valuePath ? 'enumerated-index-leaf-access' : 'enumerated-index-serialized-subtree-leaf',
@@ -1940,7 +1944,7 @@ function exactYamlAuthority(context, fieldPath) {
   return authority;
 }
 
-function deploymentApiFieldContract(resource, exactPath) {
+function deploymentApiFieldContract(resource, exactPath, valueType = null) {
   const normalized = yamlFieldMatcherPath(exactPath);
   const api = `${resource.apiVersion}/${resource.kind}`;
   const operational = (purpose, acceptedValues, emptyBehavior, impact, failure, controller = `${resource.kind} controller`) => ({
@@ -1956,6 +1960,33 @@ function deploymentApiFieldContract(resource, exactPath) {
     failure: `A schema-invalid value fails admission or Argo CD synchronization. A valid but inconsistent relationship can prevent ${resource.kind}/${resource.name} reconciliation.`,
     apiAuthority: `${api} pinned schema authority and the named reconciler for this object`,
   });
+  if (['object', 'array'].includes(valueType)) {
+    if (/^(?:spec\.)?(?:ingress|egress)$/u.test(normalized) && ['NetworkPolicy', 'CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind)) return operational(
+      `Defines the complete ${normalized.split('.').at(-1)} allow-rule list for this ${resource.kind}.`,
+      'A list of rules accepted by the exact pinned policy schema; each rule and selector has the constraints in its nested rows.',
+      'An empty allow-rule list permits no traffic through this field. Isolation still depends on the selected policy directions and other policies; it must not be interpreted as disabling enforcement.',
+      'Changes allowed traffic for the policy-selected endpoints after policy reconciliation.',
+      'Malformed rules fail admission. Empty or mismatched allows can block dependencies; broad rules can grant unintended connectivity.', 'the selected network policy engine');
+    if (/(?:^|\.)(?:podSelector|namespaceSelector|endpointSelector)$/u.test(normalized)) return operational(
+      `Selects the ${normalized.split('.').at(-1)} scope for this policy or resource.`,
+      'A label-selector map accepted by the pinned API schema; matchLabels and matchExpressions define additional terms.',
+      'An empty selector matches every object in its permitted scope. It is not an omitted selector; surrounding namespace and rule fields still constrain that scope.',
+      'Changes the complete selected object set after controller or policy reconciliation.',
+      'Invalid selectors fail admission; an empty or overly broad selector can expand authority, while an unmatched selector blocks intended use.', 'the named resource controller or policy engine');
+    if (resource.kind === 'AppProject' && normalized === 'spec.clusterResourceWhitelist') return operational(
+      'Lists the cluster-scoped resource group/kind pairs this Argo CD project permits.',
+      'A list of group/kind maps accepted by the pinned AppProject CRD; wildcard entries grant the corresponding broad resource scope.',
+      'An empty list grants no cluster-scoped resource kinds through this whitelist.',
+      'Changes which cluster-scoped desired resources the project can synchronize.',
+      'Malformed entries fail validation; absent permissions make application synchronization fail.', 'Argo CD AppProject controller');
+    if (resource.kind === 'AppProject' && normalized === 'spec.namespaceResourceWhitelist') return operational(
+      'Lists the namespaced resource group/kind pairs this Argo CD project permits.',
+      'A list of group/kind maps accepted by the pinned AppProject CRD; wildcard entries grant broad resource scope.',
+      'Argo CD 3.5.2 denies all namespaced resource kinds for an explicit []. Omission or null instead permits namespaced kinds subject to the blacklist and destination checks. Controller proof: [IsGroupKindNamePermitted](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/pkg/apis/application/v1alpha1/app_project_types.go#L367-L385).',
+      'Changes which namespaced desired resources the project can synchronize.',
+      'Malformed entries fail validation; empty or insufficient explicit permissions prevents application synchronization.', 'Argo CD 3.5.2 AppProject evaluator');
+    return structural(`Groups the exact ${normalized} API fields of ${resource.kind}/${resource.name}; the pinned collection schema and nested contracts define accepted keys, item variants, and receiving relationships.`);
+  }
   if (normalized === 'apiVersion') return structural(`Selects the versioned API schema used to decode ${resource.kind}/${resource.name}.`);
   if (normalized === 'kind') return structural(`Selects the API resource kind decoded for ${resource.name}.`);
   if (normalized === 'metadata.name') return operational(`Names this ${resource.kind} object within its API scope.`, 'A value that satisfies the pinned Kubernetes ObjectMeta name schema.', 'The pinned schema and the sibling generateName field define omission behavior; an empty authored name must satisfy the same schema.', 'Changes object identity. Controllers and references continue to target the old name until they are changed together.', 'A malformed name fails admission. A renamed object can leave references unresolved.', 'Kubernetes API server');
@@ -2055,7 +2086,7 @@ function versionedApiSchemaContract(schema) {
   if (schema.format) constraints.push(`format \`${schema.format}\``);
   if (schema.minimum !== null && schema.minimum !== undefined) constraints.push(`minimum ${schema.minimum}`);
   if (schema.maximum !== null && schema.maximum !== undefined) constraints.push(`maximum ${schema.maximum}`);
-  const acceptedValues = `The pinned authority (${schema.authority}) defines ${constraints.join('; ')} for the exact leaf \`${schema.resolvedPath}\`.`;
+  const acceptedValues = `The pinned authority (${schema.authority}) defines ${constraints.join('; ')} for the exact field \`${schema.resolvedPath}\`.`;
   const defaultBehavior = schema.default === '<no schema default>'
     ? 'The exact field schema defines no default.'
     : `The exact field schema default is \`${JSON.stringify(schema.default)}\`.`;
@@ -2069,7 +2100,8 @@ function versionedApiSchemaContract(schema) {
 }
 
 function yamlMeaning(context, exactPath, valueType, semantics, authority) {
-  if (valueType === 'object' || valueType === 'array') return { status: 'structural-container', text: 'Structural container. Child leaf rows define configurable behavior.', evidence: context.sourcePath, blockerOwner: null, closureCondition: null };
+  if (['object', 'array'].includes(valueType) && !authority && (!context.resource || semantics.deploymentBoundary)
+    && !semantics.consumers.some((consumer) => consumer.kind?.startsWith('helm-template'))) return { status: 'structural-container', text: 'Groups the nested values listed below. This grouping has no separately proved template receiver; its child contracts determine runtime behavior.', evidence: `${context.sourcePath}:${context.fieldLine}`, blockerOwner: null, closureCondition: null };
   if (authority && context.resource && semantics.deploymentBoundary) {
     const receiverProved = semantics.consumers.length > 0
       && semantics.consumers.every((consumer) => consumer.kind !== 'embedded-payload-consumer-unproved');
@@ -2098,7 +2130,7 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
     };
   }
   if (context.resource) {
-    const contract = deploymentApiFieldContract(context.resource, exactPath);
+    const contract = deploymentApiFieldContract(context.resource, exactPath, valueType);
     const schemaAuthority = {
       ...apiFieldSchemaAuthority(context.resource.apiVersion, context.resource.kind, exactPath),
       fieldPath: exactPath,
@@ -2121,7 +2153,7 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
     };
   }
   if (authority) return {
-    status: authority.externalChart ? 'external-chart-authority' : authority.chartRoot ? 'local-helm-field-authority' : 'implementation-authority',
+    status: authority.externalChart ? (authority.collectionOnly ? 'external-chart-collection-authority' : 'external-chart-authority') : authority.chartRoot ? 'local-helm-field-authority' : 'implementation-authority',
     text: `${authority.purpose} Accepted values: ${authority.acceptedValues} ${context.sourceClass === 'helm-values'
       ? 'Selected chart default: the checked-in value in this row is the chart default.'
       : context.sourceClass === 'helm-example'
@@ -2137,6 +2169,7 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
     sourceFileSha256: authority.sourceFileSha256,
     externalChart: authority.externalChart ?? null,
     localHelmChart: authority.chartRoot ?? null,
+    upstreamTemplateProof: authority.upstreamTemplateProof ?? null,
     semanticGroup: authority.group ?? null,
     semanticAuthorityEvidence: authority.semanticAuthorityEvidence,
     semanticContractEvidence: authority.semanticContractEvidence,
@@ -2145,7 +2178,8 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
     closureCondition: null,
   };
   const dottedPath = exactPath.replace(/\[[0-9]+\]/gu, '[]');
-  const consumer = semantics.consumers.find((item) => item !== 'unknown');
+  const consumer = semantics.consumers.find((item) => item?.kind?.startsWith('helm-template'))
+    ?? semantics.consumers.find((item) => item !== 'unknown');
   const inactive = semantics.required === 'not-applicable-unused'
     || (semantics.consumers.length > 0 && semantics.consumers.every((item) => item?.inactiveProfile === true || item?.kind === 'not-applicable'));
   if (inactive) return {
@@ -2186,10 +2220,10 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
   const node = pathSegments.length ? context.document?.getIn(pathSegments, true) : context.document?.contents;
   const fieldLine = Array.isArray(node?.range) ? context.lineCounter?.linePos(node.range[0]).line : 1;
   const fieldContext = { ...context, fieldLine };
-  const discoveredSemantics = yamlSemantics(fieldContext, exactPath, valueType);
-  const authority = valueType === 'object' || valueType === 'array' ? null : exactYamlAuthority(context, fieldPath);
+  const discoveredSemantics = fieldPath === '$' ? { required: 'not-applicable-container', requiredReason: 'Document envelope; nested rows define its contract.', defaultKind: 'authored-container', constraints: [], runtimeOwner: 'Document envelope', consumers: [], precedence: ['See nested rows'], effectiveValueProof: `${context.sourcePath}:1`, changeImpact: 'See nested rows.', failureMeaning: 'YAML syntax errors stop parsing.', blockerOwner: null, closureCondition: null } : yamlSemantics(fieldContext, exactPath, valueType);
+  const authority = fieldPath === '$' ? null : exactYamlAuthority(context, fieldPath);
   if (authority?.chartRoot && !allowLocalHelmAuthorityMaintenance) {
-    const actualConsumers = discoveredSemantics.consumers.map((consumer) => ({
+    const actualConsumers = discoveredSemantics.consumers.filter((consumer) => consumer.kind?.startsWith('helm-template')).map((consumer) => ({
       path: consumer.path,
       kind: consumer.kind,
       templateExpression: consumer.templateExpression,
@@ -2212,10 +2246,16 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
   let semantics = authority ? {
     ...discoveredSemantics,
     consumers: [
-      ...(authority.chartRoot ? discoveredSemantics.consumers.map((consumer) => ({
-        ...consumer,
-        exactValuePath: fieldPath.replace(/^\$\.?/u, ''),
-      })) : discoveredSemantics.consumers),
+      ...(authority.chartRoot ? discoveredSemantics.consumers.map((consumer) => {
+        const proof = authority.consumerProof.find((item) => item.path === consumer.path && item.line === consumer.line
+          && item.kind === consumer.kind && item.bindingKind === consumer.bindingKind);
+        return {
+          ...consumer,
+          exactValuePath: fieldPath.replace(/^\$\.?/u, ''),
+          ...(proof ? { receiver: proof.receiver, receiverProof: proof.receiverProof, condition: proof.condition,
+            conditionProof: proof.conditionProof, defaultProof: proof.defaultProof, defaultClauseProofs: proof.defaultClauseProofs } : {}),
+        };
+      }) : discoveredSemantics.consumers),
       ...runtimeProofConsumers,
     ],
     constraints: [...new Set([...discoveredSemantics.constraints, authority.acceptedValues, `empty/omitted: ${authority.emptyBehavior}`])],
@@ -2232,8 +2272,8 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
     failureMeaning: authority.failure,
   } : discoveredSemantics;
   if (!authority && context.resource && discoveredSemantics.deploymentBoundary === undefined
-    && !['object', 'array'].includes(valueType)) {
-    const apiContract = deploymentApiFieldContract(context.resource, exactPath);
+    && fieldPath !== '$') {
+    const apiContract = deploymentApiFieldContract(context.resource, exactPath, valueType);
     semantics = {
       ...semantics,
       constraints: [...new Set([...semantics.constraints, apiContract.acceptedValues])],
@@ -2242,17 +2282,28 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
       effectiveValueProof: `${context.sourcePath}#$.${exactPath} -> ${apiContract.apiAuthority}`,
     };
   }
+  if (authority?.sourceOnly) semantics = {
+    ...semantics,
+    required: 'not-applicable-unused', requiredReason: 'No checked-in deploy path installs this repository source on a node.',
+    runtimeOwner: 'No proved deployed consumer; operator-owned node configuration remains separate',
+    consumers: [
+      { path: 'scripts/registry-client-config.mjs', line: 57, kind: 'source-configuration-producer-contract', authority: 'nodeConfiguration defines accepted registry-clients.v1 output; it does not install this repository YAML' },
+      { path: 'scripts/inspect-node-registry.mjs', line: 15, kind: 'source-configuration-inspector-contract', authority: 'inspectNodeRegistry reads only explicitly supplied source configuration; its CLI reads /etc/rancher/k3s/registries.yaml, not this repository file' },
+    ],
+    precedence: ['checked-in empty source baseline', 'operator selects, generates and installs a separate node configuration', 'effective containerd state and uncached CRI pull remain unverified'],
+    effectiveValueProof: 'No checked-in binding installs this repository file; the named producer and inspector define only source configuration contracts.',
+  };
   // The node range belongs to the exact scalar/sequence item, not to its parent
   // mapping.  Pass that context through so every API-field citation and digest is
   // bound to the leaf that the row describes.
-  const meaning = yamlMeaning(fieldContext, exactPath, valueType, semantics, authority);
+  const meaning = fieldPath === '$' ? { status: 'structural-container', text: 'YAML document envelope.', evidence: `${context.sourcePath}:1`, blockerOwner: null, closureCondition: null } : yamlMeaning(fieldContext, exactPath, valueType, semantics, authority);
   result.push({
     path: fieldPath,
     type: valueType,
     required: semantics.required,
     requiredReason: semantics.requiredReason,
     defaultKind: semantics.defaultKind,
-    value: valueType === 'object' || valueType === 'array' ? `<${valueType}>`
+    value: valueType === 'object' || valueType === 'array' ? (Object.keys(value).length === 0 ? (valueType === 'array' ? '[]' : '{}') : `<${valueType}: ${Object.keys(value).length} entries; see child rows>`)
       : context.resource?.kind === 'Secret' && /^(?:data|stringData)\./u.test(exactPath) ? '<redacted:secret-payload>'
         : redactValue(fieldPath, value),
     constraints: semantics.constraints,
@@ -2273,6 +2324,7 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
     sourceLineSha256: sha256(read(context.sourcePath).split('\n')[fieldLine - 1] ?? ''),
     meaning,
   });
+  const collectionRow = result.at(-1);
   if (Array.isArray(value)) {
     value.forEach((item, index) => yamlFields(item, context, `${fieldPath}[${index}]`, result, [...pathSegments, index]));
   } else if (value && typeof value === 'object') {
@@ -2284,7 +2336,45 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
       yamlFields(value[key], context, next, result, [...pathSegments, key]);
     }
   }
+  if (['object', 'array'].includes(valueType) && fieldPath !== '$') {
+    completeYamlCollection(collectionRow, context, value, result);
+  }
   return result;
+}
+
+// Collection rows preserve Helm merge behavior and the receiving contract.
+// Grouping rows link actual descendants; they cannot conceal an empty option.
+function completeYamlCollection(row, context, value, fields) {
+  const descendants = fields.filter((field) => field.path.startsWith(`${row.path}.`) || field.path.startsWith(`${row.path}[`));
+  const isHelm = Boolean(context.chartRoot || context.externalBindings.length);
+  const merge = isHelm
+    ? row.type === 'array'
+      ? 'Helm replaces a list as one value: a later [] removes all earlier items; omission keeps the earlier list. Explicit null removes the merged key before schema and template evaluation; the receiving contract can reject it or apply a fallback.'
+      : 'Helm merges map keys recursively: a later {} keeps earlier keys; omission keeps the earlier map. Explicit null removes the merged key before schema and template evaluation; the receiving contract can reject it or apply a fallback.'
+    : 'This is an authored manifest or loader collection. Helm list replacement and map merge rules do not apply unless the named receiving path explicitly invokes Helm. Its exact API or loader contract controls empty, omitted, and null values.';
+  row.collection = { entries: Object.keys(value).length, empty: Object.keys(value).length === 0, childPaths: descendants.map((field) => field.path), mergeBehavior: merge };
+  row.constraints = [...new Set([...row.constraints, merge])];
+  if (row.meaning.status !== 'structural-container') {
+    row.meaning.text = `${row.meaning.text} Collection precedence: ${merge}`;
+    return;
+  }
+  const leaves = descendants.filter((field) => !['object', 'array'].includes(field.type));
+  const children = descendants.filter((field) => yamlFieldPathTokens(field.path).length === yamlFieldPathTokens(row.path).length + 1);
+  const contracts = leaves.length ? leaves : children;
+  if (!contracts.length) {
+    row.meaning = { status: 'collection-meaning-blocker', text: `This empty ${row.type} has no exact collection contract. ${merge}`, evidence: `${context.sourcePath}:${row.sourceLine}`, blockerOwner: context.owner.component, closureCondition: `Add an exact collection authority for ${context.sourcePath}#${row.path}, including new keys or items, accepted forms, empty/omitted/null behavior, receiver and failure effect.` };
+    row.blockerOwner = row.meaning.blockerOwner;
+    row.closureCondition = row.meaning.closureCondition;
+    return;
+  }
+  row.requiredReason = 'This row groups the named nested contracts. Their required states and conditions still apply after collection merge or replacement.';
+  row.runtimeOwner = [...new Set(contracts.map((field) => field.runtimeOwner))].join('; ');
+  row.consumers = [...new Map(contracts.flatMap((field) => field.consumers).map((consumer) => [`${consumer.path}:${consumer.line}:${consumer.kind}`, consumer])).values()];
+  row.precedence = [...new Set(contracts.flatMap((field) => field.precedence))];
+  row.effectiveValueProof = `Nested contract paths: ${contracts.map((field) => field.path).join(', ')}. Each child row pins its complete receiving chain.`;
+  row.changeImpact = 'Changing this group changes its accepted nested values. Each child row identifies its receiving effect and whether a workload or controller must be reconciled.';
+  row.failureMeaning = 'Removing or replacing the group can remove required children. The linked nested schema, template and runtime contracts determine the rejected render, admission or startup failure.';
+  row.meaning.text = `Groups the nested fields ${children.map((field) => `\`${field.path}\``).join(', ')}. It has no separately proved whole-collection receiver. Accepted keys and item variants are those defined by the nested schema and consumer contracts; this row does not authorize arbitrary new keys. ${merge}`;
 }
 
 function buildYamlInventory() {
@@ -2344,7 +2434,7 @@ function buildYamlInventory() {
   const allFields = files.flatMap((file) => file.documents.flatMap((document) => document.fields));
   for (const file of files) {
     const actualPaths = new Set(file.documents.flatMap((document) => document.fields)
-      .filter((field) => !['object', 'array'].includes(field.type)).map((field) => field.path));
+      .map((field) => field.path));
     const registeredPaths = [
       ...yamlAuthorityPaths(file.path),
       ...(allowLocalHelmAuthorityMaintenance ? [] : localHelmAuthorityPaths(file.path)),
@@ -2431,7 +2521,7 @@ function buildYamlInventory() {
     }
   }
   const authoredAuthorityStatuses = new Set([
-    'embedded-payload-authority', 'external-chart-authority', 'implementation-authority', 'local-helm-field-authority',
+    'embedded-payload-authority', 'external-chart-authority', 'external-chart-collection-authority', 'implementation-authority', 'local-helm-field-authority',
   ]);
   let authoredAuthorityEvidenceCount = 0;
   for (const file of files) for (const document of file.documents) {
@@ -2455,7 +2545,7 @@ function buildYamlInventory() {
       `CONFIG_YAML_SEMANTIC_CONTRACT_RANGE_MISSING: ${file.path}#${field.path}`);
       assert.equal(sha256(authorityLines.slice(contractEvidence.line - 1, contractEvidence.endLine).join('\n')), contractEvidence.sourceRangeSha256,
         `CONFIG_YAML_SEMANTIC_CONTRACT_RANGE_DRIFT: ${file.path}#${field.path}`);
-      authoredAuthorityEvidenceCount += 1;
+      if (!['object', 'array'].includes(field.type)) authoredAuthorityEvidenceCount += 1;
     }
   }
   assert.equal(authoredAuthorityEvidenceCount, 1223,
@@ -2466,7 +2556,7 @@ function buildYamlInventory() {
   const unknownLeafRuntimeOwners = leafFields.filter((field) => field.runtimeOwner === 'unknown').length;
   const unknownLeafRequired = leafFields.filter((field) => field.required === 'conditional-or-unknown').length;
   const semanticGapIds = files.flatMap((file) => file.documents.flatMap((document) => document.fields
-    .filter((field) => !['object', 'array'].includes(field.type)
+    .filter((field) => field.path !== '$'
       && (/blocker/u.test(field.meaning?.status ?? '') || (file.sourceClass === 'helm-values' && field.meaning?.status === 'inactive-profile')))
     .map((field) => `${file.path}#${field.path}`)));
   if (!allowSemanticGaps && semanticGapIds.length) {
@@ -2519,7 +2609,11 @@ function buildYamlInventory() {
       externalSchemaLeafMeanings: leafFields.filter((field) => field.meaning.status === 'external-schema-authority').length,
       inactiveProfileLeaves: leafFields.filter((field) => field.meaning.status === 'inactive-profile').length,
       embeddedPayloadContractsNeedingConsumerProof: leafFields.filter((field) => field.meaning.status === 'embedded-payload-meaning-blocker').length,
-      activeMeaningBlockers: leafFields.filter((field) => /blocker/u.test(field.meaning.status)).length,
+      collectionFields: allFields.filter((field) => field.path !== '$' && ['object', 'array'].includes(field.type)).length,
+      emptyCollectionFields: allFields.filter((field) => field.collection?.empty).length,
+      collectionMeaningBlockers: allFields.filter((field) => field.collection && /blocker/u.test(field.meaning.status)).length,
+      localHelmCollectionMeanings: allFields.filter((field) => field.collection && field.meaning.status === 'local-helm-field-authority').length,
+      activeMeaningBlockers: allFields.filter((field) => field.path !== '$' && /blocker/u.test(field.meaning.status)).length,
       semanticGapBaselineEntries: 0,
       externalSchemaMeaningBlockers: leafFields.filter((field) => field.meaning.status === 'external-schema-meaning-blocker').length,
       implementationMeaningBlockers: leafFields.filter((field) => field.meaning.status === 'implementation-only-meaning-blocker').length,
@@ -4340,13 +4434,27 @@ function buildSchemaInventory() {
   };
 }
 
+const observerGeneratedPrefix = 'skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability/';
+const observerCanonicalPrefix = 'contracts/agent-observability/v1/src/';
+const observerSyncSource = 'skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs';
+function canonicalRuntimeSource(sourcePath) {
+  if (!sourcePath.startsWith(observerGeneratedPrefix)) return sourcePath;
+  const canonical = `${observerCanonicalPrefix}${sourcePath.slice(observerGeneratedPrefix.length)}`;
+  assert(exists(canonical), `CONFIG_RUNTIME_CANONICAL_SOURCE_MISSING: ${sourcePath} has no tracked observer contract authority`);
+  assert.equal(sha256(read(sourcePath)), sha256(read(canonical)),
+    `CONFIG_MATERIALIZED_SOURCE_DRIFT: ${sourcePath} differs from ${canonical}; regenerate it with ${observerSyncSource}`);
+  return canonical;
+}
+
 function runtimeTextSources() {
   const files = new Set();
   for (const sourceRoot of RUNTIME_SCAN_ROOTS) {
     for (const file of walk(sourceRoot, (absolutePath) => TEXT_EXTENSIONS.has(path.extname(absolutePath))
       && !(path.extname(absolutePath) === '.go' && absolutePath.endsWith('_test.go')))) files.add(file);
   }
-  return [...files].sort();
+  // Track the canonical contract even before the observer build materializes
+  // its ignored import directory; copies resolve to that same source identity.
+  return [...new Set([...files].map(canonicalRuntimeSource))].sort();
 }
 
 function maskQuotedShellHeredocs(text) {
@@ -6144,9 +6252,6 @@ function buildRuntimeInputInventory(yamlInventory) {
   assert.equal([...groupedEnvironment.values()].filter((entry) => /blocker/u.test(entry.meaningStatus) && (!entry.blockerOwner || !entry.closureCondition)).length, 0,
     'quality gate: every unresolved environment meaning needs an owner and concrete closure condition');
   const environmentContractGaps = [...groupedEnvironment.values()].filter((entry) => /blocker/u.test(entry.meaningStatus));
-  if (!allowSemanticGaps && environmentContractGaps.length) {
-    throw new Error(`CONFIG_SEMANTIC_GAP: environment receiving sources lack qualified semantic authority: ${environmentContractGaps.flatMap((entry) => [...entry.unqualifiedReaders, ...entry.unqualifiedProducers].map((item) => `${entry.name}:${item.path}`)).slice(0, 30).join(', ')}. Expected authority: owning reader plus purpose, accepted form, default and empty behavior, precedence, impact, and failure symptom.`);
-  }
   const controllerWrapperInputs = [
     'KUBECLAW_NAMESPACE', 'KUBERNETES_SERVICE_PORT', 'BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION',
     'BUSTER_ALLOWED_NAMESPACE_PREFIXES', 'BUSTER_DEFAULT_TTL_SECONDS', 'BUSTER_MAX_TTL_SECONDS',
@@ -6357,16 +6462,30 @@ function buildRuntimeInputInventory(yamlInventory) {
     `quality gate: chart-managed gateway Secret key ${key} lacks its exact render condition`);
   const secretIdentity = (fact) => `${fact.kind}:${fact.name}:${fact.key ?? ''}:${(fact.keys ?? []).join(',')}:${fact.path}:${fact.fieldPath ?? ''}`;
   const secretSemanticGaps = secrets.filter((fact) => fact.semanticStatus !== 'authored-secret-authority');
-  if (!allowSemanticGaps && secretSemanticGaps.length) {
-    throw new Error(`CONFIG_SEMANTIC_GAP: Secret declarations or references lack maintained operator authority: ${secretSemanticGaps.slice(0, 8).map(secretIdentity).join(', ')}. Expected authority: purpose, namespace, keys, optionality, producer, consumer, rotation owner and method, and failure symptom.`);
+  // Discover both transport and Secret ownership gaps before rejecting: the
+  // same newly introduced Secret reference can also create an ENV producer.
+  // Reporting the first category alone would hide the other required contract.
+  if (!allowSemanticGaps && (environmentContractGaps.length || secretSemanticGaps.length)) {
+    const diagnostics = [];
+    if (environmentContractGaps.length) diagnostics.push(`environment receiving sources lack qualified semantic authority: ${environmentContractGaps.flatMap((entry) => [...entry.unqualifiedReaders, ...entry.unqualifiedProducers].map((item) => `${entry.name}:${item.path}:${item.line}`)).join(', ')}. Expected authority: owning reader plus purpose, accepted form, default and empty behavior, precedence, impact, and failure symptom.`);
+    if (secretSemanticGaps.length) diagnostics.push(`Secret declarations or references lack maintained operator authority: ${secretSemanticGaps.map(secretIdentity).join(', ')}. Expected authority: purpose, namespace, keys, optionality, producer, consumer, rotation owner and method, and failure symptom.`);
+    throw new Error(`CONFIG_SEMANTIC_GAP: ${diagnostics.join(' ')} `);
   }
   const configurationConsumerSources = schemaSources().flatMap((schemaPath) => {
     const pluginRoot = schemaPath.includes('/schemas/') ? schemaPath.split('/schemas/')[0] : path.dirname(schemaPath);
-    return walk(`${pluginRoot}/src`, (absolutePath) => /\.(?:ts|mts|js|mjs)$/.test(absolutePath));
+    const sources = walk(`${pluginRoot}/src`, (absolutePath) => /\.(?:ts|mts|js|mjs)$/.test(absolutePath)).map(canonicalRuntimeSource);
+    if (pluginRoot === 'skills/common/plugins/openclaw-agent-observer') {
+      sources.push(...walk(observerCanonicalPrefix.replace(/\/$/u, ''), (absolutePath) => /\.(?:ts|mts|js|mjs)$/.test(absolutePath)), observerSyncSource);
+    }
+    return sources;
   }).filter((sourcePath, index, all) => all.indexOf(sourcePath) === index).sort().map((sourcePath) => ({
     path: sourcePath,
     sourceDigest: sha256(read(sourcePath)),
-    purpose: 'candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection',
+    purpose: sourcePath.startsWith(observerCanonicalPrefix)
+      ? 'tracked agent-observability runtime authority copied byte-for-byte to the observer generated import path by sync-contract.mjs; field-level ownership requires source inspection'
+      : sourcePath === observerSyncSource ? 'tracked producer of observer runtime contract copies from contracts/agent-observability/v1/src'
+        : 'candidate runtime consumer of a discovered configuration schema; field-level ownership requires source inspection',
+    ...(sourcePath.startsWith(observerCanonicalPrefix) ? { materialization: { producer: observerSyncSource, runtimePath: `${observerGeneratedPrefix}${sourcePath.slice(observerCanonicalPrefix.length)}`, mode: 'byte-for-byte copy; ignored build output is not source authority' } } : {}),
   }));
   const classifiedCliFlags = classifyCliFacts(cliFlags);
   return {
