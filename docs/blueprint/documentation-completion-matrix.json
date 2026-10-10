@@ -7508,7 +7508,7 @@
         "tests/verification/e2e/support/platform-config.ts",
         "charts/prism/templates/workloads.yaml"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "passed-current-authored-page-partition-only",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7570,6 +7570,15 @@
           "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
           "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b",
           "scope": "Complete canonical page frozen by exact candidate hash"
+        },
+        {
+          "agent": "/root/a98_precedence_timer_source_fresh",
+          "role": "source",
+          "verdict": "PASS",
+          "revision": "9d085bb20af0cc70201cc41801011b63c626301c",
+          "report": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md",
+          "reportSha256": "1c0b1e98f2183a3e396ec8867ad2885e6b4dd4e1fa9fbd913a730ec2787c9890",
+          "scope": "Complete authored two-page source correspondence only; whole inventories/gates/Reader/Quality/finalAstra remain unproven"
         }
       ],
       "openFindingIds": [
@@ -7596,7 +7605,7 @@
         "skills/prism/server/control-config.ts",
         "skills/prism/config/native-worker.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "passed-current-authored-page-partition-only",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7659,6 +7668,15 @@
           "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-fresh/report.md",
           "reportSha256": "d40ba15ad643827299dd2af1381ef3915681b85cb0d07f023d3b0ad54b0b924b",
           "scope": "Complete canonical page frozen by exact candidate hash"
+        },
+        {
+          "agent": "/root/a98_precedence_timer_source_fresh",
+          "role": "source",
+          "verdict": "PASS",
+          "revision": "9d085bb20af0cc70201cc41801011b63c626301c",
+          "report": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md",
+          "reportSha256": "1c0b1e98f2183a3e396ec8867ad2885e6b4dd4e1fa9fbd913a730ec2787c9890",
+          "scope": "Complete authored two-page source correspondence only; whole inventories/gates/Reader/Quality/finalAstra remain unproven"
         }
       ],
       "openFindingIds": [
@@ -14745,7 +14763,7 @@
       "report": "/home/node/Documents/Codex/a98-evidence/precedence-composition-source-fresh/report.md",
       "reportSha256": "c2d68ce67960d43474a96110378d79e00733dbc14b16d2ac6d9b68cd9c567edf",
       "reportedBy": "/root/a98_precedence_composition_source_fresh",
-      "state": "root-corrected-pending-new-full-source-review",
+      "state": "source-correction-verified-pending-reader-quality-and-global-gates",
       "pages": [
         "docs/site/reference/configuration-precedence.md",
         "docs/site/reference/configuration-change-impact.md"
@@ -14759,7 +14777,8 @@
         "A98-11"
       ],
       "description": "Schema accepts shutdownTimeoutMs above Node timer range; original loader accepted2147483648 and original shutdown timer rejected after about1.9ms. Docs now distinguish schema acceptance, actual timer conversion, operational stop, owner and bounded probe limits. Product schema unchanged.",
-      "author": "/root"
+      "author": "/root",
+      "sourceRecheckReport": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md"
     },
     {
       "id": "A98-PRISM-DIAGNOSTIC-COUNTER-MEANINGS",
@@ -14806,6 +14825,44 @@
       "assignedAuthor": "/root/a98_prism_trust_counter_writer",
       "correctionReport": "/home/node/Documents/Codex/a98-evidence/prism-trust-counter-writer/report.md",
       "correctionReportSha256": "457d8fe359f41c7ecd1ff5488bed9b4113b22dc5d019676e8a46d864c500bac0"
+    },
+    {
+      "id": "A98-PLATFORM-ACTIVE-ADAPTER-DEPENDENCIES",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md",
+      "reportSha256": "1c0b1e98f2183a3e396ec8867ad2885e6b4dd4e1fa9fbd913a730ec2787c9890",
+      "reportedBy": "/root/a98_precedence_timer_source_fresh",
+      "state": "root-corrected-pending-new-full-affected-source-review",
+      "pages": [
+        "docs/site/reference/pipeline-platform.md"
+      ],
+      "catalogueIds": [
+        "CFG-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "activeAdapters initial roots are expanded recursively with required capability provider adapters; empty roots do not guarantee no adapterstarts.",
+      "author": "/root"
+    },
+    {
+      "id": "A98-PLATFORM-DISABLED-ADAPTER-VALIDATION",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md",
+      "reportSha256": "1c0b1e98f2183a3e396ec8867ad2885e6b4dd4e1fa9fbd913a730ec2787c9890",
+      "reportedBy": "/root/a98_precedence_timer_source_fresh",
+      "state": "root-corrected-pending-new-full-affected-source-review",
+      "pages": [
+        "docs/site/reference/pipeline-platform.md"
+      ],
+      "catalogueIds": [
+        "CFG-002"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "All configured adapter IDs must exist; schemas are validated only for enabled adapters. Invalid disabled configuration can become a later activation error.",
+      "author": "/root"
     }
   ],
   "checks": [
@@ -15988,11 +16045,20 @@
       "model": "gpt-6.1-sol",
       "forkTurns": "none",
       "initialMode": "read-only",
-      "state": "running",
+      "state": "completed-rejection-supplementary-page",
       "reviewedRevision": "9d085bb20af0cc70201cc41801011b63c626301c plus explicit pipeline-platform overlay9ab8e318fa7ccbd13c3d1562e02c0d4b1613232c4eaed9d78df0ba77ac94d17a",
       "freshContext": true,
       "readOnly": true,
-      "scopeLimit": "Two full configuration pages plus supplementary platform context; no global inventory/Reader/Quality/live acceptance"
+      "scopeLimit": "Two full configuration pages plus supplementary platform context; no global inventory/Reader/Quality/live acceptance",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md",
+      "reportSha256": "1c0b1e98f2183a3e396ec8867ad2885e6b4dd4e1fa9fbd913a730ec2787c9890",
+      "gateVerdicts": {
+        "CFG-013-source-pages": "PASS",
+        "CFG-014-source-pages": "PASS",
+        "CFG-002-supplementary-context": "FAIL",
+        "A98-10-named-source-semantics": "PASS",
+        "A98-11-two-page-source": "PASS"
+      }
     }
   ],
   "continuation": {

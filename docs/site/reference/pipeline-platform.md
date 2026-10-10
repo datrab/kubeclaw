@@ -3,7 +3,7 @@
 Status: current configuration reference
 Audience: platform operator, pipeline operator, plugin author
 Owner: plugin runtime and Nova Core
-Evidence: skills/common/plugin-runtime/foundation/config/platform.schema.json; skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts
+Evidence: skills/common/plugin-runtime/foundation/config/platform.schema.json; skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts; skills/common/plugin-runtime/foundation/registry/capabilities.ts; skills/common/plugin-runtime/foundation/registry/configuration.ts; skills/common/plugin-runtime/foundation/registry/activation.ts; skills/nova/core/execution/adapter-startup.ts
 Applies to: `pipeline-platform.v2`
 Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 
@@ -34,8 +34,8 @@ interpolation at this boundary.
 | `externalTrust` | Closed object; see below | No default | Discovery verifies external package provenance. |
 | `providers` | Object from capability name to non-empty registration ID | `{}` is valid only if enabled registrations need no selected provider | Capability resolution selects one provider for each keyed capability. |
 | `grants` | Three-level JSON object: registration ID → capability → resource policy object | `{}` is structurally valid | Capability resolution rejects an enabled registration that lacks required authority. Resource policy fields are capability-specific, so this envelope deliberately remains open. |
-| `adapters` | Object from adapter registration ID to its JSON configuration object | `{}` is valid | Registration configuration validation checks each value against the installed adapter schema. |
-| `activeAdapters` | Unique array of non-empty registration IDs | `[]` is valid | Only these adapters activate. Supplying configuration in `adapters` does not activate one. |
+| `adapters` | Object from adapter registration ID to its JSON configuration object | `{}` is valid | Every configured ID must exist. The runtime checks configuration against the installed schema for enabled adapters; invalid disabled configuration can remain undetected until activation. |
+| `activeAdapters` | Unique array of non-empty registration IDs | `[]` is valid | Lists adapters to enable directly. Required capability providers and their dependencies are also enabled. Supplying configuration in `adapters` alone does not enable one. |
 | `observers` | Object from observer registration ID to its JSON configuration object | `{}` is valid | Every keyed observer is enabled, schema-checked, and used for event delivery. |
 | `isolation` | Optional closed object `{cgroupRoot}`; `cgroupRoot` is non-empty | Omitted means no platform isolation object is passed to activation | Plugin activation receives the resolved cgroup root. Availability and permissions are checked by the relevant runtime, not by JSON Schema. |
 | `storageRoot` | Non-empty path string | No default | Nova stores run snapshots, journals, effect locks, and observer records below this resolved root. |
@@ -54,6 +54,39 @@ interpolation at this boundary.
 The schema constrains the two digest maps but does not establish who approved a
 digest. The operator must obtain these values through the deployment's trust
 process.
+
+## Adapter selection and validation
+
+Nova first enables the graph's stage owners, the configured observers, and
+the IDs in `activeAdapters`. It then selects the provider of each capability
+required by an enabled registration. Those providers can require other
+providers. Resolution continues until no further registration is added.
+The final enabled set determines which adapter implementations load and start.
+An empty `activeAdapters` list therefore does not guarantee that no adapter
+will start: a stage or observer can require a provider adapter.
+
+Source: [initial enabled registrations](https://github.com/datrab/kubeclaw/blob/187df367ba1009c8f08b2b7704174201c90fceaa/skills/nova/core/execution/engine-runtime.ts#L44-L50),
+[recursive provider selection](https://github.com/datrab/kubeclaw/blob/187df367ba1009c8f08b2b7704174201c90fceaa/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L149-L159),
+[loading enabled adapters](https://github.com/datrab/kubeclaw/blob/187df367ba1009c8f08b2b7704174201c90fceaa/skills/common/plugin-runtime/foundation/registry/activation.ts#L129-L136),
+and [starting enabled adapters](https://github.com/datrab/kubeclaw/blob/187df367ba1009c8f08b2b7704174201c90fceaa/skills/nova/core/execution/adapter-startup.ts#L25-L31).
+
+Configuration validation has two boundaries. Every key in `adapters` and
+`observers` must name a known registration. Schema validation then applies to
+enabled registrations, using their supplied configuration or `{}` when absent.
+In the platform path, every configured observer is initially enabled. An
+adapter can remain disabled, so successful preparation does not prove that its
+stored configuration satisfies its schema. A later graph, provider, or
+`activeAdapters` change can enable it and expose that invalid value.
+
+Before changing adapter selection, validate the configuration for the resulting
+enabled set. Stop on `REGISTRY_RESULT_INVALID`; correct the rejected value
+against that adapter's installed schema before activation. Removing the ID
+from `activeAdapters` does not disable it if another enabled registration still
+requires it as a provider.
+
+Source: [known registration IDs](https://github.com/datrab/kubeclaw/blob/187df367ba1009c8f08b2b7704174201c90fceaa/skills/common/plugin-runtime/foundation/registry/configuration.ts#L51-L63),
+[enabled configuration validation](https://github.com/datrab/kubeclaw/blob/187df367ba1009c8f08b2b7704174201c90fceaa/skills/common/plugin-runtime/foundation/registry/configuration.ts#L65-L81),
+and [preparation with resolved providers](https://github.com/datrab/kubeclaw/blob/187df367ba1009c8f08b2b7704174201c90fceaa/skills/nova/core/execution/engine-runtime.ts#L34-L41).
 
 ## Path resolution
 
