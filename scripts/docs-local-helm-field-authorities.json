@@ -23480,7 +23480,7 @@
           "group": "service-type",
           "purpose": "Selects how Kubernetes exposes the KubeClaw Service.",
           "acceptedValues": "`ClusterIP`, `NodePort`, or `LoadBalancer`, subject to cluster support.",
-          "emptyBehavior": "An empty value is invalid; removing it uses the chart default.",
+          "emptyBehavior": "Removing the override uses chart default ClusterIP. An explicit empty string renders type: (YAML null); fresh typed decode leaves the empty type and Kubernetes defaults it to ClusterIP. The declared supported input policy remains ClusterIP, NodePort or LoadBalancer; empty is not a fourth supported choice.",
           "impact": "Changes the network exposure boundary and the Service fields rendered by the chart.",
           "failure": "An unsupported type fails admission; an unsuitable type makes the service unreachable or exposes it unexpectedly.",
           "semanticAuthority": "explicit-field-contract",

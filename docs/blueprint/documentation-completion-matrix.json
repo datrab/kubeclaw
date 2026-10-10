@@ -18801,7 +18801,16 @@
         "External provider boundary needs concrete inputs/owner/stop/futureproof"
       ],
       "owner": "/root",
-      "limits": "Original conditional consumer assertions mostly PASS only in reviewed slice;21originals reverified, Helm renders not API/live proofs. No full Core acceptance."
+      "limits": "Original conditional consumer assertions mostly PASS only in reviewed slice;21originals reverified, Helm renders not API/live proofs. No full Core acceptance.",
+      "correctionCandidate": {
+        "state": "authored-not-independently-accepted",
+        "author": "/root/service_product_routes_correction_writer",
+        "reportSha256": "4fdbe5f81aa6b4e4fe17ebe4aae1c752d86d3b3b452a3f3a4855f80ac8009c06",
+        "rootVerifiedArtifacts": 32,
+        "changes": "Service type empty/null semantics; conditional cleanup; selected producer routing and read-only owner diagnosis; non-Service exports preserved",
+        "limits": "Author governing-text combined read truncated, scope/Operate/relevant gates separately read. No full contract or live acceptance.",
+        "rootIntegration": "Canonical reference navigation and change-impact route linked. Root fixed two out-of-range source citations;4product pins verified. Full refs13196 terminalFAIL from those corrected ranges plus concurrent unreleased Buster generated-route/range errors, reported to its owner. No full reference PASS claimed."
+      }
     },
     "pvcQualityReview": {
       "reviewer": "/root/pvc_runtime_complete_quality_fresh",

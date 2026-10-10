@@ -34,6 +34,7 @@ procedures. This section gives exact names and source-backed facts.
 - [Helm values](helm-values.md) lists current value families and Secret references.
 - [Secrets](secrets.md) lists names, keys, owners, consumers, and recovery rules.
 - [Endpoints](endpoints.md) catalogues Services, ports, ingresses, inbound routes, outbound connections, trust boundaries, health, and failure effects.
+- [Service routes and diagnosis](service-routing.md) connects supported Service producers to ports, endpoints, DNS, network owners, and read-only failure checks.
 - [Configuration precedence](configuration-precedence.md) identifies which source wins for each consumer without treating unrelated configuration families as one override stack.
 - [API object updates](api-object-updates.md) explains client-side apply, patches, Argo operation selection, field ownership, and recovery boundaries.
 - [Configuration change impact](configuration-change-impact.md) maps changes to restart, new-run, republish, host, rollout, and data procedures.

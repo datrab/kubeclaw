@@ -439,6 +439,15 @@ retrying. A timeout does not prove that an external operation did not happen.
 >
 > **Limit:** Local checks cannot choose a maintenance window or prove that an external dependency honors a credential overlap period.
 
+## Service exposure changes
+
+Before changing a Service type or port, identify the selected producer and the
+stored Service. The [Service routes and diagnosis](service-routing.md) reference
+explains active and ignored chart overrides, endpoint selection, and the
+required network owner. It also separates API allocation from DNS, forwarding,
+and external provider work. Changing values alone does not prove that a route
+works or that previous external resources have been removed.
+
 ## PVC reclamation and retained data
 
 A PersistentVolumeClaim (PVC), also called a storage claim in this section,
