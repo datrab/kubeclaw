@@ -341,7 +341,7 @@ ${generatedEnd()}
 function renderHelmValues(configurationValues, configurationSchemas) {
   const valueFiles = configurationValues.files;
   const apiResourceSections = renderApiResourceReference(configurationValues.apiResources,
-    (source, line) => `[${literalText(source)}](${pinnedSourceUrl(source, line, line)})`);
+    (source, line) => `[${literalText(source)}](${pinnedSourceUrl(source, line, line)})`, configurationValues.apiMetadataReferences);
   const collectionSchemaKey = (schema) => JSON.stringify([schema.authority, schema.authoritySha256, schema.apiVersion, schema.kind, schema.resolvedPath]);
   const collectionSchemaAnchor = (schema) => `api-collection-${createHash('sha256').update(collectionSchemaKey(schema)).digest('hex').slice(0, 16)}`;
   const collectionSchemaContract = ({ fieldPath, ...schema }) => JSON.stringify(schema);

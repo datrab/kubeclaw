@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { apiResourceFieldBoundaries } from '../docs-api-schema-authorities.mjs';
-import { renderApiResourceReference } from '../docs-api-reference.mjs';
+import { renderApiResourceReference, renderImplicitMetadataReferences } from '../docs-api-reference.mjs';
+
+import { implicitKubernetesObjectMetaReferences } from '../docs-kubernetes-metadata-receiver-contracts.mjs';
 
 // Renderer fixtures are synthetic content, never runtime or acceptance proof.
 function fixture() {
@@ -67,4 +69,39 @@ test('internal open-proof notes cannot be published as product limitations', () 
   }
   const product=fixture();product[0].rows[0].receiverContract.qualificationLimits.push('A configured driver must support this feature.');
   assert(renderApiResourceReference(product,link).includes('A configured driver must support this feature.'));
+});
+
+
+test('implicit metadata stays separate from schema rows and all references resolve', () => {
+  const references=structuredClone(implicitKubernetesObjectMetaReferences);
+  const resources=references.map(({apiVersion,kind})=>({apiVersion,kind}));
+  const output=renderImplicitMetadataReferences(resources,references);
+  assert.equal((output.match(/<a id="api-metadata-/gu)??[]).length,references.length);
+  assert.equal((output.match(/#### <code>/gu)??[]).length,references.reduce((n,r)=>n+r.contracts.length,0));
+  assert(!output.includes('<summary>Pinned API schema constraints</summary>'));
+  for(const label of ['Receiver:','Operation:','Omitted:','JSON null:','Explicit empty value:','Invalid value:','Change effect:']) assert(output.includes(label));
+  const missing=references.slice(1);
+  assert.throws(()=>renderImplicitMetadataReferences(resources,missing),/API_REFERENCE_METADATA_MISSING/);
+  assert.throws(()=>renderImplicitMetadataReferences(resources,[...references,references[0]]),/API_REFERENCE_METADATA_DUPLICATE/);
+  const changed=structuredClone(references);changed[0].contracts[0].cases[0].sourceOutcome='Unverified replacement';
+  assert.throws(()=>renderImplicitMetadataReferences(resources,changed),/API_REFERENCE_METADATA_DRIFT/);
+});
+
+test('opaque metadata must link the matching canonical reference before publication', () => {
+  const reference=implicitKubernetesObjectMetaReferences.find(r=>r.kind==='CiliumNetworkPolicy');
+  const sample=fixture()[0].rows[0].receiverContract;
+  const resource={apiVersion:reference.apiVersion,kind:reference.kind,extra:[],sourceContexts:[],rows:
+    apiResourceFieldBoundaries(reference.apiVersion,reference.kind).map(row=>({...row,receiverContract:{
+      ...structuredClone(sample),kind:reference.kind,fieldPath:row.fieldPath,
+      ...(row.fieldPath==='$.metadata'?{canonicalReferenceId:reference.referenceId}:{})
+    }}))};
+  const output=renderApiResourceReference([resource],link,[reference]);
+  const target=output.match(/Create, update, ownership and deletion\]\(#(api-metadata-[a-f0-9]+)\)/u)?.[1];
+  assert(target);assert(output.includes(`<a id="${target}"></a>`));
+  assert.equal((output.match(/<a id="api-field-/gu)??[]).length,resource.rows.length);
+  const metadata=resource.rows.find(row=>row.fieldPath==='$.metadata').receiverContract;
+  metadata.canonicalReferenceId='wrong-kind';
+  assert.throws(()=>renderApiResourceReference([resource],link,[reference]),/API_REFERENCE_METADATA_LINK_MISSING/);
+  metadata.canonicalReferenceId=reference.referenceId;
+  assert.throws(()=>renderApiResourceReference([resource],link,[]),/API_REFERENCE_METADATA_MISSING/);
 });

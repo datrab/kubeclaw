@@ -26,7 +26,7 @@ import { receiverContracts as coreReceiverContracts } from './docs-kubernetes-co
 import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver-contracts.mjs';
 import { receiverContracts as ciliumReceiverContracts } from './docs-cilium-receiver-contracts.mjs';
 import { receiverContracts as envelopeReceiverContracts } from './docs-kubernetes-envelope-receiver-contracts.mjs';
-import { receiverContracts as metadataReceiverContracts } from './docs-kubernetes-metadata-receiver-contracts.mjs';
+import { receiverContracts as metadataReceiverContracts, implicitKubernetesObjectMetaReferences } from './docs-kubernetes-metadata-receiver-contracts.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
@@ -3003,6 +3003,8 @@ function buildYamlInventory() {
     },
     files,
     apiResources,
+    apiMetadataReferences: implicitKubernetesObjectMetaReferences.filter(reference => apiResources.some(resource =>
+      resource.apiVersion === reference.apiVersion && resource.kind === reference.kind)),
     totals: {
       files: files.length,
       apiResourceKinds: apiResources.length,

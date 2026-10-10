@@ -17532,5 +17532,6 @@ export const receiverContracts = declarations.map(([kind,fieldPath,type,underlyi
  const aliasName=type.replace(/^\*/, '').split('.').at(-1);
  const seenAliases=new Set();let alias=aliasName;while(aliases[alias]&&!seenAliases.has(alias)){seenAliases.add(alias);const [underlying,file,line]=aliases[alias];record.evidence.push(source(file,line,line,'The Go declaration for '+alias+' uses underlying representation '+underlying+'. The declaration belongs to the cited package; it does not by itself prove custom methods or the identity of a similarly named type from another package.'));alias=underlying.replace(/^\*/, '').split('.').at(-1);}
  refine(record,type);
+ if(fieldPath==='$.metadata') record.canonicalReferenceId=`kubernetes-objectmeta:cilium.io/v2:${kind}`;
  return record;
 });

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { apiResourceFieldBoundaries } from './docs-api-schema-authorities.mjs';
 import { apiReceiverCoverage, assertApiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
+import { implicitKubernetesObjectMetaReferences as canonicalMetadataReferences } from './docs-kubernetes-metadata-receiver-contracts.mjs';
 
 const text = value => String(value).replace(/[&<>"'\\`\[\]*_|~]/gu,
   character => `&#${character.codePointAt(0)};`).replaceAll('\n', '<br>');
@@ -9,14 +10,85 @@ const code = value => `<code>${text(value)}</code>`;
 const identity = row => JSON.stringify([row.apiVersion, row.kind, row.fieldPath]);
 const anchor = row => `api-field-${createHash('sha256').update(identity(row)).digest('hex').slice(0, 20)}`;
 
+function renderReceiverContract(receiver, key, fieldPath) {
+  const prose = [receiver.purpose, receiver.receiver, receiver.operationScope,
+    receiver.omitted, receiver.nullValue, receiver.emptyValue, receiver.invalidValue,
+    receiver.changeImpact, ...(receiver.crossFieldConditions ?? []),
+    ...(receiver.qualificationLimits ?? []), ...(receiver.cases ?? []).flatMap(item =>
+      [item.name, item.condition, item.sourceOutcome]),
+    ...(receiver.evidence ?? []).map(item => item.claim)];
+  // Explicit authoring obligations belong in internal evidence, never in
+  // the product reference. Real product limits remain publishable prose.
+  assert(!prose.some(value => /OPEN (?:DOCUMENTATION|SHARED METADATA) PROOF|Available-source documentation gap|unclosed source-proof obligation/iu.test(String(value))),
+    `API_REFERENCE_UNRESOLVED_PROOF: ${key} ${fieldPath}`);
+  for (const name of ['purpose', 'receiver', 'operationScope', 'omitted', 'nullValue', 'emptyValue', 'invalidValue', 'changeImpact']) {
+    assert(typeof receiver[name] === 'string' && receiver[name].trim(),
+      `API_REFERENCE_RECEIVER_INCOMPLETE: ${key} ${fieldPath} ${name}`);
+  }
+  for (const name of ['crossFieldConditions', 'cases', 'evidence', 'qualificationLimits']) {
+    assert(Array.isArray(receiver[name]), `API_REFERENCE_RECEIVER_INCOMPLETE: ${key} ${fieldPath} ${name}`);
+  }
+  assert(receiver.cases.length && receiver.evidence.length,
+    `API_REFERENCE_RECEIVER_INCOMPLETE: ${key} ${fieldPath} cases/evidence`);
+  const cases = receiver.cases.map(item => {
+    for (const name of ['name', 'condition', 'sourceOutcome']) assert(typeof item[name] === 'string' && item[name].trim(),
+      `API_REFERENCE_CASE_INCOMPLETE: ${key} ${fieldPath} ${name}`);
+    return `- **${text(item.name)}:** ${text(item.condition)} Expected from the cited source: ${text(item.sourceOutcome)}`;
+  }).join('\n');
+  const evidence = receiver.evidence.map(item => {
+    const range = item.url?.match(/^https:\/\/github\.com\/[^/]+\/[^/]+\/blob\/[a-f0-9]{40}\/[^#]+#L([1-9][0-9]*)(?:-L([1-9][0-9]*))?$/u);
+    assert(range && Number(range[2] ?? range[1]) >= Number(range[1])
+      && typeof item.claim === 'string' && item.claim.trim(),
+      `API_REFERENCE_EVIDENCE_INCOMPLETE: ${key} ${fieldPath}`);
+    return `- [${text(item.claim)}](${item.url})`;
+  }).join('\n');
+  return `${text(receiver.purpose)}\n\n` +
+    `**Receiver:** ${text(receiver.receiver)}\n\n**Operation:** ${text(receiver.operationScope)}\n\n` +
+    `**Omitted:** ${text(receiver.omitted)}\n\n**JSON null:** ${text(receiver.nullValue)}\n\n` +
+    `**Explicit empty value:** ${text(receiver.emptyValue)}\n\n**Invalid value:** ${text(receiver.invalidValue)}\n\n` +
+    `**Change effect:** ${text(receiver.changeImpact)}\n\n` +
+    (receiver.crossFieldConditions.length ? `**Related conditions:**\n\n${receiver.crossFieldConditions.map(item => `- ${text(item)}`).join('\n')}\n\n` : '') +
+    `**Examples and expected outcomes:**\n\n${cases}\n\n` +
+    (receiver.qualificationLimits.length ? `**Scope and limits:**\n\n${receiver.qualificationLimits.map(item => `- ${text(item)}`).join('\n')}\n\n` : '') +
+    `**Implementation sources:**\n\n${evidence}\n\n` ;
+}
+
+const metadataAnchor = referenceId => `api-metadata-${createHash('sha256').update(referenceId).digest('hex').slice(0, 20)}`;
+
+export function renderImplicitMetadataReferences(resources, references = []) {
+  assert(Array.isArray(references), 'API_REFERENCE_METADATA_INVENTORY_MISSING');
+  const expected = canonicalMetadataReferences.filter(reference => resources.some(resource =>
+    resource.apiVersion === reference.apiVersion && resource.kind === reference.kind));
+  const seen = new Set();
+  for (const reference of references) {
+    assert(!seen.has(reference.referenceId), `API_REFERENCE_METADATA_DUPLICATE: ${reference.referenceId}`);
+    seen.add(reference.referenceId);
+    const authority = expected.find(item => item.referenceId === reference.referenceId);
+    assert(authority, `API_REFERENCE_METADATA_EXTRA: ${reference.referenceId}`);
+    assert.deepEqual(reference, authority, `API_REFERENCE_METADATA_DRIFT: ${reference.referenceId}`);
+  }
+  for (const reference of expected) assert(seen.has(reference.referenceId),
+    `API_REFERENCE_METADATA_MISSING: ${reference.referenceId}`);
+  return expected.map(reference => {
+    const fields = reference.contracts.map(receiver =>
+      `#### ${code(receiver.fieldPath)}\n\n` + renderReceiverContract(receiver, reference.referenceId, receiver.fieldPath)).join('\n\n');
+    return `<a id="${metadataAnchor(reference.referenceId)}"></a>\n\n` +
+      `### Standard metadata for ${text(reference.kind)} (${code(reference.apiVersion)})\n\n` +
+      `These standard Kubernetes metadata fields apply to this ${text(reference.scope.toLowerCase())} resource. ` +
+      `The custom-resource schema exposes metadata as one object; these fields are described separately from its enumerated schema paths.\n\n${fields}`;
+  }).join('\n\n');
+}
+
 // Publication must not turn maintenance inventories with missing receivers
 // into an apparently complete reference. Compare against the actual authority,
 // not only the inventory's claimed totals or missing-path list.
-export function renderApiResourceReference(resources, sourceLink) {
+export function renderApiResourceReference(resources, sourceLink, metadataReferences = []) {
   assert(Array.isArray(resources) && resources.length,
     'API_REFERENCE_INVENTORY_MISSING');
+  const metadataSections = renderImplicitMetadataReferences(resources, metadataReferences);
+  const referenceMap = new Map(metadataReferences.map(reference => [reference.referenceId, reference]));
   const seenResources = new Set();
-  return resources.map(resource => {
+  const resourceSections = resources.map(resource => {
     const key = `${resource.apiVersion}/${resource.kind}`;
     assert(!seenResources.has(key), `API_REFERENCE_RESOURCE_DUPLICATE: ${key}`);
     seenResources.add(key);
@@ -48,46 +120,16 @@ export function renderApiResourceReference(resources, sourceLink) {
     const sections = authority.map(expected => {
       const row = rows.get(expected.fieldPath);
       const receiver = row.receiverContract;
-      const prose = [receiver.purpose, receiver.receiver, receiver.operationScope,
-        receiver.omitted, receiver.nullValue, receiver.emptyValue, receiver.invalidValue,
-        receiver.changeImpact, ...(receiver.crossFieldConditions ?? []),
-        ...(receiver.qualificationLimits ?? []), ...(receiver.cases ?? []).flatMap(item =>
-          [item.name, item.condition, item.sourceOutcome]),
-        ...(receiver.evidence ?? []).map(item => item.claim)];
-      // Explicit authoring obligations belong in internal evidence, never in
-      // the product reference. Real product limits remain publishable prose.
-      assert(!prose.some(value => /OPEN (?:DOCUMENTATION|SHARED METADATA) PROOF|Available-source documentation gap|unclosed source-proof obligation/iu.test(String(value))),
-        `API_REFERENCE_UNRESOLVED_PROOF: ${key} ${row.fieldPath}`);
-      for (const name of ['purpose', 'receiver', 'operationScope', 'omitted', 'nullValue', 'emptyValue', 'invalidValue', 'changeImpact']) {
-        assert(typeof receiver[name] === 'string' && receiver[name].trim(),
-          `API_REFERENCE_RECEIVER_INCOMPLETE: ${key} ${row.fieldPath} ${name}`);
+      let relatedReference = '';
+      const descriptor = canonicalMetadataReferences.find(reference => reference.apiVersion === resource.apiVersion && reference.kind === resource.kind);
+      if (descriptor && row.fieldPath === '$.metadata') {
+        assert.equal(receiver.canonicalReferenceId, descriptor.referenceId,
+          `API_REFERENCE_METADATA_LINK_MISSING: ${key}`);
+        assert(referenceMap.has(receiver.canonicalReferenceId), `API_REFERENCE_METADATA_TARGET_MISSING: ${key}`);
+        relatedReference = `**Standard metadata fields:** [Create, update, ownership and deletion](#${metadataAnchor(descriptor.referenceId)}).\n\n`;
       }
-      for (const name of ['crossFieldConditions', 'cases', 'evidence', 'qualificationLimits']) {
-        assert(Array.isArray(receiver[name]), `API_REFERENCE_RECEIVER_INCOMPLETE: ${key} ${row.fieldPath} ${name}`);
-      }
-      assert(receiver.cases.length && receiver.evidence.length,
-        `API_REFERENCE_RECEIVER_INCOMPLETE: ${key} ${row.fieldPath} cases/evidence`);
-      const cases = receiver.cases.map(item => {
-        for (const name of ['name', 'condition', 'sourceOutcome']) assert(typeof item[name] === 'string' && item[name].trim(),
-          `API_REFERENCE_CASE_INCOMPLETE: ${key} ${row.fieldPath} ${name}`);
-        return `- **${text(item.name)}:** ${text(item.condition)} Expected from the cited source: ${text(item.sourceOutcome)}`;
-      }).join('\n');
-      const evidence = receiver.evidence.map(item => {
-        const range = item.url?.match(/^https:\/\/github\.com\/[^/]+\/[^/]+\/blob\/[a-f0-9]{40}\/[^#]+#L([1-9][0-9]*)(?:-L([1-9][0-9]*))?$/u);
-        assert(range && Number(range[2] ?? range[1]) >= Number(range[1])
-          && typeof item.claim === 'string' && item.claim.trim(),
-          `API_REFERENCE_EVIDENCE_INCOMPLETE: ${key} ${row.fieldPath}`);
-        return `- [${text(item.claim)}](${item.url})`;
-      }).join('\n');
-      return `<a id="${anchor(row)}"></a>\n\n#### ${code(row.fieldPath)}\n\n${text(receiver.purpose)}\n\n` +
-        `**Receiver:** ${text(receiver.receiver)}\n\n**Operation:** ${text(receiver.operationScope)}\n\n` +
-        `**Omitted:** ${text(receiver.omitted)}\n\n**JSON null:** ${text(receiver.nullValue)}\n\n` +
-        `**Explicit empty value:** ${text(receiver.emptyValue)}\n\n**Invalid value:** ${text(receiver.invalidValue)}\n\n` +
-        `**Change effect:** ${text(receiver.changeImpact)}\n\n` +
-        (receiver.crossFieldConditions.length ? `**Related conditions:**\n\n${receiver.crossFieldConditions.map(item => `- ${text(item)}`).join('\n')}\n\n` : '') +
-        `**Examples and expected outcomes:**\n\n${cases}\n\n` +
-        (receiver.qualificationLimits.length ? `**Scope and limits:**\n\n${receiver.qualificationLimits.map(item => `- ${text(item)}`).join('\n')}\n\n` : '') +
-        `**Implementation sources:**\n\n${evidence}\n\n` +
+      return `<a id="${anchor(row)}"></a>\n\n#### ${code(row.fieldPath)}\n\n` +
+        relatedReference + renderReceiverContract(receiver, key, row.fieldPath) +
         `<details>\n<summary>Pinned API schema constraints</summary>\n\n` +
         `Authority: ${text(row.authority)}. Content SHA-256: ${code(row.authoritySha256)}.\n\n` +
         `<pre><code>${text(JSON.stringify(row.contract, null, 2)).replaceAll('<br>', '\n')}</code></pre>\n\n</details>`;
@@ -99,4 +141,5 @@ export function renderApiResourceReference(resources, sourceLink) {
       `Expected outcomes below come from implementation sources. They do not report a live API request or deployment test.\n\n` +
       `Checked-in resource inputs:\n\n${contexts}\n\n${sections}`;
   }).join('\n\n');
+  return [resourceSections, metadataSections].filter(Boolean).join('\n\n');
 }
