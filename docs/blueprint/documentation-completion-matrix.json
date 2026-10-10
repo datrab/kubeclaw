@@ -19756,6 +19756,16 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/workload-delegation-final-correction-root",
       "checks": "Two observed13-testPASS integration runs, no skips; five original authorities SHA-verified; final status citation start is narrowed only",
       "limits": "Author source inspection/integration only; no Source/Reader/Quality/Astra acceptance, full current producer join or live API execution."
+    },
+    "podReadinessSuccessThresholdCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-source-stable-complete-discovery-and-independent-source-review",
+      "scope": "Actual BuildKit preflight Pod omits readinessProbe.successThreshold. Material present-Probe default1 is already selected by receiving-function applicability; corresponding rootPod receiver was missing. ExactSource-backed receiver added using existing qualified common child mechanism and rootPod update/ownership route; visitor409-410 only defaults a present Probe.",
+      "workloadReceiverRecords": 769,
+      "newRecords": 1,
+      "checks": "18focusedintegrationtestsPASS0FAIL0SKIP before laterproducer gatewidening; finalnewsource link is citation-only",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/workload-delegation-final-correction-root/pod-readiness-correction.json",
+      "limits": "Actual globaldiscovery remainsFAILunqualifiedcheck.stdout withmutableauthorgate; noallproducerjoinPASS/fullSource/Reader/Quality/Astra or package acceptance."
     }
   }
 }

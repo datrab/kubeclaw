@@ -418,6 +418,7 @@ const expandedPaths = {
     "$.spec.containers[].readinessProbe.failureThreshold",
     "$.spec.containers[].readinessProbe.initialDelaySeconds",
     "$.spec.containers[].readinessProbe.periodSeconds",
+    "$.spec.containers[].readinessProbe.successThreshold",
     "$.spec.containers[].readinessProbe.timeoutSeconds",
     "$.spec.containers[].securityContext",
     "$.spec.containers[].securityContext.allowPrivilegeEscalation",
@@ -529,6 +530,9 @@ for(const [kind,paths] of Object.entries(expandedPaths))for(const path of paths)
  if(kind==='Pod'&&path==='$.spec.automountServiceAccountToken'){
   facts.omitted='The pointer remains nil through typed Pod defaulting. With ServiceAccount admission enabled, a nonnil Pod choice wins, then the ServiceAccount choice, then true; the selected explicit false disables its token automount.';
   facts.evidence.push(source('plugin/pkg/admission/serviceaccount/admission.go','254-265','Automount precedence is Pod pointer, ServiceAccount pointer, then true.'));
+ }
+ if(kind==='Pod'&&path==='$.spec.containers[].readinessProbe.successThreshold'){
+  facts.evidence.push(source('pkg/apis/core/v1/zz_generated.defaults.go','409-410','The root Pod visitor calls SetDefaults_Probe only for a present regular-container readinessProbe.'));
  }
  if(kind==='Pod'&&path==='$.spec.containers[].image'){
   facts.invalidValue='An empty image or leading/trailing whitespace is rejected by actual Pod validation. API acceptance still does not prove registry access, pull credentials, image content or executable availability.';
