@@ -35,6 +35,7 @@ procedures. This section gives exact names and source-backed facts.
 - [Secrets](secrets.md) lists names, keys, owners, consumers, and recovery rules.
 - [Endpoints](endpoints.md) catalogues Services, ports, ingresses, inbound routes, outbound connections, trust boundaries, health, and failure effects.
 - [Configuration precedence](configuration-precedence.md) identifies which source wins for each consumer without treating unrelated configuration families as one override stack.
+- [API object updates](api-object-updates.md) explains client-side apply, patches, Argo operation selection, field ownership, and recovery boundaries.
 - [Configuration change impact](configuration-change-impact.md) maps changes to restart, new-run, republish, host, rollout, and data procedures.
 - [Configuration errors](configuration-errors.md) maps validation and admission signals to their owner and safe corrective action.
 - [Project pipeline publication](project-pipeline-publication.md) documents the coupled `.swarm/progress.json` and `.swarm/pipeline.json` publication contract.
