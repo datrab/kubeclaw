@@ -19736,6 +19736,26 @@
       "rootVerifiedSealedFiles": 12,
       "rootVerification": "/home/node/Documents/Codex/a98-evidence/selector-map-null-correction-root/scope-manifest-verification.json",
       "limits": "Root verified sealed file bytes/digests and distinct identities; 234 semantic exclusions apply only to frozen5d scope. Entire Source/Reader/Quality/Astra acceptance remains incomplete."
+    },
+    "workloadDelegationAndDefaultProofCorrections": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-complete-source-review",
+      "scope": [
+        "enableServiceLinks positive Pod-default201-204 and complete PodSpec211-232 absence proof",
+        "Full Job visitor378-705 establishes no SetDefaults_Pod; Cron regular Container216-223 positive caption plus completeCronvisitor companion",
+        "Seven exact metadata string-map item null cases retain key with empty string; copied template/PVC metadata distinct from selector equality",
+        "504 early delegated cross-field paragraphs no longer name foreign Deployment registry/LiteLLM clients as actual Job/Cron/StatefulSet operations; mapped actualkind/path and conditional operation-assessment task preserve typed-versus-patch/parent/merge limits",
+        "DRA claim resolution includes Pod claim loop and resourceclaim.Name479-481; status termination-message normalization includes executed regular/init/ephemeral calls1187-1235"
+      ],
+      "findingOrigins": [
+        "/root/workload_node_complete_source_fresh F20 metadata/null and provisional operation delegation finding",
+        "/root/workload_node_corrected_complete_source_fresh F22/F23 negative default proof and captions631/639/645/648"
+      ],
+      "workloadIdentitiesPreserved": 768,
+      "changedWorkloadRecords": 562,
+      "evidence": "/home/node/Documents/Codex/a98-evidence/workload-delegation-final-correction-root",
+      "checks": "Two observed13-testPASS integration runs, no skips; five original authorities SHA-verified; final status citation start is narrowed only",
+      "limits": "Author source inspection/integration only; no Source/Reader/Quality/Astra acceptance, full current producer join or live API execution."
     }
   }
 }
