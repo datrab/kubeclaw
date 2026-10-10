@@ -16092,6 +16092,20 @@
       ],
       "description": "QD838-SOURCE001 independently found all34 ResourceQuota captions missing direct DNS alias311 evidence. Root splits namespaced ObjectMeta call8068–8070 from alias311. All34 changed records differ only in evidence. Historical838FAIL retained.",
       "proof": "/home/node/Documents/Codex/a98-evidence/hugepages-quota-root-correction-export-audit.json"
+    },
+    {
+      "id": "A98-PATH-SEGMENT-NAME-CAPTION-BOUNDS",
+      "state": "candidate-pending-new-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Independent WORKLOAD-838-SRC-002 found PDB34 inherited path/name.go25–75 beyond68-line source. Root corrects shared caption to25–68 and explicitly distinguishes name versus prefix checks. Dynamic entire affected union is102records:34Role,34RoleBinding,34PDB; all evidence-only, no identity or case changes. Initial Root audit expected34 and rejected larger102union; expanded actual delta retained. Historical838FAIL unchanged.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/pdb-path-name-caption-root-correction.json"
     }
   ],
   "checks": [
@@ -20549,6 +20563,15 @@
       "rootAudit": "/home/node/Documents/Codex/a98-evidence/hugepages-quota-root-correction-export-audit.json",
       "initialTests": "Initial five-file run30PASS1FAIL due missing go ENOENT. Repeated failed six-test file with explicit existing Go binary terminal0:6PASS0FAIL0SKIP. Thus every test passed in a recorded run; not an all-suite/content acceptance.",
       "producer": "v6 bounded join1140contexts39GVK2124paths zero missing/errors; v7 suite86PASS role425zeroUnknown, join deliberately terminated143 due4 concrete Go escape gaps. Corrected writer grammar still being audited; no final producer acceptance."
+    },
+    "pathSegmentEvidenceCorrection": {
+      "baseRevision": "46249582430c71013e67f7cc90923535228ce607",
+      "state": "candidate-not-independent-acceptance",
+      "changedRecords": 102,
+      "rootTests": "12PASS0FAIL0SKIP terminal0",
+      "fieldIdentitiesUnchanged": true,
+      "implicitContractsAndReferencesUnchanged": true,
+      "rootAudit": "/home/node/Documents/Codex/a98-evidence/pdb-path-name-caption-root-correction.json"
     }
   }
 }
