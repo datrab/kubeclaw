@@ -595,6 +595,10 @@ for(const [kind,paths] of Object.entries(expandedPaths))for(const path of paths)
   facts.invalidValue='An empty image or leading/trailing whitespace is rejected by actual Pod validation. API acceptance still does not prove registry access, pull credentials, image content or executable availability.';
   facts.evidence.push(source('pkg/apis/core/validation/validation.go','4430-4441','validateContainerOnlyForPod rejects leading/trailing image whitespace.'),source('pkg/apis/core/validation/validation.go','4499-4526','Root Pod metadata/spec validation invokes the Pod-only container validator.'));
  }
+ if(kind==='Pod'&&path==='$.spec.restartPolicy'){
+  facts.invalidValue='Normal Pod validation accepts Always, OnFailure and Never. Other nonempty values are rejected; an empty value that reaches validation without defaulting is required. The selected BuildKit preflight uses Never. API acceptance does not prove its command completed.';
+  facts.evidence.push(source('pkg/apis/core/validation/validation.go','4072-4084','Normal Pod restart-policy validation accepts Always, OnFailure and Never.'),source('pkg/apis/core/validation/validation.go','4648-4652','PodSpec validation calls the normal restart-policy validator.'));
+ }
  if(kind==='Pod'&&path==='$.spec.securityContext'){
   facts.omitted='Nil is replaced by an empty PodSecurityContext by SetDefaults_PodSpec. No user/group/fsGroup/seccomp choice is invented by that empty object.';
   facts.nullValue='Fresh null leaves the pointer nil; SetDefaults_PodSpec creates an empty PodSecurityContext.';
@@ -772,6 +776,18 @@ for(const [kind,children] of Object.entries(selectedDefaultChildren))for(const c
   qualificationLimits:facts.qualificationLimits,
   cases:[{name:'omitted-at-create',condition:'Present immediate Container or ContainerPort item.',sourceOutcome:facts.omitted},{name:'explicit-null',condition:'Fresh typed JSON null before defaulting.',sourceOutcome:facts.nullValue},{name:'explicit-empty-or-zero',condition:'Explicit empty string before defaulting.',sourceOutcome:facts.emptyValue},{name:'invalid-value-or-combination',condition:'Nonempty value reaches typed validation.',sourceOutcome:facts.invalidValue},...facts.consumerCases,{name:'update-and-recovery',condition:'Stored update or uncertain request.',sourceOutcome:kind==='Pod'?podChange:effect(kind)}]
  });
+}
+// StatefulSet validates a replacement copy and constructs matching claim volumes.
+// Source-child validators/consumers apply to the authored volume only when its
+// name is not replaced by a volumeClaimTemplate.
+for(const r of records.values())if(r.kind==='StatefulSet'&&/^\$\.spec\.template\.spec\.volumes(?:$|\[|\.)/.test(r.fieldPath)){
+ const condition='For authored volumes whose names do not match a volumeClaimTemplate name: ';
+ for(const field of ['omitted','nullValue','emptyValue','invalidValue'])r[field]=condition+r[field];
+ r.cases=r.cases.map(c=>({...c,condition:condition+c.condition}));
+ const replacement='After successful typed decoding, StatefulSet validation removes every authored volume whose name matches a volumeClaimTemplate and validates a generated PVC volume instead. Invalid source children or duplicate authored entries with that matching name do not pass through the original source validator. Other template fields and nonmatching volumes still require valid values. The controller also removes matching authored volumes and inserts the ordinal PVC reference with readOnly false; the authored source is not mounted. Typed decoding errors occur before this substitution. Immediate defaults can run before replacement but do not determine the resulting matching volume source.';
+ r.crossFieldConditions.push(replacement);
+ r.cases.push({name:'matching-claim-template-volume-replacement',condition:'Successfully decoded volume name matches a volumeClaimTemplate name; the remaining StatefulSet and template meet their requirements.',sourceOutcome:replacement});
+ r.evidence.push(av('101-114','StatefulSet validation constructs PVC volumes keyed by claim-template name.'),av('193-214','StatefulSet validation removes all authored volumes with matching names from the template copy before validation.'),source('pkg/controller/statefulset/stateful_set_utils.go','390-405','Claim templates receive ordinal claim identity.'),source('pkg/controller/statefulset/stateful_set_utils.go','411-433','Controller replaces matching authored volumes with generated PVC references and readOnly false.'));
 }
 export const receiverContracts=[...records.values()];
 export function workloadReceiverContracts(apiVersion,kind,exactBoundaries) {

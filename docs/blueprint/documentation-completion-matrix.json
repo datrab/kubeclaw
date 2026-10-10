@@ -15950,6 +15950,30 @@
         "A98-11"
       ],
       "description": "Frozen corrected Source F52 flags eight limits-key zero cases that reused request-key behavior. Shared apps receiver now distinguishes retained zero limits from existing requests: at Pod creation a missing request receives its matching zero limit; an existing request is not overwritten, and pair validation still applies. Null Quantity retains key with zero amount. Template storage is separate from Pod-create defaulting. Historical frozen FAILs remain unchanged."
+    },
+    {
+      "id": "A98-POD-RESTART-POLICY-KIND-CORRECTION",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Original frozen Source F27 found StatefulSet Always-only restriction in normal Pod restartPolicy. Current Pod invalid outcome/case now accepts Always/OnFailure/Never, rejects other nonempty values and distinguishes defaulting from validation and command success. Exact primary core validation4072–4084/4648–4652 inspected; actual preflight uses Never."
+    },
+    {
+      "id": "A98-STATEFUL-VOLUME-CLAIM-REPLACEMENT-QUALIFICATION",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Corrected frozen Source F53 identifies14 source rejection cases missing StatefulSet matching-VCT-name substitution. All45 existing StatefulSet volume records now qualify authored source outcomes/cases to nonmatching names and explicitly cover matching volume replacement after successful typed decoding. Validation removes all matching authored volumes; controller inserts ordinal PVC/readOnly false. Other template requirements and decoding errors remain enforced. Immediate defaults are distinguished from effective matching source. No new unused upstream fields or historical verdicts changed."
     }
   ],
   "checks": [
@@ -16933,6 +16957,11 @@
       "command": "KUBECLAW_DOCS_GO_BINARY=<qualified Go> node --test scripts/tests/workload-termination-defaults.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs",
       "state": "terminal-pass",
       "scope": "Session44742:12PASS0FAIL0SKIP, duration74.14s. Actual discovery included stable but uncommitted six producer-author files; this is integrated author test evidence, not immutable independent Source/Reader/Quality/Astra acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Session48604:13PASS0FAIL0SKIP. Direct current content audit verifies Pod invalid case equality plus45 existing StatefulSet volume rows with matching/nonmatching route case. Author/source integration only; no independent current acceptance."
     }
   ],
   "reviewAssignments": [
@@ -20136,6 +20165,16 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/resource-root-scope-root/limit-request-zero-correction.json",
       "next": "Observe qualified integrated producer test terminal state, commit root correction, then freeze latest Source plus six producer-author overlays.",
       "checks": "6receiverPASS;8contentrows;finalqualifiedGo integrated12PASS0FAIL0SKIP"
+    },
+    "podPolicyAndStatefulVolumeReplacement": {
+      "author": "/root",
+      "state": "candidate-not-independent-acceptance",
+      "baseRevision": "00e326f2c0854242b46bded5c6d70fadb9373a55",
+      "records": "1Podpolicy;45existingStatefulvolume",
+      "checks": "13PASS0FAIL0SKIP + directcontentaudit",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/resource-root-scope-root/pod-policy-stateful-volume-corrections.json",
+      "sources": "Authenticated original corevalidation4072–4084/4648–4652;appsvalidation101–114/193–214;Statefulstorage390–405/411–433.",
+      "next": "Freeze newestRootcommit+stableproducer6overlays;fulljoin/tests and independentcurrentreviews."
     }
   }
 }
