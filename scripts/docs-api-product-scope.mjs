@@ -356,8 +356,8 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
           }
         }
       }
-      if (boundary && actual.length) {
-        add(boundary, { reason: 'authored-resource-field', path: context.path, document: context.document, fieldPath: actualPath, sourceDigest: context.sourceDigest });
+      if (boundary) {
+        add(boundary, { reason: actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: actualPath, sourceDigest: context.sourceDigest });
         if(kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
           const receiverDefault=runtimeDefaultApplicability(kind,actualPath,{},value,records.get(boundary.fieldPath));
           const child=authority.find(row=>matches(tokens(row.fieldPath),[...actual,0]));

@@ -24,7 +24,7 @@ test('actual authenticated monitoring render fields resolve recursively, without
    walk(v,path+part,shape?.properties?.[key]??shape?.additionalProperties);
   }
  };
- for(const obj of docs.filter(x=>x.kind===kind)){const shape=schema.spec.versions.find(x=>x.name==='v1').schema.openAPIV3Schema;for(const [key,val] of Object.entries(obj))walk(val,'$.'+key,shape.properties[key]);}
+ for(const obj of docs.filter(x=>x.kind===kind)){const shape=schema.spec.versions.find(x=>x.name==='v1').schema.openAPIV3Schema;walk(obj,'$',shape);}
  assert.throws(()=>select('monitoring.coreos.com/v1',kind,['$.spec.newSelectedField']),/FIELD_GAP/);
  }
  assert.equal(get('Prometheus','$.spec.retention').selectedSchemaConstraints.type,'string');
@@ -36,6 +36,7 @@ test('exact map keys and array indices survive qualification; changed and rename
  assert.equal(select('monitoring.coreos.com/v1','Prometheus',['$.spec.resources.requests["cpu"]'])[0].authoritySelector.fieldPath,'$.spec.resources.requests["cpu"]');
  for(const path of ['$.spec.endpoints[0].renamedAuthorization','$.spec.selector.matchExpressions[0].operator'])assert.throws(()=>select('monitoring.coreos.com/v1','ServiceMonitor',[path]),/FIELD_GAP/);
  assert.throws(()=>select('monitoring.coreos.com/v1','Prometheus',[{fieldPath:'$.spec.retention',contract:{type:'integer'}}]),/SCHEMA_DRIFT/);
+ assert.throws(()=>select('monitoring.coreos.com/v1','Prometheus',[{fieldPath:'$',contract:{type:'integer'}}]),/SCHEMA_DRIFT/);
  assert.throws(()=>select('monitoring.coreos.com/v1','Prometheus',[{fieldPath:'$.spec.evaluationInterval',contract:{default:'new-default'}}]),/SCHEMA_DRIFT/);
  for(const [version,kind] of [['monitoring.coreos.com/v2','Prometheus'],['monitoring.coreos.com/v1','Unknown']])assert.throws(()=>select(version,kind,[]),/GVK_GAP/);
 });

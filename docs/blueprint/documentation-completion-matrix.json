@@ -15878,6 +15878,18 @@
         "A98-11"
       ],
       "description": "Root authored actual TokenReview and DeleteOptions request roots, each five explicit request-body cases with endpoint/type/producer evidence. DELETE absent-body query branch differs from nonempty null/body branch; empty options do not cancel deletion, and TokenReview is nonpersistent with required token and separately checked output. Remaining six missing root factories and universal actual-root publication selection stay open. Workload candidate corrects F49 PDB maxUnavailable recovery to PDB identity/status, distinguishes zero PDB spec acceptance from empty-root metadata rejection, and qualifies StatefulSet restartPolicy update as Always-only even when template validation is skipped. Frozen independent FAILs remain immutable; no current complete Source/Reader/Quality/Astra acceptance."
+    },
+    {
+      "id": "A98-ACTUAL-RESOURCE-ROOT-SELECTION-CANDIDATE",
+      "state": "implemented-pending-stable-producer-join-publication-and-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "All nine formerly missing root factories now authored: Pod in b238c9e1, TokenReview/DeleteOptions in e2010e93, and monitoring3/webhook2/ClusterSPIFFEID in this candidate. apiProductSelection now selects present authored root boundary with authored-resource-root reason. Root envelope is an actual selected object, not unused generic Kubernetes field scope. Monitoring roots bind original served required-spec/object lines and separate admission from scrape/rule/workload effects; webhook roots distinguish invalid empty envelope from valid named empty-handler configuration; ClusterSPIFFEID root distinguishes unstructured identity/schema from later registration/issuance. New root contracts require independent Source/Reader/Quality review, actual global producer join, generated publication and remaining gates. Historical bounded approvals cover only prior field records."
     }
   ],
   "checks": [
@@ -16791,6 +16803,26 @@
       "command": "GO_BINARY=/home/node/Documents/Codex/a98-evidence/argo-receiver-writer/go/bin/go node --test scripts/tests/auth-delete-receiver.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs",
       "state": "terminal-pass",
       "scope": "Session36015 observed16PASS0FAIL0SKIP. Includes original controller authentication/fenced-delete HTTP fixtures, actual BuildKit shell and registry Job selections. Earlier session19257 had15PASS1SKIP because bare go missing; superseded for this test scope only by qualified binary run. Pure root factory lookup separately returns one root and five cases for each request kind. No live Kubernetes/authentication/storage/eviction or full publication/acceptance claim."
+    },
+    {
+      "command": "Pure current productApiReceiverRecords(api,kind,[root]) audit against38registered baseline",
+      "state": "terminal-pass",
+      "scope": "Session83079 observed38exact-root factories,0missing/duplicate. Private resource-root-scope-root/current-root-factory-audit.json. This static registered list is not an upper bound on actual or dynamically discovered product APIs; no semantic/publication acceptance inferred."
+    },
+    {
+      "command": "node --test scripts/tests/api-product-runtime-defaults.test.mjs scripts/tests/prometheus-selected-receiver.test.mjs scripts/tests/clusterspiffeid-selected-receiver.test.mjs scripts/tests/webhook-selected-receiver.test.mjs",
+      "state": "terminal-pass-with-explicit-skip",
+      "scope": "Session11106 terminal22PASS0FAIL1SKIP. Includes actual authenticated monitoring Helm render now walking root, root schema type drift rejection, archive/schema checks and resource-root applicability fixture. Skipped webhook authentic-context comparison because WEBHOOK_SELECTED_EVIDENCE absent; not claimed as complete coverage."
+    },
+    {
+      "command": "GO_BINARY qualified7-file receiver/default test group",
+      "state": "terminal-fail",
+      "scope": "Session93485 observed38PASS1FAIL1SKIP. Actual BuildKit shell selection blocked by concurrent producer candidate API_PRODUCT_SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED scripts/activate-native-worker-ax41.sh:115. Producer author notified to qualify original sink/consumer; pending stable candidate rerun. No failure waived."
+    },
+    {
+      "command": "Deep equality of preexisting field records against e2010e93 modules",
+      "state": "terminal-pass",
+      "scope": "All46webhook+18ClusterSPIFFEID+185monitoring prior records byte-structurally equal after root additions; 6root records added. This limits accidental existing-record drift, not independent semantic acceptance."
     }
   ],
   "reviewAssignments": [
@@ -19956,6 +19988,18 @@
       "publicationSelection": "not-yet-activated",
       "checks": "16PASS0FAIL0SKIP session36015",
       "sourceInspection": "Primary files hash-matched archived provenance: TokenReview49–130, DELETE61–203, JSON identity46–63/116–215, apps validation200–260, policy validation47–86, disruption status1001–1036."
+    },
+    "actualResourceRootSelection": {
+      "author": "/root",
+      "state": "candidate-not-independent-acceptance",
+      "newRootFactories": 6,
+      "remainingKnownMissingRootFactories": 0,
+      "registeredBaselineLookup": "38PASS0gap",
+      "selection": "Present authored root is selected with explicit reason; unused optional upstream alternatives stay outside scope.",
+      "priorFieldRecordsUnchanged": 249,
+      "focusChecks": "22PASS0FAIL1SKIP",
+      "broadCheck": "38PASS1FAIL1SKIP; author raw-shell sink qualification open",
+      "next": "Observe producer author stable release, rerun complete actual discovery/root joins, generate revision-bound canonical output, then fresh independent Source/Reader/Quality."
     }
   }
 }

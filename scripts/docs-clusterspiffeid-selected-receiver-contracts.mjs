@@ -11,7 +11,7 @@ const schemaEvidence = {url: "https://github.com/spiffe/helm-charts-hardened/blo
 const statusEvidence = {url: "https://github.com/spiffe/helm-charts-hardened/blob/029f1985233ee3e47d2b579c355f95f4db6e115a/charts/spire-crds/templates/spire.spiffe.io_clusterspiffeids.yaml#L253-L260",claim:"The resource schema requires metadata/spec; this served storage version declares the status subresource."};
 const server = [k('staging/src/k8s.io/apiextensions-apiserver/pkg/apiserver/customresource_handler.go',1406,1470,'CRD schema coercion preserves root identity and standard ObjectMeta while pruning unknown fields and nonnullable nulls.'),k('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresource/strategy.go',144,176,'PrepareForCreate removes submitted status; PrepareForUpdate restores old status or removes newly submitted status when the status subresource is enabled.'),k('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresource/status_strategy.go',65,92,'The status strategy preserves the previous object outside submitted status.')];
 const paths = [
- '$.apiVersion','$.kind','$.metadata','$.spec','$.spec.className','$.spec.fallback','$.spec.hint',
+ '$','$.apiVersion','$.kind','$.metadata','$.spec','$.spec.className','$.spec.fallback','$.spec.hint',
  '$.spec.namespaceSelector','$.spec.namespaceSelector.matchExpressions','$.spec.namespaceSelector.matchExpressions[]','$.spec.namespaceSelector.matchExpressions[].key','$.spec.namespaceSelector.matchExpressions[].operator','$.spec.namespaceSelector.matchExpressions[].values','$.spec.namespaceSelector.matchExpressions[].values[]',
  '$.spec.podSelector','$.spec.podSelector.matchLabels','$.spec.podSelector.matchLabels["*"]','$.spec.spiffeIDTemplate'
 ];
@@ -36,6 +36,18 @@ function canonical(path) {
  return normalized;
 }
 function make(fieldPath) {
+ if(fieldPath==='$') {
+  const body=make('$.spec');
+  const omitted='An absent request object cannot create this registration policy. Omitting an unused child within a present policy is a separate case.';
+  const nullValue='A null body cannot supply the actual kind required by unstructured decoding. It does not delete an existing policy or registration and is not a merge-patch rule.';
+  const emptyValue='{} has no required body kind. Supplying identity alone still does not supply valid metadata and the required spec with a nonempty spiffeIDTemplate. A shape-valid policy still requires parsing, selection and successful registration.';
+  const invalidValue='Malformed JSON, missing or mismatched kind/apiVersion, invalid metadata or a spec that fails CRD constraints can reject the request. A template or selector that later fails parsing/rendering is a separate controller failure.';
+  return {...body,fieldPath,authoritySelector:{apiVersion:api,kind:kindName,fieldPath},purpose:'Submit the selected cluster-scoped desired workload identity registration policy.',omitted,nullValue,emptyValue,invalidValue,
+   changeImpact:'Changing the admitted desired policy can add, update or delete SPIRE registrations during later reconciliation. It does not itself revoke already issued SVIDs or prove successful attestation or a consumer connection. After an uncertain write, read the policy UID/resourceVersion, effective spec, controller eligibility, status and real registrations before retrying. Correct the owning chart values or controller/API failure and verify the resulting registration separately.',
+   cases:[{name:'absent-request',condition:'The custom-resource request body is absent.',sourceOutcome:omitted},{name:'null-root',condition:'Unstructured request decoding receives JSON null.',sourceOutcome:nullValue},{name:'empty-root',condition:'The body is {} or contains identity without required policy content.',sourceOutcome:emptyValue},{name:'invalid-root-versus-controller-failure',condition:'The envelope/spec fails admission or the admitted policy fails later parsing/rendering.',sourceOutcome:invalidValue},...body.cases],
+   evidence:[...body.evidence,k('staging/src/k8s.io/apimachinery/pkg/runtime/serializer/json/json.go',164,190,'Unstructured decoding reads actual body identity and rejects missing kind.'),k('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresource/validator.go',46,74,'Custom-resource creation validates standard ObjectMeta separately from its schema.'),k('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresource/validator.go',115,133,'Custom-resource TypeMeta must match the served kind and group/version.')],
+   qualificationLimits:[...body.qualificationLimits,'Root envelope selection does not expand unused foreign schema alternatives; identity, metadata and selected spec fields retain their own canonical contracts.']};
+ }
  const p=canonical(fieldPath); let clause=clauses[p]; const evidence=[schemaEvidence,statusEvidence,...server,parse,reconcile,registration];
  let nullValue='The foreign schema does not declare nullable here. Structural null pruning and required checks determine admission; null does not supply an explicit empty typed value.';
  let invalidValue='Incompatible types or CRD constraints can reject admission. Later parsing/rendering/API errors remain distinct from schema validity.';

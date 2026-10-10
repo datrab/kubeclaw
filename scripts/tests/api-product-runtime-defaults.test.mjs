@@ -25,6 +25,9 @@ test('omission evidence follows each actual container and preserves explicit sib
       {name:'implicit',image:'example.invalid/app:latest'},
     ]}}}});
   const pull = omissions(selected, '$.spec.template.spec.containers[].imagePullPolicy');
+  assert.ok(selected.fieldPaths.includes('$'), 'the submitted resource envelope must have reader coverage');
+  assert.deepEqual(selected.applicability['$'].map(row=>({fieldPath:row.fieldPath,reason:row.reason})),
+    [{fieldPath:'$',reason:'authored-resource-root'}]);
   assert.deepEqual(pull.map(row => row.fieldPath), ['$.spec.template.spec.containers[1].imagePullPolicy']);
   assert.match(pull[0].omission, /parsed image tag is latest/);
   for (const field of ['terminationMessagePath','terminationMessagePolicy']) {

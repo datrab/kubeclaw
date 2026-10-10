@@ -8,8 +8,8 @@ import { receiverContracts, clusterSPIFFEIDSelectedReceiverContracts as contract
 const api='spire.spiffe.io/v1alpha1',kind='ClusterSPIFFEID';
 const selected=[ '$.apiVersion','$.kind','$.metadata','$.spec','$.spec.className','$.spec.fallback','$.spec.hint','$.spec.namespaceSelector','$.spec.namespaceSelector.matchExpressions','$.spec.namespaceSelector.matchExpressions[]','$.spec.namespaceSelector.matchExpressions[].key','$.spec.namespaceSelector.matchExpressions[].operator','$.spec.namespaceSelector.matchExpressions[].values','$.spec.namespaceSelector.matchExpressions[].values[]','$.spec.podSelector','$.spec.podSelector.matchLabels','$.spec.podSelector.matchLabels["*"]','$.spec.spiffeIDTemplate'];
 const find=p=>receiverContracts.find(x=>x.fieldPath===p);
-test('actual selected 18-field union has explicit complete receiver records',()=>{
- assert.deepEqual(receiverContracts.map(x=>x.fieldPath),selected);
+test('actual resource root and selected 18-field union have explicit complete receiver records',()=>{
+ assert.deepEqual(receiverContracts.map(x=>x.fieldPath),['$',...selected]);
  for(const r of receiverContracts){assert.deepEqual(r.authoritySelector,{apiVersion:api,kind,fieldPath:r.fieldPath});for(const key of ['purpose','receiver','operationScope','omitted','nullValue','emptyValue','invalidValue','changeImpact'])assert.ok(r[key]?.length>20,key);assert.ok(r.evidence.length>=7);assert.ok(r.cases.length);assert.ok(r.qualificationLimits.some(x=>x.includes('no live')));}
 });
 test('exact selected indices and label keys survive; an additional selected field fails closed',()=>{

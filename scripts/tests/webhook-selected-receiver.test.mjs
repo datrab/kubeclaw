@@ -8,7 +8,7 @@ const kinds=['MutatingWebhookConfiguration','ValidatingWebhookConfiguration'];
 const expected=['$.webhooks','$.webhooks[]',...['admissionReviewVersions','admissionReviewVersions[]','clientConfig','clientConfig.service','clientConfig.service.name','clientConfig.service.namespace','clientConfig.service.path','failurePolicy','name','rules','rules[]','rules[].apiGroups','rules[].apiGroups[]','rules[].apiVersions','rules[].apiVersions[]','rules[].operations','rules[].operations[]','rules[].resources','rules[].resources[]','sideEffects','timeoutSeconds'].map(p=>`$.webhooks[].${p}`)];
 const find=(kind,p)=>receiverContracts.find(r=>r.kind===kind&&r.fieldPath===p);
 test('selected body union owns exact kind/version/path identity and complete branch records',()=>{
- for(const kind of kinds){assert.deepEqual(contracts(api,kind).map(r=>r.fieldPath),expected);for(const r of contracts(api,kind)){
+ for(const kind of kinds){assert.deepEqual(contracts(api,kind).map(r=>r.fieldPath),['$',...expected]);for(const r of contracts(api,kind)){
  assert.deepEqual(r.authoritySelector,{apiVersion:api,kind,fieldPath:r.fieldPath});
  for(const key of ['purpose','receiver','operationScope','omitted','nullValue','emptyValue','invalidValue','changeImpact'])assert.ok(r[key]?.length>20,key);
  assert.ok(r.evidence.length>=12);assert.ok(r.qualificationLimits.some(s=>s.includes('no live')));
@@ -60,8 +60,8 @@ test('independent authentic discovered context union agrees with body contract s
 });
 
 test('selected upstream schema types and required constraints cannot silently drift',()=>{
- for(const kind of kinds)for(const path of expected){const a=apiFieldSchemaAuthority(api,kind,path);
- const type=path.endsWith('[]')?(path.endsWith('webhooks[]')||path.endsWith('rules[]')?'object':'string'):/\.(?:webhooks|rules|admissionReviewVersions|apiGroups|apiVersions|operations|resources)$/.test(path)?'array':/\.(?:clientConfig|service)$/.test(path)?'object':path.endsWith('timeoutSeconds')?'integer':'string';
+ for(const kind of kinds)for(const path of ['$',...expected]){const a=apiFieldSchemaAuthority(api,kind,path);
+ const type=path==='$'?'object':path.endsWith('[]')?(path.endsWith('webhooks[]')||path.endsWith('rules[]')?'object':'string'):/\.(?:webhooks|rules|admissionReviewVersions|apiGroups|apiVersions|operations|resources)$/.test(path)?'array':/\.(?:clientConfig|service)$/.test(path)?'object':path.endsWith('timeoutSeconds')?'integer':'string';
  assert.equal(a.type,type,`${kind} ${path}`);assert.equal(a.authoritySha256,'483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446');
  if(path.endsWith('.sideEffects')||path.endsWith('.admissionReviewVersions')||path.endsWith('.clientConfig')||path.endsWith('.name'))assert.equal(a.requiredBySchema,true,path);
  if(path.endsWith('.timeoutSeconds'))assert.equal(a.format,'int32');
