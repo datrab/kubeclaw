@@ -15525,6 +15525,20 @@
       "description": "15 status contracts now111 Source cases. Actual default JSON builder/request, status client/server handler, manager identity and typed merge/prune routes qualified.26 original primary files verified by Git blob and SHA256;38 exact evidence bounds captured. Full server installation, wrappers, schema granularity and reset filtering remain explicit documentation gaps. No independent acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/admission-status-root/report.md",
       "evidenceSha256": "a6c533b4708ed4ac40c69a984ab3c7ad295354682ddff67de0b81a8cb2f580ea"
+    },
+    {
+      "id": "A98-STATUS-SERVER-WRAPPERS-RESET-SCHEMA",
+      "state": "partially-qualified-pending-source-provider-and-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Original status store/installer reset filter chain, all selected Apply wrappers and generic OpenAPI type/list conversion qualified;41 primary Gitblob verified files. Exact Kubernetes generated OpenAPI model-provider configuration still open. No field-removal or independent final acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/admission-status-root/report.md",
+      "evidenceSha256": "ea4ccf4e55dd22fb13f58181552f6bd721535a8a4978505161efe42be6bc9db0"
     }
   ],
   "checks": [

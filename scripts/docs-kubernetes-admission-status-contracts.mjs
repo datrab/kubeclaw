@@ -11,6 +11,25 @@ const metaTypes = (start, end, claim) => source('staging/src/k8s.io/apimachinery
 const controller = (start, end, claim) => source('pkg/controller/validatingadmissionpolicystatus/controller.go', start, end, claim);
 const checker = (start, end, claim) => source('staging/src/k8s.io/apiserver/pkg/admission/plugin/policy/validating/typechecking.go', start, end, claim);
 const applyEvidence = [
+  source('staging/src/k8s.io/apiserver/pkg/server/genericapiserver.go',1034,1064,'The generic server builds resource OpenAPI models and creates a type converter without preserving unknown fields; configuration and construction errors are returned.'),
+  source('staging/src/k8s.io/apiserver/pkg/server/genericapiserver.go',791,804,'Resource installation assigns the supplied converter to the API group version before installing REST endpoints.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/typeconverter.go',45,71,'The converter constructs a typed parser from OpenAPI models, selects by group/version/kind and decodes structured or unstructured objects.'),
+  source('vendor/k8s.io/kube-openapi/pkg/schemaconv/openapi.go',225,258,'List conversion uses declared relationship and map keys to construct the structured merge list schema.'),
+  source('vendor/k8s.io/kube-openapi/pkg/schemaconv/smd.go',269,288,'Atomic list extensions become atomic merge lists; map lists become associative lists with their declared keys.'),
+  source('pkg/registry/admissionregistration/validatingadmissionpolicy/storage/storage.go',75,80,'The status store selects the status update and reset-field strategies.'),
+  source('pkg/registry/admissionregistration/validatingadmissionpolicy/storage/storage.go',107,119,'The status REST endpoint delegates reset-field discovery and updates to its store.'),
+  strategy(173,188,'The v1 status reset set excludes spec and metadata from field ownership.'),
+  source('staging/src/k8s.io/apiserver/pkg/endpoints/installer.go',702,725,'Endpoint installation turns reset fields into exclude filters and installs the default manager with the group converters, version and subresource.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/fieldmanager.go',34,43,'The public factory creates the structured merge manager with reset filters and wraps it in the default manager chain.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/structuredmerge.go',43,59,'The structured merge updater receives reset filters as its IgnoreFilter.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/versioncheck.go',46,51,'The outer manager rejects an apply object with a different full group/version/kind.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/lastappliedmanager.go',59,65,'Client-side apply migration only continues for the kubectl manager after delegation; other names return its result.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/lastappliedupdater.go',47,68,'The last-applied annotation is synchronized only for the kubectl manager when that annotation exists.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/skipnonapplied.go',75,92,'An empty managed set is initialized by an update under before-first-apply before the named apply is delegated.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/capmanagers.go',58,61,'The manager cap wrapper delegates Apply directly; its update-manager cap is not run here.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/managedfieldsupdater.go',69,81,'A changed apply sets the manager timestamp. An unchanged apply uses a deep copy of the live object and removes its old encoded managed fields before later encoding.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/stripmeta.go',35,53,'The metadata wrapper defines API identity and server metadata paths that are excluded from ownership.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/stripmeta.go',66,88,'After apply, the metadata wrapper removes its excluded paths from this manager set and deletes an empty set.'),
   source('staging/src/k8s.io/client-go/applyconfigurations/admissionregistration/v1/typechecking.go',26,47,'The warning slice has JSON omitempty; the builder starts empty and appends only supplied warning entries.'),
   source('staging/src/k8s.io/client-go/applyconfigurations/admissionregistration/v1/validatingadmissionpolicystatus.go',29,58,'The status apply builder uses pointers for observed generation and typeChecking; conditions are an omitempty slice.'),
   source('staging/src/k8s.io/client-go/util/apply/apply.go',34,49,'The default apply request uses JSON serialization and the YAML apply patch media type. Both named CBOR client gates select CBOR instead; marshal errors are returned.'),
@@ -27,6 +46,8 @@ const applyEvidence = [
   source('vendor/sigs.k8s.io/structured-merge-diff/v6/merge/update.go',131,157,'Conflicts intersect another manager set with modified or added fields. Without force they fail; with force conflicting ownership is removed from the other manager.'),
 ];
 const applyConditions = [
+  'The status endpoint excludes spec and metadata from the apply ownership set. Its update strategy also restores the old spec and status lifecycle metadata. This status write is not a route to change policy settings.',
+  'The controller manager name is validatingadmissionpolicy-status, so the kubectl-only client-side apply migration and last-applied annotation update do not run for it. If stored managed fields are empty, the wrapper first records the existing fields under before-first-apply. It can return an initialization error before apply.',
   'Server-side apply merges a declared configuration with the stored object and tracks a set of owned fields. The manager identifier includes name, Apply operation, API version and status subresource; the name alone does not identify the full set.',
   'In the default JSON request route, an empty computed warning result leaves expressionWarnings nil in the apply builder. The omitempty tag omits that field; the request does not send expressionWarnings: []. The controller also omits conditions.',
   'At the typed merge boundary, an omitted field or item previously owned by this manager is a pruning candidate. Another current owner can retain it. A first apply without a previous owned set does not prune omitted stored items. Schema granularity, ignored fields, conversion and restored dangling items affect the result.',
@@ -84,7 +105,7 @@ function add(path, shape, purpose, omitted, emptyValue, invalidValue, evidence, 
     qualificationLimits:[
       'These are pinned-source expectations. No API request, CEL evaluation, controller process, informer synchronization or live status update was executed.',
       'Actual controller selection, discovery schemas, permissions and server apply ownership determine whether a status write succeeds. On controller errors inspect its logs and access before changing the policy; retries do not prove recovery.',
-      'Available-source documentation gap: the client builder, default JSON request, manager identity and typed merge pruning routes are qualified above. The complete server installation, manager wrappers, schema field granularity and reset-field filtering for this status producer still require qualification before its exact field-removal outcomes can be accepted.',
+      'Available-source documentation gap: the client, endpoint, manager wrappers, generic type-converter construction and list-schema conversion routes are qualified above. The Kubernetes server configuration that supplies these generated OpenAPI definitions still requires an exact source link before the full route and field-removal outcomes can be accepted.',
     ],
   };
   records.push(record);
@@ -140,7 +161,7 @@ add('$.status.typeChecking.expressionWarnings','list','Lists diagnostics produce
   'The fresh slice is nil and contains no warning entries. The warning validator accepts it.',
   '[] is accepted. A retained {} item fails its required fieldRef and warning checks.',
   'Wrong JSON collection types or invalid present warning entries are rejected.',warningEvidence,{
-    conditions:['The producer calls WithExpressionWarnings for its computed entries. Do not infer from an empty computed result that the serialized apply request includes an explicit empty list, or that values owned by another writer disappear.'],
+    conditions:['The producer calls WithExpressionWarnings for its computed entries. Do not infer from an empty computed result that the serialized apply request includes an explicit empty list, or that values owned by another writer disappear.','The generated v1 OpenAPI model declares this warning list atomic. It does not declare separate ownership keys for individual warning entries.'],
   });
 add('$.status.typeChecking.expressionWarnings[]','struct','Associates one diagnostic message with an expression field.',
   'Removing the item removes one supplied diagnostic. A retained zero item has empty strings and fails both required-field checks.',
@@ -157,4 +178,13 @@ add('$.status.typeChecking.expressionWarnings[].warning','string','Provides the 
   'The fresh empty string is rejected as required.',
   'An empty string is rejected; whitespace-only text is nonempty and is not trimmed by this validator.',
   'Wrong JSON types fail decoding. The shown warning validator imposes no warning-text length bound beyond requiring nonempty text.',warningEvidence);
+for(const record of records) {
+  if(record.fieldPath.startsWith('$.status.typeChecking.expressionWarnings')) {
+    record.evidence.push(source('pkg/generated/openapi/zz_generated.openapi.go',2372,2384,'The generated v1 TypeChecking model declares expressionWarnings with list type atomic.'));
+  }
+  if(record.fieldPath.startsWith('$.status.conditions')) {
+    record.crossFieldConditions.push('The generated v1 OpenAPI model declares conditions as a map list keyed by type. This schema distinguishes entries by condition type; it is not the atomic warning-list schema.');
+    record.evidence.push(source('pkg/generated/openapi/zz_generated.openapi.go',2797,2806,'The generated v1 status model declares conditions as a map list keyed by type.'));
+  }
+}
 export const receiverContracts=Object.freeze(records.map(record=>Object.freeze(record)));
