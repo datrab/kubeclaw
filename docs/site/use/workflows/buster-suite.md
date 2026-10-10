@@ -404,6 +404,12 @@ It also rejects skipped providers, a source mismatch, an architecture approval
 path, missing demo stages, or a plan that merely contains the provider names
 without the required links.
 
+The Kubernetes fixture output is named `demo-credentials`. The demo
+authentication input is named `credentials`. Use these different port names
+when checking the link; the shared schema ID does not replace either name.
+[The fixture emits the named output](https://github.com/datrab/kubeclaw/blob/d271cf712e1f882c0c64e0c6d9e8a5cd36f18508/skills/buster/plugins/kubernetes-fixture/src/provider.js#L123-L126),
+and [the authentication package declares its input](https://github.com/datrab/kubeclaw/blob/d271cf712e1f882c0c64e0c6d9e8a5cd36f18508/skills/buster/plugins/demo-auth-smoke/plugin.json#L22-L28).
+
 ```bash
 node --input-type=module - "$PROJECT_FILE" "$COMPILED_PIPELINE" \
   "$EVIDENCE_DIR/compile.json" "$EVIDENCE_DIR/expected-provider-chain.json" <<'NODE'
@@ -456,7 +462,7 @@ if (!linked(build, 'image', deployment, 'image', 'value', 'kubeclaw.container-im
     && link.kind === 'artifact' && link.mediaType === 'application/vnd.kubeclaw.checked-kubernetes-yaml')
   || !linked(deployment, 'deployment', exposure, 'deployment', 'value', 'kubeclaw.kubernetes-deployment-fixture@1')
   || !linked(deployment, 'deployment', auth, 'deployment', 'value', 'kubeclaw.kubernetes-deployment-fixture@1')
-  || !linked(deployment, 'credentials', auth, 'credentials', 'value', 'kubeclaw.generated-demo-credentials@1')
+  || !linked(deployment, 'demo-credentials', auth, 'credentials', 'value', 'kubeclaw.generated-demo-credentials@1')
   || !linked(exposure, 'exposure', auth, 'exposure', 'value', 'kubeclaw.public-endpoint-fixture@1')) {
   throw new Error('BuildKit, Kubernetes, Tailscale, and demo links are incomplete');
 }

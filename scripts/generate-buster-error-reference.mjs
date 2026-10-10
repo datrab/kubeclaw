@@ -7,7 +7,10 @@ import ts from 'typescript';
 
 const root = path.resolve(import.meta.dirname, '..');
 const target = path.join(root, 'docs/site/reference/buster-error-codes.md');
-const revision = '3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f';
+const revisionArg = process.argv.find(argument => argument.startsWith('--revision='));
+const revision = revisionArg?.slice('--revision='.length)
+  ?? (fs.existsSync(target) ? fs.readFileSync(target, 'utf8').match(/^Evidence revision: `([a-f0-9]{40})`$/mu)?.[1] : undefined);
+assert(/^[a-f0-9]{40}$/u.test(revision ?? ''), 'supply --revision=<full source commit> or a reference with a valid evidence revision');
 const codePattern = /^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+(?:$|:)/u;
 
 function walk(directory) {
@@ -727,6 +730,12 @@ function naturalCause(code) {
   return `${lead} detected an invalid state while processing ${object}.`;
 }
 function diagnosis(code) {
+  if (code === 'KUBERNETES_FIXTURE_RBAC_DENIED') return [
+    'The fixture caller did not receive yes from kubectl auth can-i for the verb named after the code.',
+    'Preparation stops before server dry-run and lease apply.',
+    'Check the configured client context and identity, lease API group, controller namespace, and create/get/delete permission on busternamespaceleases.<group>. This client authorization check is separate from controller subject and namespace allowlists.',
+    'Repeat preflight only after the intended identity and reviewed Kubernetes permissions are correct. Do not broaden the controller allowlist to repair client authorization.',
+  ];
   const cause = naturalCause(code);
   const { object, suffix } = errorParts(code);
   if (/_CANCELLED$/u.test(code)) return [cause, 'The operation stopped before complete evidence existed.', 'Confirm who requested cancellation. Check retained resources and partial evidence.', 'Start a new attempt only after cleanup or an intentional retention decision.'];
@@ -874,7 +883,7 @@ const lines = [
   'Source inventory: production files under `skills/buster/engine` and `skills/buster/plugins/*/src`',
   `Evidence revision: \`${revision}\``,
   'Applies to: stable uppercase error codes constructed by the shipped Buster engine, providers, and execution adapters',
-  'Last verified: generated from the complete production source inventory on 2026-09-20', '',
+  `Last verified: generated from the complete production source inventory at ${revision}`, '',
   '## How To Use This Reference', '',
   'Find the stable code at the start of the error message. Text after the first',
   'colon is diagnostic detail and is not part of the code. The table separates the',

@@ -18934,6 +18934,20 @@
       ],
       "checks": "Root3focused testsPASS including original production Go HTTP branches with test doubles, no skips, Go1.26.3; module/test seals and all original provenance verified. No live Kubernetes acceptance.",
       "integrationRequirement": "Route-specific API identity; no stored-resource ObjectMeta inference; Namespace UID default distinguished from generic deletion preconditions. Fresh Source/Reader/Quality and full discovery/generation/gates remain."
+    },
+    "ownedBusterLeaseCorrectedFreshSourceReview": {
+      "revision": "7d0ad00b82839b977d232e3463240dd21a4d96ef",
+      "reviewer": "/root/buster_complete_source_corrected_fresh",
+      "freshContext": true,
+      "verdict": "FAIL; two proved content defects plus incomplete full150field evidence",
+      "reportSha256": "34ed06346edbe604f7ff3d93b4ac0b6f2ae1a84cbca4a1370c3373774aca42ff",
+      "rootVerification": "Fullreportread and SHA256SUMS exit0; historicalFAILpreserved.",
+      "findings": [
+        "Deployment success validator used fixture output credentials instead of declared demo-credentials",
+        "Generated RBAC-denial diagnosis confuses client Kubernetes authorization with controller allowlist",
+        "Full150field Source acceptance and per-field evidence incomplete; no structuralPASSsubstitution"
+      ],
+      "correctionCandidate": "Root workflow named-port fix and generator diagnostic override. Actual published validator executed with synthetic actual-port plan PASS and wrong-output negative rejected. Not resolved compilation/live execution. Fresh full Source/Reader/Quality still required."
     }
   }
 }
