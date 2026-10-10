@@ -18360,6 +18360,19 @@
       "scope": "F09 exact counter range repaired; F10 queue concurrency/delayed-work consequences; F11 selection input/order/no-rule boundaries. New cases only four producer boundaries.",
       "checks": "Final syntax and17focusedtests PASS; earlier metadatafixture failures retained. No live or independent semantic acceptance.",
       "remaining": "F05 integrated inventory/source-lock/publication remains required and open."
+    },
+    "applicationSetMetadataAuthorCandidate": {
+      "author": "/root",
+      "state": "source-qualified-author-candidate-independent-review-open",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/metadata-applicationset-root",
+      "recordsPreserved": 382,
+      "originalCasesPreserved": true,
+      "addedCases": 4,
+      "verifiedArtifacts": 6,
+      "exactCaptionPairs": 14,
+      "scope": "ApplicationSet generated Application metadata preservation/replacement, ignored differences and write errors, event filtering, finalizer prefixes and invalid-destination removal, controller-name child lookup and complete owner-list clearing.",
+      "checks": "17 focused tests PASS; syntax and original record/case preservation PASS; fresh primary Gitblob/SHA256 checks. Complete Argo/Cilium consumer discovery remains open; publication guard retained.",
+      "accepted": false
     }
   },
   "productBoundaries": [
