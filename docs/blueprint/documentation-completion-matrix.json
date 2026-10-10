@@ -16609,6 +16609,11 @@
       "command": "node --test scripts/tests/clusterspiffeid-selected-receiver.test.mjs scripts/tests/prometheus-selected-receiver.test.mjs",
       "state": "terminal-pass",
       "scope": "9 local unit/contract/render tests, zero skipped; not independent/global/live acceptance"
+    },
+    {
+      "command": "WEBHOOK_SELECTED_EVIDENCE=/home/node/Documents/Codex/a98-evidence/product-output-default-discovery-correction-writer node --test scripts/tests/webhook-selected-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "7 local tests, zero skipped, current authentic selected paths and schema authority; not independent semantic/live/global acceptance"
     }
   ],
   "reviewAssignments": [
@@ -19184,6 +19189,19 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/webhook-root-metadata-writer",
       "checks": "7 focused tests PASS, no skipped. Actual selected root join PASS. Both immutable original strategies/storage/name validators inspected; source spans bounded against retained originals. Prior exports preserved except three explicit new Pod/ServiceAccount/Secret resourceVersion invalid-case clarifications.",
       "scope": "Cluster-scoped DNS-subdomain identity; create generation1 and Webhooks-difference update increment; mandatory nonzero current replacement resourceVersion; no status or create-on-update; registration is not admission endpoint success."
+    },
+    "selectedWebhookBodies": {
+      "author": "/root/webhook_selected_receiver_writer",
+      "state": "released-author-candidate-pending-independent-review-and-source-bound-publication",
+      "records": 46,
+      "selectedBodyPathsPerKind": 23,
+      "actualContexts": 5,
+      "rootSelectedPathsPerKind": 7,
+      "report": "/home/node/Documents/Codex/a98-evidence/webhook-selected-receiver-writer/report.json",
+      "reportSha256": "eb5e1f56bd321ba434a04dfb04027df114df5910fcc18bc6e28ad6e55748a5eb",
+      "rootVerifiedSealEntries": 24,
+      "rootTests": "WEBHOOK_SELECTED_EVIDENCE enabled:7PASS,0SKIP. Unknown/new/renamed fields, authority identity and schema drift regressions checked. Routine test without private evidence skips the private contextual join; required proof used explicit environment.",
+      "qualification": "No independent Source/Reader/Quality, endpoint/TLS/live or whole-package acceptance."
     }
   }
 }
