@@ -17395,6 +17395,12 @@
       "state": "terminal-pass-integrity-only",
       "scope": "All6135 sealed artifacts and report/primary/evidence manifests match; seal d3ec362357c029024a351a2c239c31a86f1c42a034d74c8b93c09090ee18dd08. HistoricalFAIL remains immutable; no current acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/workload-838-final-sealed-root-integrity.json"
+    },
+    {
+      "command": "Root supplemental5 sealed artifact verification",
+      "state": "terminal-pass-integrity-only",
+      "scope": "All116artifacts match manifest d67fed80825b356af51b9530190bbd5b1fb3ff681614a79e580039ee38036005. Originald8 verdict preserved; no corrected approval.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-supplemental5-root-integrity.json"
     }
   ],
   "reviewAssignments": [
@@ -18731,7 +18737,7 @@
     {
       "agent": "/root/actual_selection_70_complete_source_fresh",
       "role": "Source",
-      "state": "original70-sealed-supplemental5-running",
+      "state": "sealed-original70-and-complete-supplemental5",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
@@ -18739,7 +18745,9 @@
       "scope": "All62StatefulSet and8DaemonSet literal actual-selection assertions. Independent actual output/profile provenance, selection dependency equivalence, field normalization and wording semantics. No producer-family or global acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-complete-source-fresh",
       "supplementalScope": "After complete70: complete4 Job/CronJob resources parent records plus PDB maxUnavailable. Original immutable d8 review only; Root corrected wording must receive new fresh reviewer.",
-      "boundedOriginal70Verdict": "Independent union membership70PASS; literal wording62FAIL8PASS at d8. Corrected content unaccepted."
+      "boundedOriginal70Verdict": "Independent union membership70PASS; literal wording62FAIL8PASS at d8. Corrected content unaccepted.",
+      "supplementalVerdict": "At immutable d8: full4Job/CronJob resources parentsPASS; PDBFAILonlyoriginalwording,25cases183captionoccurrences30crossfield componentsPASS. No correctedcandidate acceptance.",
+      "supplementalEvidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-complete-source-fresh/supplemental5/report.md"
     },
     {
       "agent": "/root/stateful_selection_c1c295_complete63_source_fresh",
@@ -18751,6 +18759,17 @@
       "revision": "c1c295b4aceb5199df608440355f70d7fa750477",
       "scope": "All63 corrected records62Stateful+PDBmaxUnavailable,424cases1782captionoccurrences, retained typed/source dimensions and actual selection/default provenance. No checklist-only or global acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-selection-c1c295-new-fresh-source-task.md"
+    },
+    {
+      "agent": "/root/a98_current_reader_complete_fresh",
+      "role": "Reader",
+      "state": "running-complete-ap09-8-current-reader-scope",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "6ff3c26d6c47d9c803ce53f3a686b4217e7ff520",
+      "scope": "Derive all30 current catalogue requirements and A98-01–14 Reader applicability; complete canonical task/navigation/examples/configuration/operator/extension procedures, safe actual offline exercises. Known stale outputs are findings, not future acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/a98-current-reader-complete-fresh"
     }
   ],
   "continuation": {
@@ -18771,8 +18790,8 @@
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
       "/root/producer_c770_eight_findings_correction_writer",
-      "/root/actual_selection_70_complete_source_fresh",
-      "/root/stateful_selection_c1c295_complete63_source_fresh"
+      "/root/stateful_selection_c1c295_complete63_source_fresh",
+      "/root/a98_current_reader_complete_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
