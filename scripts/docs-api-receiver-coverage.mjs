@@ -9,12 +9,17 @@ const canonical = (value) => yamlFieldPath(
 
 // This join checks completeness, not technical correctness or independent
 // acceptance. Keep both the schema and the authored receiver contract intact.
-// Every schema path participates, including metadata, status and unused fields.
-export function apiReceiverCoverage(apiVersion, kind, receiverContracts) {
+// Without a product selection this remains the exhaustive mechanical join.
+// Production inventory supplies source-derived applicability.
+export function apiReceiverCoverage(apiVersion, kind, receiverContracts, selection = null) {
   assert(Array.isArray(receiverContracts), 'API_RECEIVER_REGISTRY_INVALID: expected an array');
+  const boundaries = apiResourceFieldBoundaries(apiVersion, kind);
+  const applicable = selection ? new Set(selection.fieldPaths) : null;
+  if (applicable) for (const fieldPath of applicable) assert(boundaries.some(row => row.fieldPath === fieldPath), `API_PRODUCT_PATH_OUTSIDE_AUTHORITY: ${fieldPath}`);
   const selected = new Map();
   for (const record of receiverContracts.filter((entry) => entry.kind === kind)) {
     const fieldPath = canonical(record.fieldPath);
+    if (applicable && !applicable.has(fieldPath) && boundaries.some(row => row.fieldPath === fieldPath)) continue;
     assert(!selected.has(fieldPath), `API_RECEIVER_CONTRACT_DUPLICATE: ${apiVersion}/${kind} ${fieldPath}`);
     for (const name of ['purpose', 'receiver', 'operationScope', 'omitted', 'nullValue', 'emptyValue', 'invalidValue', 'changeImpact']) {
       assert(typeof record[name] === 'string' && record[name].trim(),
@@ -40,15 +45,14 @@ export function apiReceiverCoverage(apiVersion, kind, receiverContracts) {
       `API_RECEIVER_CONTRACT_INCOMPLETE: ${apiVersion}/${kind} ${fieldPath} ${name}`);
     selected.set(fieldPath, record);
   }
-  const boundaries = apiResourceFieldBoundaries(apiVersion, kind);
   const paths = new Set(boundaries.map((row) => row.fieldPath));
-  const rows = boundaries.map((schema) => ({
+  const rows = boundaries.filter(row => !applicable || applicable.has(row.fieldPath)).map((schema) => ({
     ...schema,
     receiverContract: selected.get(schema.fieldPath) ?? null,
     coverageState: selected.has(schema.fieldPath) ? 'authored-contract-present' : 'receiver-contract-missing',
   }));
   return {
-    apiVersion, kind, proofClass: 'schema-and-authored-contract-join-only', rows,
+    apiVersion, kind, ...(selection ? { productSelection: selection } : {}), proofClass: 'schema-and-authored-contract-join-only', rows,
     missing: rows.filter((row) => !row.receiverContract).map((row) => row.fieldPath),
     extra: [...selected.keys()].filter((fieldPath) => !paths.has(fieldPath)).sort(),
     acceptanceLimit: 'Contract presence does not prove the claims, source support, reader tasks, publication, or independent acceptance.',

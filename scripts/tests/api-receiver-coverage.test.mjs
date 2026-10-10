@@ -40,3 +40,14 @@ test('empty case outcomes and unpinned evidence are rejected before marking cont
     [{ ...record, evidence: [{ url: 'https://github.com/kubernetes/kubernetes/blob/master/example.go#L1-L5', claim: 'Unpinned source' }] }]),
   /API_RECEIVER_EVIDENCE_INCOMPLETE/);
 });
+
+test('product selection requires selected receivers without auditing unused alternatives', () => {
+  const path = '$.spec.podSelector';
+  const selection = { fieldPaths: [path] };
+  const coverage = apiReceiverCoverage('networking.k8s.io/v1', 'NetworkPolicy', receiverContracts, selection);
+  assert.deepEqual(coverage.rows.map(row => row.fieldPath), [path]);
+  assertApiReceiverCoverage(coverage);
+  const missing = apiReceiverCoverage('networking.k8s.io/v1', 'NetworkPolicy',
+    receiverContracts.filter(record => record.fieldPath !== path), selection);
+  assert.throws(() => assertApiReceiverCoverage(missing), /API_RECEIVER_CONTRACT_MISSING/);
+});

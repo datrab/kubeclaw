@@ -11,7 +11,7 @@ import {
   table,
 } from './docs-generate-core.mjs';
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
-import { renderApiResourceReference } from './docs-api-reference.mjs';
+import { renderApiResourceReference, upstreamApiReference } from './docs-api-reference.mjs';
 
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -341,7 +341,7 @@ ${generatedEnd()}
 function renderHelmValues(configurationValues, configurationSchemas) {
   const valueFiles = configurationValues.files;
   const apiResourceSections = renderApiResourceReference(configurationValues.apiResources,
-    (source, line) => `[${literalText(source)}](${pinnedSourceUrl(source, line, line)})`, configurationValues.apiMetadataReferences);
+    (source, line) => `[${literalText(source)}](${pinnedSourceUrl(source, line, line)})`, configurationValues.apiMetadataReferences, root);
   const collectionSchemaKey = (schema) => JSON.stringify([schema.authority, schema.authoritySha256, schema.apiVersion, schema.kind, schema.resolvedPath]);
   const collectionSchemaAnchor = (schema) => `api-collection-${createHash('sha256').update(collectionSchemaKey(schema)).digest('hex').slice(0, 16)}`;
   const collectionSchemaContract = ({ fieldPath, ...schema }) => JSON.stringify(schema);
@@ -377,20 +377,9 @@ function renderHelmValues(configurationValues, configurationSchemas) {
       : '';
     return `${meaning}${collection}${authority}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}${semanticAuthority}`;
   };
-  const schemaContractText = (node) => {
-    if (!node) return 'This field has no contract at this boundary.';
-    const { description, observedSchemaKeywords, schemaReferenceChain, referencedContract, ...constraints } = node;
-    return `${description === undefined ? 'The schema supplies no description for this node.' : literalText(description)}<br>Constraints and alternatives: ${literalCode(JSON.stringify(constraints))}<br>Keywords at this boundary: ${literalCode(JSON.stringify(observedSchemaKeywords))}${schemaReferenceChain ? `<br>Reference: ${literalCode(JSON.stringify(schemaReferenceChain))}<br>Referenced definition: ${schemaContractText(referencedContract)}` : ''}`;
-  };
-  const apiCollectionSections = [...apiCollectionSchemas.values()].sort((left, right) => collectionSchemaKey(left.schema).localeCompare(collectionSchemaKey(right.schema))).map(({ schema, fields }) => {
-    const children = [...Object.entries(schema.children).map(([name, node]) => [`Child \`${name}\``, schemaContractText(node)]),
-      ...Object.entries(schema.itemChildren).map(([name, node]) => [`Item child \`${name}\``, schemaContractText(node)])];
-    const parents = schema.parentContracts.map((parent) => [`Parent \`${parent.path || '<API object>'}\``, schemaContractText(parent)]);
-    return `<a id="${collectionSchemaAnchor(schema)}"></a>\n\n### ${schema.kind}: ${schema.resolvedPath === '' ? 'API object root' : literalCode(schema.resolvedPath)}\n\nAuthority: ${schema.authority}. Content SHA-256: \`${schema.authoritySha256}\`. API: \`${schema.apiVersion}/${schema.kind}\`.\n\nThis section preserves the exact pinned schema descriptions. It describes accepted shape and the stated API behavior. Read the linked field row for the selected input, actual apply or loader receiver, operational consequence, and controller limit. A missing schema default does not prove that the controller inserts no default. A patch annotation does not select the client's apply mode.\n\n${table(['Boundary', 'Exact schema contract'], [
-      ['Field', schemaContractText(schema.contract)], ['List item', schemaContractText(schema.item)],
-      ['Map value', schemaContractText(schema.mapValue)], ...children, ...parents,
-    ])}\n\nField sources:\n\n${fields.map((field) => `- ${sourceLink(field.source, field.line)} — document ${field.document}, \`${field.path}\`.`).join('\n')}\n`;
-  }).join('\n');
+  const apiCollectionSections = [...apiCollectionSchemas.values()].sort((left, right) => collectionSchemaKey(left.schema).localeCompare(collectionSchemaKey(right.schema))).map(({ schema, fields }) =>
+    `<a id="${collectionSchemaAnchor(schema)}"></a>\n\n### ${schema.kind}: ${schema.resolvedPath === '' ? 'API object root' : literalCode(schema.resolvedPath)}\n\nAuthority: ${literalText(schema.authority)}. Content SHA-256: \`${schema.authoritySha256}\`. API: \`${schema.apiVersion}/${schema.kind}\`.\n\n[General field definitions, collection constraints and unused alternatives](${upstreamApiReference(schema.apiVersion, schema.kind)}). The full mechanical contract remains in the configuration inventory. Read the linked field row for the selected input, actual receiver, operational consequence and controller limit. A missing schema default does not prove that the controller inserts no default. A patch annotation does not select the client's apply mode.\n\nField sources:\n\n${fields.map((field) => `- ${sourceLink(field.source, field.line)} — document ${field.document}, \`${field.path}\`.`).join('\n')}\n`
+  ).join('\n');
   const consumerText = (field) => field.consumers.map((consumer) => {
     if (consumer === 'unknown') return 'Unknown';
     const location = consumer.path ? sourceLink(consumer.path, consumer.line ?? 1) : '`unresolved source`';
@@ -534,7 +523,7 @@ Each field row separates the checked-in source from the runtime receiver. It fol
 
 ${fieldSections}
 
-## Complete API Field Reference
+## Product API Field Reference
 
 This reference separates JSON decoding, API rules and the component that uses each field. Read the operation and related conditions before changing a value. List items and map values have their own field entries; their empty and null behavior can differ from the enclosing collection.
 
@@ -542,7 +531,7 @@ ${apiResourceSections}
 
 ## Kubernetes API Collection Contracts
 
-Each field row links to its own kind and schema path below. These contracts include the direct children, list items, map values, parent requirements, alternatives and API patch annotations from the pinned schema. The operational explanation and the actual receiving path remain in the field row.
+Each field row links to its own kind and schema path below. These entries identify the pinned schema and link to general upstream constraints. The complete mechanical contracts remain in the inventory. The selected operational explanation and receiving path remain in the field row.
 
 ${apiCollectionSections}
 

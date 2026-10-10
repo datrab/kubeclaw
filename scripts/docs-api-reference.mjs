@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
+import { apiProductSelection, assertProductApiContexts, productMetadataReferences, versionedApiReceiverRegistries } from './docs-api-product-scope.mjs';
 import { createHash } from 'node:crypto';
-import { apiResourceFieldBoundaries } from './docs-api-schema-authorities.mjs';
+import { apiResourceFieldBoundaries, apiAuthorityLock } from './docs-api-schema-authorities.mjs';
 import { apiReceiverCoverage, assertApiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
 import { implicitKubernetesObjectMetaReferences as canonicalMetadataReferences } from './docs-kubernetes-metadata-receiver-contracts.mjs';
 
@@ -60,12 +61,18 @@ function renderReceiverContract(receiver, key, fieldPath) {
     (readerReferences ? `**Related procedures and explanations:**\n\n${readerReferences}\n\n` : '');
 }
 
+export function upstreamApiReference(apiVersion, kind) {
+  const lock = apiAuthorityLock();
+  return apiVersion === 'cilium.io/v2' ? lock.customResources.cilium.crds[kind].source
+    : apiVersion === 'argoproj.io/v1alpha1' ? 'https://github.com/argoproj/argo-helm/releases/tag/argo-cd-' + lock.customResources.argoproj.version
+      : lock.kubernetes.source;
+}
+
 const metadataAnchor = referenceId => `api-metadata-${createHash('sha256').update(referenceId).digest('hex').slice(0, 20)}`;
 
 export function validateImplicitMetadataReferences(resources, references = []) {
   assert(Array.isArray(references), 'API_REFERENCE_METADATA_INVENTORY_MISSING');
-  const expected = canonicalMetadataReferences.filter(reference => resources.some(resource =>
-    resource.apiVersion === reference.apiVersion && resource.kind === reference.kind));
+  const expected = productMetadataReferences(resources);
   const seen = new Set();
   for (const reference of references) {
     assert(!seen.has(reference.referenceId), `API_REFERENCE_METADATA_DUPLICATE: ${reference.referenceId}`);
@@ -95,9 +102,18 @@ export function renderImplicitMetadataReferences(resources, references = []) {
 // Publication must not turn maintenance inventories with missing receivers
 // into an apparently complete reference. Compare against the actual authority,
 // not only the inventory's claimed totals or missing-path list.
-export function renderApiResourceReference(resources, sourceLink, metadataReferences = []) {
+export function renderApiResourceReference(resources, sourceLink, metadataReferences = [], sourceRoot = process.cwd()) {
   assert(Array.isArray(resources) && resources.length,
     'API_REFERENCE_INVENTORY_MISSING');
+  if (resources.some(item => item.productSelection)) {
+    assert(resources.every(item => item.productSelection), 'API_PRODUCT_MIXED_SCOPE');
+    assertProductApiContexts(resources, sourceRoot);
+  }
+  for (const resource of resources.filter(item => item.productSelection)) {
+    const actual = apiProductSelection(resource.apiVersion, resource.kind, resource.sourceContexts,
+      versionedApiReceiverRegistries.get(resource.apiVersion) ?? [], sourceRoot);
+    assert.deepEqual(resource.productSelection, actual, `API_PRODUCT_SELECTION_DRIFT: ${resource.apiVersion}/${resource.kind}`);
+  }
   validateImplicitMetadataReferences(resources, metadataReferences);
   const referenceMap = new Map(metadataReferences.map(reference => [reference.referenceId, reference]));
   const seenResources = new Set();
@@ -105,7 +121,8 @@ export function renderApiResourceReference(resources, sourceLink, metadataRefere
     const key = `${resource.apiVersion}/${resource.kind}`;
     assert(!seenResources.has(key), `API_REFERENCE_RESOURCE_DUPLICATE: ${key}`);
     seenResources.add(key);
-    const authority = apiResourceFieldBoundaries(resource.apiVersion, resource.kind);
+    const authority = apiResourceFieldBoundaries(resource.apiVersion, resource.kind)
+      .filter(row => !resource.productSelection || resource.productSelection.fieldPaths.includes(row.fieldPath));
     assert(Array.isArray(resource.rows), `API_REFERENCE_ROWS_MISSING: ${key}`);
     const rows = new Map();
     for (const row of resource.rows) {
@@ -126,7 +143,7 @@ export function renderApiResourceReference(resources, sourceLink, metadataRefere
     assert(Array.isArray(resource.extra) && !resource.extra.length,
       `API_REFERENCE_EXTRA_RECEIVERS: ${key}`);
     const joined = apiReceiverCoverage(resource.apiVersion, resource.kind,
-      resource.rows.map(row => row.receiverContract));
+      resource.productSelection ? versionedApiReceiverRegistries.get(resource.apiVersion) ?? [] : resource.rows.map(row => row.receiverContract), resource.productSelection ?? null);
     assertApiReceiverCoverage(joined);
     for (const row of joined.rows) assert.deepEqual(rows.get(row.fieldPath).receiverContract,
       row.receiverContract, `API_REFERENCE_RECEIVER_IDENTITY_DRIFT: ${key} ${row.fieldPath}`);
@@ -135,23 +152,26 @@ export function renderApiResourceReference(resources, sourceLink, metadataRefere
       const receiver = row.receiverContract;
       let relatedReference = '';
       const descriptor = canonicalMetadataReferences.find(reference => reference.apiVersion === resource.apiVersion && reference.kind === resource.kind);
-      if (descriptor && row.fieldPath === '$.metadata') {
+      if (descriptor && referenceMap.has(descriptor.referenceId) && row.fieldPath === '$.metadata') {
         assert.equal(receiver.canonicalReferenceId, descriptor.referenceId,
           `API_REFERENCE_METADATA_LINK_MISSING: ${key}`);
         assert(referenceMap.has(receiver.canonicalReferenceId), `API_REFERENCE_METADATA_TARGET_MISSING: ${key}`);
         relatedReference = `**Standard metadata fields:** [Create, update, ownership and deletion](#${metadataAnchor(descriptor.referenceId)}).\n\n`;
       }
       return `<a id="${anchor(row)}"></a>\n\n#### ${code(row.fieldPath)}\n\n` +
+        (resource.productSelection ? `**Applicability:** ${text(JSON.stringify(resource.productSelection.applicability[row.fieldPath]))}\n\n` : '') +
         relatedReference + renderReceiverContract(receiver, key, row.fieldPath) +
         `<details>\n<summary>Pinned API schema constraints</summary>\n\n` +
         `Authority: ${text(row.authority)}. Content SHA-256: ${code(row.authoritySha256)}.\n\n` +
-        `<pre><code>${text(JSON.stringify(row.contract, null, 2)).replaceAll('<br>', '\n')}</code></pre>\n\n</details>`;
+        (resource.productSelection ? `[General field definitions and unused alternatives](${upstreamApiReference(resource.apiVersion, resource.kind)}).\n\n</details>` : `<pre><code>${text(JSON.stringify(row.contract, null, 2)).replaceAll('<br>', '\n')}</code></pre>\n\n</details>`);
     }).join('\n\n');
+    const upstream = upstreamApiReference(resource.apiVersion, resource.kind);
     const contexts = (resource.sourceContexts ?? []).map(context =>
       `- ${sourceLink(context.path, 1)}; YAML document ${text(context.document)}.`).join('\n');
     return `### ${text(resource.kind)} (${code(resource.apiVersion)})\n\n` +
-      `These fields cover the full pinned API schema, including options absent from the checked-in manifests. ` +
+      (resource.productSelection ? `These fields describe checked-in resource choices and relevant omissions under present objects. General upstream alternatives remain available through the pinned schema authority shown for each field. Discovery limits: ${text(resource.productSelection.limits.join(' '))} ` : `These fields cover the full pinned API schema, including options absent from the checked-in manifests. `) +
       `Expected outcomes below come from implementation sources. They do not report a live API request or deployment test.\n\n` +
+      `[Pinned upstream schema or chart CRD authority](${upstream}).\n\n` +
       `Checked-in resource inputs:\n\n${contexts}\n\n${sections}`;
   }).join('\n\n');
   return [resourceSections, renderImplicitMetadataReferences(resources, metadataReferences)].filter(Boolean).join('\n\n');

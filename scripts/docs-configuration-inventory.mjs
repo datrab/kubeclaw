@@ -17,6 +17,7 @@ import {
   assertLocalHelmAuthorityRegistry, localHelmAuthorityFile, localHelmAuthorityPaths, localHelmFieldAuthority,
 } from './docs-local-helm-authorities.mjs';
 import { apiFieldSchemaAuthority, apiFieldCollectionAuthority } from './docs-api-schema-authorities.mjs';
+import { apiProductSelection, productMetadataReferences, productScopeLimits, versionedApiReceiverRegistries } from './docs-api-product-scope.mjs';
 import { apiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
 import { receiverContracts as networkingReceiverContracts } from './docs-kubernetes-network-receiver-contracts.mjs';
 import { receiverContracts as admissionReceiverContracts } from './docs-kubernetes-admission-receiver-contracts.mjs';
@@ -2741,18 +2742,6 @@ function completeYamlCollection(row, context, value, fields) {
 // Bind an authored receiver registry to its declared API version. A new version
 // must not inherit another version's runtime claims merely because kind names
 // and field paths match.
-const versionedApiReceiverRegistries = new Map([
-  ['v1', coreReceiverContracts],
-  ['apps/v1', [...deploymentReceiverContracts, ...envelopeReceiverContracts.filter(record => record.authoritySelector.apiVersion === 'apps/v1')]],
-  ['argoproj.io/v1alpha1', argoReceiverContracts],
-  ['cilium.io/v2', ciliumReceiverContracts],
-  ['networking.k8s.io/v1', [...networkingReceiverContracts, ...envelopeReceiverContracts.filter(record => record.authoritySelector.apiVersion === 'networking.k8s.io/v1')]],
-  ['admissionregistration.k8s.io/v1', [...admissionReceiverContracts, ...admissionStatusReceiverContracts, ...envelopeReceiverContracts.filter(record => record.authoritySelector.apiVersion === 'admissionregistration.k8s.io/v1')]],
-]);
-for (const [apiVersion, records] of versionedApiReceiverRegistries) {
-  versionedApiReceiverRegistries.set(apiVersion, [...records,
-    ...metadataReceiverContracts.filter(record => record.authoritySelector.apiVersion === apiVersion)]);
-}
 
 function buildApiResourceInventory(files) {
   const resources = new Map();
@@ -2767,10 +2756,11 @@ function buildApiResourceInventory(files) {
     }
   }
   return [...resources.entries()].sort(([left], [right]) => left.localeCompare(right))
-    .map(([, resource]) => ({ ...resource,
-      ...apiReceiverCoverage(resource.apiVersion, resource.kind,
-        versionedApiReceiverRegistries.get(resource.apiVersion) ?? []),
-    }));
+    .map(([, resource]) => {
+      const receivers = versionedApiReceiverRegistries.get(resource.apiVersion) ?? [];
+      const selection = apiProductSelection(resource.apiVersion, resource.kind, resource.sourceContexts, receivers, root);
+      return { ...resource, ...apiReceiverCoverage(resource.apiVersion, resource.kind, receivers, selection) };
+    });
 }
 
 function buildYamlInventory() {
@@ -2979,7 +2969,7 @@ function buildYamlInventory() {
   assert.equal(apiReceiverExtraPaths.length, 0,
     `API_RECEIVER_PATH_OUTSIDE_AUTHORITY: ${apiReceiverExtraPaths.join(', ')}`);
   if (!allowSemanticGaps && apiReceiverGaps.length) {
-    throw new Error(`API_RECEIVER_CONTRACT_MISSING: public API fields lack authored receiving contracts:\n${apiReceiverGaps.join('\n')}\nThis scope includes unused alternatives, metadata, status, list items and map values. The --allow-semantic-gaps maintenance mode records these gaps; it does not pass the gate. Contract presence still requires independent Source, Reader and Quality acceptance.`);
+    throw new Error(`API_RECEIVER_CONTRACT_MISSING: public API fields lack authored receiving contracts:\n${apiReceiverGaps.join('\n')}\nThis scope includes discovered resource choices and recorded relevant omissions, including selected metadata, list items and map values. Unused upstream alternatives do not require a receiver audit. The --allow-semantic-gaps maintenance mode records these gaps; it does not pass the gate. Contract presence still requires independent Source, Reader and Quality acceptance.`);
   }
   assert.equal(unknownLeafRuntimeOwners, 0, 'quality gate: leaf runtime ownership must be resolved, not mass-unknown');
   assert.equal(unknownLeafConsumers, 0, 'quality gate: leaf consumers must resolve to an authority or an explicit not-applicable binding');
@@ -2999,12 +2989,12 @@ function buildYamlInventory() {
     generatedBy: 'scripts/docs-configuration-inventory.mjs',
     discovery: {
       roots: SOURCE_ROOTS,
+      apiProductScope: productScopeLimits,
       rule: 'all YAML below examples, gitops, my-values, and releases/values; chart root values.yaml and ci-values.yaml',
     },
     files,
     apiResources,
-    apiMetadataReferences: implicitKubernetesObjectMetaReferences.filter(reference => apiResources.some(resource =>
-      resource.apiVersion === reference.apiVersion && resource.kind === reference.kind)),
+    apiMetadataReferences: productMetadataReferences(apiResources),
     totals: {
       files: files.length,
       apiResourceKinds: apiResources.length,

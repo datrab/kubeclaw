@@ -18622,6 +18622,36 @@
         "False retained assertions and narrow evidence corrected"
       ],
       "acceptance": "No fresh candidate Source, Reader, Quality, Astra or AP09.8 acceptance; driver and live recovery observations remain unperformed."
+    },
+    "generatorSelectionFoundation": {
+      "state": "implemented-foundation-not-scope-complete",
+      "author": "/root/product_scoped_api_generator_writer",
+      "files": {
+        "scripts/docs-api-product-scope.mjs": "1085d2dea3791e944aac46462b2fbb575dd4493de1070a055bbf9c01d06d4f76",
+        "scripts/docs-api-receiver-coverage.mjs": "e0ea716f61d463d2c354a6bb117644a2240c71186cb62af72f86f6e78422f58c",
+        "scripts/docs-api-reference.mjs": "54d4dfff78b1f71cb0e8c429ba4d31b5aabd2a03cd21b732da934915e1127d6a",
+        "scripts/docs-configuration-inventory.mjs": "1a3f438df46e2851f93704ce68d3d2687e3946b984721ea75c169deffcf38ef6",
+        "scripts/docs-generate.mjs": "8f1459e1ee2201d04b6b6725afb46f4d0c63682b9725283cc278f8c77ef4a01a",
+        "scripts/tests/api-receiver-coverage.test.mjs": "8bfba8777e5bbdf7b3a84c5988a5688042e544351395f76d662bd4daa1ebb9e2",
+        "scripts/tests/api-reference.test.mjs": "b04591747aa81549df439228b7035ab22a10be8dcf9451904bcc0b114c633e7b"
+      },
+      "reportSha256": "d7b9e9336b98a3020a9ae88bb103e5ab9c628b694a22e5e54f4eecf1f15efc06",
+      "observedPrivateScope": {
+        "kinds": 13,
+        "contexts": 65,
+        "selectedRows": 349,
+        "missing": 0,
+        "implicitMetadataRows": 15
+      },
+      "observedChecks": "16focused tests;privateinventorywrite0;earlierprivate--check0;finalgenerationfailsselectedApplicationmetadata proof beforewrites. Not final integrated checks.",
+      "pending": [
+        "Discover supported Helm/controller/render/script outputs incl identified GitOps template metadata",
+        "Qualify additional relevant runtime omissions",
+        "Review selected-case verbosity and consolidate general semantics",
+        "Resolve actual selected CRD metadata Source proof",
+        "New independent Source/Reader/Quality reviews; current inventory/generation/mandatory mutations"
+      ],
+      "acceptance": "No complete config scope, publication, A98 gate or package acceptance."
     }
   }
 }

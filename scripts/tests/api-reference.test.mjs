@@ -128,3 +128,71 @@ test('reader explanations retain their links and reject unsupported targets', ()
   receiver.readerReferences[0].target='../missing.md#unknown';
   assert.throws(()=>renderApiResourceReference(resources,link),/API_REFERENCE_READER_LINK_INVALID/);
 });
+
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { apiProductSelection, versionedApiReceiverRegistries } from '../docs-api-product-scope.mjs';
+import { apiReceiverCoverage } from '../docs-api-receiver-coverage.mjs';
+
+test('source-selected publication binds raw paths, quoted keys, schema and source changes', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'api-product-test-'));
+  fs.mkdirSync(path.join(root, 'examples'));
+  try {
+    const content = 'apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: fixture\n  labels:\n    example.org/name: selected\ndata:\n  config.yml: value\n';
+    fs.writeFileSync(path.join(root, 'examples/fixture.yaml'), content);
+    const contexts = [{ path: 'examples/fixture.yaml', document: 0, sourceDigest: createHash('sha256').update(content).digest('hex') }];
+    const records = versionedApiReceiverRegistries.get('v1');
+    const selection = apiProductSelection('v1', 'ConfigMap', contexts, records, root);
+    assert(selection.fieldPaths.includes('$.data["*"]'));
+    assert(selection.fieldPaths.includes('$.metadata.labels["*"]'));
+    assert(!selection.fieldPaths.some(value => value.startsWith('$.metadata.managedFields')));
+    const resource = { ...apiReceiverCoverage('v1', 'ConfigMap', records, selection), sourceContexts: contexts };
+    const output = renderApiResourceReference([resource], link, [], root);
+    assert(output.includes('authored-resource-field'));
+    assert(!output.includes('full pinned API schema'));
+    const omittedContext = structuredClone(resource); omittedContext.sourceContexts = [];
+    assert.throws(() => renderApiResourceReference([omittedContext], link, [], root), /API_PRODUCT_DISCOVERY_DRIFT/);
+    const removed = structuredClone(resource); removed.rows.pop();
+    assert.throws(() => renderApiResourceReference([removed], link, [], root), /API_REFERENCE_BOUNDARY_COUNT/);
+    const forged = structuredClone(resource); forged.productSelection.fieldPaths.pop();
+    assert.throws(() => renderApiResourceReference([forged], link, [], root), /API_PRODUCT_SELECTION_DRIFT/);
+    const changed = structuredClone(resource); changed.rows[0].contract.type = 'wrong';
+    assert.throws(() => renderApiResourceReference([changed], link, [], root), /API_REFERENCE_SCHEMA_DRIFT/);
+    fs.writeFileSync(path.join(root, 'examples/fixture.yaml'), content.replace('value', 'changed'));
+    assert.throws(() => renderApiResourceReference([resource], link, [], root), /API_PRODUCT_(?:SOURCE|DISCOVERY)_DRIFT/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('relevant PVC omissions carry pinned receiver evidence without expanding absent alternatives', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'api-product-pvc-'));
+  fs.mkdirSync(path.join(root, 'examples'));
+  try {
+    const content = 'apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: fixture\nspec:\n  accessModes: [ReadWriteOnce]\n  resources:\n    requests:\n      storage: 1Gi\n';
+    fs.writeFileSync(path.join(root, 'examples/fixture.yaml'), content);
+    const contexts = [{ path: 'examples/fixture.yaml', document: 0, sourceDigest: createHash('sha256').update(content).digest('hex') }];
+    const selection = apiProductSelection('v1', 'PersistentVolumeClaim', contexts, versionedApiReceiverRegistries.get('v1'), root);
+    const omission = selection.applicability['$.spec.storageClassName'];
+    assert(omission?.some(item => item.reason === 'receiver-default-under-present-parent' && item.evidence.length));
+    assert(!selection.fieldPaths.includes('$.spec.dataSource.name'));
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('an added upstream choice is discovered and cannot pass with its meaning removed', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'api-product-add-'));
+  fs.mkdirSync(path.join(root, 'examples'));
+  try {
+    const content = 'apiVersion: v1\nkind: ConfigMap\nmetadata: {name: fixture}\nimmutable: true\ndata: {key: value}\n';
+    fs.writeFileSync(path.join(root, 'examples/fixture.yaml'), content);
+    const contexts = [{ path: 'examples/fixture.yaml', document: 0, sourceDigest: createHash('sha256').update(content).digest('hex') }];
+    const records = versionedApiReceiverRegistries.get('v1');
+    const selection = apiProductSelection('v1', 'ConfigMap', contexts, records, root);
+    assert(selection.fieldPaths.includes('$.immutable'));
+    const resource = { ...apiReceiverCoverage('v1', 'ConfigMap', records.filter(record => record.fieldPath !== '$.immutable'), selection), sourceContexts: contexts };
+    assert.throws(() => renderApiResourceReference([resource], link, [], root), /API_REFERENCE_RECEIVER_MISSING/);
+    const complete = structuredClone({ ...apiReceiverCoverage('v1', 'ConfigMap', records, selection), sourceContexts: contexts });
+    complete.rows.find(row => row.fieldPath === '$.immutable').receiverContract.purpose = 'Tampered selected meaning';
+    assert.throws(() => renderApiResourceReference([complete], link, [], root), /API_REFERENCE_RECEIVER_IDENTITY_DRIFT/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
