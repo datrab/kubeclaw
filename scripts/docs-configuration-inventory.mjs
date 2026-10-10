@@ -20,6 +20,7 @@ import { apiFieldSchemaAuthority, apiFieldCollectionAuthority } from './docs-api
 import { apiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
 import { receiverContracts as networkingReceiverContracts } from './docs-kubernetes-network-receiver-contracts.mjs';
 import { receiverContracts as admissionReceiverContracts } from './docs-kubernetes-admission-receiver-contracts.mjs';
+import { receiverContracts as admissionStatusReceiverContracts } from './docs-kubernetes-admission-status-contracts.mjs';
 import { receiverContracts as deploymentReceiverContracts } from './docs-kubernetes-apps-receiver-contracts.mjs';
 import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver-contracts.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
@@ -2740,7 +2741,7 @@ const versionedApiReceiverRegistries = new Map([
   ['apps/v1', deploymentReceiverContracts],
   ['argoproj.io/v1alpha1', argoReceiverContracts],
   ['networking.k8s.io/v1', networkingReceiverContracts],
-  ['admissionregistration.k8s.io/v1', admissionReceiverContracts],
+  ['admissionregistration.k8s.io/v1', [...admissionReceiverContracts, ...admissionStatusReceiverContracts]],
 ]);
 
 function buildApiResourceInventory(files) {

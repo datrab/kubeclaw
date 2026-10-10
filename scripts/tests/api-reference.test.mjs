@@ -55,3 +55,15 @@ test('unpinned implementation links and empty cases cannot become publication ev
   const empty=fixture();empty[0].rows[0].receiverContract.cases[0].sourceOutcome='';
   assert.throws(()=>renderApiResourceReference(empty,link),/(?:API_REFERENCE_CASE|API_RECEIVER_CASE)_INCOMPLETE/);
 });
+
+
+test('internal open-proof notes cannot be published as product limitations', () => {
+  for (const note of ['OPEN DOCUMENTATION PROOF: inspect source',
+    'Available-source documentation gap: missing consumer proof',
+    'An unclosed source-proof obligation remains']) {
+    const resources=fixture();resources[0].rows[0].receiverContract.qualificationLimits.push(note);
+    assert.throws(()=>renderApiResourceReference(resources,link),/API_REFERENCE_UNRESOLVED_PROOF/);
+  }
+  const product=fixture();product[0].rows[0].receiverContract.qualificationLimits.push('A configured driver must support this feature.');
+  assert(renderApiResourceReference(product,link).includes('A configured driver must support this feature.'));
+});

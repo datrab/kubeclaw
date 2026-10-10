@@ -48,6 +48,16 @@ export function renderApiResourceReference(resources, sourceLink) {
     const sections = authority.map(expected => {
       const row = rows.get(expected.fieldPath);
       const receiver = row.receiverContract;
+      const prose = [receiver.purpose, receiver.receiver, receiver.operationScope,
+        receiver.omitted, receiver.nullValue, receiver.emptyValue, receiver.invalidValue,
+        receiver.changeImpact, ...(receiver.crossFieldConditions ?? []),
+        ...(receiver.qualificationLimits ?? []), ...(receiver.cases ?? []).flatMap(item =>
+          [item.name, item.condition, item.sourceOutcome]),
+        ...(receiver.evidence ?? []).map(item => item.claim)];
+      // Explicit authoring obligations belong in internal evidence, never in
+      // the product reference. Real product limits remain publishable prose.
+      assert(!prose.some(value => /OPEN DOCUMENTATION PROOF|Available-source documentation gap|unclosed source-proof obligation/iu.test(String(value))),
+        `API_REFERENCE_UNRESOLVED_PROOF: ${key} ${row.fieldPath}`);
       for (const name of ['purpose', 'receiver', 'operationScope', 'omitted', 'nullValue', 'emptyValue', 'invalidValue', 'changeImpact']) {
         assert(typeof receiver[name] === 'string' && receiver[name].trim(),
           `API_REFERENCE_RECEIVER_INCOMPLETE: ${key} ${row.fieldPath} ${name}`);
