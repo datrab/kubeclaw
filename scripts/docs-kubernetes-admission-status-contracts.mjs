@@ -43,7 +43,8 @@ const applyEvidence = [
   source('staging/src/k8s.io/apiserver/pkg/endpoints/handlers/patch.go',500,517,'The apply handler decodes the patch and passes the named field manager and force option to FieldManager.Apply.'),
   source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/fieldmanager.go',57,74,'Default field management wraps the underlying manager, including manager identity and metadata handling, with the group version and subresource.'),
   source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/fieldmanager.go',181,208,'Apply decodes stored managed fields, delegates to the manager chain, translates conflicts and encodes the resulting managed fields.'),
-  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/buildmanagerinfo.go',54,74,'The apply manager identifier includes its name, Apply operation, API version and subresource.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/buildmanagerinfo.go',54,74,'Apply prepares a manager entry with name, operation, version and subresource, then delegates identifier construction.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/managedfields.go',134,158,'Identifier construction removes fields, time and, for Apply, API version. Apply identity remains stable when its API version changes.'),
   source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/structuredmerge.go',120,158,'Structured apply checks version and patch managedFields, converts live and patch objects to typed values and invokes the merge updater.'),
   source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/structuredmerge.go',162,181,'A changed merged value is converted back, defaulted and converted to the internal version; conversion errors are returned.'),
   source('vendor/sigs.k8s.io/structured-merge-diff/v6/merge/update.go',209,249,'Apply computes the new field set, filters ignored fields, prunes against the previous set and checks changes with the force option.'),
@@ -54,7 +55,7 @@ const applyEvidence = [
 const applyConditions = [
   'The status endpoint excludes spec and metadata from the apply ownership set. Its update strategy also restores the old spec and status lifecycle metadata. This status write is not a route to change policy settings.',
   'The controller manager name is validatingadmissionpolicy-status, so the kubectl-only client-side apply migration and last-applied annotation update do not run for it. If stored managed fields are empty, the wrapper first records the existing fields under before-first-apply. It can return an initialization error before apply.',
-  'Server-side apply merges a declared configuration with the stored object and tracks a set of owned fields. The manager identifier includes name, Apply operation, API version and status subresource; the name alone does not identify the full set.',
+  'Server-side apply merges a declared configuration with the stored object and tracks a set of owned fields. The Apply manager identifier includes its name, Apply operation and status subresource. Identifier construction removes API version for Apply. The owned VersionedSet separately retains its API version for field conversion; the name alone does not identify the full manager entry.',
   'In the default JSON request route, an empty computed warning result leaves expressionWarnings nil in the apply builder. The omitempty tag omits that field; the request does not send expressionWarnings: []. The controller also omits conditions.',
   'At the typed merge boundary, an omitted field or item previously owned by this manager is a pruning candidate. Another current owner can retain it. A first apply without a previous owned set does not prune omitted stored items. Schema granularity, ignored fields, conversion and restored dangling items affect the result.',
   'Force true permits transfer of conflicting ownership for modified or added fields. It does not mean that all omitted warnings or conditions are deleted. Inspect the stored value and managed fields before a corrective write; repeated retries do not establish a different ownership result.',
@@ -70,7 +71,7 @@ const commonEvidence = [
   source('vendor/sigs.k8s.io/json/internal/golang/encoding/json/decode.go',950,1003,'Null clears pointers and collections; it leaves ordinary scalar and value-struct receivers unchanged. These cases start with a fresh typed object.'),
   source('vendor/sigs.k8s.io/json/internal/golang/encoding/json/decode.go',535,560,'Array tokens require an array or slice receiver; wrong token types cannot populate a string or struct.'),
   source('vendor/sigs.k8s.io/json/internal/golang/encoding/json/decode.go',568,625,'Array iteration retains value items, including the zero struct reached by a null item.'),
-  source('vendor/sigs.k8s.io/json/internal/golang/encoding/json/decode.go',697,732,'Object decoding selects the struct or map receiver and rejects incompatible target kinds.'),
+  source('vendor/sigs.k8s.io/json/internal/golang/encoding/json/decode.go',697,732,'Object decoding selects struct fields and rejects incompatible target kinds.'),
   source('vendor/sigs.k8s.io/json/internal/golang/encoding/json/decode.go',1028,1105,'String and number decoding check the receiving type and integer range instead of coercing incompatible values.'),
   strategy(59,80,'Normal create clears status and initializes generation; normal update restores old status and increments generation for a changed spec.'),
   strategy(154,168,'The status strategy invokes the status validator, restores the old spec and resets lifecycle metadata. It does not increment generation.'),
@@ -83,7 +84,8 @@ const baseConditions = [
   'Normal create discards authored status. Normal update preserves stored status. These field outcomes describe a typed status-subresource update with the immediate parent present.',
   'Omission in a fresh typed replacement and omission in an apply or merge patch are different operations. Do not use these replacement cases to infer removal of a field owned by another manager.',
   'The status controller skips type checking when metadata.generation is less than or equal to status.observedGeneration. It uses an informer snapshot and can publish observations of an earlier generation.',
-  'The controller checks validation expressions and their nonempty messageExpression fields. This warning list is not an execution result for a resource request or proof that a binding enforces the policy.',
+  'The warning producer checks validation expressions and their nonempty messageExpression fields. It first compiles the policy variables into each checked expression environment. This warning list is not an execution result for a resource request or proof that a binding enforces the policy.',
+  'Type checking can skip resource kinds after mapper or schema-resolution failures. A parameter schema failure leaves no parameter declaration. Compiler-construction failures also skip that kind. An observed generation and empty warnings therefore do not prove that every matching kind was checked. Inspect controller logs, discovery and schema availability before relying on these diagnostics.',
 ];
 const records = [];
 function add(path, shape, purpose, omitted, emptyValue, invalidValue, evidence, options = {}) {
@@ -107,7 +109,7 @@ function add(path, shape, purpose, omitted, emptyValue, invalidValue, evidence, 
       {name:'Explicit empty value',condition:'The immediate parent exists and the receiver-specific empty representation described below is supplied.',sourceOutcome:emptyValue},
       ...applyCases,...(options.cases ?? []),
     ],
-    evidence:[...commonEvidence,...applyEvidence,...evidence,checker(104,138,'The warning producer checks only validation and message expressions and constructs indexed field references.')],
+    evidence:[...commonEvidence,...applyEvidence,...evidence,checker(104,138,'The warning producer constructs indexed field references for validation and message-expression diagnostics.')],
     qualificationLimits:[
       'These are pinned-source expectations. No API request, CEL evaluation, controller process, informer synchronization or live status update was executed.',
       'Actual controller selection, discovery schemas, permissions and server apply ownership determine whether a status write succeeds. On controller errors inspect its logs and access before changing the policy; retries do not prove recovery.',
@@ -185,6 +187,14 @@ add('$.status.typeChecking.expressionWarnings[].warning','string','Provides the 
   'An empty string is rejected; whitespace-only text is nonempty and is not trimmed by this validator.',
   'Wrong JSON types fail decoding. The shown warning validator imposes no warning-text length bound beyond requiring nonempty text.',warningEvidence);
 for(const record of records) {
+  record.evidence.push(checker(141,175,'Context construction skips resource kinds whose schemas cannot be resolved, can omit the parameter declaration and retains policy variables.'),checker(198,226,'Each resolved kind compiles policy variables before the target expression; compiler-construction failures skip the kind.'),checker(266,284,'Type selection skips rules without usable concrete group, version or resource entries.'),checker(299,323,'Mapper resolution retries after at most one refresh per policy and can skip failures; collecting the maximum count returns early.'),checker(336,368,'Wildcard groups or versions yield no candidates for that rule; wildcard and subresource entries are skipped in resource extraction.'));
+  if(['$.status','$.status.observedGeneration','$.status.typeChecking','$.status.typeChecking.expressionWarnings'].includes(record.fieldPath)) {
+    record.cases.push(
+      {name:'Unavailable resource schema',condition:'The controller generation guard permits checking, but all selected resource kind schemas fail resolution.',sourceOutcome:'Context construction skips every failed kind. No per-kind expression result is produced. The controller can still submit observedGeneration with empty computed warnings; those observations do not certify complete type coverage.'},
+      {name:'Variable dependencies during checking',condition:'A selected kind has a resolved schema and a validation expression uses a policy variable.',sourceOutcome:'CheckExpression first compiles the supplied variable declarations into the composition environment, then compiles the validation expression in StoredExpressions. Diagnostics are still indexed to that validation or message expression.'},
+      {name:'Same Apply manager changes API version',condition:'The manager name, Apply operation and status subresource stay the same while the Apply API version changes.',sourceOutcome:'BuildManagerIdentifier clears APIVersion for Apply, so this version change alone does not create a new identity. Pruning can still use the prior VersionedSet API version and its conversion rules; this is not automatically a first apply.'},
+    );
+  }
   if(record.fieldPath.startsWith('$.status.typeChecking.expressionWarnings')) {
     record.evidence.push(source('pkg/generated/openapi/zz_generated.openapi.go',2372,2384,'The generated v1 TypeChecking model declares expressionWarnings with list type atomic.'));
   }
