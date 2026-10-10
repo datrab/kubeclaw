@@ -18635,6 +18635,25 @@
           "R2 canonical symptom routes missing"
         ],
         "correctionOwner": "/root/pvc_runtime_discovery_correction_writer"
+      },
+      "runtimeDiscoveryCorrection": {
+        "state": "author-candidate-not-independently-accepted",
+        "author": "/root/pvc_runtime_discovery_correction_writer",
+        "baseRevision": "caacf8a63d071158595d00c4af269e35550dfb80",
+        "reportSha256": "0cdf4aee83c97758bb803d02a8c96b5e24aeabaeefdbe670cf2a76fe98f49e89",
+        "rootVerifiedArtifacts": 13,
+        "currentPageHashes": {
+          "docs/site/reference/configuration-change-impact.md": "541e3ac3daef12ebff2b262c15bc060cc04b23b35b8e61abd9eedf52c21d6a3a",
+          "docs/site/use/diagnose.md": "1e911e454e664b7e539a3cce5953fa65b7ad3fa51fba7217f69b62198434795e"
+        },
+        "changes": [
+          "R1 actual CSI driver/controller/node containers and effective inputs discovery",
+          "R2 canonical Lost/ClaimMisbound/reclaim/FailedMount symptom routes",
+          "Pinned SMB internal default policy is not assigned from its configured option; no product fix",
+          "Explicit externally owned staging/worker inspection boundary and safe stop"
+        ],
+        "rootFollowup": "Narrowed two over-wide source citations; distinguished name-template versus namespace-template token support against original external-provisioner source.",
+        "acceptance": "No fresh Source/Reader/Quality/Astra or package acceptance; no live kubectl/storage operation."
       }
     },
     "generatorSelectionFoundation": {

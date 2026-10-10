@@ -538,8 +538,8 @@ error can leave server work complete and cause another driver call.
 
 PV `Retain` and SMB `onDelete: Retain` are different controls. The first prevents
 the reclaim operation. The second can return success from the SMB operation
-while keeping the directory. An empty SMB `onDelete` uses the driver's configured
-default. [effective policy and secrets gate](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L185-L209)
+while keeping the directory. An empty SMB `onDelete` uses the driver's internal default member. For the
+pinned v1.20.0 implementation this member remains empty, as explained below. [effective policy and secrets gate](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L185-L209)
 
 | SMB input | Directory effect and recovery boundary |
 | --- | --- |
@@ -573,11 +573,86 @@ establish a backup.
 The continuing-worker outcome is an inference from the timeout wrapper and
 staging lock, not an executed failure or a claim that every timeout leaves a mount.
 
+### Discover the selected SMB runtime inputs
+
+KubeClaw's optional bootstrap Application selects chart 1.20.0 in `kube-system`;
+its values set only `controller.replicas: 1`. This is configured intent, not
+proof of installation or of the driver selected for a claim.
+[Application selection](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/gitops/platform/bootstrap/csi-driver-smb.yaml#L13-L28),
+[bootstrap values](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/gitops/platform/values/csi-driver-smb.yaml#L1-L3).
+
+For this conditional branch, first establish `spec.csi.driver: smb.csi.k8s.io`
+on the recorded PV. A different driver needs its owner's procedure. The chart's
+controller has `csi-provisioner` and `smb` containers sharing the CSI socket;
+the Linux node DaemonSet has `smb` and `node-driver-registrar` containers.
+Use the controller for deletion and the node Pod on the workload's actual node
+for mount failures. The registrar is not the mount worker.
+[controller socket and containers](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/templates/csi-smb-controller.yaml#L69-L90),
+[controller driver](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/templates/csi-smb-controller.yaml#L141-L177),
+[node registration and driver](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/templates/csi-smb-node.yaml#L71-L123).
+
+Determine the deletion inputs from the retained PV and selected controller:
+
+| Input | Effective selection in the pinned implementation |
+| --- | --- |
+| `spec.csi.volumeHandle` | Split at `#`: source, subdirectory, optional UUID, optional fourth `onDelete` segment. Fewer than two segments cannot be parsed. The fourth segment, when nonempty, wins at deletion. Read this handle, not the current StorageClass `onDelete`, for an existing volume. [handle parser](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L537-L558) |
+| Empty handle policy | `DeleteVolume` falls back to `defaultOnDeletePolicy`. The binary accepts `--default-ondelete-policy` with an empty default and passes it in `DriverOptions`, but `NewDriver` does not copy that option to its internal member. The member therefore remains empty in this pinned implementation, even if that flag is supplied. Empty policy enters the removal branch when secrets exist. Do not interpret the argument as an effective Retain policy. [flags](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/cmd/smbplugin/main.go#L50-L51), [option passed](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/cmd/smbplugin/main.go#L79-L99), [complete constructor](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/smb.go#L127-L170), [fallback and removal](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L185-L189) |
+| `removeArchivedVolumePath` | Read `--remove-archived-volume-path` in the controller `smb` arguments. If absent with the original binary entrypoint, its default is `true`; `NewDriver` copies this option. The selected chart emits neither this flag nor the default-policy flag. An overridden command, wrapper or unknown image requires its own contract; stop until supplied. [flag default](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/cmd/smbplugin/main.go#L50-L51), [member assignment](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/smb.go#L127-L140), [selected arguments](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/templates/csi-smb-controller.yaml#L148-L153) |
+
+Creation validates StorageClass `onDelete` against empty, Delete, Retain and
+Archive, without case sensitivity. Creation stores Retain or Archive in the
+handle. Deletion parses an existing handle directly; it does not repeat that
+validation. Thus another nonempty handle policy can also enter removal.
+[creation validation and override](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L498-L506),
+[accepted values](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/smb.go#L288-L296),
+[handle encoding](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L430-L440).
+
+Record credential **references**, never Secret contents:
+
+- Deletion first uses both PV annotations
+  `volume.kubernetes.io/provisioner-deletion-secret-name` and
+  `volume.kubernetes.io/provisioner-deletion-secret-namespace`, when both keys
+  exist. Nonempty values select that reference; both empty mean no secrets.
+  One empty value does not fall back to the StorageClass. If either key is
+  absent, the provisioner consults the PV's StorageClass. A missing class or
+  claim reference can leave deletion without secrets.
+  [annotation precedence](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1314-L1347),
+  [class and claim fallback](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1348-L1379).
+- In that fallback, `csi.storage.k8s.io/provisioner-secret-name` and
+  `csi.storage.k8s.io/provisioner-secret-namespace` select the pair. Only if the
+  operation-specific pair is absent does the `csi.storage.k8s.io/secret-name`
+  and `csi.storage.k8s.io/secret-namespace` default pair apply. Duplicate
+  deprecated/current keys, incomplete pairs and empty supplied values are
+  errors, not a winner. The name template supports `${pv.name}`, `${pvc.name}` and
+  `${pvc.namespace}` from the PV name and claimRef. The namespace template
+  supports `${pv.name}` and `${pvc.namespace}`, but not `${pvc.name}`. The deletion fallback
+  constructs no PVC annotations; an annotation token cannot be resolved there.
+  Stop if the reference cannot be resolved. Lookup failure can still leave
+  deletion without secrets; a valid reference does not prove credentials were
+  supplied. [pair validation](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1713-L1757),
+  [default-pair selection](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1778-L1794),
+  [namespace resolution](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1796-L1817),
+  [name resolution](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1819-L1846).
+- For these persistent PVC volumes, node staging uses the already resolved PV
+  `spec.csi.nodeStageSecretRef`, independently of deletion annotations.
+  Provisioning resolves `csi.storage.k8s.io/node-stage-secret-name` and
+  `csi.storage.k8s.io/node-stage-secret-namespace` with the same default-pair rules;
+  a later StorageClass change does not change the stored PV reference. The
+  SMB node receives request secrets. Its volume-context `secretName` and
+  `secretNamespace` lookup is conditional on inline ephemeral volumes; it is
+  not the credential fallback for this PVC route.
+  [provisioning references](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L722-L753),
+  [staging request and conditional lookup](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L195-L220).
+
 ### Diagnose before changing cleanup
 
 The storage owner performs this read-only investigation from an approved
-cluster context. It requires permission to read the named PVC and PV,
-StorageClasses, Pods, VolumeAttachments, controller configuration and logs.
+cluster context from an independent administration host. First complete
+[Bind Cluster Authority](../use/install.md#bind-cluster-authority) and
+[Prepare Independent Access](../use/install.md#prepare-independent-access).
+It requires permission to read the named PVC and PV,
+StorageClasses, CSINodes, cluster-wide Pod discovery, VolumeAttachments,
+controller configuration and logs.
 Use the retained PVC/PV record when the claim is already absent. Do not print
 Secret values. Stop if access fails or the claim/PV UID cannot be established.
 Use `kubectl` compatible with the target cluster. In the commands below,
@@ -602,7 +677,8 @@ against a deployed instance as part of this source verification.
    implementation boundary and obtain its contract from the storage owner.
    Use `kubectl --context <context> get pv <pv> -o yaml` and, for a nonempty
    class, `kubectl --context <context> get storageclass <class> -o yaml`.
-   Read selected images with `kubectl --context <context> -n <driver-namespace> get pod <driver-pod> -o jsonpath='{.spec.containers[*].image}'`.
+   For the selected SMB branch, use the discovery steps below. A chart tag
+   alone does not establish the running binary or the selected claim driver.
 3. Inspect Pod claim use, VolumeAttachments and current controller errors.
    Distinguish protection waiting, missing credentials, server mount failure,
    and a successful driver call followed by failed API cleanup. Retain the
@@ -611,8 +687,57 @@ against a deployed instance as part of this source verification.
    and match `spec.source.persistentVolumeName` to the recorded PV.
    Read the selected component's incident logs with
    `kubectl --context <context> -n <driver-namespace> logs <driver-pod> -c <container> --since-time=<start-time>`.
-4. Have the storage owner check the actual share and archive path through the
-   approved storage process. Do not remove finalizers or delete retained data
+4. For an actual SMB PV, identify the workload Pod from the claim's describe
+   output and read `kubectl --context <context> -n <namespace> get pod <workload-pod> -o yaml`.
+   `<workload-pod>` is a Pod that uses this claim; record its UID, volume claim
+   name and `spec.nodeName`. If no node is assigned, stop the node-mount route.
+   Read `kubectl --context <context> get csinode <node> -o yaml` and match the
+   PV driver in `spec.drivers`; `<node>` is that recorded workload node.
+   List candidate Pods with `kubectl --context <context> get pods -A -o wide`.
+   For the selected chart, inspect `csi-smb-controller` Pods and
+   `csi-smb-node` Pods on that node, then verify them through the next read.
+   Names alone are not evidence of driver identity.
+5. Read each candidate with
+   `kubectl --context <context> -n <driver-namespace> get pod <driver-pod> -o yaml`.
+   Match the `smb` argument `--drivername` to the PV driver. Match controller
+   `csi-provisioner` and `smb` CSI socket arguments, environment and shared
+   volume; match the node registrar socket to the node `smb` socket. Record
+   Pod UID, node, ownerReferences, each container's name, image, command and
+   args, and `status.containerStatuses` name, imageID, state and restartCount.
+   Compare the original chart container names and arguments linked above.
+   Do not select an unrelated sidecar's logs. For deletion retain both
+   `csi-provisioner` and controller `smb` logs; for staging retain node `smb`
+   logs. Use the timestamped log command in step 3 with each named container.
+   If a Pod restarted, also read
+   `kubectl --context <context> -n <driver-namespace> logs <driver-pod> -c <container> --previous --since-time=<start-time>`.
+   A missing previous log is an evidence gap. Unknown image digest, wrapper,
+   mismatched driver, inaccessible Pod or ambiguous controller selection
+   requires a stop and the platform owner's deployment record. Confirm the
+   recorded imageIDs correspond to the original versions before applying
+   their defaults. Record all candidate controllers if leadership is unknown;
+   do not infer the request recipient from one healthy Pod.
+6. Use the runtime-input table and credential-reference rules above to record
+   the effective handle policy, archive-removal flag and both credential
+   references. Preserve uncertainty about lookup success separately from
+   reference selection. Do not fetch Secrets to resolve that uncertainty.
+7. Have the storage owner check the actual share and archive path through the
+   approved storage process. For mount timeout, Kubernetes object reads and
+   container logs do not prove the mount worker stopped or show the current
+   staging mount. KubeClaw supplies no supported host/process inspection
+   procedure for that proof. Stop before retry, restart, unmount or deletion
+   until the node/storage owner supplies an approved read-only inspection
+   procedure and timestamped observations: node and driver Pod/image identity,
+   exact stagingTargetPath correlated to the incident volume handle, current
+   mount source/target/options in the correct mount namespace, and remaining
+   mount-worker/process state. Obtain the exact path from a recorded CSI
+   request or the owner's kubelet evidence; do not guess it from the PV name.
+   The owner must also observe the original and `archived-<subdirectory>`
+   locations on the actual share after uncertain deletion. Missing logs or an
+   absent API object prove neither worker termination nor erasure. Platform
+   operations owns the missing host inspection procedure; the storage owner
+   owns share observations. Resumption requires those inputs and an explicit
+   owner determination that no conflicting work remains and the proposed
+   action preserves retained data. Do not remove finalizers or delete retained data
    to force convergence. A directory on the same share is not an independent
    backup. Use the [recovery procedure](../use/recovery.md#nonnegotiable-rules) and its
    isolated-target checks; stop before cutover when application recovery is
