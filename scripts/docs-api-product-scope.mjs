@@ -157,6 +157,25 @@ function runtimeDefaultApplicability(kind, fieldPath, parent, resource, record) 
     }[fieldPath];
     if(driver)return receivingDefault('pkg/apis/storage/v1/defaults.go',...driver);
   }
+  if (kind === 'Service') {
+    const type = resource.spec?.type || 'ClusterIP';
+    const serviceDefault = {
+      '$.spec.type': ['123-L125', 'An empty Service type defaults to ClusterIP.'],
+      '$.spec.sessionAffinity': ['107-L112', 'An empty sessionAffinity defaults to None; None clears sessionAffinityConfig.'],
+      '$.spec.ports[].protocol': ['126-L130', 'Each present Service port with empty protocol defaults to TCP.'],
+      '$.spec.ports[].targetPort': ['131-L133', 'An absent targetPort is integer zero and defaults to this Service port number; an explicit empty string also defaults to the port number.'],
+    }[fieldPath];
+    if (serviceDefault) return {...core(...serviceDefault), explicitZeroValues: fieldPath.endsWith('targetPort') ? ['', 0, null] : ['', null]};
+    if (fieldPath === '$.spec.internalTrafficPolicy' && ['ClusterIP', 'NodePort', 'LoadBalancer'].includes(type))
+      return {...core('141-L146', 'An absent internalTrafficPolicy pointer defaults to Cluster for ClusterIP, NodePort and LoadBalancer Services; this default does not apply to ExternalName.'), explicitZeroValues:[null]};
+    if (fieldPath === '$.spec.allocateLoadBalancerNodePorts' && type === 'LoadBalancer')
+      return {...core('148-L152', 'For a LoadBalancer Service, an absent allocateLoadBalancerNodePorts pointer defaults to true.'), explicitZeroValues:[null]};
+    if (fieldPath === '$.spec.externalTrafficPolicy' && (['NodePort', 'LoadBalancer'].includes(type) || (type === 'ClusterIP' && resource.spec?.externalIPs?.length))) {
+      const result = core('135-L139', 'For an externally accessible Service, an empty externalTrafficPolicy defaults to Cluster.');
+      result.evidence.push(defaultEvidence('pkg/api/service/util.go', '71-L75', 'ExternallyAccessible includes LoadBalancer, NodePort and ClusterIP with nonempty externalIPs.'));
+      return {...result, explicitZeroValues:['', null]};
+    }
+  }
   const podSpecPrefix = { Pod: '$.spec', Deployment: '$.spec.template.spec', DaemonSet: '$.spec.template.spec', StatefulSet: '$.spec.template.spec', Job: '$.spec.template.spec', CronJob: '$.spec.jobTemplate.spec.template.spec' }[kind];
   if (!podSpecPrefix) return null;
   if(kind==='Pod'&&fieldPath==='$.spec.enableServiceLinks') {
@@ -169,6 +188,33 @@ function runtimeDefaultApplicability(kind, fieldPath, parent, resource, record) 
   }
   const member = fieldPath.slice(podSpecPrefix.length + 1);
   if (!fieldPath.startsWith(`${podSpecPrefix}.`)) return null;
+  if (/^(containers|initContainers|ephemeralContainers)\[\]\./u.test(member)) {
+    if (member.endsWith('.ports[].protocol')) {
+      const routes = {
+        Pod: ['core', ['375-L379', '301-L305', '449-L453']],
+        Deployment: ['apps', ['541-L545', '467-L471', '615-L619']],
+        DaemonSet: ['apps', ['214-L218', '140-L144', '288-L292']],
+        StatefulSet: ['apps', ['1195-L1199', '1121-L1125', '1269-L1273']],
+        Job: ['batch', ['555-L559', '481-L485', '629-L633']],
+        CronJob: ['batch', ['219-L223', '145-L149', '293-L297']],
+      };
+      const [group, ranges] = routes[kind];
+      const index = ['containers', 'initContainers', 'ephemeralContainers'].indexOf(member.split('[')[0]);
+      return {...receivingDefault(`pkg/apis/${group}/v1/zz_generated.defaults.go`, ranges[index], 'Each present container port with empty protocol defaults to TCP on this receiving route.'), explicitZeroValues:['', null]};
+    }
+    if (member.endsWith('.imagePullPolicy'))
+      return {...core('82-L93', 'An empty container imagePullPolicy defaults to Always when the parsed image tag is latest, otherwise IfNotPresent. The image reference of this container determines the default; an explicit policy is preserved.'), explicitZeroValues:['', null]};
+    if (member.endsWith('.terminationMessagePath')) {
+      const result = core('94-L96', 'An empty container terminationMessagePath defaults to /dev/termination-log.');
+      result.evidence.push(defaultEvidence('staging/src/k8s.io/api/core/v1/types.go', '2896-L2897', 'TerminationMessagePathDefault is /dev/termination-log.'));
+      return {...result, explicitZeroValues:['', null]};
+    }
+    if (member.endsWith('.terminationMessagePolicy')) {
+      const result = core('97-L99', 'An empty container terminationMessagePolicy defaults to File. This setting does not prove that a terminated container wrote a message.');
+      result.evidence.push(defaultEvidence('staging/src/k8s.io/api/core/v1/types.go', '2808-L2810', 'TerminationMessageReadFile has the value File.'));
+      return {...result, explicitZeroValues:['', null]};
+    }
+  }
   const simple = {
     dnsPolicy: ['211-L218', 'An empty DNS policy defaults to ClusterFirst.'],
     restartPolicy: ['219-L221', 'An empty restart policy defaults to Always.'],
@@ -318,15 +364,17 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         const parts = tokens(boundary.fieldPath);
         const key = parts.at(-1);
         if (parts.length !== actual.length + 1 || !matches(parts.slice(0, -1), actual)
-          || key === '*' || key === '[]' || Object.hasOwn(node, key)) continue;
+          || key === '*' || key === '[]') continue;
         const record = records.get(boundary.fieldPath);
         const required = (parent.contract.required ?? []).includes(key);
         const defaulted = Object.hasOwn(boundary.contract, 'default');
         const receiverDefault = (context.requestMethod?null:runtimeDefaultApplicability(kind, boundary.fieldPath, node, value, record));
+        const present = Object.hasOwn(node, key);
+        if (present && !receiverDefault?.explicitZeroValues?.includes(node[key])) continue;
         if (!required && !defaulted && !receiverDefault) continue;
         const fieldPath = yamlFieldPath([...actual, key]);
         const evidence = {
-          reason: required ? 'required-under-present-parent' : defaulted ? 'schema-default-under-present-parent' : 'receiver-default-under-present-parent',
+          reason: present ? 'receiver-default-for-explicit-zero-value' : required ? 'required-under-present-parent' : defaulted ? 'schema-default-under-present-parent' : 'receiver-default-under-present-parent',
           path: context.path, document: context.document, fieldPath,
           parentPath: yamlFieldPath(actual), sourceDigest: context.sourceDigest,
           ...(materializedBy ? { materializedBy } : {}),

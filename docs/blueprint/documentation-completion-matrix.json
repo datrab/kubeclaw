@@ -18507,10 +18507,10 @@
       "accepted": false
     },
     "currentIndependentWork": {
-      "cluster212": "Corrected12 prior findings and ten new selected CRD fields integrated candidate; fresh full212 review next",
-      "identity253": "Completed frozen Source FAIL235PASS18FAIL; corrected SPIFFE candidate ready for fresh full253 review",
-      "outputDiscovery": "New independent fresh reviewer completing actual producer closure assessment; prior thread stopped without final report",
-      "crdScaleStatus": "Author released; two release digests verified; focused tests passed; no global acceptance"
+      "cluster212": "Complete fresh Source review at f01 preparing final report",
+      "identity253": "Complete fresh Source PASS253/1283cases, publicationFAIL3anchors; evidence verified113entries",
+      "outputDiscovery": "Complete SourceFAIL8; correction author owns discovery/registry/existingapi-reference tests",
+      "runtimeDefaults": "Root source candidate5focusedPASS; full fresh independent review pending"
     }
   },
   "productBoundaries": [
@@ -19362,6 +19362,49 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/spiffe-source-bounds-empty-correction-writer",
       "checks": "7 focused SPIFFE tests PASS, zero skipped, included in combined15; authentic archive schema checked",
       "qualification": "Author source checks, not independent acceptance"
+    },
+    "identity253CorrectedCompleteSource": {
+      "reviewer": "/root/identity253_corrected_complete_source_fresh",
+      "revision": "f01d766a5c6cd06a0a733ebd09a6e75e8215dd71",
+      "report": "/home/node/Documents/Codex/a98-evidence/identity253-corrected-complete-source-fresh/report.json",
+      "reportSha256": "0b9681012c6cd22556e32239d0f31aaf61b63d7826eb81f64a4e6b00a883acb4",
+      "rootVerifiedSealEntries": 113,
+      "records": 253,
+      "cases": 1283,
+      "pass": 253,
+      "fail": 0,
+      "unreviewed": 0,
+      "sourceVerdict": "PASS-assigned-partition-only",
+      "publicationVerdict": "FAIL-three-stale-anchors",
+      "freshHTTPSOriginals": 76,
+      "sourceSpans": 201,
+      "focusedTests": "16PASS0SKIP",
+      "remaining": "Publication refresh; independent Reader/Quality and package Astra; other Source partitions/generator completeness remain open"
+    },
+    "outputDiscoveryCompleteSourceReview": {
+      "reviewer": "/root/output_discovery_finish_fresh_review",
+      "revision": "f01d766a5c6cd06a0a733ebd09a6e75e8215dd71",
+      "verdict": "FAIL-eight-source-completeness-findings",
+      "report": "/home/node/Documents/Codex/a98-evidence/output-discovery-finish-fresh-review/REPORT.md",
+      "reportSha256": "29c128eb0fd599ed985d87c07b0740a9b48d742a7e687a8f6494a178b599632a",
+      "rootVerifiedSealEntries": 28,
+      "contextsDiscovered": 1199,
+      "gvkGroups": 39,
+      "missingAmongDiscovered": 0,
+      "focusedTests": "36PASS0SKIP",
+      "qualification": "Zero discovered receiver gaps does not establish omitted producer completeness. Root JSON.parse spread rejection confirmed; current Cilium variable-byte classification independently PASS, byte reproducibility not claimed.",
+      "correctionAuthor": "/root/producer_closure_eight_findings_writer"
+    },
+    "actualRuntimeDefaultsCandidate": {
+      "author": "/root",
+      "state": "source-candidate-pending-independent-review-and-full-replay",
+      "files": [
+        "scripts/docs-api-product-scope.mjs",
+        "scripts/tests/api-product-runtime-defaults.test.mjs"
+      ],
+      "scope": "Per-instance present container image policy/termination message defaults and container port protocol on actual receiving routes; Service type, affinity, port protocol/target port and conditional selected traffic/LoadBalancer defaults; explicit zero-value default evidence respects pointer and nonempty overrides",
+      "checks": "5 focused tests PASS0SKIP; pinned actual core defaults, typed constants, service helper and generated receiving routes read",
+      "remaining": "Fresh independent Source review, actual all-producer receiver join, publication and Reader/Quality; unused alternatives not expanded"
     }
   }
 }
