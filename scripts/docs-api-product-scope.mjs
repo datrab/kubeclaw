@@ -95,14 +95,21 @@ function runtimeDefaultApplicability(kind, fieldPath, parent, resource, record) 
       const key=fieldPath.slice(prefix.length+1);
       const job={
         parallelism:['41-L43','An absent parallelism pointer defaults to 1.'],
-        ...(parent.parallelism===undefined?{completions:['37-L40','When both completions and parallelism are absent, completions defaults to 1.']}:{}),
-        backoffLimit:['44-L50',parent.backoffLimitPerIndex===undefined?'Absent backoffLimit defaults to 6.':'With backoffLimitPerIndex present, absent backoffLimit defaults to MaxInt32.'],
-        completionMode:['56-L59','An absent completionMode defaults to NonIndexed.'],
-        suspend:['60-L62','An absent suspend pointer defaults to false.'],
-        manualSelector:['72-L74','An absent manualSelector pointer defaults to false.'],
-        podReplacementPolicy:['63-L71','When JobPodReplacementPolicy is enabled, absence defaults to Failed with podFailurePolicy, otherwise TerminatingOrFailed.'],
+        ...(parent.parallelism==null?{completions:['37-L40','When both completions and parallelism are absent, completions defaults to 1.']}:{}),
+        backoffLimit:['44-L50',parent.backoffLimitPerIndex==null?'Absent backoffLimit defaults to 6.':'With backoffLimitPerIndex present, absent backoffLimit defaults to MaxInt32.'],
+        completionMode:['55-L58','An absent completionMode defaults to NonIndexed.'],
+        suspend:['59-L61','An absent suspend pointer defaults to false.'],
+        manualSelector:['71-L73','An absent manualSelector pointer defaults to false.'],
+        podReplacementPolicy:['62-L69','When JobPodReplacementPolicy is enabled, absence defaults to Failed with podFailurePolicy, otherwise TerminatingOrFailed.'],
       }[key];
-      if(job)return receivingDefault('pkg/apis/batch/v1/defaults.go',...job);
+      if(job) {
+        if(kind==='CronJob')return {
+          reason:'Relevant deferred child Job default: CronJob stores the nested JobSpec without running SetDefaults_Job. The controller copies it into a separate Job; Job create defaulting applies at that later boundary.',
+          omission:'The stored CronJob template keeps this absent pointer nil. On subsequent child Job creation: '+job[1],
+          evidence:[defaultEvidence('pkg/apis/batch/v1/zz_generated.defaults.go','42-L53','CronJob default traversal calls SetDefaults_CronJob and PodSpec defaults, without SetDefaults_Job.'),defaultEvidence('pkg/controller/cronjob/utils.go','244-L266','getJobFromTemplate2 copies the template spec into a separate child Job.'),defaultEvidence('pkg/controller/cronjob/cronjob_controllerv2.go','604-L609','The controller submits the constructed child Job with CreateJob.'),defaultEvidence('pkg/apis/batch/v1/defaults.go',job[0],job[1])],
+        };
+        return receivingDefault('pkg/apis/batch/v1/defaults.go',...job);
+      }
     }
     if(kind==='CronJob') {
       const cron={

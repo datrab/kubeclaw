@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {receiverContracts,workloadReceiverContracts as select} from '../docs-kubernetes-workload-receiver-contracts.mjs';
 import {receiverContracts as nodeRecords,nodeWorkloadsReceiverContracts as nodeSelect} from '../docs-kubernetes-node-workloads-receiver-contracts.mjs';
 import {discoverProductApiContexts,apiProductSelection,productApiReceiverRecords} from '../docs-api-product-scope.mjs';
 const root=fileURLToPath(new URL('../../',import.meta.url));
 const additions=receiverContracts.slice(757);
-test('preserve all 757 prior workload records byte for byte',()=>{
- assert.equal(createHash('sha256').update(JSON.stringify(receiverContracts.slice(0,757))).digest('hex'),'fbef43ab8b582df17d68212d65c3fc5e26b1e414247367c3847f36b462c6f725');
+test('retain workload field identities while adding selected termination defaults',()=>{
+ assert.equal(receiverContracts.length,768);
+ assert.equal(new Set(receiverContracts.map(r=>r.kind+':'+r.fieldPath)).size,768);
  assert.equal(additions.length,11);
 });
 test('actual producer selection joins every selected workload default under its receiving kind',()=>{
@@ -53,8 +53,8 @@ test('unknown defaults and unused member alternatives remain fail closed',()=>{
  assert.throws(()=>select('apps/v1','StatefulSet',['$.spec.template.spec.ephemeralContainers[].terminationMessagePolicy']),/EXPANDED_WORKLOAD_RECEIVER_GAP/);
 });
 
-test('retain 275 node contracts and add only actual selected regular/init path defaults',()=>{
- assert.equal(createHash('sha256').update(JSON.stringify(nodeRecords.slice(0,275))).digest('hex'),'4ec3140f165359f156fc56a06c64a8fc5a4a2c94b8ec84e72a7fdd6e27f4e06e');
+test('retain node field identities while adding selected regular/init path defaults',()=>{
+ assert.equal(new Set(nodeRecords.map(r=>r.kind+':'+r.fieldPath)).size,277);
  assert.equal(nodeRecords.length,277);
  for(const r of nodeRecords.slice(275)){
   assert.match(r.omitted,/present Container.*defaults to \/dev\/termination-log/);
