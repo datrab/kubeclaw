@@ -26,8 +26,9 @@ completed owned cleanup. A **fence** is an identity and state check that prevent
 an older operation from changing resources owned by a newer operation.
 
 The controller uses a separate ServiceAccount. The lease client creates and reads
-leases; deployer and tester subjects receive different namespace-local Roles.
-Dedicated credential readers receive access to the named Secret. Readiness and
+leases; deployer and tester subjects receive namespace-local RoleBindings to
+the existing deployer/tester ClusterRoles. Dedicated credential readers receive
+namespace-local Roles and RoleBindings for access to the named Secret. Readiness and
 human product decisions use separately authenticated TLS endpoints. Enabling one
 client does not enable all these authorities.
 
@@ -123,6 +124,16 @@ access only after proving namespace ownership, and waits for deletion or expiry.
 The root schema does not require `spec`; an absent spec still cannot provision a
 usable lease because its requested namespace is missing.
 
+The fixture writes `spec.runId` from the lease name and `spec.project` from
+its validated request payload. These optional trace values are stored and included
+in the accepted spec digest. Namespace ownership labels use the lease name, UID,
+purpose and metadata scope instead. The readiness producer supplies a separate
+`runId`; the controller stores it in `demoReadiness` without comparing it to
+`spec.runId`. Do not use equality of these fields as an implemented ownership
+check. [Owner-label construction](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L1765-L1781)
+and [readiness state construction](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/demo-readiness.go#L250-L256)
+show their separate sources.
+
 The CRD makes the namespace, trace identity, access, workload service claims,
 verified image and manifest digest, cleanup policy, TTL, copied-secret set and
 credential request immutable. Create a new lease for those changes. An optional
@@ -208,6 +219,15 @@ establish these separate boundaries.
 
 ## Read each observation at its own level
 
+`status.createdAt` reports the lease object's `metadata.creationTimestamp`,
+parsed as RFC3339 and converted to UTC. If that timestamp cannot be parsed, the
+controller uses current UTC time. It is not a measured namespace preparation
+time. [The timestamp helper](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/cmd/buster-namespace-controller/main.go#L674-L680)
+defines this observation. The fixture requires a valid timestamp in this status
+field. If status has no string `expiresAt`, the fixture derives its returned
+expiry from this lease timestamp plus its requested retention seconds;
+[it does not measure namespace preparation](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L721-L726).
+
 Namespace `phase: Ready` means that the controller completed its namespace
 provisioning sequence. It can coexist with `CredentialsReady=False` or
 `ExposureReady=False`. The controller reports separate conditions keyed by `type`:
@@ -243,9 +263,14 @@ Before committed readiness, preview creation requires `purpose: final-preview`
 and `exposure.provider: tailscale-ingress`. Omitted exposure or provider selects
 `off`. The preview port defaults to 80. Its service name falls back to
 `spec.serviceName`, then `app`; its hostname derives from namespace and service
-when omitted. An omitted or empty path selects `/`. Nonempty paths must begin
+when omitted. An omitted path selects `/` in the controller. An explicit empty
+string fails the CRD leading-slash pattern during admission, including the
+fixture server dry-run. The controller also has a defensive empty-string fallback
+for absent or legacy data; this does not make an empty path admissible. Nonempty
+paths must begin
 with one slash and exclude query, fragment, NUL and line-break characters.
-The controller checks service endpoints and the observed ingress before reporting
+[The owned path pattern](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L176-L179)
+applies before reconciliation. The controller checks service endpoints and the observed ingress before reporting
 a preview URL. Tailscale operator, DNS and network reachability remain external
 dependencies.
 
@@ -397,11 +422,27 @@ required data before a destructive cleanup.
 | `Expired` or `Deleting` | Stop consumers and let fenced cleanup finish. A new task requires a new lease identity. |
 | Finalizer remains | Inspect namespace ownership labels, current ingress, deletion progress and controller access. Repair the cause. Manual finalizer removal is a last action only after proving no owned resource remains. |
 
-Fixture cancellation or a preparation failure can invoke release after partial
-success; cleanup errors remain part of the fixture result. Reconciliation uses
-current server state after restart, rather than trusting the caller's previous
-response. Do not infer successful deletion from a timed-out client call. Inspect
-the lease, namespace and owned ingress before deciding whether to retry.
+When preparation fails or is cancelled inside the protected block after lease
+apply returned, the fixture attempts release with a separate abort signal and cleanup timer
+bounded by its configured maximum execution time. It suppresses any cleanup
+error and rethrows only the original preparation error. That result therefore
+does not establish whether cleanup completed. Inspect the current lease,
+namespace and owned ingress directly before retrying or assuming resources are
+gone. [Failed-prepare cleanup](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L616-L625)
+and [error suppression](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L733-L735)
+define this limit. Errors before that protected block, including a failed lease
+apply, do not invoke this cleanup handler. An apply error can leave an uncertain
+server result. Inspect the lease before concluding that no resource was created.
+[The apply-to-cleanup boundary](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L703-L714)
+shows where cleanup protection starts.
+
+An explicit release request awaits deletion and propagates a delete failure.
+Its reported success follows the completed delete command; it does not prove
+removal of external copies or retained backing volumes.
+[Explicit release](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L739-L744)
+has this different error contract. Reconciliation uses current server state after
+restart, rather than trusting the caller's previous response. Do not infer
+successful deletion from a timed-out client call.
 
 Use [the fixture guide](../extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md)
 for prepare/release tasks and [Demo Delivery](../use/demo-delivery.md) for verified

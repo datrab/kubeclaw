@@ -18887,7 +18887,15 @@
         "actual namespace RoleBindings reference ClusterRoles"
       ],
       "owner": "/root/buster_owned_lease_receiver_writer",
-      "correctionState": "Author correction running; full fresh affected-scope review required. All150boundaries present and8Node testsPASS do not prove semantic correctness."
+      "correctionState": "Author correction running; full fresh affected-scope review required. All150boundaries present and8Node testsPASS do not prove semantic correctness.",
+      "correctionCandidate": {
+        "state": "authored-not-independently-accepted",
+        "author": "/root/buster_owned_lease_receiver_writer",
+        "reportSha256": "e20a0c0afc22f9c328d7fc562079882457c691d5e810d6b5071be7003c1daa92",
+        "changes": "Trace/statustimestamp/cleanup-suppression/admittedpath/RoleBindings source distinctions corrected; protected prepare catch vs earlier uncertainapply differentiated",
+        "checks": "Root12testsPASS including original TS failurecleanup vs explicitrelease behavior;150identities preserved;202source ranges authorchecked",
+        "reviewRequired": "New fullfresh Source/Reader/Quality, generatedanchors and overall gates"
+      }
     },
     "documentationRendererToolchain": {
       "state": "CI and contributor prerequisites sourceupdated",

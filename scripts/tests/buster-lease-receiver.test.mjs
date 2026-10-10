@@ -100,3 +100,74 @@ test('effective access follows bound chart ClusterRoles rather than unused names
  assert(get('$.spec.access').qualificationLimits.some(x=>x.includes('BUSTER_RBAC_HELPER_CHART_DIVERGENCE')));
  assert(get('$.spec.access').evidence.some(x=>x.url.includes('buster-namespace-controller.yaml#L24-L67')));
 });
+
+// Check producer-to-receiver relationships in the actual sources, not shared
+// purpose strings. These checks do not execute Go or a Kubernetes API request.
+test('spec trace fields have fixture producers and digest storage but no direct label/readiness consumer',()=>{
+ const controllerDirectory=new URL('cmd/buster-namespace-controller/',root);
+ const sources=fs.readdirSync(controllerDirectory).filter(p=>p.endsWith('.go')&&!p.endsWith('_test.go'))
+  .map(p=>fs.readFileSync(new URL(p,controllerDirectory),'utf8')).join('\n');
+ const main=fs.readFileSync(new URL('cmd/buster-namespace-controller/main.go',root),'utf8');
+ const labels=main.slice(main.indexOf('func ownerLabels('),main.indexOf('func leaseLabelValue('));
+ assert.match(labels,/item\.Metadata\.UID/);assert.match(labels,/item\.Spec\["purpose"\]/);
+ assert(!/Spec\["(?:runId|project)"\]/.test(sources),'A new direct trace consumer requires contract review');
+ const digest=main.slice(main.indexOf('func leaseSpecDigest('),main.indexOf('func fullLeaseSpecDigest('));
+ assert.deepEqual([...digest.matchAll(/delete\(copy, "([^"]+)"\)/g)].map(m=>m[1]).sort(),['exposure','purpose']);
+ const fixture=fs.readFileSync(new URL('skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts',root),'utf8');
+ assert.match(fixture,/runId: leaseName, project: text\(payload\.project/);
+ const ready=fs.readFileSync(new URL('cmd/buster-namespace-controller/demo-readiness.go',root),'utf8');
+ assert.match(ready,/"runId": r\.RunID/);
+ assert(get('$.spec.runId').evidence.some(e=>e.url.includes('main.go#L1765-L1781')));
+ assert(get('$.status.demoReadiness.runId').evidence.some(e=>e.url.includes('demo-readiness.go#L250-L256')));
+});
+test('published createdAt follows the lease timestamp helper and its parse-error fallback',()=>{
+ const main=fs.readFileSync(new URL('cmd/buster-namespace-controller/main.go',root),'utf8');
+ const helper=main.slice(main.indexOf('func (c *controller) createdAt('),main.indexOf('// ensureControllerSecretAccess'));
+ assert.match(helper,/time\.Parse\(time\.RFC3339, item\.Metadata\.CreationTimestamp\)/);
+ assert.match(helper,/if err != nil \{\s*return time\.Now\(\)\.UTC\(\)/);
+ assert.match(helper,/return createdAt\.UTC\(\)/);
+ assert.match(main,/"createdAt":\s+c\.createdAt\(item\)\.Format\(time\.RFC3339\)/);
+ assert(get('$.status.createdAt').evidence.some(e=>e.url.includes('main.go#L674-L680')));
+});
+test('owned path admission rejects empty while omission can reach the defensive receiver fallback',()=>{
+ const schema=ownedSchema().properties.spec.properties.exposure;
+ assert(!(schema.required??[]).includes('path'));
+ const pattern=new RegExp(schema.properties.path.pattern);
+ assert(!pattern.test(''));assert(pattern.test('/'));assert(pattern.test('/health'));
+ for(const invalid of ['health','/?query','/#fragment','/line\nnext'])assert(!pattern.test(invalid));
+ const main=fs.readFileSync(new URL('cmd/buster-namespace-controller/main.go',root),'utf8');
+ const exposure=main.slice(main.indexOf('func previewExposureSpec('),main.indexOf('func (c *controller) ensurePreviewExposure('));
+ assert.match(exposure,/path := stringValue\(exposureMap\["path"\]\)\s*if path == "" \{\s*path = "\/"/);
+ assert.match(get('$.spec.exposure.path').emptyValue,/explicit empty string fails/);
+});
+test('actual failed-prepare cleanup slice suppresses delete errors while explicit release propagates them',async()=>{
+ const ts=(await import('typescript')).default;
+ const {runInNewContext}=await import('node:vm');
+ const text=fs.readFileSync(new URL('skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts',root),'utf8');
+ const parsed=ts.createSourceFile('fixture.ts',text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);
+ let methods=[];const visit=node=>{if(ts.isMethodDeclaration(node))methods.push(node);ts.forEachChild(node,visit);};visit(parsed);
+ const method=name=>{const node=methods.find(n=>n.name.getText(parsed)===name);assert(node,name);return node;};
+ const cleanup=method('#releaseAfterPrepareFailure').getText(parsed),release=method('#release').getText(parsed);
+ let catchBody;const findCatch=node=>{if(ts.isCatchClause(node)&&node.block.getText(parsed).includes('#releaseAfterPrepareFailure'))catchBody=node.block.getText(parsed);ts.forEachChild(node,findCatch);};findCatch(method('#prepare'));
+ assert(catchBody,'Original failed-prepare cleanup handler missing');
+ const prepare=method('#prepare');
+ const applyIndex=prepare.body.statements.findIndex(n=>n.getText(parsed).includes("['apply', '-f', '-']"));
+ const protectedIndex=prepare.body.statements.findIndex(n=>ts.isTryStatement(n)&&n.catchClause?.getText(parsed).includes('#releaseAfterPrepareFailure'));
+ assert(applyIndex>=0&&protectedIndex>applyIndex,'Lease apply is outside and before failed-prepare cleanup protection; moving it changes the failure contract');
+ const dnsLine=text.split('\n').find(line=>line.startsWith('const DNS_LABEL = '));assert(dnsLine);
+ const program=`${dnsLine}\nclass Slice {
+ #maximumExecutionMs=1000; #controllerNamespace='controller';
+ #kubectlRun=stub;
+ ${cleanup}
+ ${release}
+ async failedPrepare(leaseName,error) ${catchBody}
+ async explicitRelease(leaseName){return this.#release(leaseName,new AbortController().signal);}
+ } new Slice()`;
+ const javascript=ts.transpileModule(program,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
+ const cleanupError=new Error('delete failed'),prepareError=new Error('original preparation cancelled');
+ const calls=[];const instance=runInNewContext(javascript,{AbortController,setTimeout,clearTimeout,stub:async(...args)=>{calls.push(args);throw cleanupError;}});
+ await assert.rejects(instance.failedPrepare('test-lease',prepareError),error=>error===prepareError);
+ assert.equal(calls.length,1);assert.equal(calls[0][0][0],'delete');assert.equal(calls[0][2].aborted,false);
+ await assert.rejects(instance.explicitRelease('test-lease'),error=>error===cleanupError);
+ assert.equal(calls.length,2);
+});
