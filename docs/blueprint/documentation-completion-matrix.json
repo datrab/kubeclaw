@@ -15818,6 +15818,30 @@
         "A98-11"
       ],
       "description": "Frozen F43: schedule/timeZone update cases now describe actual updateCronJob384-413 new-schedule parsing, UnParseableCronJobSchedule event on parse failure and next calculated requeue. Existing Job specs/execution remain separate; later scheduling checks still apply. Original immutable controller bytes already authenticated/hashverified and exact body independently read by Root. No live or independent acceptance claimed."
+    },
+    {
+      "id": "A98-STATEFUL-REPLICAS-CONSUMER-CORRECTION",
+      "state": "source-correction-awaiting-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Frozen F44: replicas changeImpact/update now explains accepted desired ordinal range changes, missing Pod creation, out-of-range Pod removal, ordering/readiness/termination delays and claim retention ownership checks; zero does not prove immediate termination or blanket PVC deletion. Authenticated original stateful_set_control.go SHA25671aa452f83f36cae7cecda3873caca1c4e71560635aa8a4c7aa5a07c7925a05f read594-630/440-479/661-700/513-539; apps validation246-271 confirms mutable replicas. No live or independent acceptance."
+    },
+    {
+      "id": "A98-STATEFUL-RETENTION-STRATEGY-CONSUMER-CORRECTION",
+      "state": "source-correction-awaiting-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Frozen F45/F46: retention parent/whenDeleted/whenScaled update effects now explain owner-ref reconciliation, unexpected controller guard, ordinal-dependent choices, later GC, failed-update/recovery and no synchronous deletion guarantee. Strategy parent/type/rollingUpdate/partition effects now distinguish OnDelete versus revision replacement, nil threshold, partition changes, MaxUnavailableStatefulSet gate/budget, availability/termination and recovery. Read authenticated statefulutils303-348/control704-825 and mutable allowlist; unused ordinal/minReady alternatives not newly selected. Await independent complete review."
     }
   ],
   "checks": [
@@ -16711,6 +16735,11 @@
       "command": "KUBECLAW_DOCS_KUBERNETES_SOURCE_DIR=/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/cronjob-deferred-child-defaults.test.mjs",
       "state": "terminal-pass",
       "scope": "Final selector/scope/schedule/timeZone candidate:9passed0failed0skipped session15230 terminal. Earlier selector/scope9PASS40899 superseded by added schedule changes. Narrow checks/default original-source boundary only; Root manually read immutable updateCronJob384-413 and previously authenticated JobSpecUpdate623-634. Full Source/Reader/Quality acceptance absent."
+    },
+    {
+      "command": "KUBECLAW_DOCS_KUBERNETES_SOURCE_DIR=/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/cronjob-deferred-child-defaults.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Final Stateful replicas/retention/strategy candidate9PASS0FAIL0SKIP session90591; prior replicas-only9PASS91021 superseded by policy/strategy corrections. Root authenticated/read controller71aa452f83f36cae7cecda3873caca1c4e71560635aa8a4c7aa5a07c7925a05f, utilitiese0f34bbeae9896c2348cce459acad4562154f768a0683e5a7d566acc27991f3b and appsvalidation. Narrow boundary/invariant tests only, no complete independent semantics, live PVC operations or package acceptance."
     }
   ],
   "reviewAssignments": [
