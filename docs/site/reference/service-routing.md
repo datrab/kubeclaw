@@ -1,5 +1,12 @@
 # Service routes and diagnosis
 
+Status: source-backed procedure; live routing unverified
+Audience: operator, platform maintainer
+Owner: platform networking
+Evidence: charts/kubeclaw/templates/service.yaml; charts/prism/templates/services.yaml; charts/ops-pod/templates/workload.yaml; scripts/docs-kubernetes-core-receiver-contracts.mjs
+Applies to: supported local Service producers and the explicitly selected upstream source baselines
+Last verified: 2026-10-10; source and local renders checked, cluster behavior unverified
+
 A stored Service is network intent. It does not prove that a Pod listens, that DNS has updated, or that a client is allowed to connect. Use this page to find the selected producer, understand its receiving path, and inspect the failed stage before any change. The generated [configuration precedence](configuration-precedence.md) and [Helm values](helm-values.md) provide field types, defaults and input authorities. This page explains their product relationships; it does not duplicate the full field tables.
 
 ## Find the producer

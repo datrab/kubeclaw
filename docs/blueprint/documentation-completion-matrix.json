@@ -18821,6 +18821,23 @@
       "rootVerifiedArtifacts": 156,
       "finding": "Q-F01: PVC/PV, provisioner, CSI, SMB, finalizer and staging require task-local definitions.",
       "correctionState": "Root authored compact definitions; fresh full affected-scope Quality re-review required. No retrospective PASS."
+    },
+    "selectedPrismJobHookCandidate": {
+      "state": "authored-not-independently-accepted",
+      "author": "/root",
+      "evidenceDirectory": "/home/node/Documents/Codex/a98-evidence/job-hook-consumers-root",
+      "changes": "Actual selected Helm install/upgrade/hook creation/deletion/watch and Argo phase/wave/finalizer/health paths, conditional version scopes; no migration success from status/object absence",
+      "checks": "379unaffected metadata contracts+implicitreferences preserved;3named-hook records qualified; newcitationranges valid;6workloadtestsPASS",
+      "fullRefs": "74872 terminalFAIL only concurrent Buster new generated anchors absent; no fullcurrentPASS"
+    },
+    "pvcQualityCorrectedReview": {
+      "state": "report-address-erratum-pending",
+      "revision": "2622a2611e3f214681d86f941ebdde204afed84f",
+      "reviewer": "/root/pvc_runtime_vocabulary_quality_corrected_fresh",
+      "reportedVerdict": "bounded QUALITY PASS",
+      "rootSealVerifiedFiles": 5565,
+      "reportSha256": "f9d31773743488970ee27929b4df09aa13bf6aed26a3553f4888290cd9a7819f",
+      "rootFinding": "Report line spans for definitions do not match frozen page; reviewer rechecking all citation spans and resealing. PASS not integrated as final evidence."
     }
   }
 }

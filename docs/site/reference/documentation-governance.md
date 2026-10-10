@@ -53,6 +53,18 @@ The publication tool checks page metadata and repository evidence paths. See the
 The status generator reads the machine-owned issue register. See the
 [status source boundary](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts/docs-status.mjs).
 
+## Generator prerequisites
+
+Run documentation generators from the repository root with Node.js 24 and
+installed repository dependencies. API output discovery also requires Go
+1.26.3 on `PATH`. It uses the standard Go parser to inspect the controller's
+source; it does not build or run the controller. The documentation workflow
+pins the same Go version for both validation and trusted regeneration.
+Use `node --version` and `go version` to confirm the tools before generation.
+If either tool is absent, install it through the development environment's
+approved toolchain procedure. A missing parser is a failed prerequisite, not
+permission to omit controller-produced API objects from the inventory.
+
 ## Authored Explanations and Generated Facts
 
 Authored text explains purpose, sequence, reasons, consequences, failure, and recovery.

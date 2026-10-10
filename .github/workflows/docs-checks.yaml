@@ -21,6 +21,11 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24"
+      - name: Set up documentation Go parser
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version: "1.26.3"
+          cache: false
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
       - name: Check docs workflow trigger coverage
@@ -73,6 +78,11 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24"
+      - name: Set up documentation Go parser
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version: "1.26.3"
+          cache: false
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
       - name: Check docs workflow trigger coverage
