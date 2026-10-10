@@ -10,6 +10,34 @@ const types = (start, end, claim) => source('staging/src/k8s.io/api/admissionreg
 const metaTypes = (start, end, claim) => source('staging/src/k8s.io/apimachinery/pkg/apis/meta/v1/types.go', start, end, claim);
 const controller = (start, end, claim) => source('pkg/controller/validatingadmissionpolicystatus/controller.go', start, end, claim);
 const checker = (start, end, claim) => source('staging/src/k8s.io/apiserver/pkg/admission/plugin/policy/validating/typechecking.go', start, end, claim);
+const applyEvidence = [
+  source('staging/src/k8s.io/client-go/applyconfigurations/admissionregistration/v1/typechecking.go',26,47,'The warning slice has JSON omitempty; the builder starts empty and appends only supplied warning entries.'),
+  source('staging/src/k8s.io/client-go/applyconfigurations/admissionregistration/v1/validatingadmissionpolicystatus.go',29,58,'The status apply builder uses pointers for observed generation and typeChecking; conditions are an omitempty slice.'),
+  source('staging/src/k8s.io/client-go/util/apply/apply.go',34,49,'The default apply request uses JSON serialization and the YAML apply patch media type. Both named CBOR client gates select CBOR instead; marshal errors are returned.'),
+  source('staging/src/k8s.io/client-go/gentype/type.go',322,348,'ApplyStatus constructs the apply request, selects the status subresource and passes patch options; request errors are returned.'),
+  source('staging/src/k8s.io/apiserver/pkg/endpoints/handlers/patch.go',500,517,'The apply handler decodes the patch and passes the named field manager and force option to FieldManager.Apply.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/fieldmanager.go',57,74,'Default field management wraps the underlying manager, including manager identity and metadata handling, with the group version and subresource.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/fieldmanager.go',181,208,'Apply decodes stored managed fields, delegates to the manager chain, translates conflicts and encodes the resulting managed fields.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/buildmanagerinfo.go',54,74,'The apply manager identifier includes its name, Apply operation, API version and subresource.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/structuredmerge.go',120,158,'Structured apply checks version and patch managedFields, converts live and patch objects to typed values and invokes the merge updater.'),
+  source('staging/src/k8s.io/apimachinery/pkg/util/managedfields/internal/structuredmerge.go',162,181,'A changed merged value is converted back, defaulted and converted to the internal version; conversion errors are returned.'),
+  source('vendor/sigs.k8s.io/structured-merge-diff/v6/merge/update.go',209,249,'Apply computes the new field set, filters ignored fields, prunes against the previous set and checks changes with the force option.'),
+  source('vendor/sigs.k8s.io/structured-merge-diff/v6/merge/update.go',252,279,'Pruning requires a previous owned set and conversion to its version; a missing version retains the merged object. Owned and dangling items are restored before conversion back.'),
+  source('vendor/sigs.k8s.io/structured-merge-diff/v6/merge/update.go',282,308,'Pruning restores items claimed by another manager or the current new configuration, grouped by API version.'),
+  source('vendor/sigs.k8s.io/structured-merge-diff/v6/merge/update.go',131,157,'Conflicts intersect another manager set with modified or added fields. Without force they fail; with force conflicting ownership is removed from the other manager.'),
+];
+const applyConditions = [
+  'Server-side apply merges a declared configuration with the stored object and tracks a set of owned fields. The manager identifier includes name, Apply operation, API version and status subresource; the name alone does not identify the full set.',
+  'In the default JSON request route, an empty computed warning result leaves expressionWarnings nil in the apply builder. The omitempty tag omits that field; the request does not send expressionWarnings: []. The controller also omits conditions.',
+  'At the typed merge boundary, an omitted field or item previously owned by this manager is a pruning candidate. Another current owner can retain it. A first apply without a previous owned set does not prune omitted stored items. Schema granularity, ignored fields, conversion and restored dangling items affect the result.',
+  'Force true permits transfer of conflicting ownership for modified or added fields. It does not mean that all omitted warnings or conditions are deleted. Inspect the stored value and managed fields before a corrective write; repeated retries do not establish a different ownership result.',
+];
+const applyCases = [
+  {name:'Empty computed warnings in the default JSON route',condition:'The controller computes no warnings; the two CBOR client gates do not both select CBOR.',sourceOutcome:'WithExpressionWarnings appends no entries. JSON omitempty omits expressionWarnings; typeChecking remains a present pointer to an empty object. This request shape alone does not prove removal of stored warnings.'},
+  {name:'First apply omits a stored field',condition:'The merge updater has no previous owned set for this complete manager identifier and the new configuration omits an existing field.',sourceOutcome:'The prune function returns the merged value unchanged because lastSet is nil or empty. This omission is not an unconditional delete.'},
+  {name:'Omitted item has another owner',condition:'At the typed merge boundary an item is absent from this manager\'s new configuration but another current manager owns it, and required conversions succeed.',sourceOutcome:'The prune route restores items claimed by current managed sets. Inspect schema granularity and the resulting object; Force true does not remove this ownership solely because the item was omitted.'},
+  {name:'Forced conflicting change',condition:'A supplied modified or added field intersects another manager\'s owned set and the merge updater receives force true.',sourceOutcome:'The updater does not return the non-force conflict error and subtracts the conflicting field set from the other manager. Other validation and conversion errors can still fail the write.'},
+];
 const commonEvidence = [
   source('staging/src/k8s.io/apimachinery/pkg/runtime/serializer/json/json.go',267,304,'The typed JSON serializer invokes the pinned decoder; strict decoding also reports duplicate and unknown fields.'),
   source('vendor/sigs.k8s.io/json/internal/golang/encoding/json/decode.go',950,1003,'Null clears pointers and collections; it leaves ordinary scalar and value-struct receivers unchanged. These cases start with a fresh typed object.'),
@@ -45,18 +73,18 @@ function add(path, shape, purpose, omitted, emptyValue, invalidValue, evidence, 
     operationScope:'Fresh typed JSON status-subresource update; ordinary create/update have the different status preparation rules stated below. Source-derived controller publication is separate from executed validation.',
     omitted,nullValue,emptyValue,invalidValue,
     changeImpact:options.changeImpact ?? 'Changes reported policy observations through the status endpoint. It does not change the policy spec, binding, or outcome of a resource request.',
-    crossFieldConditions:[...baseConditions,...(options.conditions ?? [])],
+    crossFieldConditions:[...baseConditions,...applyConditions,...(options.conditions ?? [])],
     cases:[
       {name:'Omitted field in fresh replacement',condition:'The immediate parent exists and this field is omitted from a fresh typed status update.',sourceOutcome:omitted},
       {name:'Explicit JSON null',condition:'The immediate parent exists and this field is JSON null in a fresh typed status update.',sourceOutcome:nullValue},
       {name:'Explicit empty value',condition:'The immediate parent exists and the receiver-specific empty representation described below is supplied.',sourceOutcome:emptyValue},
-      ...(options.cases ?? []),
+      ...applyCases,...(options.cases ?? []),
     ],
-    evidence:[...commonEvidence,...evidence,checker(104,138,'The warning producer checks only validation and message expressions and constructs indexed field references.')],
+    evidence:[...commonEvidence,...applyEvidence,...evidence,checker(104,138,'The warning producer checks only validation and message expressions and constructs indexed field references.')],
     qualificationLimits:[
       'These are pinned-source expectations. No API request, CEL evaluation, controller process, informer synchronization or live status update was executed.',
       'Actual controller selection, discovery schemas, permissions and server apply ownership determine whether a status write succeeds. On controller errors inspect its logs and access before changing the policy; retries do not prove recovery.',
-      'Available-source documentation gap: the complete server-side apply field-ownership and omission route for this status producer still requires separate qualification. The named Force option is an input, not proof that every omitted warning or condition is removed.',
+      'Available-source documentation gap: the client builder, default JSON request, manager identity and typed merge pruning routes are qualified above. The complete server installation, manager wrappers, schema field granularity and reset-field filtering for this status producer still require qualification before its exact field-removal outcomes can be accepted.',
     ],
   };
   records.push(record);

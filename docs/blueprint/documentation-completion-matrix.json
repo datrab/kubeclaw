@@ -15511,6 +15511,20 @@
       "evidenceSha256": "4725a966f915c30979ab4c2a7516a9fff4f9878489070b5376fdcc0aee9e5313",
       "artifactManifestSha256": "c3fe9f6a8879996a8d29b99cdc5077b13aee6906c5454ed48eecb3264dcc6c73",
       "rootVerifiedArtifacts": 51
+    },
+    {
+      "id": "A98-STATUS-APPLY-ROUTE-PARTIAL-QUALIFICATION",
+      "state": "partially-qualified-not-accepted",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "15 status contracts now111 Source cases. Actual default JSON builder/request, status client/server handler, manager identity and typed merge/prune routes qualified.26 original primary files verified by Git blob and SHA256;38 exact evidence bounds captured. Full server installation, wrappers, schema granularity and reset filtering remain explicit documentation gaps. No independent acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/admission-status-root/report.md",
+      "evidenceSha256": "a6c533b4708ed4ac40c69a984ab3c7ad295354682ddff67de0b81a8cb2f580ea"
     }
   ],
   "checks": [
