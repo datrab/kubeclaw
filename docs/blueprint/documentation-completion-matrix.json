@@ -18531,7 +18531,7 @@
       "No product runtime changes",
       "Contractually gated parity and deletion"
     ],
-    "transitionState": "governance-updated-generator-and-gate-migration-pending",
+    "transitionState": "governance-passed-generator-supported-output-and-reader-corrections-in-progress",
     "openWork": [
       "Audit discovery and rendering against the approved boundary without losing conditional product inputs",
       "Classify upstream alternatives individually using actual source selection and supported reader tasks",
@@ -18621,7 +18621,21 @@
         "Retention policy and safe storage diagnosis",
         "False retained assertions and narrow evidence corrected"
       ],
-      "acceptance": "No fresh candidate Source, Reader, Quality, Astra or AP09.8 acceptance; driver and live recovery observations remain unperformed."
+      "acceptance": "No fresh candidate Source, Reader, Quality, Astra or AP09.8 acceptance; driver and live recovery observations remain unperformed.",
+      "freshReaderReview": {
+        "reviewer": "/root/pvc_product_reader_fresh",
+        "freshContext": true,
+        "revision": "443e138c33ae7b83ffc33aed79f5fa04d784f4b0",
+        "verdict": "FAIL affected reader slice only",
+        "reportSha256": "2abfadf80903c6e01f4993c72e599779d1dcfe6ecd9d1a3fe8a3e33da4ed2b9b",
+        "rootVerifiedArtifacts": 161,
+        "tasks": "Three supplemental synthetic reader tasks PASS, conditional SMB task FAIL; no live registered reader exercises executed.",
+        "openFindings": [
+          "R1 actual runtime component/input/staging/worker discovery incomplete",
+          "R2 canonical symptom routes missing"
+        ],
+        "correctionOwner": "/root/pvc_runtime_discovery_correction_writer"
+      }
     },
     "generatorSelectionFoundation": {
       "state": "implemented-foundation-not-scope-complete",
@@ -18651,7 +18665,63 @@
         "Resolve actual selected CRD metadata Source proof",
         "New independent Source/Reader/Quality reviews; current inventory/generation/mandatory mutations"
       ],
-      "acceptance": "No complete config scope, publication, A98 gate or package acceptance."
+      "acceptance": "No complete config scope, publication, A98 gate or package acceptance.",
+      "freshSourceReview": {
+        "reviewer": "/root/product_selection_generator_source_fresh",
+        "freshContext": true,
+        "revision": "2cfab37c9b121d64427475e8d86abc7e41771527",
+        "verdict": "FAIL complete product scope; bounded raw foundation mechanically passes",
+        "reportSha256": "d6566aa95bacbc8e327b748c9e5b45ae05ddc9532e4376f6610540b28c728ee5",
+        "rootVerifiedArtifacts": 37,
+        "findings": [
+          "Supported template/script/controller outputs missing",
+          "Relevant runtime omissions/defaults missing",
+          "Instance-level array omissions suppressed",
+          "Frozen full publication blocked and inventories stale",
+          "Argo general field links imprecise",
+          "Internal discovery prose leaks into published limits",
+          "Malformed YAML skipped by independent discovery"
+        ],
+        "correctionOwner": "/root/product_output_default_discovery_correction_writer"
+      }
+    },
+    "selectedCrdMetadataCorrections": {
+      "state": "author-candidate-not-independently-accepted",
+      "author": "/root/selected_crd_metadata_correction_writer",
+      "headAtSeal": "2cfab37c9b121d64427475e8d86abc7e41771527",
+      "files": [
+        {
+          "path": "scripts/docs-kubernetes-metadata-receiver-contracts.mjs",
+          "sha256": "a12e433b2620c610dc1ccb6b23b76289da2d7fb33561794a223ccee6afaa3c98",
+          "bytes": 128793
+        },
+        {
+          "path": "scripts/docs-argo-receiver-contracts.mjs",
+          "sha256": "4d6b75cbc9c8406b543afd21826172898823248ced321f92edf776223cc59740",
+          "bytes": 538261
+        },
+        {
+          "path": "scripts/docs-cilium-receiver-contracts.mjs",
+          "sha256": "7180c34d7b18b6aec031cefa6b2b6e56b063150e2ae627505cf94f6e8793ebd6",
+          "bytes": 511377
+        }
+      ],
+      "evidenceDirectory": "/home/node/Documents/Codex/a98-evidence/selected-crd-metadata-correction-writer",
+      "reportSha256": "5cbcf355d9c444bbc42e6bbfbe13832e7210a5492ce0be8fd576487edb63e007",
+      "rootVerifiedArtifacts": 83,
+      "observedChecks": "Author 45rawCRDcontexts15implicit4parent metadata clauses;16focused tests. Root observed16tests PASS, not full independent source acceptance.",
+      "remaining": "Full selected publication remains blocked at Application $.spec; supported output discovery and new Source/Reader/Quality reviews remain."
+    },
+    "observedOfficialMutationRun": {
+      "revision": "2cfab37c9b121d64427475e8d86abc7e41771527",
+      "command": "npm run docs:drift:config:mutations",
+      "sessionId": 25027,
+      "state": "terminal-fail",
+      "exitCode": 1,
+      "log": "/home/node/Documents/Codex/a98-evidence/scoped-mutations-2cfab37c.log",
+      "logSha256": "1127e5a16bfed061cf9b4053b934dc8f702ada0e83c22b74cb29297c288d9c69",
+      "failure": "Baseline publication failed API_REFERENCE_UNRESOLVED_PROOF Application $.metadata after two PASS families. No full mutation PASS.",
+      "isolation": "Detached frozen source worktree; existing host node_modules symlink, not clean dependency install."
     }
   }
 }
