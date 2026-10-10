@@ -19663,6 +19663,20 @@
       "state": "PASS-focused-integration-checks-not-independent-acceptance",
       "checks": "24testsPASS0FAIL0SKIP including sourcehash-verifiedProbe/Job/DaemonSet sourcecontracts; 20coverage/workload/Service checksPASS beforelatestadditionalcaptions, sixkindProbe-boundaryprobesPASS,54authenticatedgeneratedProbevisitorcallranges verified",
       "limits": "No current source-stableallproducerjoinPASS (oldfrozend8tuple mismatch rightlyrejected); no API/liveexecution; fullSource stillongoing; noReader/Quality/Astra/packageclosure"
+    },
+    "volumeAttributesFeatureGateCaptionCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-complete-source-review",
+      "source": "kubernetes-csi/external-provisioner986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go617-628",
+      "scope": "IncludeactualVolumeAttributesClass featuregate condition at617, previously omitted618-628; actualoriginalwholeSHAchecked; runtimeassertionunchanged",
+      "findingOrigin": "workload_node_corrected_complete_source_fresh caption75d8"
+    },
+    "workloadNodeScopeProofQualification": {
+      "reviewer": "/root/workload_node_complete_source_fresh",
+      "revision": "5d4324872f076af5a11e56420e60c217122ea69a",
+      "state": "mechanical-unselected-not-semantic-NOT_APPLICABLE",
+      "scope": "All239mechanicalexclusions and1189cases restoredUNREVIEWED pendingsemanticmateriality; oldunselectedN/Acheckpoint superseded.17of759selectedcaptionpairsFAIL,742PASS,wholecase/recordreviewongoing.",
+      "qualification": "Hookreplaycannotproveomissionirrelevance; newJobselector/presentProbe materialdefaults illustrateinvalidexclusions. No wholeSourceacceptance."
     }
   }
 }
