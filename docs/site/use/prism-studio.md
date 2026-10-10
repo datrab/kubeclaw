@@ -3,7 +3,7 @@
 Status: local deploy-script verification passed; fixed spike browser path blocks complete local checks; absent runtime release selection blocks deployment; no live journey result
 Audience: Prism operator, designer, incident responder, platform maintainer
 Owner: Prism maintainers
-Evidence: skills/prism; skills/nova/plugins/prism-design; charts/prism; scripts/deploy.sh
+Evidence: skills/prism; skills/nova/plugins/prism-design; charts/prism; charts/kubeclaw; scripts/deploy.sh
 Evidence revision: `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`
 Applies to: the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage
 Historical executed checks: 2026-10-09 against `082db288f7bc5e686e47306d60cf4db7d8ba8cfc`; local deploy-script, Control configuration, and interruption checks passed; no browser recovery or live journey result is available. Source links were checked at the evidence revision; this does not change the execution revision.
@@ -264,7 +264,7 @@ The Prism agent uses the same pattern:
 1. The shared agent chart defaults.
 2. Materialized selected values in `releases/values/prism-agent.yaml`.
 3. The optional private file named by `PRISM_AGENT_VALUES_FILE` before the deploy script starts.
-4. The generated code-bundle override and selected LiteLLM endpoint.
+4. The generated code-bundle override and selected LiteLLM memory-search embedding endpoint.
 
 The script saves the optional file names as overlays and then replaces the shell
 variables with the materialized release paths. This detail explains why an
@@ -408,6 +408,8 @@ Inspect the effective agent configuration for these task boundaries:
 - `auth`, `litellm`, and optional `discord` refer to their dedicated Secret keys.
   Verify the caller allowlists against the private authority record. Do not
   include their values in deployment evidence.
+  `auth` authenticates Gateway access; `litellm` authenticates memory-search
+  embeddings. Neither key supplies the managed OpenAI reasoning identity.
 - `codeBundle` must match the runtime receipt commit and contract. The bundle
   supplies runtime contracts even when repository synchronization is enabled.
 - The Prism bridge uses its own named listener, bounded invocation, private
@@ -419,8 +421,10 @@ Inspect the effective agent configuration for these task boundaries:
   loopback Control destination. The common chart's generic bridge is a different surface.
 - The workspace installs Prism role and tool instructions. Those instructions
   guide the agent; server-side admission still owns permission and validity.
-- Dependency probes disabled by the Prism overlay do not remove the explicit
-  PostgreSQL, Control, worker, or LiteLLM functional checks in this procedure.
+- Dependency probes disabled by the Prism overlay do not remove dependency
+  requirements. This procedure supplies PostgreSQL, Control, and worker health
+  checks. It supplies no executed remote embedding or reasoning check; require
+  separate route evidence at the boundary below.
 
 The common chart contains other capabilities for other roles. They are outside
 this Prism overlay and do not become Prism features merely because the shared
@@ -434,7 +438,7 @@ chart supports them.
 >
 > It also defines [auth, LiteLLM, Stitch, and Discord values](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L147-L201) and [model and Git values](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L203-L220).
 >
-> The shipped overlay fixes [the role, image, code bundle, authentication, and model endpoint](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/my-values/prism-agent-values.yaml#L1-L40).
+> The shipped overlay fixes [the role, image, code bundle, Gateway authentication, and embedding endpoint](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/my-values/prism-agent-values.yaml#L1-L40).
 >
 > It fixes [the agent, service, trust, and bridge selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/my-values/prism-agent-values.yaml#L45-L85) and [workspace and dependency probes](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/my-values/prism-agent-values.yaml#L87-L103).
 >
@@ -443,6 +447,46 @@ chart supports them.
 > The deploy command [resolves and verifies the selected Prism bundle](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/scripts/deploy.sh#L1688-L1724).
 >
 > It then [applies the private overlay before binding the bundle and LiteLLM endpoint](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/scripts/deploy.sh#L1725-L1748).
+
+### Separate reasoning from memory embeddings
+
+OpenClaw uses two external routes for different work. The Prism agent uses the
+managed OpenAI route through the `codex` runtime to produce directions and
+natural-language revisions. OpenClaw memory search uses LiteLLM to obtain
+`gemini-embedding-001` vectors. An embedding is a numeric representation used
+to search related memory; it is not a generated design or revision.
+
+| Route | Configuration and credential owner | Required evidence and limit |
+| --- | --- | --- |
+| Agent reasoning | Selected `agent.model.primary` and `agent.model.fallbacks`, the generated model allowlist, and enabled OpenAI/Codex plugins. The OpenClaw provider owner manages OpenAI OAuth separately from Gateway and LiteLLM keys. | A bounded request through the intended OpenClaw session and selected model, followed by the matching Control job/tool result. Gateway readiness, an embedding, or a zero CLI exit does not prove this result. |
+| Memory-search embeddings | Selected `litellm.endpoint`, `litellm.existingSecret`, and `litellm.existingSecretKey` supply the memory-search route and `LITELLM_API_KEY`. The platform gateway and credential owners manage LiteLLM; its upstream identity has a separate provider owner. | An authenticated request returning a valid vector for the configured embedding model. LiteLLM health or a completed design does not establish this route's health. |
+
+Use the canonical [runtime dependency contracts](../understand/platform-and-operations.md#runtime-dependency-contracts)
+for the managed OpenAI credential boundary and the separate LiteLLM and upstream
+owners. OpenAI OAuth material belongs in OpenClaw's protected persistent state;
+the chart's managed auth configuration selects profiles without supplying their
+usable credentials. This page supplies no provider login, token replacement,
+or credential-file inspection procedure. Stop before affected work if its
+selected route or access is unverified. The owning team must provide a bounded
+functional check for that route and retain its sanitized result. No such live
+result is established here. For an admitted job, first follow
+[Agent or memory route failure](#agent-or-memory-route-failure).
+
+> **Source evidence — distinct reasoning and embedding routes**
+>
+> **Claim:** LiteLLM supplies OpenClaw memory-search embeddings; managed OpenAI/Codex supplies agent reasoning. Control commits the fenced Prism result separately.
+>
+> **Implementation:** The gateway [configures the remote embedding endpoint, key reference, and model](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L74), [selects allowed reasoning models and the `codex` runtime](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/configmap-gateway.yaml#L84-L108), and [enables OpenAI/Codex plugins](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/configmap-gateway.yaml#L285-L290).
+> The workload [synchronizes managed auth configuration](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L474-L476), [reasoning configuration](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L498-L514), and [memory-search configuration with the separate key reference](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L516-L524).
+> The runner [invokes OpenClaw for the claimed job](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/agent-job-runner.mjs#L27-L44); the plugin [commits directions](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/openclaw-plugin/index.mjs#L54-L56) or [a revision](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/openclaw-plugin/index.mjs#L77-L79) to Control.
+>
+> **Contract or setting:** The common values [declare the embedding-only LiteLLM purpose and Secret selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L162-L173). The runtime container [receives that key](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1342-L1343) and [mounts persistent OpenClaw state](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1410-L1420).
+>
+> **Test evidence:** Source/configuration inspection only. Neither remote route nor a live direction/revision result was executed here.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`.
+>
+> **Limit:** Configured routes and mounted state do not prove usable OAuth, embedding credentials, provider capacity, agent permission, or completion.
 
 ### Nova Prism-stage configuration
 
@@ -469,7 +513,7 @@ namespaces, operator target, signal type, and issuer ID.
 | --- | --- | --- |
 | `prism-postgresql-auth` | `password`, `runtime-password`, `migrator-password`, `readonly-password`, `admin-url`, `runtime-url`, `migrator-url`, `readonly-url` | Separate database identities for administration, migration, runtime, and read-only access |
 | `prism-runtime` | `session-secret`, `ingress-secret`, `dispatch-secret`, `worker-secret`, `ingestion-secret` | Session signing and internal request authentication when the matching SPIFFE path is not used |
-| `openclaw-shared-secrets` | `gatewayToken-prism`, LiteLLM key, optional `discordToken-prism` | Prism agent gateway, managed model route, and optional Discord interface |
+| `openclaw-shared-secrets` | `gatewayToken-prism`, configured LiteLLM key, optional `discordToken-prism` | Prism agent Gateway access, OpenClaw memory-search embeddings, and optional Discord interface; managed OpenAI OAuth is separate |
 | `ghcr-secret` | Kubernetes pull credentials | Private selected images |
 | `github-bundle-reader` or configured replacement | Bundle token key | Version-matched private Prism code bundle |
 | Product decision signing Secret | `private-key.pem` by default | Optional dedicated Ed25519 product-decision authority |
@@ -487,7 +531,9 @@ implemented and validated.
 
 Never store provider tokens in `prism-runtime` or inject them into Control,
 Studio, worker, or ingestion. The Prism OpenClaw agent is the only production
-component that owns the managed model route.
+component that uses the managed OpenAI/Codex reasoning route. Its OpenClaw
+provider owner manages reasoning credentials; the LiteLLM key supplies only
+memory-search embeddings. Follow [the two route boundaries](#separate-reasoning-from-memory-embeddings).
 
 > **Source evidence — Secret creation**
 >
@@ -650,10 +696,10 @@ service health alone does not remove that boundary.
 | --- | --- | --- |
 | 1 | Nova dispatches architecture; Control records the active request and agent job; Nova stores its approval wait. | Source inspected; live dispatch unavailable until deployment gates pass. |
 | 2 | Studio obtains a trusted session and lists Control projects. | Source inspected; private ingress and actual caller identity unverified. |
-| 3 | The agent commits exactly three current directions; Studio reconnects to the same round. | Source inspected; external OpenClaw/LiteLLM completion unverified. |
+| 3 | The agent commits exactly three current directions; Studio reconnects to the same round. | Source inspected; managed OpenAI/Codex reasoning through OpenClaw and the matching Control commit unverified. |
 | 4 | Authenticated direction selection and feedback use retained idempotency keys. | Source inspected; browser interaction unexecuted. |
 | 5 | A new child round binds current document, architecture, parent, and request identity. | Source inspected; live round and concurrency behavior unexecuted. |
-| 6 | Typed edits create revisions; natural-language edits create durable jobs. | Source inspected; browser editing and provider reconciliation unexecuted. |
+| 6 | Typed edits create revisions; natural-language edits create durable jobs. | Source inspected; browser editing, managed OpenAI/Codex reasoning, and provider reconciliation unexecuted. |
 | 7 | History restore creates a new current revision. | Isolated embedded database/HTTP checks completed; installed database and browser restore unexecuted. |
 | 8 | Studio previews views, states, flows, assets, and viewport choices. | Source inspected; browser and asset delivery unexecuted. |
 | 9 | Worker evaluation produces findings for the exact document revision. | Source inspected; native worker execution unexecuted. |
@@ -804,6 +850,8 @@ The agent must use the SPIFFE identity permitted by Control to claim and commit
 this job. If directions remain pending, check
 [Agent work blocked by trust](#agent-work-blocked-by-trust) before treating the
 delay as a model/provider problem. Do not dispatch another request to test it.
+After trust admission is established, distinguish the managed reasoning route
+from memory-search embeddings through [Agent or memory route failure](#agent-or-memory-route-failure).
 
 The Prism agent must commit exactly three materially different and valid Design
 Documents for one generation. A **job fence** is the durable identity of the
@@ -955,6 +1003,8 @@ request through [Agent work blocked by trust](#agent-work-blocked-by-trust).
 Enter a concrete instruction and select **Propose change**.
 Studio stores one pending request with its base revision and idempotency key.
 Control creates a durable Prism agent job in the same project session.
+OpenClaw uses the managed OpenAI/Codex reasoning route for that job; LiteLLM
+supplies the separate memory-search embeddings.
 The agent must return a complete document with exactly the next revision number.
 
 The client helper can resubmit the same stored request and poll its original job.
@@ -1339,6 +1389,31 @@ error. This page supplies no generic trust-repair or job-replay command.
 > [revision guard](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L263-L265)
 > require mode and exact peer permission. [Agent admission](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/control/agent-admission.ts#L16-L23)
 > separately refuses unresolved external work; trust repair does not resolve it.
+
+### Agent or memory route failure
+
+Use this path after [agent trust](#agent-work-blocked-by-trust) has been checked.
+A pending direction or revision alone does not identify a provider failure.
+Preserve the original job/fence, session, request/key, architecture, round,
+instruction/base revision, time, and sanitized error. Stop new agent work,
+approval, publication, and Nova signals while the original outcome is unknown.
+
+| Observable failure | Discriminating check and repair owner | Required closure |
+| --- | --- | --- |
+| OpenClaw reports a memory-search embedding error | Compare the selected `litellm` endpoint and Secret reference with the error's route/model. Gateway and credential owners distinguish consumer authentication, LiteLLM/database access, and upstream embedding failure. | The owner restores the same configured route and proves an authenticated valid embedding for `gemini-embedding-001`. Prism maintainers also reconcile the original job before work continues. An embedding result does not prove direction or revision completion. |
+| OpenClaw reports a managed reasoning error | Compare the selected primary/fallback model and managed OpenAI/Codex configuration with the original session's sanitized error. The OpenClaw provider owner checks OAuth, model permission, availability, and quota. | The owner proves a bounded request through the intended model/session after repair. Prism maintainers establish the original fenced job/tool result and current direction or revision. LiteLLM health or embeddings cannot close this failure. |
+| Bridge launch, provider response, or Control tool commit remains uncertain | Correlate the original Control job/fence and stored result with the OpenClaw session and retained bridge/CLI receipt. A process exit or provider response alone is insufficient. | Prism maintainers reconcile that exact external outcome. Keep `needs_nova` stopped; credential repair does not authorize a second launch. |
+
+The [route configuration evidence](#separate-reasoning-from-memory-embeddings)
+identifies these separate consumers and owners. The
+[OpenClaw Prism dispatch path](../understand/openclaw.md#prism-dispatch-path)
+explains the job and process receipts. This page supplies no generic provider
+repair or external replay command. If the owner cannot classify the failure or
+establish the original result, retain that uncertainty and stop. A supported
+repair must retain the original identities, prove the affected route, reconcile
+its durable result, and keep credentials out of evidence. Record the repair
+decision and sanitized check result separately from health checks and live
+journey acceptance; remove only owned temporary check resources after retention.
 
 ### Child round interrupted
 
@@ -1956,6 +2031,8 @@ directory-sync steps before it acknowledges an object.
 | Local spike verifier reports that the Chromium executable does not exist at the fixed `1228` path | Fixed `executablePath` in the mobile-editor and preview-isolation configs | Exact error path, config, locked Playwright version, installation output | Follow [the local browser stop](#stop-at-the-fixed-spike-browser-path). Stop the spike and aggregate gates; package-local reinstallation does not supply that path. |
 | Studio shows no projects | Nova dispatch or Control admission | Nova stage result; Control request log; `prism.project` and active `design_request` | Reconcile the original dispatch. Do not create a replacement project. |
 | Project exists but has no directions | Agent trust, durable job, or external outcome | Selected Control/agent SPIFFE mode and exact identity; `Prism agent jobs require SPIFFE trust` or `Prism agent tools require SPIFFE worker trust`; original job state/fence/result and sanitized bridge log | Follow [Agent work blocked by trust](#agent-work-blocked-by-trust) on a trust rejection. Stop for release/trust owners and Prism maintainers; healthy HMAC probes cannot enable agent work. Preserve original identities and never replay an uncertain launch. |
+| OpenClaw reports a memory-search embedding failure | LiteLLM consumer key, gateway/database, or upstream embedding route | Selected `litellm` endpoint/Secret reference, `gemini-embedding-001`, and sanitized route error | Follow [Agent or memory route failure](#agent-or-memory-route-failure). Require embedding-owner proof and original-job reconciliation; do not treat it as a managed reasoning failure. |
+| OpenClaw reports a managed reasoning failure | OpenAI/Codex configuration, OAuth, model access, availability, or quota | Selected reasoning model, original OpenClaw session, sanitized provider error, and Control job/fence/result | Follow [Agent or memory route failure](#agent-or-memory-route-failure). Require provider-owner proof and exact job/result reconciliation; LiteLLM health cannot close this boundary. |
 | Studio says invalid session | Tailscale identity exchange or cookie forwarding | Studio proxy log; two `Set-Cookie` headers | Fix ingress/proxy handling. Do not weaken CSRF or session checks. |
 | New round remains pending | Agent trust, retained request, current round, or blocked agent session | Selected SPIFFE mode/identity and exact trust rejection; stored request/key, generation ID and durable job state | Stop on a [trust rejection](#agent-work-blocked-by-trust). Otherwise retry only the retained request when Studio offers it; stop on missing storage or unresolved predecessor. |
 | Visual edit reports revision conflict | Another edit committed, or the original edit committed before its reply disappeared | Original operation/base/actor/time, current document, and revision history | Stop and reconcile the original outcome through [Revision conflict](#revision-conflict) and [Typed edit or restore interrupted](#typed-edit-or-restore-interrupted). Author a new operation only after that uncertainty is resolved. |
@@ -2208,7 +2285,8 @@ and retained output for each live acceptance.
 | Durable native worker operation and restart journal | Implemented; native proof needs a prepared Linux host and isolated database | Claim native operation only with retained native gate evidence. |
 | PostgreSQL migration and pgvector retrieval | Implemented; native PostgreSQL proof needs configured test databases | Claim actual PostgreSQL behavior only when the native suite ran. |
 | Tailscale Studio ingress and SPIFFE service trust | Charted and checked structurally; live proof is environment-specific | Claim live identity only after cluster tests. |
-| Prism agent through OpenClaw and LiteLLM | Implemented path requires SPIFFE-enabled Control and the exact trusted agent identity; actual permission/provider proof is live | Stop before submission until [agent admission](#spiffe-agent-admission) is proved. Do not infer permission or provider success from healthy HMAC probes or deterministic worker tests. |
+| Prism reasoning through managed OpenAI/Codex in OpenClaw | Configured path requires SPIFFE-enabled Control and the exact trusted agent identity; actual permission/provider/result proof is live | Stop before submission until [agent admission](#spiffe-agent-admission) and the selected reasoning route are proved. Do not infer permission or provider success from healthy HMAC probes, LiteLLM embeddings, or deterministic worker tests. |
+| OpenClaw memory-search embeddings through LiteLLM | Configured separately with the embedding endpoint/model and LiteLLM key; remote functional proof remains unexecuted here | Require a valid authenticated embedding for the selected route. This result does not prove agent reasoning or a Control direction/revision commit. |
 | Corpus public-web acquisition | Acquisition code exists, but Control rejects `public-web` until a source policy is approved | Do not present public-web ingestion as an enabled operator feature. |
 | Ingestion service | Implemented but disabled by default | Enable only with explicit resource sizing and source policy. |
 | Browser archive download in Studio | Not implemented as a user action | Use the Nova governed handoff or an authorized artifact client. |

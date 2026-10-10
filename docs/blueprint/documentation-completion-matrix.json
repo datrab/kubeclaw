@@ -7281,7 +7281,9 @@
       "openFindingIds": [
         "A98-SOURCE-PRISM-REPLICAS",
         "A98-HELM-COLLECTION-FIELD-LOSS",
-        "A98-HELM-DEFAULT-AND-CONSTRAINT-SEMANTICS"
+        "A98-HELM-DEFAULT-AND-CONSTRAINT-SEMANTICS",
+        "A98-ARGO-RESOURCE-WHITELIST-SOURCE-RANGE",
+        "A98-BUSTER-EMPTY-CRD-ENUM"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L284"
     },
@@ -14900,7 +14902,7 @@
       "report": "/home/node/Documents/Codex/a98-evidence/prism-trust-source-fresh/report.md",
       "reportSha256": "6fa6496fdb250b16330e0ff4cd339bb070b097533540330fa1f958213e68b7cb",
       "reportedBy": "/root/a98_prism_trust_source_fresh",
-      "state": "author-correction-active",
+      "state": "author-corrected-pending-new-full-independent-reviews",
       "pages": [
         "docs/site/use/prism-studio.md"
       ],
@@ -14913,7 +14915,9 @@
         "A98-13"
       ],
       "description": "LiteLLM memory-search embedding secret/endpoint must be separate from managed OpenAI/Codex reasoning and direction completion.",
-      "author": "/root/a98_prism_model_route_writer"
+      "author": "/root/a98_prism_model_route_writer",
+      "candidatePageSha256": "041a849890eb72f65e58f729ee0b7860b646b4794c27fae165153113752a0dcb",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/prism-model-route-writer/report.md"
     },
     {
       "id": "A98-PLATFORM-PROVIDER-SELECTION",
@@ -14990,6 +14994,43 @@
       ],
       "description": "Canonical duplicate/missing roots and disabled/unrequested grants plus closed capability consumer shapes need explicit error and reader path.",
       "author": "/root/a98_platform_conditions_writer"
+    },
+    {
+      "id": "A98-ARGO-RESOURCE-WHITELIST-SOURCE-RANGE",
+      "reportedBy": "/root/a98_api_collection_source_fresh",
+      "state": "root-corrected-pending-generator-check-and-new-source-review",
+      "pages": [
+        "docs/site/reference/helm-values.md"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-09",
+        "A98-10"
+      ],
+      "description": "Argo IsGroupKindNamePermitted source link incorrectly pointed at normalizePolicy. Verified immutable e258ee source function399-418; generator pin corrected and original registry generation yielded1091 entries.",
+      "author": "/root",
+      "authority": "https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/pkg/apis/application/v1alpha1/app_project_types.go#L399-L418",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/local-helm-argo-pin-correction.log"
+    },
+    {
+      "id": "A98-BUSTER-EMPTY-CRD-ENUM",
+      "reportedBy": "/root/a98_api_collection_source_fresh",
+      "state": "root-corrected-pending-regeneration-and-new-source-review",
+      "pages": [
+        "docs/site/reference/helm-values.md"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-09",
+        "A98-10"
+      ],
+      "description": "Empty CRD enum is not deny-all in the pinned Kubernetes validator: enum validation runs only for nonempty lists. Correct controller fallback vs fence deny-all vs CRD no enum restriction; other schema/admission conditions remain. Null still unsupported, no live proof.",
+      "author": "/root",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/buster-empty-enum-root-authorities.json"
     }
   ],
   "checks": [
@@ -15523,6 +15564,14 @@
         "scripts/generate-local-helm-authorities.mjs": "168e824d4e8b218677943d09763df3f417e364a6d8d39f7c0cdde9fb9e0c8d19"
       },
       "scope": "Released author changes plus root $ref keyword metadata, Argo dedup/missing/variant/label/narrowlink corrections. Syntax checks passed; full current inventories/publication/mutations/independent reviews pending."
+    },
+    {
+      "command": "npm run docs:inventory:local-helm && npm run docs:inventory:local-helm:check",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "sessionId": 14803,
+      "log": "/home/node/Documents/Codex/a98-evidence/local-helm-argo-pin-correction.log",
+      "scope": "Argo whitelist narrow pin correction only, before subsequent Buster enum correction; bounded maintenance/boolean controls, no independent content acceptance"
     }
   ],
   "reviewAssignments": [
@@ -16662,6 +16711,13 @@
       "verdict": "FAIL-new-test-node-composition-finding",
       "correctedBy": "/root",
       "nextReviewer": "/root/a98_precedence_composition_source_fresh"
+    },
+    "prismModelRouteAuthor": {
+      "agent": "/root/a98_prism_model_route_writer",
+      "pageSha256": "041a849890eb72f65e58f729ee0b7860b646b4794c27fae165153113752a0dcb",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-model-route-writer/report.md",
+      "state": "released-author-only",
+      "scope": "Split actual reasoning/embedding credentials and closure across full journey;14 Bash blocks preserved; no independent/global/live acceptance"
     }
   },
   "productBoundaries": [
