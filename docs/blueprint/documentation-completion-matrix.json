@@ -19215,6 +19215,17 @@
       "rootVerifiedSealEntries": 138,
       "rootTests": "7 expanded tests PASS, zero skipped, includes actual BuildKit shell output and registry GC transform; author13focused tests PASS.",
       "snapshotQualification": "1199context snapshot owned field joins have zero gaps; source-derived Pod serviceAccountName awaiting fresh generator applicability refresh. Common root providers are separate. No independent semantic/global/live acceptance."
+    },
+    "selectedPrinterColumnPriority": {
+      "author": "/root",
+      "state": "candidate-pending-complete-fresh-independent-source",
+      "bodyRecords": 58,
+      "addedRecord": "CustomResourceDefinition $.spec.versions[].additionalPrinterColumns[].priority",
+      "scope": "actual newly selected registration display priority; int32 zero/null, no sign validation, pinned table normal/wide nonzero filtering; no data/scheduling/security effect",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/crd-printer-priority-root",
+      "upstreamOriginals": 4,
+      "freshSourceReviewer": "/root/cluster_fixture_complete_source_corrected_fresh",
+      "reviewScope": "full202records plus entire fixture task/source chain at following frozen source SHA; prior201 incomplete review remains historical"
     }
   }
 }
