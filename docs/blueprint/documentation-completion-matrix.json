@@ -14629,7 +14629,7 @@
       "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-source-fresh/report.md",
       "reportSha256": "54b86f1856737060f77b566d5334551f06d28a50d0d6b484d36cdfcb86d406d6",
       "reportedBy": "/root/a98_helm_collection_source_fresh",
-      "state": "open-author-assigned",
+      "state": "author-corrected-with-root-delta-pending-coherent-generation-and-independent-reviews",
       "pages": [
         "scripts/docs-configuration-inventory.mjs",
         "scripts/docs-api-schema-authorities.mjs"
@@ -14642,14 +14642,16 @@
         "A98-11"
       ],
       "description": "Generic fallback treats 849 API collections across 13 kinds as structural without exact operational empty/omitted contracts. NetworkPolicy from/ports empty or missing allows all peers/ports. Genuine envelopes require named child contracts.",
-      "assignedAuthor": "/root/a98_api_collection_writer"
+      "assignedAuthor": "/root/a98_api_collection_writer",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/api-collection-writer/report.md",
+      "correctionReportSha256": "48cfa511c714a5b170a6fb75a8fbe708516fef69dffe438e2521b46721d60f55"
     },
     {
       "id": "A98-MANIFEST-HELM-PRECEDENCE-MISTAGS",
       "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-source-fresh/report.md",
       "reportSha256": "54b86f1856737060f77b566d5334551f06d28a50d0d6b484d36cdfcb86d406d6",
       "reportedBy": "/root/a98_helm_collection_source_fresh",
-      "state": "open-author-assigned",
+      "state": "author-corrected-with-root-delta-pending-coherent-generation-and-independent-reviews",
       "pages": [
         "scripts/docs-configuration-inventory.mjs"
       ],
@@ -14660,14 +14662,16 @@
         "A98-11"
       ],
       "description": "104 API collections in Cilium policy and registry mirror manifests receive Helm values precedence despite actual kubectl apply consumers. Determine genuine receiving class and reject incompatible claims.",
-      "assignedAuthor": "/root/a98_api_collection_writer"
+      "assignedAuthor": "/root/a98_api_collection_writer",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/api-collection-writer/report.md",
+      "correctionReportSha256": "48cfa511c714a5b170a6fb75a8fbe708516fef69dffe438e2521b46721d60f55"
     },
     {
       "id": "A98-BUSTER-PREFIX-MULTI-RECEIVER-EMPTY",
       "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-source-fresh/report.md",
       "reportSha256": "54b86f1856737060f77b566d5334551f06d28a50d0d6b484d36cdfcb86d406d6",
       "reportedBy": "/root/a98_helm_collection_source_fresh",
-      "state": "open-author-assigned",
+      "state": "author-corrected-with-root-delta-pending-coherent-generation-and-independent-reviews",
       "pages": [
         "scripts/generate-local-helm-authorities.mjs",
         "scripts/docs-local-helm-field-authorities.json"
@@ -14679,7 +14683,9 @@
         "A98-11"
       ],
       "description": "Controller fallback test does not apply to namespace fence [].exists or CRD enum []; null does not render a supported common fallback. Document all actual receivers and safe nonempty recovery.",
-      "assignedAuthor": "/root/a98_api_collection_writer"
+      "assignedAuthor": "/root/a98_api_collection_writer",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/api-collection-writer/report.md",
+      "correctionReportSha256": "48cfa511c714a5b170a6fb75a8fbe708516fef69dffe438e2521b46721d60f55"
     },
     {
       "id": "A98-PRISM-DIAGNOSIS-UNCERTAINTY",
@@ -15370,6 +15376,32 @@
         "docs/site/reference/glossary.md": "25aa9f129ccaaa67badedc48cf73c3aa7693b0af851d03a3ea193d43115bc1db"
       },
       "scope": "Author implementation verification only;14bash/13interruption rows preserved; no independent/live/global acceptance"
+    },
+    {
+      "command": "API collection author strict inventories/canonical generation/controls and complete row ledgers",
+      "state": "author-terminal-pass",
+      "report": "/home/node/Documents/Codex/a98-evidence/api-collection-writer/report.md",
+      "reportSha256": "48cfa511c714a5b170a6fb75a8fbe708516fef69dffe438e2521b46721d60f55",
+      "scope": "Author candidate only; 913API collections,849affectedrows,104receiverrows,all1613collections35empty accounted. Root metadata/Argo after-release deltas require new coherent generation. No independent source/reader/quality/fullmutation/global acceptance."
+    },
+    {
+      "command": "Root collection reference keyword metadata control",
+      "state": "terminal-pass-after-initial-fixture-failure",
+      "log": "/home/node/Documents/Codex/a98-evidence/api-collection-root-reference-keywords-corrected.log",
+      "initialFailure": "/home/node/Documents/Codex/a98-evidence/api-collection-root-reference-keywords.log",
+      "scope": "Exact helper edge/target and source-keyword separation; no controller execution. Initial false schema default1 expectation corrected to no formal schema default."
+    },
+    {
+      "command": "API collection source integration",
+      "state": "source-ready-for-coherent-generation-not-accepted",
+      "fileHashes": {
+        "scripts/docs-api-schema-authorities.mjs": "5427b35d740aa743bd6f5244f35512f727b7e8addd66201ec32d9b865fbfd0e6",
+        "scripts/docs-configuration-inventory.mjs": "0c9a7b4c5f39a526da12a2fc079a4365b2c0c31c18c942011bfe2ae60efecd26",
+        "scripts/docs-generate.mjs": "441b3200b2b1f42bd061ab246ca31b00f1fd25f8b45741754f561b1602773611",
+        "scripts/docs-local-helm-field-authorities.json": "05bc94d7c4d9834133c6e4712a25bf3d2d4f98bb397dfa231c86072ba0f4bb65",
+        "scripts/generate-local-helm-authorities.mjs": "168e824d4e8b218677943d09763df3f417e364a6d8d39f7c0cdde9fb9e0c8d19"
+      },
+      "scope": "Released author changes plus root $ref keyword metadata, Argo dedup/missing/variant/label/narrowlink corrections. Syntax checks passed; full current inventories/publication/mutations/independent reviews pending."
     }
   ],
   "reviewAssignments": [

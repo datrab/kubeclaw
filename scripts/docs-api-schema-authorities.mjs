@@ -114,6 +114,9 @@ function loadCustomResourceSchemas() {
     const archive = archiveManifest.charts[authority.chartKey];
     assert(archive && archive.chart === authority.chart && archive.version === authority.version,
       `${authority.chartKey}: custom-resource authority does not match the vendored chart`);
+    const archiveBytes = fs.readFileSync(path.join(repositoryRoot, archive.path));
+    assert.equal(archiveBytes.length, archive.size, `${authority.chartKey}: chart archive byte count changed`);
+    assert.equal(sha256(archiveBytes), archive.sha256, `${authority.chartKey}: chart archive bytes changed`);
     const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-api-crd-'));
     try {
       const unpack = spawnSync('tar', ['-xzf', path.join(repositoryRoot, archive.path), '-C', temporary], { encoding: 'utf8' });
@@ -170,7 +173,28 @@ function resolveReference(schema) {
   return current;
 }
 
-export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath) {
+// Keep the reference edge as well as its target. OpenAPI field descriptions
+// beside $ref contain defaults and conditions that the definition alone lacks.
+// Legacy scalar authorities keep their existing resolver and identity shape.
+function resolveCollectionReference(schema) {
+  if (!schema?.$ref) return schema;
+  let current = schema;
+  const references = [], siblings = {};
+  while (current?.$ref) {
+    assert(current.$ref.startsWith('#/definitions/'), `unsupported OpenAPI reference ${current.$ref}`);
+    assert(!references.includes(current.$ref), `cyclic OpenAPI reference ${current.$ref}`);
+    references.push(current.$ref);
+    for (const [key, value] of Object.entries(current)) if (key !== '$ref' && !Object.hasOwn(siblings, key)) siblings[key] = value;
+    current = kubernetesOpenApi.definitions[current.$ref.slice('#/definitions/'.length)];
+    assert(current, `missing OpenAPI definition ${references.at(-1)}`);
+  }
+  for (const [key, value] of Object.entries(siblings)) if (!['description', 'title'].includes(key) && Object.hasOwn(current, key)) {
+    assert.deepEqual(value, current[key], `API_SCHEMA_REFERENCE_CONFLICT: ${references[0]} sibling ${key} conflicts with its definition`);
+  }
+  return { ...current, ...siblings, schemaReferenceChain: references, referencedContract: apiSchemaNodeContract(current) };
+}
+
+export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath, { includeCollectionContract = false } = {}) {
   if (fieldPath === 'apiVersion' || fieldPath === 'kind') return {
     authority: `Kubernetes ${manifest.kubernetes.version} object envelope plus ${apiVersion}/${kind} selected API contract`,
     authoritySha256: manifest.kubernetes.contentSha256,
@@ -209,19 +233,27 @@ export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath) {
     authority = custom.authority;
     authoritySha256 = custom.archiveSha256;
   }
-  let current = resolveReference(schema);
+  const resolve = includeCollectionContract ? resolveCollectionReference : resolveReference;
+  let current = resolve(schema);
   const resolved = [];
   let requiredBySchema = false;
+  let parent = null;
+  const parentContracts = [];
   for (let index = 0; index < fieldTokens.length; index += 1) {
     const token = fieldTokens[index];
-    current = resolveReference(current);
-    if (token === '[]') current = resolveReference(current?.items);
+    current = resolve(current);
+    parent = current;
+    if (includeCollectionContract) parentContracts.push({ path: yamlFieldPath(resolved, { root: false, arrayWildcard: true }), ...apiSchemaNodeContract(parent) });
+    if (token === '[]') {
+      if (includeCollectionContract) requiredBySchema = false;
+      current = resolve(current?.items);
+    }
     else if (current?.properties?.[token]) {
       requiredBySchema = Array.isArray(current.required) && current.required.includes(token);
-      current = resolveReference(current.properties[token]);
+      current = resolve(current.properties[token]);
     }
     else if (typeof current?.additionalProperties === 'object') {
-      current = resolveReference(current.additionalProperties);
+      current = resolve(current.additionalProperties);
       resolved.push(...fieldTokens.slice(index));
       index = fieldTokens.length;
       break;
@@ -245,7 +277,46 @@ export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath) {
     requiredBySchema,
     nullable: current.nullable === true,
     descriptionSha256: current.description ? sha256(current.description) : null,
+    ...(includeCollectionContract ? {
+      contract: apiSchemaNodeContract(current),
+      children: Object.fromEntries(Object.entries(current.properties ?? {}).map(([name, child]) => [name, apiSchemaNodeContract(resolve(child))])),
+      item: current.items ? apiSchemaNodeContract(resolve(current.items)) : null,
+      itemChildren: Object.fromEntries(Object.entries(resolve(current.items)?.properties ?? {}).map(([name, child]) => [name, apiSchemaNodeContract(resolve(child))])),
+      mapValue: typeof current.additionalProperties === 'object' ? apiSchemaNodeContract(resolve(current.additionalProperties)) : null,
+      parent: parent ? apiSchemaNodeContract(parent) : null,
+      parentContracts,
+      contractScope: 'Exact pinned schema contracts only. Descriptions can state controller behavior; a missing description or schema default does not prove a controller fallback. API patch annotations do not select the apply mode used by a client.',
+    } : {}),
   };
+}
+
+// Preserve complete constraint and composition fragments. Resolve only the
+// requested node and its direct children, so recursive definitions stay finite.
+function apiSchemaNodeContract(schema) {
+  if (!schema) return null;
+  const keywords = ['type', 'description', 'default', 'nullable', 'enum', 'const', 'format', 'pattern',
+    'minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum', 'multipleOf',
+    'minLength', 'maxLength', 'minItems', 'maxItems', 'uniqueItems', 'minProperties',
+    'maxProperties', 'required', 'additionalProperties', 'oneOf', 'anyOf', 'allOf',
+    'not', 'if', 'then', 'else', 'dependencies', 'dependentRequired', 'dependentSchemas',
+    'contains', 'minContains', 'maxContains', 'propertyNames', 'patternProperties', 'prefixItems',
+    'additionalItems', 'unevaluatedProperties', 'unevaluatedItems', 'readOnly', 'writeOnly',
+    'deprecated', 'title', 'example', 'examples', '$schema', '$id', '$comment',
+    'schemaReferenceChain', 'referencedContract'];
+  // Properties and items are exposed through the named child/item boundaries.
+  // Unknown keywords cannot silently disappear from an "exact" contract.
+  const structural = ['properties', 'items'];
+  for (const key of Object.keys(schema)) assert(keywords.includes(key) || structural.includes(key)
+    || key.startsWith('x-kubernetes-'), `API_SCHEMA_COLLECTION_KEYWORD_UNQUALIFIED: ${key}`);
+  return { ...Object.fromEntries(Object.entries(schema).filter(([key]) => keywords.includes(key)
+    || key.startsWith('x-kubernetes-'))), observedSchemaKeywords: [...new Set([
+      ...Object.keys(schema).filter((key) => !['schemaReferenceChain', 'referencedContract'].includes(key)),
+      ...(schema.schemaReferenceChain ? ['$ref'] : []),
+    ])].sort() };
+}
+
+export function apiFieldCollectionAuthority(apiVersion, kind, fieldPath) {
+  return apiFieldSchemaAuthority(apiVersion, kind, fieldPath, { includeCollectionContract: true });
 }
 
 export function apiAuthorityLock() {

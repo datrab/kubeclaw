@@ -741,13 +741,18 @@ function collectionContract(field) {
   if (p === 'podAnnotations') return api('metadata.annotations', 'Defines annotations placed on the Pod template.', 'An effective empty map adds no annotations; {} retains earlier keys and null removes the optional block. Annotation values must be strings.', 'Changes controller or process signals for consumers of the exact annotation keys; changing Pod-template annotations can start a rollout.');
   if (p === 'extraVolumeMounts') return api('spec.containers[0].volumeMounts', 'Defines extra volume mounts for the primary container.', 'An effective [] adds no mounts; null omits the optional block. Each name must resolve to a Pod volume and each mountPath must be accepted by the API.', 'Changes container filesystem exposure after Pod replacement.');
   if (p === 'service.extraPorts') return make('service-extra-ports', 'Defines additional ports in the rendered Kubernetes Service.', 'A list of ServicePort maps with valid name, port, targetPort and protocol; names and target ports must match intended listeners.', 'An effective [] adds no extra ports. Null omits the optional range; deleting mandatory item fields can fail API admission.', 'Changes Service exposure and routing after Helm reconciliation without creating a listener by itself.', 'Invalid or duplicate ports fail admission; a valid port with no matching listener remains unreachable.');
+  if (p === 'busterNamespaceBroker.allowedPrefixes') return make('namespace-prefix-receiver-boundary',
+    'Defines the namespace-name prefixes shared by the namespace controller, its admission fence, and the namespace-lease CRD.',
+    'Use a deliberate nonempty list of valid namespace-name prefixes, such as ["test"]. The controller matches prefix plus "-"; the CRD enum restricts spec.namespacePrefix when that optional field is supplied.',
+    'All three templates render only when busterNamespaceBroker.enabled is true and agentRole is buster; the fence also requires Kubernetes >=1.30. An omitted override retains the merged list. An effective [] renders an empty controller environment string, [].exists(prefix, ...) in the Fail/Deny fence, and enum: [] in the lease CRD. The controller falls back to test, but the fence cannot match any namespace name and the empty enum provides no permitted explicit namespacePrefix. Explicit null renders null.exists(prefix, ...) and a null enum; neither template uses the controller fallback. Null is not a supported recovery value.',
+    'Changes which managed namespace names the controller may create or delete and which explicit namespacePrefix values lease admission can accept. The namespace fence applies to the controller and worker identities; the worker is separately denied direct namespace operations. Other Kubernetes RBAC grants remain separate.',
+    'Stop before applying an empty or null prefix result. Restore a deliberate nonempty supported list and render again. Check the same prefixes in BUSTER_ALLOWED_NAMESPACE_PREFIXES, the fence expression, and the lease CRD enum before API validation and controller reconciliation. These source and render checks do not prove live admission or lease creation.');
   if (/(?:^|\.)resources(?:\.(codex|mcp))?(?:\.(requests|limits))?$/u.test(p) || /\.resources\.(requests|limits)$/u.test(p)) {
     const part = /\.(requests|limits)$/u.exec(p)?.[1];
     return api(`spec.containers[0].resources${part ? `.${part}` : ''}`, `Defines ${part ?? 'resource requests and limits'} for the container selected by ${p}.`, 'An effective empty resource map adds no boundaries through this field. {} preserves earlier resource keys; null can remove them only if the chart schema and template permit it. Prism ingestion retains its enabled-mode required CPU/memory constraints.', 'Changes scheduling reservations or runtime enforcement; new Pod resources apply after workload reconciliation.');
   }
   const named = {
     'agent.model.fallbacks': ['ordered provider-qualified model identifiers', 'An effective [] configures no fallback model; primary selection remains separate.', 'model fallback order, request recovery, provider cost and latency'],
-    'busterNamespaceBroker.allowedPrefixes': ['namespace-prefix strings accepted by the broker', 'An empty result follows the linked controller prefix fallback; it does not authorize all namespace names.', 'permitted leased namespace names'],
     'busterNamespaceBroker.controller.allowedAccess': ['subject/modes maps; subjects are canonical namespace/name or DNS labels and modes are tester or deployer', 'An empty list fails the controller requirement for at least one permitted subject.', 'subjects and modes authorized to request leased access'],
     'busterNamespaceBroker.controller.allowedAccess[].modes': ['tester or deployer strings', 'An effective [] grants no modes for this subject.', 'lease modes granted to the paired subject'],
     'busterNamespaceBroker.controller.allowedSourceSecrets': ['nonempty Secret-name strings', 'An effective [] permits no source Secrets through this allowlist.', 'Secret sources permitted to cross the lease namespace boundary'],
@@ -876,7 +881,12 @@ for (const field of local) {
     ...approvedSemantics,
     semanticAuthority: 'explicit-field-contract',
     selectedBaseline: field.value,
-    runtimeConsumerProof: booleanRuntimeProof(field).length > 0 ? booleanRuntimeProof(field)
+    runtimeConsumerProof: chartRoot === 'charts/kubeclaw' && cleanPath(field.path) === 'busterNamespaceBroker.allowedPrefixes'
+      ? [{ path: 'cmd/buster-namespace-controller/main.go', line: 143,
+        sourceLineSha256: digest(fs.readFileSync(path.join(root, 'cmd/buster-namespace-controller/main.go'), 'utf8').split('\n')[142]),
+        kind: 'checked-in-runtime-reader', environment: 'BUSTER_ALLOWED_NAMESPACE_PREFIXES',
+        authority: 'newController reads the comma-separated prefixes and uses test when the effective list is empty. The fence and lease CRD templates do not use this fallback.' }]
+      : booleanRuntimeProof(field).length > 0 ? booleanRuntimeProof(field)
       : environment ? (environment.runtimeReaders.length > 0
       ? environment.runtimeReaders.map((reader) => ({
         path: reader.path,

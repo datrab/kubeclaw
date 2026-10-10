@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import {
   generatedEnd,
   generatedNotice,
@@ -322,6 +323,20 @@ ${generatedEnd()}
 
 function renderHelmValues(configurationValues, configurationSchemas) {
   const valueFiles = configurationValues.files;
+  const collectionSchemaKey = (schema) => JSON.stringify([schema.authority, schema.authoritySha256, schema.apiVersion, schema.kind, schema.resolvedPath]);
+  const collectionSchemaAnchor = (schema) => `api-collection-${createHash('sha256').update(collectionSchemaKey(schema)).digest('hex').slice(0, 16)}`;
+  const collectionSchemaContract = ({ fieldPath, ...schema }) => JSON.stringify(schema);
+  const apiCollectionSchemas = new Map();
+  for (const file of valueFiles) for (const document of file.documents) for (const field of document.fields) {
+    const schema = field.meaning.apiCollectionAuthority;
+    if (!schema) continue;
+    const key = collectionSchemaKey(schema);
+    const existing = apiCollectionSchemas.get(key);
+    if (existing && collectionSchemaContract(existing.schema) !== collectionSchemaContract(schema)) throw new Error(`API collection schema identity collision: ${key}`);
+    const entry = existing ?? { schema, fields: [] };
+    entry.fields.push({ source: file.path, document: document.index, path: field.path, line: field.sourceLine });
+    apiCollectionSchemas.set(key, entry);
+  }
   const sourceLink = (sourcePath, line = 1, label = `${sourcePath}:${line}`, endLine = line) => '[`' + label + '`](' + pinnedSourceUrl(sourcePath, line, endLine) + ')';
   const meaningEvidence = (evidence) => {
     const [source, ...details] = evidence.split('; ');
@@ -330,15 +345,32 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     return details.length > 0 ? `${linked}; ${details.join('; ')}` : linked;
   };
   const readerMeaning = (field) => {
+    const collection = field.meaning.apiCollectionAuthority
+      ? `<br>[Exact API collection contract](#${collectionSchemaAnchor(field.meaning.apiCollectionAuthority)})`
+      : '';
     if (field.meaning.status === 'inactive-profile') return `${field.meaning.text}<br>This file is not selected by a checked-in deployment path.`;
-    if (/blocker/u.test(field.meaning.status)) return `${field.meaning.text}<br>This field is not ready for operator use because its receiving behavior is not yet proved.`;
+    if (/blocker/u.test(field.meaning.status)) return `${field.meaning.text}${collection}<br>This field is not ready for operator use because its receiving behavior is not yet proved.<br>Owner: ${field.blockerOwner}. Required before use: ${field.closureCondition}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}`;
     const authority = field.meaning.apiAuthority ? `<br>Behavior authority: ${field.meaning.apiAuthority}` : '';
     const semantic = field.meaning.semanticContractEvidence;
     const semanticAuthority = semantic
       ? `<br>Semantic contract: ${sourceLink(semantic.path, semantic.line, `${semantic.path}:${semantic.line}-${semantic.endLine}`, semantic.endLine)}`
       : '';
-    return `${field.meaning.text}${authority}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}${semanticAuthority}`;
+    return `${field.meaning.text}${collection}${authority}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}${semanticAuthority}`;
   };
+  const schemaContractText = (node) => {
+    if (!node) return 'This field has no contract at this boundary.';
+    const { description, observedSchemaKeywords, schemaReferenceChain, referencedContract, ...constraints } = node;
+    return `${description?.replace(/\s+/gu, ' ').trim() ?? 'The schema supplies no description for this node.'}<br>Constraints and alternatives: \`${JSON.stringify(constraints)}\`<br>Keywords at this boundary: \`${JSON.stringify(observedSchemaKeywords)}\`${schemaReferenceChain ? `<br>Reference: \`${JSON.stringify(schemaReferenceChain)}\`<br>Referenced definition: ${schemaContractText(referencedContract)}` : ''}`;
+  };
+  const apiCollectionSections = [...apiCollectionSchemas.values()].sort((left, right) => collectionSchemaKey(left.schema).localeCompare(collectionSchemaKey(right.schema))).map(({ schema, fields }) => {
+    const children = [...Object.entries(schema.children).map(([name, node]) => [`Child \`${name}\``, schemaContractText(node)]),
+      ...Object.entries(schema.itemChildren).map(([name, node]) => [`Item child \`${name}\``, schemaContractText(node)])];
+    const parents = schema.parentContracts.map((parent) => [`Parent \`${parent.path || '<API object>'}\``, schemaContractText(parent)]);
+    return `<a id="${collectionSchemaAnchor(schema)}"></a>\n\n### ${schema.kind}: \`${schema.resolvedPath}\`\n\nAuthority: ${schema.authority}. Content SHA-256: \`${schema.authoritySha256}\`. API: \`${schema.apiVersion}/${schema.kind}\`.\n\nThis section preserves the exact pinned schema descriptions. It describes accepted shape and the stated API behavior. Read the linked field row for the selected input, actual apply or loader receiver, operational consequence, and controller limit. A missing schema default does not prove that the controller inserts no default. A patch annotation does not select the client's apply mode.\n\n${table(['Boundary', 'Exact schema contract'], [
+      ['Field', schemaContractText(schema.contract)], ['List item', schemaContractText(schema.item)],
+      ['Map value', schemaContractText(schema.mapValue)], ...children, ...parents,
+    ])}\n\nField sources:\n\n${fields.map((field) => `- ${sourceLink(field.source, field.line)} — document ${field.document}, \`${field.path}\`.`).join('\n')}\n`;
+  }).join('\n');
   const consumerText = (field) => field.consumers.map((consumer) => {
     if (consumer === 'unknown') return 'Unknown';
     const location = consumer.path ? sourceLink(consumer.path, consumer.line ?? 1) : '`unresolved source`';
@@ -481,6 +513,12 @@ ${table(['File', 'Class', 'Documents', 'Recursive fields'], valueFiles.map((file
 Each field row separates the checked-in source from the runtime receiver. It follows local Helm templates, Argo CD value-file bindings, and Kubernetes resource authorities. An external chart or Kubernetes API owns validation when its schema is outside this repository. A field with no active deployment binding is identified as inactive instead of being presented as an effective option.
 
 ${fieldSections}
+
+## Kubernetes API Collection Contracts
+
+Each field row links to its own kind and schema path below. These contracts include the direct children, list items, map values, parent requirements, alternatives and API patch annotations from the pinned schema. The operational explanation and the actual receiving path remain in the field row.
+
+${apiCollectionSections}
 
 ## Deployed Configuration Payloads
 

@@ -4708,16 +4708,25 @@
           ]
         },
         "$.busterNamespaceBroker.allowedPrefixes": {
-          "group": "named-runtime-collection",
-          "purpose": "Defines permitted leased namespace names.",
+          "group": "namespace-prefix-receiver-boundary",
+          "purpose": "Defines the namespace-name prefixes shared by the namespace controller, its admission fence, and the namespace-lease CRD.",
           "collectionInputType": "array",
-          "acceptedValues": "A list of namespace-prefix strings accepted by the broker.",
-          "emptyBehavior": "Omission keeps the earlier list; a later [] replaces it with no items. An empty result follows the linked controller prefix fallback; it does not authorize all namespace names.",
-          "impact": "Changes permitted leased namespace names when this value wins Helm precedence and the linked parent conditions enable its receiving path. Reconcile the release; process startup readers apply after Pod replacement.",
-          "failure": "Invalid items fail the linked chart guard, API admission or runtime parser. Accepted but incorrect items can deny intended work or authorize unintended scope.",
+          "acceptedValues": "Use a deliberate nonempty list of valid namespace-name prefixes, such as [\"test\"]. The controller matches prefix plus \"-\"; the CRD enum restricts spec.namespacePrefix when that optional field is supplied.",
+          "emptyBehavior": "Omission keeps the earlier list; a later [] replaces it with no items. All three templates render only when busterNamespaceBroker.enabled is true and agentRole is buster; the fence also requires Kubernetes >=1.30. An omitted override retains the merged list. An effective [] renders an empty controller environment string, [].exists(prefix, ...) in the Fail/Deny fence, and enum: [] in the lease CRD. The controller falls back to test, but the fence cannot match any namespace name and the empty enum provides no permitted explicit namespacePrefix. Explicit null renders null.exists(prefix, ...) and a null enum; neither template uses the controller fallback. Null is not a supported recovery value.",
+          "impact": "Changes which managed namespace names the controller may create or delete and which explicit namespacePrefix values lease admission can accept. The namespace fence applies to the controller and worker identities; the worker is separately denied direct namespace operations. Other Kubernetes RBAC grants remain separate.",
+          "failure": "Stop before applying an empty or null prefix result. Restore a deliberate nonempty supported list and render again. Check the same prefixes in BUSTER_ALLOWED_NAMESPACE_PREFIXES, the fence expression, and the lease CRD enum before API validation and controller reconciliation. These source and render checks do not prove live admission or lease creation.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "<array: 1 entries; see child rows>",
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "cmd/buster-namespace-controller/main.go",
+              "line": 143,
+              "sourceLineSha256": "f12bd483dd80f3d7efb9f241f2471be93d52336bd2cf29e3eb67b48d62edffe2",
+              "kind": "checked-in-runtime-reader",
+              "environment": "BUSTER_ALLOWED_NAMESPACE_PREFIXES",
+              "authority": "newController reads the comma-separated prefixes and uses test when the effective list is empty. The fence and lease CRD templates do not use this fallback."
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
@@ -4853,7 +4862,16 @@
           "failure": "A malformed prefix never matches or fails CRD validation; a broad prefix expands the broker boundary.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "test",
-          "runtimeConsumerProof": [],
+          "runtimeConsumerProof": [
+            {
+              "path": "cmd/buster-namespace-controller/main.go",
+              "line": 143,
+              "sourceLineSha256": "f12bd483dd80f3d7efb9f241f2471be93d52336bd2cf29e3eb67b48d62edffe2",
+              "kind": "checked-in-runtime-reader",
+              "environment": "BUSTER_ALLOWED_NAMESPACE_PREFIXES",
+              "authority": "newController reads the comma-separated prefixes and uses test when the effective list is empty. The fence and lease CRD templates do not use this fallback."
+            }
+          ],
           "consumerProof": [
             {
               "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",

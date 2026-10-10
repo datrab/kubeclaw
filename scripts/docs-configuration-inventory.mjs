@@ -16,7 +16,7 @@ import { assertYamlAuthorityRegistry, yamlAuthorityFile, yamlAuthorityPaths, yam
 import {
   assertLocalHelmAuthorityRegistry, localHelmAuthorityFile, localHelmAuthorityPaths, localHelmFieldAuthority,
 } from './docs-local-helm-authorities.mjs';
-import { apiFieldSchemaAuthority } from './docs-api-schema-authorities.mjs';
+import { apiFieldSchemaAuthority, apiFieldCollectionAuthority } from './docs-api-schema-authorities.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
@@ -1660,6 +1660,33 @@ function deploymentFieldBoundary(resource, exactPath) {
   return { kind: 'api-envelope', owner: null };
 }
 
+function manifestReceivingPaths(sourcePath) {
+  const bindings = [];
+  const exactApply = sourcePath === 'my-values/infra/cilium-cluster-policies.yaml'
+    ? { path: 'scripts/deploy-cilium.sh', pattern: /kubectl apply -f .*my-values\/infra\/cilium-cluster-policies\.yaml/u, condition: 'after the Cilium policy CRDs are Established' }
+    : sourcePath === 'my-values/infra/registry-mirror.yaml'
+      ? { path: 'scripts/deploy.sh', pattern: /kubectl apply -n .*registry-mirror\.yaml/u, condition: 'KUBECLAW_DEPLOY_LAB_DOCKERHUB_MIRROR=true' } : null;
+  if (exactApply) {
+    const lines = read(exactApply.path).split('\n');
+    const index = lines.findIndex((line) => exactApply.pattern.test(line));
+    assert(index >= 0, `CONFIG_API_RECEIVER_DRIFT: ${sourcePath} lost its exact kubectl apply receiver`);
+    const command = lines[index].trim();
+    assert(!/--server-side/u.test(command), `CONFIG_API_RECEIVER_DRIFT: ${sourcePath} apply mode changed`);
+    bindings.push({ path: exactApply.path, line: index + 1, kind: 'kubernetes-manifest-client-side-apply',
+      direction: 'read', authority: `This exact command uses kubectl client-side apply: ${command}`,
+      condition: exactApply.condition, sourceLineSha256: sha256(lines[index]) });
+  }
+  if (sourcePath === 'my-values/infra/registry-mirror.yaml') {
+    const lines = read('scripts/argocd-self-management.mjs').split('\n');
+    const index = lines.findIndex((line) => /directory:.*include: 'registry-mirror\.yaml', recurse: false/u.test(line));
+    assert(index >= 0, 'CONFIG_API_RECEIVER_DRIFT: registry mirror lost its exact Argo CD directory receiver');
+    bindings.push({ path: 'scripts/argocd-self-management.mjs', line: index + 1,
+      kind: 'argocd-directory-manifest', direction: 'read', sourceLineSha256: sha256(lines[index]),
+      authority: 'Argo CD generates this file as a directory manifest. FailOnSharedResource=true is set; this source does not request Helm values coalescing. Resource annotations and configured sync options can still select the apply operation.' });
+  }
+  return bindings;
+}
+
 function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
   const exactLine = context.fieldLine ?? 1;
   const semanticPath = yamlFieldMatcherPath(exactPath);
@@ -1693,11 +1720,11 @@ function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
   if (boundary.kind === 'controller-annotation-payload') {
     if (semanticPath === 'metadata.annotations.kubeclaw.io/health-mode') return [{
       path: 'gitops/platform/bootstrap/argocd.yaml', line: 40, kind: 'checked-in-controller-reader', direction: 'read',
-      authority: 'the pinned Argo CD 10.8.0 Application health Lua code reads this exact annotation key',
+      authority: 'the Application health Lua code from the pinned Argo CD chart 10.8.0 reads this exact annotation key',
     }];
     if (/^metadata\.annotations\.argocd\.argoproj\.io\/(?:ignore-healthcheck|sync-wave|compare-options)$/u.test(semanticPath)) return [{
       path: 'gitops/platform/bootstrap/argocd.yaml', line: 15, kind: 'version-bound-external-controller-contract', direction: 'read',
-      authority: 'the pinned Argo CD 10.8.0 chart selects the controller version that owns this exact argocd.argoproj.io annotation contract',
+      authority: 'the pinned Argo CD chart 10.8.0 selects the controller version that owns this exact argocd.argoproj.io annotation contract',
     }];
     return [{ path: context.sourcePath, line: exactLine, kind: 'embedded-payload-consumer-unproved', direction: 'unknown', authority: 'no exact version-bound annotation controller was found' }];
   }
@@ -1742,7 +1769,9 @@ function yamlSemantics(context, exactPath, valueType) {
   if (context.resource) {
     const { kind, name, apiVersion } = context.resource;
     const semanticExactPath = yamlFieldMatcherPath(exactPath);
-    const apiOwner = kind === 'Application' ? 'Argo CD Application controller' : `Kubernetes ${kind} controller`;
+    const apiOwner = kind === 'Application' || kind === 'AppProject' ? `Argo CD ${kind} controller`
+      : kind === 'CiliumNetworkPolicy' || kind === 'CiliumClusterwideNetworkPolicy' ? 'Cilium policy parser and agent'
+        : kind === 'NetworkPolicy' ? 'the selected network policy implementation' : `Kubernetes ${kind} controller`;
     const boundary = deploymentFieldBoundary(context.resource, semanticExactPath);
     if (boundary.kind !== 'api-envelope') return {
       required: 'embedded-payload-contract',
@@ -1765,14 +1794,14 @@ function yamlSemantics(context, exactPath, valueType) {
       defaultKind: 'authored-manifest',
       constraints: [`${apiVersion}/${kind} API schema and admission`],
       runtimeOwner: `${apiOwner} for ${kind}/${name}`,
-      consumers: [{
+      consumers: [...manifestReceivingPaths(context.sourcePath), {
         path: context.sourcePath,
         line: context.fieldLine ?? 1,
         sourceLineSha256: sha256(read(context.sourcePath).split('\n')[(context.fieldLine ?? 1) - 1] ?? ''),
         kind: 'kubernetes-api',
         authority: apiFieldSchemaAuthority(apiVersion, kind, exactPath).authority,
       }],
-      precedence: ['authored manifest', 'Kubernetes API defaulting and admission', `${apiOwner} reconciliation`],
+      precedence: ['authored manifest', 'named client apply or synchronization operation and existing field ownership', 'Kubernetes API defaulting and admission', `${apiOwner} reconciliation`],
       effectiveValueProof: `${context.sourcePath} -> ${apiVersion}/${kind} admission -> ${kind}/${name}`,
       changeImpact: `Changes the desired ${kind}/${name} resource state after admission.`,
       failureMeaning: `Invalid fields fail API admission or Argo sync; accepted fields can still fail ${apiOwner} reconciliation.`,
@@ -1944,7 +1973,223 @@ function exactYamlAuthority(context, fieldPath) {
   return authority;
 }
 
-function deploymentApiFieldContract(resource, exactPath, valueType = null) {
+function deploymentApiCollectionContract(resource, exactPath, valueType, documentValue = null) {
+  const field = yamlFieldMatcherPath(exactPath);
+  const api = `${resource.apiVersion}/${resource.kind}`;
+  const schema = apiFieldCollectionAuthority(resource.apiVersion, resource.kind, exactPath);
+  const ciliumRule = ['CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind) ? documentValue?.spec : null;
+  const parserBoundary = ciliumRule && ['ingress', 'ingressDeny', 'egress', 'egressDeny'].every((direction) => !ciliumRule[direction]?.length)
+    && ['spec', 'spec.ingress', 'spec.egress', 'spec.enableDefaultDeny'].includes(field)
+    ? ` The selected checked-in rule has zero entries in all four Cilium allow/deny direction lists. In Cilium 1.20.1, the CNP/CCNP Parse method calls Rule.Sanitize, which rejects this with rule must have at least one of Ingress, IngressDeny, Egress, EgressDeny. A valid CRD shape therefore does not prove policy installation or traffic enforcement. Stop before relying on this object for isolation. Cilium and configuration maintainers must choose a supported policy design or verified controller version, then prove parser acceptance and both required and denied traffic before removing this limit. No live parser rejection or enforcement check ran. [Parser boundary](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/k8s/apis/cilium.io/v2/${resource.kind === 'CiliumNetworkPolicy' ? 'cnp_types.go#L191-L201' : 'ccnp_types.go#L97-L107'}); [Rule.Sanitize](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L42-L46).`
+    : '';
+  const result = (group, purpose, emptyBehavior, impact, failure, { structural = false, source = null } = {}) => ({
+    status: structural ? 'deployment-collection-envelope' : 'deployment-operational-authority',
+    collectionGroup: group, purpose, emptyBehavior: `${emptyBehavior}${parserBoundary}`, impact, failure: `${failure}${parserBoundary}`,
+    acceptedValues: 'The exact field, item and child schema contracts listed here apply together. Parent descriptions and required fields constrain the complete object; a schema-valid fragment does not prove that the receiving controller can use it.',
+    apiAuthority: `${schema.authority}${source ? `; ${source}` : ''}`,
+    collectionSchemaAuthority: schema,
+    qualification: { method: 'path-specific contract and exact pinned schema', group, scope: 'Source contract; admission and reconciliation have not run.', ...(parserBoundary ? { controllerLimit: parserBoundary } : {}) },
+  });
+  const k8sSource = (file, lines) => `[Kubernetes v1.35.0 ${file.split('/').at(-1)}](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/${file}#${lines})`;
+  const argoSource = (file, lines) => `[Argo CD 3.5.2 ${file}](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/pkg/apis/application/v1alpha1/${file}#${lines})`;
+  const unqualified = (missing) => ({
+    status: 'api-collection-meaning-blocker', collectionGroup: 'unqualified-api-collection',
+    purpose: `The exact ${api} field ${field} reaches the API server. Its schema and named children are shown here, but the complete receiving behavior is not established.`,
+    acceptedValues: 'Use the exact pinned field, item, child and parent schema contracts. They do not establish a missing controller contract.',
+    emptyBehavior: `Not established: ${missing}. Stop before using an empty, omitted or null collection as a reset or fallback. Keep the checked-in selection until the receiving behavior is established.`,
+    impact: `Changing ${field} changes desired ${resource.kind}/${resource.name} state. The complete operational consequence is not established.`,
+    failure: `An unqualified change can remove required inputs or expand scope. The configuration owner must establish ${missing} before this field is presented as a supported change.`,
+    apiAuthority: schema.authority, collectionSchemaAuthority: schema,
+    qualification: { method: 'exact pinned schema only', missing, scope: 'Unqualified controller behavior; no acceptance claim.' },
+    blockerOwner: `configuration owners and the ${resource.kind} controller owner`,
+    closureCondition: `Establish ${missing} for ${api} ${field}, with pinned implementation and a bounded negative check.`,
+  });
+  const envelopeKinds = ['Namespace', 'CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy', 'NetworkPolicy', 'Application', 'AppProject', 'Deployment', 'Service', 'Ingress', 'ValidatingAdmissionPolicy', 'ValidatingAdmissionPolicyBinding', 'PersistentVolumeClaim', 'ConfigMap'];
+  if (envelopeKinds.includes(resource.kind) && (field === 'metadata' || field === 'spec' || resource.kind === 'Deployment' && ['spec.template', 'spec.template.metadata', 'spec.template.spec'].includes(field))) return result(
+    'api-object-envelope', `Groups the named ${field} child contracts for ${resource.kind}/${resource.name}.`,
+    'An empty or removed envelope still has to satisfy the required child fields, API validation and the receiving object contract. It does not disable the object or its controller. Null is not a supported whole-object reset. Child defaults apply only when the enclosing object and API operation permit them.',
+    `Changes the named desired-state children. For Deployment Pod-template changes, the Deployment creates replacement Pods; the descriptions that forbid updating a Pod apply to a running Pod, not to changing its Deployment template.`,
+    'Missing required children fail admission; inconsistent selectors, references or policy inputs can prevent reconciliation. The named child contracts describe the exact consequences.', { structural: true });
+  if (/(?:^|\.)metadata\.(?:labels|annotations)$/u.test(field)) return result(
+    'object-metadata-map', `Stores ${field.endsWith('labels') ? 'labels used by exact matching selectors' : 'annotations interpreted by the component named by each key'}.`,
+    'An empty map supplies no entries from this field. Omission has no authored entries in a new object; apply may remove previously managed entries or retain entries owned by another writer. Null is not a general reset of other writers. A Pod-template label change must keep the Deployment selector valid.',
+    'Changes stored metadata and the exact selector or annotation consumers shown in child rows. Pod-template changes can start a rollout; object metadata by itself does not prove process restart.',
+    'Invalid keys or values fail admission. Lost selector labels can detach routing or policy; a stored annotation has no proved process effect without its exact reader.');
+  if (/(?:^|\.)(?:matchLabels|matchExpressions|values)(?:\[\])?$/u.test(field) && /(?:Selector|Endpoints|selector)/u.test(field)) return result(
+    'label-selector-terms', 'Defines label requirements for the enclosing selector.',
+    'matchLabels entries and matchExpressions are ANDed. An empty requirements set adds no restriction to that selector. For In and NotIn, values must be nonempty; for Exists and DoesNotExist, values must be empty. An empty item still has to supply the required key and operator. Omission or null of a term collection adds no terms after accepted API decoding; it does not define omission of the enclosing selector. Its parent contract remains in force.',
+    'Changes which objects or endpoints the enclosing selector matches; removing terms can broaden scope.',
+    'Invalid operator/value combinations fail validation; valid broad terms can select unintended workloads or traffic.');
+  if (resource.kind === 'NetworkPolicy') {
+    if (/^spec\.(?:ingress|egress)$/u.test(field)) return result('network-policy-rule-list', 'Defines the traffic allow rules for the named policy direction.',
+      'An empty, omitted or accepted null list contributes no allow rules. Whether the selected Pods are isolated in that direction depends on policyTypes and all selecting policies. Allow rules across the selecting policy set are ORed; source and port restrictions within one rule must both match.',
+      'Changes traffic allowed to or from selected Pods after policy enforcement.', 'Removing all allows can block dependencies; removing a restriction inside a retained rule can expand traffic.');
+    if (/^spec\.(?:ingress\[\]\.from|egress\[\]\.to|(?:ingress|egress)\[\]\.ports)$/u.test(field)) {
+      const ports = field.endsWith('.ports');
+      return result('network-policy-peer-port-list', `Restricts the ${ports ? 'destination ports' : 'peers'} matched by this NetworkPolicy rule.`,
+        `An empty or missing list matches all ${ports ? 'ports' : 'peers'} in this rule. Nonempty entries are ORed. The peer and port restrictions are intersected; a request must match both. Accepted null is decoded as a missing list, not as a deny rule.`,
+        `Removing the complete list broadens the retained rule to all ${ports ? 'ports' : 'peers'}; it does not remove the rule.`,
+        'A broad retained rule can grant unintended traffic; a mismatched nonempty entry can block required traffic.');
+    }
+    if (/^spec\.(?:ingress|egress)\[\]$/u.test(field)) return result('network-policy-rule', 'Combines the peer and port restrictions of one allow rule.',
+      'A rule with missing or empty from/to matches all peers; missing or empty ports matches all ports. Each nonempty member list ORs its entries, and the peer and port restrictions intersect. An empty rule therefore permits all traffic in that direction through this rule. Removing the rule removes that allow. A null rule item is not a supported substitute for deleting it.',
+      'Changes the intersection of peers and ports allowed by this rule; separate rules are ORed.', 'An empty retained rule broadens traffic even if other rules remain narrow.');
+    if (/^spec\.(?:ingress\[\]\.from|egress\[\]\.to)\[\]$/u.test(field)) return result('network-policy-peer', 'Selects the peer alternative used by this allow-rule item.',
+      'An empty peer selects all peers. podSelector and namespaceSelector in the same item intersect; separate peer items are ORed. ipBlock cannot be combined with either selector. Removing the item removes that alternative; removing all peer items broadens the enclosing rule.',
+      'Changes the peer scope permitted by the retained allow rule.', 'An invalid alternative combination fails validation; an empty peer expands the source or destination scope.');
+    if (/^spec\.(?:ingress|egress)\[\]\.ports\[\]$/u.test(field)) return result('network-policy-port', 'Selects one port and transport protocol allowed by the rule.',
+      'An omitted port matches all ports for the selected protocol. Protocol defaults to TCP; endPort requires a numeric port and must not be below it. Removing an item removes that alternative; removing the list permits all ports. Null is not a supported port item.',
+      'Changes the allowed destination port range.', 'Invalid port ranges fail admission; deleting the list can broaden traffic.', { source: k8sSource('pkg/apis/networking/v1/defaults.go', 'L30-L45') });
+    if (field === 'spec.policyTypes') return result('network-policy-directions', 'Selects the policy directions that isolate selected Pods.',
+      'Kubernetes defaults a zero-length list, including [], omission or decoded null, to Ingress and also Egress when the egress rule list is nonempty. Use an explicit Egress item for an egress-only policy or an empty egress allow set. Empty items are invalid.',
+      'Changes which traffic directions need an explicit allow from the selecting policy set.', 'A missing Egress direction can leave egress unrestricted; a direction without allows can block traffic.', { source: k8sSource('pkg/apis/networking/v1/defaults.go', 'L38-L45') });
+    if (/(?:podSelector|namespaceSelector)$/u.test(field)) return result('network-policy-selector', 'Selects Pods or namespaces for the enclosing policy or peer.',
+      'An empty selector matches all objects within its scope. The top-level podSelector scopes Pods to the policy namespace. A peer podSelector without namespaceSelector also uses the policy namespace; a peer namespaceSelector with podSelector intersects both selectors. Omission of a peer selector does not mean an empty selector. Null is not a supported reset of the required top-level selector.',
+      'Changes the Pods isolated or peers permitted by the policy.', 'Broad selectors can grant traffic or isolate unrelated Pods; inconsistent selectors can block intended traffic.');
+  }
+  if (['CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind)) {
+    if (/^spec\.(?:ingress|egress)$/u.test(field)) return result('cilium-direction-rules', 'Defines Cilium allow rules for the named direction.',
+      'An omitted or empty list contributes no allow rule in this direction. It does not by itself prove disabled enforcement: enableDefaultDeny and all policies selecting the endpoints still apply. Null decoding and policy normalization are not a supported way to recover an empty allow set.',
+      'Changes allowed traffic after Cilium policy reconciliation.', 'Missing allows can block dependencies; broad retained rules can expand traffic.');
+    if (/^spec\.(?:ingress|egress)\[\]$/u.test(field)) return result('cilium-allow-rule', 'Combines the alternatives and restrictions of one Cilium traffic rule.',
+      'The exact pinned rule description lists mutually exclusive peer members and the intersections between present members. Removing a member removes its restriction subject to its own exact contract; removing the complete rule removes that allow. An empty retained rule is not a supported reset. Null items must not be used in place of deletion.',
+      'Changes which peer and port combinations the policy engine allows.', 'Invalid alternative combinations fail Cilium validation; removed restrictions can expand scope.');
+    if (/\.(?:fromEndpoints|toEndpoints)$/u.test(field)) return result('cilium-peer-selectors', 'Selects endpoint identities permitted by this Cilium rule.',
+      'The pinned Cilium contract distinguishes [] from omission: an empty non-nil list selects no endpoints, while a nil list is a wildcard when ToPorts is specified. One empty EndpointSelector selects everything. Null cannot be assumed to preserve []; admission and policy normalization must preserve the intended selector state.',
+      'Changes allowed endpoint identities, with the enclosing port restrictions still intersected.', 'Replacing a restrictive list with omission can broaden traffic; [] can block required peers.');
+    if (/\.(?:fromEndpoints|toEndpoints)\[\]$|\.endpointSelector$/u.test(field)) return result('cilium-endpoint-selector', 'Selects the endpoints for the enclosing policy or peer alternative.',
+      'An empty selector object has no label requirements. The enclosing peer list decides whether that empty item selects everything; a missing list is a different state. At the policy root, Rule.Sanitize requires exactly one declared endpointSelector or nodeSelector: a declared {} is different from a missing or null selector. Do not use null to select a fallback.',
+      'Changes protected endpoints or allowed peer identities.', 'A broad selector expands the policy scope; an invalid root selector combination fails Cilium rule validation.', { source: '[Cilium 1.20.1 Rule.Sanitize](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L67-L85)' });
+    if (/\.(?:fromEntities|toEntities)$/u.test(field)) return result('cilium-entity-list', 'Selects reserved Cilium identities permitted by the enclosing traffic rule.',
+      'The pinned policy translator distinguishes [] from omission: an explicit empty entity list produces no selected identities; a missing list can leave peer selection to the other supported selector member or act as a wildcard with port rules. It does not select the none entity or disable the whole policy. Null must not be assumed to preserve explicit [].',
+      'Changes which infrastructure or external identities can communicate.', 'A broad entity or removed restriction can grant traffic across a wider trust boundary.', { source: '[Cilium 1.20.1 peer translation](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/utils/parserules.go#L149-L166)' });
+    if (field === 'spec.enableDefaultDeny') return result('cilium-default-deny-map', 'Controls whether this policy enables default deny for each selected traffic direction.',
+      'When EnableNonDefaultDenyPolicies is enabled, a missing direction override defaults true for directions with allow or deny rules and false otherwise. If that Cilium feature is disabled, Rule.Sanitize sets both directions true regardless of authored overrides. Any selecting policy can enable default deny. An empty map supplies no overrides; removing this map does not disable default deny. Null must not be used as an explicit false override.',
+      'Changes whether unmatched traffic is dropped for selected endpoints.', 'A false override can leave traffic allowed unless another selecting policy enables default deny; true without allows can block dependencies.', { source: '[Cilium 1.20.1 default-deny selection](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L47-L66)' });
+    if (/\.toPorts(?:\[\])?\.ports\[\]$/u.test(field)) return result('cilium-port-protocol-item', 'Selects a Cilium port and optional transport protocol.',
+      'The item schema and PortProtocol contract apply together. Omitted or empty protocol matches transport protocols TCP, UDP and SCTP; named ports may narrow this. An empty port item is not a supported way to remove a port restriction. Remove the intended rule item and inspect the remaining rule scope.',
+      'Changes traffic matched by the enclosing Cilium port rule.', 'Invalid port/protocol combinations fail validation; a broad protocol can permit unintended traffic.', { source: '[Cilium 1.20.1 PortProtocol](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/l4.go#L43-L83)' });
+    if (/\.toPorts(?:\[\])?(?:\.ports)?$/u.test(field)) return result('cilium-port-rule-list', 'Defines the port-rule entries and their port/protocol lists used by the Cilium policy engine.',
+      'Empty or omitted toPorts produces no port-rule entries. With a nonempty allowed peer selector and no other L4 entries, the engine creates an L3-only allowance for all transport ports; an explicit empty peer list still selects nothing. A retained PortRule with an empty or omitted ports list contributes no port/protocol iteration and no L4 filter from that entry. These states are different. Removing the last PortRule can therefore broaden the peer rule, while removing its ports can remove its allowance. An accepted null list must be inspected as the decoded zero-length state; null items are not a supported recovery input. Optional Layer 7 alternatives still have their own validation and do not add a missing port/protocol entry.',
+      'Changes the traffic filters emitted by this rule after Cilium reconciliation, with peer selection and the complete policy set still in force.',
+      'Invalid combinations fail Cilium rule validation. Changing the wrong list level can block traffic or broaden the retained peer rule. Stop before treating an empty list as a deny-all or disable switch; inspect the complete peer and port rule together.',
+      { source: '[Cilium 1.20.1 rule translation](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/utils/parserules.go#L19-L46); [port iteration and L3-only allowance](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/rule.go#L356-L413)' });
+  }
+  if (resource.kind === 'AppProject') {
+    if (/^spec\.(?:cluster|namespace)ResourceWhitelist(?:\[\])?$/u.test(field)) return result('argo-resource-permissions', 'Defines resource group and kind permissions in this Argo CD project.',
+      'For namespaced resources, [] is an explicit deny-all whitelist, while omission or null permits namespaced kinds subject to blacklist and destination checks. For cluster-scoped resources, empty, omitted or null grants no kinds. A nonempty list permits matching entries unless a blacklist denies them. Each item requires the actual group/kind or supported wildcard; an empty item is not permission.',
+      'Changes which desired resource kinds the project can synchronize.', 'Missing permissions stop synchronization; broad wildcards expand authority.', { source: argoSource('app_project_types.go', 'L399-L413') });
+    if (/^spec\.(?:sourceRepos|destinations)(?:\[\])?$/u.test(field)) return result('argo-source-destination-permissions', 'Defines source repository or cluster/namespace permissions for this project.',
+      'The evaluator loops over the selected entries. An empty, omitted or null list supplies no matching allow entry. PermitOnlyProjectScopedClusters can further restrict an otherwise matched destination; it does not replace a missing destination permission. Positive matches do not override a matching negative pattern. Empty destination items are not a supported allow entry.',
+      'Changes the repositories or destination namespaces available to project Applications.', 'No matching permission prevents synchronization; a wildcard or wrong destination can expand the deployment boundary.', { source: argoSource('app_project_types.go', 'L458-L530') });
+  }
+  if (resource.kind === 'Application') {
+    if (/^spec\.sources(?:\[\])?$|^spec\.source$/u.test(field)) return result('argo-source-selection', 'Selects the desired manifest or chart sources for this Application.',
+      'A nonempty sources list takes precedence over source. Empty, omitted or null sources falls back to source; when both are absent the selected source is empty and cannot generate desired state. Each source needs repoURL and a valid chart or path. Multiple sources remain ordered; later repeated resources can override earlier source output.',
+      'Changes desired-state source identity, content and precedence.', 'An incomplete source prevents manifest generation; changing source order can replace desired resources.', { source: `${argoSource('types.go', 'L281-L296')}; [multiple-source resource precedence](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/docs/user-guide/multiple_sources.md#L45-L47)` });
+    if (field === 'spec.destination') return result('argo-destination', 'Selects the cluster and default namespace for generated resources.',
+      'The destination child contract requires a registered server or cluster name and project permission. An empty, omitted or null map is not a supported destination reset. Namespace omission is usable only for cluster-scoped output or resources with their own accepted namespace.',
+      'Changes the target cluster and namespaced reference boundary.', 'An incomplete or denied destination stops synchronization.');
+    if (/^spec\.sources?(?:\[\])?\.(?:helm|directory)$/u.test(field)) return result('argo-manifest-generator-options', 'Groups options for the Helm or directory generator selected by this source.',
+      'An empty map still requests that generator type. Omission lets Argo CD infer the type from the source; competing generator option maps are not a supported combination. Child defaults and required settings apply only to the selected generator. Null is not a supported way to clear generated desired state.',
+      'Changes which files and options enter generated desired state.', 'An incompatible generator or missing input fails manifest generation; unintended files can enter synchronization.', { source: `${argoSource('types.go', 'L3798-L3825')}; [generator selection](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/reposerver/repository/repository.go#L1921-L1943)` });
+    if (/^spec\.sources?(?:\[\])?\.helm\.valueFiles$/u.test(field)) return result('argo-helm-value-file-list', 'Selects ordered values files for the source Helm render.',
+      'An empty, omitted or null list adds no values files through this field; chart defaults and other values/valuesObject/parameters inputs remain. Resolved paths retain first-occurrence order; duplicate resolved paths are skipped. Later distinct files have higher Helm precedence. A $ref path resolves through a source ref; missing files fail generation unless ignoreMissingValueFiles is enabled.',
+      'Changes effective Helm values and the resulting desired manifests.', 'A missing file or ref fails generation; removing overrides can re-enable chart defaults.', { source: '[Argo CD ordered ref/local resolution](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/reposerver/repository/repository.go#L1475-L1499); [unique resolved paths](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/reposerver/repository/repository.go#L1466-L1474); [missing files and ordered append](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/reposerver/repository/repository.go#L1531-L1547)' });
+    if (field === 'spec.syncPolicy' || field === 'spec.syncPolicy.automated') return result('argo-sync-policy', 'Controls Application synchronization and the optional automated-sync path.',
+      'A missing or null automated object disables automated sync. An empty automated map enables it unless enabled is explicitly false; omitted prune, selfHeal and allowEmpty do not enable those flags. An empty syncPolicy map does not by itself enable automation. Removing syncPolicy also removes its app-wide syncOptions.',
+      'Changes whether the controller synchronizes automatically and can prune or repair live drift.', 'An unintended automated object can start changes; unsafe prune/allowEmpty choices can remove desired resources.', { source: argoSource('types.go', 'L1530-L1547') });
+    if (field === 'spec.syncPolicy.syncOptions') return result('argo-sync-options-list', 'Selects named synchronization options for this Application.',
+      'An empty, omitted or null list sets no app-wide options through this field. Resource annotations can still set options. The exact option names and values decide validation, apply, namespace creation, replacement and pruning; an empty item is not a supported option.',
+      'Changes how Argo CD performs synchronization for generated resources.', 'A wrong option can change ownership, replace resources or make synchronization fail.');
+    if (/^spec\.ignoreDifferences(?:\[\])?(?:\.jqPathExpressions)?$/u.test(field)) return result('argo-comparison-exclusions', 'Selects resource fields excluded from Argo CD comparison.',
+      'An empty, omitted or null list excludes no fields through this field. Each item filters objects by group/kind and optional name/namespace; its JQ or JSON-pointer selectors choose fields. An empty selector list contributes no excluded paths. Other configured comparison rules can still apply. RespectIgnoreDifferences is a separate sync option.',
+      'Changes which differences can make an Application appear out of sync.', 'Invalid expressions fail comparison; broad selectors can hide material drift.');
+  }
+  if (resource.kind === 'Deployment') {
+    if (/^spec\.selector(?:\.matchLabels)?$/u.test(field)) return result('deployment-selector', 'Selects the Pods owned by this Deployment.',
+      'The apps/v1 Deployment requires a nonempty immutable selector that matches the Pod-template labels. An empty, omitted or null selector is not a supported reset. Empty matchLabels must still leave a valid nonempty complete selector through matchExpressions.',
+      'Changes controller ownership; changing the immutable selector requires a deliberate replacement workflow.', 'An invalid, empty, changed or mismatched selector fails API validation.', { source: k8sSource('pkg/apis/apps/validation/validation.go', 'L637-L659') });
+    if (field === 'spec.strategy') return result('deployment-replacement-strategy', 'Selects the method that replaces old Pods with new Pods.',
+      'Omission or an empty strategy selects the Kubernetes RollingUpdate defaults. Recreate and RollingUpdate are distinct variants; rollingUpdate settings cannot accompany Recreate. Null is not a separate disablement mode. Availability during replacement depends on the selected rollout constraints.',
+      'Changes Pod replacement order and available capacity during rollout.', 'An invalid variant fails admission; a valid aggressive rollout can interrupt service.', { source: k8sSource('pkg/apis/apps/v1/defaults.go', 'L38-L63') });
+    const containerField = /^spec\.template\.spec\.containers(?:\[\])?(?:\.(.*))?$/u.exec(field);
+    if (containerField) {
+      const member = containerField[1];
+      if (!member) return result('pod-container-set', 'Defines the application containers in each new Deployment Pod.',
+        'The Pod requires at least one container and unique names. An empty, omitted or null list cannot create a valid Pod. Removing one item removes that process from replacement Pods; running Pod container lists cannot be updated in place.',
+        'Changes the processes and startup dependencies of replacement Pods.', 'Missing or duplicate containers fail admission; a valid changed image/process can fail startup.');
+      if (member === 'args' || member === 'command') return result('container-launch-list', `Defines the ordered container ${member}.`,
+        `An empty, omitted or decoded null ${member} list leaves the image ${member === 'args' ? 'CMD arguments' : 'ENTRYPOINT command'} in effect. Entries are ordered and environment references are expanded under the exact field contract. This field does not invoke a shell unless the selected executable does so.`,
+        'Changes the program or its arguments after Pod replacement.', 'An invalid executable or argument can make the container exit; removing arguments can select unintended image defaults.');
+      if (/^env(?:\[\])?$|^envFrom(?:\[\])?(?:\.secretRef)?$/u.test(member)) return result('container-environment-collection', 'Defines literal environment entries or references to environment sources.',
+        'An empty, omitted or null list adds no entries through that field; image environment and other env/envFrom entries remain. env entries override duplicate envFrom keys; the last envFrom source wins among sources. Items select literal value or valueFrom, or a ConfigMap/Secret source. A missing nonoptional referenced object or key prevents container setup; optional references can be absent.',
+        'Changes process input after Pod replacement; Secret/ConfigMap edits do not update an existing process environment.', 'Invalid alternatives fail admission; unavailable required credentials prevent startup.');
+      if (/^ports(?:\[\])?$/u.test(member)) return result('container-port-declarations', 'Declares named container ports for API references and tooling.',
+        'An empty, omitted or null list declares no ports. It does not stop the image process from listening or block network traffic. A named Service targetPort or probe still needs a matching declaration; numeric endpoints remain separate.',
+        'Changes named-port resolution and desired Pod metadata, not the process listener itself.', 'Invalid or duplicate declarations fail validation; a missing named target can break routing.');
+      if (/^resources(?:\.(?:requests|limits))?$/u.test(member)) return result('container-resource-boundaries', 'Defines container scheduling requests and runtime resource limits.',
+        'An empty or missing map supplies no authored resource keys through this field. A request omitted while its limit is present defaults to that limit in Kubernetes; admission such as LimitRange can add further constraints. Requests cannot exceed limits. Null is not a supported bypass of namespace resource policy.',
+        'Changes scheduling reservations and resource enforcement for replacement Pods.', 'Invalid quantities fail admission; high requests can leave Pods Pending and low limits can throttle or terminate processes.', { source: k8sSource('pkg/apis/core/v1/defaults.go', 'L170-L205') });
+      if (/^volumeMounts(?:\[\])?$/u.test(member)) return result('container-volume-mounts', 'Selects Pod volumes and the container paths where they appear.',
+        'An empty, omitted or null list adds no mounts. Each retained item needs a matching Pod volume and a valid unique mountPath. Removing a mount removes that filesystem exposure from replacement Pods; it does not delete the source volume data.',
+        'Changes container data and credential access after Pod replacement.', 'Invalid or missing volume relationships fail admission or setup; a removed mount can break process startup.');
+      if (/^(?:livenessProbe|readinessProbe|startupProbe)(?:\.httpGet)?$/u.test(member)) return result('container-health-probe', 'Defines a container health check and its selected action.',
+        'A missing or null probe supplies no check of that type. An empty probe is invalid because exactly one action must be selected. A supplied httpGet action requires a port; other action alternatives cannot be present together. Probe timing defaults and success/failure thresholds remain in the named child contracts.',
+        'Liveness and startup failures can restart a container; readiness failures remove it from ready Service endpoints. Startup gating postpones the other probes.', 'Invalid actions fail validation; a wrong endpoint or aggressive timing can cause restart loops or traffic loss.');
+    }
+    if (/^spec\.template\.spec\.volumes(?:\[\])?(?:\.(?:configMap|secret|persistentVolumeClaim))?$/u.test(field)) return result('pod-volume-sources', 'Defines named Pod volumes and their selected source alternatives.',
+      'An empty, omitted or null list adds no volumes. Each retained named volume must have one supported source variant; a volume item with no source defaults to emptyDir in Kubernetes. ConfigMap/Secret sources project keys as files unless items selects keys and paths. A missing nonoptional source prevents setup; a PVC reference must name a claim in the Pod namespace. Removing a Pod volume does not delete its PVC.',
+      'Changes files and persistent storage accessible to replacement Pods.', 'Unmatched mounts or invalid source alternatives fail admission; unavailable required sources leave Pods unable to start.', { source: k8sSource('pkg/apis/core/v1/defaults.go', 'L65-L98') });
+  }
+  if (resource.kind === 'Service') {
+    if (field === 'spec.selector') return result('service-endpoint-selector', 'Selects Pods whose endpoints receive Service traffic.',
+      'An empty, omitted or null selector delegates endpoint management to an external process; the Service controller does not select every Pod. Selector applies to ClusterIP, NodePort and LoadBalancer, and is ignored for ExternalName. Apply ownership decides which previously stored keys are removed.',
+      'Changes the selected endpoint set after EndpointSlice reconciliation.', 'A mismatched selector yields no endpoints; a broad nonempty selector can route traffic to unintended Pods.');
+    if (/^spec\.ports(?:\[\])?$/u.test(field)) return result('service-listeners', 'Defines exposed Service ports and their target listeners.',
+      'A non-headless Service other than ExternalName requires at least one port: empty, omitted or null cannot supply it. Headless and ExternalName have separate validation rules. Items select numeric or named targetPort, with protocol and port defaults from the exact child contracts.',
+      'Changes network exposure and routing, while the target process must still listen.', 'Invalid or duplicate ports fail admission; unresolved named targets or absent listeners prevent requests.', { source: k8sSource('pkg/apis/core/validation/validation.go', 'L6587-L6627') });
+  }
+  if (resource.kind === 'Ingress') {
+    if (/^spec\.defaultBackend(?:\.service(?:\.port)?)?$/u.test(field)) return result('ingress-backend-alternatives', 'Selects the backend used when no Ingress rule matches.',
+      'A declared backend selects exactly one service or resource alternative. A service backend requires its name and either a port name or number. An empty or null backend is not a supported target; removing defaultBackend still requires valid rules or another valid complete Ingress configuration.',
+      'Changes the destination of unmatched requests.', 'Invalid alternatives fail admission; an unresolved Service or port makes the backend unavailable.');
+    if (/^spec\.tls(?:\[\])?(?:\.hosts)?$/u.test(field)) return result('ingress-tls-selection', 'Selects Ingress TLS entries, certificate Secrets and host names.',
+      'An empty, omitted or null TLS list supplies no explicit TLS entries through this field. Empty or missing hosts uses the selected Ingress controller wildcard-host behavior described by the pinned API; actual certificate and default-listener behavior depends on that controller. The host names must match the selected certificate. Null is not a proved TLS-disable switch.',
+      'Changes TLS certificate and host routing requested from the selected Ingress controller.', 'A missing certificate or host mismatch can cause client TLS failure; source checks do not prove live controller behavior.');
+  }
+  if (resource.kind === 'PersistentVolumeClaim') {
+    if (field === 'spec.accessModes') return result('pvc-access-mode-set', 'Requests access modes supported by the selected storage driver.',
+      'API validation requires at least one access mode, so empty, omitted or null cannot create a valid claim. The selected driver must support the requested modes. ReadWriteOncePod is distinct from ReadWriteOnce and restricts access at the Pod boundary.',
+      'Changes volume matching and concurrent access constraints.', 'Invalid modes fail admission; unsupported modes leave the claim Pending.', { source: k8sSource('pkg/apis/core/validation/validation.go', 'L2464-L2498') });
+    if (/^spec\.resources(?:\.requests)?$/u.test(field)) return result('pvc-storage-request', 'Requests persistent storage capacity for the claim.',
+      'The claim requires a positive storage request. Empty, omitted or null resources/requests cannot provide it; a generic container request-to-limit fallback is not a storage recovery contract. Updates must satisfy PVC resizing and storage-driver constraints.',
+      'Changes requested capacity and volume binding or expansion; it does not prove filesystem expansion has completed.', 'Missing or invalid storage fails admission; unavailable capacity or unsupported expansion leaves storage unusable.', { source: k8sSource('pkg/apis/core/validation/validation.go', 'L2464-L2512') });
+  }
+  if (resource.kind === 'ValidatingAdmissionPolicy' || resource.kind === 'ValidatingAdmissionPolicyBinding') {
+    if (/^spec\.matchConditions(?:\[\])?$/u.test(field)) return result('admission-match-conditions', 'Filters admission requests before policy validation.',
+      'An empty, omitted or null list adds no condition filter and matches all requests already selected by the resource rules and selectors. Any false condition skips the policy. When none is false, errors reject under Fail and skip under Ignore. Each item needs its name and valid CEL expression; at most 64 conditions are accepted.',
+      'Changes which requests reach validation and how condition errors affect them.', 'Removing a filter can broaden admission enforcement; a faulty expression can reject requests under Fail.');
+    if (/^spec\.matchConstraints(?:\.resourceRules(?:\[\])?(?:\.(?:apiGroups|apiVersions|operations|resources))?)?$/u.test(field)) return result('admission-resource-rule-selection', 'Selects the API operations and resources to which the policy applies.',
+      'ResourceRules entries are ORed; fields within one rule constrain the same request. Exclude rules take precedence. A rule must supply nonempty valid apiGroups, apiVersions, operations and resources; wildcard entries follow the exact item constraints. Empty matchConstraints or resourceRules is not a supported all-resources default. Null cannot be used to recover an incomplete required match contract.',
+      'Changes the admission requests subject to this policy.', 'Invalid rules fail policy validation; broad wildcards can affect unrelated API operations.', { source: k8sSource('pkg/apis/admissionregistration/validation/validation.go', 'L791-L799') });
+    if (/^spec\.validations(?:\[\])?$/u.test(field)) return result('admission-validation-list', 'Defines the CEL checks used to accept or reject matched requests.',
+      'Empty, omitted or null validations supplies no validation expressions. validations and auditAnnotations cannot both be empty; at least one is required. Each retained item needs a valid expression. Removing a validation removes that check and does not remove the remaining policy or binding.',
+      'Changes policy checks and the failures acted on by its bindings.', 'Invalid CEL or missing required checks fails validation; permissive valid expressions can admit unsafe requests.');
+    if (/^spec\.variables(?:\[\])?$/u.test(field)) return result('admission-variable-order', 'Defines named CEL variables available to later policy expressions.',
+      'An empty, omitted or null list defines no variables. Expressions that still reference a removed variable can fail compilation. Variables may refer only to earlier variables, must be acyclic, and are unavailable in matchConditions.',
+      'Changes shared expression inputs and evaluation order.', 'Invalid names, forward references or cycles fail expression checks; affected request failures follow policy and binding settings.');
+    if (field === 'spec.validationActions') return result('admission-enforcement-actions', 'Selects Deny, Warn or Audit behavior for policy failures.',
+      'The binding requires at least one action. Empty, omitted or null fails validation. Duplicate actions and the Deny+Warn combination are invalid. Order does not matter. failurePolicy controls whether policy errors are acted on; the exact binding contract lists the effect of each action.',
+      'Changes whether clients receive denial, warnings or audit evidence.', 'Invalid action sets fail admission; removing Deny while keeping only audit or warning can allow failing requests.', { source: k8sSource('pkg/apis/admissionregistration/validation/validation.go', 'L926-L960') });
+  }
+  if (resource.kind === 'ConfigMap' && field === 'data') return result('configmap-payload-map', 'Stores named string payloads for the exact workload readers in child rows.',
+    'An empty, omitted or null map supplies no payload entries. Required key references can then prevent Pod setup; optional projections can be absent. ConfigMap stores strings and validates key syntax, not each process configuration language. A process default cannot be inferred from an empty map.',
+    'Changes files or environment entries delivered to readers; mounted updates and process reload have separate contracts.', 'Invalid outer keys fail admission; missing or invalid required process payloads can prevent startup.');
+  return unqualified('whole-collection empty/omitted/null behavior, controller defaults and item alternatives');
+}
+
+function deploymentApiFieldContract(resource, exactPath, valueType = null, documentValue = null) {
   const normalized = yamlFieldMatcherPath(exactPath);
   const api = `${resource.apiVersion}/${resource.kind}`;
   const operational = (purpose, acceptedValues, emptyBehavior, impact, failure, controller = `${resource.kind} controller`) => ({
@@ -1961,31 +2206,7 @@ function deploymentApiFieldContract(resource, exactPath, valueType = null) {
     apiAuthority: `${api} pinned schema authority and the named reconciler for this object`,
   });
   if (['object', 'array'].includes(valueType)) {
-    if (/^(?:spec\.)?(?:ingress|egress)$/u.test(normalized) && ['NetworkPolicy', 'CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind)) return operational(
-      `Defines the complete ${normalized.split('.').at(-1)} allow-rule list for this ${resource.kind}.`,
-      'A list of rules accepted by the exact pinned policy schema; each rule and selector has the constraints in its nested rows.',
-      'An empty allow-rule list permits no traffic through this field. Isolation still depends on the selected policy directions and other policies; it must not be interpreted as disabling enforcement.',
-      'Changes allowed traffic for the policy-selected endpoints after policy reconciliation.',
-      'Malformed rules fail admission. Empty or mismatched allows can block dependencies; broad rules can grant unintended connectivity.', 'the selected network policy engine');
-    if (/(?:^|\.)(?:podSelector|namespaceSelector|endpointSelector)$/u.test(normalized)) return operational(
-      `Selects the ${normalized.split('.').at(-1)} scope for this policy or resource.`,
-      'A label-selector map accepted by the pinned API schema; matchLabels and matchExpressions define additional terms.',
-      'An empty selector matches every object in its permitted scope. It is not an omitted selector; surrounding namespace and rule fields still constrain that scope.',
-      'Changes the complete selected object set after controller or policy reconciliation.',
-      'Invalid selectors fail admission; an empty or overly broad selector can expand authority, while an unmatched selector blocks intended use.', 'the named resource controller or policy engine');
-    if (resource.kind === 'AppProject' && normalized === 'spec.clusterResourceWhitelist') return operational(
-      'Lists the cluster-scoped resource group/kind pairs this Argo CD project permits.',
-      'A list of group/kind maps accepted by the pinned AppProject CRD; wildcard entries grant the corresponding broad resource scope.',
-      'An empty list grants no cluster-scoped resource kinds through this whitelist.',
-      'Changes which cluster-scoped desired resources the project can synchronize.',
-      'Malformed entries fail validation; absent permissions make application synchronization fail.', 'Argo CD AppProject controller');
-    if (resource.kind === 'AppProject' && normalized === 'spec.namespaceResourceWhitelist') return operational(
-      'Lists the namespaced resource group/kind pairs this Argo CD project permits.',
-      'A list of group/kind maps accepted by the pinned AppProject CRD; wildcard entries grant broad resource scope.',
-      'Argo CD 3.5.2 denies all namespaced resource kinds for an explicit []. Omission or null instead permits namespaced kinds subject to the blacklist and destination checks. Controller proof: [IsGroupKindNamePermitted](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/pkg/apis/application/v1alpha1/app_project_types.go#L367-L385).',
-      'Changes which namespaced desired resources the project can synchronize.',
-      'Malformed entries fail validation; empty or insufficient explicit permissions prevents application synchronization.', 'Argo CD 3.5.2 AppProject evaluator');
-    return structural(`Groups the exact ${normalized} API fields of ${resource.kind}/${resource.name}; the pinned collection schema and nested contracts define accepted keys, item variants, and receiving relationships.`);
+    return deploymentApiCollectionContract(resource, exactPath, valueType, documentValue);
   }
   if (normalized === 'apiVersion') return structural(`Selects the versioned API schema used to decode ${resource.kind}/${resource.name}.`);
   if (normalized === 'kind') return structural(`Selects the API resource kind decoded for ${resource.name}.`);
@@ -1998,15 +2219,15 @@ function deploymentApiFieldContract(resource, exactPath, valueType = null) {
     if (/^spec\.sources?\[\]\.repoURL$|^spec\.source\.repoURL$/u.test(normalized)) return operational('Selects the Git or Helm repository from which Argo CD reads desired state.', 'An absolute repository URL supported by Argo CD and authorized by its repository credentials.', 'An empty or omitted URL leaves the source incomplete and reconciliation cannot load desired state.', 'Changes the trust and content origin for every object generated from this source.', 'Malformed, unreachable, or unauthorized repositories produce comparison and synchronization errors.', 'Argo CD Application controller');
     if (/^spec\.sources?\[\]\.targetRevision$|^spec\.source\.targetRevision$/u.test(normalized)) return operational('Selects the Git revision, chart version, or immutable source revision reconciled by Argo CD.', 'A revision accepted by the selected source type. This repository uses complete commits or exact chart versions where the surrounding source contract requires them.', 'An empty revision is not a complete source selection.', 'Changes the exact desired-state version rendered and applied by the Application.', 'A missing or unresolved revision produces a comparison error and prevents synchronization.', 'Argo CD repo-server and Application controller');
     if (/^spec\.sources?\[\]\.(?:chart|path)$|^spec\.source\.(?:chart|path)$/u.test(normalized)) return operational('Selects the chart name or repository directory rendered for this Application source.', 'A chart name or clean repository-relative directory that exists at the selected revision.', 'An empty selection cannot identify render input unless another valid source mode is used.', 'Changes the complete manifest set produced by this source.', 'A missing chart or path makes manifest generation fail.', 'Argo CD repo-server');
-    if (/^spec\.sources?\[\]\.helm\.valueFiles\[\]$/u.test(normalized)) return operational('Adds one ordered Helm values file to this Argo CD source.', 'A repository-relative values path, or a `$ref/` path backed by a declared multi-source reference.', 'An empty item is invalid. An empty list uses only chart defaults and inline values.', 'Changes Helm precedence and every rendered field overridden by the selected file.', 'A missing file or invalid reference makes manifest generation fail.', 'Argo CD repo-server Helm renderer');
+    if (/^spec\.sources?(?:\[\])?\.helm\.valueFiles\[\]$/u.test(normalized)) return operational('Adds one values-file path to this Argo CD source. The repo-server preserves first-occurrence order after resolving paths and skips repeated resolved paths; A,B,A remains A,B.', 'A repository-relative values path, or a `$ref/` path backed by a declared multi-source reference.', 'Use a nonempty file path. An empty list adds no files; chart defaults and other values, valuesObject and parameters inputs remain.', 'Changes Helm precedence and every rendered field overridden by each distinct selected file.', 'An invalid reference makes manifest generation fail. Missing files fail unless ignoreMissingValueFiles permits omission.', 'Argo CD repo-server Helm renderer');
     if (/^spec\.sources?\[\]\.helm\.releaseName$|^spec\.source\.helm\.releaseName$/u.test(normalized)) return operational('Sets the Helm release name used while Argo CD renders this source.', 'A Helm release name accepted by the pinned renderer and chart helpers.', 'Omission lets Argo CD derive a release name from the Application; an empty scalar is not an explicit stable name.', 'Changes generated names, labels, and selectors for charts that use the Helm release identity.', 'An invalid name stops rendering; changing it can replace or orphan resources.', 'Argo CD repo-server Helm renderer');
     if (/^spec\.sources?\[\]\.ref$/u.test(normalized)) return operational('Defines the multi-source reference name used by `$ref/` values-file paths.', 'A non-empty Argo CD source-reference identifier unique within this Application.', 'Omission means the source cannot be addressed by another source; an empty reference is invalid.', 'Changes how values and chart sources are joined during manifest generation.', 'A missing or mismatched reference makes the linked values file unresolved.', 'Argo CD repo-server');
     if (normalized === 'spec.destination.server') return operational('Selects the Kubernetes API server to which Argo CD applies this Application.', 'A cluster URL or registered cluster name accepted by Argo CD; in-cluster deployment uses `https://kubernetes.default.svc`.', 'An empty destination server leaves the Application destination incomplete.', 'Changes the target cluster for all generated resources.', 'An unknown, unreachable, or unauthorized cluster prevents synchronization.', 'Argo CD Application controller');
     if (normalized === 'spec.destination.namespace') return operational('Selects the default target namespace for namespaced resources generated by this Application.', 'A DNS-label namespace allowed by the AppProject destination policy.', 'An empty namespace is valid only when every generated resource supplies its own namespace or is cluster-scoped.', 'Changes the namespace, DNS, RBAC, storage, Secret, and policy scope of generated resources.', 'A forbidden or absent namespace causes sync failure; a partial move breaks namespaced dependencies.', 'Argo CD Application controller');
     if (normalized === 'spec.project') return operational('Binds this Application to the named Argo CD AppProject policy.', 'An existing AppProject name in the Argo CD namespace.', 'An omitted project uses Argo CD `default`; an empty name is not the selected policy.', 'Changes permitted source repositories, destinations, and resource kinds.', 'A missing project or denied source/destination makes reconciliation fail.', 'Argo CD Application controller');
-    if (/^spec\.syncPolicy\.syncOptions\[\]$/u.test(normalized)) return operational('Adds one Argo CD synchronization option to the Application.', 'A `Name=true|false` option supported by the pinned Argo CD 10.8.0 authority.', 'Omission leaves that named option absent. An empty list item must satisfy the pinned CRD item schema and is not treated as a named option.', 'Changes apply, namespace creation, validation, ownership, or pruning behavior according to the named option.', 'An unsupported or unsafe option can make synchronization fail or apply resources with unintended ownership semantics.', 'Argo CD 10.8.0 Application controller');
-    if (/^spec\.syncPolicy\.automated\.(?:prune|selfHeal|allowEmpty)$/u.test(normalized)) return operational(`Controls Argo CD automated synchronization behavior for ${normalized.split('.').at(-1)}.`, '`true` or `false` as defined by the pinned Argo CD 10.8.0 CRD.', 'When the exact CRD permits omission, Argo CD receives no authored Boolean and applies the pinned controller semantics for that named flag. An authored empty scalar fails the Boolean schema.', 'Changes whether Argo CD removes absent resources, repairs live drift, or permits an empty generated set.', 'An unsafe selection can retain stale resources, overwrite emergency changes, or prune the complete Application output.', 'Argo CD 10.8.0 Application controller');
-    if (/^spec\.sources?\[\]\.directory\.recurse$|^spec\.source\.directory\.recurse$/u.test(normalized)) return operational('Controls whether Argo CD recursively scans subdirectories below the selected Git directory.', '`true` includes matching manifests below nested directories. `false` limits discovery to the selected directory.', 'When the exact CRD permits omission, the directory generator does not enable recursive traversal. An authored empty scalar fails the Boolean schema.', 'Changes the set of manifests that enters desired state from the selected source path.', 'A false value can silently omit nested resources. A true value can include unintended manifests that match the directory rules.', 'Argo CD 10.8.0 repo-server directory generator');
+    if (/^spec\.syncPolicy\.syncOptions\[\]$/u.test(normalized)) return operational('Adds one Argo CD synchronization option to the Application.', 'A `Name=true|false` option supported by the pinned Argo CD controller authority.', 'Omission leaves that named option absent. An empty list item must satisfy the pinned CRD item schema and is not treated as a named option.', 'Changes apply, namespace creation, validation, ownership, or pruning behavior according to the named option.', 'An unsupported or unsafe option can make synchronization fail or apply resources with unintended ownership semantics.', 'The pinned Argo CD Application controller');
+    if (/^spec\.syncPolicy\.automated\.(?:prune|selfHeal|allowEmpty)$/u.test(normalized)) return operational(`Controls Argo CD automated synchronization behavior for ${normalized.split('.').at(-1)}.`, '`true` or `false` as defined by the CRDs from the pinned Argo CD chart 10.8.0.', 'When the exact CRD permits omission, Argo CD receives no authored Boolean and applies the pinned controller semantics for that named flag. An authored empty scalar fails the Boolean schema.', 'Changes whether Argo CD removes absent resources, repairs live drift, or permits an empty generated set.', 'An unsafe selection can retain stale resources, overwrite emergency changes, or prune the complete Application output.', 'The pinned Argo CD Application controller');
+    if (/^spec\.sources?\[\]\.directory\.recurse$|^spec\.source\.directory\.recurse$/u.test(normalized)) return operational('Controls whether Argo CD recursively scans subdirectories below the selected Git directory.', '`true` includes matching manifests below nested directories. `false` limits discovery to the selected directory.', 'When the exact CRD permits omission, the directory generator does not enable recursive traversal. An authored empty scalar fails the Boolean schema.', 'Changes the set of manifests that enters desired state from the selected source path.', 'A false value can silently omit nested resources. A true value can include unintended manifests that match the directory rules.', 'The pinned Argo CD repo-server directory generator');
     if (/^spec\.sources?\[\]\.directory\.include$|^spec\.source\.directory\.include$/u.test(normalized)) return operational('Selects which files the Argo CD directory generator includes.', 'An Argo CD directory include glob, including brace expansion supported by the pinned controller version.', 'Omission includes all supported manifest files not excluded by another rule. An empty pattern matches no useful input.', 'Changes the exact manifest files loaded from the selected Git directory.', 'A malformed or over-narrow pattern omits desired resources; an over-broad pattern can include files that must not be applied.', 'Argo CD repo-server directory generator');
     if (/^spec\.sources?\[\]\.helm\.skipTests$|^spec\.source\.helm\.skipTests$/u.test(normalized)) return operational('Controls whether Argo CD omits Helm test-hook resources while rendering this source.', '`true` skips resources annotated as Helm tests. `false` keeps them in rendered output.', 'Omission uses the pinned Argo CD Helm-renderer default. An empty scalar is invalid.', 'Changes whether chart test Jobs and their supporting resources enter the Application manifest set.', 'Keeping incompatible test hooks can make synchronization unhealthy; skipping them removes those chart-provided validation resources.', 'Argo CD repo-server Helm renderer');
     if (/^spec\.ignoreDifferences\[\]\.(?:group|kind|name|namespace)$/u.test(normalized)) return operational('Selects the API objects to which this Argo CD difference-suppression rule applies.', 'An exact API group, kind, object name, or namespace accepted by the pinned Argo CD Application CRD. Empty group denotes the Kubernetes core API group.', 'Omitted name or namespace broadens the rule to all matching objects in that dimension; kind is required for a useful rule.', 'Changes which live objects can hide differences from Argo CD comparison and synchronization.', 'A narrow selector leaves expected controller-owned drift visible; a broad selector can hide real configuration drift.', 'Argo CD Application comparison engine');
@@ -2043,8 +2264,8 @@ function deploymentApiFieldContract(resource, exactPath, valueType = null) {
   if (/\.containers\[\]\.image$/u.test(normalized)) return operational('Selects the OCI image executed by this container.', 'A valid OCI image reference. Immutable production selection uses a digest.', 'An empty image is invalid and prevents Pod creation.', 'Changes the executable filesystem and process code run by the workload.', 'Malformed or unavailable references cause admission errors, `ErrImagePull`, or `ImagePullBackOff`.');
   if (/\.containers\[\]\.imagePullPolicy$/u.test(normalized)) return operational('Selects when kubelet pulls the container image.', '`Always`, `IfNotPresent`, or `Never`.', 'Omission lets Kubernetes derive a policy from the image tag; an empty scalar is invalid.', 'Changes registry traffic and whether cached bytes can be reused.', 'An unsupported value fails admission; `Never` without cached bytes or a required pull failure prevents startup.');
   if (/\.containers\[\]\.resources\.(?:requests|limits)\.(?:cpu|memory|ephemeral-storage)$/u.test(normalized)) return operational('Sets one Kubernetes scheduling request or runtime resource limit for the container.', 'A non-negative Kubernetes resource quantity appropriate to the named resource.', 'Omission removes that request or limit; an empty scalar is invalid.', 'Changes scheduling, reserved capacity, throttling, eviction, or termination behavior.', 'Invalid quantities fail admission. Excessive requests leave Pods Pending; undersized limits cause throttling, eviction, or OOM termination.');
-  if (/\.(?:containerPort|port|targetPort|nodePort)$/u.test(normalized)) return operational('Sets a listener, Service, target, policy, or externally allocated network port.', 'A value that satisfies the exact pinned field schema. Numeric port fields use the schema minimum and maximum. A named target port is valid only when the exact schema accepts a string.', 'If the exact schema permits omission, the API stores no authored port unless that same schema supplies a default. An authored empty scalar must satisfy the field schema.', 'Changes the network endpoint used by workloads, Services, probes, or policy.', 'A schema-invalid port fails admission. A schema-valid but conflicting or mismatched port makes traffic or health checks fail.');
-  if (/\.protocol$/u.test(normalized)) return operational('Selects the network protocol for this port or policy rule.', 'One of the enum values in the exact pinned field schema.', 'If the exact schema permits omission, the API stores the schema default when one exists; otherwise it stores no authored protocol. An empty string must satisfy the same enum.', 'Changes how traffic is matched or routed.', 'An unsupported value fails admission; a schema-valid mismatch prevents the expected traffic.');
+  if (!['CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind) && /\.(?:containerPort|port|targetPort|nodePort)$/u.test(normalized)) return operational('Sets a listener, Service, target, policy, or externally allocated network port.', 'A value that satisfies the exact pinned field schema. Numeric port fields use the schema minimum and maximum. A named target port is valid only when the exact schema accepts a string.', 'If the exact schema permits omission, the API stores no authored port unless that same schema supplies a default. An authored empty scalar must satisfy the field schema.', 'Changes the network endpoint used by workloads, Services, probes, or policy.', 'A schema-invalid port fails admission. A schema-valid but conflicting or mismatched port makes traffic or health checks fail.');
+  if (!['CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy'].includes(resource.kind) && /\.protocol$/u.test(normalized)) return operational('Selects the network protocol for this port or policy rule.', 'One of the enum values in the exact pinned field schema.', 'If the exact schema permits omission, the API stores the schema default when one exists; otherwise it stores no authored protocol. An empty string must satisfy the same enum.', 'Changes how traffic is matched or routed.', 'An unsupported value fails admission; a schema-valid mismatch prevents the expected traffic.');
   if (resource.kind === 'Service' && normalized === 'spec.type') return operational('Selects how Kubernetes exposes this Service.', '`ClusterIP`, `NodePort`, `LoadBalancer`, or `ExternalName` where supported by the remaining Service fields.', 'Omission defaults to `ClusterIP`; an empty scalar is invalid.', 'Changes the network exposure boundary and allocated Service fields.', 'An incompatible type/field combination fails admission or makes the endpoint unreachable or unintentionally exposed.', 'Kubernetes Service controller');
   if (/\.(?:secretRef|secret|secretKeyRef)\.name$|\.secretName$/u.test(normalized)) return operational('Selects the existing Kubernetes Secret read by this workload field.', 'A DNS-compatible Secret name in the workload namespace unless the exact controller documents another scope.', 'An empty or omitted required reference cannot supply the selected data.', 'Changes which credential or trust object is delivered to the workload.', 'A malformed or missing required Secret prevents Pod materialization or makes authentication fail.');
   if (/\.configMap\.name$|\.configMapRef\.name$/u.test(normalized)) return operational('Selects the existing Kubernetes ConfigMap delivered to this workload.', 'A DNS-compatible ConfigMap name in the workload namespace.', 'An empty or omitted required reference cannot supply configuration.', 'Changes which configuration object is mounted or injected.', 'A missing required ConfigMap prevents Pod materialization; incompatible content makes the process fail.');
@@ -2056,9 +2277,9 @@ function deploymentApiFieldContract(resource, exactPath, valueType = null) {
   if (/\.volumeMounts\[\]\.(?:name|mountPath|subPath|readOnly)$/u.test(normalized) || /\.volumes\[\]\.name$/u.test(normalized)) return operational('Defines or selects one volume mount relationship in the Pod.', 'A unique matching volume name, valid container path, clean subpath, or Boolean read-only flag according to the exact field.', 'Required names and mount paths cannot be empty; omitted read-only state defaults to writable.', 'Changes which files the container can read or modify and where they appear.', 'Invalid or unmatched fields fail admission or Pod setup; a wrong path hides required configuration or exposes writable data.');
   if (resource.kind === 'CiliumNetworkPolicy' || resource.kind === 'CiliumClusterwideNetworkPolicy') {
     if (normalized === 'spec.description') return structural(`Stores the human-readable description of ${resource.kind}/${resource.name}; Cilium does not use this field to select endpoints or allow traffic.`);
-    if (/^spec\.enableDefaultDeny\.(?:ingress|egress)$/u.test(normalized)) return operational('Controls whether selecting endpoints with this policy enables default-deny enforcement for the named traffic direction.', '`true` enables default deny for this direction. `false` keeps this policy from enabling default deny by itself.', 'If the exact Cilium 1.20.1 CRD permits omission, the policy engine receives no authored override for this direction. An authored empty scalar fails the Boolean schema.', 'Changes whether traffic not explicitly allowed by the complete policy set is denied for selected endpoints.', 'False can leave unintended traffic allowed. True without complete allow rules blocks required connectivity.', 'Cilium 1.20.1 policy engine');
+    if (/^spec\.enableDefaultDeny\.(?:ingress|egress)$/u.test(normalized)) return operational('Controls whether selecting endpoints with this policy enables default-deny enforcement for the named traffic direction.', 'A Boolean override. When EnableNonDefaultDenyPolicies is enabled, true enables default deny and false keeps this policy from enabling it by itself. When that feature is disabled, Rule.Sanitize forces both directions true.', 'When the feature is enabled, omission defaults true for a direction with allow or deny rules and false otherwise. The complete Rule must first pass parsing; the linked parent collection explains the zero-rule rejection. An authored empty scalar fails the Boolean schema.', 'Changes whether traffic not explicitly allowed by the complete policy set is denied for selected endpoints.', 'False can leave unintended traffic allowed. True without complete allow rules blocks required connectivity.', '[Cilium 1.20.1 Rule.Sanitize](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L42-L66)');
     if (/\.port$/u.test(normalized)) return operational('Selects a destination port allowed by this Cilium policy rule.', 'A decimal port from 1 through 65535 or a supported named port.', 'An empty port is invalid; removing the port entry changes the rule scope.', 'Changes which application endpoint the selected identities may reach.', 'A mismatch blocks required traffic; a broad or wrong port weakens isolation.', 'Cilium policy engine');
-    if (/\.protocol$/u.test(normalized)) return operational('Selects the transport protocol matched by this Cilium policy port.', 'One of the protocol values accepted by the pinned Cilium 1.20.1 CRD field.', 'If the exact CRD permits omission, the policy engine receives no authored protocol and applies the CRD-defined rule semantics. An empty string must satisfy the same field schema.', 'Changes which transport traffic the policy permits.', 'A mismatch blocks required traffic or permits an unintended protocol.', 'Cilium 1.20.1 policy engine');
+    if (/\.protocol$/u.test(normalized)) return operational('Selects the transport protocol matched by this Cilium policy port.', 'One of the protocol values accepted by the pinned Cilium 1.20.1 CRD field.', 'Omitted or empty protocol is interpreted as ANY: TCP, UDP and SCTP. Named-port validation can further restrict accepted protocols. The exact schema and PortProtocol parser apply together.', 'Changes which transport traffic the policy permits.', 'A mismatch blocks required traffic or permits an unintended protocol.', 'Cilium 1.20.1 policy engine');
     if (/\.(?:fromEntities|toEntities)\[\]$/u.test(normalized)) return operational('Selects a Cilium reserved identity matched by this policy direction.', 'A reserved entity value accepted by the pinned Cilium 1.20.1 CRD field.', 'Removing the item removes that identity from the rule; removing the complete list leaves no entity match from this field. An empty string must satisfy the same field schema.', 'Changes the non-Pod identity boundary that can send or receive traffic.', 'A wrong entity blocks required infrastructure traffic or grants a broader trust boundary.', 'Cilium 1.20.1 policy engine');
     if (/\.endpointSelector\.|\.(?:fromEndpoints|toEndpoints)\[\]\./u.test(normalized)) return operational('Defines one exact label selector key, operator, or value used by the Cilium policy.', 'A label selector value accepted by the pinned Cilium CRD field.', 'Removing the exact leaf removes that selector term; an authored empty value remains part of the enclosing selector and must satisfy the CRD.', 'Changes which endpoints the policy selects as subjects, sources, or destinations.', 'A selector mismatch denies required traffic; an overbroad selector grants unintended connectivity.', 'Cilium policy engine');
   }
@@ -2091,11 +2312,11 @@ function versionedApiSchemaContract(schema) {
     ? 'The exact field schema defines no default.'
     : `The exact field schema default is \`${JSON.stringify(schema.default)}\`.`;
   const omissionBehavior = schema.requiredBySchema
-    ? 'The parent schema requires this field, so omission fails schema validation.'
+    ? 'When its enclosing object is declared, the parent schema requires this field; omission then fails schema validation.'
     : `The parent schema permits omission. ${defaultBehavior}`;
   const emptyBehavior = schema.nullable
     ? 'The exact schema permits null. Any other empty value must satisfy the same type, enum, format, and range constraints.'
-    : 'The exact schema does not permit null. An empty string, list, or object is an authored value and must satisfy the same type, enum, format, range, and parent constraints.';
+    : 'The schema supplies no nullable marker. This does not establish how the selected API decoder or apply operation handles null. An empty string, list, or object is an authored value and must satisfy the type, enum, format, range, and parent constraints.';
   return { acceptedValues, defaultBehavior, omissionBehavior, emptyBehavior };
 }
 
@@ -2130,26 +2351,31 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
     };
   }
   if (context.resource) {
-    const contract = deploymentApiFieldContract(context.resource, exactPath, valueType);
+    const contract = deploymentApiFieldContract(context.resource, exactPath, valueType, context.documentValue);
     const schemaAuthority = {
       ...apiFieldSchemaAuthority(context.resource.apiVersion, context.resource.kind, exactPath),
       fieldPath: exactPath,
     };
     const schemaContract = versionedApiSchemaContract(schemaAuthority);
+    const collectionSchema = contract.collectionSchemaAuthority;
+    const collectionText = collectionSchema
+      ? ` The linked API collection contract includes the exact field, child, item and parent descriptions, constraints and alternatives. Those descriptions can define API defaults absent from the schema default keyword. Null acceptance and deletion also depend on the receiving operation; absence of nullable does not prove that API decoding rejects every null.`
+      : '';
     return {
       status: contract.status,
-      text: `${contract.purpose} Accepted values: ${schemaContract.acceptedValues} Operational constraint: ${contract.acceptedValues} Default: ${schemaContract.defaultBehavior} Omission: ${schemaContract.omissionBehavior} Empty value: ${schemaContract.emptyBehavior} Operational result after omission or an empty value: ${contract.emptyBehavior}`,
+      text: `${contract.purpose} Accepted values: ${schemaContract.acceptedValues} Operational constraint: ${contract.acceptedValues} Default: ${schemaContract.defaultBehavior} Omission: ${schemaContract.omissionBehavior} ${collectionSchema ? 'Collection result' : `Empty value: ${schemaContract.emptyBehavior} Operational result after omission or an empty value`}: ${contract.emptyBehavior}${collectionText}`,
       evidence: `${context.sourcePath}:${context.fieldLine ?? 1}; ${schemaAuthority.authority}; sha256:${schemaAuthority.authoritySha256}`,
       acceptedValues: `${schemaContract.acceptedValues} ${contract.acceptedValues}`,
       defaultBehavior: schemaContract.defaultBehavior,
       omissionBehavior: schemaContract.omissionBehavior,
-      emptyBehavior: `${schemaContract.emptyBehavior} ${contract.emptyBehavior}`,
+      emptyBehavior: `${collectionSchema ? '' : `${schemaContract.emptyBehavior} `}${contract.emptyBehavior}`,
       apiAuthority: `${schemaAuthority.authority}; ${contract.apiAuthority}`,
       apiSchemaAuthority: schemaAuthority,
+      ...(collectionSchema ? { apiCollectionAuthority: collectionSchema, collectionGroup: contract.collectionGroup, qualification: contract.qualification } : {}),
       sourceLine: context.fieldLine ?? 1,
       sourceLineSha256: sha256(read(context.sourcePath).split('\n')[(context.fieldLine ?? 1) - 1] ?? ''),
-      blockerOwner: null,
-      closureCondition: null,
+      blockerOwner: contract.blockerOwner ?? null,
+      closureCondition: contract.closureCondition ?? null,
     };
   }
   if (authority) return {
@@ -2273,7 +2499,7 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
   } : discoveredSemantics;
   if (!authority && context.resource && discoveredSemantics.deploymentBoundary === undefined
     && fieldPath !== '$') {
-    const apiContract = deploymentApiFieldContract(context.resource, exactPath, valueType);
+    const apiContract = deploymentApiFieldContract(context.resource, exactPath, valueType, context.documentValue);
     semantics = {
       ...semantics,
       constraints: [...new Set([...semantics.constraints, apiContract.acceptedValues])],
@@ -2346,14 +2572,26 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
 // Grouping rows link actual descendants; they cannot conceal an empty option.
 function completeYamlCollection(row, context, value, fields) {
   const descendants = fields.filter((field) => field.path.startsWith(`${row.path}.`) || field.path.startsWith(`${row.path}[`));
-  const isHelm = Boolean(context.chartRoot || context.externalBindings.length);
+  const isHelm = !context.resource && Boolean(context.chartRoot || context.externalBindings.length);
+  const receiverClass = context.resource ? 'kubernetes-api-manifest' : isHelm ? 'helm-values' : 'source-loader';
   const merge = isHelm
     ? row.type === 'array'
       ? 'Helm replaces a list as one value: a later [] removes all earlier items; omission keeps the earlier list. Explicit null removes the merged key before schema and template evaluation; the receiving contract can reject it or apply a fallback.'
       : 'Helm merges map keys recursively: a later {} keeps earlier keys; omission keeps the earlier map. Explicit null removes the merged key before schema and template evaluation; the receiving contract can reject it or apply a fallback.'
-    : 'This is an authored manifest or loader collection. Helm list replacement and map merge rules do not apply unless the named receiving path explicitly invokes Helm. Its exact API or loader contract controls empty, omitted, and null values.';
-  row.collection = { entries: Object.keys(value).length, empty: Object.keys(value).length === 0, childPaths: descendants.map((field) => field.path), mergeBehavior: merge };
+    : context.resource
+      ? 'This document is an API manifest. Its named client apply or synchronization operation, existing object state and field ownership control which stored keys or items are retained or removed. kubectl client-side apply compares the submitted manifest, live object and last-applied configuration; fields managed elsewhere can remain. API patch/list annotations describe patch behavior, not Helm values merge. Empty, omitted and null input then pass through the exact API admission/defaulting and controller contracts; null is not a general reset command.'
+      : 'This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence.';
+  row.collection = { entries: Object.keys(value).length, empty: Object.keys(value).length === 0, childPaths: descendants.map((field) => field.path), mergeBehavior: merge,
+    receiverClass, rejectedHelmBinding: context.rejectedHelmBinding ?? null };
   row.constraints = [...new Set([...row.constraints, merge])];
+  if (row.meaning.status === 'deployment-collection-envelope') {
+    const children = descendants.filter((field) => yamlFieldPathTokens(field.path).length === yamlFieldPathTokens(row.path).length + 1);
+    row.collection.childContracts = children.map((child) => ({ path: child.path, status: child.meaning.status,
+      receivingSources: child.consumers.map((consumer) => ({ path: consumer.path, line: consumer.line, kind: consumer.kind })),
+      emptyBehavior: child.meaning.emptyBehavior ?? null, blockerOwner: child.blockerOwner, closureCondition: child.closureCondition }));
+    row.meaning.text += ` Actual child contracts: ${children.map((child) => `\`${child.path}\` (${child.meaning.status.includes('blocker') ? 'receiving behavior not established' : child.meaning.collectionGroup ?? child.type})`).join(', ')}. A child limitation remains a limitation of this envelope. Collection precedence: ${merge}`;
+    return;
+  }
   if (row.meaning.status !== 'structural-container') {
     row.meaning.text = `${row.meaning.text} Collection precedence: ${merge}`;
     return;
@@ -2409,13 +2647,23 @@ function buildYamlInventory() {
       documents: documents.map((document, index) => {
         const value = document.errors.length ? null : document.toJS();
         const resource = value?.apiVersion && value?.kind ? { apiVersion: value.apiVersion, kind: value.kind, name: value.metadata?.name ?? '<unnamed>' } : null;
+        const selectedExternalBindings = [...(valueBindings.get(sourcePath) ?? []), ...directExternalBindings, ...(externalProfiles.get(sourcePath) ?? []), ...(localBinding?.externalBinding ? [localBinding.externalBinding] : [])];
+        if (resource) assert(![...(valueBindings.get(sourcePath) ?? []), ...directExternalBindings].some((binding) => ['argocd-helm-values', 'operator-helm-values'].includes(binding.kind)),
+          `CONFIG_API_RECEIVER_CLASS_CONFLICT: ${sourcePath} document ${index} is ${resource.apiVersion}/${resource.kind}, but an actual Helm values receiver also selects it`);
+        const rejectedHelmBinding = resource && localBinding ? {
+          chartRoot: localBinding.chartRoot ?? null, externalBinding: localBinding.externalBinding ?? null, evidence: localBinding.evidence,
+          reason: 'The inferred nearby chart is incompatible with this API document. It does not select this document as Helm values.',
+        } : null;
         return {
         index,
         resource,
+        receiverClass: resource ? 'kubernetes-api-manifest' : (chartRootMatch?.[1] ?? localBinding?.chartRoot) || selectedExternalBindings.length ? 'helm-values' : 'source-loader',
+        rejectedHelmBinding,
         fields: document.errors.length ? [] : yamlFields(value, {
           sourcePath,
           sourceDigest,
-          chartRoot: chartRootMatch?.[1] ?? localBinding?.chartRoot ?? null,
+          chartRoot: resource ? null : chartRootMatch?.[1] ?? localBinding?.chartRoot ?? null,
+          rejectedHelmBinding,
           consumerMap,
           sourceClass,
           owner: sourceOwner(sourcePath),
@@ -2423,7 +2671,7 @@ function buildYamlInventory() {
           document,
           documentValue: value,
           lineCounter,
-          externalBindings: [...(valueBindings.get(sourcePath) ?? []), ...directExternalBindings, ...(externalProfiles.get(sourcePath) ?? []), ...(localBinding?.externalBinding ? [localBinding.externalBinding] : [])],
+          externalBindings: resource ? [] : selectedExternalBindings,
           runtimeBindings: sourcePath === 'gitops/platform/values/codex-ops.yaml'
             ? runtimeBindings
             : (chartRootMatch?.[1] ?? localBinding?.chartRoot) ? [] : runtimeBindings,
@@ -2560,7 +2808,10 @@ function buildYamlInventory() {
       && (/blocker/u.test(field.meaning?.status ?? '') || (file.sourceClass === 'helm-values' && field.meaning?.status === 'inactive-profile')))
     .map((field) => `${file.path}#${field.path}`)));
   if (!allowSemanticGaps && semanticGapIds.length) {
-    throw new Error(`CONFIG_SEMANTIC_GAP: public YAML options lack qualified semantic authority: ${semanticGapIds.slice(0, 12).join(', ')}. Expected authority: exact source path + full field path with purpose, accepted values, default/empty behavior, impact, and failure symptom.`);
+    const details = files.flatMap((file) => file.documents.flatMap((document) => document.fields
+      .filter((field) => field.path !== '$' && /blocker/u.test(field.meaning?.status ?? ''))
+      .map((field) => `${file.path} document ${document.index}#${field.path}: ${field.meaning.qualification?.missing ?? field.closureCondition}`)));
+    throw new Error(`CONFIG_SEMANTIC_GAP: public YAML options lack qualified semantic authority:\n${details.join('\n')}\nExpected authority: exact source path + full field path with purpose, accepted values, default/empty behavior, impact, and failure symptom. Use the existing --allow-semantic-gaps maintenance mode only to inspect and publish explicit blockers; it does not pass this gate.`);
   }
   assert.equal(unknownLeafRuntimeOwners, 0, 'quality gate: leaf runtime ownership must be resolved, not mass-unknown');
   assert.equal(unknownLeafConsumers, 0, 'quality gate: leaf consumers must resolve to an authority or an explicit not-applicable binding');
@@ -2990,6 +3241,19 @@ function schemaEmptyBehavior(field) {
 }
 
 function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && field.path === '$.activeAdapters[]') return {
+    accepted: 'An existing adapter registration identifier. This list is the explicit initial set; required capabilities of enabled adapters, observers and stages recursively enable their selected provider adapters',
+    empty: 'An empty identifier does not name a registered adapter. Removing every item removes only this initial adapter set; required provider adapters can still become enabled.',
+    failure: 'An unknown enabled identifier or an unavailable required capability prevents registry admission. An enabled adapter can then fail its registered configuration schema or startup. Configuration for a disabled adapter is not schema-validated, but its configured identifier must still exist.',
+    evidence: ['skills/nova/core/execution/engine-runtime.ts:47', 'skills/common/plugin-runtime/foundation/registry/capabilities.ts:149', 'skills/common/plugin-runtime/foundation/registry/configuration.ts:59', 'skills/common/plugin-runtime/foundation/registry/configuration.ts:75'],
+  };
+  if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && field.path === '$.shutdownTimeoutMs') return {
+    accepted: 'The schema requires an integer of at least 1 and sets no maximum. Use 1 through 2,147,483,647 milliseconds for the current Node timers: a larger delay becomes 1 millisecond rather than a longer deadline. [Node 24.21.0 timer contract](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args)',
+    omission: 'The platform schema requires the field and supplies no default. The loader does not insert one.',
+    empty: 'Null, an empty string and zero fail the integer/minimum constraint. A schema-valid delay above the Node timer range is still an unsafe deadline input.',
+    failure: 'Adapter activation and readiness race their operation against a timer and can reject with ADAPTER_START_TIMEOUT. Overall shutdown races against ADAPTER_SHUTDOWN_TIMEOUT. These rejections and abort signals do not prove that the underlying adapter work stopped. Readiness teardown, rollback and late activation cleanup pass an abort signal but still await the shutdown promise; an adapter that ignores cancellation can keep that cleanup pending. Stop before declaring cleanup complete or replaying an uncertain effect.',
+    evidence: ['skills/nova/core/execution/adapters.ts:79', 'skills/nova/core/execution/adapter-support.ts:17', 'skills/nova/core/execution/adapter-support.ts:21', 'skills/nova/core/execution/adapter-startup.ts:153', 'skills/nova/core/execution/adapter-startup.ts:162'],
+  };
   if (authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema') {
     const contract = observerInlineFieldContract(field.path.replace(/^\$\./u, ''));
     if (contract) return { accepted: `The inline schema declares ${field.type} for plugin values. The runtime separately applies this normalization to the selected plugin or environment value: ${contract.acceptedForm}`,
@@ -3020,6 +3284,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   const leaf = segments.at(-1);
   const parent = segments.at(-2);
   if (!leaf) return null;
+  if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && fieldPath === '$.shutdownTimeoutMs') return 'Sets the timer delay used for adapter activation, readiness and shutdown. Some paths reject at the deadline; cleanup paths that only pass an abort signal can remain pending if the adapter does not settle.';
 
   if (/^(?:artifacts|coverage|reports)\[\]\./u.test(pathWithoutRoot)) {
     const declarationKind = pathWithoutRoot.split('[', 1)[0].replace(/s$/u, '');
@@ -3158,7 +3423,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     absoluteFileAllowance: `Sets the fixed number of additional changed files that the review governor permits before proportional growth rules apply.`,
     absoluteNonTestLocAllowance: `Sets the fixed number of additional non-test lines that the review governor permits before proportional growth rules apply.`,
     accept: `Sets the HTTP Accept header sent by ${context}.`,
-    activeAdapters: `Lists the adapter registration IDs that ${context} starts; configured but inactive adapters receive no calls.`,
+    activeAdapters: `Lists the adapter registration IDs initially enabled in ${context}. Required capabilities can recursively enable provider adapters beyond this list. A configured adapter receives no calls only if it remains outside the complete enabled set.`,
     add: `Adds entries to the selected rule set used by ${context}.`,
     agent: `Selects the configured runtime-agent target that ${context} dispatches.`,
     agentRole: `Sets the stable stage-role label emitted with ${context} decisions and lifecycle events.`,
@@ -3363,7 +3628,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     servicePort: `Sets the service port published in the typed endpoint returned by ${context}.`,
     serviceTargetPort: `Sets the workload target port when it differs from the published service port.`,
     settingsFile: `Selects the repository-relative Lighthouse settings file loaded by ${context}.`,
-    shutdownTimeoutMs: `Limits graceful drain and shutdown for ${context} before remaining work is forced closed.`,
+    shutdownTimeoutMs: `Sets the shutdown timeout passed to ${context}; its receiving cancellation contract determines whether work actually stops.`,
     signingSecret: `Names the confidential HMAC key used by ${context} to sign one target's request.`,
     sourceAuthority: `Sets the exact source-attestation authority accepted by ${context}.`,
     sourcePrivateKeySecret: `Names the confidential private key used to sign source attestations sent by ${context}.`,
@@ -3669,14 +3934,21 @@ for (const [field, anchor, purpose, omission, empty] of [
 const platformSchema = 'skills/common/plugin-runtime/foundation/config/platform.schema.json';
 const engineRuntime = 'skills/nova/core/execution/engine-runtime.ts';
 for (const [paths, anchor, purpose, empty] of [
-  [['$.activeAdapters'], 'platform.activeAdapters.forEach', 'Selects adapter registrations to activate; configuration alone does not activate an adapter.', 'An empty list activates no adapter directly. Required capability dependencies still govern admission.'],
-  [['$.adapters', '$.adapters.{*}'], 'adapters: objectMap(platform.adapters)', 'Maps adapter registration identifiers to their exact activation configuration.', 'An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema.'],
+  [['$.activeAdapters'], 'platform.activeAdapters.forEach', 'Selects the initially enabled adapter registrations. Observer and stage registrations also enter the initial enabled set; required capabilities then recursively enable their selected provider adapters. Configuration alone does not activate an adapter.', 'An empty list enables no adapter directly through this field. Dependencies of enabled observers and stages can still enable and start provider adapters.'],
+  [['$.adapters', '$.adapters.{*}'], 'adapters: objectMap(platform.adapters)', 'Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started.', 'An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema.'],
   [['$.observers', '$.observers.{*}'], 'observers: objectMap(platform.observers)', 'Maps enabled observer registration identifiers to their exact configuration.', 'An empty map enables no observer.'],
   [['$.externalTrust', '$.externalTrust.allowedSourceDigests', '$.externalTrust.allowedSourceDigests.{*}'], 'platform.externalTrust.allowedSourceDigests', 'Selects allowed external package digests for each canonical source reference.', 'An empty digest map permits no source by digest allowlisting; an empty per-source list permits no digest for that source.'],
   [['$.externalTrust.verifiedAttestations'], 'platform.externalTrust.verifiedAttestations', 'Maps external package digests to verified attestation digests used by package admission.', 'An empty map provides no verified attestation admission.'],
   [['$.providers'], 'new Map(Object.entries(platform.providers))', 'Selects one adapter registration for each configured capability identifier.', 'An empty map selects no capability providers. Registrations that require capabilities can fail admission.'],
   [['$.grants', '$.grants.{*}', '$.grants.{*}.{*}'], 'grants: nestedMap(platform.grants)', 'Maps registration identifiers and capability identifiers to their resource-scoped grants.', 'An empty grant map grants no capability at that level. Configuration cannot create permission outside this policy.'],
 ]) collectionAuthority(platformSchema, paths, engineRuntime, anchor, purpose, 'The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints.', empty);
+SCHEMA_COLLECTION_AUTHORITIES.get(`${platformSchema}::$.activeAdapters`).secondaryAuthorities = [
+  ['skills/common/plugin-runtime/foundation/registry/capabilities.ts', 'function enableProviders('],
+];
+for (const field of ['$.adapters', '$.adapters.{*}']) SCHEMA_COLLECTION_AUTHORITIES.get(`${platformSchema}::${field}`).secondaryAuthorities = [
+  ['skills/common/plugin-runtime/foundation/registry/configuration.ts', 'for (const registrationId of configured.adapters.keys())'],
+  ['skills/common/plugin-runtime/foundation/registry/configuration.ts', 'for (const [registrationId, entry] of snapshot.adapters)'],
+];
 collectionAuthority(platformSchema, ['$.administrativeDecisionIssuers', '$.administrativeDecisionIssuers[]'], 'skills/nova/core/execution/engine-admin.ts', 'administrativeDecisionIssuers.some',
   'Selects the operator or administrator identities allowed to reopen a run.', 'The platform schema requires this list.', 'An empty list denies every administrative reopen principal. An empty entry lacks type and id and is invalid.');
 collectionAuthority(platformSchema, ['$.isolation'], 'skills/common/plugin-runtime/foundation/config/platform.ts', 'config.isolation ? { isolation:',
