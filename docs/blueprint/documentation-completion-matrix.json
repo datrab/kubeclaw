@@ -15263,6 +15263,19 @@
       ],
       "description": "77context Sourcepartition39FAIL38UNPROVEN. Recursiveexposure shallow; absent receiver/default/variant/Secret/change qualification and generic actualArgo syncOptions effects. Ciliumzero-direction documentedproductlimitation is independentlysourceconfirmed and is not the defect.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/argo-cilium-source-fresh/boundaries.json"
+    },
+    {
+      "id": "A98-NETWORK-RECEIVER-CANDIDATE-SOURCE",
+      "state": "corrected-pending-new-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Full SourceFAIL: NR-S01 incorrect explicit-policyTypes requirement on2records; NR-S02 common fieldmanager citation omittedline572 across122; NR-S03 path-name citation omittedline25 across4. Root corrected all3 after reading original pinned implementations. No acceptance of corrected candidate yet.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/network-receiver-source-fresh/report.md"
     }
   ],
   "checks": [
@@ -15886,6 +15899,27 @@
       "manifestSha256": "44022b96509d4c14e5a241b875ee17ba5df43b4ad561d76d31de71f3b76c0ee7",
       "checkedArtifacts": 24,
       "report": "/home/node/Documents/Codex/a98-evidence/kubernetes-field-semantics-writer/report.md"
+    },
+    {
+      "command": "node --test scripts/tests/api-schema-boundaries.test.mjs",
+      "state": "terminal-pass",
+      "scope": "3tests: unselected deep Deployment alternatives; list/map/reference exact contracts; status versus spec and unknown authority rejection. First draft test wrongly expected x-kubernetes-int-or-string; actual pinned OpenAPI uses format:int-or-string. Corrected expectation after reading authority. Schema traversal only, not receiver acceptance."
+    },
+    {
+      "command": "node --check scripts/docs-kubernetes-network-receiver-contracts.mjs",
+      "state": "terminal-pass",
+      "scope": "Corrected candidate syntax only; new Source acceptance pending."
+    },
+    {
+      "command": "main docs reference check after generated145da1d0",
+      "state": "terminal-pass",
+      "scope": "4897local links2801anchors7604repository paths28307pinned links; main includes historical directories, not isolated checkout proof.",
+      "sourceRevision": "6fa4830a48244d29655104a5be58957d5fa87d2f"
+    },
+    {
+      "command": "isolated docs reference check source6fa4830a",
+      "state": "terminal-fail",
+      "scope": "3missing historical directories in AP03-progress, ap01-baseline/README and generated/reference/README. No directory fabrication or checker relaxation."
     }
   ],
   "reviewAssignments": [
@@ -16761,7 +16795,7 @@
       "freshContext": true,
       "forkTurns": "none",
       "readOnly": false,
-      "state": "running",
+      "state": "released-candidate-pending-independent-acceptance",
       "exclusiveFiles": [
         "scripts/docs-kubernetes-network-receiver-contracts.mjs"
       ],
@@ -16774,11 +16808,50 @@
       "freshContext": true,
       "forkTurns": "none",
       "readOnly": false,
-      "state": "running",
+      "state": "released-candidate-pending-independent-acceptance",
       "exclusiveFiles": [
         "scripts/docs-kubernetes-admission-receiver-contracts.mjs"
       ],
       "scopeLimit": "Source-backed recursive operational cases; no copied schema fact store; no independent selfacceptance."
+    },
+    {
+      "agent": "/root/a98_network_receiver_source_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "completed-fail",
+      "baseRevision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
+      "candidateSha256": "34867e26cdd61a4c390d74b46d1d475d2e06c36b798377faf08d95f9fc0a67d8",
+      "scope": "All122records120recursivepaths175boundaries69workitems; Source only, not published integration.",
+      "report": "/home/node/Documents/Codex/a98-evidence/network-receiver-source-fresh/report.md",
+      "reportSha256": "42eee38f3ab5f7c1c7060cddf49a7dafdb1c0a004fb062fd3e6be451953628bc",
+      "rootVerifiedArtifacts": 14
+    },
+    {
+      "agent": "/root/a98_network_receiver_source_corrected_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "running",
+      "baseRevision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
+      "candidateSha256": "9471984986a95045032bec7cc67e77a6068b84abf8d2fe214898c25e6508a85e",
+      "scope": "Full corrected122records120recursivepaths175boundaries69workitems; new independent reviewer, not previous findings-only check."
+    },
+    {
+      "agent": "/root/a98_admission_receiver_source_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "running",
+      "baseRevision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
+      "candidateSha256": "63411d10aaecd9773fc341611ad0f49ce85fd529eca4e81befb20ddb671580ca",
+      "scope": "All132recursive spec contracts and actual source/decoder/route cases. Findings already reported; no approval."
     }
   ],
   "continuation": {
@@ -17249,7 +17322,10 @@
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
     "currentSourceHead": "f68a7294abf0928c1aabf290c6a7e486c651a808",
-    "nextAction": "Sourcecommit releasedinventory and Workerpinrepair; rawinventory generation then explicitSHA core/platform/publication/governance; separate generatedcommit. Parallel3receiver module authors underway; all700K8s andArgoCiliumincompleteproof remainopen."
+    "nextAction": "Sourcecommit releasedinventory and Workerpinrepair; rawinventory generation then explicitSHA core/platform/publication/governance; separate generatedcommit. Parallel3receiver module authors underway; all700K8s andArgoCiliumincompleteproof remainopen.",
+    "currentPushedRevision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
+    "recursiveSchemaDiscovery": "Root added apiResourceFieldBoundaries to sole existing schema authority. Includes selected and unselected property/item/map paths, rejects cyclic/unqualified structural-composition/tuple traversal. Deployment spec nonmetadata1267 plus root makes1268; matches author reconciliation. Not yet consumed by inventory/site.",
+    "currentMutationObservation": "Original90473 process remains live at source7e413cf6; log advanced through default-precedence variants and nova-cli-flag:add/change. No terminal PASS; preserve same process. Current-source mutation coverage still required later."
   },
   "productBoundaries": [
     {

@@ -331,6 +331,47 @@ export function apiFieldCollectionAuthority(apiVersion, kind, fieldPath) {
   return apiFieldSchemaAuthority(apiVersion, kind, fieldPath, { includeCollectionContract: true });
 }
 
+// Enumerate schema boundaries independently of the selected manifest values.
+// A receiver registry can join these paths to authored semantics, so an unused
+// alternative or a newly added nested field cannot silently escape coverage.
+// This is schema evidence only; enumeration does not qualify runtime behavior.
+export function apiResourceFieldBoundaries(apiVersion, kind) {
+  const builtin = builtinDefinitions.get(`${apiVersion}/${kind}`);
+  const schema = builtin ? kubernetesOpenApi.definitions[builtin]
+    : loadCustomResourceSchemas().get(`${apiVersion}/${kind}`)?.schema;
+  assert(schema, `API_SCHEMA_AUTHORITY_MISSING: ${apiVersion}/${kind}`);
+  const authority = apiFieldCollectionAuthority(apiVersion, kind, '$');
+  const boundaries = [];
+  function visit(raw, tokens, ancestors) {
+    const identity = resolveReference(raw);
+    const fieldPath = yamlFieldPath(tokens, { arrayWildcard: true });
+    assert(identity, `API_SCHEMA_BOUNDARY_MISSING: ${apiVersion}/${kind} ${fieldPath}`);
+    assert(!ancestors.has(identity), `API_SCHEMA_RECURSIVE_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath}`);
+    const node = resolveCollectionReference(raw);
+    const contract = apiSchemaNodeContract(node);
+    // Structural composition needs a separately qualified traversal. Keeping
+    // its exact fragment in a contract is not proof that its fields were visited.
+    for (const keyword of ['allOf', 'anyOf', 'oneOf']) {
+      assert(!(node[keyword] ?? []).some((branch) => branch.$ref || branch.properties
+        || branch.items || typeof branch.additionalProperties === 'object'),
+      `API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath} ${keyword}`);
+    }
+    boundaries.push({ apiVersion, kind, fieldPath, authority: authority.authority,
+      authoritySha256: authority.authoritySha256, contract });
+    const next = new Set(ancestors).add(identity);
+    for (const [name, child] of Object.entries(node.properties ?? {}).sort(([a], [b]) => a.localeCompare(b))) {
+      visit(child, [...tokens, name], next);
+    }
+    if (node.items) {
+      assert(!Array.isArray(node.items), `API_SCHEMA_TUPLE_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath}`);
+      visit(node.items, [...tokens, '[]'], next);
+    }
+    if (typeof node.additionalProperties === 'object') visit(node.additionalProperties, [...tokens, '*'], next);
+  }
+  visit(schema, [], new Set());
+  return boundaries;
+}
+
 export function apiAuthorityLock() {
   return manifest;
 }
