@@ -19569,6 +19569,13 @@
       "fieldPath": "StatefulSet:$.spec.template",
       "scope": "Validator copies/clears hostname/subdomain/substitutesvolumeclaims for validation; controlleridentityassignment occurslater.58-79caption restricted toactualtemplatelabel/annotationsvalidation.193-223actualvalidationstageproof",
       "checks": "13workloadtestsPASS0SKIP;583legacyrecords unchanged outsideexplicitcorrectionboundaries. Initial combined23run21PASS2FAIL staleblanketsnapshot/oldphrasing assertions preserved ascheckhistory, corrected scopedpreservation andboundaryassertion."
+    },
+    "statefulSetAlwaysSourceSpanCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-source-review",
+      "recordsChanged": 2,
+      "scope": "spec and restartPolicy actualAlwaysrequirement appsvalidation217-219, not generaltemplatevalidator58-79; Rootactualoriginalreread",
+      "historicalReview": "Originalfrozen5dcontinues with sourcecaptiondefects; d8freshreviewmustretainimmutableverdict, newcorrectionnotretroactiveacceptance"
     }
   }
 }
