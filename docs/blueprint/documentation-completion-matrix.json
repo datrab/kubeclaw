@@ -14721,6 +14721,24 @@
       ],
       "description": "Worker diagnosis requires bound read-only endpoint/status/JSON and logs commands, exact error branches, permissions, safe stop/owner for unsupported repair, retry/retention/cleanup.",
       "assignedAuthor": "/root/a98_prism_diagnosis_quality_writer"
+    },
+    {
+      "id": "A98-TEST-NODE-COMPOSITION-NOT-PRECEDENCE",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-deadlines-fresh/report.md",
+      "reportSha256": "561103756f0a0b8074360d8d626c976465ec20f343e1b09e7ff035f371bf7dc1",
+      "reportedBy": "/root/a98_precedence_source_deadlines_fresh",
+      "state": "root-corrected-pending-new-full-source-review",
+      "pages": [
+        "docs/site/reference/configuration-precedence.md"
+      ],
+      "catalogueIds": [
+        "CFG-013"
+      ],
+      "acceptanceIds": [
+        "A98-11"
+      ],
+      "description": "Direct nodes and suite additions compose distinct IDs, not higher-priority replacements. Existing selected/direct or add/template collisions reject. Suite overrides preserve uses; matrix/default/limit rules are separate.",
+      "author": "/root"
     }
   ],
   "checks": [
@@ -15133,11 +15151,14 @@
     },
     {
       "command": "npm run docs:drift:config:mutations",
-      "state": "live-verified-no-final-result",
+      "state": "terminal-fail",
       "sessionId": 63228,
       "revision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
       "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-d57ac356.log",
-      "scope": "Original full runner in clean immutable checkout; keep observing same handle to terminal."
+      "scope": "Original full runner in clean immutable checkout; keep observing same handle to terminal.",
+      "exitCode": 1,
+      "logSha256": "8cbfc50b6250699feb18cc7977364d7d2dd6469f951976691531c58e30bd64db",
+      "failure": "api-leaf-context:parent-substitution constructor expects obsolete full yamlMeaning assignment; cannot create mutation. No full PASS."
     },
     {
       "command": "node scripts/docs-configuration-inventory.mjs",
@@ -15163,6 +15184,27 @@
       "result": "passed",
       "log": "/home/node/Documents/Codex/a98-evidence/precedence-root-deadline-webhook-boundary.log",
       "scope": "Reader-site boundary only; independent semantic reviews outstanding"
+    },
+    {
+      "command": "node scripts/check-configuration-drift-mutations.mjs --case-prefix=api-leaf-context:parent-substitution",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "sessionId": 11988,
+      "baseRevision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
+      "sourcePatch": "Only exact constructor target/replacement strings changed from assignment to function call; mutation still substitutes leaf fieldContext with parent context. No assertion or diagnostic weakening.",
+      "runnerSha256": "e0e5d36a69e8467101ca7c0f045c32f8565111d841f3bc34c41d4e4f2cab49da",
+      "log": "/home/node/Documents/Codex/a98-evidence/api-leaf-context-constructor-d57.log",
+      "logSha256": "1e6615f58994650a2918ee38c969ee6ef58288b660f8236bb004f877bbac9868",
+      "scope": "Original isolated focused case, detection and restored baseline PASS; no full suite PASS or independent semantic acceptance."
+    },
+    {
+      "command": "Root two-page pinned source integrity audit",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/home/node/Documents/Codex/a98-evidence/precedence-composition-root-pins.json",
+      "scope": "98 exact Git links valid and current source bytes equal pinned objects; not semantic acceptance."
     }
   ],
   "reviewAssignments": [
@@ -15752,7 +15794,7 @@
       "forkTurns": "none",
       "freshContext": true,
       "readOnly": true,
-      "state": "running",
+      "state": "complete-fail-released",
       "scope": [
         "Complete corrected configuration-precedence.md",
         "Complete corrected configuration-change-impact.md"
@@ -15762,14 +15804,41 @@
         "configuration-precedence.md": "f53780959590fa0600918a14e39636dcf431dd7209c13712dac9062336cb7762",
         "configuration-change-impact.md": "212fad85100cd942269f054c656458f37f3dcad11d60050ffa82af1e0440a8e5"
       },
-      "scopeLimit": "Full affected SOURCE partition only; no whole gate or package acceptance."
+      "scopeLimit": "Complete two-page SOURCE; A98-10 named-source support subset only, no whole inventory or gate acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-deadlines-fresh/report.md",
+      "reportSha256": "561103756f0a0b8074360d8d626c976465ec20f343e1b09e7ff035f371bf7dc1",
+      "partitionVerdicts": {
+        "CFG-013": "FAIL",
+        "CFG-014": "PASS",
+        "A98-11": "FAIL"
+      }
+    },
+    {
+      "agent": "/root/a98_precedence_composition_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "scope": [
+        "Complete corrected configuration-precedence.md",
+        "Complete configuration-change-impact.md"
+      ],
+      "candidateBaseRevision": "6426d88697e238231b76c4680abbe8cb4619f43a",
+      "candidateHashes": {
+        "configuration-precedence.md": "729ab6b6d3c4b1a9d6e3d8b5349a85db417fb75aac6394ddd059b3480ca056f1",
+        "configuration-change-impact.md": "212fad85100cd942269f054c656458f37f3dcad11d60050ffa82af1e0440a8e5"
+      },
+      "scopeLimit": "Whole affected SOURCE partition only; no global acceptance."
     }
   ],
   "continuation": {
     "stage": "Six collection/diagnostic source files released and checked; commit source then immutable original mutation suite. Canonical precedence/impact candidates remain frozen for new Source review, which is investigating readiness cleanup bounds.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Parallel API collection and Prism diagnosis authors correct exact independent failures; precedence fresh Source running with pair frozen. Observe SAME63228 immutable d57 mutation until terminal. After author releases source commit, separate complete generated outputs and required NEW fresh Source/Reader/Quality reviews; allAP/global scope retained.",
+    "next": "Parallel generator/API collection and Prism quality writers continue exclusive files. New whole two-page SOURCE review running; freeze contents. Original full d57 mutation terminal FAIL due obsolete constructor, isolated corrected constructor PASS. After released source corrections commit, shared full generation separate and NEW original full mutation against immutable source. All package/global obligations remain.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -15787,7 +15856,7 @@
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
-    "currentMutationState": "live-verified-no-final-result",
+    "currentMutationState": "terminal-fail",
     "consumerWriterFinished": {
       "agent": "/root/a98_config_writer",
       "paths": [
@@ -16053,8 +16122,8 @@
       },
       "scope": "Prism assigned partitions only; no whole gate/global acceptance or live success"
     },
-    "currentMutationExitCode": null,
-    "currentMutationLogSha256": null,
+    "currentMutationExitCode": 1,
+    "currentMutationLogSha256": "8cbfc50b6250699feb18cc7977364d7d2dd6469f951976691531c58e30bd64db",
     "prismBrowserWriterCompleted": {
       "agent": "/root/a98_prism_browser_boundary_writer",
       "report": "/home/node/Documents/Codex/a98-evidence/prism-browser-boundary-writer/report.md",
@@ -16148,7 +16217,21 @@
         ],
         "scope": "Whole affected quality correction; new full independent reviews after release."
       }
-    ]
+    ],
+    "focusedMutationConstructor": {
+      "sessionId": 11988,
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "log": "/home/node/Documents/Codex/a98-evidence/api-leaf-context-constructor-d57.log",
+      "scope": "Only api-leaf-context:parent-substitution original focused case and restored baseline; entire required suite still incomplete."
+    },
+    "precedenceSourceThirdCompleted": {
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-deadlines-fresh/report.md",
+      "reportSha256": "561103756f0a0b8074360d8d626c976465ec20f343e1b09e7ff035f371bf7dc1",
+      "verdict": "FAIL-new-test-node-composition-finding",
+      "correctedBy": "/root",
+      "nextReviewer": "/root/a98_precedence_composition_source_fresh"
+    }
   },
   "productBoundaries": [
     {

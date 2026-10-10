@@ -25,18 +25,56 @@ Use this sequence to find an effective value:
 
 ## Precedence by family
 
-| Family | Lowest to highest precedence | Important boundary |
+| Family | Resolution order and override rules | Important boundary |
 | --- | --- | --- |
 | Pipeline platform | Schema-required value → optional consumer default (`effectLockTtlMs` only) | One `--platform` file; no second file or project merge. Relative paths resolve from its canonical directory. |
 | Explicit pipeline graph | Exact `stage.config`/`stage.input` values → defaults or derived values implemented by that stage | Stage validation does not insert schema defaults. `pipeline-definition.v2` fields do not inherit from `nova-project.v2`; the compiler materializes a new graph. |
 | Nova project | Compiler constants → optional project fields → compiler-derived repository/source bindings | Array order does not control module order. The topological graph and ID tie-break do. |
-| `.swarm/pipeline.json` test nodes | Suite template → suite exclusion/override/add → direct scope nodes → matrix values → provider schema defaults → resolver policy defaults/caps | Scope concurrency may narrow a suite ceiling, never widen it. Provider plan output is resolved data, not another authoring layer. |
+| `.swarm/pipeline.json` test nodes | Select suite templates and apply exclusions/overrides → add distinct suite and direct nodes → merge matrix configuration → resolve provider schema defaults and validate policy limits | Node-ID conflicts reject; direct nodes and suite additions do not override selected nodes. Scope concurrency may narrow a suite ceiling, never widen it. Provider plan output is resolved data, not another authoring layer. |
 | Coupled `.swarm` files | Committed generation selected by `.scaffold-publication/current.json` | When publication metadata exists, loose `progress.json` and `pipeline.json` must match it. No fallback on damage. |
 | Helm | Chart defaults → supplied values files/CLI values in Helm's order → rendered manifest | The running process sees only the rendered result. GitOps can reapply its declared source after manual cluster edits. |
 | Kubernetes environment | Literal rendered value or selected ConfigMap/Secret key → fallback under the exact process loader condition | An empty value selects a fallback for `||` and shell `:-`, but stays explicit for `??` and shell `-`. A pod does not reload most environment values. Secret changes require rollout unless a component explicitly watches files. |
 | Compact swarm profile expander | Standard profile → supplied webhook and context fields → validated recursive `overrides` → template substitution using the original `repo_root` input | Overrides can replace existing context fields. Placeholder input can differ from the effective root. The caller can make further changes after expansion; see the bounded flow below. This is not the pipeline-platform authority. |
 | Prism | Prism Helm values → rendered environment/files → defaults under each loader's empty-value rule → root-owned native pool policy for aggregate capacity | Environment cannot override host cgroup capacity. SPIFFE mode changes which credential variables are authoritative. |
 | Plugin configuration | Exact supplied stage/observer/adapter config → that consumer's implemented fallback; test-provider authored values → schema-default resolution → provider fallback | The registry validates stages, observers, and adapters without inserting defaults. Its test-provider resolver clones values and inserts schema defaults. Grants remain separate and cannot be created by plugin config. |
+
+An arrow shows the order in which that consumer resolves its inputs. A later
+step replaces an earlier value only where the named merge or override permits
+it. Defaults and fallbacks apply under each consumer's own missing- or
+empty-value conditions; they are not a universal higher-priority input.
+
+### Test-node composition and configuration
+
+Within a suite selection, `suites.<instance>.overrides.<node>` changes an
+existing template node. Its `uses` remains the template's provider contract.
+Configuration objects merge recursively; arrays and scalar values replace
+the corresponding earlier value. Evidence outcome settings merge separately.
+
+Suite `add` and direct scope `tests` or `fixtures` compose distinct node IDs.
+A suite addition cannot reuse a template ID, even if that template node was
+excluded. A direct declaration cannot reuse an already selected node ID.
+Either collision fails with `TEST_PLAN_NODE_DUPLICATE`; neither declaration
+wins. Remove an unintended duplicate or deliberately change the selection.
+Do not rely on declaration order to choose a winner.
+
+Matrix values then merge into each selected node's configuration. The provider
+resolver validates a clone and inserts schema defaults only for absent values.
+Policy defaults and maxima govern separate execution settings. Requests above
+the applicable timeout, limit, or concurrency maximum reject; the resolver
+does not reduce them to that maximum. The minimum requested concurrency across
+selected suites is a separate composition rule. A direct scope limit may
+lower that suite ceiling but cannot raise it.
+
+Source: [suite override merge](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L236-L243),
+[selected nodes and suite-add collision](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L370-L380),
+[shared duplicate-ID guard](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L328-L331),
+and [direct declarations](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L384-L389).
+See also [matrix merge and timeout bound](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L546-L566),
+[provider configuration resolution](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121),
+[clone and schema defaults](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/common/plugin-runtime/foundation/registry/schema.ts#L86-L110),
+[execution limit bounds](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L427-L434),
+[suite and scope concurrency](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L333-L351),
+and [policy concurrency bound](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L696-L704).
 
 ## Compact profile inputs and overrides
 
