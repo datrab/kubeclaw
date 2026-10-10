@@ -15385,6 +15385,20 @@
       "description": "Original generator now sees full pinned schema paths for all actual API input kinds, including unused controls, metadata/status and item/map boundaries. Only two released registries joined;5444currently missing registry bindings, distinct from old selected-field prose. Normal gate rejects gaps. Need reuse/finish remaining qualified semantics and render full reference, then current fullSource/Reader/Quality/Astra.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/api-resource-inventory-integration-root/report.md",
       "evidenceSha256": "7e06cf473bc878da094389c8681bfacf72dc8b232902c254980f505e34181e03"
+    },
+    {
+      "id": "A98-NETWORK-SCHEMA-CORRECTION5",
+      "state": "corrected-pending-new-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Reject unsupported prefixItems/contains/additionalItems/unevaluatedItems/unevaluatedProperties at all schema-fragment depths; recursively qualify nested unknown schema keywords. Fifteen actual pinned-authority variants tested. Attach actual DNS grammar, enum literals and selector conjunction implementations to all applicable Network records;122records707cases preserved. New independent full Source review required.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/network-schema-correction5-root/checks.json",
+      "evidenceSha256": "fc7157d190b51d4b89ea49c2688410aebc5cfca0bbeb242a3e944c7ead44ddb3"
     }
   ],
   "checks": [
@@ -16137,6 +16151,17 @@
       },
       "report": "/home/node/Documents/Codex/a98-evidence/apps-receiver-integration-root/report.md",
       "reportSha256": "5c4110ef32632c1589fe2ba03448e239900acdd773a6f2717eeb80ced4e536ca"
+    },
+    {
+      "command": "node --test scripts/tests/api-schema-boundaries.test.mjs scripts/tests/api-receiver-coverage.test.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "sourceDigests": {
+        "scripts/docs-api-schema-authorities.mjs": "55ab41867db490b5f0b49582d6232c839a25a06b6395a9bb737c13819fdf79c8",
+        "scripts/tests/api-schema-boundaries.test.mjs": "d84e3cc30301ea3bea9f8e700043e5b5a04466879ccb23a23682cc80f186a05d",
+        "scripts/docs-kubernetes-network-receiver-contracts.mjs": "9ab2bce6642656446fb8b598291955c3f87efeadce15f3ac95c026627afa2bf1"
+      },
+      "scope": "Nine tests including fifteen isolated authority mutations. Author mechanical verification, no semantic/package acceptance."
     }
   ],
   "reviewAssignments": [
@@ -17146,13 +17171,18 @@
       "freshContext": true,
       "forkTurns": "none",
       "readOnly": true,
-      "state": "running",
+      "state": "terminal-fail",
       "baseRevision": "2efe7bb3",
       "candidateSha256": {
         "network": "3f5470835b028646cbf9d6b1101ff8aad499b6504b7e39bd0d07e00154cadf85",
         "admission": "145f3e02b3a3d3c2f0d690934cb3611d5d12a7438450da3f6a944ec4b1097571"
       },
-      "scope": "NewcompleteNetwork122/707/175/69 plusAdmission132/751/95/29 and shared schema traversal/coverage helpers; whole scopes, no inheritedPASS, no Reader/Quality/globalapproval."
+      "scope": "NewcompleteNetwork122/707/175/69 plusAdmission132/751/95/29 and shared schema traversal/coverage helpers; whole scopes, no inheritedPASS, no Reader/Quality/globalapproval.",
+      "report": "/home/node/Documents/Codex/a98-evidence/network-admission-source-corrected-complete-fresh/report.md",
+      "reportSha256": "d67bf879bdf5aba88bd5a9f7ed899ed80b660ccc04988ad76d890834a3b520a5",
+      "verifiedArtifacts": 5885,
+      "artifactManifestSha256": "48892a19abf7b5519f038c12131d7b0cc539e6b2f9806b9d863d007af54f463f",
+      "result": "Fourteen new finding groups CS01–02, NS01–03, AS01–09. Prior eight groups verified corrected; Admission45 behavioral failures. No package approval."
     },
     {
       "agent": "/root/a98_apps_receiver_corrected_source_complete_fresh",
@@ -17635,12 +17665,12 @@
       "unprovenRecursiveContexts": 165,
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
-    "currentSourceHead": "f68a7294abf0928c1aabf290c6a7e486c651a808",
-    "nextAction": "Sourcecommit releasedinventory and Workerpinrepair; rawinventory generation then explicitSHA core/platform/publication/governance; separate generatedcommit. Parallel3receiver module authors underway; all700K8s andArgoCiliumincompleteproof remainopen.",
-    "currentPushedRevision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
-    "recursiveSchemaDiscovery": "Root added apiResourceFieldBoundaries to sole existing schema authority. Includes selected and unselected property/item/map paths, rejects cyclic/unqualified structural-composition/tuple traversal. Deployment spec nonmetadata1267 plus root makes1268; matches author reconciliation. Not yet consumed by inventory/site.",
-    "currentMutationObservation": "Original90473 process remains live at source7e413cf6; log advanced through default-precedence variants and nova-cli-flag:add/change. No terminal PASS; preserve same process. Current-source mutation coverage still required later.",
-    "apiReceiverJoin": "Root added apiReceiverCoverage plus strict completeness assertion. Traverses every resource boundary including metadata/status; retains schema and authoredcontract without inferringSourcePASS. No current inventory/site integration yet.",
+    "currentSourceHead": "8649b3b164e95b1bd31149b0a7f63bdd36df679d",
+    "nextAction": "Commit root schema/Network corrections; finish Admission AS01–09 author correction; full new independent Source review. Argo author and Deployment complete fresh Source review running. Complete remaining core/metadata/Cilium coverage and reader rendering; no AP09.8 acceptance yet.",
+    "currentPushedRevision": "8649b3b164e95b1bd31149b0a7f63bdd36df679d",
+    "recursiveSchemaDiscovery": "Full13 current raw API kind schemas5698paths; unsupported structural branches now rejected deeply and unknown nested fragment keywords qualified. Updated helper requires new independent Source review.",
+    "currentMutationObservation": "Original full config mutation at7e413cf6 terminalPASS exit0; no running original process. Current revised coverage needs new whole-gate evidence after missing receiver baseline is complete.",
+    "apiReceiverJoin": "Versioned original inventory now joins1539 authoredcontracts and retains4159 missing paths among5698 schema boundaries. Normal gate rejects missing contracts; maintenance generation is not acceptance.",
     "ciliumCompositionDiscovery": "ExactpinnedCilium anyOf branches onlyrequire alreadydeclared fields viaemptyproperties. Qualified presence-only traversal preserves originalbranches;858paths eachCNP/CCNP. Other newstructuralalternatives stillreject; privateactualauthority mutation verifiesreject.",
     "deploymentAuthorLastObservation": "1268unique authoredrecords =1267nonmetadataSpecboundaries+root.347workitems201projectedboundaries mapped; finalreport/checks stillpending. No independent acceptance."
   },

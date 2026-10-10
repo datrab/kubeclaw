@@ -318,8 +318,40 @@ function apiSchemaNodeContract(schema) {
     'x-kubernetes-patch-merge-key', 'x-kubernetes-patch-strategy',
     'x-kubernetes-preserve-unknown-fields', 'x-kubernetes-unions',
     'x-kubernetes-validations'];
-  for (const key of Object.keys(schema)) assert(keywords.includes(key) || structural.includes(key)
-    || kubernetesKeywords.includes(key), `API_SCHEMA_COLLECTION_KEYWORD_UNQUALIFIED: ${key}`);
+  const unsupportedBranches = ['prefixItems', 'contains', 'additionalItems',
+    'unevaluatedProperties', 'unevaluatedItems'];
+  // Qualify schema fragments, not instance data such as defaults or examples.
+  // References stay bounded: normal boundary traversal resolves their targets.
+  const qualified = new WeakSet();
+  function qualify(fragment) {
+    if (typeof fragment === 'boolean') return;
+    assert(fragment && typeof fragment === 'object' && !Array.isArray(fragment),
+      'API_SCHEMA_FRAGMENT_UNQUALIFIED');
+    if (qualified.has(fragment)) return;
+    qualified.add(fragment);
+    for (const key of Object.keys(fragment)) {
+      assert(keywords.includes(key) || structural.includes(key) || key === '$ref'
+        || kubernetesKeywords.includes(key), `API_SCHEMA_COLLECTION_KEYWORD_UNQUALIFIED: ${key}`);
+      assert(!unsupportedBranches.includes(key), `API_SCHEMA_STRUCTURAL_BRANCH_UNQUALIFIED: ${key}`);
+    }
+    for (const key of ['properties', 'patternProperties', 'dependentSchemas']) {
+      for (const child of Object.values(fragment[key] ?? {})) qualify(child);
+    }
+    for (const child of Object.values(fragment.dependencies ?? {})) {
+      if (!Array.isArray(child)) qualify(child); // Property dependencies contain names.
+    }
+    for (const key of ['allOf', 'anyOf', 'oneOf']) {
+      for (const child of fragment[key] ?? []) qualify(child);
+    }
+    for (const key of ['not', 'if', 'then', 'else', 'propertyNames', 'additionalProperties']) {
+      if (Object.hasOwn(fragment, key)) qualify(fragment[key]);
+    }
+    if (fragment.items) {
+      assert(!Array.isArray(fragment.items), 'API_SCHEMA_TUPLE_BOUNDARY_UNQUALIFIED');
+      qualify(fragment.items);
+    }
+  }
+  qualify(schema);
   return { ...Object.fromEntries(Object.entries(schema).filter(([key]) => keywords.includes(key)
     || kubernetesKeywords.includes(key))), observedSchemaKeywords: [...new Set([
       ...Object.keys(schema).filter((key) => !['schemaReferenceChain', 'referencedContract'].includes(key)),

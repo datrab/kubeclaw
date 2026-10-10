@@ -71,8 +71,19 @@ test('a new structural alternative fails coverage instead of silently losing its
       { allOf: [{ properties: { newlyExposedAlternative: { type: 'string' } } }] },
       { allOf: [{ patternProperties: { '^newlyExposed': { type: 'string' } } }] },
     ];
-    for (const [index, branch] of variants.entries()) {
-      swagger.definitions['io.k8s.api.core.v1.Service'].properties.spec.anyOf = [branch];
+    const spec = swagger.definitions['io.k8s.api.core.v1.Service'].properties.spec;
+    const originalSpec = structuredClone(spec);
+    const mutations = variants.map(branch => ({ anyOf: [branch] }));
+    for (const keyword of ['prefixItems', 'contains', 'additionalItems', 'unevaluatedItems', 'unevaluatedProperties']) {
+      const fragment = keyword === 'prefixItems'
+        ? [{ properties: { lostChild: { type: 'string' } } }]
+        : { properties: { lostChild: { type: 'string' } } };
+      mutations.push({ [keyword]: fragment }, { anyOf: [{ [keyword]: fragment }] });
+    }
+    mutations.push({ oneOf: [{ type: 'string', unknownNestedConstraint: true }] });
+    mutations.push({ propertyNames: { type: 'string', unknownNestedConstraint: true } });
+    for (const [index, mutation] of mutations.entries()) {
+      swagger.definitions['io.k8s.api.core.v1.Service'].properties.spec = { ...originalSpec, ...mutation };
       const bytes = Buffer.from(JSON.stringify(swagger));
       const compressed = gzipSync(bytes);
       Object.assign(lock.kubernetes, { contentSha256: digest(bytes), compressedSha256: digest(compressed), compressedSize: compressed.length });
@@ -82,7 +93,7 @@ test('a new structural alternative fails coverage instead of silently losing its
       fs.writeFileSync(path.join(temporary, 'scripts/docs-api-authority-lock.sha256'), `${digest(lockBytes)}  docs-api-authority-lock.json\n`);
       const fixture = await import(`${pathToFileURL(path.join(temporary, 'scripts/docs-api-schema-authorities.mjs')).href}?variant=${index}`);
       assert.throws(() => fixture.apiResourceFieldBoundaries('v1', 'Service'),
-        /API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: v1\/Service \$\.spec anyOf/);
+        /API_SCHEMA_(?:COMPOSITION_BOUNDARY|STRUCTURAL_BRANCH|COLLECTION_KEYWORD)_UNQUALIFIED/);
     }
   } finally {
     fs.rmSync(temporary, { recursive: true, force: true });
