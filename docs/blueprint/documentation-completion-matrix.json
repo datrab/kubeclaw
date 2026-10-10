@@ -17428,6 +17428,12 @@
       "state": "mixed-terminal-author-only",
       "scope": "Workload6PASS; isolatedoperator mutations terminal0 including literalofflinepositive andclusternegative fixtures. FulloperatorFAIL(service-routing binding);demo package1PASS2FAIL(OpenSSLabsent). No fullgate/Reader/Source acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/root-source-reader-corrections-author-report.json"
+    },
+    {
+      "command": "Root Service bound shell fence syntax and exact3new reader classifications",
+      "state": "terminal-pass-author-only",
+      "scope": "All3Service fences sh-nPASS and begin assert_cluster_binding; allpriorclassifications preserved,3added after checking immutablebaseline. Fulloperator check now fails generatedopenissues npmci imperative, sourceinputcorrected awaiting generation; treecheck fails staleoutput after3classification corrections.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/demo-current-rehearsal"
     }
   ],
   "reviewAssignments": [
@@ -18779,13 +18785,14 @@
     {
       "agent": "/root/stateful_selection_c1c295_complete63_source_fresh",
       "role": "Source",
-      "state": "running-new-fresh-full-corrected63",
+      "state": "sealed-fail1-full63",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
       "revision": "c1c295b4aceb5199df608440355f70d7fa750477",
       "scope": "All63 corrected records62Stateful+PDBmaxUnavailable,424cases1782captionoccurrences, retained typed/source dimensions and actual selection/default provenance. No checklist-only or global acceptance.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-selection-c1c295-new-fresh-source-task.md"
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-selection-c1c295-complete63-source-fresh/report.md",
+      "verdict": "62recordsPASS1FAILNotFound;all424cases1782captionsPASS,998componentsPASS1FAIL.425correctionoutsideacceptance."
     },
     {
       "agent": "/root/a98_current_reader_complete_fresh",
@@ -18797,6 +18804,17 @@
       "revision": "6ff3c26d6c47d9c803ce53f3a686b4217e7ff520",
       "scope": "Derive all30 current catalogue requirements and A98-01–14 Reader applicability; complete canonical task/navigation/examples/configuration/operator/extension procedures, safe actual offline exercises. Known stale outputs are findings, not future acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/a98-current-reader-complete-fresh"
+    },
+    {
+      "agent": "/root/stateful_notfound_425_complete63_source_fresh",
+      "role": "Source",
+      "state": "running-new-fresh-complete-corrected63",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "425be378fa25d26835a5418d65bfd457e151cc16",
+      "scope": "All63 complete currentrecords,424cases/allcurrentcaptions/retained999components and actualtype/provenance/default routes. Independently assess NotFound correction; no previousfinding-only approval.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-notfound-425-complete63-source-fresh"
     }
   ],
   "continuation": {
@@ -18817,7 +18835,7 @@
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
       "/root/producer_c770_eight_findings_correction_writer",
-      "/root/stateful_selection_c1c295_complete63_source_fresh",
+      "/root/stateful_notfound_425_complete63_source_fresh",
       "/root/a98_current_reader_complete_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",

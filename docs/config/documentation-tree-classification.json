@@ -23409,6 +23409,30 @@
       "originalPath": "docs/blueprint/documentation-completion-matrix.json",
       "expectedPath": "docs/blueprint/documentation-completion-matrix.json",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/api-object-updates.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/api-object-updates.md",
+      "expectedPath": "docs/site/reference/api-object-updates.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/service-routing.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/service-routing.md",
+      "expectedPath": "docs/site/reference/service-routing.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/kubernetes-fixture.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/kubernetes-fixture.md",
+      "expectedPath": "docs/site/use/workflows/kubernetes-fixture.md",
+      "introducedAfterBaseline": true
     }
   ]
 }

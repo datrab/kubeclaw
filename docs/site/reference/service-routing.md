@@ -72,32 +72,34 @@ For the conditional default cloud controller, [cleanup, lines 374–398](https:/
 
 ## Act: inspect without changing the cluster
 
-Run from an approved operator workstation with kubectl compatible with the supplied server version and read access to the named namespace, Pods, EndpointSlices, events, workloads and relevant cluster controller/DNS configuration. RBAC denial is an access boundary; obtain the required read authority from the cluster owner. The examples assume POSIX shell, kubectl and jq. Replace `APPROVED_CONTEXT`, `SERVICE_NAMESPACE` and `SERVICE_NAME` with the approved context and identity from the selected producer/render. Replace controller/DNS identities only after discovery by their owner; never guess a production context.
+Run from an approved operator workstation with kubectl compatible with the supplied server version and read access to the named namespace, Pods, EndpointSlices, events, workloads and relevant cluster controller/DNS configuration. RBAC denial is an access boundary; obtain the required read authority from the cluster owner. The examples assume POSIX shell, kubectl and jq. Complete [Bind Cluster Authority](../use/install.md#bind-cluster-authority) first, and keep the same restricted shell with its `assert_cluster_binding` and `bound_kubectl` functions. Obtain `SERVICE_NAMESPACE` and `SERVICE_NAME` from the selected producer/render; the context comes from the independently verified binding. Replace controller/DNS identities only after discovery by their owner; never guess a production context.
 
 ```sh
-ctx='APPROVED_CONTEXT'
+assert_cluster_binding
+ctx="$EXPECTED_CONTEXT"
 ns='SERVICE_NAMESPACE'
 svc='SERVICE_NAME'
-kubectl config get-contexts "$ctx"
-kubectl --context "$ctx" version --client
-kubectl --context "$ctx" get --raw /version
-kubectl --context "$ctx" -n "$ns" get service "$svc" -o json
-kubectl --context "$ctx" -n "$ns" get service "$svc" -o yaml --show-managed-fields
-kubectl --context "$ctx" -n "$ns" get events --field-selector involvedObject.kind=Service,involvedObject.name="$svc"
+bound_kubectl config get-contexts "$ctx"
+bound_kubectl --context "$ctx" version --client
+bound_kubectl --context "$ctx" get --raw /version
+bound_kubectl --context "$ctx" -n "$ns" get service "$svc" -o json
+bound_kubectl --context "$ctx" -n "$ns" get service "$svc" -o yaml --show-managed-fields
+bound_kubectl --context "$ctx" -n "$ns" get events --field-selector involvedObject.kind=Service,involvedObject.name="$svc"
 ```
 
 Confirm identity, UID, resourceVersion, owners, managedFields, selector, all ports/targetPorts/nodePorts, clusterIPs/families/policies, class, status and finalizers. An absent object after a rejected write is different from a stored object with no backends. Events are transient and their absence proves no success. Keep request errors and the selected render alongside these reads; validation errors and allocator exhaustion occur before a working Service exists.
 
 ```sh
-selector=$(kubectl --context "$ctx" -n "$ns" get service "$svc" -o json | jq -r '.spec.selector // {} | to_entries | map(.key + "=" + .value) | join(",")')
+assert_cluster_binding
+selector=$(bound_kubectl --context "$ctx" -n "$ns" get service "$svc" -o json | jq -r '.spec.selector // {} | to_entries | map(.key + "=" + .value) | join(",")')
 printf '%s\n' "$selector"
 if [ -z "$selector" ]; then
   printf "%s\n" "STOP: confirm the stored selector with the deployment owner." >&2
   exit 1
 fi
 # Confirm this is the expected selector before the next reads.
-kubectl --context "$ctx" -n "$ns" get pods -l "$selector" -o json
-kubectl --context "$ctx" -n "$ns" get endpointslices -l "kubernetes.io/service-name=$svc" -o json
+bound_kubectl --context "$ctx" -n "$ns" get pods -l "$selector" -o json
+bound_kubectl --context "$ctx" -n "$ns" get endpointslices -l "kubernetes.io/service-name=$svc" -o json
 ```
 
 An empty selector command would list every Pod; stop and inspect the stored nil/empty representation and producer before using it. No matching Pod indicates labels/namespace/workload selection failure. Matching unready Pods indicate workload readiness failure; inspect their conditions and the named workload's events/logs with approved read access. Compare each targetPort with Pod container ports, protocol, address and readiness. A missing name is not a listener failure: the controller can omit the endpoint port. Compare Slice Service owner UID, manager, address family, port and ready/serving/terminating fields. Missing or stale Slices with matching ready Pods require EndpointSlice controller/version/events/log evidence from its owner; do not create manual Slices as recovery.
@@ -105,15 +107,16 @@ An empty selector command would list every Pod; stop and inspect the stored nil/
 For routing and DNS, the networking owner supplies `SYSTEM_NAMESPACE`, `PROXY_CONFIGMAP`, `PROXY_WORKLOAD`, `DNS_CONFIGMAP` and `DNS_WORKLOAD` identities. Use only the identities and resource kinds the owner confirms:
 
 ```sh
+assert_cluster_binding
 system_ns='SYSTEM_NAMESPACE'
 proxy_cm='PROXY_CONFIGMAP'
 proxy_workload='PROXY_WORKLOAD'
 dns_cm='DNS_CONFIGMAP'
 dns_workload='DNS_WORKLOAD'
-kubectl --context "$ctx" -n "$system_ns" get configmap "$proxy_cm" -o yaml
-kubectl --context "$ctx" -n "$system_ns" get "$proxy_workload" -o yaml
-kubectl --context "$ctx" -n "$system_ns" get configmap "$dns_cm" -o yaml
-kubectl --context "$ctx" -n "$system_ns" get "$dns_workload" -o yaml
+bound_kubectl --context "$ctx" -n "$system_ns" get configmap "$proxy_cm" -o yaml
+bound_kubectl --context "$ctx" -n "$system_ns" get "$proxy_workload" -o yaml
+bound_kubectl --context "$ctx" -n "$system_ns" get configmap "$dns_cm" -o yaml
+bound_kubectl --context "$ctx" -n "$system_ns" get "$dns_workload" -o yaml
 ```
 
 Workload placeholders include a kind/name, such as `daemonset/kube-proxy` only if confirmed. K3s can package kube-proxy outside such a workload; ask its owner for the actual read-only configuration/log capture. Missing ConfigMaps are not proof of a disabled component. Confirm mode, images, DNS zone/cache/options and logs before assigning the fault to rules or DNS. Healthy Slices with failed forwarding require approved node rule/connection-tracking evidence for the selected mode; these API reads cannot prove kernel rules. Correct endpoint forwarding with a failed name requires query/cache evidence from an existing authorized client and actual DNS configuration. Record query name, server, result and time; distinguish unsynchronized SERVFAIL from synchronized NXDOMAIN and cache effects. No pod creation or exec is authorized by this procedure.
