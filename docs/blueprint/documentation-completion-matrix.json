@@ -15902,6 +15902,42 @@
         "A98-11"
       ],
       "description": "Workload, namespace-isolation, webhook and monitoring qualification prose now describes product scope and execution limits without internal source/reader/quality acceptance statements. Existing unresolved source-proof notes remain publication blockers; they were not removed. Root workload omission/null cases now identify request-body boundaries separately from child present-parent rules. Renderer rejects explicit internal documentation acceptance statements while permitting product review stages and honest lack of live evidence. No product outcomes, authorities, schema or field identities changed; semantic review state remains in this matrix outside the reader tree."
+    },
+    {
+      "id": "A98-REQUEST-ROOT-CASE-CONTEXT-CORRECTION",
+      "state": "candidate-pending-independent-reader-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "20 existing core/identity/isolation/cluster/node/Argo/Cilium root contracts inherited child present-parent omission conditions. Root omission now means absent request body; core/Argo/Cilium root null and Argo/Cilium root empty-object conditions are explicit. Argo/Cilium root case labels no longer name a present parent. Nonroot conditions remain unchanged by this correction. Pure38registered root audit finds no omission case conditioned on a present child parent; this does not prove source outcomes or publication."
+    },
+    {
+      "id": "A98-RETAINED-IMAGEPULL-SECRET-NULL-ITEM-CORRECTION",
+      "state": "candidate-pending-new-independent-complete-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Independent original frozen Source F26 identifies Job220/Cron393/State566/Pod726 null items reusing absent-item text. Common apps imagePullSecrets[] null now retains zero LocalObjectReference/name-empty and nonempty list, which blocks ServiceAccount admission empty-list copy at actual root/child Pod creation; template storage is separate. Direct allow-list validator permits zero name but proves no credential. Adjacent readiness/scheduling item nulls now explicitly retain zero gate structs and fail required qualified names. Source decoding528–620, Core validators4134–4154/4248–4259 and ServiceAccount155–171 inspected; no live execution or candidate acceptance claimed."
+    },
+    {
+      "id": "A98-JOB-INTERMEDIATE-OUTPUT-SCOPE-CLARIFICATION",
+      "state": "candidate-pending-stable-producer-join-and-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Independent original frozen F25 flags9 Job probe/port records from registry GCJob intermediate pre-deletion shape as actual producer outputs. Producer author is correcting actual discovery; current appended Job operation scope now depends on actual emitted field/source context and explicitly distinguishes intermediate renderer objects removed before emission. Unused typed alternatives are not newly required documentation. No old exclusion seal, historical FAIL or actual discovery acceptance is changed by this prose correction."
     }
   ],
   "checks": [
@@ -16845,6 +16881,26 @@
       "command": "Structural receiver impact comparison against e70ddd3d",
       "state": "terminal-pass",
       "scope": "Private resource-root-scope-root/reader-language-impact.json:770workload+45namespace-isolation+48webhook+188monitoring records retain identical identities/schema/source/effect/outcome data; only qualification wording and root-case/parent conditions differ. Root cross-field conditions deliberately excluded from this comparison and require independent semantic review."
+    },
+    {
+      "command": "6-file receiver/coverage/reader-language group before new null correction",
+      "state": "terminal-pass",
+      "scope": "Session93107 terminal28PASS0FAIL0SKIP. Root-only condition comparison private remaining-root-case-impact.json confirmed nonroot records/source/outcomes unchanged at that earlier candidate. Subsequent common imagePullSecrets/gate null corrections deliberately change derived null cases; do not use earlier comparison as current null-case equivalence."
+    },
+    {
+      "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/node-workloads-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Session35695 terminal13PASS0FAIL0SKIP after common null item correction, includes actual authenticated external node contexts. Later Job operation-scope wording checked by separate17672 group; no current complete Source/publication acceptance."
+    },
+    {
+      "command": "5-file receiver/coverage/reader-language final group",
+      "state": "terminal-pass",
+      "scope": "Session17672 terminal23PASS0FAIL0SKIP after null/Job scope correction. Subsequent Argo/Cilium root case name changes are exercised by pure root factory audit12163, not claimed covered by already-loaded test imports."
+    },
+    {
+      "command": "Pure38registered root omission-context audit and exact four workload imagePullSecrets[] null lookups",
+      "state": "terminal-pass",
+      "scope": "Session12163 terminal38roots no child-parent omission condition; root-case-context-audit.json. Direct Job/CronJob/StatefulSet/Pod null cases match retained-zero-item explanation and no longer append absent-item outcome. These are mechanical/content checks, not a live decode/admission or independent semantic acceptance."
     }
   ],
   "reviewAssignments": [
@@ -20029,6 +20085,15 @@
       "focusTests": "23PASS0FAIL1explicitSKIP",
       "publicationPolicy": "Explicit documentation acceptance language fails; source-proof gaps still fail; product review stages remain allowed.",
       "next": "Generate actual stable integrated source output and perform fresh independent Reader/Quality reviews."
+    },
+    "rootCasesAndNullItems": {
+      "author": "/root",
+      "state": "candidate-not-independent-acceptance",
+      "rootConditionCorrection": "20resource roots, no scope expansion",
+      "nullItemCorrection": "Shared imagePullSecrets/readiness/scheduling item behavior; all derived actualkind rows require independent current review.",
+      "producerScope": "Appended Job field claims conditional on actual emitted output; final source-stable join pending.",
+      "checks": "28PASS initial,13PASS node/null,23PASS final receiver group;38registered root condition audit PASS",
+      "sourceInspection": "Original decoder/Core validation/ServiceAccount sources checked by recorded hashes; no live execution."
     }
   }
 }
