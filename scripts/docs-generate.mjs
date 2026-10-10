@@ -11,6 +11,7 @@ import {
   table,
 } from './docs-generate-core.mjs';
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
+import { renderApiResourceReference } from './docs-api-reference.mjs';
 
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -339,6 +340,8 @@ ${generatedEnd()}
 
 function renderHelmValues(configurationValues, configurationSchemas) {
   const valueFiles = configurationValues.files;
+  const apiResourceSections = renderApiResourceReference(configurationValues.apiResources,
+    (source, line) => `[${literalText(source)}](${pinnedSourceUrl(source, line, line)})`);
   const collectionSchemaKey = (schema) => JSON.stringify([schema.authority, schema.authoritySha256, schema.apiVersion, schema.kind, schema.resolvedPath]);
   const collectionSchemaAnchor = (schema) => `api-collection-${createHash('sha256').update(collectionSchemaKey(schema)).digest('hex').slice(0, 16)}`;
   const collectionSchemaContract = ({ fieldPath, ...schema }) => JSON.stringify(schema);
@@ -530,6 +533,12 @@ ${table(['File', 'Class', 'Documents', 'Recursive fields'], valueFiles.map((file
 Each field row separates the checked-in source from the runtime receiver. It follows local Helm templates, Argo CD value-file bindings, and Kubernetes resource authorities. An external chart or Kubernetes API owns validation when its schema is outside this repository. A field with no active deployment binding is identified as inactive instead of being presented as an effective option.
 
 ${fieldSections}
+
+## Complete API Field Reference
+
+This reference separates JSON decoding, API rules and the component that uses each field. Read the operation and related conditions before changing a value. List items and map values have their own field entries; their empty and null behavior can differ from the enclosing collection.
+
+${apiResourceSections}
 
 ## Kubernetes API Collection Contracts
 

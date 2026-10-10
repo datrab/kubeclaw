@@ -15382,7 +15382,7 @@
         "A98-10",
         "A98-11"
       ],
-      "description": "Original generator now sees full pinned schema paths for all actual API input kinds, including unused controls, metadata/status and item/map boundaries. Only two released registries joined;5444currently missing registry bindings, distinct from old selected-field prose. Normal gate rejects gaps. Need reuse/finish remaining qualified semantics and render full reference, then current fullSource/Reader/Quality/Astra.",
+      "description": "Original generator discovers5698 schema boundaries and now joins3439 authored records from Network, Admission, Deployment and Argo registries.2259 missing registry bindings remain. Strict normal gate rejects gaps. Full reader reference renderer added with authority/identity/completeness guards; no generated publication or independent acceptance yet.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/api-resource-inventory-integration-root/report.md",
       "evidenceSha256": "7e06cf473bc878da094389c8681bfacf72dc8b232902c254980f505e34181e03"
     },
@@ -15399,6 +15399,46 @@
       "description": "Reject unsupported prefixItems/contains/additionalItems/unevaluatedItems/unevaluatedProperties at all schema-fragment depths; recursively qualify nested unknown schema keywords. Fifteen actual pinned-authority variants tested. Attach actual DNS grammar, enum literals and selector conjunction implementations to all applicable Network records;122records707cases preserved. New independent full Source review required.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/network-schema-correction5-root/checks.json",
       "evidenceSha256": "fc7157d190b51d4b89ea49c2688410aebc5cfca0bbeb242a3e944c7ead44ddb3"
+    },
+    {
+      "id": "A98-ADMISSION-RECEIVER-CORRECTION4",
+      "state": "corrected-pending-new-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Author corrected all AS01–09 groups:31 scalar/key semantics,18 Namespace request-vs-cache operation conditions,actual rule/selector/default/literal/parser/ordered-variable/CEL compiler/activation/budget proofs.132 identities and751 prior cases preserved;911current cases. Root verified nine artifacts and reran author mechanical checks. Requires full new independent Source review.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/admission-receiver-correction4-writer/report.md",
+      "evidenceSha256": "947a926d905694037ccd7ec68dbe50bc2e8dcdfda4100dc438e482f9439c5cd5"
+    },
+    {
+      "id": "A98-ARGO-RECEIVER-CANDIDATE",
+      "state": "authored-with-explicit-source-proof-gaps",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Author released1900 records5843cases at4d6b75cb. Root actual strict shape join has noextra and only6root metadata/envelope missing. Author explicitly retains per-field admission/patch/default/conflict/state/recovery proof qualifications on all1900 records. No Source acceptance; available source gaps must be resolved rather than product-limit waivers.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/argo-receiver-writer/REPORT.md",
+      "evidenceSha256": "83232301c407cd738c13034cff1fafc1ff61dbf8a40fba6dea44a791ad763a84"
+    },
+    {
+      "id": "A98-COMPLETE-API-READER-RENDERER",
+      "state": "source-integrated-pending-complete-input-and-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Complete API reference renderer included in canonical Helm values generation. Compares every inventory path and schema against pinned authorities; rejects missing receiver rows, duplicate/drifted paths,unqualified links/cases. Renders all behavior dimensions, conditions/cases/source proofs and literal escaped fullschema. Four focused tests pass; no actual complete product reference has been published because2259registry paths remain missing."
     }
   ],
   "checks": [
@@ -16162,6 +16202,20 @@
         "scripts/docs-kubernetes-network-receiver-contracts.mjs": "9ab2bce6642656446fb8b598291955c3f87efeadce15f3ac95c026627afa2bf1"
       },
       "scope": "Nine tests including fifteen isolated authority mutations. Author mechanical verification, no semantic/package acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/api-reference.test.mjs scripts/tests/api-schema-boundaries.test.mjs scripts/tests/api-receiver-coverage.test.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "tests": 13,
+      "sessionId": 74777,
+      "scope": "Author mechanical tests including15authority mutations and4publication completeness/literal encoding controls; no independent Source/Reader acceptance.",
+      "sourceDigests": {
+        "scripts/docs-api-reference.mjs": "9cb8a295023c88f73d447e52444a992a4cb582bcb5d8db22675f70b1d0d5e24c",
+        "scripts/docs-generate.mjs": "a3d9d202c5774681abd7a19ba62fd240d35caa965c1a55b92331c1b7facb1a00",
+        "scripts/docs-api-schema-authorities.mjs": "55ab41867db490b5f0b49582d6232c839a25a06b6395a9bb737c13819fdf79c8",
+        "scripts/tests/api-reference.test.mjs": "9b26c8942a9cbb5d4af152ab5357a865a4502a3c9f7d5b20fd596fedbdf73aca"
+      }
     }
   ],
   "reviewAssignments": [
@@ -17195,6 +17249,16 @@
       "baseRevision": "8efd6186c0e0387ef721feabf133a6571785963e",
       "candidateSha256": "e96425368a043dd5bc23604577adf6016fd17e725c9553327c74bc590a315e58",
       "scope": "Full1285records7712cases347workitems plus independent raw/Helm/customsurface discovery; no inheritedauthorPASS. Metadata remains explicitglobalgap, no Reader/Quality/integrationapproval."
+    },
+    {
+      "agent": "/root/a98_admission_receiver_correction4_writer",
+      "role": "writer",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "completed-author-correction-not-acceptance",
+      "scope": "Exclusive Admission module AS01–AS09;132records911cases; ownership released.",
+      "candidateSha256": "ea7b1eadcca0bf820ba177dfe2159dcad873218fe2b1c9487e00ef173da25d3a"
     }
   ],
   "continuation": {
@@ -17666,13 +17730,14 @@
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
     "currentSourceHead": "8649b3b164e95b1bd31149b0a7f63bdd36df679d",
-    "nextAction": "Commit root schema/Network corrections; finish Admission AS01–09 author correction; full new independent Source review. Argo author and Deployment complete fresh Source review running. Complete remaining core/metadata/Cilium coverage and reader rendering; no AP09.8 acceptance yet.",
+    "nextAction": "Commit Admission correction4, releasedArgo integration and completeAPI reference renderer. Start full fresh Network/Admission/shared-helper Source review and parallel Core receiver writing. Deployment Source remains active; ArgoSource/fullproof and Core/metadata/Cilium2259 registry gaps remain open.",
     "currentPushedRevision": "8649b3b164e95b1bd31149b0a7f63bdd36df679d",
     "recursiveSchemaDiscovery": "Full13 current raw API kind schemas5698paths; unsupported structural branches now rejected deeply and unknown nested fragment keywords qualified. Updated helper requires new independent Source review.",
     "currentMutationObservation": "Original full config mutation at7e413cf6 terminalPASS exit0; no running original process. Current revised coverage needs new whole-gate evidence after missing receiver baseline is complete.",
-    "apiReceiverJoin": "Versioned original inventory now joins1539 authoredcontracts and retains4159 missing paths among5698 schema boundaries. Normal gate rejects missing contracts; maintenance generation is not acceptance.",
+    "apiReceiverJoin": "Original inventory versioned registry now has3439 contract bindings and2259missing among5698 schema paths. Normalgate and API publicationrenderer reject missing; no complete generated reader output yet.",
     "ciliumCompositionDiscovery": "ExactpinnedCilium anyOf branches onlyrequire alreadydeclared fields viaemptyproperties. Qualified presence-only traversal preserves originalbranches;858paths eachCNP/CCNP. Other newstructuralalternatives stillreject; privateactualauthority mutation verifiesreject.",
-    "deploymentAuthorLastObservation": "1268unique authoredrecords =1267nonmetadataSpecboundaries+root.347workitems201projectedboundaries mapped; finalreport/checks stillpending. No independent acceptance."
+    "deploymentAuthorLastObservation": "1268unique authoredrecords =1267nonmetadataSpecboundaries+root.347workitems201projectedboundaries mapped; finalreport/checks stillpending. No independent acceptance.",
+    "argoAuthor": "Released4d6b75cb1900records5843cases; per-fieldSourceproofgaps explicitlyopen; root integrated registry and verified exactschemajoin missing6metadata/envelope roots."
   },
   "productBoundaries": [
     {

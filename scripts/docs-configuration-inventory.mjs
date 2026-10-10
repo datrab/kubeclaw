@@ -21,6 +21,7 @@ import { apiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
 import { receiverContracts as networkingReceiverContracts } from './docs-kubernetes-network-receiver-contracts.mjs';
 import { receiverContracts as admissionReceiverContracts } from './docs-kubernetes-admission-receiver-contracts.mjs';
 import { receiverContracts as deploymentReceiverContracts } from './docs-kubernetes-apps-receiver-contracts.mjs';
+import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver-contracts.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
@@ -2737,6 +2738,7 @@ function completeYamlCollection(row, context, value, fields) {
 // and field paths match.
 const versionedApiReceiverRegistries = new Map([
   ['apps/v1', deploymentReceiverContracts],
+  ['argoproj.io/v1alpha1', argoReceiverContracts],
   ['networking.k8s.io/v1', networkingReceiverContracts],
   ['admissionregistration.k8s.io/v1', admissionReceiverContracts],
 ]);
