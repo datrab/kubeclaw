@@ -19440,6 +19440,18 @@
       "authenticatedPrimaryFiles": 6,
       "generatedProtocolSourceRanges": 18,
       "qualification": "F07 bounded correction independently passes; other producer closure, whole CFG009/AP09, publication, Reader/Quality and live acceptance remain open"
+    },
+    "monitoringSourceSpanCorrectionCandidate": {
+      "author": "/root",
+      "reviewerFindingOrigin": "/root/monitoring185_complete_source_fresh at9ab29fb",
+      "state": "author-corrected-pending-new-complete-independent-source-review",
+      "records": 185,
+      "changedEvidenceRecords": 61,
+      "nonEvidenceDimensionsPreserved": true,
+      "scope": "Rule namespace call33\u201339, StatefulSet annotation removal83\u201399, address wrapper2292\u20132294 and actual shard hash/disable2397\u20132415; narrow actual immutable source claims",
+      "checks": "4 focused testsPASS0SKIP including authentic selectedmonitoring render; old185 non-evidence record dimensions deep-equal preserved",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/monitoring-source-span-correction-root",
+      "independentHistoricalState": "Full initial185 source review not yet sealed; provisional124PASS61FAIL all822casesPASS, no retroactive acceptance"
     }
   }
 }
