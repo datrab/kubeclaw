@@ -358,6 +358,20 @@ add('CSIDriver','$.spec.seLinuxMount','Declare support for a CSI filesystem moun
 for(const record of records.slice(-3)) {
  record.cases.push({name:'update',condition:'Actual client construction and ownership yield a permitted typed change.',sourceOutcome:record.changeImpact},{name:'consumer',condition:'The named consumer receives a created Pod or CSI mount request with its required dependencies.',sourceOutcome:record.crossFieldConditions.join(' ')});
 }
+// Actual external producer replay selects omitted paths in regular/init Containers.
+for(const member of ['containers','initContainers']){
+ const path=`$.spec.template.spec.${member}[].terminationMessagePath`;
+ const origin=deploymentTemplates.find(r=>r.fieldPath===path);
+ if(!origin)throw Error(`NODE_WORKLOAD_TEMPLATE_REUSE_GAP: ${path}`);
+ const record=qualifyTemplate(origin);
+ record.omitted='Within a present Container item, an empty terminationMessagePath defaults to /dev/termination-log; no absent Container item is created.';
+ record.nullValue='Fresh typed JSON null leaves the ordinary string empty; Container defaulting selects /dev/termination-log. Patch deletion depends on request construction and ownership.';
+ record.emptyValue='An explicit empty string defaults to /dev/termination-log; nonempty paths are retained and do not prove the image can write the file.';
+ record.cases=record.cases.map(c=>({...c,sourceOutcome:c.name==='omitted-at-create'?record.omitted:c.name==='explicit-null'?record.nullValue:c.name==='explicit-empty-or-zero'?record.emptyValue:c.sourceOutcome}));
+ record.cases.push({name:'update-and-recovery',condition:'An accepted update or uncertain request is observed.',sourceOutcome:dsChange+' '+dsRecovery});
+ record.evidence.push(source('pkg/apis/core/v1/defaults.go','94-99','Empty Container termination message path defaults to TerminationMessagePathDefault.'),source('staging/src/k8s.io/api/core/v1/types.go','2896-2897','TerminationMessagePathDefault is /dev/termination-log.'));
+ records.push(record);
+}
 export const receiverContracts=Object.freeze(records.map(Object.freeze));
 export function nodeWorkloadsReceiverContracts(apiVersion,kind,exactBoundaries) {
  if(apiVersions[kind]!==apiVersion) return [];

@@ -9,7 +9,7 @@ const av=(lines,claim)=>source('pkg/apis/apps/validation/validation.go',lines,cl
 const bd=(lines,claim)=>source('pkg/apis/batch/v1/defaults.go',lines,claim);
 const ad=(lines,claim)=>source('pkg/apis/apps/v1/defaults.go',lines,claim);
 const kinds=['Job','CronJob','StatefulSet','PodDisruptionBudget'];
-const strategies={Job:['batch/job','94-208'],CronJob:['batch/cronjob','87-116'],StatefulSet:['apps/statefulset','72-134'],PodDisruptionBudget:['policy/poddisruptionbudget','65-96']};
+const strategies={Pod:['core/pod','86-118'],Job:['batch/job','94-208'],CronJob:['batch/cronjob','87-116'],StatefulSet:['apps/statefulset','72-134'],PodDisruptionBudget:['policy/poddisruptionbudget','65-96']};
 const parentEvidence=kind=>[source(`pkg/registry/${strategies[kind][0]}/strategy.go`,strategies[kind][1],`${kind} normal create clears status; normal update preserves stored status and applies its own preparation and validation.`)];
 const jobChange='An existing Job template is immutable except the exact suspended-Job scheduling/resource allowances selected by its strategy and feature gates. The selected unsuspended migration/probe/storage Jobs remain subject to Job template immutability. Inspect completion and external effects before recreating a Job; recreation can repeat its command.';
 const stateChange='An accepted StatefulSet template change affects replacement Pods through its update strategy; it does not edit all existing Pods immediately. Ordinal identity and generated PVC names persist across Pod replacement. Inspect rollout, actual mounted claims and application recovery before removing Pods or storage.';
@@ -635,6 +635,52 @@ for(const suffix of ['', '[]', '[].name', '[].request']) {
   operationScope:'The supported PostgreSQL recovery renderer forwards policy.resources to its batch/v1 CronJob backup container. These four selected fields describe that public-object forwarding and the actual CronJob to Job to Pod receive path. Rendering is offline evidence; actual request construction, admission, gate configuration and old object state are separate inputs.',
   crossFieldConditions:cronClaimConditions,
   qualificationLimits:['Only the four selected container claim fields are added. No Pod resource-claim declaration, upstream alternative, live allocation, semantic acceptance or global documentation acceptance is established.']
+ });
+}
+// Actual producer replay selects these omitted Container defaults. Reuse only
+// the equivalent child contract, and qualify its receiving parent independently.
+const selectedDefaultChildren={
+ StatefulSet:['containers[].terminationMessagePath','containers[].terminationMessagePolicy'],
+ CronJob:['containers[].terminationMessagePath','containers[].terminationMessagePolicy'],
+ Job:['containers[].ports[].protocol','containers[].terminationMessagePath','containers[].terminationMessagePolicy','initContainers[].terminationMessagePath','initContainers[].terminationMessagePolicy'],
+ Pod:['containers[].terminationMessagePath','containers[].terminationMessagePolicy']
+};
+for(const [kind,children] of Object.entries(selectedDefaultChildren))for(const child of children){
+ const prefix=kind==='Pod'?'$.spec':kind==='CronJob'?'$.spec.jobTemplate.spec.template.spec':'$.spec.template.spec';
+ const fieldPath=`${prefix}.${child}`;
+ const origin=`$.spec.template.spec.${child}`;
+ const facts=qualifiedChild(kind==='CronJob'?'Job':kind,kind==='Pod'?fieldPath:origin);
+ // The visitor offsets above do not apply to CronJob's deeper JobTemplate.
+ if(kind==='CronJob'){
+  facts.evidence=facts.evidence.filter(e=>!e.url.includes('/zz_generated.defaults.go'));
+  facts.evidence.push(source('pkg/apis/batch/v1/zz_generated.defaults.go','216-223','CronJob visits each regular Container and its ports in JobTemplate, without running SetDefaults_Job or SetDefaults_Pod.'),
+   bv('888-900','CronJob validates its JobTemplate through JobSpec validation and forbids manual selectors.'),
+   source('pkg/controller/cronjob/utils.go','243-273','CronJob copies JobTemplate spec into separately created Jobs.'),
+   source('pkg/apis/batch/v1/zz_generated.defaults.go','378-396','Child Job separately defaults its PodSpec without SetDefaults_Pod.'),
+   source('pkg/controller/controller_utils.go','562-599','Job child Pod construction copies the template before separate Pod creation.'));
+ }
+ const policy=child.endsWith('terminationMessagePolicy');
+ if(child.includes('terminationMessage')){
+  const value=policy?'File':'/dev/termination-log';
+  const consumer=podChildren.find(r=>r.fieldPath===origin).cases.find(c=>c.name==='termination-message-file-log-and-total-limits');
+  if(consumer)facts.consumerCases.push({...consumer,sourceOutcome:consumer.sourceOutcome.replace('Deployment templates forbid nonempty ephemeral containers; declared regular/init containers still count even when their message is empty.','Declared containers count even when their message is empty; the actual receiving kind validation still constrains which container members can be supplied.')});
+  facts.omitted=`Within the present Container item, the empty string defaults to ${value}. No absent Container item is created.`;
+  facts.nullValue=`Fresh typed JSON null leaves the ordinary string empty; Container defaulting selects ${value}. This is not a patch deletion rule.`;
+  facts.emptyValue=`An explicit empty string defaults to ${value}; a nonempty string is retained before validation.`;
+  facts.evidence.push(source('pkg/apis/core/v1/defaults.go','94-99','SetDefaults_Container defaults empty termination path and policy.'),
+   source('staging/src/k8s.io/api/core/v1/types.go',policy?'2808-2810':'2896-2897',policy?'File is the termination message read-file policy.':'TerminationMessagePathDefault is /dev/termination-log.'));
+ }
+ if(kind!=='CronJob'){
+  facts.evidence.push(...expansionRoute(kind));
+  facts.evidence.push(source(kind==='Pod'?'pkg/apis/core/v1/zz_generated.defaults.go':kind==='Job'?'pkg/apis/batch/v1/zz_generated.defaults.go':'pkg/apis/apps/v1/zz_generated.defaults.go',kind==='Pod'?'372-380':kind==='Job'?(child.startsWith('init')?'478-485':'552-559'):'1192-1199',`${kind} generated visitor defaults the selected Container item and empty port protocol without inventing missing items.`));
+ }
+ // add() supplies the exact parent strategy and kind-specific change/recovery.
+ add(kind,fieldPath,facts.purpose,facts.omitted,facts.emptyValue,facts.invalidValue,facts.evidence,{
+  ...(kind==='Pod'?{operationScope:'The actual cmd_buildkit_preflight shell heredoc is submitted by kubectl apply -f -. Request construction and ownership precede typed Pod validation.'}:{}),
+  nullValue:facts.nullValue,crossFieldConditions:[...facts.crossFieldConditions,'Only a present Container or ContainerPort item receives this default. Invalid nonempty values are validation inputs, not default predicates.'],
+  changeImpact:(kind==='Pod'?podChange:effect(kind))+' '+(kind==='CronJob'?'Read stored CronJob, child Job/Pod events and logs after an uncertain write. Correct admission, placement, image, mount or command failures before retrying; backup retries can repeat external effects.':recovery(kind)),
+  qualificationLimits:facts.qualificationLimits,
+  cases:[{name:'omitted-at-create',condition:'Present immediate Container or ContainerPort item.',sourceOutcome:facts.omitted},{name:'explicit-null',condition:'Fresh typed JSON null before defaulting.',sourceOutcome:facts.nullValue},{name:'explicit-empty-or-zero',condition:'Explicit empty string before defaulting.',sourceOutcome:facts.emptyValue},{name:'invalid-value-or-combination',condition:'Nonempty value reaches typed validation.',sourceOutcome:facts.invalidValue},...facts.consumerCases,{name:'update-and-recovery',condition:'Stored update or uncertain request.',sourceOutcome:kind==='Pod'?podChange:effect(kind)}]
  });
 }
 export const receiverContracts=[...records.values()];
