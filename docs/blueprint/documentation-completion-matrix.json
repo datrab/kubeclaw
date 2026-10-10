@@ -18585,6 +18585,23 @@
       "reviewReportCorrection": "Five frozen/current Prism/Ops templates conditionally omit empty storageClassName; report explicit-empty classification is contradicted by independently read source. Do not reuse that claim.",
       "correctionEvidenceSha256": "94ead30d0e4edc3ea38e3689c9fe7af390d10087a5af9b229123cfd671f72a0a",
       "acceptance": "No package or source-partition acceptance; corrections and revised-scope fresh reviews pending."
+    },
+    "appsRetainedClaimCorrections": {
+      "state": "author-candidate-not-independently-accepted",
+      "module": "scripts/docs-kubernetes-apps-receiver-contracts.mjs",
+      "moduleSha256": "41f57a4e33e56afeaa23c95be84b7024daef3dedf055bda14a675eaec9cdc728",
+      "reportSha256": "70b1166fe54b8f9e9f7d67fec71e9aec1b6757a0421af510611f44f0a1b93de1",
+      "sealSha256": "ea8fa29ceec6a69a66533b0e9027a4624b1f410559db86d0bae0db127d4292af",
+      "verifiedArtifacts": 10,
+      "author": "/root/apps_selected_claim_correction_writer",
+      "corrections": [
+        "F02 exact progress/helper caption separation",
+        "F06 required versus preferred affinity validation",
+        "F03 actual effective gate default/lock/component version qualification",
+        "F07 Deployment old-template compatibility does not carry into newly created ReplicaSet/Pod"
+      ],
+      "checks": "17 focused tests; original source blob verification;1285record identities/case names preserved. Author checks only.",
+      "acceptance": "No selected product discovery completion, full Source/Reader/Quality/Astra or A98 acceptance."
     }
   }
 }
