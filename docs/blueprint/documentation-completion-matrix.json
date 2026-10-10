@@ -15371,6 +15371,20 @@
       "description": "Author corrected all5groups across132records751cases. Exact pathwrapper61–68, skipaction320, selectorcall75, enums/wildcardbody and actual lazyMap implementation. Non-evidenceproperties/cases preserved. Final145f3e02 candidate under new fullfreshSource review; no approval.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/kubernetes-admission-receiver-writer/correction-3/report.md",
       "evidenceSha256": "e8adb6d237da67206933d78b36e6837da01a42cae2a12f88f08e0bd3a6080f59"
+    },
+    {
+      "id": "A98-RECURSIVE-API-INVENTORY-INTEGRATION",
+      "state": "integrated-in-source-incomplete-receiver-coverage",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Original generator now sees full pinned schema paths for all actual API input kinds, including unused controls, metadata/status and item/map boundaries. Only two released registries joined;5444currently missing registry bindings, distinct from old selected-field prose. Normal gate rejects gaps. Need reuse/finish remaining qualified semantics and render full reference, then current fullSource/Reader/Quality/Astra.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/api-resource-inventory-integration-root/report.md",
+      "evidenceSha256": "7e06cf473bc878da094389c8681bfacf72dc8b232902c254980f505e34181e03"
     }
   ],
   "checks": [
@@ -16093,6 +16107,24 @@
       "scope": "132records751cases allnon-evidence preserved;191distinctranges59primaryhashes,95appearances29workitems identities unchanged. Root read full release report and verified exactsubjectSHA; freshSource independentreverification ongoing.",
       "report": "/home/node/Documents/Codex/a98-evidence/kubernetes-admission-receiver-writer/correction-3/report.md",
       "reportSha256": "e8adb6d237da67206933d78b36e6837da01a42cae2a12f88f08e0bd3a6080f59"
+    },
+    {
+      "command": "node scripts/docs-configuration-inventory.mjs --out-dir private/strict",
+      "state": "terminal-fail",
+      "exitCode": 1,
+      "result": "expected-negative-control-rejection",
+      "scope": "Actual production invocation rejects newly exposed unused/metadata/status/operation receiver gaps. Normal inventory gate currently fails. Not global acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/api-resource-inventory-integration-root/strict/result.json",
+      "log": "/home/node/Documents/Codex/a98-evidence/api-resource-inventory-integration-root/strict/stderr.log",
+      "logSha256": "f1acbb79e9a6a0bc4308d00547946103f972fda92245c545384855bd741157ef"
+    },
+    {
+      "command": "node scripts/docs-configuration-inventory.mjs --out-dir private/maintenance --allow-semantic-gaps",
+      "state": "terminal-pass-maintenance-only",
+      "exitCode": 0,
+      "scope": "13resource types65contexts5698schema boundaries254registry contracts present5444missing. Exact unused alternatives and operation paths retained; only version-bound released registries integrated. Maintenance output is not acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/api-resource-inventory-integration-root/summary.json",
+      "reportSha256": "622fcd6cde2686fe5308c5eb642e945399f7bd013c65561b0eced57f7d2e4f81"
     }
   ],
   "reviewAssignments": [
@@ -17112,10 +17144,10 @@
     }
   ],
   "continuation": {
-    "stage": "Released all8network/admissionSource evidence corrections; new fullfreshSource including common helpers underway. Deployment15findings and Argo fullperfieldreceivers remain under authoring. No AP09.8 closure.",
+    "stage": "Complete fresh Source review ongoing: new scalar/list/map inheritance and Namespace DELETE semantic leads, helper structural keywords lack traversal/rejection. Root full API inventory discovery integrated and verified failclosed on current missing contracts. Deployment/Argo authors active.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Complete newwholeScopeSource review, fix remaining materialfindings with freshfullreview. Integrate allreleasedreceiverregistries plus core/metadata/status into schema-driven inventory; Source/gen/fullcurrentgates; independentReader/Quality/Astra. No massparity before AP09.8 acceptance.",
+    "next": "Read fullnew Source report and correct allbehavior/support/helper defects; newfreshfullreview. Finish/reuse allremainingAPI receiver registries inclcore/metadata/status, join and render fullcanonicalreference. Source/gen/currentgates/Reader/Quality/Astra. No massparity before AP09.8 approval.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],

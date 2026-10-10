@@ -17,6 +17,9 @@ import {
   assertLocalHelmAuthorityRegistry, localHelmAuthorityFile, localHelmAuthorityPaths, localHelmFieldAuthority,
 } from './docs-local-helm-authorities.mjs';
 import { apiFieldSchemaAuthority, apiFieldCollectionAuthority } from './docs-api-schema-authorities.mjs';
+import { apiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
+import { receiverContracts as networkingReceiverContracts } from './docs-kubernetes-network-receiver-contracts.mjs';
+import { receiverContracts as admissionReceiverContracts } from './docs-kubernetes-admission-receiver-contracts.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
@@ -2728,6 +2731,33 @@ function completeYamlCollection(row, context, value, fields) {
   row.meaning.text = `Groups the nested fields ${children.map((field) => `\`${field.path}\``).join(', ')}. It has no separately proved whole-collection receiver. Accepted keys and item variants are those defined by the nested schema and consumer contracts; this row does not authorize arbitrary new keys. ${merge}`;
 }
 
+// Bind an authored receiver registry to its declared API version. A new version
+// must not inherit another version's runtime claims merely because kind names
+// and field paths match.
+const versionedApiReceiverRegistries = new Map([
+  ['networking.k8s.io/v1', networkingReceiverContracts],
+  ['admissionregistration.k8s.io/v1', admissionReceiverContracts],
+]);
+
+function buildApiResourceInventory(files) {
+  const resources = new Map();
+  for (const file of files) {
+    for (const document of file.documents) {
+      if (!document.resource) continue;
+      const { apiVersion, kind } = document.resource;
+      const key = `${apiVersion}/${kind}`;
+      if (!resources.has(key)) resources.set(key, { apiVersion, kind, sourceContexts: [] });
+      resources.get(key).sourceContexts.push({ path: file.path, document: document.index,
+        sourceDigest: file.sourceDigest, owner: sourceOwner(file.path).component });
+    }
+  }
+  return [...resources.entries()].sort(([left], [right]) => left.localeCompare(right))
+    .map(([, resource]) => ({ ...resource,
+      ...apiReceiverCoverage(resource.apiVersion, resource.kind,
+        versionedApiReceiverRegistries.get(resource.apiVersion) ?? []),
+    }));
+}
+
 function buildYamlInventory() {
   assertYamlAuthorityRegistry(root);
   if (!allowLocalHelmAuthorityMaintenance) assertLocalHelmAuthorityRegistry(root);
@@ -2792,6 +2822,7 @@ function buildYamlInventory() {
       };}),
     };
   });
+  const apiResources = buildApiResourceInventory(files);
   const allFields = files.flatMap((file) => file.documents.flatMap((document) => document.fields));
   for (const file of files) {
     const actualPaths = new Set(file.documents.flatMap((document) => document.fields)
@@ -2926,6 +2957,15 @@ function buildYamlInventory() {
       .map((field) => `${file.path} document ${document.index}#${field.path}: ${field.meaning.qualification?.missing ?? field.closureCondition}`)));
     throw new Error(`CONFIG_SEMANTIC_GAP: public YAML options lack qualified semantic authority:\n${details.join('\n')}\nExpected authority: exact source path + full field path with purpose, accepted values, default/empty behavior, impact, and failure symptom. Use the existing --allow-semantic-gaps maintenance mode only to inspect and publish explicit blockers; it does not pass this gate.`);
   }
+  const apiReceiverGaps = apiResources.flatMap((resource) => resource.missing
+    .map((fieldPath) => `${resource.apiVersion}/${resource.kind} ${fieldPath}`));
+  const apiReceiverExtraPaths = apiResources.flatMap((resource) => resource.extra
+    .map((fieldPath) => `${resource.apiVersion}/${resource.kind} ${fieldPath}`));
+  assert.equal(apiReceiverExtraPaths.length, 0,
+    `API_RECEIVER_PATH_OUTSIDE_AUTHORITY: ${apiReceiverExtraPaths.join(', ')}`);
+  if (!allowSemanticGaps && apiReceiverGaps.length) {
+    throw new Error(`API_RECEIVER_CONTRACT_MISSING: public API fields lack authored receiving contracts:\n${apiReceiverGaps.join('\n')}\nThis scope includes unused alternatives, metadata, status, list items and map values. The --allow-semantic-gaps maintenance mode records these gaps; it does not pass the gate. Contract presence still requires independent Source, Reader and Quality acceptance.`);
+  }
   assert.equal(unknownLeafRuntimeOwners, 0, 'quality gate: leaf runtime ownership must be resolved, not mass-unknown');
   assert.equal(unknownLeafConsumers, 0, 'quality gate: leaf consumers must resolve to an authority or an explicit not-applicable binding');
   assert.equal(unknownLeafRequired, 0, 'quality gate: leaf required state must be source-backed, external-schema, or explicitly not applicable');
@@ -2947,8 +2987,14 @@ function buildYamlInventory() {
       rule: 'all YAML below examples, gitops, my-values, and releases/values; chart root values.yaml and ci-values.yaml',
     },
     files,
+    apiResources,
     totals: {
       files: files.length,
+      apiResourceKinds: apiResources.length,
+      apiResourceSourceContexts: apiResources.reduce((sum, resource) => sum + resource.sourceContexts.length, 0),
+      apiSchemaBoundaries: apiResources.reduce((sum, resource) => sum + resource.rows.length, 0),
+      apiReceiverContractsPresent: apiResources.reduce((sum, resource) => sum + resource.rows.length - resource.missing.length, 0),
+      apiReceiverContractsMissing: apiReceiverGaps.length,
       documents: files.reduce((sum, file) => sum + file.documents.length, 0),
       fields: files.reduce((sum, file) => sum + file.documents.reduce((count, document) => count + document.fields.length, 0), 0),
       unresolvedSourceOwner: allFields.filter((field) => field.ownerComponent === 'unknown').length,
