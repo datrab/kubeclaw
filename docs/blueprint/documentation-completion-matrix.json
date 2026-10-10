@@ -16029,6 +16029,20 @@
         "scripts/tests/api-receiver-coverage.test.mjs": "269d18d2b88047fd0cfe9ea2aa5f84d2364548daf0d4440aa00b27cd7c7a78a0",
         "scripts/docs-kubernetes-network-receiver-contracts.mjs": "9d164f1eaefb15b9d5ba59d305059ac55d22f75b72ba07e1fc1848a87e022250"
       }
+    },
+    {
+      "command": "node --test scripts/tests/api-schema-boundaries.test.mjs scripts/tests/api-receiver-coverage.test.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "sessionId": 99768,
+      "testsPassed": 9,
+      "log": "/home/node/Documents/Codex/a98-evidence/recursive-schema-discovery-root/combined-tests-nested-pattern.log",
+      "logSha256": "bafdbad985851b2411bf433bd337c8523eb1af3caaff707a32d929885018e287",
+      "scope": "New negative control for structural patternProperties hidden in nested allOf under anyOf; original authority presence branches still pass. Mechanical coverage, no semantic or publication acceptance.",
+      "sourceDigests": {
+        "scripts/docs-api-schema-authorities.mjs": "2aebf110323807a988659d1ddfed47067eec6267d91d026efccfd9be2e8ce5c9",
+        "scripts/tests/api-schema-boundaries.test.mjs": "868067636f0104b4b4122d8f86da4569f877a6704de110c44b3d0e3fde66ba0f"
+      }
     }
   ],
   "reviewAssignments": [

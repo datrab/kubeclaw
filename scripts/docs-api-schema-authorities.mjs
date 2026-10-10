@@ -344,7 +344,8 @@ export function apiResourceFieldBoundaries(apiVersion, kind) {
   const boundaries = [];
   function hasStructure(branch) {
     if (!branch || typeof branch !== 'object' || Array.isArray(branch)) return false;
-    if (branch.$ref || branch.properties || branch.items || typeof branch.additionalProperties === 'object') return true;
+    if (branch.$ref || branch.properties || branch.patternProperties || branch.items
+      || typeof branch.additionalProperties === 'object') return true;
     return ['allOf', 'anyOf', 'oneOf'].some((key) => (branch[key] ?? []).some(hasStructure))
       || ['not', 'if', 'then', 'else'].some((key) => hasStructure(branch[key]))
       || ['dependentSchemas', 'dependencies'].some((key) => Object.values(branch[key] ?? {}).some(hasStructure));
@@ -368,13 +369,13 @@ export function apiResourceFieldBoundaries(apiVersion, kind) {
       ...['dependentSchemas', 'dependencies'].flatMap((key) => Object.values(node[key] ?? {}).map((branch) => [key, branch])),
     ];
     for (const [keyword, branch] of alternatives) {
-        if (!hasStructure(branch)) continue;
-        const presenceOnly = Object.keys(branch).every((key) => ['properties', 'required'].includes(key))
-          && Object.entries(branch.properties ?? {}).every(([name, child]) =>
-            Object.hasOwn(node.properties ?? {}, name) && Object.keys(child).length === 0)
-          && (branch.required ?? []).every((name) => Object.hasOwn(node.properties ?? {}, name));
-        assert(presenceOnly,
-          `API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath} ${keyword}`);
+      if (!hasStructure(branch)) continue;
+      const presenceOnly = Object.keys(branch).every((key) => ['properties', 'required'].includes(key))
+        && Object.entries(branch.properties ?? {}).every(([name, child]) =>
+          Object.hasOwn(node.properties ?? {}, name) && Object.keys(child).length === 0)
+        && (branch.required ?? []).every((name) => Object.hasOwn(node.properties ?? {}, name));
+      assert(presenceOnly,
+        `API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath} ${keyword}`);
     }
     boundaries.push({ apiVersion, kind, fieldPath, authority: authority.authority,
       authoritySha256: authority.authoritySha256, contract });
