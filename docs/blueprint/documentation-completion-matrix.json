@@ -15746,6 +15746,18 @@
         "A98-11"
       ],
       "description": "Root read full frozen9f completeSource report and verified74sealedartifacts seal126427acacaf63ec2dcd6fca1b647edd3d61edc79cc1515bdee454987a6d7f8f. Existing15paths/147cases/78captions bounded supported; completeFAIL F05inventory/generated and new F06ten-result perrule duplicates/earlyreturn, F07readyqueue aftercancel/unbounded sync checkerwait, F08discardedstandalonevariable diagnostics/nooutputtype enforcement/program init. Noinheritance of partialPASS as packageacceptance."
+    },
+    {
+      "id": "A98-CRONJOB-HISTORY-DEADLINE-CONSUMER-CORRECTION",
+      "state": "source-correction-awaiting-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Corrected successful/failed history-limit change outcomes: current observed finished Jobs are deleted oldest-by-start-time; cleanup precedes suspension; deletion errors do not roll back successful deletions. Corrected startingDeadlineSeconds change outcome: current missed-start eligibility, strict before-now check, no existing Job execution-deadline change. Exact pinned controller evidence attached to all three fields. Historical frozen F34/F35 remain FAIL; no independent acceptance claimed."
     }
   ],
   "checks": [
@@ -16614,6 +16626,11 @@
       "command": "WEBHOOK_SELECTED_EVIDENCE=/home/node/Documents/Codex/a98-evidence/product-output-default-discovery-correction-writer node --test scripts/tests/webhook-selected-receiver.test.mjs",
       "state": "terminal-pass",
       "scope": "7 local tests, zero skipped, current authentic selected paths and schema authority; not independent semantic/live/global acceptance"
+    },
+    {
+      "command": "KUBECLAW_DOCS_KUBERNETES_SOURCE_DIR=/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/cronjob-deferred-child-defaults.test.mjs scripts/tests/cronjob-selected-claims.test.mjs",
+      "state": "terminal-pass",
+      "scope": "12 passed, zero failures, zero skipped; bounded workload/CronJob checks and authenticated original defaulting/child-creation source checks. Root separately read pinned CronJob controller205-216,499-563,682-760 and verified SHA25602d99bfe1d6dcddcb37c5e2a68173405db6b5f00644786d8dbc15b8576086b06. Not independent acceptance or live execution."
     }
   ],
   "reviewAssignments": [
