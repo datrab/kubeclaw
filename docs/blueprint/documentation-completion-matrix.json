@@ -15360,7 +15360,7 @@
     },
     {
       "id": "A98-ADMISSION-RECEIVER-CORRECTION3",
-      "state": "author-correction-in-progress",
+      "state": "corrected-pending-new-independent-review",
       "catalogueIds": [
         "CFG-009"
       ],
@@ -15368,8 +15368,9 @@
         "A98-10",
         "A98-11"
       ],
-      "description": "CompletefreshSource AF01path helper9records, AF02missing-policycontinue2, AF03namespace/objectconjunction2, AF04literalsets/wildcardhelper56, AF05actual lazyMap4. Author reading actual sources and correcting all5groups. NoSource approval.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/network-admission-source-final-candidate-fresh/findings.json"
+      "description": "Author corrected all5groups across132records751cases. Exact pathwrapper61–68, skipaction320, selectorcall75, enums/wildcardbody and actual lazyMap implementation. Non-evidenceproperties/cases preserved. Final145f3e02 candidate under new fullfreshSource review; no approval.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/kubernetes-admission-receiver-writer/correction-3/report.md",
+      "evidenceSha256": "e8adb6d237da67206933d78b36e6837da01a42cae2a12f88f08e0bd3a6080f59"
     }
   ],
   "checks": [
@@ -16081,6 +16082,17 @@
       "scope": "122records707cases allnon-evidence unchanged vs9d;94immutable ranges bounded against verified primary hashes. Coverageguard validates cases/evidence, no extra paths; missing metadata explicitly remains. Not Source/Reader/Quality/publication acceptance.",
       "report": "/home/node/Documents/Codex/a98-evidence/network-receiver-correction4-root/checks.json",
       "reportSha256": "d6918d8027f08facd597104d6f4f88fbfcbcc3a249b785781ac544bdf6b68d5e"
+    },
+    {
+      "command": "admission correction3 syntax/export/primary/range checks",
+      "state": "author-reported-terminal-pass",
+      "exitCode": 0,
+      "sourceDigests": {
+        "scripts/docs-kubernetes-admission-receiver-contracts.mjs": "145f3e02b3a3d3c2f0d690934cb3611d5d12a7438450da3f6a944ec4b1097571"
+      },
+      "scope": "132records751cases allnon-evidence preserved;191distinctranges59primaryhashes,95appearances29workitems identities unchanged. Root read full release report and verified exactsubjectSHA; freshSource independentreverification ongoing.",
+      "report": "/home/node/Documents/Codex/a98-evidence/kubernetes-admission-receiver-writer/correction-3/report.md",
+      "reportSha256": "e8adb6d237da67206933d78b36e6837da01a42cae2a12f88f08e0bd3a6080f59"
     }
   ],
   "reviewAssignments": [
@@ -17082,13 +17094,28 @@
       "reportSha256": "84e702be686cbe36ed628a54ee8725397dfa826f04a5b4f69f705257e3754a5d",
       "verifiedArtifacts": 5852,
       "artifactManifestSha256": "f58b53d84c2a9c218762c37c9278dfe46e79ae977f24e1cfbf342263817015c4"
+    },
+    {
+      "agent": "/root/a98_network_admission_source_corrected_complete_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "running",
+      "baseRevision": "2efe7bb3",
+      "candidateSha256": {
+        "network": "3f5470835b028646cbf9d6b1101ff8aad499b6504b7e39bd0d07e00154cadf85",
+        "admission": "145f3e02b3a3d3c2f0d690934cb3611d5d12a7438450da3f6a944ec4b1097571"
+      },
+      "scope": "NewcompleteNetwork122/707/175/69 plusAdmission132/751/95/29 and shared schema traversal/coverage helpers; whole scopes, no inheritedPASS, no Reader/Quality/globalapproval."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 receiver authoring and complete fresh Source reviews. Network/admission exact proof corrections; Deployment15findings under correction; Argo1900owned boundaries not yet semantically complete.",
+    "stage": "Released all8network/admissionSource evidence corrections; new fullfreshSource including common helpers underway. Deployment15findings and Argo fullperfieldreceivers remain under authoring. No AP09.8 closure.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Commit checked released network correction4 and matrix; Admission author completing five proof gaps, Deployment fifteen Source findings and Argo fullperfieldreceivers remain in parallel. NewfreshcompleteSource onreleasedimmutablecandidate, then integrate Source/gen/fullgates/Reader/Quality/Astra.",
+    "next": "Complete newwholeScopeSource review, fix remaining materialfindings with freshfullreview. Integrate allreleasedreceiverregistries plus core/metadata/status into schema-driven inventory; Source/gen/fullcurrentgates; independentReader/Quality/Astra. No massparity before AP09.8 acceptance.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -17103,7 +17130,7 @@
     "agents": [
       "/root/a98_kubernetes_apps_receiver_writer",
       "/root/a98_argo_receiver_writer",
-      "/root/a98_network_admission_source_final_candidate_fresh"
+      "/root/a98_network_admission_source_corrected_complete_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
