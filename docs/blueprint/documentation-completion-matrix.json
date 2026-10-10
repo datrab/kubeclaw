@@ -15190,7 +15190,7 @@
     },
     {
       "id": "A98-READER-HOST-LIFECYCLE",
-      "state": "author-correction-in-progress",
+      "state": "author-corrected-pending-independent-source-reader-quality",
       "description": "Separate OpenClaw/Codex host lifecycle lacks exact versioned install/activate/observe/disable/remove route or precise supported operation boundary. Nova lifecycle must explicitly scope its applicable registrations.",
       "catalogueIds": [
         "OPL-003",
@@ -15201,7 +15201,13 @@
         "A98-13"
       ],
       "reportedBy": "/root/a98_operator_reader_current_fresh",
-      "report": "/home/node/Documents/Codex/a98-evidence/operator-reader-current-fresh/report.md"
+      "report": "/home/node/Documents/Codex/a98-evidence/operator-reader-current-fresh/report.md",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/host-lifecycle-writer/report.md",
+      "files": [
+        "docs/site/extend/testing.md",
+        "docs/site/use/plugins.md"
+      ],
+      "validation": "28 fixed source links, Bash syntax and safe recording shell cases, original Prism registration1 and observer4 tests PASS. Actual host invocation absent; adapter fixture blocked BusyBox flock GNU --timeout."
     },
     {
       "id": "A98-READER-SECRET-BOUND-CONTEXT",
@@ -15217,6 +15223,19 @@
       ],
       "reportedBy": "/root/a98_operator_reader_current_fresh",
       "report": "/home/node/Documents/Codex/a98-evidence/operator-reader-current-fresh/report.md"
+    },
+    {
+      "id": "A98-KUBERNETES-RECURSIVE-RECEIVER-PROOF",
+      "state": "open",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Independent exhaustive Source review yields700named missing receiver/case proof workitems and21findings16FAIL5UNPROVEN. Concrete family corrections do not satisfy whole recursive receiver contract; preserve every exposed optional field.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/kubernetes-api-contexts-source-fresh/semantic-context-ledger.json"
     }
   ],
   "checks": [
@@ -15825,6 +15844,13 @@
       "state": "terminal-pass",
       "scope": "Eight offline cases: correct/wrong context, default/explicit Tailscale namespace and name, both Secret examples. No live validation. Earlier flawed shell-function harness called real client through env; read Forbidden, no mutation; log retained.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/secrets-bound-shell-root/results.json"
+    },
+    {
+      "command": "npm run docs:publication:check",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "log": "/home/node/Documents/Codex/a98-evidence/host-lifecycle-root-publication.log",
+      "scope": "Current authored host corrections and f68 generated outputs,147pages51plugins. Not final coherent generated revision or independent contents acceptance."
     }
   ],
   "reviewAssignments": [
@@ -16617,6 +16643,34 @@
         "docs/site/extend/testing.md"
       ],
       "scopeLimit": "OPL-003/004 A98-02/13 separate host lifecycle. Producer proposal only: root exclusively owns scripts/docs-generate-core.mjs."
+    },
+    {
+      "agent": "/root/a98_argo_cilium_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "reviewedRevision": "f68a7294abf0928c1aabf290c6a7e486c651a808",
+      "scopeLimit": "All77baseline Argo/Cilium APIcollectioncontexts, recursive exposed boundaries/scalars/authored effective routes; expands if new publiccontexts found. Frozen f68 Source and generated snapshot; no later mutable acceptance."
+    },
+    {
+      "agent": "/root/a98_kubernetes_api_contexts_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "completed-fail",
+      "reviewedRevision": "f68a7294abf0928c1aabf290c6a7e486c651a808",
+      "scopeLimit": "Full93contexts252instances1142exposedboundaries;42FAIL51UNPROVEN contexts,700namedUNPROVEN boundary workitems. Schema1764comparisonPASS andMarkdown1394projectionPASS distinct. No wholeCFG009/A98acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/kubernetes-api-contexts-source-fresh/report.md",
+      "manifestSha256": "dcb13ad63c893cbb037d49c274f3e3c49343b5474683db5f3f3d740674bbc1d9",
+      "integrity": {
+        "checkedArtifacts": 104,
+        "mismatches": 0
+      }
     }
   ],
   "continuation": {

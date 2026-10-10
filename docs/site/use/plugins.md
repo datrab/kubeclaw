@@ -170,6 +170,20 @@ dependency exists.
 ## Canonical Plugin Lifecycle Procedure
 <!-- operator-task: plugin-lifecycle -->
 
+This procedure operates Nova `pipeline-plugin-v2` registrations selected through
+`pipeline-platform.v2`. It does not install or activate the OpenClaw extensions
+`kubeclaw-agent-observer` and `kubeclaw-prism`, or the Codex plugin `kubeclaw-ops`.
+Use the [packaged OpenClaw host route](../extend/testing.md#operate-the-packaged-openclaw-hosts)
+and the [Codex host lifecycle boundary](../extend/testing.md#codex-host-lifecycle-boundary)
+for their version, deployment controls, observations, disable/removal limits,
+owners, and safe stops. Nova compile/start/audit cannot prove their host lifecycle.
+
+`kubeclaw.openclaw-agent-events:source` belongs to this Nova procedure, but also
+requires an actual compatible OpenClaw SDK event source in the Nova process.
+Apply its [SDK readiness and host-event proof boundary](../extend/testing.md#nova-adapter-with-an-openclaw-sdk-dependency)
+before claiming activation. Package discovery, injected SDK tests, and provider
+selection do not prove configured real-host subscription.
+
 ### Supported start state, version, location, and authority
 
 Start with a clean checkout at the exact source commit, an existing
