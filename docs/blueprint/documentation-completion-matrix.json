@@ -14605,6 +14605,122 @@
       "author": "/root",
       "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-corrected-fresh/report.md",
       "reportSha256": "4ac728bdb289345d20c64cee84d5d254190558a88bec852dd196c76d1f371b77"
+    },
+    {
+      "id": "A98-API-COLLECTION-GENERIC-SEMANTICS",
+      "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-source-fresh/report.md",
+      "reportSha256": "54b86f1856737060f77b566d5334551f06d28a50d0d6b484d36cdfcb86d406d6",
+      "reportedBy": "/root/a98_helm_collection_source_fresh",
+      "state": "open-author-assigned",
+      "pages": [
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-api-schema-authorities.mjs"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Generic fallback treats 849 API collections across 13 kinds as structural without exact operational empty/omitted contracts. NetworkPolicy from/ports empty or missing allows all peers/ports. Genuine envelopes require named child contracts.",
+      "assignedAuthor": "/root/a98_api_collection_writer"
+    },
+    {
+      "id": "A98-MANIFEST-HELM-PRECEDENCE-MISTAGS",
+      "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-source-fresh/report.md",
+      "reportSha256": "54b86f1856737060f77b566d5334551f06d28a50d0d6b484d36cdfcb86d406d6",
+      "reportedBy": "/root/a98_helm_collection_source_fresh",
+      "state": "open-author-assigned",
+      "pages": [
+        "scripts/docs-configuration-inventory.mjs"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-11"
+      ],
+      "description": "104 API collections in Cilium policy and registry mirror manifests receive Helm values precedence despite actual kubectl apply consumers. Determine genuine receiving class and reject incompatible claims.",
+      "assignedAuthor": "/root/a98_api_collection_writer"
+    },
+    {
+      "id": "A98-BUSTER-PREFIX-MULTI-RECEIVER-EMPTY",
+      "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-source-fresh/report.md",
+      "reportSha256": "54b86f1856737060f77b566d5334551f06d28a50d0d6b484d36cdfcb86d406d6",
+      "reportedBy": "/root/a98_helm_collection_source_fresh",
+      "state": "open-author-assigned",
+      "pages": [
+        "scripts/generate-local-helm-authorities.mjs",
+        "scripts/docs-local-helm-field-authorities.json"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-11"
+      ],
+      "description": "Controller fallback test does not apply to namespace fence [].exists or CRD enum []; null does not render a supported common fallback. Document all actual receivers and safe nonempty recovery.",
+      "assignedAuthor": "/root/a98_api_collection_writer"
+    },
+    {
+      "id": "A98-PRISM-DIAGNOSIS-UNCERTAINTY",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-quality-current-fresh/report.md",
+      "reportSha256": "868bc58be08d53e7786236dc1a682139ad00e3cac8fe80197d9fe4e2742512b3",
+      "reportedBy": "/root/a98_prism_quality_current_fresh",
+      "state": "open-author-assigned",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-06",
+        "A98-13"
+      ],
+      "description": "Diagnosis map revision conflict and generic Nova resume rejection skip original outcome/wait audit and uncertainty stop requirements.",
+      "assignedAuthor": "/root/a98_prism_diagnosis_quality_writer"
+    },
+    {
+      "id": "A98-PRISM-OPERATIONAL-TERMS",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-quality-current-fresh/report.md",
+      "reportSha256": "868bc58be08d53e7786236dc1a682139ad00e3cac8fe80197d9fe4e2742512b3",
+      "reportedBy": "/root/a98_prism_quality_current_fresh",
+      "state": "open-author-assigned",
+      "pages": [
+        "docs/site/use/prism-studio.md",
+        "docs/site/reference/glossary.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Necessary HMAC, nonce, CSRF, job fence and ARIA terms need plain definitions at first use and glossary entries.",
+      "assignedAuthor": "/root/a98_prism_diagnosis_quality_writer"
+    },
+    {
+      "id": "A98-PRISM-EXECUTABLE-WORKER-DIAGNOSIS",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-quality-current-fresh/report.md",
+      "reportSha256": "868bc58be08d53e7786236dc1a682139ad00e3cac8fe80197d9fe4e2742512b3",
+      "reportedBy": "/root/a98_prism_quality_current_fresh",
+      "state": "open-author-assigned",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-06",
+        "A98-13"
+      ],
+      "description": "Worker diagnosis requires bound read-only endpoint/status/JSON and logs commands, exact error branches, permissions, safe stop/owner for unsupported repair, retry/retention/cleanup.",
+      "assignedAuthor": "/root/a98_prism_diagnosis_quality_writer"
     }
   ],
   "checks": [
@@ -15588,12 +15704,20 @@
       "forkTurns": "none",
       "freshContext": true,
       "readOnly": true,
-      "state": "running",
+      "state": "complete-fail-released",
       "scope": [
         "Helm and API collection semantics, complete affected generator path"
       ],
       "revision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
-      "scopeLimit": "Assigned partition only; no whole gate or package acceptance."
+      "scopeLimit": "Assigned partition only; no whole gate or package acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-source-fresh/report.md",
+      "reportSha256": "54b86f1856737060f77b566d5334551f06d28a50d0d6b484d36cdfcb86d406d6",
+      "partitionVerdicts": {
+        "CFG-009": "FAIL",
+        "A98-10": "FAIL",
+        "A98-11": "FAIL",
+        "A98-14": "UNPROVEN"
+      }
     },
     {
       "agent": "/root/a98_prism_quality_current_fresh",
@@ -15603,12 +15727,22 @@
       "forkTurns": "none",
       "freshContext": true,
       "readOnly": true,
-      "state": "running",
+      "state": "complete-fail-released",
       "scope": [
         "Complete Prism canonical page and relevant linked navigation"
       ],
       "revision": "82049ca0c5b02c264805205220cdcc035641f955",
-      "scopeLimit": "Assigned partition only; no whole gate or package acceptance."
+      "scopeLimit": "Assigned partition only; no whole gate or package acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-quality-current-fresh/report.md",
+      "reportSha256": "868bc58be08d53e7786236dc1a682139ad00e3cac8fe80197d9fe4e2742512b3",
+      "partitionVerdicts": {
+        "OPR-010": "FAIL",
+        "A98-02": "FAIL",
+        "A98-04": "PASS",
+        "A98-06": "FAIL",
+        "A98-12": "PASS",
+        "A98-13": "FAIL"
+      }
     },
     {
       "agent": "/root/a98_precedence_source_deadlines_fresh",
@@ -15635,7 +15769,7 @@
     "stage": "Six collection/diagnostic source files released and checked; commit source then immutable original mutation suite. Canonical precedence/impact candidates remain frozen for new Source review, which is investigating readiness cleanup bounds.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "New full affected precedence Source review; Helm collection Source report and correction; Prism Quality review. Observe same full mutation handle. Commit sources before complete shared generated refresh; final individual reviews/gates and Astra still required. All AP01\u2013AP11 scope retained.",
+    "next": "Parallel API collection and Prism diagnosis authors correct exact independent failures; precedence fresh Source running with pair frozen. Observe SAME63228 immutable d57 mutation until terminal. After author releases source commit, separate complete generated outputs and required NEW fresh Source/Reader/Quality reviews; allAP/global scope retained.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -15977,7 +16111,44 @@
       "reportSha256": "4ac728bdb289345d20c64cee84d5d254190558a88bec852dd196c76d1f371b77",
       "verdict": "FAIL-two-material-findings",
       "correction": "Root corrected phase-specific deadlines and authored webhook removal; new full independent Source review required."
-    }
+    },
+    "helmCollectionSourceCompleted": {
+      "report": "/home/node/Documents/Codex/a98-evidence/helm-collection-source-fresh/report.md",
+      "reportSha256": "54b86f1856737060f77b566d5334551f06d28a50d0d6b484d36cdfcb86d406d6",
+      "revision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
+      "verdict": "FAIL-S1-S2-S3",
+      "scope": "Affected source partitions only; all 849 generic API groups and 104 manifest mistags recorded; no exhaustive positive semantic acceptance or original full mutation PASS."
+    },
+    "prismQualityCompleted": {
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-quality-current-fresh/report.md",
+      "reportSha256": "868bc58be08d53e7786236dc1a682139ad00e3cac8fe80197d9fe4e2742512b3",
+      "revision": "82049ca0c5b02c264805205220cdcc035641f955",
+      "verdict": "FAIL-Q1-Q2-Q3",
+      "scope": "Prism QUALITY only; A98-04/12 partitions PASS,02/06/13 and OPR010 FAIL."
+    },
+    "parallelAuthorAssignments": [
+      {
+        "agent": "/root/a98_api_collection_writer",
+        "files": [
+          "scripts/docs-configuration-inventory.mjs",
+          "scripts/docs-generate.mjs",
+          "scripts/docs-local-helm-authorities.mjs",
+          "scripts/docs-local-helm-field-authorities.json",
+          "scripts/docs-yaml-field-authorities.mjs",
+          "scripts/generate-local-helm-authorities.mjs",
+          "scripts/docs-api-schema-authorities.mjs"
+        ],
+        "scope": "Full affected collection qualification, actual receiver precedence, all Buster prefix receivers. Author never reviewer."
+      },
+      {
+        "agent": "/root/a98_prism_diagnosis_quality_writer",
+        "files": [
+          "docs/site/use/prism-studio.md",
+          "docs/site/reference/glossary.md"
+        ],
+        "scope": "Whole affected quality correction; new full independent reviews after release."
+      }
+    ]
   },
   "productBoundaries": [
     {
