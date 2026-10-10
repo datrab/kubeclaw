@@ -1,5 +1,6 @@
 /** Selected batch/apps/policy workload boundaries. Publication still needs independent review. */
 import {receiverContracts as podChildren} from './docs-kubernetes-apps-receiver-contracts.mjs';
+import {yamlFieldPathTokens} from './yaml-field-path.mjs';
 import {receiverContracts as core} from './docs-kubernetes-core-receiver-contracts.mjs';
 const revision='66452049f3d692768c39c797b21b793dce80314e';
 const source=(file,lines,claim)=>({url:`https://github.com/kubernetes/kubernetes/blob/${revision}/${file}#L${String(lines).replace('-','-L')}`,claim});
@@ -57,7 +58,7 @@ for(const [field,om,empty,invalid] of [
 ])add('CronJob',`$.spec.${field}`,`Set CronJob ${field}.`,om,empty,invalid,[bd('76-89','CronJob defaults concurrency/suspend/history.'),bv('782-883','CronJob validates schedule, deadlines, zone, history and concurrency.')]);
 for(const [field,om,empty,invalid] of [
  ['replicas','Nil defaults to 1.','Zero is retained and scales desired Pods to zero.','Negative values are rejected.'],
- ['revisionHistoryLimit','Nil defaults to 10.','Zero is retained.','Negative values are rejected.'],
+ ['revisionHistoryLimit','Nil defaults to 10.','Zero is retained.','Negative values are accepted with a warning and retain all historical revisions.'],
  ['minReadySeconds','The scalar remains zero.','Zero requires no additional stable-ready interval.','Negative values are rejected.'],
  ['serviceName','The string remains empty; creation validation does not require nonempty serviceName.','Empty is API-valid but supplies no selected service subdomain.','A nonempty invalid DNS label is rejected on creation; changing serviceName is forbidden.'],
  ['podManagementPolicy','Empty defaults to OrderedReady.','Empty follows the same default.','Only OrderedReady/Parallel are accepted; policy is immutable.'],
@@ -70,7 +71,7 @@ for(const [field,om,empty,invalid] of [
  ['persistentVolumeClaimRetentionPolicy.whenScaled','Empty defaults to Retain.','Empty follows the same default.','Only Retain/Delete are accepted.'],
  ['ordinals','Nil uses ordinal start zero.','Empty object has start zero.','Negative start is rejected.'],
  ['ordinals.start','Absent scalar remains zero.','Zero is retained.','Negative start is rejected.']
-])add('StatefulSet',`$.spec.${field}`,`Configure StatefulSet ${field}.`,om,empty,invalid,[ad('101-147','StatefulSet defaults differ from Deployment rollout defaults.'),av('127-268','StatefulSet validates spec and limits mutable fields.'),source('pkg/controller/statefulset/stateful_set_utils.go','88-120','StatefulSet start ordinal defaults to zero.')],{changeImpact:['serviceName','podManagementPolicy'].includes(field)?'Changing this stored StatefulSet spec field is forbidden. Recreating a set changes its API identity; inspect existing ordinal Pods, PVCs and owners before any replacement.':stateChange});
+])add('StatefulSet',`$.spec.${field}`,`Configure StatefulSet ${field}.`,om,empty,invalid,[ad('101-147','StatefulSet defaults differ from Deployment rollout defaults.'),av('127-268','StatefulSet validates spec and limits mutable fields.'),...(field==='revisionHistoryLimit'?[source('pkg/registry/apps/statefulset/strategy.go','143-145','Negative revisionHistoryLimit is accepted with a warning and retains all historical revisions.'),source('pkg/controller/statefulset/stateful_set_control.go','173-216','History pruning keeps live revisions and returns without deletion for a negative limit; nonnegative limits remove excess non-live revisions.')]:[]),source('pkg/controller/statefulset/stateful_set_utils.go','88-120','StatefulSet start ordinal defaults to zero.')],{changeImpact:field==='revisionHistoryLimit'?'Changing revisionHistoryLimit changes later pruning of non-live ControllerRevisions, not the template in existing Pods. The controller keeps current, update and Pod-referenced live revisions; a negative limit returns without deleting history, while zero can remove all non-live history. Lowering the limit can permanently remove old rollback revisions. Inspect retained revisions before a change and read controller errors after an uncertain request; increasing the limit cannot recover already deleted revisions.':['serviceName','podManagementPolicy'].includes(field)?'Changing this stored StatefulSet spec field is forbidden. Recreating a set changes its API identity; inspect existing ordinal Pods, PVCs and owners before any replacement.':stateChange});
 for(const path of ['$.spec.selector','$.spec.selector.matchLabels','$.spec.selector.matchLabels[<exact-key>]'])add('StatefulSet',path,'Select this set’s Pods.','Missing selector is rejected; an omitted equality key adds no equality requirement.','The complete selector cannot be empty. A label equality value can be empty when its key is valid.','Invalid labels, empty selector or template mismatch reject creation. Selector changes are forbidden.',[av('174-218','StatefulSet requires valid nonempty selector matching template.'),av('238-268','Selector is outside mutable-field allowlist.')],{changeImpact:'Changing the StatefulSet selector is forbidden.'});
 add('StatefulSet','$.spec.template','Define ordinal Pods.','The zero template lacks required containers and selector-matching labels.','Empty template fails these checks.','Pod template must match selector; restart must Always and activeDeadlineSeconds must be absent.',[av('58-79','StatefulSet validates selector match, Pod template and Always.'),av('193-223','Controller overwrites hostname/subdomain and installs template PVC volumes for validation.')]);
 add('StatefulSet','$.spec.template.spec','Set spec copied into ordinal Pods.','PodSpec defaults supply restart Always, DNS ClusterFirst, grace 30 and scheduler; containers remain required.','Empty still lacks containers.','Invalid PodSpec, non-Always restart or nonnil activeDeadlineSeconds rejects the set.',[source('pkg/apis/core/v1/defaults.go','211-232','PodSpec defaults selected omissions.'),av('58-79','StatefulSet requires Always.'),av('218-223','StatefulSet forbids template activeDeadlineSeconds.')]);
@@ -256,4 +257,347 @@ for(const kind of ['Job','CronJob','StatefulSet']){
 }
 for(const path of ['$.spec.volumeClaimTemplates[].metadata','$.spec.volumeClaimTemplates[].metadata.name','$.spec.volumeClaimTemplates[].metadata.annotations','$.spec.volumeClaimTemplates[].metadata.annotations[<exact-key>]'])add('StatefulSet',path,'Supply metadata for a generated ordinal PVC.','No selected name/annotation is supplied by this boundary.','Empty claim template name cannot establish the intended volume/claim identity.','Template spec validation is separate from later ordinary PVC metadata validation; generated PVC create can reject metadata.',[av('117-124','StatefulSet validates PVC template specs.'),source('pkg/controller/statefulset/stateful_set_utils.go','386-407','PVC deep copy preserves template metadata, assigns claim name/namespace and selector labels.')],{changeImpact:'PVC template metadata is within immutable volumeClaimTemplates. Generated claims have their own API identity; annotations copied to them are not a Helm/Argo operation on the StatefulSet.'});
 for(const kind of ['Job','CronJob'])add(kind,kind==='Job'?'$.spec.podReplacementPolicy':'$.spec.jobTemplate.spec.podReplacementPolicy','Set when replacement Job Pods may be created.','With JobPodReplacementPolicy enabled, child Job defaulting selects TerminatingOrFailed without podFailurePolicy and Failed with it. CronJob nested defaulting does not run SetDefaults_Job.','An explicit empty policy is unsupported.','Only Failed/TerminatingOrFailed are accepted; podFailurePolicy requires Failed.',[bd('60-69','Job replacement default depends on podFailurePolicy and the gate.'),bv('229-274','Job validates replacement policy and related conditions.')]);
+
+
+// Actual constructor/transform/external-output expansion. Only the selected paths
+// below are appended; this is not a generic Kubernetes subtree provider.
+const expandedPaths = {
+  "StatefulSet": [
+    "$.spec.template.metadata.name",
+    "$.spec.template.spec.affinity.podAffinity",
+    "$.spec.template.spec.affinity.podAntiAffinity",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[]",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm.labelSelector",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm.labelSelector.matchLabels",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm.labelSelector.matchLabels[<exact-key>]",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm.topologyKey",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].weight",
+    "$.spec.template.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution",
+    "$.spec.template.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[]",
+    "$.spec.template.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[].labelSelector",
+    "$.spec.template.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[].labelSelector.matchLabels",
+    "$.spec.template.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[].labelSelector.matchLabels[<exact-key>]",
+    "$.spec.template.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[].topologyKey",
+    "$.spec.template.spec.containers[].env[].valueFrom.configMapKeyRef",
+    "$.spec.template.spec.containers[].env[].valueFrom.configMapKeyRef.key",
+    "$.spec.template.spec.containers[].env[].valueFrom.configMapKeyRef.name",
+    "$.spec.template.spec.containers[].env[].valueFrom.configMapKeyRef.optional",
+    "$.spec.template.spec.containers[].env[].valueFrom.fieldRef",
+    "$.spec.template.spec.containers[].env[].valueFrom.fieldRef.fieldPath",
+    "$.spec.template.spec.containers[].livenessProbe.httpGet",
+    "$.spec.template.spec.containers[].livenessProbe.httpGet.path",
+    "$.spec.template.spec.containers[].livenessProbe.httpGet.port",
+    "$.spec.template.spec.containers[].ports",
+    "$.spec.template.spec.containers[].ports[]",
+    "$.spec.template.spec.containers[].ports[].containerPort",
+    "$.spec.template.spec.containers[].ports[].name",
+    "$.spec.template.spec.containers[].ports[].protocol",
+    "$.spec.template.spec.containers[].readinessProbe.httpGet",
+    "$.spec.template.spec.containers[].readinessProbe.httpGet.path",
+    "$.spec.template.spec.containers[].readinessProbe.httpGet.port",
+    "$.spec.template.spec.containers[].securityContext.privileged",
+    "$.spec.template.spec.containers[].securityContext.seLinuxOptions",
+    "$.spec.template.spec.containers[].workingDir",
+    "$.spec.template.spec.enableServiceLinks",
+    "$.spec.template.spec.hostIPC",
+    "$.spec.template.spec.hostNetwork",
+    "$.spec.template.spec.nodeSelector",
+    "$.spec.template.spec.nodeSelector[<exact-key>]",
+    "$.spec.template.spec.priorityClassName",
+    "$.spec.template.spec.securityContext.supplementalGroups",
+    "$.spec.template.spec.securityContext.sysctls",
+    "$.spec.template.spec.shareProcessNamespace",
+    "$.spec.template.spec.volumes[].configMap.items",
+    "$.spec.template.spec.volumes[].configMap.items[]",
+    "$.spec.template.spec.volumes[].configMap.items[].key",
+    "$.spec.template.spec.volumes[].configMap.items[].path",
+    "$.spec.template.spec.volumes[].configMap.optional",
+    "$.spec.template.spec.volumes[].emptyDir.medium",
+    "$.spec.template.spec.volumes[].secret.items",
+    "$.spec.template.spec.volumes[].secret.items[]",
+    "$.spec.template.spec.volumes[].secret.items[].key",
+    "$.spec.template.spec.volumes[].secret.items[].path",
+    "$.spec.template.spec.volumes[].secret.optional",
+    "$.spec.updateStrategy.rollingUpdate.maxUnavailable",
+    "$.spec.volumeClaimTemplates[].apiVersion",
+    "$.spec.volumeClaimTemplates[].kind",
+    "$.spec.volumeClaimTemplates[].metadata.labels",
+    "$.spec.volumeClaimTemplates[].metadata.labels[<exact-key>]"
+  ],
+  "PodDisruptionBudget": [
+    "$.spec.maxUnavailable"
+  ],
+  "Job": [
+    "$.spec.template.metadata.name",
+    "$.spec.template.spec.affinity.podAntiAffinity",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[]",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm.labelSelector",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm.labelSelector.matchLabels",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm.labelSelector.matchLabels[<exact-key>]",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].podAffinityTerm.topologyKey",
+    "$.spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[].weight",
+    "$.spec.template.spec.containers[].env[].valueFrom.configMapKeyRef",
+    "$.spec.template.spec.containers[].env[].valueFrom.configMapKeyRef.key",
+    "$.spec.template.spec.containers[].env[].valueFrom.configMapKeyRef.name",
+    "$.spec.template.spec.containers[].livenessProbe.httpGet",
+    "$.spec.template.spec.containers[].livenessProbe.httpGet.path",
+    "$.spec.template.spec.containers[].livenessProbe.httpGet.port",
+    "$.spec.template.spec.containers[].ports",
+    "$.spec.template.spec.containers[].ports[]",
+    "$.spec.template.spec.containers[].ports[].containerPort",
+    "$.spec.template.spec.containers[].readinessProbe.httpGet",
+    "$.spec.template.spec.containers[].readinessProbe.httpGet.path",
+    "$.spec.template.spec.containers[].readinessProbe.httpGet.port",
+    "$.spec.template.spec.initContainers[].args",
+    "$.spec.template.spec.initContainers[].args[]",
+    "$.spec.template.spec.initContainers[].restartPolicy",
+    "$.spec.template.spec.initContainers[].securityContext.runAsGroup",
+    "$.spec.template.spec.initContainers[].securityContext.runAsNonRoot",
+    "$.spec.template.spec.initContainers[].securityContext.runAsUser",
+    "$.spec.template.spec.initContainers[].volumeMounts[].readOnly",
+    "$.spec.template.spec.nodeSelector",
+    "$.spec.template.spec.nodeSelector[<exact-key>]",
+    "$.spec.template.spec.volumes[].csi",
+    "$.spec.template.spec.volumes[].csi.driver",
+    "$.spec.template.spec.volumes[].csi.readOnly",
+    "$.spec.ttlSecondsAfterFinished"
+  ],
+  "Pod": [
+    "$.spec",
+    "$.spec.automountServiceAccountToken",
+    "$.spec.containers",
+    "$.spec.containers[]",
+    "$.spec.containers[].args",
+    "$.spec.containers[].args[]",
+    "$.spec.containers[].command",
+    "$.spec.containers[].command[]",
+    "$.spec.containers[].env",
+    "$.spec.containers[].env[]",
+    "$.spec.containers[].env[].name",
+    "$.spec.containers[].env[].value",
+    "$.spec.containers[].image",
+    "$.spec.containers[].imagePullPolicy",
+    "$.spec.containers[].name",
+    "$.spec.containers[].readinessProbe",
+    "$.spec.containers[].readinessProbe.exec",
+    "$.spec.containers[].readinessProbe.exec.command",
+    "$.spec.containers[].readinessProbe.exec.command[]",
+    "$.spec.containers[].readinessProbe.failureThreshold",
+    "$.spec.containers[].readinessProbe.initialDelaySeconds",
+    "$.spec.containers[].readinessProbe.periodSeconds",
+    "$.spec.containers[].readinessProbe.timeoutSeconds",
+    "$.spec.containers[].securityContext",
+    "$.spec.containers[].securityContext.allowPrivilegeEscalation",
+    "$.spec.containers[].securityContext.appArmorProfile",
+    "$.spec.containers[].securityContext.appArmorProfile.type",
+    "$.spec.containers[].securityContext.capabilities",
+    "$.spec.containers[].securityContext.capabilities.add",
+    "$.spec.containers[].securityContext.capabilities.add[]",
+    "$.spec.containers[].securityContext.capabilities.drop",
+    "$.spec.containers[].securityContext.capabilities.drop[]",
+    "$.spec.containers[].securityContext.privileged",
+    "$.spec.containers[].volumeMounts",
+    "$.spec.containers[].volumeMounts[]",
+    "$.spec.containers[].volumeMounts[].mountPath",
+    "$.spec.containers[].volumeMounts[].name",
+    "$.spec.dnsPolicy",
+    "$.spec.imagePullSecrets",
+    "$.spec.imagePullSecrets[]",
+    "$.spec.imagePullSecrets[].name",
+    "$.spec.restartPolicy",
+    "$.spec.schedulerName",
+    "$.spec.securityContext",
+    "$.spec.securityContext.fsGroup",
+    "$.spec.securityContext.runAsGroup",
+    "$.spec.securityContext.runAsNonRoot",
+    "$.spec.securityContext.runAsUser",
+    "$.spec.securityContext.seccompProfile",
+    "$.spec.securityContext.seccompProfile.type",
+    "$.spec.terminationGracePeriodSeconds",
+    "$.spec.volumes",
+    "$.spec.volumes[]",
+    "$.spec.volumes[].emptyDir",
+    "$.spec.volumes[].name"
+  ]
+};
+const workloadVersions={Job:'batch/v1',CronJob:'batch/v1',StatefulSet:'apps/v1',PodDisruptionBudget:'policy/v1',Pod:'v1'};
+export const delegatedRootContracts=Object.freeze({TypeMeta:'docs-kubernetes-envelope-receiver-contracts.mjs',ObjectMeta:'docs-kubernetes-metadata-receiver-contracts.mjs'});
+const isDelegated=path=>/^\$\.(?:metadata(?:\.|\[|$)|apiVersion$|kind$)/.test(path);
+const pathMatches=(pattern,exact)=>{
+ const expected=yamlFieldPathTokens(pattern.replaceAll('[<exact-key>]','["*"]'));
+ const actual=yamlFieldPathTokens(exact.replaceAll('[<exact-key>]','["*"]'));
+ return expected.length===actual.length&&expected.every((token,index)=>token==='*'?typeof actual[index]==='string'&&actual[index]!=='[]':token==='[]'?typeof actual[index]==='number'||actual[index]==='[]':token===actual[index]);
+};
+const normalized=path=>path.replace(/\[(?:"(?:[^"\\]|\\.)*"|'[^']*'|\*)\]/g,'[<exact-key>]').replace(/\[\d+\]/g,'[]');
+const podChange='The selected buildkit preflight Pod uses kubectl apply. A stored Pod is subject to normal Pod update validation: selected container image changes can be accepted, but command, environment, probes, volumes and security changes cannot be made by treating it as a mutable workload template. Read the stored UID/spec and events after an uncertain write. Diagnose admission, placement, image or node failure before deleting/recreating this disposable preflight Pod; recreation repeats its command. API acceptance or readiness of this probe does not prove a later production build.';
+const recovery=kind=>kind==='Pod'?podChange:kind==='Job'?'Read the Job UID, conditions, active Pods and logs after an uncertain request. Distinguish API rejection from failed child Pod creation, scheduling, image, mount and command failure. Retain result/log evidence before cleanup. Recreating a Job can repeat migration, garbage collection or other external effects; verify previous completion and ownership first.':'Read StatefulSet UID, generation/observedGeneration, ordinal Pods, events and actual claims after an uncertain write. Correct the specific admission, placement, image, mount or application dependency before observing reconciliation. Retain ordinal claim identity and inspect retention/reclaim policy before removing storage.';
+const expansionRoute=kind=>kind==='Pod'?[
+ source('pkg/apis/core/v1/zz_generated.defaults.go','207-218','A root Pod runs SetDefaults_Pod then SetDefaults_PodSpec and child visitors.'),
+ source('pkg/apis/core/v1/defaults.go','165-232','Pod-create-only resource requests, service links and host-network defaults differ from stored PodTemplate defaults.'),
+ source('pkg/registry/core/pod/strategy.go','86-118','Actual Pod create initializes Pending/QOS status, drops disabled fields, applies selector/AppArmor preparation and validates with ResourceIsPod true.'),
+ source('pkg/registry/core/pod/strategy.go','103-109','Normal Pod update preserves stored status before Pod-specific validation.'),
+ source('pkg/apis/core/validation/validation.go','5695-5840','Normal Pod spec updates have a narrow allowlist; they are not workload template replacement.')
+]:kind==='Job'?[
+ source('pkg/apis/batch/v1/zz_generated.defaults.go','378-396','Actual Job visitor defaults Job and embedded PodSpec/children without SetDefaults_Pod.'),
+ source('pkg/registry/batch/job/strategy.go','94-205','Actual Job prepare generates selector, clears/preserves status and drops disabled template fields; old Job state determines exact mutable scheduling/resource allowances.'),
+ bv('276-291','Actual Job template requires Never/OnFailure; podFailurePolicy requires Never.'),
+ source('pkg/controller/job/job_controller.go','1789-1818','Job passes the prepared template to CreatePodsWithGenerateName and records failed child creations.'),
+ source('pkg/controller/controller_utils.go','562-599','A child Pod deep-copies template spec but copies selected metadata and receives a generated name; Pod create errors are reported.')
+]:[
+ source('pkg/apis/apps/v1/zz_generated.defaults.go','1027-1046','Actual StatefulSet visitor defaults its PodSpec/children without SetDefaults_Pod.'),
+ source('pkg/registry/apps/statefulset/strategy.go','72-134','Actual StatefulSet preparation drops disabled template fields, clears/preserves status and increments generation on spec change.'),
+ av('174-268','Actual StatefulSet template must match selector, requires Always/no activeDeadlineSeconds and uses the StatefulSet mutable-field allowlist.'),
+ source('pkg/controller/statefulset/stateful_set_utils.go','389-452','StatefulSet supplies ordinal Pod identity, hostname/subdomain and generated PVC volumes, and merges selector labels into ordinal claims.'),
+ source('pkg/controller/statefulset/stateful_set_utils.go','517-539','Actual StatefulSet constructor calls GetPodFromTemplate, installs ordinal identity/storage and selects current or updated template revision by partition.')
+];
+function appendExpanded(kind,fieldPath,facts) {
+ const changeImpact=facts.changeImpact??(kind==='Pod'?podChange:effect(kind));
+ const record={kind,fieldPath,purpose:facts.purpose,receiver:`Kubernetes ${kind} typed API and the named child/runtime consumer`,
+ operationScope:kind==='Pod'?'The actual cmd_buildkit_preflight shell heredoc is submitted by kubectl apply -f -. Apply request construction and stored-object ownership precede the typed Pod create/update boundary. This root Pod is not a stored controller template.':kind==='Job'?'Actual Job chart renders, deployment shell heredocs, API-probe and registry-local renderers select these fields. The selected shell/transform procedures use kubectl apply; chart writes use their selected Helm/Argo request route. Offline construction is not an executed write. These typed create/update outcomes follow request merge/ownership, admission and old Job state.':'Actual local, infrastructure and authenticated external Helm outputs select these fields. Their Helm/Argo client request construction and ownership precede the actual typed create/update and kind-specific preparation. Offline chart rendering is not an executed write; configured admission, gates and old object state remain inputs.',
+ omitted:facts.omitted,nullValue:facts.nullValue,emptyValue:facts.emptyValue,invalidValue:facts.invalidValue,changeImpact,
+ crossFieldConditions:[...(facts.crossFieldConditions??[]),'The immediate parent/item must exist; omission does not create every descendant. API acceptance is separate from the admission, scheduler, kubelet, driver and application consumer observations.'],
+ cases:[{name:'omitted-at-create',condition:'Selected field is absent in a present immediate typed parent/item.',sourceOutcome:facts.omitted},{name:'explicit-null',condition:'Fresh JSON null reaches the present parent before defaulting.',sourceOutcome:facts.nullValue},{name:'explicit-empty-or-zero',condition:'The stated empty or zero value is supplied.',sourceOutcome:facts.emptyValue},{name:'invalid-value-or-combination',condition:'The stated invalid condition survives strategy preparation and reaches validation.',sourceOutcome:facts.invalidValue},{name:'update-and-recovery',condition:'An accepted update or an uncertain request is observed.',sourceOutcome:kind==='Pod'?podChange:changeImpact+' '+recovery(kind)},...(facts.consumerCases??[])],
+ evidence:[...facts.evidence,...(kind==='PodDisruptionBudget'?parentEvidence(kind):expansionRoute(kind))],
+ qualificationLimits:[...(facts.qualificationLimits??[]),'This bounded reuse preserves field-level default/validator/consumer claims under the actual kind-specific parent and preparation route. Root TypeMeta/ObjectMeta delegate to their common modules; an omitted delegation is a coverage gap. No live request, semantic acceptance, reader exercise or quality review is established.'],authoritySelector:{apiVersion:workloadVersions[kind],kind,fieldPath}};
+ const key=`${kind}:${fieldPath}`;if(records.has(key))throw Error(`duplicate ${key}`);records.set(key,record);
+}
+// Do not copy Deployment ownership/rollout/parent cases into a different kind.
+const deploymentContext=/Deployment|ReplicaSet|deployment\/|structured-merge|strategicpatch|merge\/update|fieldmanager|kubectl|gitops-engine|Whole|whole.*coverage|complete.*1389|Operation applicability|registry-local|LiteLLM|registry-mirror|GitOps|Argo|SSA|CSA|managedfields|endpoints\/handlers\/patch/;
+const qualifyText=(text,kind)=>{
+ const result=text.replaceAll('Deployment template',kind==='Pod'?'Pod request':`${kind} Pod template`).replaceAll('Deployment',kind==='Pod'?'Pod request':`${kind} Pod template`);
+ return kind==='Pod'?result.replaceAll('template validation','Pod validation').replaceAll('Container template validation','Container Pod validation').replaceAll('reject the template','reject the Pod').replaceAll('accepted template','accepted Pod'):result;
+};
+function qualifiedChild(kind,path) {
+ const origin=kind==='Pod'?path.replace('$.spec','$.spec.template.spec'):path;
+ const r=podChildren.find(r=>normalized(r.fieldPath)===normalized(origin));
+ if(!r)throw Error(`EXPANDED_WORKLOAD_UNAUTHORED_CHILD: ${kind} ${path}`);
+ const evidence=r.evidence.flatMap(e=>{
+  if(e.url.includes('/pkg/apis/apps/v1/zz_generated.defaults.go')){
+   const range=e.url.match(/#L(\d+)-L(\d+)$/);
+   if(range&&Number(range[1])>=375&&Number(range[2])<=691){
+    const offset=kind==='StatefulSet'?654:kind==='Job'?14:-166;
+    const file=kind==='Job'?'pkg/apis/batch/v1/zz_generated.defaults.go':kind==='Pod'?'pkg/apis/core/v1/zz_generated.defaults.go':'pkg/apis/apps/v1/zz_generated.defaults.go';
+    return [source(file,`${Number(range[1])+offset}-${Number(range[2])+offset}`,qualifyText(e.claim,kind))];
+   }
+   return [];
+  }
+  return deploymentContext.test(`${e.url} ${e.claim}`)||e.url.includes('/pkg/apis/apps/')?[]:[e];
+ });
+ if(!evidence.length)throw Error(`EXPANDED_WORKLOAD_SOURCE_GAP: ${kind} ${path}`);
+ return {purpose:qualifyText(r.purpose,kind),omitted:qualifyText(r.omitted,kind),nullValue:qualifyText(r.nullValue,kind),emptyValue:qualifyText(r.emptyValue,kind),invalidValue:qualifyText(r.invalidValue,kind),
+ crossFieldConditions:r.crossFieldConditions.filter(t=>!deploymentContext.test(t)).map(t=>qualifyText(t,kind)),
+ consumerCases:r.cases.slice(4).filter(c=>!deploymentContext.test(JSON.stringify(c))).map(c=>structuredClone(c)),evidence,
+ qualificationLimits:r.qualificationLimits.filter(t=>!deploymentContext.test(t)).map(t=>qualifyText(t,kind))};
+}
+for(const [kind,paths] of Object.entries(expandedPaths))for(const path of paths){
+ if(!path.startsWith(kind==='Pod'?'$.spec.':'$.spec.template.spec.'))continue;
+ const facts=qualifiedChild(kind,path);
+ // SetDefaults_PodSpec supplies this empty context in a root Pod as well.
+ if(kind==='Pod'&&path==='$.spec.automountServiceAccountToken'){
+  facts.omitted='The pointer remains nil through typed Pod defaulting. With ServiceAccount admission enabled, a nonnil Pod choice wins, then the ServiceAccount choice, then true; the selected explicit false disables its token automount.';
+  facts.evidence.push(source('plugin/pkg/admission/serviceaccount/admission.go','254-265','Automount precedence is Pod pointer, ServiceAccount pointer, then true.'));
+ }
+ if(kind==='Pod'&&path==='$.spec.containers[].image'){
+  facts.invalidValue='An empty image or leading/trailing whitespace is rejected by actual Pod validation. API acceptance still does not prove registry access, pull credentials, image content or executable availability.';
+  facts.evidence.push(source('pkg/apis/core/validation/validation.go','4430-4441','validateContainerOnlyForPod rejects leading/trailing image whitespace.'),source('pkg/apis/core/validation/validation.go','4499-4526','Root Pod metadata/spec validation invokes the Pod-only container validator.'));
+ }
+ if(kind==='Pod'&&path==='$.spec.securityContext'){
+  facts.omitted='Nil is replaced by an empty PodSecurityContext by SetDefaults_PodSpec. No user/group/fsGroup/seccomp choice is invented by that empty object.';
+  facts.nullValue='Fresh null leaves the pointer nil; SetDefaults_PodSpec creates an empty PodSecurityContext.';
+ }
+ appendExpanded(kind,path,facts);
+}
+for(const kind of ['Job','StatefulSet'])appendExpanded(kind,'$.spec.template.metadata.name',{
+ purpose:'Distinguish the stored template name from the generated child Pod identity.',
+ omitted:'No template name is supplied; the actual controller supplies child Pod identity.',
+ nullValue:'Fresh null leaves this ordinary string empty. It does not clear a stored child Pod name through patch semantics.',
+ emptyValue:'An empty template name is not an ordinary Pod create identity error at this stored-template boundary.',
+ invalidValue:'ValidatePodTemplateSpec validates template labels, annotations and spec without ordinary ObjectMeta name validation. The controller does not copy this template name as the child Pod name; later child Pod create validates its generated identity.',
+ evidence:[source('pkg/apis/core/validation/validation.go','7066-7080','PodTemplate validation does not call ordinary ObjectMeta name validation.'),source('pkg/controller/controller_utils.go','562-584','GetPodFromTemplate supplies GenerateName from parent rather than template metadata.name.'),...(kind==='StatefulSet'?[source('pkg/controller/statefulset/stateful_set_utils.go','435-452','StatefulSet overwrites child name with the ordinal identity.')]:[])]
+});
+appendExpanded('StatefulSet','$.spec.updateStrategy.rollingUpdate.maxUnavailable',{
+ purpose:'Bound unavailable ordinal Pods during the selected rolling update.',
+ omitted:'Within a present RollingUpdate object, nil defaults to 1 when MaxUnavailableStatefulSet is enabled. A disabled gate drops a fresh value unless the old StatefulSet already uses it.',
+ nullValue:'Fresh null leaves the IntOrString pointer nil and follows the gate-selected default/drop route.',
+ emptyValue:'Integer zero and a zero percentage are rejected if the field survives preparation; an empty string is not a valid percentage.',
+ invalidValue:'The retained budget must be a positive integer or positive percentage at most 100%; OnDelete forbids the rollingUpdate object.',
+ evidence:[ad('114-124','MaxUnavailable defaults to integer 1 only with the gate and a present RollingUpdate object.'),source('pkg/registry/apps/statefulset/strategy.go','83-125','Disabled gate drops maxUnavailable unless old object already uses it.'),av('499-516','StatefulSet rolling budget validates positive IntOrString and at most 100%.'),source('pkg/controller/statefulset/stateful_set_utils.go','682-698','Controller converts percentage budgets with round-down and a minimum of one.'),source('pkg/controller/statefulset/stateful_set_control.go','704-717','OnDelete returns before the controller gate selects the budget update path.'),source('pkg/controller/statefulset/stateful_set_control.go','762-818','Budget update counts unavailable Pods, waits at the limit and deletes eligible old-revision Pods within the remaining budget.')],
+ crossFieldConditions:['This StatefulSet budget does not use Deployment maxSurge semantics. Inspect both API-server and controller feature-gate settings; they are separate execution inputs. With the controller gate enabled and RollingUpdate selected, a percentage is rounded down and clamped to at least one. The controller counts unavailable Pods, waits when the budget is exhausted and otherwise deletes eligible old-revision Pods from highest ordinal within the remaining budget and partition. Conversion or deletion errors stop that reconciliation; inspect its events and correct the specific dependency.']
+});
+for(const path of ['$.spec.volumeClaimTemplates[].apiVersion','$.spec.volumeClaimTemplates[].kind'])appendExpanded('StatefulSet',path,{
+ purpose:'Carry selected PVC template type metadata without treating the template as an independent PVC request.',
+ omitted:'No nested TypeMeta value is supplied; the StatefulSet validator checks the template PVC spec and the controller later constructs typed ordinal PVCs.',
+ nullValue:'Fresh null leaves the ordinary TypeMeta string empty; this is not a separate PVC API endpoint selection.',
+ emptyValue:'The StatefulSet nested template validator does not independently require these TypeMeta strings.',
+ invalidValue:'These strings do not change the StatefulSet endpoint or the typed PVC spec. ValidateStatefulSetSpec validates PVC template specs, not a new nested API request; child PVC encoding/admission is a later boundary.',
+ evidence:[av('117-124','StatefulSet create validates each PVC template spec.'),source('pkg/controller/statefulset/stateful_set_utils.go','389-405','Controller deep-copies typed PVC templates and assigns ordinal name/namespace/selector labels.')],
+ changeImpact:'volumeClaimTemplates is immutable on a stored StatefulSet. This nested TypeMeta value does not change an existing claim API identity.'
+});
+for(const path of ['$.spec.volumeClaimTemplates[].metadata.labels','$.spec.volumeClaimTemplates[].metadata.labels[<exact-key>]'])appendExpanded('StatefulSet',path,{
+ purpose:'Copy template labels to ordinal claims and merge the StatefulSet selector equality labels.',
+ omitted:'With nil template labels, the generated claim receives selector matchLabels; an omitted key contributes no template label.',
+ nullValue:'Fresh null leaves the map nil or an ordinary string map value empty. The controller then merges selector labels; null is not a child PVC patch deletion rule.',
+ emptyValue:'An empty map gets selector entries during claim construction. An empty value can be legal under ordinary label validation with a valid key.',
+ invalidValue:'StatefulSet create validates PVC specs rather than ordinary PVC ObjectMeta labels. Later generated PVC create can reject invalid label keys/values; selector keys overwrite same-name template label values before that child creation.',
+ evidence:[av('117-124','PVC template validation checks spec only.'),source('pkg/controller/statefulset/stateful_set_utils.go','389-405','Ordinal claim construction preserves template metadata then merges selector labels, overwriting colliding keys.')],
+ changeImpact:'Claim templates are immutable on the StatefulSet; editing this field cannot relabel an existing claim through a template update. Inspect the generated claim and owner before any separate PVC write.'
+});
+appendExpanded('Job','$.spec.ttlSecondsAfterFinished',{
+ purpose:'Allow the TTL controller to remove finished disposable Jobs and dependent Pods.',
+ omitted:'Nil supplies no TTL cleanup request.',nullValue:'Fresh null leaves the optional integer pointer nil; no TTL cleanup is selected.',
+ emptyValue:'Explicit zero is retained and makes a finished Job eligible for cleanup without an added TTL delay; deletion remains asynchronous.',
+ invalidValue:'Negative TTL is rejected by Job validation; wrong-type JSON fails typed decode.',
+ evidence:[bv('206-208','Job TTL must be nonnegative.'),source('pkg/controller/ttlafterfinished/ttlafterfinished_controller.go','206-259','TTL controller rereads the latest finished Job before foreground deletion with its UID precondition.')],
+ changeImpact:'Changing TTL changes the controller cleanup deadline for a finished Job; after deletion, lengthening TTL cannot recover its API object or logs. Retain result evidence before short TTL cleanup and read the object after an uncertain update.'
+});
+appendExpanded('PodDisruptionBudget','$.spec.maxUnavailable',{
+ purpose:'Set the selected voluntary eviction unavailability budget.',
+ omitted:'Nil supplies no maximum budget; minAvailable can supply the mutually exclusive minimum.',
+ nullValue:'Fresh null leaves the IntOrString pointer nil. A separate apply/patch request determines deletion or retained ownership.',
+ emptyValue:'Integer zero is retained and requests zero permitted unavailability; an empty string is not a valid percentage.',
+ invalidValue:'Negative counts, invalid percentages, percentages above 100% or simultaneous minAvailable are rejected.',
+ evidence:[source('pkg/apis/policy/validation/validation.go','50-75','PDB validates mutually exclusive min/max budgets, nonnegative counts and percentages at most 100%.'),source('pkg/controller/disruption/disruption.go','818-840','Disruption controller calculates desired healthy count from maxUnavailable and expected controller scale.')],
+ crossFieldConditions:['Budget and Ready observations constrain the eviction API. This field does not prevent every deletion, rollout, node loss or application outage. Controller scale lookup is an execution dependency for a percentage budget.'],
+ changeImpact:'An accepted budget update changes later eviction decisions after controller observation. Inspect PDB desiredHealthy/disruptionsAllowed and selected Pod readiness before retrying a denied eviction.'
+});
+appendExpanded('Pod','$.spec',{
+ purpose:'Run the selected disposable rootless BuildKit prerequisite Pod before production build operations.',
+ omitted:'Zero PodSpec gets common defaults but has no required containers. Root Pod defaulting also applies request-from-limit, service-link and hostNetwork port rules; it is distinct from a stored template.',
+ nullValue:'Fresh null leaves the PodSpec struct at zero and follows root Pod defaulting; missing required containers are still rejected.',
+ emptyValue:'An empty PodSpec cannot provide the selected BuildKit container and volumes; defaults do not make it a valid runnable preflight.',
+ invalidValue:'ValidatePodCreate checks Pod metadata/spec and Pod-specific combinations with ResourceIsPod true. Configured admission can reject or mutate the Pod; failed scheduling, image, mount or command execution is a later consumer failure.',
+ evidence:[source('pkg/apis/core/validation/validation.go','5600-5623','Root Pod create validates actual Pod metadata/spec and Pod-only field combinations.'),source('pkg/apis/core/v1/defaults.go','165-232','Root Pod and common PodSpec defaults are different functions.')],
+ crossFieldConditions:['The selected shell preflight uses restartPolicy Never, automountServiceAccountToken false, explicit security settings, image pull identity and emptyDir storage. Its API, scheduling, container-ready and command evidence are separate observations.']
+});
+appendExpanded('Pod','$.spec.enableServiceLinks',{
+ purpose:'Control service-derived environment variables for the root BuildKit preflight Pod.',
+ omitted:'Root Pod defaulting changes nil to DefaultEnableServiceLinks (true). This differs from a stored template, which retains nil until child Pod creation.',
+ nullValue:'Fresh null leaves the boolean pointer nil; root Pod defaulting supplies true.',
+ emptyValue:'Explicit false is retained. Kubelet still includes default-namespace master Services independently of this flag; ordinary Services require the Pod namespace and this flag true.',
+ invalidValue:'A non-boolean token fails typed decode. A valid boolean does not prove Service reachability or application connectivity.',
+ evidence:[source('pkg/apis/core/v1/defaults.go','201-204','Root Pod defaulting supplies DefaultEnableServiceLinks for nil.'),source('pkg/kubelet/kubelet_pods.go','683-730','Kubelet builds environment entries from assigned ClusterIP Services with exact master-Service and same-namespace flag branches.')],
+ crossFieldConditions:['A same-name enabled namespace Service replaces the default-namespace map entry. A nil Service lister supplies no Service variables; a list error fails environment construction. Explicit/imported container environment follows its separate precedence.']
+});
+appendExpanded('Pod','$.spec.serviceAccountName',{
+ purpose:'Identify the namespace-local service account used by the root preflight Pod and its enabled admission checks.',
+ omitted:'The typed string remains empty. When ServiceAccount admission is enabled, an empty Pod serviceAccountName becomes default before that account is looked up. Missing account lookup rejects admission even when token automount is false.',
+ nullValue:'Fresh null leaves the ordinary string empty; enabled ServiceAccount admission follows the same default-account route.',
+ emptyValue:'Empty follows the enabled admission default. A nonempty valid account name selects that namespace-local account; it does not create the account.',
+ invalidValue:'Invalid service account name fails PodSpec validation. With ServiceAccount admission enabled, lookup or enforced Secret-reference checks can reject an otherwise valid name.',
+ evidence:[source('pkg/apis/core/validation/validation.go','4663-4669','PodSpec validates service account names.'),source('plugin/pkg/admission/serviceaccount/admission.go','146-175','Enabled admission defaults the account, looks it up and conditionally adds token/pull-secret references.')],
+ crossFieldConditions:['The selected buildkit preflight explicitly sets automountServiceAccountToken false. This disables token automount under the named plugin; it does not bypass service account lookup or every other admission plugin. Inspect actual admission configuration and stored Pod identity before inferring access.']
+});
 export const receiverContracts=[...records.values()];
+export function workloadReceiverContracts(apiVersion,kind,exactBoundaries) {
+ if(workloadVersions[kind]!==apiVersion)return [];
+ return exactBoundaries.filter(boundary=>!isDelegated(typeof boundary==='string'?boundary:boundary.fieldPath)).map(boundary=>{
+  const fieldPath=typeof boundary==='string'?boundary:boundary.fieldPath;
+  const record=receiverContracts.find(record=>record.kind===kind&&pathMatches(record.fieldPath,fieldPath));
+  if(!record)throw Error(`EXPANDED_WORKLOAD_RECEIVER_GAP: ${apiVersion}/${kind}:${fieldPath}`);
+  return {...record,fieldPath,authoritySelector:{apiVersion,kind,fieldPath}};
+ });
+}

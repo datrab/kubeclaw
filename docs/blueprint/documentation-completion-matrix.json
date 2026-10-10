@@ -19202,6 +19202,19 @@
       "rootVerifiedSealEntries": 24,
       "rootTests": "WEBHOOK_SELECTED_EVIDENCE enabled:7PASS,0SKIP. Unknown/new/renamed fields, authority identity and schema drift regressions checked. Routine test without private evidence skips the private contextual join; required proof used explicit environment.",
       "qualification": "No independent Source/Reader/Quality, endpoint/TLS/live or whole-package acceptance."
+    },
+    "expandedSelectedWorkloads": {
+      "author": "/root/expanded_workload_selected_receiver_writer",
+      "state": "released-author-candidate-pending-independent-review-and-source-bound-publication",
+      "addedRecords": 155,
+      "preservedLegacyRecords": 597,
+      "correctedLegacyRecords": 1,
+      "correction": "StatefulSet revisionHistoryLimit accepts negative with warning and retains all history; controller prunes only excess non-live revisions for nonnegative limits.",
+      "report": "/home/node/Documents/Codex/a98-evidence/expanded-workload-receiver-writer/report.md",
+      "reportSha256": "5033daf28a7573639067c6ed76e3116927708ffae2f3b3540bbfbf08ff99a8d8",
+      "rootVerifiedSealEntries": 138,
+      "rootTests": "7 expanded tests PASS, zero skipped, includes actual BuildKit shell output and registry GC transform; author13focused tests PASS.",
+      "snapshotQualification": "1199context snapshot owned field joins have zero gaps; source-derived Pod serviceAccountName awaiting fresh generator applicability refresh. Common root providers are separate. No independent semantic/global/live acceptance."
     }
   }
 }
