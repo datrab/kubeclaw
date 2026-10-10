@@ -5,10 +5,10 @@ import {receiverContracts,workloadReceiverContracts as select} from '../docs-kub
 import {receiverContracts as nodeRecords,nodeWorkloadsReceiverContracts as nodeSelect} from '../docs-kubernetes-node-workloads-receiver-contracts.mjs';
 import {discoverProductApiContexts,apiProductSelection,productApiReceiverRecords} from '../docs-api-product-scope.mjs';
 const root=fileURLToPath(new URL('../../',import.meta.url));
-const additions=receiverContracts.slice(757);
+const additions=receiverContracts.slice(757).filter(r=>/terminationMessage|\.ports\[\]\.protocol$/.test(r.fieldPath));
 test('retain workload field identities while adding selected termination defaults',()=>{
- assert.equal(receiverContracts.length,768);
- assert.equal(new Set(receiverContracts.map(r=>r.kind+':'+r.fieldPath)).size,768);
+ assert.equal(receiverContracts.length,770);
+ assert.equal(new Set(receiverContracts.map(r=>r.kind+':'+r.fieldPath)).size,770);
  assert.equal(additions.length,11);
 });
 test('actual producer selection joins every selected workload default under its receiving kind',()=>{
@@ -18,7 +18,9 @@ test('actual producer selection joins every selected workload default under its 
   const selection=apiProductSelection(version,kind,actual,productApiReceiverRecords(version,kind),root);
   const paths=selection.fieldPaths.filter(p=>/terminationMessage|imagePullPolicy|\.ports\[\]\.protocol$/.test(p));
   assert.ok(paths.length,kind);assert.equal((kind==='DaemonSet'?nodeSelect:select)(version,kind,paths).length,paths.length);
-  for(const record of (kind==='DaemonSet'?nodeRecords.slice(275):additions).filter(r=>r.kind===kind))assert.ok(selection.fieldPaths.includes(record.fieldPath),record.fieldPath);
+  // A protocol default is applicable only to a retained port item. Registry GC
+  // removes ports before emitting its Job; an intermediate template is not output.
+  for(const record of (kind==='DaemonSet'?nodeRecords.slice(275):additions).filter(r=>r.kind===kind&&/terminationMessage/.test(r.fieldPath)))assert.ok(selection.fieldPaths.includes(record.fieldPath),record.fieldPath);
  }
 });
 test('termination omission null empty and invalid cases retain bounded runtime consumption',()=>{

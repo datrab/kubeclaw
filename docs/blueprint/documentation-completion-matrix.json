@@ -15938,6 +15938,18 @@
         "A98-11"
       ],
       "description": "Independent original frozen F25 flags9 Job probe/port records from registry GCJob intermediate pre-deletion shape as actual producer outputs. Producer author is correcting actual discovery; current appended Job operation scope now depends on actual emitted field/source context and explicitly distinguishes intermediate renderer objects removed before emission. Unused typed alternatives are not newly required documentation. No old exclusion seal, historical FAIL or actual discovery acceptance is changed by this prose correction."
+    },
+    {
+      "id": "A98-LIMIT-REQUEST-ZERO-QUANTITY-CORRECTION",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Frozen corrected Source F52 flags eight limits-key zero cases that reused request-key behavior. Shared apps receiver now distinguishes retained zero limits from existing requests: at Pod creation a missing request receives its matching zero limit; an existing request is not overwritten, and pair validation still applies. Null Quantity retains key with zero amount. Template storage is separate from Pod-create defaulting. Historical frozen FAILs remain unchanged."
     }
   ],
   "checks": [
@@ -16901,6 +16913,26 @@
       "command": "Pure38registered root omission-context audit and exact four workload imagePullSecrets[] null lookups",
       "state": "terminal-pass",
       "scope": "Session12163 terminal38roots no child-parent omission condition; root-case-context-audit.json. Direct Job/CronJob/StatefulSet/Pod null cases match retained-zero-item explanation and no longer append absent-item outcome. These are mechanical/content checks, not a live decode/admission or independent semantic acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/workload-termination-defaults.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs",
+      "state": "terminal-fail",
+      "scope": "Session86162:9PASS3FAIL. Termination test stale total768 vs770 and slice757 including new unrelated records; actual discovery failed unconfigured bare Go ENOENT. Tests updated to retain11 termination/protocol children while verifying770 unique records; qualified-Go rerun session78462 pending."
+    },
+    {
+      "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs; eight limits-key content lookups",
+      "state": "terminal-pass",
+      "scope": "Six receiver testsPASS0FAIL0SKIP. Eight workload/node regular/init limits-key zero and null descriptions and zero cases contain distinct limit-specific behavior. Intermediate author lookup scripts failed due to incorrect expected counts/case-name assumptions, corrected before recording the eight-record result. No independent semantic or live acceptance."
+    },
+    {
+      "command": "Qualified-Go workload/termination integration rerun",
+      "state": "terminal-fail",
+      "scope": "Session78462:11PASS1FAIL0SKIP. Actual producer join now correctly omits registry GC Job ports removed by render-registry-local.mjs58–68; old test demanded protocol for removed intermediate port. Test now requires actual selected termination children and still joins every actually selected protocol field. Session44742 repeats qualified current integration and is pending."
+    },
+    {
+      "command": "KUBECLAW_DOCS_GO_BINARY=<qualified Go> node --test scripts/tests/workload-termination-defaults.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Session44742:12PASS0FAIL0SKIP, duration74.14s. Actual discovery included stable but uncommitted six producer-author files; this is integrated author test evidence, not immutable independent Source/Reader/Quality/Astra acceptance."
     }
   ],
   "reviewAssignments": [
@@ -20094,6 +20126,16 @@
       "producerScope": "Appended Job field claims conditional on actual emitted output; final source-stable join pending.",
       "checks": "28PASS initial,13PASS node/null,23PASS final receiver group;38registered root condition audit PASS",
       "sourceInspection": "Original decoder/Core validation/ServiceAccount sources checked by recorded hashes; no live execution."
+    },
+    "limitRequestZeroQuantity": {
+      "author": "/root",
+      "state": "candidate-not-independent-acceptance",
+      "baseRevision": "da40e6cbb76c31b5bbaa634e3fd19254e36faa02",
+      "records": 8,
+      "sourceInspection": "Authenticated pinned Kubernetes66452049f3d692768c39c797b21b793dce80314e core/v1/defaults.go164–191 and apimachinery Quantity733–752 inspected directly.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/resource-root-scope-root/limit-request-zero-correction.json",
+      "next": "Observe qualified integrated producer test terminal state, commit root correction, then freeze latest Source plus six producer-author overlays.",
+      "checks": "6receiverPASS;8contentrows;finalqualifiedGo integrated12PASS0FAIL0SKIP"
     }
   }
 }
