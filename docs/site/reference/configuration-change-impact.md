@@ -438,3 +438,191 @@ retrying. A timeout does not prove that an external operation did not happen.
 > **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 >
 > **Limit:** Local checks cannot choose a maintenance window or prove that an external dependency honors a credential overlap period.
+
+## PVC reclamation and retained data
+
+KubeClaw stores role configuration and workspaces on separate claims. Prism
+uses claims for PostgreSQL and artifacts. Their default chart values leave
+`storageClass` empty, and their templates omit `storageClassName` for that value.
+The stored claim can therefore receive the cluster default class. This differs
+from an explicitly empty API `storageClassName`, which requests no class.
+The configured SMB Application selects chart 1.20.0, but it does not select a
+class for all these claims. The actual default class and driver remain unknown
+until the operator reads the cluster objects.
+[role defaults](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/kubeclaw/values.yaml#L279-L289),
+[role claim templates](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/kubeclaw/templates/pvc.yaml#L14-L48),
+[Prism defaults](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/values.yaml#L53-L63),
+[database claim](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/postgresql.yaml#L62-L72),
+[artifact claim](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/workloads.yaml#L217-L230),
+[SMB chart selection](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/gitops/platform/bootstrap/csi-driver-smb.yaml#L12-L20),
+[default-class admission](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/plugin/pkg/admission/storage/storageclass/setdefault/admission.go#L80-L119).
+
+For an omitted class, Kubernetes recognizes the exact value `"true"` in either
+`storageclass.kubernetes.io/is-default-class` or its beta annotation. Among
+matching classes it selects the newest creation timestamp, then the ascending
+class name for a timestamp tie. No default leaves this selection unresolved;
+a list or claim-update error stops that attempt. The binding controller can
+assign a subsequently available default. Read the stored class and its
+`provisioner` before relying on a driver contract.
+[default selection](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/storageclass.go#L40-L70),
+[annotation values](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/storageclass.go#L76-L85),
+[later claim assignment](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L967-L992).
+
+Role configuration/workspace and Prism artifact/backup PVCs carry Helm
+`keep` and Argo `Prune=false,Delete=false` annotations. The database claim
+template carries the Argo annotations. Ordinary release removal therefore does
+not select the explicit PVC retirement route below. Inspect the rendered object,
+its workload and the intended GitOps operation before retiring storage.
+[role claim retention](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/kubeclaw/templates/pvc.yaml#L8-L10),
+[workspace retention](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/kubeclaw/templates/pvc.yaml#L34-L36),
+[artifact retention](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/workloads.yaml#L220-L224),
+[backup retention](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/jobs.yaml#L63-L74),
+[database template](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/charts/prism/templates/postgresql.yaml#L62-L72).
+
+A claim is an API request for storage. A PersistentVolume (PV) records the
+selected storage and its reclaim policy. Removing `kubernetes.io/pvc-protection`
+allows claim deletion only after the protection controller finds no qualifying
+Pod use. It does not reclaim the PV or erase server data. After the bound claim
+is absent, the PV controller checks the claim identity, records `Released` and
+selects the PV's reclaim policy. `Retain` performs no reclaim operation.
+For an external CSI driver, `Delete` leaves the driver operation to its
+provisioner. A failed claim lookup or phase write stops that reconciliation;
+an existing `Failed` phase remains visible.
+[PVC protection](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/pvcprotection/pvc_protection_controller.go#L257-L275),
+[claim lookup](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L605-L640),
+[claim UID comparison](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L641-L658),
+[release and reclaim](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L660-L687),
+[policy dispatch](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1180-L1223),
+[external deleter handoff](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1499-L1512).
+For the general storage lifecycle, see the upstream
+[reclaiming explanation](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaiming).
+
+### A previously bound claim loses its binding
+
+A previously bound claim can become `Lost` when its `spec.volumeName` is empty
+or its PV is absent from the controller cache. The controller reports
+`ClaimLost`. If the PV exists but refers to another claim UID, it reports
+`ClaimMisbound` and marks the claim `Lost`. A PV without a claim reference can
+instead be bound again to the existing claim; a failed write leaves that repair
+for a later reconciliation. These observations do not establish the state of
+the underlying data. Retain both object identities and ask the storage owner
+to inspect the volume before creating replacement storage or attempting recovery.
+[missing bound name or PV](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L499-L516),
+[repair and claim UID mismatch](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L527-L555).
+
+### Selected SMB deletion route
+
+The following table applies only to the default external-provisioner v6.0.0
+and SMB driver v1.20.0 selected by SMB chart 1.20.0. An image override or a
+different PV driver requires its own source contract.
+[chart image defaults](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/values.yaml#L1-L14)
+
+The provisioner library checks its PV ownership, `Released` phase, `Delete`
+policy and configured finalizer guard. It calls CSI `DeleteVolume` before
+requesting PV deletion and removing its own finalizer when configured.
+The CSI request uses the PV handle, resolved secrets and a timeout. When its
+VolumeAttachment lister exists, any matching attachment or list error blocks
+the request. Credential-fetch failure can still yield a request without secrets.
+An error emits `VolumeFailedDelete`; the queue retries according to its configured
+failed-delete threshold. Zero has no threshold stop; a nonzero threshold stops
+rate-limited requeue when reached. A successful driver call followed by an API
+error can leave server work complete and cause another driver call.
+[ownership and sync](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/vendor/sigs.k8s.io/sig-storage-lib-external-provisioner/v13/controller/controller.go#L1153-L1199),
+[deletion guard](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/vendor/sigs.k8s.io/sig-storage-lib-external-provisioner/v13/controller/controller.go#L1284-L1320),
+[driver call before API cleanup](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/vendor/sigs.k8s.io/sig-storage-lib-external-provisioner/v13/controller/controller.go#L1621-L1681),
+[retry threshold](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/vendor/sigs.k8s.io/sig-storage-lib-external-provisioner/v13/controller/controller.go#L1034-L1049),
+[CSI request](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1286-L1311),
+[credential reference](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1314-L1347),
+[credential lookup and failure](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1348-L1380),
+[attachment check](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1383-L1402).
+
+PV `Retain` and SMB `onDelete: Retain` are different controls. The first prevents
+the reclaim operation. The second can return success from the SMB operation
+while keeping the directory. An empty SMB `onDelete` uses the driver's configured
+default. [effective policy and secrets gate](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L185-L209)
+
+| SMB input | Directory effect and recovery boundary |
+| --- | --- |
+| No secrets, or effective `onDelete: Retain` | Returns success without deleting the subdirectory. Subsequent PV removal does not prove data erasure. [no-action return](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L256-L261) |
+| Secrets and effective `onDelete: Archive` | Mounts the share and renames the directory to `archived-<subdirectory>`. If `removeArchivedVolumePath` is enabled, it first removes an earlier archive. A later rename error can leave that earlier archive lost. [archive branch](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L211-L234) |
+| Secrets and another non-Retain policy | Removes the subdirectory. The driver provides no rollback for removed data. [removal branch](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L235-L254) |
+| Unparseable nonempty handle, or completed handle in the in-process deletion cache | Can return success without new directory work. Even a no-directory-work success caches the handle, so a later call with secrets can still skip directory work. A cached response is not durable proof of data recovery. [handle checks](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L150-L165), [cache check](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L190-L200), [cached completion including no-action](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L256-L261) |
+
+Mount, rename and removal errors propagate. Deferred unmount failure is logged
+without changing the completed RPC result. Inspect the server state after an
+error or interrupted response before deciding what can safely repeat.
+[deferred unmount](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L202-L209)
+
+### Selected SMB mount failures
+
+For a claim actually backed by SMB v1.20.0, a workload mount follows binding
+and uses the PV handle, source, subdirectory and node-stage credentials.
+A readable existing staging mount can be reused. An unreadable staging target
+can be unmounted and still return its read error. A new share mount runs through
+a 110-second wait that does not cancel the mount worker on timeout. The staging
+call then releases its lock; this means a timeout can leave mount work running.
+Check the current staging target and driver work before retrying. The separate
+NodePublish step binds that staging path into the container, with read-only intent
+when requested. `Bound` and a successful mount do not verify application data or
+establish a backup.
+[staging inputs and lock](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L137-L193),
+[staging and mount result](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L267-L296),
+[existing-target check](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L463-L477),
+[timeout worker](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/util/util.go#L40-L57),
+[container publication](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/nodeserver.go#L75-L106).
+The continuing-worker outcome is an inference from the timeout wrapper and
+staging lock, not an executed failure or a claim that every timeout leaves a mount.
+
+### Diagnose before changing cleanup
+
+The storage owner performs this read-only investigation from an approved
+cluster context. It requires permission to read the named PVC and PV,
+StorageClasses, Pods, VolumeAttachments, controller configuration and logs.
+Use the retained PVC/PV record when the claim is already absent. Do not print
+Secret values. Stop if access fails or the claim/PV UID cannot be established.
+Use `kubectl` compatible with the target cluster. In the commands below,
+`<context>` is the approved cluster context, `<namespace>` and `<claim>` are the
+recorded claim identity, `<pv>` comes from its `spec.volumeName`, and `<class>`
+comes from the stored claim or PV. If `spec.volumeName` is empty, stop before
+the PV commands and investigate the lost binding described above. Do not run
+the class lookup for an empty class name. `<driver-namespace>`, `<driver-pod>` and `<container>` identify the
+selected provisioner or driver, not an assumed SMB installation. `<start-time>`
+is the incident's recorded RFC3339 start time. These reads have not been run
+against a deployed instance as part of this source verification.
+
+1. Record the claim namespace, name, UID, deletion timestamp, finalizers,
+   `spec.volumeName`, `storageClassName`, phase and events. Match the PV claim
+   reference by namespace, name and UID; a reused name is a different lifetime.
+   Read the claim with `kubectl --context <context> -n <namespace> get pvc <claim> -o yaml`
+   and its current use/events with `kubectl --context <context> -n <namespace> describe pvc <claim>`.
+   A NotFound result uses the retained record; it does not prove data deletion.
+2. Record the PV UID, reclaim policy, phase, finalizers, CSI driver and handle.
+   Read the selected StorageClass and actual provisioner/driver images. Apply
+   the table only when those versions match; otherwise stop at the selected
+   implementation boundary and obtain its contract from the storage owner.
+   Use `kubectl --context <context> get pv <pv> -o yaml` and, for a nonempty
+   class, `kubectl --context <context> get storageclass <class> -o yaml`.
+   Read selected images with `kubectl --context <context> -n <driver-namespace> get pod <driver-pod> -o jsonpath='{.spec.containers[*].image}'`.
+3. Inspect Pod claim use, VolumeAttachments and current controller errors.
+   Distinguish protection waiting, missing credentials, server mount failure,
+   and a successful driver call followed by failed API cleanup. Retain the
+   non-secret deletion-credential reference and effective SMB policy/options.
+   Read attachments with `kubectl --context <context> get volumeattachments -o yaml`
+   and match `spec.source.persistentVolumeName` to the recorded PV.
+   Read the selected component's incident logs with
+   `kubectl --context <context> -n <driver-namespace> logs <driver-pod> -c <container> --since-time=<start-time>`.
+4. Have the storage owner check the actual share and archive path through the
+   approved storage process. Do not remove finalizers or delete retained data
+   to force convergence. A directory on the same share is not an independent
+   backup. Use the [recovery procedure](../use/recovery.md#nonnegotiable-rules) and its
+   isolated-target checks; stop before cutover when application recovery is
+   unavailable or unverified.
+
+Keep the object identities, policies, image versions, event/log timestamps and
+server observations with the backup evidence. This investigation creates no
+cluster resources and needs no cluster cleanup. Protect retained evidence as
+operational data. The source contracts do not prove an executed deletion,
+erasure, backup or restored application. Platform operations owns any missing
+selected-driver contract; closing that gap requires pinned branch coverage and
+an isolated test with the actual driver, policies, credentials and application
+reader before destructive cleanup can be approved.

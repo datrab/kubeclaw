@@ -18602,6 +18602,26 @@
       ],
       "checks": "17 focused tests; original source blob verification;1285record identities/case names preserved. Author checks only.",
       "acceptance": "No selected product discovery completion, full Source/Reader/Quality/Astra or A98 acceptance."
+    },
+    "coreStorageCorrections": {
+      "state": "author-integrated-candidate-pending-fresh-reviews",
+      "author": "/root/a98_core_current_storage_correction_writer",
+      "module": "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+      "moduleSha256": "b913527555b1cf1579fe8adaa8b0158bdd28c36c2198296c187fd5c4508a5cc7",
+      "authorReaderSha256": "a7cd8f3250ad63624a25804daae1ac263def74d4634392d4e46f06bc5dfaf77e",
+      "currentReaderSha256": "e20e4410b99a6bf6bca2a2fc800297cd58b7fa5bc948ffcb61f4ca6e928d034c",
+      "rootReaderFollowup": "Split two overly wide source spans; add previously bound PVC loss/repair explanation and explicit stop before PV lookup when volumeName is empty. Source read in author original pv_controller.go489–555; no executed controller or live data recovery.",
+      "reportSha256": "df1e8bf62138700d17be9e8f7764977d766506e1691008e3a3a5d3237ad9c0c4",
+      "artifactManifestSha256": "ca0411b3389c5786ed97cabb01642105b7cd88694442a2f29a31b18657a1f9a5",
+      "verifiedSealedArtifacts": 54,
+      "observedAuthorChecks": "27tests22private5repository;syntax0;joins42/49/89/92;272identities1467case names preserved. Not Source/Reader acceptance.",
+      "materialCurrentCorrections": [
+        "Default StorageClass stable/beta exact true and newest-time/name-tie winner",
+        "Previously bound PVC missing name/PV and claim UID mismatch; conditional repair",
+        "Retention policy and safe storage diagnosis",
+        "False retained assertions and narrow evidence corrected"
+      ],
+      "acceptance": "No fresh candidate Source, Reader, Quality, Astra or AP09.8 acceptance; driver and live recovery observations remain unperformed."
     }
   }
 }
