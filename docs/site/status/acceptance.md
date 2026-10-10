@@ -25,7 +25,7 @@ Each execution record names the acceptance area and requirement, UTC timestamp, 
 
 Record **passed**, **failed**, **blocked** or **not executed** per gate. Exit code zero counts only when the intended scope actually ran. Zero cases, all-skipped suites, empty reports, file existence, schema validation, model-written reports and compiled graphs are not execution evidence. Preserve failed runs separately from successful retries. Changes to source, browser baseline, required scope or identity invalidate the affected acceptance result.
 
-The procedures below require an environment approved for their actual effects. D12 does not grant that environment approval. A passing subtest does not close an incomplete implementation finding. Commands requiring operator-selected values are not ready-to-run configurations.
+The procedures below require an environment approved for their actual effects. The [local completion policy](../decisions/acceptance.md#d12--accepted-local-completion-policy) does not grant that environment approval. A passing subtest does not close an incomplete implementation finding. Commands requiring operator-selected values are not ready-to-run configurations.
 
 ## Contracts, SDK and installable packages
 
@@ -35,7 +35,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Procedure:** Generate, build original source packages and register/install them in a fresh workspace. Connect real publishers and readers with valid and invalid data. Exercise depth, size, cycles, shared noncyclic references, incorrect media types and unknown tags. Carry supported historical codecs and current profiles through locale changes, snapshots, crashes and replay. Offer equal bytes from a different producer to test identity ownership.
 
-**Pass conditions:** Validation is bounded and fails controllably. Original data and producer/schema/profile identity survive without a hidden new legacy fallback. Equal content does not transfer producer authority. A selected SDK consumer test proves that consumer, not model execution or the whole product. Use only the legitimate test environment and original authorized consumers. A historical unavailable helper is not evidence that its test ran.
+**Pass conditions:** Validation is bounded and fails controllably. Original data and producer/schema/profile identity survive without a hidden new legacy fallback. Equal content does not transfer producer authority. A selected SDK consumer test proves that consumer, not model execution or the whole product. Use only the legitimate test environment and original authorized consumers. Do not report a test as executed if its required helper was unavailable.
 
 ## Durable state, effects and recovery
 
@@ -79,7 +79,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Procedure:** Execute independent modules in their actual separate working directories. Contend on short Git mutations, create a merge conflict and lose a push response after remote success. Inject cleanup failure followed by recovery; test symlink/path escape. A deleted or foreign workspace must not acquire new authority.
 
-**Pass conditions:** No work in another workspace, bounded cancellable lock waits, precise conflict causes, push reconciliation instead of blind duplication and ownership-bound cleanup. Branch consolidation and equal trees prove provenance, not execution of these product paths.
+**Pass conditions:** No work in another workspace, bounded cancellable lock waits, precise conflict causes, push reconciliation instead of blind duplication and ownership-bound cleanup. Matching source trees do not prove execution of these product paths.
 
 ## Executed quality gates and eleven production receipts
 
@@ -103,7 +103,7 @@ The procedures below require an environment approved for their actual effects. D
 | e2e | kubeclaw.e2e-suite@1 | e2e | Playwright interactions in the actual application path |
 | security | kubeclaw.security-suite@1 | security | Real scanner, database freshness and source/image binding |
 
-`manifest → lint:kubernetes-policy` and `bundle → kubeclaw.size-budget@1` have complete local parity in the pinned suite inventory and require no separate production receipt there. Their required checks still apply. For the other eleven, completed source cutover is not completed production acceptance.
+`manifest → lint:kubernetes-policy` and `bundle → kubeclaw.size-budget@1` have complete local parity in the pinned suite inventory and require no separate production receipt there. Their required checks still apply. Registration of the other eleven suites does not prove their production execution.
 
 **Pass conditions:** Every successful suite has its complete authenticated receipt and executed scope. Schema checks alone do not attest an executing worker. Expected defect cases remain failures in the specified result field. Stub tests must not hide missing Chromium, ESLint configuration, shell tools, or complete reports. `tests/verification/contracts/check-production-receipt-attestation.mjs` checks the local receipt contract. The actual production run supplies real signing and execution identity.
 
@@ -149,7 +149,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Procedure:** Create namespace and exposure for the exact tested source, run, and attempt. Execute positive and negative native admission cases for decision, status, and generation. Include stale or foreign decisions and forbidden additional fields. Open the application through DNS or Tailnet. Log in and verify credential delivery. Lose and replay the Ready response. Test the default retention week from Ready for Acceptance. Test extension, expiry warning, early cleanup, and expired demo behavior. Clean up the namespace, URL, and credentials together. Record explicit human acceptance and later change requests against the exact version.
 
-**Pass conditions:** Ready means tested and delivered; accepted requires the human. Old acceptance remains historically valid but does not authorize a new version. Generation/UID/receipt bindings reject stale cleanup and Ready acknowledgements. Tailnet execution revision and cleanup proof come from independent authenticated receipts. Schema/CEL/CAS fixtures and 24 operation/status combinations do not prove a running controller. Historical 384-domain plus 384-extra-field checks must not be described indiscriminately as 768 negative live cases. Faulty historical stale-cleanup/expiry fixtures are not demonstrated product defects.
+**Pass conditions:** Ready means tested and delivered; accepted requires the human. Old acceptance remains historically valid but does not authorize a new version. Generation/UID/receipt bindings reject stale cleanup and Ready acknowledgements. Tailnet execution revision and cleanup proof come from independent authenticated receipts. Schema/CEL/CAS fixtures and 24 operation/status combinations do not prove a running controller. The 384 domain checks and 384 additional-field checks do not prove 768 negative live cases. Invalid stale-cleanup or expiry fixtures do not establish product defects.
 
 ## Release identity, registry, mirrors and GitHub permissions
 
@@ -157,7 +157,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Prerequisites:** Controlled registry with actual PVC/CSI, BuildKit/CRI clients, configured CA/auth, immutable release bundle and reproducible builds. GitHub checks use actual PR/publication jobs. Reproducible runtime-image inputs and separation of operator configuration from public examples remain incomplete.
 
-**Procedure:** Build from clean source and compare published OCI descriptor/platform digests, deployed pod imageIDs and active role bundle. Restart/move the registry pod; after planned offline garbage collection, pull referenced manifests/layers again and measure unreferenced storage release. Test cache misses and hits through both BuildKit and node CRI, then a defined upstream outage. Record cached hits and uncached misses during that outage separately; an online miss does not satisfy the inherited offline-miss requirement. Trigger stale scanner-database refusal. In actual GitHub jobs, check PR read permissions separately from publication privileges.
+**Procedure:** Build from clean source and compare published OCI descriptor/platform digests, deployed pod imageIDs and active role bundle. Restart/move the registry pod; after planned offline garbage collection, pull referenced manifests/layers again and measure unreferenced storage release. Test cache misses and hits through both BuildKit and node CRI, then a defined upstream outage. Record cached hits and uncached misses during that outage separately; an online miss does not prove behavior during an upstream outage. Trigger stale scanner-database refusal. In actual GitHub jobs, check PR read permissions separately from publication privileges.
 
 **Pass conditions:** The exact tested release is used, without private or mutable substitute references. Data survives real storage/pod changes. Ephemeral-to-PVC changes are not silently accepted as safe upgrades. Offline GC follows an exclusive maintenance procedure. Mirror configuration works in every actual client. A timed-out GHCR call, YAML pin check or Helm render proves neither OCI availability nor effective GitHub permissions. The local Distribution 3.0.0 GC result releasing 65,536 unreferenced bytes is bounded evidence, not CSI/capacity acceptance.
 
@@ -183,7 +183,7 @@ For Redis, PostgreSQL/pgvector, and LiteLLM, write data and execute the document
 
 **Pass conditions:** No success at the wrong revision, data loss or implicit database downgrade/restore. The current combination of `targetRevision: main` and literal comparison with resolved status SHAs is a source-confirmed technical gap, not a demonstrated live outage. Platform autosync and manual child/runtime sync are distinct. Application-server readiness does not establish Devbox pairing.
 
-Local GitOps evidence uses real Git/Helm/Lua/filesystem operations but fixture cluster responses, digests and SQL commands. Native Redis checks and PostgreSQL cryptographic restores retain their actual scope. Historical Qdrant snapshot evidence does not make the retired service part of the current gate. Real scheduling, installed CSI, complete cross-service restore and unresolved infrastructure prerequisites remain separate. Complete application recovery stays open until the platform has full recovery coverage.
+Local GitOps evidence uses real Git/Helm/Lua/filesystem operations but fixture cluster responses, digests and SQL commands. Native Redis checks and PostgreSQL cryptographic restores retain their actual scope. Qdrant snapshot tests do not make the retired service part of the current gate. Real scheduling, installed CSI, complete cross-service restore and unresolved infrastructure prerequisites remain separate. Complete application recovery stays open until the platform has full recovery coverage.
 
 ## Complete user journey and evidence-backed final report
 
@@ -217,12 +217,12 @@ presence does not claim that an execution has occurred.
 - Run the actual process tree with credential drop, host SIGKILL, readable procfs and delegated cgroups. A blocked kernel prerequisite is not a pass.
 - Cause a real cgroup memory-limit failure and read the kernel result. Simulated memory counters are insufficient.
 - Restart the real remote process and read its state through the graph reader. A compiled graph is preparation only.
-- Run the actual sandbox and import its executed JUnit results. Preserve the historical EPIPE/exit-70 failure separately.
+- Run the actual sandbox and import its executed JUnit results. Preserve the recorded EPIPE/exit-70 failure separately.
 - Execute cumulative pipeline checks and deliver the resulting Ready candidate. A final-module-only result is insufficient.
 - Build through the actual BuildKit runner, exercise its real deadline, and preserve final evidence for success, timeout and failure. Local HTTP protocol checks do not prove a container build.
 - Run the original native command runner and verify its executed result artifact and ownership.
-- Approve a real browser baseline, detect a mismatch and perform an authorized refresh. Old blocked v1 checks do not prove this path.
-- Exercise adopted pipeline status errors and durable whole-process ownership. A stale pre-closure subrecord does not reopen locally closed work.
+- Approve a real browser baseline, detect a mismatch and perform an authorized refresh. A blocked browser check does not prove this path.
+- Exercise adopted pipeline status errors and durable whole-process ownership.
 
 ### Prism services and browser
 

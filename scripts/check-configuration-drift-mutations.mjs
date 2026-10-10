@@ -245,8 +245,16 @@ function expectLocalHelmMaintenanceDetected(name, mutate, expectedDiagnostic) {
 }
 
 try {
-  ['charts', 'examples', 'gitops', 'my-values', 'releases', 'scripts', 'skills', 'docker', 'ops', 'tools', 'cmd', 'packaging', 'versions.json', 'docs/generated/inventory', 'docs/site'].forEach(copy);
+  ['charts', 'examples', 'gitops', 'my-values', 'releases', 'scripts', 'skills', 'contracts/agent-observability/v1/src', 'docker', 'ops', 'tools', 'cmd', 'packaging', 'versions.json', 'docs/generated/inventory', 'docs/site'].forEach(copy);
   fs.symlinkSync(path.join(repositoryRoot, 'node_modules'), path.join(temporaryRoot, 'node_modules'), 'dir');
+  // Recreate the ignored observer contract from canonical source in this fixture.
+  // Copied host-generated output must never substitute for that authority.
+  const observerContractSync = spawnSync(process.execPath, ['skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs'], {
+    cwd: temporaryRoot,
+    encoding: 'utf8',
+  });
+  assert.ifError(observerContractSync.error);
+  assert.equal(observerContractSync.status, 0, `isolated observer contract synchronization failed\n${observerContractSync.stdout}\n${observerContractSync.stderr}`);
   const runtimeSemantics = runGenerator('--check-runtime-consumer-semantics-only');
   assert.equal(runtimeSemantics.status, 0, `runtime consumer semantic checks failed\n${runtimeSemantics.stdout}\n${runtimeSemantics.stderr}`);
   console.log(runtimeSemantics.stdout.trim());

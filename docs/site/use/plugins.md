@@ -276,8 +276,17 @@ a run, or prove a dependency. Treat compilation as code admission: approved plug
 modules are loaded even though no pipeline work starts.
 
 A run then starts adapters in dependency order and awaits each adapter's
-`ready()` result. Startup failure revokes the started contexts and attempts
-bounded shutdown; no partially started adapter set becomes the usable runtime.
+`ready()` result. The host races each factory and readiness call against
+`shutdownTimeoutMs`. A readiness failure first revokes the failing adapter's
+context and awaits its shutdown. Only after that cleanup settles can the outer
+startup rollback revoke the other started contexts and attempt their shutdown.
+No partially started adapter set becomes the usable runtime.
+Failed-readiness teardown and startup rollback abort their shutdown signal after
+`shutdownTimeoutMs`, but still await the adapter's shutdown promise. An adapter
+that ignores the signal can therefore leave run startup pending indefinitely.
+Pending failed-readiness cleanup also delays the outer rollback, so the earlier
+adapters' contexts have not yet been revoked by that rollback.
+See [adapter startup and shutdown limits](../understand/plugin-runtime.md#activation-is-fail-closed).
 This startup transaction cannot reverse an external effect already accepted by
 a service. After compile succeeds, start the controlled project only during its
 approved window:
@@ -291,9 +300,14 @@ npm run pipeline -- \
   --audit "<run-id>"
 ```
 
-Take `<run-id>` from the first command. Stop on adapter startup or readiness failure. Retain the adapter ID, dependency,
-configuration digest, and shutdown outcome. Restore the dependency through its
-owner and reconcile any uncertain external effect before retry. A process start
+Take `<run-id>` from the first command when it returns one. Stop new admission on
+adapter startup or readiness failure, or when startup remains pending after its
+timeout. Retain the adapter ID, dependency, configuration digest, elapsed time,
+available run identity, and known or unresolved shutdown outcome. Do not treat
+the timeout or a process stop as proof that cleanup completed. The plugin-runtime
+maintainers own a stuck startup; the adapter owner must establish cleanup and
+remaining resource ownership. Restore the dependency through its owner and
+reconcile any uncertain external effect before retry. A process start
 proves only that the process exists; adapter readiness proves its declared
 startup checks; the controlled project's terminal result proves the selected
 business operation.
@@ -367,4 +381,4 @@ before [atomically publishing the package](https://github.com/datrab/kubeclaw/bl
 while removal accepts only a direct child of the installation root
 ([implementation](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/foundation/packages/install.ts#L220-L234)).
 
-Compilation [prepares and validates the admitted registry](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine.ts#L18-L22), including [enabled module imports](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine-runtime.ts#L29-L41). Run startup [publishes the adapter set only after startup succeeds](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/adapters.ts#L34-L49). The starter [orders dependencies, calls factories and readiness, and rolls back a failure](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/adapter-startup.ts#L25-L61). Live external plugin activation has no verified outcome for this procedure.
+Compilation [prepares and validates the admitted registry](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine.ts#L18-L22), including [enabled module imports](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine-runtime.ts#L29-L41). Run startup [publishes the adapter set only after startup succeeds](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapters.ts#L43-L49). The starter [orders dependencies, calls factories and readiness, and attempts rollback on failure](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapter-startup.ts#L25-L61). Its [factory and readiness timeout race](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapter-support.ts#L15-L18) does not bound the awaited [failed-readiness teardown and startup rollback](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapter-startup.ts#L144-L165). Live external plugin activation has no verified outcome for this procedure.

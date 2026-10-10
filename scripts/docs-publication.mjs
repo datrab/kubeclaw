@@ -272,9 +272,9 @@ function pluginPage(plugin) {
     'Owner: plugin-foundation',
     `Evidence: ${rel(file)}; ${rel(guide)}`,
     `Applies to: ${manifest.apiVersion}; package ${manifest.packageVersion}`,
-    `Last verified: see the separate verification record; generated source evidence revision ${sourceRevision}; authored guidance evidence revision ${guidance.evidenceRevision}`,
+    `Last verified: source facts revision ${sourceRevision}; package behavior sources revision ${guidance.evidenceRevision}. Local command results and their limits appear under Package Checks.`,
     '',
-    '## Authored Guidance',
+    '## Purpose',
     '',
     authored?.purpose ?? 'Authored guidance is missing.',
     '',
@@ -302,7 +302,7 @@ function pluginPage(plugin) {
     '- [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)',
     '- [Host and engine boundaries](../host-and-engine.md)',
     '',
-    '## Generated Package Facts',
+    '## Package Reference',
     '',
     `- Host: \`${host}\`.`,
     `- Package identity: \`${manifest.id}@${manifest.packageVersion}\`.`,
@@ -381,18 +381,18 @@ function pluginPage(plugin) {
       'Registry validation checks declared paths, schemas, and capability names.',
       'Activation or the Buster loader checks executable exports; discovery does not import package code.',
       'The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.',
-      'Nova or Buster records a bounded failure without giving the package lifecycle authority.',
+      'The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.',
+      'Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).',
     ] : openclaw ? [
       'OpenClaw rejects invalid host configuration or an unavailable extension module.',
-      'External dependency failure appears in the extension result or bounded diagnostics.',
+      'External dependency failure appears in the extension result or host diagnostics. Check the package-specific request limits before activation.',
     ] : [
       'An absent plugin prevents skill discovery. Missing external tools prevent the diagnostic workflow, not discovery.',
       'The current package has no package-local automated acceptance test.',
     ]),
     '',
-    '## Verification Record',
+    '## Package Checks',
     '',
-    `Catalogue status: \`${mechanical?.auditStatus ?? 'pending'}\`.`,
     `Recorded local command result on ${localVerification.date}: \`${localResult?.result ?? 'not-run'}\`.`,
     '',
     localResult?.reason ?? 'No local verification result exists.',
@@ -404,20 +404,15 @@ function pluginPage(plugin) {
     `Package test files found: ${tests.length}. This is file discovery, not an executed test count.`,
     ...(packageValue.scripts?.test ? ['', 'Exact package test script (run from the package directory):', '', '```text', packageValue.scripts.test, '```'] : []),
     '',
-    'The catalogue status does not claim live host or cluster acceptance.',
+    'Local package checks do not prove live host or cluster readiness.',
     'The result above states the exact local limit. Run the package command in the target environment before activation.',
     '',
     '## Source Evidence',
     '',
     `- Manifest: ${sourceLink(rel(file), file)}`,
-    `- Authored package guide: ${sourceLink(rel(guide), guide)}`,
+    `- Package implementation guide: ${sourceLink(rel(guide), guide)}`,
     ...registrations.filter((item) => item.module).map((item) => `- Module for \`${item.id}\`: ${sourceLink(item.module, path.join(directory, item.module))}`),
     ...tests.map((target) => `- Test: ${sourceLink(rel(target), target)}`),
-    '',
-    'Generated facts come from the manifest, package metadata, runtime-role inventory,',
-    'schemas, and test-file discovery. Maintained guidance data owns the purpose,',
-    'use, exclusion, and limit text. Publication can refresh facts without inventing or',
-    'silently replacing those explanations.',
   );
   return `${lines.join('\n')}\n`;
 }
@@ -494,7 +489,7 @@ function registrationDependencyFacts(plugin, registration) {
   const roles = plugin.mechanical?.includedRoles ?? [];
   const namespace = plugin.openclaw ? 'OpenClaw host activation and tool configuration'
     : plugin.codex ? 'Codex host MCP connection'
-      : ['test provider', 'report adapter'].includes(registration.kind) || roles.length === 1 && roles[0] === 'buster' ? 'Buster resolved-plan runtime routes'
+      : ['test provider', 'report adapter'].includes(registration.kind) ? 'Buster resolved-plan runtime routes'
         : roles.length === 1 && roles[0] === 'nova' ? 'Nova platform grants and adapter selection'
           : 'selected pipeline runtime capability binding';
   // A capability identifies an authority boundary. It does not identify the

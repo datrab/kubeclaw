@@ -14124,6 +14124,143 @@
       "description": "Source-author full-scope audit found global failure screen hides controls after pending natural revision or direction errors; helper replay/in-memory identity does not provide an executable UI recovery action.",
       "correctionAuthor": "/root/a98_reference_writer",
       "draftSha256": "32e519b304604708adcf0af22e3d478e9d54e4e521965efa725a293784580247"
+    },
+    {
+      "id": "A98-STARTUP-ROLLBACK-COOPERATIVE-TIMEOUT",
+      "reportedAtRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "state": "corrected-source-or-authored-prose-pending-generation-and-new-independent-review",
+      "pages": [
+        "docs/site/use/plugins.md",
+        "docs/site/understand/plugin-runtime.md"
+      ],
+      "catalogueIds": [
+        "OPL-003",
+        "OPL-005"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-04",
+        "A98-06",
+        "A98-13"
+      ],
+      "description": "Failed-readiness cleanup and startup rollback abort a signal but await shutdown without an enforced completion race; adapter ignoring abort can keep startup pending. Actual tracked adapter-startup.ts151\u2013165 contradicts bounded rollback prose.",
+      "evidenceBoundary": "Prior live reviewer messages identified finding; final /tmp report and probe artifacts unavailable after session migration. Source/prose revalidation and new independent full-scope acceptance required.",
+      "correctionLimit": "No full requirement/gate acceptance. Publication changes require regeneration; authoritative issue fields remain current product facts, not status closures."
+    },
+    {
+      "id": "A98-PRISM-READINESS-ROUTE-MODE",
+      "reportedAtRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "state": "corrected-source-or-authored-prose-pending-generation-and-new-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-04",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Chart worker readiness checks /bootstrap, native reconciliation only. /ready checks nonce database only HMAC; SPIFFE /ready does not. Worker pod readiness cannot establish database readiness.",
+      "evidenceBoundary": "Prior live reviewer messages identified finding; final /tmp report and probe artifacts unavailable after session migration. Source/prose revalidation and new independent full-scope acceptance required.",
+      "correctionLimit": "No full requirement/gate acceptance. Publication changes require regeneration; authoritative issue fields remain current product facts, not status closures."
+    },
+    {
+      "id": "A98-READER-SEMANTIC-WORK-HISTORY",
+      "reportedAtRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "state": "corrected-source-or-authored-prose-pending-generation-and-new-independent-review",
+      "pages": [
+        "docs/status/open-issues.json",
+        "docs/site/status/acceptance.md",
+        "scripts/docs-publication.mjs"
+      ],
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Reader-linked status pages and generated guides retain closed-finding bookkeeping, catalogue progress and authoring workflow. Preserve product issues and actual command evidence while removing internal work history.",
+      "evidenceBoundary": "Prior live reviewer messages identified finding; final /tmp report and probe artifacts unavailable after session migration. Source/prose revalidation and new independent full-scope acceptance required.",
+      "correctionLimit": "No full requirement/gate acceptance. Publication changes require regeneration; authoritative issue fields remain current product facts, not status closures."
+    },
+    {
+      "id": "A98-BUSTER-PACKAGING-NOT-ADAPTER-BINDING",
+      "reportedAtRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "state": "corrected-source-or-authored-prose-pending-generation-and-new-independent-review",
+      "pages": [
+        "scripts/docs-publication.mjs",
+        "docs/site/use/plugins.md"
+      ],
+      "catalogueIds": [
+        "OPL-003",
+        "OPL-004"
+      ],
+      "acceptanceIds": [
+        "A98-04",
+        "A98-06"
+      ],
+      "description": "Buster-only package inclusion does not prove Buster resolved-plan selection of its Foundation capability adapter registration. Direct command runtime uses CommandRunner library through DirectCommandCapabilityInvoker, not registration activate().",
+      "evidenceBoundary": "Prior live reviewer messages identified finding; final /tmp report and probe artifacts unavailable after session migration. Source/prose revalidation and new independent full-scope acceptance required.",
+      "correctionLimit": "No full requirement/gate acceptance. Publication changes require regeneration; authoritative issue fields remain current product facts, not status closures."
+    },
+    {
+      "id": "A98-PRISM-PORTABLE-CHECKSUM",
+      "reportedAtRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "state": "corrected-source-or-authored-prose-pending-generation-and-new-independent-review",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-03",
+        "A98-13"
+      ],
+      "description": "Documented sha256sum --check fails on BusyBox; portable -c supports the same checksum check. Bootstrap success does not repair a later unsupported flag.",
+      "evidenceBoundary": "Prior live reviewer messages identified finding; final /tmp report and probe artifacts unavailable after session migration. Source/prose revalidation and new independent full-scope acceptance required.",
+      "correctionLimit": "No full requirement/gate acceptance. Publication changes require regeneration; authoritative issue fields remain current product facts, not status closures."
+    },
+    {
+      "id": "A98-HELM-COLLECTION-FIELD-LOSS",
+      "reportedAtRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "reportedBy": "/root/a98_helm_source_fresh_current",
+      "state": "open",
+      "pages": [
+        "docs/site/reference/helm-values.md",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-configuration-inventory.mjs"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Fresh Helm Source reviewer reports canonical renderer excludes object/array fields; 1613 nonroot structural/maps/list entries over67 discovered files require actual collection semantics, not leaf-count proxy. Review complete report still pending.",
+      "evidenceBoundary": "Active read-only independent Source partition, report pending; root has not claimed whole gates or independently verified each render."
+    },
+    {
+      "id": "A98-HELM-DEFAULT-AND-CONSTRAINT-SEMANTICS",
+      "reportedAtRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "reportedBy": "/root/a98_helm_source_fresh_current",
+      "state": "open",
+      "pages": [
+        "docs/site/reference/helm-values.md",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-configuration-inventory.mjs"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Fresh Helm Source probes contradict revision free-form Git claim (template requires lowercase40hex), policy empty-value removal claim (falls back to chart files), gateway empty disables claim (localhost fallback), and Prism Always pull policy (schema allows only IfNotPresent/Never). Full scope corrections and independent re-review required.",
+      "evidenceBoundary": "Active read-only independent Source partition, report pending; root has not claimed whole gates or independently verified each render."
     }
   ],
   "checks": [
@@ -14488,6 +14625,38 @@
       "log": "/tmp/kubeclaw-a98-prism-interruption-validate.log",
       "logSha256": "cd419b0024b4770b6e544808751a2e83cd9a2f93b440cad3164f58a07bf17516",
       "scope": "127 pinned links41 files,31 local links,9 preserved Bash blocks syntax only, controlled language and draft guide check pass. No independent acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/plugin-source-closure.test.mjs scripts/tests/plugin-dependency-boundaries.test.mjs",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/home/node/Documents/Codex/a98-evidence/publication-correction-helper-tests.log",
+      "scope": "32 helper tests, none skipped; not generated-page semantics or full Source acceptance."
+    },
+    {
+      "command": "npm run docs:site-boundary:check",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/home/node/Documents/Codex/a98-evidence/current-corrections-boundary.log",
+      "scope": "Final invocation after correcting reader evidence wording. Regex pass is not complete semantic work-language acceptance."
+    },
+    {
+      "command": "node scripts/docs-check-refs.mjs",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/home/node/Documents/Codex/a98-evidence/current-corrections-refs.log",
+      "scope": "3836 links1744 anchors6707 repository paths20960 pins. After correcting exact D12 anchor and source-callout revision; pin validity is not technical semantic proof."
+    },
+    {
+      "command": "node scripts/check-configuration-drift-mutations.mjs --schema-semantics-only",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/home/node/Documents/Codex/a98-evidence/clean-mutation-fixture-schema-semantics.log",
+      "scope": "Author isolated clean7c snapshot with only corrected runner; canonical sync, runtime semantics and schema semantics, no full mutation suite."
     }
   ],
   "reviewAssignments": [
@@ -14860,13 +15029,29 @@
       "artifactIndex": "/tmp/kubeclaw-a98-reader-round4-artifact-index.json",
       "artifactIndexSha256": "6dd64070b6fe0fdfff12e7622bb3ba317fad85e794e1f75f3cf2e3f6ac9dfbd7",
       "evidenceProvenance": "Administrative report records exact previously executed stdin and captured tool-output transcripts. Saved fixture files themselves were not rerun. Supplied author logs remain explicitly separate."
+    },
+    {
+      "agent": "/root/a98_helm_source_fresh_current",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "reviewedRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "state": "running",
+      "scope": [
+        "CFG-009 full Helm/GitOps/infrastructure partition"
+      ],
+      "scopeLimit": "Does not accept complete A98-10/11 or other configuration families.",
+      "artifactDirectory": "/home/node/Documents/Codex/a98-evidence/helm-source-current-7c85236"
     }
   ],
   "continuation": {
-    "stage": "AP09.8 independent Source/Quality/Reader material findings corrected; integrated link/boundary/helper checks passed; source commit and shared generation next; fresh acceptance still open",
+    "stage": "AP09.8 material lifecycle/readiness/reader-language corrections integrated and scoped checks passed; full independent acceptance remains open",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Commit verified authored/source changes only; generate against exact newsource SHA with separate generated commit; all applicable freshness/publication/config/mutation gates to terminal. New fresh Source/Reader/Quality reviews required after correction, followed by Astra only when complete Sol evidence. No parity/deletion before AP09.8 acceptance.",
+    "next": "Commit checked authored/source corrections; preserve frozen Helm source scope. Regenerate in separate commit against source SHA after scope release, run required gates and full mutation suite from clean corrected snapshot. Fix Helm collection/default/constraint findings; new full affected Source/Reader/Quality reviews and Astra still required.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -14875,13 +15060,15 @@
       "/root/a98_operator_writer",
       "/root/a98_reference_writer"
     ],
-    "currentMutationSession": 35062,
-    "currentMutationLog": "/tmp/kubeclaw-a98-current-config-mutations.log",
+    "currentMutationSession": 52519,
+    "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7c85236.log",
     "currentMutationSnapshot": "b35311ad8db0946f44286b4a26a99e8676f44de4",
-    "agents": [],
+    "agents": [
+      "/root/a98_helm_source_fresh_current"
+    ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
-    "currentMutationState": "unproven-process-handle-missing-on-resumption",
+    "currentMutationState": "terminal exit 1 before mutations: clean fixture omitted canonical observer contract synchronization; runner corrected, focused clean-snapshot semantic checks passed; full rerun pending source commit",
     "consumerWriterFinished": {
       "agent": "/root/a98_config_writer",
       "paths": [
@@ -15098,7 +15285,41 @@
       "actualChecks": "17 linked contracts,3config, originalControl/PGlite HTTP and evaluation reservation; deploy source.9Bash syntax only; materialization expected ENOENT. No full bootstrap/browser/live acceptance.",
       "correctionState": "History API vs UI, data URLs and supporting failure range corrected; fresh full affected Reader review required"
     },
-    "pluginSourceCorrectionState": "Author implemented F1-F6 and38helper tests; all70rows retained. Current pin, host namespaces, credential selector, boundary owners,11runtime consumer routes and9GNUflock dependencies corrected. Full fresh independent semantic Source review still required;0diagnostics is not acceptance."
+    "pluginSourceCorrectionState": "Author implemented F1-F6 and38helper tests; all70rows retained. Current pin, host namespaces, credential selector, boundary owners,11runtime consumer routes and9GNUflock dependencies corrected. Full fresh independent semantic Source review still required;0diagnostics is not acceptance.",
+    "currentMutationRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+    "priorSessionRevalidation": {
+      "date": "2026-10-10",
+      "session": 73994,
+      "result": "Unknown process id; process listing confirms no previous mutation runner. Prior /tmp review directories and logs absent. No final PASS inferred.",
+      "localAndRemoteRevision": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+      "initialWorktree": "clean"
+    },
+    "evidenceAvailability": "Historical checks in this matrix retain their originally recorded scope and outcome. Missing /tmp artifacts are not current inspectable acceptance evidence; required current checks and independent reviews must be recreated and saved durably.",
+    "currentMutationExitCode": 1,
+    "authorReports": [
+      {
+        "agent": "/root/a98_status_reader_language_writer",
+        "files": [
+          "docs/status/open-issues.json",
+          "docs/site/status/acceptance.md"
+        ],
+        "scope": "20 product issues preserved; semantic work-history removed; generation and independent acceptance pending."
+      },
+      {
+        "agent": "/root/a98_lifecycle_readiness_portability_writer",
+        "files": [
+          "docs/site/use/plugins.md",
+          "docs/site/understand/plugin-runtime.md",
+          "docs/site/use/prism-studio.md"
+        ],
+        "scope": "Startup cleanup sequencing and pending rollback, readiness route/mode, portable -c; BusyBox checks only, no GNU execution claimed."
+      },
+      {
+        "agent": "/root/a98_clean_mutation_fixture_writer",
+        "report": "/home/node/Documents/Codex/a98-evidence/clean-mutation-fixture-writer-report.md",
+        "scope": "Only runner fixture copy/sync; no gate weakening."
+      }
+    ]
   },
   "productBoundaries": [
     {

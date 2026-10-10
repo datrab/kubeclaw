@@ -519,8 +519,38 @@ bound_kubectl exec -n "$prism_namespace" deployment/agent-prism -c kubeclaw -- o
 ```
 
 If the worker is not ready, do not bypass the readiness probe.
-Readiness proves native ownership reconciliation and database nonce access.
-Liveness only proves that the process can answer.
+Interpret each health result at its own boundary:
+
+| Signal | What it proves | What still needs a separate check |
+| --- | --- | --- |
+| Worker Pod readiness: `GET /bootstrap` | Native ownership reconciliation is complete. | Nonce-table access, service authentication, and a functional worker attempt. |
+| Worker `GET /ready`, HMAC mode | Native ownership is ready and the worker can query its PostgreSQL nonce table. | Successful authenticated attempt execution. |
+| Worker `GET /ready`, SPIFFE mode | Native ownership is ready; this route does not query the nonce database. | SPIFFE authentication and successful attempt execution. |
+| Worker `GET /health` | The HTTP process can answer. | Native ownership and dependency readiness. |
+| Control `GET /ready` and PostgreSQL `pg_isready` | Control can execute `SELECT 1`; PostgreSQL is accepting connections. | Worker nonce-table access and the complete Studio journey. |
+
+The chart uses worker `/bootstrap` for Pod readiness so that the post-install
+migration can create the nonce table after the Pod becomes ready. The smoke
+command separately calls worker `/ready`. The chart default has
+`workerTrust.spiffe.enabled: false`; determine the actual mode from the selected
+values and render. The absent runtime release selection establishes no deployed
+mode. Use the canonical [Worker endpoints](../understand/prism-runtime.md#worker-endpoints)
+explanation for these boundaries. Keep admission closed on failed native
+reconciliation or, in HMAC mode, failed nonce-table access.
+
+> **Source evidence — worker and dependency health**
+>
+> **Claim:** Worker Pod readiness and worker dependency readiness are different checks.
+>
+> **Implementation:** The worker [checks native readiness and conditionally checks the nonce database](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/prism/server/worker-service.ts#L72-L86); its [health and bootstrap routes have separate meanings](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/prism/server/worker-service.ts#L95-L105). Control [checks PostgreSQL with `SELECT 1`](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/prism/server/control-server.ts#L143-L147). The smoke command [calls both service readiness routes and `pg_isready`](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/scripts/deploy.sh#L1802-L1811).
+>
+> **Contract or setting:** The chart [selects worker `/bootstrap` and liveness `/health`](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/charts/prism/templates/workloads.yaml#L157-L162) and [defaults SPIFFE to disabled](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/charts/prism/values.yaml#L75-L84). The nonce check [queries the exact nonce table](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/prism/server/worker-readiness.ts#L8-L10).
+>
+> **Test evidence:** The [Helm fixture checks worker bootstrap readiness and health liveness](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/prism/tests/worker-readiness-chart.test.mts#L6-L15). No executed result for this fixture is recorded here.
+>
+> **Revision:** `7c85236b9a1992466ceb33b64f657062be57b4dd`
+>
+> **Limit:** Probe definitions do not establish a rendered selected release, live dependency health, authenticated worker attempt, or completed Studio journey.
 
 ## The Complete Studio Journey
 
@@ -1373,11 +1403,14 @@ run audit and restricted signal submission.
 1. Check `/health`, `/bootstrap`, and `/ready` separately.
 2. Inspect native worker reconciliation diagnostics.
 3. Verify the selected node, pool namespace, policy digest, engine content digest,
-   cgroup v2 pool, ownership store, journal, and nonce database.
+   cgroup v2 pool, ownership store, and journal. In HMAC mode, also verify nonce
+   database access and migration state through worker `/ready`.
 4. Keep admission closed until all retained ownership is reconciled.
 
 Reason: a healthy process can still be unsafe to admit because a previous attempt
-or process tree has unresolved ownership.
+or process tree has unresolved ownership. Pod readiness uses `/bootstrap`; only
+HMAC-mode `/ready` also checks nonce-table access. Follow the [health signal
+boundaries](#4-verify-status-and-smoke-behavior) before interpreting a successful probe.
 
 ### Deployment failed during migration
 
@@ -1424,7 +1457,7 @@ directory-sync steps before it acknowledges an object.
 | Publication fails or its reply disappears | Original approval, worker capture, artifact write, or baseline commit | Original approval ID, worker receipt, full log artifact, target ID and baseline record | Stop. Reconcile approval/publication separately; another Approve click cannot replay the original baseline request. |
 | Nova rejects resume | Wait, issuer, architecture, approval, or bundle identity | Nova signal validation and Prism stage reason | Correct the unsigned signal through the restricted Nova CLI. Issuer matching does not authenticate its caller. |
 | Nova rejects archive | Stored bytes or archive member contract | Exact `PRISM_ARCHIVE_*` error | Preserve evidence and diagnose. Do not bypass verification. |
-| Worker returns 503 on `/ready` | Native reconciliation or nonce database | Readiness JSON and worker diagnostic event | Restore the dependency or reconcile ownership before admission. |
+| Worker returns 503 on `/bootstrap` or `/ready` | Native reconciliation; HMAC-mode `/ready` can also fail on nonce-table access | Exact endpoint, selected authentication mode, readiness JSON error, and worker diagnostic event | Reconcile ownership or restore the HMAC nonce dependency before admission; a successful Pod probe does not prove nonce access. |
 
 Control currently writes request failures to process logs.
 Studio and ingestion write structured error records for unhandled request I/O.
@@ -1475,7 +1508,7 @@ set -e
 printf '%s\n' "$prism_bootstrap_status" \
   > "$PRISM_BOOTSTRAP_EVIDENCE_DIR/prism-bootstrap.exit-status.txt"
 test "$prism_bootstrap_status" -eq 0
-sha256sum --check "$PRISM_BOOTSTRAP_EVIDENCE_DIR/prism-lockfiles-before.sha256"
+sha256sum -c "$PRISM_BOOTSTRAP_EVIDENCE_DIR/prism-lockfiles-before.sha256"
 test -d node_modules
 for package in puck-adapter mobile-editor preview-isolation postgres-retrieval; do
   test -d "spikes/prism/$package/node_modules"
@@ -1490,6 +1523,9 @@ Retain the five lockfile digests, sanitized bootstrap output, exit status, and
 directory observations. Apply the canonical checkout-owner cleanup to all five
 installed trees; never delete a path whose ownership or disposability is
 unproven.
+The checksum check uses `-c`, which is supported by both GNU and BusyBox
+`sha256sum`. Keep the same repository working directory so that the recorded
+relative lockfile paths resolve correctly.
 
 After the bootstrap, install Chromium through each package's local Playwright
 version if the machine does not already have the matching cached browser:
@@ -1590,7 +1626,8 @@ A Prism operator journey is complete only when all statements below are true:
 
 - the selected release and code bundle match one reviewed source commit;
 - Prism service and agent releases are ready;
-- the native worker reports ready after ownership reconciliation;
+- the native worker reports ready after ownership reconciliation; in HMAC mode,
+  worker `/ready` also confirms nonce-table access;
 - Control stored the intended active architecture digest and revision;
 - the agent committed exactly three current directions;
 - a human selected one direction and reviewed the exact current revision;

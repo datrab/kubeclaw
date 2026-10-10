@@ -16,7 +16,7 @@
   "status_semantics": {
     "open": "The cause, contract or implementation remains open within the stated scope.",
     "in-progress": "A bounded partial implementation or analysis exists; the whole finding remains incomplete.",
-    "partially-implemented": "Inherited original-register status for partial implementation. remaining_work still contains code work; this is not synonymous with locally verified."
+    "partially-implemented": "Part of the implementation exists. The remaining work still requires code changes; complete local verification is not established."
   },
   "verification_policy": "Reproduction steps and completion criteria describe work to perform unless a record explicitly identifies completed execution. Native and live status stay separate. Source links are commit-pinned; mutable GitHub issue state has a read date.",
   "issues": [
@@ -35,7 +35,7 @@
         "Report adapters",
         "Shared Worker Core"
       ],
-      "current_state": "Core now performs early and final resource observations. runner.measure still reads instance.resources(); moving the observation later does not create exclusive whole-attempt ownership. Related locally closed Prism/Core findings are not reopened. Durable fixture readiness/control, separate readiness/completion promises, a bounded fourth process pipe and native launcher ownership primitives exist as locally tested building blocks. The production runner still constructs LocalWorkerRuntime; the native lifetime API is not its production execution path.",
+      "current_state": "Core now performs early and final resource observations. runner.measure still reads instance.resources(); moving the observation later does not create exclusive whole-attempt ownership. Durable fixture readiness/control, separate readiness/completion promises, a bounded fourth process pipe and native launcher ownership primitives exist as locally tested building blocks. The production runner still constructs LocalWorkerRuntime; the native lifetime API is not its production execution path.",
       "remaining_work": [
         "Integrate durable attempt/claim-bound local execution ownership across Core and Buster, including provider work, parent capability execution, browser/command children, adapters, evidence and finalization.",
         "Define aggregate measurement and hard budget enforcement. Distinguish cumulative CPU from CPU rate and processes from cgroup tasks. Required missing observations must fail. Declare remote BuildKit/Kubernetes work separately.",
@@ -77,19 +77,19 @@
           "path": "skills/buster/engine/test-gates/runner.ts",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/runner.ts",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "skills/buster/engine/test-gates/provider-loader.ts",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/provider-loader.ts",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "skills/worker/core/worker/attempt-executor.ts",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/worker/core/worker/attempt-executor.ts",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/remediation/implementation/attempt-resource-accountability-boundary.md",
@@ -158,7 +158,7 @@
       ],
       "evidence": {
         "assessment": "The pinned implementation establishes the remaining quiescence gap. Local checks cover only the bounded behavior described below; no live environment result is available.",
-        "prior_verification": "Partial. Buster records both a failed durable terminal-status write and an actual status-read failure as fatal service errors, preserving both causes. Shutdown waits for active admission work. The independent quota, lock and corruption cases passed 7 of 7 checks; the root cases passed 6 of 6 checks and the type check passed. Data remains unchanged.",
+        "prior_verification": "Partial. Buster records both a failed durable terminal-status write and an actual status-read failure as fatal service errors, preserving both causes. Shutdown waits for active admission work. The quota, lock and corruption suite passed all 7 checks. A separate suite passed all 6 checks, and the type check passed. Data remains unchanged.",
         "implementation_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
         "superseded_results": [
           "Two original corrupt-status-store red runs produced SyntaxError while readiness stayed BUSTER_READY and shutdown fulfilled. Corrupt bytes were preserved; nativeProviderExecuted=false.",
@@ -180,13 +180,13 @@
           "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/remote-plan-service.ts",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/terminal-workspace.ts",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/remediation/implementation/buster-orphan-recovery-boundary.md",
@@ -250,7 +250,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "The pinned implementation establishes the remaining connected-retirement gap. No new test rerun or live environment result is available.",
-        "prior_verification": "Partial: telemetry, admission and imported attempt-result copies were checked with actual quota release and preserved replay. Independent attempt-v2 checks: 19/19. Integrated root checks: 45/45, no skips. Complete retention across the remaining stores and references remains open.",
+        "prior_verification": "Partial: telemetry, admission and imported attempt-result copies were checked with actual quota release and preserved replay. The attempt-v2 suite passed all 19 checks. The integrated suite passed all 45 checks with no skips. Complete retention across the remaining stores and references remains open.",
         "implementation_commit": "27315faad862f71df940ed32bc4e5a98eca72e0d"
       },
       "sources": [
@@ -268,25 +268,25 @@
           "path": "scripts/observability-retirement-plan.mjs",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/observability-retirement-plan.mjs",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "scripts/retire-nova-dispatch.mjs",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/retire-nova-dispatch.mjs",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "scripts/retire-operator-request.mjs",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/retire-operator-request.mjs",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/remediation/implementation/run3-observability-next-package.md",
@@ -365,13 +365,13 @@
           "path": "tests/verification/deployment/runtime-tool-locks-native.mjs",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/runtime-tool-locks-native.mjs",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "tests/verification/deployment/go-tool-locks-native.mjs",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/go-tool-locks-native.mjs",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         }
       ]
     },
@@ -389,7 +389,7 @@
         "Chart values",
         "Installation documentation"
       ],
-      "current_state": "The original finding remains open. Its historical future-publication trigger does not make the remaining separation work complete today. Actual values are referenced by path rather than copied into this register.",
+      "current_state": "Operator-specific configuration still requires separation from public examples. Actual values are referenced by path rather than copied into this register.",
       "remaining_work": [
         "Separate operator configuration from fully parameterized fictional examples; document namespace, routing, identity and external-secret interfaces.",
         "Inspect current Git/build/artifact scope and relevant history for sensitive leftovers and report precise search limits. A history rewrite needs its own concrete decision."
@@ -425,7 +425,7 @@
           "path": "my-values/nova-values.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/nova-values.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/infrastructure/public-config.md",
@@ -448,7 +448,7 @@
         "Argo/Ops/Prism Ingress",
         "External Tailnet configuration"
       ],
-      "current_state": "Repository values, Ingress resources and access documentation exist. Their presence does not prove external ACLs, authorized users or recovery without the operator. Historical unpinned-chart wording is not this finding's remaining scope.",
+      "current_state": "Repository values, Ingress resources and access documentation exist. Their presence does not prove external ACLs, authorized users or recovery without the operator.",
       "remaining_work": [
         "Document each Ingress purpose, authorized identities, tag owners, OAuth permissions, HTTPS/DNS requirements and backend authentication without exposing credentials.",
         "Record ownership of an existing externally managed operator versus the installer and the independent recovery path."
@@ -483,7 +483,7 @@
           "path": "my-values/infra/tailscale-operator-values.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/tailscale-operator-values.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/deployment/tailscale-operator.md",
@@ -495,7 +495,7 @@
           "path": "charts/prism/templates/services.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/templates/services.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         }
       ]
     },
@@ -548,7 +548,7 @@
           "path": "docker/buster-runtime-entrypoint.sh",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docker/buster-runtime-entrypoint.sh",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/infrastructure/buildkit.md",
@@ -614,7 +614,7 @@
           "path": "scripts/deploy.sh",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/deploy.sh",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/deployment/setup-flow.md",
@@ -680,13 +680,13 @@
           "path": "scripts/deploy-cilium.sh",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/deploy-cilium.sh",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "my-values/infra/cilium-cluster-policies.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/cilium-cluster-policies.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/infrastructure/cilium-migration.md",
@@ -710,7 +710,7 @@
         "Envoy SDS",
         "Worker identities"
       ],
-      "current_state": "Values and peer bindings are documented. Historical upstream defaults do not establish the effective rendered recommendations or an actual recovery-time guarantee.",
+      "current_state": "Values and peer bindings are documented. Chart defaults do not establish the effective rendered settings or an actual recovery-time guarantee.",
       "remaining_work": [
         "Fully render the currently pinned charts and determine server PVC/datastore, CA retention, SVID/CA TTL and effective permissions.",
         "Specify secured CA/server state, credential authority, tolerated outage and revocation limits."
@@ -745,7 +745,7 @@
           "path": "my-values/infra/spire-values.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/spire-values.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/security/worker-trust.md",
@@ -776,7 +776,7 @@
         "Prism DB/artifacts/backups",
         "Paperless"
       ],
-      "current_state": "Stateful image/chart pins and preflight checks have partial fixes. Historical storage-review totals are not current measurements. The optional host-pool profile is a configuration budget, not observed available capacity.",
+      "current_state": "Stateful image/chart pins and their release preflight checks do not measure current node or disk capacity. The optional host-pool profile defines a configuration budget; it does not establish observed available capacity.",
       "remaining_work": [
         "Combine current rendered requests/limits and actual allocatable/disk values, including DaemonSets, surge, jobs and Paperless reserve.",
         "Budget ephemeral/PVC/cache/backup growth and align quotas with permitted manual retention."
@@ -817,13 +817,19 @@
           "path": "charts/prism/templates/workloads.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/templates/workloads.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/remediation/implementation/pr6-stateful-upgrade-checkpoint.md",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-stateful-upgrade-checkpoint.md",
           "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "scripts/stateful-release-preflight.mjs",
+          "commit": "7c85236b9a1992466ceb33b64f657062be57b4dd",
+          "url": "https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/scripts/stateful-release-preflight.mjs#L19-L39",
+          "scope": "The release preflight checks StatefulSet and PVC compatibility. It does not measure free node or disk capacity."
         }
       ]
     },
@@ -885,13 +891,13 @@
           "path": "charts/prism/files/prism-backup.sh",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/files/prism-backup.sh",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "tests/verification/deployment/prism-backup.test.mts",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/prism-backup.test.mts",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/remediation/implementation/pr6-prism-backup-groups.md",
@@ -939,7 +945,7 @@
         "Tailscale",
         "CNI/API/PVC"
       ],
-      "current_state": "Independent host access is an operator statement. Current chart defaults use execNamespaces=[kubeclaw] and mount a token/kubeconfig in Codex; the historical observer-only description is not the current permission contract. MCP tool mode and Kubernetes identity must be distinguished.",
+      "current_state": "Independent host access is an operator statement. Current chart defaults use execNamespaces=[kubeclaw] and mount a token/kubeconfig in Codex. MCP tool mode does not by itself establish the Kubernetes identity's permissions.",
       "remaining_work": [
         "Document the cluster-dependent convenience path and independent host/KVM/external recovery path with separate credentials, DNS/network prerequisites and responsibilities.",
         "Capture the actual rendered Codex/MCP permissions. execNamespaces=[] disables optional exec access but does not create independent recovery access."
@@ -974,13 +980,13 @@
           "path": "charts/ops-pod/values.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/ops-pod/values.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "charts/ops-pod/templates/workload.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/ops-pod/templates/workload.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/review/infrastructure/ops-pod.md",
@@ -1038,13 +1044,13 @@
           "path": ".github/workflows/release-security.yaml",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/.github/workflows/release-security.yaml",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "scripts/updates/scan-releases.mjs",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/updates/scan-releases.mjs",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         }
       ]
     },
@@ -1086,19 +1092,19 @@
           "path": "scripts/gitops-continuous.mjs",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/gitops-continuous.mjs",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "charts/gitops/files/application-health.lua",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/gitops/files/application-health.lua",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "tests/verification/deployment/gitops-health.test.mjs",
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/gitops-health.test.mjs",
-          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+          "scope": "Pinned source. Verification scope and limits are stated above."
         },
         {
           "path": "docs/blueprint/review-ledger.jsonl",
@@ -1136,7 +1142,7 @@
         "Projection tests, persisted policy identity and published contract agree, including fixed-reference-time replay and event retraction.",
         "Any historical snapshot compatibility or migration rule is explicit; approval and implementation states remain distinguishable."
       ],
-      "live_validation": "This is a contract/implementation alignment task that can be verified locally. It does not assert a deployed incident or reopen an original 154 finding.",
+      "live_validation": "This contract/implementation alignment task can be verified locally. No deployed incident is established.",
       "dependencies": [],
       "evidence": {
         "assessment": "Bounded source and existing-test inspection; no preference test execution, product change or inferred policy approval.",
@@ -1359,7 +1365,7 @@
         "Prism control client",
         "Host extension guidance"
       ],
-      "current_state": "The guide no longer describes the existing Prism tools as fully bounded. It distinguishes requirements for a new extension from behavior that Prism currently implements.",
+      "current_state": "The schemas constrain design count but do not set complete text or document limits. The HTTP call has no explicit timeout or cancellation signal.",
       "remaining_work": [
         "Approve explicit request-size, text-size and document-size limits for both Prism tools.",
         "Add an explicit timeout and cancellation propagation contract to the HTTP call.",

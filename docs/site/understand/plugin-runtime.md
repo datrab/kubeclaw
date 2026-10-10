@@ -465,16 +465,54 @@ External capability adapters are rejected.
 An adapter can have startup state, readiness, dependency calls, cleanup, and shutdown behavior. A one-call isolated wrapper cannot preserve those semantics safely.
 The current runtime therefore requires a future persistent isolated adapter host before it can support external adapters.
 
-Adapter startup is transactional. Dependencies start first. Every adapter must activate and become ready. A startup failure rolls back the adapters that already started.
-Shutdown and startup have host-owned time limits.
+Adapter startup is transactional. Dependencies start first. Every selected
+adapter must activate and become ready before the runtime publishes the adapter
+set. The host races each factory and `ready()` call against the platform-owned
+`shutdownTimeoutMs`. A timeout reports
+`ADAPTER_START_TIMEOUT:<adapter-id>:activate` or
+`ADAPTER_START_TIMEOUT:<adapter-id>:ready` and aborts that adapter's lifecycle
+signal. Revoked contexts cannot acquire new capability authority.
+
+A readiness failure first revokes that adapter's lifecycle signal and awaits
+its shutdown. Only after this cleanup settles does the failure reach the outer
+startup handler. Its rollback revokes the remaining started contexts and
+attempts shutdown in reverse startup order. Both cleanup paths start a timer that aborts the shutdown signal,
+but they continue to await the shutdown promise. If an adapter ignores that
+signal and never settles, startup can remain pending indefinitely after its
+factory or readiness timeout. Pending failed-readiness cleanup can prevent the
+outer rollback from starting indefinitely. The earlier adapters' contexts have
+not yet been revoked by that rollback. The runtime still exposes no partial adapter set.
+This transaction does not reverse an external effect that a service already
+accepted.
+
+The separate `AdapterRuntime.shutdown()` method races its wait against a host
+deadline and can return `ADAPTER_SHUTDOWN_TIMEOUT`. That return does not prove
+that adapter cleanup or the pending startup settled. Keep new admission closed
+and retain the adapter identity, configuration digest, timeout phase, elapsed
+time, and cleanup diagnostics. Plugin-runtime maintainers and the adapter owner
+must establish remaining resource ownership and reconcile uncertain effects
+before retry. Use the [operator plugin lifecycle procedure](../use/plugins.md#3-activate-and-prove-health).
+This startup-cleanup limit can be removed only when the host bounds both failed
+readiness teardown and rollback independently of adapter cooperation, with
+checks for an adapter that ignores abort and never settles.
 
 **Rejected alternative:** returning a partially activated registry would make behavior depend on which asynchronous import failed first. The caller receives either the complete selected registry or an error.
 
 > **Source evidence — activation modes and current boundary**
 >
-> [Activation selects direct import or isolated invocation from trust scope and rejects external adapters](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
+> [Activation selects direct import or isolated invocation from trust scope and rejects external adapters](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
 >
-> [Adapter startup resolves dependencies, validates configuration, waits for readiness, and rolls back on failure](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-startup.ts#L21-L62).
+> **Claim:** Factory and readiness waits have timeout races; failed-start cleanup can remain pending after its abort timer. Pending failed-readiness cleanup prevents the outer rollback from revoking the remaining started contexts.
+>
+> **Implementation:** The starter [orders dependencies and attempts rollback on failure](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapter-startup.ts#L25-L61), [races factory activation and revokes timed-out contexts](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapter-startup.ts#L100-L103), and [awaits failed-readiness teardown and rollback directly](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapter-startup.ts#L144-L165). The runtime [publishes only a complete started set](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapters.ts#L43-L49) and [separately races normal shutdown against a deadline](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapters.ts#L74-L86).
+>
+> **Contract or setting:** [`shutdownTimeoutMs` is a positive platform-owned integer](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/common/plugin-runtime/foundation/config/platform.schema.json#L95-L95). The [startup helper races the operation against rejection](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/skills/nova/core/execution/adapter-support.ts#L15-L18).
+>
+> **Test evidence:** The contract fixture [uses stalled readiness with a shutdown that settles](https://github.com/datrab/kubeclaw/blob/7c85236b9a1992466ceb33b64f657062be57b4dd/tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs#L448-L474). No executed result for this fixture is recorded here.
+>
+> **Revision:** `7c85236b9a1992466ceb33b64f657062be57b4dd`
+>
+> **Limit:** The fixture does not establish bounded failed-start cleanup when shutdown ignores abort. No live cleanup outcome is established here.
 
 ## Invocation Leases
 
@@ -710,7 +748,7 @@ Their suffix identifies the failed ownership, sequence, idempotency, package, gr
 | Configuration | Missing owner or schema rejection | No activation | Pipeline author or operator fixes the owning configuration. |
 | Integrity | Digest differs after discovery or audit | No activation | Operator restores the exact bytes and investigates mutation. |
 | Import audit | Side effect, timeout, or invalid export | No trusted import | Author makes imports inert and exports the required function. |
-| Adapter startup | Dependency, readiness, or timeout failure | Started adapters roll back | Operator checks adapter config and dependency health. |
+| Adapter startup | Dependency, readiness, or timeout failure; cleanup can remain pending | Failed readiness revokes that adapter's context; pending cleanup delays outer rollback and revocation of the other started contexts. No partial adapter set is published. | Operator stops admission and checks config and dependencies; runtime and adapter owners establish cleanup and reconcile effects before retry. |
 | External launch | Missing sandbox or cgroup delegation | Invocation does not start | Host operator provisions and verifies kernel prerequisites. |
 | External protocol | Oversize, malformed, truncated, or undrained message | Child is terminated | Author fixes protocol behavior; operator retains diagnostics. |
 | Invocation | Expired or revoked lease | Capability and state calls fail | Core decides retry, wait, repair, or final failure. |
