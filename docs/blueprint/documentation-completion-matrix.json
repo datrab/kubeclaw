@@ -16979,6 +16979,11 @@
       "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs; four latest imagePullSecrets[] content lookups",
       "state": "terminal-pass",
       "scope": "Session94436:13PASS0FAIL0SKIP after runtime/source addition; final empty-value enabled-admission wording clarified after imports loaded. Direct final lookup verifies four Job/CronJob/StatefulSet/Pod retained-null runtime descriptions, enabled-admission empty-object boundary and exact primary citation. No live API or independent acceptance."
+    },
+    {
+      "command": "Root verify historical final evidence manifests against all recorded file sizes/SHA256",
+      "state": "terminal-pass",
+      "scope": "334 files of historical5d and5803files of historicald8 seals verified, zero mismatches. Both historical reviews remainFAIL/incomplete; no current Source/Reader/Quality/Astra or package acceptance."
     }
   ],
   "reviewAssignments": [
@@ -18151,6 +18156,54 @@
       "state": "running",
       "sourceRevision": "61e45fbaaffd5153562efdc4a36a754160be4588",
       "scope": "Complete246schema/136implicitmetadata obligations/4descriptors andactualreader/inventory integration; all2553cases171captionpairs individually qualified, read-only."
+    },
+    {
+      "agent": "/root/workload_node_complete_source_fresh",
+      "role": "historical-source-reviewer",
+      "state": "final-fail-incomplete-no-current-acceptance",
+      "sourceRevision": "5d432487",
+      "scope": "Historical1045record/5992case workload+node Source snapshot; remaining obligations explicitly unreviewed. Finalized so NEW independent identities review complete current affected scope. Historical task metadata retained in original evidence; no model/fork metadata invented here.",
+      "report": "/home/node/Documents/Codex/a98-evidence/workload-node-complete-source-fresh/final-report.md",
+      "manifest": "/home/node/Documents/Codex/a98-evidence/workload-node-complete-source-fresh/final-sealed-manifest.json",
+      "counts": "records726FAIL85PASS6UNREVIEWED228NA;cases2080PASS533FAIL2243UNREVIEWED1136NA;captions739PASS20FAIL"
+    },
+    {
+      "agent": "/root/workload_node_corrected_complete_source_fresh",
+      "role": "historical-source-reviewer",
+      "state": "final-fail-incomplete-no-current-acceptance",
+      "sourceRevision": "d8b9ee50e69257ee812b874ba20b793dea794b82",
+      "scope": "Historical1045record/5992case workload+node Source snapshot; remaining obligations explicitly unreviewed. Finalized so NEW independent identities review complete current affected scope. Historical task metadata retained in original evidence; no model/fork metadata invented here.",
+      "report": "/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh/final-report.md",
+      "manifest": "/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh/final-evidence-manifest.json",
+      "counts": "records805FAIL229UNREVIEWED11PASS;cases2023PASS95FAIL3874UNREVIEWED;captions739PASS29FAIL"
+    },
+    {
+      "agent": "/root/workload_current_fe07_source_fresh",
+      "role": "source-reviewer",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "running-current-source-review-no-acceptance",
+      "sourceRevision": "fe07fc0848521ff40d6ca22c99cc948fddd476d6",
+      "scope": "Complete current770workload records/cases/captions and shared app facts; Job/CronJob/StatefulSet/PDB/Pod. Actual applicability not proved by obsolete discovery; independent current producer join pending. Read-only current immutable source."
+    },
+    {
+      "agent": "/root/node_current_fe07_source_fresh",
+      "role": "source-reviewer",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "running-current-source-review-no-acceptance",
+      "sourceRevision": "fe07fc0848521ff40d6ca22c99cc948fddd476d6",
+      "scope": "Complete current277node records/cases/captions and shared app facts;DaemonSet/CSIDriver. Actual applicability not proved by obsolete discovery; independent current producer join pending. Read-only current immutable source."
+    },
+    {
+      "agent": "/root/producer_closure_eight_findings_writer",
+      "role": "writer",
+      "state": "running-exclusive-six-files-not-source-stable",
+      "scope": "Original-operation/output-role/markerless alias/fs async/stream qualifications; source-bound consumer recipes. No commits/push or independent acceptance. Workspace package source symlinks must bind frozen copies."
     }
   ],
   "continuation": {
@@ -20201,6 +20254,15 @@
       "checks": "13PASS0FAIL0SKIP + four final current content lookups",
       "evidence": "/home/node/Documents/Codex/a98-evidence/resource-root-scope-root/imagepull-empty-runtime-correction.json",
       "next": "Await producer alias/fs-alias fix stable release; integrate/regenerate then independent current review."
+    },
+    "currentSourceReviewTransition": {
+      "state": "current-fresh-source-reviews-running-no-acceptance",
+      "sourceRevision": "fe07fc0848521ff40d6ca22c99cc948fddd476d6",
+      "binding": "/home/node/Documents/Codex/a98-evidence/receiver-current-fe07-source-binding.json",
+      "historical": "Two obsolete source sweeps finalized FAIL/incomplete with exact unresolved ledgers. No requirement waived and no case approval copied across revisions.",
+      "current": "New independent identities fork_turns none, GPT6.1Sol high, full current affected770+277Source scopes.",
+      "producer": "Alias/fs-async/native-output closure still mutable; final snapshot must rebind local workspace package links to copied source rather than live node_modules realpaths.",
+      "next": "Finish stable producer release; complete actual source/field join and generation; current independent Source/Reader/Quality andAstra still required."
     }
   }
 }
