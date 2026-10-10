@@ -19698,6 +19698,15 @@
         "finalWorkloadRerunPass": 6
       },
       "limits": "Source inspection and focused integration only. No live Kubernetes/API execution, complete producer join, full independent Source acceptance, Reader/Quality/Astra or package acceptance."
+    },
+    "cronJobTemplateMetadataSelectorCorrection": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-complete-source-review",
+      "findingOrigin": "/root/workload_node_complete_source_fresh F18 frozen5d; /root/workload_node_corrected_complete_source_fresh caption341 frozend8",
+      "scope": "Five CronJob template metadata records no longer claim ordinary Job selector/template matching at CronJob intake. Intake calls lower-case validateJobSpec and forbids nonnil selector/manualSelectortrue; actual child Job preparation and upper-case ValidateJobSpec remain separate. Nonempty serviceAccountName guard included4663 in inherited name evidence.",
+      "sources": "Authenticated batchvalidation889-900/170-188; Jobstrategy221-282; corevalidation4663-4720",
+      "checks": "13 workload integration checksPASS0FAIL0SKIP; final source-range addition is citation-only",
+      "limits": "No live execution, current source-stable all-producer join, independent full Source PASS, Reader/Quality/Astra or package closure."
     }
   }
 }
