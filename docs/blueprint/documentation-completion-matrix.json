@@ -19075,6 +19075,24 @@
       "sealFilesVerified": 151,
       "sourceLinksBounded": 377,
       "materialRemaining": "DaemonSet and CSIDriver root metadata/envelope delegated but actualsharedexports have0records for both kinds. Explicit missingcoverage; no wholeobject19coveragePASS. Full independent Source/Reader/Quality/newgeneration required."
+    },
+    "clusterSourceReview": {
+      "reviewer": "/root/cluster_metadata_fixture_source_fresh",
+      "frozenRevision": "bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b",
+      "reportSha256": "7f1283fc5305cb424f84110d6bb1e9904e26d677a2034cadf25975d0d8caed48",
+      "state": "sealed-incomplete-FAIL",
+      "requestedRecords": 197,
+      "passRecords": 8,
+      "failRecords": 4,
+      "unreviewedRecords": 185,
+      "sealedFilesVerified": 80,
+      "findings": [
+        "F1 retain cleanup claim false; source b9ccb881 corrected candidate",
+        "F2 four retained-null list objects conflated with removal; source e40229ba corrected candidate",
+        "F3 three missing published helm-values anchors; generation pending"
+      ],
+      "remainingReview": "Every claim dimension for all197records plus full linked Buster entrypoint/grant/controller/runtime task chain remains a required new complete Fresh-Context review on corrected revision. Earlier bounded8PASS not whole surface acceptance. Reader/Quality/Astra untouched.",
+      "checks": "cluster6/workload6 testsPASS; staticguidecheckPASS; refsFAIL3publishedanchors,3archiveemptydirectory observations classified separately."
     }
   }
 }
