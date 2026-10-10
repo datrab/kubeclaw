@@ -19254,6 +19254,39 @@
       "report": "/home/node/Documents/Codex/a98-evidence/node-selected-defaults-correction-writer/report.md",
       "reportSha256": "016d71443679384ec9bb22e936cee1c6130c94c1485aca82c756f1c2c5a967dd",
       "qualification": "Author/root source/render/contract checks, not independent semantic/global/live acceptance"
+    },
+    "clusterSourceCorrectionCandidate": {
+      "author": "/root",
+      "reviewer": "/root/cluster_fixture_complete_source_corrected_fresh",
+      "reviewFreeze": "93573f4949bf3edbed6aa3404218cd51e3640bdf",
+      "state": "author-corrected-pending-new-complete-independent-fresh-review",
+      "bodyRecords": 58,
+      "changedRecords": 12,
+      "preservedRecords": 46,
+      "scope": "Four retained object-item empty examples now distinguish {} validation from wrong-type [] decode; scope, required names and shortNames references use actual narrow original lines. Historical independent failures not waived.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/cluster-source-corrections-root",
+      "rootTests": "13 cluster/body/root tests PASS, zero skipped. New array-to-object rejection source bound read at decoder543–560; actual scope364, requirednames458–469, shortnames800–804."
+    },
+    "integratedWorkloadFactory": {
+      "author": "/root/output_discovery_integrated_freeze_writer",
+      "state": "source-candidate-awaiting-source-stable-allproducer-replay-and-independent-review",
+      "sourceFiles": 2,
+      "verifiedReleaseEntries": 7,
+      "report": "/home/node/Documents/Codex/a98-evidence/output-discovery-integrated-freeze-writer/report.md",
+      "rootTests": "1 targeted actual Pod receiving-route/version/unknown-field test PASS; author full36api-reference PASS, no skipped.",
+      "qualification": "Only correct version/kind workload dispatch; sourceStable allproducer proof and generated publication not yet observed."
+    },
+    "cronJobSelectedClaims": {
+      "author": "/root/cronjob_selected_claims_writer",
+      "state": "released-author-candidate-pending-independent-review-and-publication",
+      "addedRecords": 4,
+      "preservedWorkloadRecords": 753,
+      "currentWorkloadRecords": 757,
+      "rootVerifiedSealEntries": 27,
+      "report": "/home/node/Documents/Codex/a98-evidence/cronjob-selected-claims-writer/report.md",
+      "reportSha256": "645c0e41499f37aa42a8cb8f9d0c7d62ffefdf9a3b0dfb02ecf3080938535cba",
+      "rootTests": "3 durable public recovery renderer/unknown-field/exact-boundary tests PASS, zero skipped; author16combinedPASS.",
+      "scope": "Actual public recovery resource policy serialization permits these four fields; emitted template lacks Pod resourceClaims, so nonempty references fail target membership validation rather than granting credentials or RBAC. No live/independent/global acceptance."
     }
   }
 }

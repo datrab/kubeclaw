@@ -591,6 +591,52 @@ appendExpanded('Pod','$.spec.serviceAccountName',{
  evidence:[source('pkg/apis/core/validation/validation.go','4663-4669','PodSpec validates service account names.'),source('plugin/pkg/admission/serviceaccount/admission.go','146-175','Enabled admission defaults the account, looks it up and conditionally adds token/pull-secret references.')],
  crossFieldConditions:['The selected buildkit preflight explicitly sets automountServiceAccountToken false. This disables token automount under the named plugin; it does not bypass service account lookup or every other admission plugin. Inspect actual admission configuration and stored Pod identity before inferring access.']
 });
+// The recovery renderer forwards policy.resources without a member allowlist.
+// Qualify only its newly selected container-claim boundary, not unused Pod claims.
+const cronClaimPrefix='$.spec.jobTemplate.spec.template.spec.containers[].resources.claims';
+const cronClaimRoute=[
+ {url:'https://github.com/datrab/kubeclaw/blob/07b6a051854233eb63f659b7e9a74f2c2e02741f/scripts/render-postgresql-recovery.mjs#L63-L80',claim:'Recovery CronJob copies policy.resources into its backup container and does not construct PodSpec.resourceClaims.'},
+ {url:'https://github.com/datrab/kubeclaw/blob/07b6a051854233eb63f659b7e9a74f2c2e02741f/scripts/render-postgresql-recovery.mjs#L32-L36',claim:'validateStorage requires CPU/memory limits and requests without filtering additional resources members.'},
+ source('pkg/apis/batch/v1/zz_generated.defaults.go','42-53','CronJob generated defaults visit the embedded PodSpec without SetDefaults_Job or SetDefaults_Pod.'),
+ source('pkg/registry/batch/cronjob/strategy.go','87-115','CronJob create/update drops disabled template fields using the actual old template; create obtains template validation options.'),
+ bv('888-900','CronJob JobTemplate validation calls JobSpec validation and forbids manual selectors.'),
+ bv('276-291','JobSpec validation calls PodTemplate validation and restricts restart policy.'),
+ source('pkg/apis/core/validation/validation.go','7066-7080','PodTemplate validation calls ValidatePodSpec.'),
+ source('pkg/apis/core/validation/validation.go','4637-4643','PodSpec gathers declared claim names and passes them to regular-container validation.'),
+ source('pkg/apis/core/validation/validation.go','3908-3913','Common container validation passes its resources and Pod claim names to the resource validator.'),
+ source('pkg/apis/core/validation/validation.go','7821-7827','Container resource validation delegates to the common resource-requirements validator.'),
+ source('pkg/apis/core/validation/validation.go','7886-7893','Resource-requirements validation calls claim-reference validation.'),
+ source('pkg/apis/core/validation/validation.go','7898-7953','Container claim references require Pod claim membership, DNS-label request names and nonoverlapping unique name/request pairs.'),
+ source('pkg/api/pod/util.go','1089-1128','A disabled DynamicResourceAllocation gate drops container claims and Pod claims unless the old PodSpec has resourceClaims.'),
+ source('pkg/features/kube_features.go','1292-1298','Versioned DynamicResourceAllocation defaults are false at 1.26/1.32, true at 1.34 and locked true at 1.35.'),
+ source('pkg/controller/cronjob/utils.go','243-273','CronJob controller deep-copies JobTemplate spec into a separately created child Job.'),
+ source('pkg/apis/batch/v1/zz_generated.defaults.go','378-396','Child Job default traversal runs Job defaults and PodSpec defaults.'),
+ source('pkg/registry/batch/job/strategy.go','94-129','Child Job create drops disabled template fields and generates its selector.'),
+ source('pkg/controller/job/job_controller.go','1789-1818','Job controller requests generated-name child Pods and observes failed creation.'),
+ source('pkg/controller/controller_utils.go','562-599','Child Pod construction deep-copies the template spec before the separate Pod create.'),
+ source('staging/src/k8s.io/api/core/v1/types.go','2880-2893','Container ResourceClaim names refer to PodSpec entries; empty request selects everything, a named request selects its result.'),
+ source('pkg/kubelet/cm/dra/manager.go','482-513','Kubelet resolves matching Pod claim references and uses prepared claim information to collect CDI device IDs; absent claim cache information is an error.'),
+ source('pkg/kubelet/cm/dra/claiminfo.go','122-138','CDI selection accepts all devices for empty request and otherwise matches driver request names; driver devices with no request names remain included.')
+];
+const cronClaimConditions=[
+ 'The supported PostgreSQL recovery policy.resources object is copied to the backup container by scripts/render-postgresql-recovery.mjs:63-80 after validateStorage checks only required CPU/memory requests and limits at lines 32-36. The default policy omits claims; a configured claims value is forwarded without member filtering. This renderer does not emit PodSpec.resourceClaims, so every retained nonempty claim reference lacks the required Pod claim declaration and is rejected. Do not treat serialization as support for a runnable DRA backup.',
+ 'DynamicResourceAllocation preparation occurs before validation. With a disabled gate and no old Pod resourceClaims, references are removed. Versioned defaults do not prove the effective cluster gate configuration. With references retained, name identifies a PodSpec.resourceClaims entry, not a namespace ResourceClaim directly and not an RBAC grant. An all-requests entry cannot overlap a specific request for the same claim.',
+ 'request is a DNS label at this container reference boundary. A request/subrequest string with a slash fails this validator; resource-claim allocation subrequest alternatives do not expand this selected field contract.',
+ 'An absent resources object or list does not instantiate a claim item. API acceptance does not prove allocation, driver preparation, CDI availability or container execution. Inspect the stored CronJob, child Job/Pod events and actual effective references before retrying; correct the specific validation or consumer failure. A backup retry can repeat external effects.'
+];
+for(const suffix of ['', '[]', '[].name', '[].request']) {
+ const fieldPath=cronClaimPrefix+suffix;
+ const list=suffix==='';const item=suffix==='[]';const name=suffix==='[].name';
+ const omitted=list?'No container claim references are supplied; no claim or request default is created.':item?'An absent item contributes no reference.':name?'Within a retained item, the name stays empty and is required by reference validation.':'Within a retained item, request stays empty and selects all results of the named claim; the name must still resolve.';
+ const emptyValue=list?'An empty list supplies no container claim references.':item?'An empty object has an empty required name and is rejected if retained after gate preparation.':name?'An empty name is rejected if retained after gate preparation.':'An empty request is permitted and selects all results; it cannot overlap another reference to that claim.';
+ const invalidValue='If retained after gate preparation, each item requires a nonempty name declared in PodSpec.resourceClaims, an optional DNS-label request and no duplicate or overlapping name/request selection. The recovery renderer supplies no Pod claim declarations, so a nonempty reference list is rejected. Wrong-type JSON fails typed decode.';
+ add('CronJob',fieldPath,list?'Select container resource-claim references passed through the recovery policy.':item?'Supply one container reference to a declared Pod resource claim.':name?'Identify a declared Pod resource claim for this container.':'Limit the container reference to results from one named request.',omitted,emptyValue,invalidValue,cronClaimRoute,{
+  nullValue:list?'Fresh null decodes the claims slice to nil and supplies no container references.':item?'A null list element becomes a zero ResourceClaim item; its empty required name is rejected if retained after gate preparation.':'Fresh null leaves this ordinary string empty. '+(name?'The retained item lacks its required name.':'Empty request selects all results of the named claim; it does not remove the item.'),
+  operationScope:'The supported PostgreSQL recovery renderer forwards policy.resources to its batch/v1 CronJob backup container. These four selected fields describe that public-object forwarding and the actual CronJob to Job to Pod receive path. Rendering is offline evidence; actual request construction, admission, gate configuration and old object state are separate inputs.',
+  crossFieldConditions:cronClaimConditions,
+  qualificationLimits:['Only the four selected container claim fields are added. No Pod resource-claim declaration, upstream alternative, live allocation, semantic acceptance or global documentation acceptance is established.']
+ });
+}
 export const receiverContracts=[...records.values()];
 export function workloadReceiverContracts(apiVersion,kind,exactBoundaries) {
  if(workloadVersions[kind]!==apiVersion)return [];

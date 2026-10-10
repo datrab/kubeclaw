@@ -14,7 +14,7 @@ import { authoredUnknownFieldContracts } from './docs-buster-authored-unknown-fi
 import { receiverContracts as namespaceIsolationContracts, namespaceIsolationReceiverContracts } from './docs-kubernetes-namespace-isolation-receiver-contracts.mjs';
 import { receiverContracts as authDeleteContracts, authDeleteReceiverContracts } from './docs-kubernetes-auth-delete-receiver-contracts.mjs';
 import { busterLeaseReceiverContracts } from './docs-buster-lease-receiver-contracts.mjs';
-import { receiverContracts as workloadReceiverContracts } from './docs-kubernetes-workload-receiver-contracts.mjs';
+import { receiverContracts as workloadReceiverContracts, workloadReceiverContracts as selectedWorkloadReceiverContracts } from './docs-kubernetes-workload-receiver-contracts.mjs';
 import { receiverContracts as networkingReceiverContracts } from './docs-kubernetes-network-receiver-contracts.mjs';
 import { receiverContracts as admissionReceiverContracts } from './docs-kubernetes-admission-receiver-contracts.mjs';
 import { receiverContracts as admissionStatusReceiverContracts } from './docs-kubernetes-admission-status-contracts.mjs';
@@ -350,7 +350,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
 }
 
 export const versionedApiReceiverRegistries = new Map([
-  ['v1', [...coreReceiverContracts, ...identitySecretContracts, ...namespaceIsolationContracts.filter(record=>record.authoritySelector.apiVersion==='v1'), ...authDeleteContracts.filter(record=>record.kind==='DeleteOptions'), ...envelopeReceiverContracts.filter(record=>record.authoritySelector.apiVersion==='v1')]],
+  ['v1', [...workloadReceiverContracts.filter(record=>record.kind==='Pod'), ...coreReceiverContracts, ...identitySecretContracts, ...namespaceIsolationContracts.filter(record=>record.authoritySelector.apiVersion==='v1'), ...authDeleteContracts.filter(record=>record.kind==='DeleteOptions'), ...envelopeReceiverContracts.filter(record=>record.authoritySelector.apiVersion==='v1')]],
   ['apiextensions.k8s.io/v1', [...clusterConfigurationContracts.filter(record=>record.kind==='CustomResourceDefinition'), ...envelopeReceiverContracts.filter(record=>record.authoritySelector.apiVersion==='apiextensions.k8s.io/v1')]],
   ['rbac.authorization.k8s.io/v1', [...clusterConfigurationContracts.filter(record=>['ClusterRole','ClusterRoleBinding'].includes(record.kind)), ...namespaceIsolationContracts.filter(record=>record.authoritySelector.apiVersion==='rbac.authorization.k8s.io/v1'), ...envelopeReceiverContracts.filter(record=>record.authoritySelector.apiVersion==='rbac.authorization.k8s.io/v1')]],
   ['authentication.k8s.io/v1', authDeleteContracts.filter(record=>record.kind==='TokenReview')],
@@ -378,6 +378,7 @@ export function productApiReceiverRecords(apiVersion, kind, selectedPaths = null
   if(selectedPaths&&apiVersion==='monitoring.coreos.com/v1')return [...records.filter(record=>record.kind!==kind),...prometheusSelectedReceiverContracts(apiVersion,kind,selectedPaths)];
   if(selectedPaths&&kind==='ClusterSPIFFEID'&&apiVersion==='spire.spiffe.io/v1alpha1')return [...records.filter(record=>record.kind!==kind),...clusterSPIFFEIDSelectedReceiverContracts(apiVersion,kind,selectedPaths.map(row=>typeof row==='string'?{fieldPath:row}:row))];
   if(kind==='BusterNamespaceLease'&&isProductOwnedApi(apiVersion,kind))return [...records,...busterLeaseReceiverContracts(apiVersion,apiResourceFieldBoundaries(apiVersion,kind))];
+  if (selectedPaths && ({Pod:'v1',Job:'batch/v1',CronJob:'batch/v1',StatefulSet:'apps/v1',PodDisruptionBudget:'policy/v1'})[kind]===apiVersion) return [...records.filter(record=>record.kind!==kind||/^\$\.(metadata(?:\.|\[|$)|apiVersion$|kind$)/.test(record.fieldPath)), ...selectedWorkloadReceiverContracts(apiVersion,kind,selectedPaths)];
   if(selectedPaths&&['DaemonSet','CSIDriver'].includes(kind))return [...records.filter(record=>record.kind!==kind||/^\$\.(metadata(?:\.|\[|$)|apiVersion$|kind$)/.test(record.fieldPath)),...nodeWorkloadsReceiverContracts(apiVersion,kind,selectedPaths)];
   if (selectedPaths && ['ClusterRole','ClusterRoleBinding','IngressClass','CustomResourceDefinition'].includes(kind)) return [...records.filter(record=>record.kind!==kind || /^\$\.(metadata(?:\.|\[|$)|apiVersion$|kind$)/.test(record.fieldPath)), ...clusterConfigurationReceiverContracts(apiVersion,kind,selectedPaths)];
   if (selectedPaths && ['ResourceQuota','LimitRange','Role','RoleBinding'].includes(kind)) {

@@ -498,3 +498,16 @@ test('Pod-only service links and conditional account admission are selected on t
   const template=selected('apps/v1','Deployment');assert(!template.fieldPaths.includes('$.spec.template.spec.enableServiceLinks'));assert(!template.fieldPaths.includes('$.spec.template.spec.serviceAccountName'));
  });
 });
+
+test('selected Pod workload records retain the Pod receiving route and reject new body fields', () => {
+  const fields=['$.spec','$.spec.containers','$.spec.containers[]','$.spec.containers[].name','$.spec.serviceAccountName'];
+  const records=productApiReceiverRecords('v1','Pod',fields).filter(record=>record.kind==='Pod');
+  for(const fieldPath of fields) {
+    const record=records.find(record=>record.fieldPath===fieldPath);
+    assert.ok(record,fieldPath);
+    assert.deepEqual(record.authoritySelector,{apiVersion:'v1',kind:'Pod',fieldPath});
+    assert.ok(record.evidence.some(evidence=>evidence.url.includes('pkg/registry/core/pod/')||evidence.url.includes('plugin/pkg/admission/serviceaccount/')));
+  }
+  assert.throws(()=>productApiReceiverRecords('v1','Pod',['$.spec.unknownNewProducerField']),/EXPANDED_WORKLOAD_RECEIVER_GAP: v1\/Pod/);
+  assert.equal(productApiReceiverRecords('apps/v1','Pod',fields).filter(record=>record.kind==='Pod').length,0);
+});
