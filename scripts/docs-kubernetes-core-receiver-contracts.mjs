@@ -1719,5 +1719,31 @@ for (const record of records.values()) {
   record.readerReferences = [{label:'ConfigMap consumption: cache, directory mounts, subPath and environment variables',
    target:'configuration-change-impact.md#configmap-consumption'}];
  }
+ if (record.kind === 'ConfigMap' && ['$.data','$.binaryData'].includes(record.fieldPath)) {
+  record.crossFieldConditions.push('A mutable API update does not itself refresh a container. The selected Kubelet manager can use direct GET, a TTL cache or a watch cache. Volume setup and application reads are separate steps; no fixed end-to-end refresh deadline is established.',
+   'A Linux subPath mount binds the opened, resolved file. Inference from this mount path: replacing the parent volume symbolic link does not retarget the existing bind mount. Recreate the consumer mount through its workload procedure when new content is required.');
+  record.cases.push(
+   {name:'cache-refresh-retains-old-object',condition:'The TTL-cache manager has a previous object and its refresh returns an error other than NotFound.',sourceOutcome:'The cache can return the previous object and its stored result. A successful read is not proof that the latest API edit arrived. Inspect the API object and the actual consumer value before relying on it.'},
+   {name:'watch-initial-sync-fails',condition:'The watch-cache item does not synchronize within its one-second initial read wait.',sourceOutcome:'The manager returns a synchronization error. This is an initial-read limit, not a deadline for delivering every configuration edit.'},
+   {name:'volume-error-after-publication',condition:'The atomic writer has published a changed payload, then visible-link creation, obsolete-link removal or old-directory cleanup fails.',sourceOutcome:'The writer returns an error without restoring the previous published directory. Inspect actual mounted files and Kubelet errors before retrying or claiming a rollback.'});
+  record.evidence.push(
+   source('pkg/kubelet/kubelet.go','650-669','Kubelet selects the ConfigMap manager from the configured change-detection strategy.'),
+   source('pkg/kubelet/util/manager/cache_based_manager.go','176-205','Cache refresh retains its prior stored result on a non-NotFound fetch error; successful non-older results and NotFound update it.'),
+   source('pkg/kubelet/util/manager/watch_based_manager.go','310-337','Watch-cache reads wait for initial synchronization and return synchronization, lookup or NotFound errors.'),
+   source('pkg/volume/util/atomic_writer.go','213-244','Linux publication renames the new data link; Windows removes the old link before creating its replacement. Publication errors propagate.'),
+   source('pkg/volume/util/atomic_writer.go','247-264','Visible-link and old-content cleanup can return errors after the data link has been published.'),
+   source('pkg/volume/util/subpath/subpath_linux.go','175-226','Linux subPath resolves symbolic links, opens the selected file and bind-mounts its file descriptor.'));
+ }
+ if (record.kind === 'ConfigMap' && record.fieldPath === '$.data') {
+  record.cases.push({name:'environment-captured-at-container-creation',condition:'A container obtains data through envFrom.configMapRef or env.valueFrom.configMapKeyRef, then the API object changes.',sourceOutcome:'Kubelet constructs the environment for a new container; this path does not rewrite a running container environment. Optional missing objects or keys can be skipped; other fetch errors stop construction. Recreate the container through its workload procedure and inspect application behavior.'});
+  record.evidence.push(source('pkg/kubelet/kubelet_pods.go','774-802','ConfigMap envFrom reads Data and skips only optional NotFound objects; other fetch failures stop construction.'),
+   source('pkg/kubelet/kubelet_pods.go','867-893','A selected ConfigMap environment key is read from Data; a missing key is skipped only when optional.'),
+   source('pkg/kubelet/kuberuntime/kuberuntime_container.go','396-405','Container configuration receives the constructed environment key/value entries.'));
+ }
+ if (record.kind === 'ConfigMap' && record.fieldPath === '$.binaryData') {
+  record.cases.push({name:'binary-data-is-not-an-environment-source',condition:'The selected entry exists only in binaryData and a container uses a ConfigMap environment reference.',sourceOutcome:'ConfigMap environment construction reads Data, not BinaryData. The binary entry does not supply that environment value; use the documented file consumer or an appropriate text entry.'});
+  record.evidence.push(source('pkg/kubelet/kubelet_pods.go','774-802','ConfigMap envFrom iterates Data rather than BinaryData.'),
+   source('pkg/kubelet/kubelet_pods.go','867-893','A selected ConfigMap environment key is looked up in Data rather than BinaryData.'));
+ }
 }
 export const receiverContracts=[...records.values()];

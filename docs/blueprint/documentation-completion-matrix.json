@@ -18297,6 +18297,30 @@
       "log": "/home/node/Documents/Codex/a98-evidence/config-inventory-check-00a8bae9.log",
       "logSha256": "0fdf73cce1deca9630ef3f9af6bc0fa833e63b1be37d1d279ae26bceb64bbe64",
       "finding": "DOC_DRIFT_CONFIG: stale configuration-values.json and configuration-runtime-inputs.json; not waived."
+    },
+    "appsCompleteSourceAfterCorrection2": {
+      "agent": "/root/a98_apps_complete_source_after_correction2_fresh",
+      "revision": "8fd110869b233f6995d1d2263eb0dff34772190f",
+      "verdict": "FAIL-N01-N35",
+      "report": "/home/node/Documents/Codex/a98-evidence/apps-complete-source-after-correction2-fresh/report.md",
+      "manifestSha256": "174cb32e97a02a80e642c96b81af2186d1fc8467e17ac4a72c1cd05ff8c6cb5b",
+      "verifiedRegularArtifacts": 6075,
+      "scope": "1285 records8450cases740captions22522appearances plus347originalworkitems and104missingfrozenauthority paths individually dispositioned. Later metadata/envelope integration is outside frozen verdict.",
+      "correctionWriter": "/root/a98_apps_n01_n34_complete_correction_writer",
+      "accepted": false
+    },
+    "configMapFieldConsumerCandidate": {
+      "owner": "/root",
+      "state": "author-candidate-pending-independent-full-core-source-reader-quality",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/configmap-field-consumer-root",
+      "affectedParents": [
+        "$.data",
+        "$.binaryData"
+      ],
+      "addedCases": 8,
+      "verifiedOriginalFiles": 10,
+      "checks": "17 focused tests PASS; primary SHA256/Gitblob identities and exact source ranges checked. Existing source-proof gap markers retained.",
+      "accepted": false
     }
   },
   "productBoundaries": [
