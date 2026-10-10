@@ -82,6 +82,10 @@ test('a new structural alternative fails coverage instead of silently losing its
     }
     mutations.push({ oneOf: [{ type: 'string', unknownNestedConstraint: true }] });
     mutations.push({ propertyNames: { type: 'string', unknownNestedConstraint: true } });
+    swagger.definitions['io.k8s.example.HiddenNameConstraint'] = {
+      type: 'string', unknownReferencedConstraint: true,
+    };
+    mutations.push({ propertyNames: { $ref: '#/definitions/io.k8s.example.HiddenNameConstraint' } });
     for (const [index, mutation] of mutations.entries()) {
       swagger.definitions['io.k8s.api.core.v1.Service'].properties.spec = { ...originalSpec, ...mutation };
       const bytes = Buffer.from(JSON.stringify(swagger));

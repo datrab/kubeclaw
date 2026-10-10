@@ -16216,6 +16216,27 @@
         "scripts/docs-api-schema-authorities.mjs": "55ab41867db490b5f0b49582d6232c839a25a06b6395a9bb737c13819fdf79c8",
         "scripts/tests/api-reference.test.mjs": "9b26c8942a9cbb5d4af152ab5357a865a4502a3c9f7d5b20fd596fedbdf73aca"
       }
+    },
+    {
+      "command": "node --test scripts/tests/api-schema-boundaries.test.mjs scripts/tests/api-receiver-coverage.test.mjs scripts/tests/api-reference.test.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "tests": 13,
+      "authorityMutationVariants": 16,
+      "sessionId": 72701,
+      "scope": "Includes reference-target nested unknown rule rejection. Author mechanical proof only; frozen Source reviewbd35 excludes this subsequent correction.",
+      "sourceDigests": {
+        "scripts/docs-api-schema-authorities.mjs": "e495fc1376810380a96e2d5150daf73912b365f89bf0046d93102dd2d7084948",
+        "scripts/tests/api-schema-boundaries.test.mjs": "7c089f689405f4c3383c50a3c2cc245d431c566b95f4e285484cc535b7dd2f66"
+      }
+    },
+    {
+      "command": "Original configuration inventory maintenance and strict runs plus actual API reader completeness refusal",
+      "state": "maintenance-pass-strict-expected-fail",
+      "maintenanceExitCode": 0,
+      "strictExitCode": 1,
+      "scope": "Actual5698boundaries3439contractbindings2259missing. Original strict API_RECEIVER_CONTRACT_MISSING and API reference API_REFERENCE_RECEIVER_MISSING observed. Neither negative control is normal gate/content acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/api-reference-integration-bd35d905/root-verification.json"
     }
   ],
   "reviewAssignments": [
@@ -17259,6 +17280,27 @@
       "state": "completed-author-correction-not-acceptance",
       "scope": "Exclusive Admission module AS01–AS09;132records911cases; ownership released.",
       "candidateSha256": "ea7b1eadcca0bf820ba177dfe2159dcad873218fe2b1c9487e00ef173da25d3a"
+    },
+    {
+      "agent": "/root/a98_network_admission_source_complete_after_correction5_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "running",
+      "baseRevision": "bd35d9056ade10fb18f5e9ce910ce83b0170e2a5",
+      "scope": "Complete immutable Network122records707cases and Admission132records911cases plus shared schema/receiver coverage; excludes later referenced-schema correction."
+    },
+    {
+      "agent": "/root/a98_core_api_receiver_writer",
+      "role": "writer",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "running",
+      "scope": "Exclusive newCore receiver module; full272 ConfigMap/Namespace/PVC/Service boundaries including metadata/status/envelopes."
     }
   ],
   "continuation": {
@@ -17729,9 +17771,9 @@
       "unprovenRecursiveContexts": 165,
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
-    "currentSourceHead": "8649b3b164e95b1bd31149b0a7f63bdd36df679d",
-    "nextAction": "Commit Admission correction4, releasedArgo integration and completeAPI reference renderer. Start full fresh Network/Admission/shared-helper Source review and parallel Core receiver writing. Deployment Source remains active; ArgoSource/fullproof and Core/metadata/Cilium2259 registry gaps remain open.",
-    "currentPushedRevision": "8649b3b164e95b1bd31149b0a7f63bdd36df679d",
+    "currentSourceHead": "bd35d9056ade10fb18f5e9ce910ce83b0170e2a5",
+    "nextAction": "New full independent Apps and Network/Admission Source reports pending; Core272 writer active. Fix all complete review groups and qualify Argo1900 source-proof gaps. Strict inventory/publication correctly reject2259missing. Complete metadata/Cilium registries then Source-bound generated output/current fullchecks, Reader/Quality/Astra.",
+    "currentPushedRevision": "bd35d9056ade10fb18f5e9ce910ce83b0170e2a5",
     "recursiveSchemaDiscovery": "Full13 current raw API kind schemas5698paths; unsupported structural branches now rejected deeply and unknown nested fragment keywords qualified. Updated helper requires new independent Source review.",
     "currentMutationObservation": "Original full config mutation at7e413cf6 terminalPASS exit0; no running original process. Current revised coverage needs new whole-gate evidence after missing receiver baseline is complete.",
     "apiReceiverJoin": "Original inventory versioned registry now has3439 contract bindings and2259missing among5698 schema paths. Normalgate and API publicationrenderer reject missing; no complete generated reader output yet.",

@@ -334,6 +334,7 @@ function apiSchemaNodeContract(schema) {
         || kubernetesKeywords.includes(key), `API_SCHEMA_COLLECTION_KEYWORD_UNQUALIFIED: ${key}`);
       assert(!unsupportedBranches.includes(key), `API_SCHEMA_STRUCTURAL_BRANCH_UNQUALIFIED: ${key}`);
     }
+    if (fragment.$ref) qualify(resolveReference(fragment));
     for (const key of ['properties', 'patternProperties', 'dependentSchemas']) {
       for (const child of Object.values(fragment[key] ?? {})) qualify(child);
     }
