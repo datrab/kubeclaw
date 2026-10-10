@@ -16237,6 +16237,19 @@
       "strictExitCode": 1,
       "scope": "Actual5698boundaries3439contractbindings2259missing. Original strict API_RECEIVER_CONTRACT_MISSING and API reference API_REFERENCE_RECEIVER_MISSING observed. Neither negative control is normal gate/content acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/api-reference-integration-bd35d905/root-verification.json"
+    },
+    {
+      "command": "node --test scripts/tests/api-schema-boundaries.test.mjs scripts/tests/api-receiver-coverage.test.mjs scripts/tests/api-reference.test.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "tests": 13,
+      "authorityMutationVariants": 19,
+      "sessionId": 94426,
+      "scope": "Added direct true/false and nested false item-schema rejection, after fresh frozen reviewer demonstrated lost items:false constraint. Mechanical correction only; new full independent Source review required.",
+      "sourceDigests": {
+        "scripts/docs-api-schema-authorities.mjs": "eee3f198a1253bbc20c9d75d3a1b54857b9520533ada300adf8b8ac0d4fc9a86",
+        "scripts/tests/api-schema-boundaries.test.mjs": "c146fdd1a03f822233a38ae4513a434d5a2bb543d91c30a794cea327917a293e"
+      }
     }
   ],
   "reviewAssignments": [
@@ -17771,15 +17784,16 @@
       "unprovenRecursiveContexts": 165,
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
-    "currentSourceHead": "bd35d9056ade10fb18f5e9ce910ce83b0170e2a5",
+    "currentSourceHead": "efa0d9bc4888ca793cbb225a3261293b0dd55569",
     "nextAction": "New full independent Apps and Network/Admission Source reports pending; Core272 writer active. Fix all complete review groups and qualify Argo1900 source-proof gaps. Strict inventory/publication correctly reject2259missing. Complete metadata/Cilium registries then Source-bound generated output/current fullchecks, Reader/Quality/Astra.",
-    "currentPushedRevision": "bd35d9056ade10fb18f5e9ce910ce83b0170e2a5",
+    "currentPushedRevision": "efa0d9bc4888ca793cbb225a3261293b0dd55569",
     "recursiveSchemaDiscovery": "Full13 current raw API kind schemas5698paths; unsupported structural branches now rejected deeply and unknown nested fragment keywords qualified. Updated helper requires new independent Source review.",
     "currentMutationObservation": "Original full config mutation at7e413cf6 terminalPASS exit0; no running original process. Current revised coverage needs new whole-gate evidence after missing receiver baseline is complete.",
     "apiReceiverJoin": "Original inventory versioned registry now has3439 contract bindings and2259missing among5698 schema paths. Normalgate and API publicationrenderer reject missing; no complete generated reader output yet.",
     "ciliumCompositionDiscovery": "ExactpinnedCilium anyOf branches onlyrequire alreadydeclared fields viaemptyproperties. Qualified presence-only traversal preserves originalbranches;858paths eachCNP/CCNP. Other newstructuralalternatives stillreject; privateactualauthority mutation verifiesreject.",
     "deploymentAuthorLastObservation": "1268unique authoredrecords =1267nonmetadataSpecboundaries+root.347workitems201projectedboundaries mapped; finalreport/checks stillpending. No independent acceptance.",
-    "argoAuthor": "Released4d6b75cb1900records5843cases; per-fieldSourceproofgaps explicitlyopen; root integrated registry and verified exactschemajoin missing6metadata/envelope roots."
+    "argoAuthor": "Released4d6b75cb1900records5843cases; per-fieldSourceproofgaps explicitlyopen; root integrated registry and verified exactschemajoin missing6metadata/envelope roots.",
+    "booleanItemsCorrection": "Fresh frozenbd35 reviewer found items:false omitted. Root rejects Boolean item schemas with named failure at every fragment depth and tests three newvariants;19total actual authority mutations. Later correction excluded from frozenreviewapproval."
   },
   "productBoundaries": [
     {

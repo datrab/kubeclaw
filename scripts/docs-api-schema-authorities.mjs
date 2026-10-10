@@ -347,7 +347,8 @@ function apiSchemaNodeContract(schema) {
     for (const key of ['not', 'if', 'then', 'else', 'propertyNames', 'additionalProperties']) {
       if (Object.hasOwn(fragment, key)) qualify(fragment[key]);
     }
-    if (fragment.items) {
+    if (Object.hasOwn(fragment, 'items')) {
+      assert(typeof fragment.items !== 'boolean', 'API_SCHEMA_STRUCTURAL_BRANCH_UNQUALIFIED: Boolean items');
       assert(!Array.isArray(fragment.items), 'API_SCHEMA_TUPLE_BOUNDARY_UNQUALIFIED');
       qualify(fragment.items);
     }
