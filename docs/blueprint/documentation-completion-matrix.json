@@ -18473,6 +18473,28 @@
       ],
       "qualification": "Private dependency symlink excluded only through per-commandGitconfig; initial untracked-symlink failure retained. No main generated outputs copied and no publication waiver.",
       "accepted": false
+    },
+    "orphanWorkerAuthorCandidate": {
+      "author": "/root",
+      "state": "author-corrected-pending-complete-independent-source",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/metadata-orphan-root",
+      "recordsPreserved": 382,
+      "originalCasesPreserved": true,
+      "addedCases": 18,
+      "captionPairs": 4,
+      "verifiedOriginalFiles": 1,
+      "checks": "Syntax/12focusedtests and subsequent8reference testsPASS; pinned freshprimary/treeblob checked.",
+      "accepted": false
+    },
+    "coreCompleteSourceAfterConsumers": {
+      "reviewer": "/root/a98_core_complete_source_after_consumers_fresh",
+      "revision": "07d3a25b8afeec5eaacbefe6440a615dfb6b0d65",
+      "verdict": "FAIL-CCF01-through-CCF05-F05",
+      "report": "/home/node/Documents/Codex/a98-evidence/core-complete-source-after-consumers-fresh/report.md",
+      "scope": "272recursive boundaries1467cases454ranges/94files mechanically enumerated/verified; complete614caption semantics and dimensions were not completed in initial report.",
+      "state": "same-independent-source-identity-continuing-full-original-frozen-scope",
+      "correctionAuthor": "/root/a98_core_current_storage_correction_writer",
+      "accepted": false
     }
   },
   "productBoundaries": [
