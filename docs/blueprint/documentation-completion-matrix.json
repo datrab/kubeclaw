@@ -14760,6 +14760,48 @@
       ],
       "description": "Schema accepts shutdownTimeoutMs above Node timer range; original loader accepted2147483648 and original shutdown timer rejected after about1.9ms. Docs now distinguish schema acceptance, actual timer conversion, operational stop, owner and bounded probe limits. Product schema unchanged.",
       "author": "/root"
+    },
+    {
+      "id": "A98-PRISM-DIAGNOSTIC-COUNTER-MEANINGS",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-diagnosis-source-fresh/report.md",
+      "reportSha256": "7e55ee3ff633d43fd75d7d3f549218ea980a7acc0f465f3df671cf6d8b4a61ea",
+      "reportedBy": "/root/a98_prism_diagnosis_source_fresh",
+      "state": "author-correction-in-progress",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-06",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Retained durationMs/active/open/pending require exact nonce operation/pool/event-time definitions; no native-job or leak inference.",
+      "assignedAuthor": "/root/a98_prism_trust_counter_writer"
+    },
+    {
+      "id": "A98-PRISM-SPIFFE-AGENT-PREREQUISITE",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-diagnosis-source-fresh/report.md",
+      "reportSha256": "7e55ee3ff633d43fd75d7d3f549218ea980a7acc0f465f3df671cf6d8b4a61ea",
+      "reportedBy": "/root/a98_prism_diagnosis_source_fresh",
+      "state": "author-correction-in-progress",
+      "pages": [
+        "docs/site/use/prism-studio.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-06",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Governed Studio agent claim/design/revision path requires SPIFFE Control plus trusted Agent identity; HMAC health does not establish that permission.",
+      "assignedAuthor": "/root/a98_prism_trust_counter_writer"
     }
   ],
   "checks": [
@@ -15885,6 +15927,28 @@
         "CFG-013": "FAIL",
         "CFG-014": "FAIL",
         "A98-11-source-partition": "FAIL"
+      }
+    },
+    {
+      "agent": "/root/a98_prism_diagnosis_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "state": "completed-rejection",
+      "reviewedRevision": "ab4a6ef31c3187c6daebb2d5f36482d1aa0b2e1b plus exact Prism/glossary overlays recorded in report",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-diagnosis-source-fresh/report.md",
+      "reportSha256": "7e55ee3ff633d43fd75d7d3f549218ea980a7acc0f465f3df671cf6d8b4a61ea",
+      "freshContext": true,
+      "readOnly": true,
+      "scopeLimit": "Full Prism/glossary Source partition only; no independent Reader/Quality/global gate or live acceptance",
+      "gateVerdicts": {
+        "OPR-010": "FAIL",
+        "A98-02-source": "FAIL",
+        "A98-04-source": "PASS",
+        "A98-06-source": "FAIL",
+        "A98-12-source": "FAIL",
+        "A98-13-source": "FAIL"
       }
     }
   ],

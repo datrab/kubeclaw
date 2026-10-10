@@ -688,6 +688,14 @@
     {
       "id": "PRISM-SPIKE-BROWSER-PATH-001",
       "disposition": "Open"
+    },
+    {
+      "id": "NOVA-PLATFORM-TIMEOUT-RANGE-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "CILIUM-POLICY-EMPTY-001",
+      "disposition": "Open"
     }
   ]
 }
