@@ -112,12 +112,12 @@
     },
     {
       "id": "GOV-002",
-      "title": "Vollst\u00e4ndiges Inventar aller dokumentationspflichtigen Produktoberfl\u00e4chen",
+      "title": "Vollständiges Inventar aller dokumentationspflichtigen Produktoberflächen",
       "workPackage": "AP09.1",
       "canonicalTarget": "docs/site/product-surfaces.md",
       "catalogueOwner": "documentation architecture",
       "pageOwner": "documentation architecture",
-      "readerTask": "Vollst\u00e4ndiges Inventar aller dokumentationspflichtigen Produktoberfl\u00e4chen",
+      "readerTask": "Vollständiges Inventar aller dokumentationspflichtigen Produktoberflächen",
       "sourceDependencies": [
         "package.json",
         "packaging/runtime/package-ownership.json",
@@ -193,12 +193,12 @@
     },
     {
       "id": "GOV-004",
-      "title": "Regeln f\u00fcr Quellautorit\u00e4t und revisionsgebundene Belege",
+      "title": "Regeln für Quellautorität und revisionsgebundene Belege",
       "workPackage": "AP09.1",
       "canonicalTarget": "docs/site/README.md",
       "catalogueOwner": "documentation architecture",
       "pageOwner": "documentation",
-      "readerTask": "Regeln f\u00fcr Quellautorit\u00e4t und revisionsgebundene Belege",
+      "readerTask": "Regeln für Quellautorität und revisionsgebundene Belege",
       "sourceDependencies": [
         "packaging/runtime/package-ownership.json"
       ],
@@ -227,12 +227,12 @@
     },
     {
       "id": "GOV-005",
-      "title": "Trennung generierter Fakten und redaktioneller Erkl\u00e4rungen",
+      "title": "Trennung generierter Fakten und redaktioneller Erklärungen",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/reference/documentation-governance.md",
       "catalogueOwner": "documentation architecture",
       "pageOwner": "documentation",
-      "readerTask": "Trennung generierter Fakten und redaktioneller Erkl\u00e4rungen",
+      "readerTask": "Trennung generierter Fakten und redaktioneller Erklärungen",
       "sourceDependencies": [
         "scripts/docs-governance.mjs",
         "scripts/docs-publication.mjs",
@@ -277,12 +277,12 @@
     },
     {
       "id": "GOV-006",
-      "title": "Owner, G\u00fcltigkeitsbereich, letzte Pr\u00fcfung und Check je Seite",
+      "title": "Owner, Gültigkeitsbereich, letzte Prüfung und Check je Seite",
       "workPackage": "AP09.1",
       "canonicalTarget": "docs/site/reference/documentation-governance.md",
       "catalogueOwner": "documentation architecture",
       "pageOwner": "documentation",
-      "readerTask": "Owner, G\u00fcltigkeitsbereich, letzte Pr\u00fcfung und Check je Seite",
+      "readerTask": "Owner, Gültigkeitsbereich, letzte Prüfung und Check je Seite",
       "sourceDependencies": [
         "scripts/docs-governance.mjs",
         "scripts/docs-publication.mjs",
@@ -364,12 +364,12 @@
     },
     {
       "id": "GOV-008",
-      "title": "Messbare Definition von \u201evollst\u00e4ndig\u201c",
+      "title": "Messbare Definition von „vollständig“",
       "workPackage": "AP09.1",
       "canonicalTarget": "docs/site/README.md",
       "catalogueOwner": "documentation architecture",
       "pageOwner": "documentation",
-      "readerTask": "Messbare Definition von \u201evollst\u00e4ndig\u201c",
+      "readerTask": "Messbare Definition von „vollständig“",
       "sourceDependencies": [
         "packaging/runtime/package-ownership.json"
       ],
@@ -434,12 +434,12 @@
     },
     {
       "id": "ENT-002",
-      "title": "Repr\u00e4sentative Anfrage vom Eingang bis zum Ergebnis",
+      "title": "Repräsentative Anfrage vom Eingang bis zum Ergebnis",
       "workPackage": "AP09.1",
       "canonicalTarget": "docs/site/understand/README.md",
       "catalogueOwner": "product documentation",
       "pageOwner": "platform architecture",
-      "readerTask": "Repr\u00e4sentative Anfrage vom Eingang bis zum Ergebnis",
+      "readerTask": "Repräsentative Anfrage vom Eingang bis zum Ergebnis",
       "sourceDependencies": [
         "packaging/runtime/roles",
         "skills/nova/core",
@@ -542,12 +542,12 @@
     },
     {
       "id": "ENT-005",
-      "title": "Schnellstart f\u00fcr Leser, Operator und Entwickler",
+      "title": "Schnellstart für Leser, Operator und Entwickler",
       "workPackage": "AP09.9",
       "canonicalTarget": "docs/site/understand/README.md",
       "catalogueOwner": "product documentation",
       "pageOwner": "platform architecture",
-      "readerTask": "Schnellstart f\u00fcr Leser, Operator und Entwickler",
+      "readerTask": "Schnellstart für Leser, Operator und Entwickler",
       "sourceDependencies": [
         "packaging/runtime/roles",
         "skills/nova/core",
@@ -628,12 +628,12 @@
     },
     {
       "id": "ARC-002",
-      "title": "Erlaubte und verbotene Autorit\u00e4t je Komponente",
+      "title": "Erlaubte und verbotene Autorität je Komponente",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/components-and-authority.md",
       "catalogueOwner": "architecture maintainers",
       "pageOwner": "platform architecture",
-      "readerTask": "Erlaubte und verbotene Autorit\u00e4t je Komponente",
+      "readerTask": "Erlaubte und verbotene Autorität je Komponente",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -736,12 +736,12 @@
     },
     {
       "id": "ARC-005",
-      "title": "Entscheidungen mit Gr\u00fcnden, Kosten und Alternativen",
+      "title": "Entscheidungen mit Gründen, Kosten und Alternativen",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/components-and-authority.md",
       "catalogueOwner": "architecture maintainers",
       "pageOwner": "platform architecture",
-      "readerTask": "Entscheidungen mit Gr\u00fcnden, Kosten und Alternativen",
+      "readerTask": "Entscheidungen mit Gründen, Kosten und Alternativen",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -772,12 +772,12 @@
     },
     {
       "id": "ARC-006",
-      "title": "Vollst\u00e4ndige Failure-Domain-, Abh\u00e4ngigkeits- und Datenkarte",
+      "title": "Vollständige Failure-Domain-, Abhängigkeits- und Datenkarte",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/components-and-authority.md",
       "catalogueOwner": "architecture maintainers",
       "pageOwner": "platform architecture",
-      "readerTask": "Vollst\u00e4ndige Failure-Domain-, Abh\u00e4ngigkeits- und Datenkarte",
+      "readerTask": "Vollständige Failure-Domain-, Abhängigkeits- und Datenkarte",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -988,12 +988,12 @@
     },
     {
       "id": "NVC-006",
-      "title": "Stage-Aktivierung, Eingabeaufl\u00f6sung und Ausf\u00fchrung",
+      "title": "Stage-Aktivierung, Eingabeauflösung und Ausführung",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/nova-core.md",
       "catalogueOwner": "Nova maintainers",
       "pageOwner": "Nova maintainers",
-      "readerTask": "Stage-Aktivierung, Eingabeaufl\u00f6sung und Ausf\u00fchrung",
+      "readerTask": "Stage-Aktivierung, Eingabeauflösung und Ausführung",
       "sourceDependencies": [
         "skills/nova/project",
         "skills/nova/core",
@@ -1024,12 +1024,12 @@
     },
     {
       "id": "NVC-007",
-      "title": "Attempt-Identit\u00e4t und Lease-Lifecycle",
+      "title": "Attempt-Identität und Lease-Lifecycle",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/nova-core.md",
       "catalogueOwner": "Nova maintainers",
       "pageOwner": "Nova maintainers",
-      "readerTask": "Attempt-Identit\u00e4t und Lease-Lifecycle",
+      "readerTask": "Attempt-Identität und Lease-Lifecycle",
       "sourceDependencies": [
         "skills/nova/project",
         "skills/nova/core",
@@ -1276,12 +1276,12 @@
     },
     {
       "id": "NVC-014",
-      "title": "Lifecycle Reducer und vollst\u00e4ndige Transitionstabelle",
+      "title": "Lifecycle Reducer und vollständige Transitionstabelle",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/nova-core.md",
       "catalogueOwner": "Nova maintainers",
       "pageOwner": "Nova maintainers",
-      "readerTask": "Lifecycle Reducer und vollst\u00e4ndige Transitionstabelle",
+      "readerTask": "Lifecycle Reducer und vollständige Transitionstabelle",
       "sourceDependencies": [
         "skills/nova/project",
         "skills/nova/core",
@@ -1456,12 +1456,12 @@
     },
     {
       "id": "WKC-001",
-      "title": "Zweck und neutrale Autorit\u00e4tsgrenze",
+      "title": "Zweck und neutrale Autoritätsgrenze",
       "workPackage": "AP09.3",
       "canonicalTarget": "docs/site/understand/components-and-authority.md",
       "catalogueOwner": "Worker Core maintainers",
       "pageOwner": "platform architecture",
-      "readerTask": "Zweck und neutrale Autorit\u00e4tsgrenze",
+      "readerTask": "Zweck und neutrale Autoritätsgrenze",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -1492,12 +1492,12 @@
     },
     {
       "id": "WKC-002",
-      "title": "Profile, Engine-Identit\u00e4t und Protokollversionen",
+      "title": "Profile, Engine-Identität und Protokollversionen",
       "workPackage": "AP09.3",
       "canonicalTarget": "docs/site/understand/worker-core.md",
       "catalogueOwner": "Worker Core maintainers",
       "pageOwner": "Worker Core maintainers",
-      "readerTask": "Profile, Engine-Identit\u00e4t und Protokollversionen",
+      "readerTask": "Profile, Engine-Identität und Protokollversionen",
       "sourceDependencies": [
         "contracts/pipeline-worker-core/v1",
         "skills/worker/core",
@@ -1530,12 +1530,12 @@
     },
     {
       "id": "WKC-003",
-      "title": "Readiness, Kapazit\u00e4t, Admission und Claims",
+      "title": "Readiness, Kapazität, Admission und Claims",
       "workPackage": "AP09.3",
       "canonicalTarget": "docs/site/understand/worker-core.md",
       "catalogueOwner": "Worker Core maintainers",
       "pageOwner": "Worker Core maintainers",
-      "readerTask": "Readiness, Kapazit\u00e4t, Admission und Claims",
+      "readerTask": "Readiness, Kapazität, Admission und Claims",
       "sourceDependencies": [
         "contracts/pipeline-worker-core/v1",
         "skills/worker/core",
@@ -1568,12 +1568,12 @@
     },
     {
       "id": "WKC-004",
-      "title": "Attempt-Identit\u00e4t, Replay und Duplikatschutz",
+      "title": "Attempt-Identität, Replay und Duplikatschutz",
       "workPackage": "AP09.3",
       "canonicalTarget": "docs/site/understand/worker-core.md",
       "catalogueOwner": "Worker Core maintainers",
       "pageOwner": "Worker Core maintainers",
-      "readerTask": "Attempt-Identit\u00e4t, Replay und Duplikatschutz",
+      "readerTask": "Attempt-Identität, Replay und Duplikatschutz",
       "sourceDependencies": [
         "contracts/pipeline-worker-core/v1",
         "skills/worker/core",
@@ -2383,12 +2383,12 @@
     },
     {
       "id": "SPC-010",
-      "title": "Archviewer Produktoberfl\u00e4che",
+      "title": "Archviewer Produktoberfläche",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/archviewer.md",
       "catalogueOwner": "Archviewer maintainers",
       "pageOwner": "Archviewer maintainers",
-      "readerTask": "Archviewer Produktoberfl\u00e4che",
+      "readerTask": "Archviewer Produktoberfläche",
       "sourceDependencies": [
         "docker/Dockerfile.archviewer",
         "docker/archviewer.nginx.conf",
@@ -2472,12 +2472,12 @@
     },
     {
       "id": "PLG-002",
-      "title": "Discovery ohne Codeausf\u00fchrung",
+      "title": "Discovery ohne Codeausführung",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/plugin-runtime.md",
       "catalogueOwner": "plugin-runtime maintainers",
       "pageOwner": "plugin-runtime maintainers",
-      "readerTask": "Discovery ohne Codeausf\u00fchrung",
+      "readerTask": "Discovery ohne Codeausführung",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "skills/common/plugin-runtime/foundation",
@@ -2711,12 +2711,12 @@
     },
     {
       "id": "PLG-008",
-      "title": "Capability Vocabulary und Provideraufl\u00f6sung",
+      "title": "Capability Vocabulary und Providerauflösung",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/plugin-runtime.md",
       "catalogueOwner": "plugin-runtime maintainers",
       "pageOwner": "plugin-runtime maintainers",
-      "readerTask": "Capability Vocabulary und Provideraufl\u00f6sung",
+      "readerTask": "Capability Vocabulary und Providerauflösung",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "skills/common/plugin-runtime/foundation",
@@ -2791,12 +2791,12 @@
     },
     {
       "id": "PLG-010",
-      "title": "Konfigurationsaufl\u00f6sung und Schemaanwendung",
+      "title": "Konfigurationsauflösung und Schemaanwendung",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/understand/plugin-runtime.md",
       "catalogueOwner": "plugin-runtime maintainers",
       "pageOwner": "plugin-runtime maintainers",
-      "readerTask": "Konfigurationsaufl\u00f6sung und Schemaanwendung",
+      "readerTask": "Konfigurationsauflösung und Schemaanwendung",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "skills/common/plugin-runtime/foundation",
@@ -2947,12 +2947,12 @@
     },
     {
       "id": "PLG-014",
-      "title": "Fehlender persistenter Host f\u00fcr externe Adapter",
+      "title": "Fehlender persistenter Host für externe Adapter",
       "workPackage": "AP09.2",
       "canonicalTarget": "docs/site/extend/README.md",
       "catalogueOwner": "plugin-runtime maintainers",
       "pageOwner": "plugin-foundation",
-      "readerTask": "Fehlender persistenter Host f\u00fcr externe Adapter",
+      "readerTask": "Fehlender persistenter Host für externe Adapter",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "skills/common/plugin-runtime/foundation/config/platform.ts",
@@ -2985,12 +2985,12 @@
     },
     {
       "id": "COM-001",
-      "title": "Vollst\u00e4ndige Kommunikationsmatrix",
+      "title": "Vollständige Kommunikationsmatrix",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/communication.md",
       "catalogueOwner": "runtime and platform maintainers",
       "pageOwner": "runtime and platform maintainers",
-      "readerTask": "Vollst\u00e4ndige Kommunikationsmatrix",
+      "readerTask": "Vollständige Kommunikationsmatrix",
       "sourceDependencies": [
         "contracts/pipeline-test-gate/v1",
         "contracts/pipeline-worker-core/v1",
@@ -3093,12 +3093,12 @@
     },
     {
       "id": "COM-003",
-      "title": "Nova zu Prism und zur\u00fcck",
+      "title": "Nova zu Prism und zurück",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/communication.md",
       "catalogueOwner": "runtime and platform maintainers",
       "pageOwner": "runtime and platform maintainers",
-      "readerTask": "Nova zu Prism und zur\u00fcck",
+      "readerTask": "Nova zu Prism und zurück",
       "sourceDependencies": [
         "contracts/pipeline-test-gate/v1",
         "contracts/pipeline-worker-core/v1",
@@ -3309,12 +3309,12 @@
     },
     {
       "id": "COM-007",
-      "title": "Redis Streams, Kan\u00e4le und Deduplizierung",
+      "title": "Redis Streams, Kanäle und Deduplizierung",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/communication.md",
       "catalogueOwner": "runtime and platform maintainers",
       "pageOwner": "runtime and platform maintainers",
-      "readerTask": "Redis Streams, Kan\u00e4le und Deduplizierung",
+      "readerTask": "Redis Streams, Kanäle und Deduplizierung",
       "sourceDependencies": [
         "contracts/pipeline-test-gate/v1",
         "contracts/pipeline-worker-core/v1",
@@ -3633,12 +3633,12 @@
     },
     {
       "id": "DAT-001",
-      "title": "Vollst\u00e4ndige Datenbesitz- und Persistenzmatrix",
+      "title": "Vollständige Datenbesitz- und Persistenzmatrix",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
       "catalogueOwner": "state-owning component maintainers",
       "pageOwner": "state-owning component maintainers",
-      "readerTask": "Vollst\u00e4ndige Datenbesitz- und Persistenzmatrix",
+      "readerTask": "Vollständige Datenbesitz- und Persistenzmatrix",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -3795,12 +3795,12 @@
     },
     {
       "id": "DAT-004",
-      "title": "Buster-Pl\u00e4ne, Attempts, Evidence und Reports",
+      "title": "Buster-Pläne, Attempts, Evidence und Reports",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
       "catalogueOwner": "state-owning component maintainers",
       "pageOwner": "state-owning component maintainers",
-      "readerTask": "Buster-Pl\u00e4ne, Attempts, Evidence und Reports",
+      "readerTask": "Buster-Pläne, Attempts, Evidence und Reports",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -3957,12 +3957,12 @@
     },
     {
       "id": "DAT-007",
-      "title": "Redis als Transport, nicht als Autorit\u00e4t",
+      "title": "Redis als Transport, nicht als Autorität",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
       "catalogueOwner": "state-owning component maintainers",
       "pageOwner": "state-owning component maintainers",
-      "readerTask": "Redis als Transport, nicht als Autorit\u00e4t",
+      "readerTask": "Redis als Transport, nicht als Autorität",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -4119,12 +4119,12 @@
     },
     {
       "id": "TEL-001",
-      "title": "Telemetriearchitektur und Autorit\u00e4tsgrenze",
+      "title": "Telemetriearchitektur und Autoritätsgrenze",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/telemetry.md",
       "catalogueOwner": "observability maintainers",
       "pageOwner": "observability maintainers",
-      "readerTask": "Telemetriearchitektur und Autorit\u00e4tsgrenze",
+      "readerTask": "Telemetriearchitektur und Autoritätsgrenze",
       "sourceDependencies": [
         "skills/nova/core/telemetry",
         "skills/common/plugins/openclaw-agent-observer",
@@ -4278,12 +4278,12 @@
     },
     {
       "id": "TEL-004",
-      "title": "Identit\u00e4t, Ordering, Deduplizierung und Redaction",
+      "title": "Identität, Ordering, Deduplizierung und Redaction",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/telemetry.md",
       "catalogueOwner": "observability maintainers",
       "pageOwner": "observability maintainers",
-      "readerTask": "Identit\u00e4t, Ordering, Deduplizierung und Redaction",
+      "readerTask": "Identität, Ordering, Deduplizierung und Redaction",
       "sourceDependencies": [
         "skills/nova/core/telemetry",
         "skills/common/plugins/openclaw-agent-observer",
@@ -4432,12 +4432,12 @@
     },
     {
       "id": "TEL-007",
-      "title": "Retention, Kapazit\u00e4t und Backpressure",
+      "title": "Retention, Kapazität und Backpressure",
       "workPackage": "AP09.7",
       "canonicalTarget": "docs/site/understand/telemetry.md",
       "catalogueOwner": "observability maintainers",
       "pageOwner": "observability maintainers",
-      "readerTask": "Retention, Kapazit\u00e4t und Backpressure",
+      "readerTask": "Retention, Kapazität und Backpressure",
       "sourceDependencies": [
         "skills/nova/core/telemetry",
         "skills/common/plugins/openclaw-agent-observer",
@@ -5845,12 +5845,12 @@
     },
     {
       "id": "OPR-006",
-      "title": "Diagnose nach Symptom und Autorit\u00e4t",
+      "title": "Diagnose nach Symptom und Autorität",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/use/diagnose.md",
       "catalogueOwner": "platform operations",
       "pageOwner": "platform operations",
-      "readerTask": "Diagnose nach Symptom und Autorit\u00e4t",
+      "readerTask": "Diagnose nach Symptom und Autorität",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "skills/nova/core/telemetry/audit.ts"
@@ -5922,12 +5922,12 @@
     },
     {
       "id": "OPR-007",
-      "title": "Backup, Restore und unabh\u00e4ngiger Zugang",
+      "title": "Backup, Restore und unabhängiger Zugang",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/use/recovery.md",
       "catalogueOwner": "platform operations",
       "pageOwner": "platform operations and data owners",
-      "readerTask": "Backup, Restore und unabh\u00e4ngiger Zugang",
+      "readerTask": "Backup, Restore und unabhängiger Zugang",
       "sourceDependencies": [
         "charts/prism/files/prism-backup.sh",
         "scripts/postgresql-recovery.sh",
@@ -6076,12 +6076,12 @@
     },
     {
       "id": "OPR-009",
-      "title": "Kapazit\u00e4t, Retention und Schwellenwerte",
+      "title": "Kapazität, Retention und Schwellenwerte",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/use/capacity.md",
       "catalogueOwner": "platform operations",
       "pageOwner": "platform operations and each named data owner",
-      "readerTask": "Kapazit\u00e4t, Retention und Schwellenwerte",
+      "readerTask": "Kapazität, Retention und Schwellenwerte",
       "sourceDependencies": [
         "charts/prism/files/prism-backup.sh",
         "skills/nova/core/state/read-run-evidence.ts"
@@ -6301,12 +6301,12 @@
     },
     {
       "id": "OPL-002",
-      "title": "Operative Auswahlmatrix \u00fcber alle Plugins",
+      "title": "Operative Auswahlmatrix über alle Plugins",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/use/plugins.md",
       "catalogueOwner": "plugin and platform operations",
       "pageOwner": "platform configuration owner",
-      "readerTask": "Operative Auswahlmatrix \u00fcber alle Plugins",
+      "readerTask": "Operative Auswahlmatrix über alle Plugins",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/config/platform.schema.json",
         "skills/common/plugin-runtime/foundation/registry/activation.ts",
@@ -6377,12 +6377,12 @@
     },
     {
       "id": "OPL-003",
-      "title": "Aktivierung und Erfolgspr\u00fcfung je Oberfl\u00e4che",
+      "title": "Aktivierung und Erfolgsprüfung je Oberfläche",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/use/plugins.md",
       "catalogueOwner": "plugin and platform operations",
       "pageOwner": "platform configuration owner",
-      "readerTask": "Aktivierung und Erfolgspr\u00fcfung je Oberfl\u00e4che",
+      "readerTask": "Aktivierung und Erfolgsprüfung je Oberfläche",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/config/platform.schema.json",
         "skills/common/plugin-runtime/foundation/registry/activation.ts",
@@ -6533,12 +6533,12 @@
     },
     {
       "id": "OPL-005",
-      "title": "Externe Abh\u00e4ngigkeiten und Secrets je Plugin",
+      "title": "Externe Abhängigkeiten und Secrets je Plugin",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/use/plugins.md",
       "catalogueOwner": "plugin and platform operations",
       "pageOwner": "platform configuration owner",
-      "readerTask": "Externe Abh\u00e4ngigkeiten und Secrets je Plugin",
+      "readerTask": "Externe Abhängigkeiten und Secrets je Plugin",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/config/platform.schema.json",
         "skills/common/plugin-runtime/foundation/registry/activation.ts",
@@ -7620,12 +7620,12 @@
     },
     {
       "id": "CFG-014",
-      "title": "\u00c4nderungsauswirkung: Hot, Restart, New Run oder Migration",
+      "title": "Änderungsauswirkung: Hot, Restart, New Run oder Migration",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/reference/configuration-change-impact.md",
       "catalogueOwner": "configuration owners",
       "pageOwner": "platform operations",
-      "readerTask": "\u00c4nderungsauswirkung: Hot, Restart, New Run oder Migration",
+      "readerTask": "Änderungsauswirkung: Hot, Restart, New Run oder Migration",
       "sourceDependencies": [
         "skills/nova/core/execution/engine-snapshots.ts",
         "skills/nova/project/recovery.ts",
@@ -7831,12 +7831,12 @@
     },
     {
       "id": "CFG-017",
-      "title": "Gekoppelte Ver\u00f6ffentlichung von `.swarm/progress.json` und `pipeline.json`",
+      "title": "Gekoppelte Veröffentlichung von `.swarm/progress.json` und `pipeline.json`",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/reference/project-pipeline-publication.md",
       "catalogueOwner": "configuration owners",
       "pageOwner": "Nova project setup",
-      "readerTask": "Gekoppelte Ver\u00f6ffentlichung von `.swarm/progress.json` und `pipeline.json`",
+      "readerTask": "Gekoppelte Veröffentlichung von `.swarm/progress.json` und `pipeline.json`",
       "sourceDependencies": [
         "skills/nova/project_setup/tools/progress-scaffold.ts",
         "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
@@ -7911,12 +7911,12 @@
     },
     {
       "id": "CFG-018",
-      "title": "Support- und Kompatibilit\u00e4tskarte ausgelieferter Konfiguration",
+      "title": "Support- und Kompatibilitätskarte ausgelieferter Konfiguration",
       "workPackage": "AP09.8",
       "canonicalTarget": "docs/site/reference/configuration-compatibility.md",
       "catalogueOwner": "configuration owners",
       "pageOwner": "configuration-owning components",
-      "readerTask": "Support- und Kompatibilit\u00e4tskarte ausgelieferter Konfiguration",
+      "readerTask": "Support- und Kompatibilitätskarte ausgelieferter Konfiguration",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/config/platform.schema.json",
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
@@ -8156,12 +8156,12 @@
     },
     {
       "id": "FLW-005",
-      "title": "Vorher-/Nachher-Erkl\u00e4rung des kompilierten Graphen",
+      "title": "Vorher-/Nachher-Erklärung des kompilierten Graphen",
       "workPackage": "AP09.9",
       "canonicalTarget": "docs/site/use/workflows/README.md",
       "catalogueOwner": "product integration maintainers",
       "pageOwner": null,
-      "readerTask": "Vorher-/Nachher-Erkl\u00e4rung des kompilierten Graphen",
+      "readerTask": "Vorher-/Nachher-Erklärung des kompilierten Graphen",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -8530,12 +8530,12 @@
     },
     {
       "id": "FLW-014",
-      "title": "Plugin aktivieren, pr\u00fcfen, ersetzen und entfernen",
+      "title": "Plugin aktivieren, prüfen, ersetzen und entfernen",
       "workPackage": "AP09.9",
       "canonicalTarget": "docs/site/use/workflows/README.md",
       "catalogueOwner": "product integration maintainers",
       "pageOwner": null,
-      "readerTask": "Plugin aktivieren, pr\u00fcfen, ersetzen und entfernen",
+      "readerTask": "Plugin aktivieren, prüfen, ersetzen und entfernen",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -8956,12 +8956,12 @@
     },
     {
       "id": "DEV-007",
-      "title": "Security-, Performance- und Lastpr\u00fcfung",
+      "title": "Security-, Performance- und Lastprüfung",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
       "catalogueOwner": "developer experience maintainers",
       "pageOwner": null,
-      "readerTask": "Security-, Performance- und Lastpr\u00fcfung",
+      "readerTask": "Security-, Performance- und Lastprüfung",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9042,12 +9042,12 @@
     },
     {
       "id": "DEV-009",
-      "title": "Dokumentationspflicht einer Code\u00e4nderung",
+      "title": "Dokumentationspflicht einer Codeänderung",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
       "catalogueOwner": "developer experience maintainers",
       "pageOwner": null,
-      "readerTask": "Dokumentationspflicht einer Code\u00e4nderung",
+      "readerTask": "Dokumentationspflicht einer Codeänderung",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9191,12 +9191,12 @@
     },
     {
       "id": "EXT-003",
-      "title": "F\u00fcnf Pipeline-Extension-Vertr\u00e4ge",
+      "title": "Fünf Pipeline-Extension-Verträge",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/README.md",
       "catalogueOwner": "plugin-runtime maintainers",
       "pageOwner": "plugin-foundation",
-      "readerTask": "F\u00fcnf Pipeline-Extension-Vertr\u00e4ge",
+      "readerTask": "Fünf Pipeline-Extension-Verträge",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "skills/common/plugin-runtime/foundation/config/platform.ts",
@@ -9484,12 +9484,12 @@
     },
     {
       "id": "EXT-009",
-      "title": "Vollst\u00e4ndiger Plugin-Katalog",
+      "title": "Vollständiger Plugin-Katalog",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/README.md",
       "catalogueOwner": "plugin-runtime maintainers",
       "pageOwner": "plugin-foundation",
-      "readerTask": "Vollst\u00e4ndiger Plugin-Katalog",
+      "readerTask": "Vollständiger Plugin-Katalog",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "skills/common/plugin-runtime/foundation/config/platform.ts",
@@ -9537,12 +9537,12 @@
     },
     {
       "id": "CDV-001",
-      "title": "Nova-Core-\u00c4nderung",
+      "title": "Nova-Core-Änderung",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Nova-Core-\u00c4nderung",
+      "readerTask": "Nova-Core-Änderung",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9580,12 +9580,12 @@
     },
     {
       "id": "CDV-002",
-      "title": "Lifecycle, Scheduling, Retry, Repair und Wait \u00e4ndern",
+      "title": "Lifecycle, Scheduling, Retry, Repair und Wait ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Lifecycle, Scheduling, Retry, Repair und Wait \u00e4ndern",
+      "readerTask": "Lifecycle, Scheduling, Retry, Repair und Wait ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9623,12 +9623,12 @@
     },
     {
       "id": "CDV-003",
-      "title": "Effects und Recoverysemantik \u00e4ndern",
+      "title": "Effects und Recoverysemantik ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Effects und Recoverysemantik \u00e4ndern",
+      "readerTask": "Effects und Recoverysemantik ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9666,12 +9666,12 @@
     },
     {
       "id": "CDV-004",
-      "title": "Worker-Core-Protokoll, Supervisor oder Ressourcenmodell \u00e4ndern",
+      "title": "Worker-Core-Protokoll, Supervisor oder Ressourcenmodell ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Worker-Core-Protokoll, Supervisor oder Ressourcenmodell \u00e4ndern",
+      "readerTask": "Worker-Core-Protokoll, Supervisor oder Ressourcenmodell ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9709,12 +9709,12 @@
     },
     {
       "id": "CDV-005",
-      "title": "Foundation Registry, Trust oder Isolation \u00e4ndern",
+      "title": "Foundation Registry, Trust oder Isolation ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Foundation Registry, Trust oder Isolation \u00e4ndern",
+      "readerTask": "Foundation Registry, Trust oder Isolation ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9752,12 +9752,12 @@
     },
     {
       "id": "CDV-006",
-      "title": "SDK oder \u00f6ffentlichen Contract \u00e4ndern",
+      "title": "SDK oder öffentlichen Contract ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "SDK oder \u00f6ffentlichen Contract \u00e4ndern",
+      "readerTask": "SDK oder öffentlichen Contract ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9795,12 +9795,12 @@
     },
     {
       "id": "CDV-007",
-      "title": "Capability oder Telemetrieevent einf\u00fchren",
+      "title": "Capability oder Telemetrieevent einführen",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Capability oder Telemetrieevent einf\u00fchren",
+      "readerTask": "Capability oder Telemetrieevent einführen",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9838,12 +9838,12 @@
     },
     {
       "id": "CDV-008",
-      "title": "Buster Engine \u00e4ndern",
+      "title": "Buster Engine ändern",
       "workPackage": "AP09.5",
       "canonicalTarget": "docs/site/extend/platform/buster.md",
       "catalogueOwner": "Buster maintainers",
       "pageOwner": "buster",
-      "readerTask": "Buster Engine \u00e4ndern",
+      "readerTask": "Buster Engine ändern",
       "sourceDependencies": [
         "contracts/pipeline-test-gate/v1",
         "skills/nova/core/test-gates/resolver.ts",
@@ -9876,12 +9876,12 @@
     },
     {
       "id": "CDV-009",
-      "title": "Prism Control, Worker, Ingestion oder Studio \u00e4ndern",
+      "title": "Prism Control, Worker, Ingestion oder Studio ändern",
       "workPackage": "AP09.4",
       "canonicalTarget": "docs/site/extend/platform/prism.md",
       "catalogueOwner": "Prism maintainers",
       "pageOwner": "Prism maintainers",
-      "readerTask": "Prism Control, Worker, Ingestion oder Studio \u00e4ndern",
+      "readerTask": "Prism Control, Worker, Ingestion oder Studio ändern",
       "sourceDependencies": [
         "skills/prism",
         "contracts/prism/v1",
@@ -9912,12 +9912,12 @@
     },
     {
       "id": "CDV-010",
-      "title": "Forge-, Echo-, Service- oder API-Integration \u00e4ndern",
+      "title": "Forge-, Echo-, Service- oder API-Integration ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Forge-, Echo-, Service- oder API-Integration \u00e4ndern",
+      "readerTask": "Forge-, Echo-, Service- oder API-Integration ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9955,12 +9955,12 @@
     },
     {
       "id": "CDV-011",
-      "title": "Frontend oder interaktive Oberfl\u00e4che \u00e4ndern",
+      "title": "Frontend oder interaktive Oberfläche ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Frontend oder interaktive Oberfl\u00e4che \u00e4ndern",
+      "readerTask": "Frontend oder interaktive Oberfläche ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -9998,12 +9998,12 @@
     },
     {
       "id": "CDV-012",
-      "title": "Helm, GitOps oder Infrastruktur \u00e4ndern",
+      "title": "Helm, GitOps oder Infrastruktur ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Helm, GitOps oder Infrastruktur \u00e4ndern",
+      "readerTask": "Helm, GitOps oder Infrastruktur ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -10041,12 +10041,12 @@
     },
     {
       "id": "CDV-013",
-      "title": "Datenmodell oder Migration \u00e4ndern",
+      "title": "Datenmodell oder Migration ändern",
       "workPackage": "AP09.10",
       "canonicalTarget": "docs/site/extend/platform/README.md",
       "catalogueOwner": "component maintainers",
       "pageOwner": null,
-      "readerTask": "Datenmodell oder Migration \u00e4ndern",
+      "readerTask": "Datenmodell oder Migration ändern",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -10481,12 +10481,12 @@
     },
     {
       "id": "REF-010",
-      "title": "Contracts, Versionen und Kompatibilit\u00e4t",
+      "title": "Contracts, Versionen und Kompatibilität",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/reference/contracts.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": null,
-      "readerTask": "Contracts, Versionen und Kompatibilit\u00e4t",
+      "readerTask": "Contracts, Versionen und Kompatibilität",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -10926,12 +10926,12 @@
     },
     {
       "id": "DEC-002",
-      "title": "Gr\u00fcnde, Alternativen, Konsequenzen und Supersession",
+      "title": "Gründe, Alternativen, Konsequenzen und Supersession",
       "workPackage": "AP09.1",
       "canonicalTarget": "docs/site/decisions/README.md",
       "catalogueOwner": "architecture maintainers",
       "pageOwner": "platform-architecture",
-      "readerTask": "Gr\u00fcnde, Alternativen, Konsequenzen und Supersession",
+      "readerTask": "Gründe, Alternativen, Konsequenzen und Supersession",
       "sourceDependencies": [
         "packaging/runtime/package-ownership.json"
       ],
@@ -10996,12 +10996,12 @@
     },
     {
       "id": "STA-002",
-      "title": "\u00d6ffentliche Statusangaben stimmen mit Registern \u00fcberein",
+      "title": "Öffentliche Statusangaben stimmen mit Registern überein",
       "workPackage": "AP09.1",
       "canonicalTarget": "docs/site/status/current.md",
       "catalogueOwner": "release and documentation maintainers",
       "pageOwner": "platform-architecture",
-      "readerTask": "\u00d6ffentliche Statusangaben stimmen mit Registern \u00fcberein",
+      "readerTask": "Öffentliche Statusangaben stimmen mit Registern überein",
       "sourceDependencies": [
         "packaging/runtime/roles/nova.json",
         "packaging/runtime/roles/buster.json",
@@ -11237,12 +11237,12 @@
     },
     {
       "id": "PUB-006",
-      "title": "Interaktivit\u00e4t mit statischem Fallback",
+      "title": "Interaktivität mit statischem Fallback",
       "workPackage": "AP09.12",
       "canonicalTarget": "docs/site/reference/documentation-site.md",
       "catalogueOwner": "documentation publication",
       "pageOwner": null,
-      "readerTask": "Interaktivit\u00e4t mit statischem Fallback",
+      "readerTask": "Interaktivität mit statischem Fallback",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -11360,12 +11360,12 @@
     },
     {
       "id": "PUB-009",
-      "title": "Keine parallelen widerspr\u00fcchlichen Altpfade",
+      "title": "Keine parallelen widersprüchlichen Altpfade",
       "workPackage": "AP09.12",
       "canonicalTarget": "docs/site/reference/documentation-site.md",
       "catalogueOwner": "documentation publication",
       "pageOwner": null,
-      "readerTask": "Keine parallelen widerspr\u00fcchlichen Altpfade",
+      "readerTask": "Keine parallelen widersprüchlichen Altpfade",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -11782,12 +11782,12 @@
     },
     {
       "id": "MNT-010",
-      "title": "Driftcheck f\u00fcr Schemafelder",
+      "title": "Driftcheck für Schemafelder",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": null,
-      "readerTask": "Driftcheck f\u00fcr Schemafelder",
+      "readerTask": "Driftcheck für Schemafelder",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -11823,12 +11823,12 @@
     },
     {
       "id": "MNT-011",
-      "title": "Driftcheck f\u00fcr Fehlercodes",
+      "title": "Driftcheck für Fehlercodes",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": null,
-      "readerTask": "Driftcheck f\u00fcr Fehlercodes",
+      "readerTask": "Driftcheck für Fehlercodes",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -11864,12 +11864,12 @@
     },
     {
       "id": "MNT-012",
-      "title": "Driftcheck f\u00fcr Plugins und Registrierungen",
+      "title": "Driftcheck für Plugins und Registrierungen",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/plugin-catalogue/README.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": "plugin-foundation",
-      "readerTask": "Driftcheck f\u00fcr Plugins und Registrierungen",
+      "readerTask": "Driftcheck für Plugins und Registrierungen",
       "sourceDependencies": [
         "scripts/docs-publication.mjs"
       ],
@@ -11911,12 +11911,12 @@
     },
     {
       "id": "MNT-013",
-      "title": "Driftcheck f\u00fcr Links, Anker und Quellbereiche",
+      "title": "Driftcheck für Links, Anker und Quellbereiche",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/reference/verification-commands.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": "platform-maintainers",
-      "readerTask": "Driftcheck f\u00fcr Links, Anker und Quellbereiche",
+      "readerTask": "Driftcheck für Links, Anker und Quellbereiche",
       "sourceDependencies": [
         "docs/generated/inventory/deploy-script.json",
         "scripts/docs-generate.mjs"
@@ -11959,12 +11959,12 @@
     },
     {
       "id": "MNT-014",
-      "title": "Ausf\u00fchrbare, schema-validierte Beispiele",
+      "title": "Ausführbare, schema-validierte Beispiele",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": null,
-      "readerTask": "Ausf\u00fchrbare, schema-validierte Beispiele",
+      "readerTask": "Ausführbare, schema-validierte Beispiele",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -12000,12 +12000,12 @@
     },
     {
       "id": "MNT-015",
-      "title": "Owner und Reviewpflicht bei Code\u00e4nderungen",
+      "title": "Owner und Reviewpflicht bei Codeänderungen",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": null,
-      "readerTask": "Owner und Reviewpflicht bei Code\u00e4nderungen",
+      "readerTask": "Owner und Reviewpflicht bei Codeänderungen",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -12041,12 +12041,12 @@
     },
     {
       "id": "MNT-016",
-      "title": "Generatoren \u00fcberschreiben keine Erkl\u00e4rungen",
+      "title": "Generatoren überschreiben keine Erklärungen",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/plugin-catalogue/README.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": "plugin-foundation",
-      "readerTask": "Generatoren \u00fcberschreiben keine Erkl\u00e4rungen",
+      "readerTask": "Generatoren überschreiben keine Erklärungen",
       "sourceDependencies": [
         "scripts/docs-publication.mjs"
       ],
@@ -12088,12 +12088,12 @@
     },
     {
       "id": "MNT-017",
-      "title": "Pflegeanleitung f\u00fcr Dokumentationsagenten",
+      "title": "Pflegeanleitung für Dokumentationsagenten",
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
       "catalogueOwner": "documentation automation",
       "pageOwner": null,
-      "readerTask": "Pflegeanleitung f\u00fcr Dokumentationsagenten",
+      "readerTask": "Pflegeanleitung für Dokumentationsagenten",
       "sourceDependencies": [],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "not-in-current-map",
@@ -12129,12 +12129,12 @@
     },
     {
       "id": "QUA-001",
-      "title": "Verst\u00e4ndliches technisches Englisch und technische Tiefe",
+      "title": "Verständliches technisches Englisch und technische Tiefe",
       "workPackage": "AP09.13",
       "canonicalTarget": "docs/site/status/acceptance.md",
       "catalogueOwner": "independent documentation reviewers",
       "pageOwner": "platform operator",
-      "readerTask": "Verst\u00e4ndliches technisches Englisch und technische Tiefe",
+      "readerTask": "Verständliches technisches Englisch und technische Tiefe",
       "sourceDependencies": [
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
@@ -12225,12 +12225,12 @@
     },
     {
       "id": "QUA-003",
-      "title": "Jede wichtige Entscheidung begr\u00fcndet",
+      "title": "Jede wichtige Entscheidung begründet",
       "workPackage": "AP09.13",
       "canonicalTarget": "docs/site/status/acceptance.md",
       "catalogueOwner": "independent documentation reviewers",
       "pageOwner": "platform operator",
-      "readerTask": "Jede wichtige Entscheidung begr\u00fcndet",
+      "readerTask": "Jede wichtige Entscheidung begründet",
       "sourceDependencies": [
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
@@ -12321,12 +12321,12 @@
     },
     {
       "id": "QUA-005",
-      "title": "Keine falschen Live- oder Vollst\u00e4ndigkeitsclaims",
+      "title": "Keine falschen Live- oder Vollständigkeitsclaims",
       "workPackage": "AP09.13",
       "canonicalTarget": "docs/site/status/acceptance.md",
       "catalogueOwner": "independent documentation reviewers",
       "pageOwner": "platform operator",
-      "readerTask": "Keine falschen Live- oder Vollst\u00e4ndigkeitsclaims",
+      "readerTask": "Keine falschen Live- oder Vollständigkeitsclaims",
       "sourceDependencies": [
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
@@ -12561,12 +12561,12 @@
     },
     {
       "id": "QUA-010",
-      "title": "Wartbarkeitsprobe mit k\u00fcnstlicher Oberfl\u00e4chen\u00e4nderung",
+      "title": "Wartbarkeitsprobe mit künstlicher Oberflächenänderung",
       "workPackage": "AP09.13",
       "canonicalTarget": "docs/site/status/acceptance.md",
       "catalogueOwner": "independent documentation reviewers",
       "pageOwner": "platform operator",
-      "readerTask": "Wartbarkeitsprobe mit k\u00fcnstlicher Oberfl\u00e4chen\u00e4nderung",
+      "readerTask": "Wartbarkeitsprobe mit künstlicher Oberflächenänderung",
       "sourceDependencies": [
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
@@ -12611,8 +12611,8 @@
   "gates": [
     {
       "id": "A97-01",
-      "passCondition": "Ein aus Deployments, Values, Runtime-Konfiguration, Registries und Clients erzeugtes Inventar erfasst jede aktuelle Laufzeitabh\u00e4ngigkeit und klassifiziert sie als pipelinepflichtig, optional oder geplant.",
-      "automaticFailure": "Eine Abh\u00e4ngigkeit fehlt, oder eine geplante/optionale Komponente erscheint als Pflicht.",
+      "passCondition": "Ein aus Deployments, Values, Runtime-Konfiguration, Registries und Clients erzeugtes Inventar erfasst jede aktuelle Laufzeitabhängigkeit und klassifiziert sie als pipelinepflichtig, optional oder geplant.",
+      "automaticFailure": "Eine Abhängigkeit fehlt, oder eine geplante/optionale Komponente erscheint als Pflicht.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12621,8 +12621,8 @@
     },
     {
       "id": "A97-02",
-      "passCondition": "Redis, PostgreSQL, Git-Origin, OCI-Registry, BuildKit und Tailscale besitzen je Owner, Zweck, Consumer, Protokoll, Endpoint, Identit\u00e4t, Konfiguration, Default, Pr\u00e4zedenz, Health-Signal, Ausfallwirkung, Stop-Regel und Recovery.",
-      "automaticFailure": "Eine Pflichtabh\u00e4ngigkeit hat nur eine Produktbeschreibung oder Installationsnotiz.",
+      "passCondition": "Redis, PostgreSQL, Git-Origin, OCI-Registry, BuildKit und Tailscale besitzen je Owner, Zweck, Consumer, Protokoll, Endpoint, Identität, Konfiguration, Default, Präzedenz, Health-Signal, Ausfallwirkung, Stop-Regel und Recovery.",
+      "automaticFailure": "Eine Pflichtabhängigkeit hat nur eine Produktbeschreibung oder Installationsnotiz.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12641,8 +12641,8 @@
     },
     {
       "id": "A97-04",
-      "passCondition": "Argo CD, Cilium und Monitoring sind als optionale Plattformschichten erkl\u00e4rt; die Dokumentation zeigt die funktionsf\u00e4hige Pipelinegrenze ohne sie und die zus\u00e4tzlichen F\u00e4higkeiten mit ihnen.",
-      "automaticFailure": "Optionalit\u00e4t wird behauptet, ohne Abh\u00e4ngigkeitspfade und Fallback wie Flannel zu pr\u00fcfen.",
+      "passCondition": "Argo CD, Cilium und Monitoring sind als optionale Plattformschichten erklärt; die Dokumentation zeigt die funktionsfähige Pipelinegrenze ohne sie und die zusätzlichen Fähigkeiten mit ihnen.",
+      "automaticFailure": "Optionalität wird behauptet, ohne Abhängigkeitspfade und Fallback wie Flannel zu prüfen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12651,7 +12651,7 @@
     },
     {
       "id": "A97-05",
-      "passCondition": "Kommunikationsmatrix und Endpunktinventar erfassen jeden aktiven Request-, Event-, Stream-, Store- und Providerweg mit Producer, Consumer, Transport, Authentisierung, Timeout, Gr\u00f6\u00dfenlimit, Reihenfolge, Persistenz und Ausfallwirkung.",
+      "passCondition": "Kommunikationsmatrix und Endpunktinventar erfassen jeden aktiven Request-, Event-, Stream-, Store- und Providerweg mit Producer, Consumer, Transport, Authentisierung, Timeout, Größenlimit, Reihenfolge, Persistenz und Ausfallwirkung.",
       "automaticFailure": "Nur Ports oder Services werden aufgelistet; mindestens ein aktiver Codepfad fehlt.",
       "state": "not-accepted",
       "evidence": [],
@@ -12661,8 +12661,8 @@
     },
     {
       "id": "A97-06",
-      "passCondition": "Das Store-Inventar erkl\u00e4rt f\u00fcr jeden Store Authority, Schema/Datenart, Writer, Reader, Konsistenz, Locks/Fencing, Retention, Kapazit\u00e4t, Backup, Restore, Korruption, Datenverlust und Stilllegung.",
-      "automaticFailure": "Ein persistenter Store besitzt keinen gepr\u00fcften Restore- oder ehrlichen `not implemented`-Pfad.",
+      "passCondition": "Das Store-Inventar erklärt für jeden Store Authority, Schema/Datenart, Writer, Reader, Konsistenz, Locks/Fencing, Retention, Kapazität, Backup, Restore, Korruption, Datenverlust und Stilllegung.",
+      "automaticFailure": "Ein persistenter Store besitzt keinen geprüften Restore- oder ehrlichen `not implemented`-Pfad.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12672,7 +12672,7 @@
     {
       "id": "A97-07",
       "passCondition": "Telemetrie verfolgt Signalentstehung bis Speicherung und Nutzung; Labels, Korrelation, Sampling, Redaction, Retention, Backpressure, Ausfall und fehlende End-to-End-Evidenz sind explizit.",
-      "automaticFailure": "\u201eObservable\u201c wird aus vorhandenen Metriknamen oder Logs abgeleitet.",
+      "automaticFailure": "„Observable“ wird aus vorhandenen Metriknamen oder Logs abgeleitet.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12681,7 +12681,7 @@
     },
     {
       "id": "A97-08",
-      "passCondition": "Identity-, Secret-, Network- und Supply-Chain-Matrizen erfassen jede Trust-Grenze, Credentialquelle, Rotation, Least-Privilege-Regel, Egress/Ingress-Grenze, Artefaktidentit\u00e4t und negative Zugriffserwartung.",
+      "passCondition": "Identity-, Secret-, Network- und Supply-Chain-Matrizen erfassen jede Trust-Grenze, Credentialquelle, Rotation, Least-Privilege-Regel, Egress/Ingress-Grenze, Artefaktidentität und negative Zugriffserwartung.",
       "automaticFailure": "Repository-/Render-Evidenz wird als Live-Enforcement ausgegeben.",
       "state": "not-accepted",
       "evidence": [],
@@ -12691,8 +12691,8 @@
     },
     {
       "id": "A97-09",
-      "passCondition": "Forge, Echo, OpenClaw, Codex, Ops MCP und Archviewer besitzen je einen zusammenh\u00e4ngenden Request-/Daten-/Fehlerweg, Konfiguration, Betrieb, Recovery, Erweiterungsgrenze und begr\u00fcndete Rolle im Gesamtsystem.",
-      "automaticFailure": "Die Erkl\u00e4rung ersch\u00f6pft sich in Pluginmanifest oder Komponentenliste.",
+      "passCondition": "Forge, Echo, OpenClaw, Codex, Ops MCP und Archviewer besitzen je einen zusammenhängenden Request-/Daten-/Fehlerweg, Konfiguration, Betrieb, Recovery, Erweiterungsgrenze und begründete Rolle im Gesamtsystem.",
+      "automaticFailure": "Die Erklärung erschöpft sich in Pluginmanifest oder Komponentenliste.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12701,7 +12701,7 @@
     },
     {
       "id": "A97-10",
-      "passCondition": "Mindestens ein vollst\u00e4ndiger Erfolgsweg und je ein Ausfall von Redis, PostgreSQL, Registry/BuildKit, Tailscale, LiteLLM und Git werden \u00fcber alle betroffenen Komponenten bis zur sicheren Operatorentscheidung verfolgt.",
+      "passCondition": "Mindestens ein vollständiger Erfolgsweg und je ein Ausfall von Redis, PostgreSQL, Registry/BuildKit, Tailscale, LiteLLM und Git werden über alle betroffenen Komponenten bis zur sicheren Operatorentscheidung verfolgt.",
       "automaticFailure": "Der Weg endet beim ersten Fehlercode oder empfiehlt ungebundenes Retry.",
       "state": "not-accepted",
       "evidence": [],
@@ -12719,8 +12719,8 @@
     },
     {
       "id": "A97-11",
-      "passCondition": "Ein Fresh-Context-Reviewer kann f\u00fcr jede Abh\u00e4ngigkeit aus der Dokumentation Diagnose und sichere Recovery ausw\u00e4hlen; ein zweiter Reviewer gleicht alle Matrizen vollst\u00e4ndig gegen aktuelle Sources ab.",
-      "automaticFailure": "Stichprobe, Autorenselbstauskunft oder blo\u00dfer Linkcheck ersetzt einen der beiden Reviews.",
+      "passCondition": "Ein Fresh-Context-Reviewer kann für jede Abhängigkeit aus der Dokumentation Diagnose und sichere Recovery auswählen; ein zweiter Reviewer gleicht alle Matrizen vollständig gegen aktuelle Sources ab.",
+      "automaticFailure": "Stichprobe, Autorenselbstauskunft oder bloßer Linkcheck ersetzt einen der beiden Reviews.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12731,7 +12731,7 @@
     },
     {
       "id": "A97-12",
-      "passCondition": "Automatische Driftchecks schlagen fehl, wenn ein Endpoint, Store, Event, Secret, Runtime-Service oder Ops-MCP-Tool ohne Dokumentationszuordnung hinzugef\u00fcgt wird.",
+      "passCondition": "Automatische Driftchecks schlagen fehl, wenn ein Endpoint, Store, Event, Secret, Runtime-Service oder Ops-MCP-Tool ohne Dokumentationszuordnung hinzugefügt wird.",
       "automaticFailure": "Der Check kennt nur feste Sollzahlen oder akzeptiert ein neues Element still.",
       "state": "not-accepted",
       "evidence": [],
@@ -12751,8 +12751,8 @@
     },
     {
       "id": "A98-02",
-      "passCondition": "Jedes Verfahren erf\u00fcllt vollst\u00e4ndig den Operate-Vertrag des Dokumentations-Qualit\u00e4tsstandards und nennt unterst\u00fctzte Version, Ausf\u00fchrungsort und ben\u00f6tigte Authority.",
-      "automaticFailure": "Ein Verfahren besteht nur aus Befehlen oder enth\u00e4lt einen unerkl\u00e4rten Platzhalter.",
+      "passCondition": "Jedes Verfahren erfüllt vollständig den Operate-Vertrag des Dokumentations-Qualitätsstandards und nennt unterstützte Version, Ausführungsort und benötigte Authority.",
+      "automaticFailure": "Ein Verfahren besteht nur aus Befehlen oder enthält einen unerklärten Platzhalter.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [
@@ -12780,8 +12780,8 @@
     },
     {
       "id": "A98-03",
-      "passCondition": "Installation und Preflight beginnen auf dem tats\u00e4chlich unterst\u00fctzten Ausgangszustand, pr\u00fcfen Host-/Cluster-/Storage-/DNS-/Identity-Voraussetzungen und stoppen vor Mutation bei einem Fehler.",
-      "automaticFailure": "Ein manueller, nicht dokumentierter Hostschritt ist f\u00fcr Erfolg notwendig.",
+      "passCondition": "Installation und Preflight beginnen auf dem tatsächlich unterstützten Ausgangszustand, prüfen Host-/Cluster-/Storage-/DNS-/Identity-Voraussetzungen und stoppen vor Mutation bei einem Fehler.",
+      "automaticFailure": "Ein manueller, nicht dokumentierter Hostschritt ist für Erfolg notwendig.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12793,8 +12793,8 @@
     },
     {
       "id": "A98-04",
-      "passCondition": "Start, Readiness und Beobachtung unterscheiden Prozessstart, Servicebereitschaft, Abh\u00e4ngigkeitsbereitschaft und fachliche Funktionsf\u00e4higkeit mit exakten Signalen.",
-      "automaticFailure": "\u201ePod running\u201c oder HTTP 200 wird allein als Plattformbereitschaft gewertet.",
+      "passCondition": "Start, Readiness und Beobachtung unterscheiden Prozessstart, Servicebereitschaft, Abhängigkeitsbereitschaft und fachliche Funktionsfähigkeit mit exakten Signalen.",
+      "automaticFailure": "„Pod running“ oder HTTP 200 wird allein als Plattformbereitschaft gewertet.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [
@@ -12825,7 +12825,7 @@
     },
     {
       "id": "A98-05",
-      "passCondition": "Signal, Wait/Resume, Cancellation und Restart verwenden vollst\u00e4ndige aktuelle Vertr\u00e4ge einschlie\u00dflich `resume-signal.v2`, Issuance, Signatur/Authority, Idempotenz, Replay, Reihenfolge und falscher Signale.",
+      "passCondition": "Signal, Wait/Resume, Cancellation und Restart verwenden vollständige aktuelle Verträge einschließlich `resume-signal.v2`, Issuance, Signatur/Authority, Idempotenz, Replay, Reihenfolge und falscher Signale.",
       "automaticFailure": "Ein syntaktisches Beispiel ersetzt Issuance- und Wiederholungsregeln.",
       "state": "not-accepted",
       "evidence": [],
@@ -12839,7 +12839,7 @@
     },
     {
       "id": "A98-06",
-      "passCondition": "Der Symptomindex f\u00fchrt von beobachtbaren Symptomen \u00fcber unterscheidende Checks zur Ursache, Stop-Regel und sicheren Recovery; er deckt Pflichtabh\u00e4ngigkeiten und unklare Resultate ab.",
+      "passCondition": "Der Symptomindex führt von beobachtbaren Symptomen über unterscheidende Checks zur Ursache, Stop-Regel und sicheren Recovery; er deckt Pflichtabhängigkeiten und unklare Resultate ab.",
       "automaticFailure": "Diagnose beginnt mit der angenommenen Ursache oder empfiehlt pauschales Neustarten.",
       "state": "not-accepted",
       "evidence": [],
@@ -12883,8 +12883,8 @@
     },
     {
       "id": "A98-08",
-      "passCondition": "Upgrade und Rollback nennen Versionsmatrix, Preflight, irreversible Grenze, Datenmigration, Reihenfolge, Health-Gates, Abbruch, R\u00fcckkehrpfad und Evidenzaufbewahrung.",
-      "automaticFailure": "Rollback wird nach einer irreversiblen Migration versprochen oder nur Helm-Render gepr\u00fcft.",
+      "passCondition": "Upgrade und Rollback nennen Versionsmatrix, Preflight, irreversible Grenze, Datenmigration, Reihenfolge, Health-Gates, Abbruch, Rückkehrpfad und Evidenzaufbewahrung.",
+      "automaticFailure": "Rollback wird nach einer irreversiblen Migration versprochen oder nur Helm-Render geprüft.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12896,8 +12896,8 @@
     },
     {
       "id": "A98-09",
-      "passCondition": "Stilllegung entfernt Workloads, Zugriff, Secrets, Daten, Artefakte und externe Ressourcen in sicherer Reihenfolge und nennt ausdr\u00fccklich aufzubewahrende Audit-/Recovery-Evidenz.",
-      "automaticFailure": "Cleanup verwendet ungebundene Globs oder l\u00f6scht Daten vor der letzten Exportpr\u00fcfung.",
+      "passCondition": "Stilllegung entfernt Workloads, Zugriff, Secrets, Daten, Artefakte und externe Ressourcen in sicherer Reihenfolge und nennt ausdrücklich aufzubewahrende Audit-/Recovery-Evidenz.",
+      "automaticFailure": "Cleanup verwendet ungebundene Globs oder löscht Daten vor der letzten Exportprüfung.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -12930,8 +12930,8 @@
     },
     {
       "id": "A98-11",
-      "passCondition": "F\u00fcr jeden effektiven Wert ist die vollst\u00e4ndige Pr\u00e4zedenz vom authored input bis zum Runtime-Consumer erkl\u00e4rt; Konflikt-, leerer-Wert-, Secret- und ung\u00fcltiger-Wert-F\u00e4lle sind getestet.",
-      "automaticFailure": "Zwei Quellen k\u00f6nnen denselben Wert setzen, ohne dass der Gewinner beweisbar ist.",
+      "passCondition": "Für jeden effektiven Wert ist die vollständige Präzedenz vom authored input bis zum Runtime-Consumer erklärt; Konflikt-, leerer-Wert-, Secret- und ungültiger-Wert-Fälle sind getestet.",
+      "automaticFailure": "Zwei Quellen können denselben Wert setzen, ohne dass der Gewinner beweisbar ist.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [
@@ -13027,7 +13027,7 @@
     {
       "id": "A98-14",
       "passCondition": "Mutationstests erkennen ein neues Helm-Feld, Environment-Setting, Secret, Scriptflag und `swarm.config.json`-Feld ohne Operator-Dokumentation.",
-      "automaticFailure": "Nur bekannte Feldzahlen werden gepr\u00fcft oder ein neues Feld bleibt gr\u00fcn.",
+      "automaticFailure": "Nur bekannte Feldzahlen werden geprüft oder ein neues Feld bleibt grün.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13048,8 +13048,8 @@
     },
     {
       "id": "A99-01",
-      "passCondition": "Eine aus aktuellen Schemas, Compiler und Resolvern erzeugte Referenz erfasst jedes rekursive `pipeline.json`-Feld, jede Variante, Bedingung, Identit\u00e4t, Default, Grenze und Validierungsregel.",
-      "automaticFailure": "Nur das JSON-Schema oder eine Top-Level-Feldliste wird ver\u00f6ffentlicht.",
+      "passCondition": "Eine aus aktuellen Schemas, Compiler und Resolvern erzeugte Referenz erfasst jedes rekursive `pipeline.json`-Feld, jede Variante, Bedingung, Identität, Default, Grenze und Validierungsregel.",
+      "automaticFailure": "Nur das JSON-Schema oder eine Top-Level-Feldliste wird veröffentlicht.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13058,8 +13058,8 @@
     },
     {
       "id": "A99-02",
-      "passCondition": "Die Dokumentation erkl\u00e4rt Compile-Reihenfolge, Normalisierung, Defaults, Registry-Snapshot, Rollenaufl\u00f6sung, Matrixexpansion, Abh\u00e4ngigkeiten, Gates und unver\u00e4nderliche Identit\u00e4ten mit Gr\u00fcnden und Kosten.",
-      "automaticFailure": "Ein erzeugtes Beispiel ersetzt die Mechanikerkl\u00e4rung.",
+      "passCondition": "Die Dokumentation erklärt Compile-Reihenfolge, Normalisierung, Defaults, Registry-Snapshot, Rollenauflösung, Matrixexpansion, Abhängigkeiten, Gates und unveränderliche Identitäten mit Gründen und Kosten.",
+      "automaticFailure": "Ein erzeugtes Beispiel ersetzt die Mechanikerklärung.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13068,8 +13068,8 @@
     },
     {
       "id": "A99-03",
-      "passCondition": "Stage-, Plugin-, Provider-, Fixture-, Report- und Artifact-Auswahl ist bis zur jeweiligen Registry und zum Runtime-Consumer verfolgbar; ung\u00fcltige und mehrdeutige Auswahl wird erkl\u00e4rt.",
-      "automaticFailure": "Ein Name wird dokumentiert, ohne Namespace und globale Identit\u00e4t zu unterscheiden.",
+      "passCondition": "Stage-, Plugin-, Provider-, Fixture-, Report- und Artifact-Auswahl ist bis zur jeweiligen Registry und zum Runtime-Consumer verfolgbar; ungültige und mehrdeutige Auswahl wird erklärt.",
+      "automaticFailure": "Ein Name wird dokumentiert, ohne Namespace und globale Identität zu unterscheiden.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13078,8 +13078,8 @@
     },
     {
       "id": "A99-04",
-      "passCondition": "Retry, Repair, Wait/Resume, Cancellation, Restart und Recovery erkl\u00e4ren Authority, Z\u00e4hler, Deadlines, Idempotenz, persistierten Zustand und Stop-Bedingung.",
-      "automaticFailure": "\u201eRetry\u201c oder \u201eresume\u201c erscheint ohne genaue Wiederholungsgrenze und Effect-Unsicherheit.",
+      "passCondition": "Retry, Repair, Wait/Resume, Cancellation, Restart und Recovery erklären Authority, Zähler, Deadlines, Idempotenz, persistierten Zustand und Stop-Bedingung.",
+      "automaticFailure": "„Retry“ oder „resume“ erscheint ohne genaue Wiederholungsgrenze und Effect-Unsicherheit.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13092,7 +13092,7 @@
     },
     {
       "id": "A99-05",
-      "passCondition": "`.swarm/progress.json`, Scaffolding, atomare Publikation, Compatibility und Repair sind mit Writer, Reader, Commitgrenze, Korruption, Konkurrenz und Wiederherstellung erkl\u00e4rt.",
+      "passCondition": "`.swarm/progress.json`, Scaffolding, atomare Publikation, Compatibility und Repair sind mit Writer, Reader, Commitgrenze, Korruption, Konkurrenz und Wiederherstellung erklärt.",
       "automaticFailure": "Progress-Datei wird als Log statt als Vertrag behandelt oder partielle Writes fehlen.",
       "state": "not-accepted",
       "evidence": [],
@@ -13102,8 +13102,8 @@
     },
     {
       "id": "A99-06",
-      "passCondition": "Ein minimaler Workflow durchl\u00e4uft Checkout, Konfiguration, Compile, Run, Audit, Artefaktpr\u00fcfung und Cleanup mit exakten Befehlen und erwarteten Resultaten.",
-      "automaticFailure": "Der Weg endet nach Schema-/Compile-Erfolg oder ben\u00f6tigt ein altes Beispiel.",
+      "passCondition": "Ein minimaler Workflow durchläuft Checkout, Konfiguration, Compile, Run, Audit, Artefaktprüfung und Cleanup mit exakten Befehlen und erwarteten Resultaten.",
+      "automaticFailure": "Der Weg endet nach Schema-/Compile-Erfolg oder benötigt ein altes Beispiel.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13114,8 +13114,8 @@
     },
     {
       "id": "A99-07",
-      "passCondition": "Ein repr\u00e4sentativer vollst\u00e4ndiger Workflow nutzt echte Matrix-, Fixture-, Provider-, Report-, Evidence- und Result-Import-Funktionen und wird gegen aktuelle Registries aufgel\u00f6st.",
-      "automaticFailure": "IDs sind handgeschrieben, aber nie durch Compiler/Resolver gepr\u00fcft.",
+      "passCondition": "Ein repräsentativer vollständiger Workflow nutzt echte Matrix-, Fixture-, Provider-, Report-, Evidence- und Result-Import-Funktionen und wird gegen aktuelle Registries aufgelöst.",
+      "automaticFailure": "IDs sind handgeschrieben, aber nie durch Compiler/Resolver geprüft.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13150,7 +13150,7 @@
     },
     {
       "id": "A99-09",
-      "passCondition": "Security und Secrets im Workflow erkl\u00e4ren Grant, Resource, Credentialaufl\u00f6sung, Redaction, Artifact-/Result-Authentizit\u00e4t und negative Zugriffe.",
+      "passCondition": "Security und Secrets im Workflow erklären Grant, Resource, Credentialauflösung, Redaction, Artifact-/Result-Authentizität und negative Zugriffe.",
       "automaticFailure": "Secrets erscheinen im Beispiel oder erfolgreiche Providerantwort gilt ohne Result-Authority.",
       "state": "not-accepted",
       "evidence": [],
@@ -13160,8 +13160,8 @@
     },
     {
       "id": "A99-10",
-      "passCondition": "Versions-, Schema- und Plugin-Kompatibilit\u00e4t erkl\u00e4ren akzeptierte und abgelehnte Kombinationen sowie Migration und Rollback anhand aktueller Checks.",
-      "automaticFailure": "\u201eBackward compatible\u201c wird ohne negative alte/neue Kombination behauptet.",
+      "passCondition": "Versions-, Schema- und Plugin-Kompatibilität erklären akzeptierte und abgelehnte Kombinationen sowie Migration und Rollback anhand aktueller Checks.",
+      "automaticFailure": "„Backward compatible“ wird ohne negative alte/neue Kombination behauptet.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13170,8 +13170,8 @@
     },
     {
       "id": "A99-11",
-      "passCondition": "Ein am gepr\u00fcften Commit erzeugtes Beispielinventar erfasst jedes ver\u00f6ffentlichte ausf\u00fchrbare Beispiel einschlie\u00dflich eingebetteter Codebl\u00f6cke und verlinkter Beispielartefakte. Jedes Beispiel wird mit der passenden Toolchain gepr\u00fcft und unver\u00e4ndert in einem vorregistrierten Szenario bis zum dokumentierten Ergebnis einschlie\u00dflich relevanter Fehler-, Cleanup- und Zustandspr\u00fcfung ausgef\u00fchrt. Das Ledger bindet Beispiel-ID und Content-Hash an Szenario, Umgebung, Beobachtungen und Artefakte. Gemeinsame L\u00e4ufe sind nur zul\u00e4ssig, wenn sie jedes enthaltene Beispiel tats\u00e4chlich ausf\u00fchren. Rein erkl\u00e4rende Fragmente sind ausdr\u00fccklich als nicht ausf\u00fchrbar gekennzeichnet und werden auf Vertragstreue gepr\u00fcft.",
-      "automaticFailure": "Ein als ausf\u00fchrbar dargestelltes Beispiel ist nur geparst, kompiliert oder aufgel\u00f6st, fehlt im Inventar, wurde vor der Ausf\u00fchrung undokumentiert ver\u00e4ndert oder besitzt keinen bestandenen Ausf\u00fchrungsnachweis. Ein `not run`-Label ersetzt diesen Nachweis nicht.",
+      "passCondition": "Ein am geprüften Commit erzeugtes Beispielinventar erfasst jedes veröffentlichte ausführbare Beispiel einschließlich eingebetteter Codeblöcke und verlinkter Beispielartefakte. Jedes Beispiel wird mit der passenden Toolchain geprüft und unverändert in einem vorregistrierten Szenario bis zum dokumentierten Ergebnis einschließlich relevanter Fehler-, Cleanup- und Zustandsprüfung ausgeführt. Das Ledger bindet Beispiel-ID und Content-Hash an Szenario, Umgebung, Beobachtungen und Artefakte. Gemeinsame Läufe sind nur zulässig, wenn sie jedes enthaltene Beispiel tatsächlich ausführen. Rein erklärende Fragmente sind ausdrücklich als nicht ausführbar gekennzeichnet und werden auf Vertragstreue geprüft.",
+      "automaticFailure": "Ein als ausführbar dargestelltes Beispiel ist nur geparst, kompiliert oder aufgelöst, fehlt im Inventar, wurde vor der Ausführung undokumentiert verändert oder besitzt keinen bestandenen Ausführungsnachweis. Ein `not run`-Label ersetzt diesen Nachweis nicht.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13180,8 +13180,8 @@
     },
     {
       "id": "A99-12",
-      "passCondition": "Fresh-Context-Reader f\u00fchren Minimal-, Voll- und mindestens zwei Fehler-/Recoveryjourneys ohne interne Quellen aus und erhalten die dokumentierten Zust\u00e4nde.",
-      "automaticFailure": "Ein Reviewer pr\u00fcft nur Prosa oder verwendet Wissen aus dem Erstellungsdialog.",
+      "passCondition": "Fresh-Context-Reader führen Minimal-, Voll- und mindestens zwei Fehler-/Recoveryjourneys ohne interne Quellen aus und erhalten die dokumentierten Zustände.",
+      "automaticFailure": "Ein Reviewer prüft nur Prosa oder verwendet Wissen aus dem Erstellungsdialog.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13195,8 +13195,8 @@
     },
     {
       "id": "A99-13",
-      "passCondition": "Mutationen an Schemafeld, Stage-Typ, Rolle, Provider, Fixture, Reportformat und Progress-Vertrag machen die zugeh\u00f6rige Referenz oder Journey rot.",
-      "automaticFailure": "Ein \u00f6ffentliches Pipelineelement kann ohne dokumentarische Auswirkung hinzukommen.",
+      "passCondition": "Mutationen an Schemafeld, Stage-Typ, Rolle, Provider, Fixture, Reportformat und Progress-Vertrag machen die zugehörige Referenz oder Journey rot.",
+      "automaticFailure": "Ein öffentliches Pipelineelement kann ohne dokumentarische Auswirkung hinzukommen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13205,8 +13205,8 @@
     },
     {
       "id": "A910-01",
-      "passCondition": "Ein neuer Entwickler kann Repository, Toolchains, Services, Credentials und lokale Abh\u00e4ngigkeiten aus einem sauberen Checkout reproduzierbar vorbereiten und die dokumentierte Baseline pr\u00fcfen.",
-      "automaticFailure": "Global vorinstallierte oder pers\u00f6nliche Konfiguration bleibt ungenannt.",
+      "passCondition": "Ein neuer Entwickler kann Repository, Toolchains, Services, Credentials und lokale Abhängigkeiten aus einem sauberen Checkout reproduzierbar vorbereiten und die dokumentierte Baseline prüfen.",
+      "automaticFailure": "Global vorinstallierte oder persönliche Konfiguration bleibt ungenannt.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13215,7 +13215,7 @@
     },
     {
       "id": "A910-02",
-      "passCondition": "Repository- und Workspace-Karte erkl\u00e4rt Ownership, Buildgrenzen, generierte Quellen, Codegen-Reihenfolge und verbotene Abh\u00e4ngigkeiten.",
+      "passCondition": "Repository- und Workspace-Karte erklärt Ownership, Buildgrenzen, generierte Quellen, Codegen-Reihenfolge und verbotene Abhängigkeiten.",
       "automaticFailure": "Die Karte ist nur ein Verzeichnisbaum oder verschweigt eine Ownership- oder Generierungsgrenze.",
       "state": "not-accepted",
       "evidence": [],
@@ -13225,8 +13225,8 @@
     },
     {
       "id": "A910-03",
-      "passCondition": "Build-, Test-, Lint-, Release-, Versions-, Compatibility- und Change-to-check-Wege nennen exakte Befehle, Voraussetzungen, erwartete Ergebnisse und umgebungsabh\u00e4ngige Grenzen.",
-      "automaticFailure": "Ein Meta-Skript wird genannt, ohne seine Pflichtvoraussetzungen oder Teilfehler zu erkl\u00e4ren.",
+      "passCondition": "Build-, Test-, Lint-, Release-, Versions-, Compatibility- und Change-to-check-Wege nennen exakte Befehle, Voraussetzungen, erwartete Ergebnisse und umgebungsabhängige Grenzen.",
+      "automaticFailure": "Ein Meta-Skript wird genannt, ohne seine Pflichtvoraussetzungen oder Teilfehler zu erklären.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13235,8 +13235,8 @@
     },
     {
       "id": "A910-04",
-      "passCondition": "Die \u00f6ffentliche SDK-Referenz erfasst jeden Export, Type, Helper, Testing API, portable JSON-, Identity- und Digestvertrag direkt aus den aktuellen Entrypoints.",
-      "automaticFailure": "Nur h\u00e4ufige Exporte oder TypeScript-Signaturen ohne Semantik werden dokumentiert.",
+      "passCondition": "Die öffentliche SDK-Referenz erfasst jeden Export, Type, Helper, Testing API, portable JSON-, Identity- und Digestvertrag direkt aus den aktuellen Entrypoints.",
+      "automaticFailure": "Nur häufige Exporte oder TypeScript-Signaturen ohne Semantik werden dokumentiert.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13255,8 +13255,8 @@
     },
     {
       "id": "A910-06",
-      "passCondition": "Die Klassifikation komplexer Plugins wird aus \u00fcberpr\u00fcfbaren Merkmalen erzeugt oder vollst\u00e4ndig begr\u00fcndet; jedes als komplex erkannte Plugin besitzt genau einen Deep Guide.",
-      "automaticFailure": "Gr\u00f6\u00dfe oder Autorenentscheidung allein bestimmt Komplexit\u00e4t.",
+      "passCondition": "Die Klassifikation komplexer Plugins wird aus überprüfbaren Merkmalen erzeugt oder vollständig begründet; jedes als komplex erkannte Plugin besitzt genau einen Deep Guide.",
+      "automaticFailure": "Größe oder Autorenentscheidung allein bestimmt Komplexität.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13266,7 +13266,7 @@
     {
       "id": "A910-07",
       "passCondition": "Jeder Deep Guide erfasst rekursiv Funktionen, Registrierungen, Konfiguration, Defaults, Bedingungen, Inputs, Outputs, Artifacts, Capabilities, Secrets und externe Effekte.",
-      "automaticFailure": "Der Katalogeintrag oder ein Schema-Link ersetzt die Erkl\u00e4rung.",
+      "automaticFailure": "Der Katalogeintrag oder ein Schema-Link ersetzt die Erklärung.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13275,7 +13275,7 @@
     },
     {
       "id": "A910-08",
-      "passCondition": "Jeder Deep Guide erkl\u00e4rt Lifecycle, Persistenz, Konkurrenz, Idempotenz, Retry, Cancellation, Resume, Recovery, Cleanup und Remaining Data; Nichtanwendbarkeit braucht eine Begr\u00fcndung.",
+      "passCondition": "Jeder Deep Guide erklärt Lifecycle, Persistenz, Konkurrenz, Idempotenz, Retry, Cancellation, Resume, Recovery, Cleanup und Remaining Data; Nichtanwendbarkeit braucht eine Begründung.",
       "automaticFailure": "Ein anwendbares Thema fehlt oder wird ohne Grund `N/A`.",
       "state": "not-accepted",
       "evidence": [],
@@ -13285,8 +13285,8 @@
     },
     {
       "id": "A910-09",
-      "passCondition": "Jeder Deep Guide enth\u00e4lt Fehlerfamilien mit Trigger, Wirkung, Lifecycle-Zustand, sicherer Aktion und Retry-Regel sowie einen erfolgreichen und einen negativen Ablauf.",
-      "automaticFailure": "Fehlercodes werden nur aufgelistet oder besitzen keine sichere, quellgest\u00fctzte Operatoraktion.",
+      "passCondition": "Jeder Deep Guide enthält Fehlerfamilien mit Trigger, Wirkung, Lifecycle-Zustand, sicherer Aktion und Retry-Regel sowie einen erfolgreichen und einen negativen Ablauf.",
+      "automaticFailure": "Fehlercodes werden nur aufgelistet oder besitzen keine sichere, quellgestützte Operatoraktion.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13295,7 +13295,7 @@
     },
     {
       "id": "A910-10",
-      "passCondition": "Jede unterst\u00fctzte interne Erweiterung besitzt einen Clean-Checkout-Weg f\u00fcr \u00c4nderung, Registrierung, Berechtigung, Konfiguration, Test, Aktivierung, Beobachtung, Compatibility, Entfernung und Rollback.",
+      "passCondition": "Jede unterstützte interne Erweiterung besitzt einen Clean-Checkout-Weg für Änderung, Registrierung, Berechtigung, Konfiguration, Test, Aktivierung, Beobachtung, Compatibility, Entfernung und Rollback.",
       "automaticFailure": "Kompilieren oder Unit-Test wird als Aktivierung ausgegeben.",
       "state": "not-accepted",
       "evidence": [],
@@ -13307,8 +13307,8 @@
     },
     {
       "id": "A910-11",
-      "passCondition": "Component-Change-Guides decken Nova, Worker, Buster, Prism, Registry, SDK, Telemetrie, Charts/GitOps, Ops MCP und UI ab und w\u00e4hlen nach \u00c4nderung die kleinste vollst\u00e4ndige Pr\u00fcfkette.",
-      "automaticFailure": "Ein universeller \u201erun all tests\u201c-Hinweis ersetzt Change-to-check.",
+      "passCondition": "Component-Change-Guides decken Nova, Worker, Buster, Prism, Registry, SDK, Telemetrie, Charts/GitOps, Ops MCP und UI ab und wählen nach Änderung die kleinste vollständige Prüfkette.",
+      "automaticFailure": "Ein universeller „run all tests“-Hinweis ersetzt Change-to-check.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13319,7 +13319,7 @@
     },
     {
       "id": "A910-12",
-      "passCondition": "Package-README-Parit\u00e4t wird vollst\u00e4ndig gepr\u00fcft: Jede noch g\u00fcltige notwendige Aussage ist im Site-Katalog oder Deep Guide enthalten; widerspr\u00fcchliche README-Aussagen werden nicht \u00fcbernommen.",
+      "passCondition": "Package-README-Parität wird vollständig geprüft: Jede noch gültige notwendige Aussage ist im Site-Katalog oder Deep Guide enthalten; widersprüchliche README-Aussagen werden nicht übernommen.",
       "automaticFailure": "Stichprobe oder Dateidiff ersetzt semantischen Inhaltsvergleich.",
       "state": "not-accepted",
       "evidence": [],
@@ -13329,8 +13329,8 @@
     },
     {
       "id": "A910-13",
-      "passCondition": "Ein am gepr\u00fcften Commit aus Pipeline-, Host- und Worker-Engine-Vertr\u00e4gen erzeugtes Discovery-Inventar bestimmt alle Erweiterungsklassen. Das Aufgabeninventar enth\u00e4lt je entdeckter Erweiterungsklasse eine vorregistrierte Erstellungsaufgabe und je komplexem Plugin eine vorregistrierte \u00c4nderungsaufgabe. Bei jeder Erstellungsaufgabe erstellt ein unabh\u00e4ngiger Fresh-Context-Reader oder Agent eine neue minimale Erweiterung mit neuer Identit\u00e4t aus dem dokumentierten Ausgangszustand. Er erstellt Paketstruktur, Abh\u00e4ngigkeiten, Manifest, Registrierung, Berechtigungen und Konfiguration anhand der ver\u00f6ffentlichten Anleitung und weist Build, Tests, Aktivierung, Beobachtung, negativen Weg, Compatibility, Entfernung und Remaining Data nach. Dokumentierte Generatoren und Templates sind zul\u00e4ssig; eine bereits fertig registrierte Erweiterung darf den Aufbau nicht ersetzen. Jeder notwendige undokumentierte Schritt ergibt `FAIL`; nach einer Dokumentationskorrektur wiederholt ein neuer Teilnehmer die betroffene Erstellungsaufgabe. Unabh\u00e4ngige Reader f\u00fchren auch jede komplexe \u00c4nderungsaufgabe praktisch aus. Ein echter Produktblocker bleibt `NOT READY` und kann keinen Pflichtlauf bestehen.",
-      "automaticFailure": "Eine \u00c4nderung an einer vorhandenen Erweiterung wird als Nachweis der Neuerstellung gewertet, vorbereitete Registrierung oder Maintainerhilfe verdeckt einen fehlenden Erstellungsschritt, oder eine statische Klassenliste, feste Sollzahl, ein einziges Beispiel, eine nach dem Ergebnis gew\u00e4hlte Aufgabe oder ein gelesener Blocker wird auf weitere Erweiterungen hochgerechnet.",
+      "passCondition": "Ein am geprüften Commit aus Pipeline-, Host- und Worker-Engine-Verträgen erzeugtes Discovery-Inventar bestimmt alle Erweiterungsklassen. Das Aufgabeninventar enthält je entdeckter Erweiterungsklasse eine vorregistrierte Erstellungsaufgabe und je komplexem Plugin eine vorregistrierte Änderungsaufgabe. Bei jeder Erstellungsaufgabe erstellt ein unabhängiger Fresh-Context-Reader oder Agent eine neue minimale Erweiterung mit neuer Identität aus dem dokumentierten Ausgangszustand. Er erstellt Paketstruktur, Abhängigkeiten, Manifest, Registrierung, Berechtigungen und Konfiguration anhand der veröffentlichten Anleitung und weist Build, Tests, Aktivierung, Beobachtung, negativen Weg, Compatibility, Entfernung und Remaining Data nach. Dokumentierte Generatoren und Templates sind zulässig; eine bereits fertig registrierte Erweiterung darf den Aufbau nicht ersetzen. Jeder notwendige undokumentierte Schritt ergibt `FAIL`; nach einer Dokumentationskorrektur wiederholt ein neuer Teilnehmer die betroffene Erstellungsaufgabe. Unabhängige Reader führen auch jede komplexe Änderungsaufgabe praktisch aus. Ein echter Produktblocker bleibt `NOT READY` und kann keinen Pflichtlauf bestehen.",
+      "automaticFailure": "Eine Änderung an einer vorhandenen Erweiterung wird als Nachweis der Neuerstellung gewertet, vorbereitete Registrierung oder Maintainerhilfe verdeckt einen fehlenden Erstellungsschritt, oder eine statische Klassenliste, feste Sollzahl, ein einziges Beispiel, eine nach dem Ergebnis gewählte Aufgabe oder ein gelesener Blocker wird auf weitere Erweiterungen hochgerechnet.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13343,7 +13343,7 @@
     {
       "id": "A910-14",
       "passCondition": "Mutationen an SDK-Export, Pluginmanifest, Erweiterungsklasse, Registration, verschachteltem Configfeld, Capability, Secret und Error Code machen Generator oder Guide-Check rot.",
-      "automaticFailure": "Eine neue \u00f6ffentliche Oberfl\u00e4che oder Erweiterungsklasse bleibt unbemerkt oder nur die Sollzahl \u00e4ndert sich.",
+      "automaticFailure": "Eine neue öffentliche Oberfläche oder Erweiterungsklasse bleibt unbemerkt oder nur die Sollzahl ändert sich.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13352,7 +13352,7 @@
     },
     {
       "id": "A911-01",
-      "passCondition": "Ein maschinenlesbares Quelleninventar definiert f\u00fcr Schema, Config, CLI, Contract, Event, Error, Endpoint, Store, Capability und Workflow jeweils Suchraum, Parser, Owner und Ausschl\u00fcsse.",
+      "passCondition": "Ein maschinenlesbares Quelleninventar definiert für Schema, Config, CLI, Contract, Event, Error, Endpoint, Store, Capability und Workflow jeweils Suchraum, Parser, Owner und Ausschlüsse.",
       "automaticFailure": "Ein Generator scannt nur handverlesene Dateien ohne deklarierte Grenze.",
       "state": "not-accepted",
       "evidence": [],
@@ -13362,7 +13362,7 @@
     },
     {
       "id": "A911-02",
-      "passCondition": "Jede Referenz ist rekursiv vollst\u00e4ndig und bewahrt Varianten, Bedingungen, Defaults, Grenzen, Deprecated-Zustand, Consumer und Source-Position.",
+      "passCondition": "Jede Referenz ist rekursiv vollständig und bewahrt Varianten, Bedingungen, Defaults, Grenzen, Deprecated-Zustand, Consumer und Source-Position.",
       "automaticFailure": "Verschachtelte Felder oder dynamische Familien fehlen.",
       "state": "not-accepted",
       "evidence": [],
@@ -13372,7 +13372,7 @@
     },
     {
       "id": "A911-03",
-      "passCondition": "Nova Grants, Buster Runtime Capabilities, Plugin Capabilities, Kubernetes RBAC und andere Namespaces sind getrennt und ihre \u00dcbersetzungsgrenzen erkl\u00e4rt.",
+      "passCondition": "Nova Grants, Buster Runtime Capabilities, Plugin Capabilities, Kubernetes RBAC und andere Namespaces sind getrennt und ihre Übersetzungsgrenzen erklärt.",
       "automaticFailure": "Gleichnamige IDs werden in einer gemeinsamen, semantisch falschen Tabelle vermischt.",
       "state": "not-accepted",
       "evidence": [],
@@ -13383,7 +13383,7 @@
     {
       "id": "A911-04",
       "passCondition": "Events enthalten Producer, Consumer, Schema/Version, Transport, Reihenfolge, Idempotenz, Persistenz, Retention und unbekannte Consumer.",
-      "automaticFailure": "Eventname und Payloadlink gelten als vollst\u00e4ndig.",
+      "automaticFailure": "Eventname und Payloadlink gelten als vollständig.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13393,7 +13393,7 @@
     {
       "id": "A911-05",
       "passCondition": "Errors enthalten exakten Code/Familie, Throw-/Emit-Site, Trigger, Wirkung, Lifecycle-Zustand, Retry, sichere Aktion und dynamische Bildung.",
-      "automaticFailure": "Regex-Suche nach Stringliteralen gilt ohne dynamische Familien als vollst\u00e4ndig.",
+      "automaticFailure": "Regex-Suche nach Stringliteralen gilt ohne dynamische Familien als vollständig.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13402,8 +13402,8 @@
     },
     {
       "id": "A911-06",
-      "passCondition": "Endpoints, Stores und Workflows sind mit Authority, Identit\u00e4t, Limits, Zustands\u00fcberg\u00e4ngen und Ausfallgrenzen an ihre authored Erkl\u00e4rung gebunden.",
-      "automaticFailure": "Generierte Fakten werden ohne lesbare Bedeutung ver\u00f6ffentlicht.",
+      "passCondition": "Endpoints, Stores und Workflows sind mit Authority, Identität, Limits, Zustandsübergängen und Ausfallgrenzen an ihre authored Erklärung gebunden.",
+      "automaticFailure": "Generierte Fakten werden ohne lesbare Bedeutung veröffentlicht.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13412,7 +13412,7 @@
     },
     {
       "id": "A911-07",
-      "passCondition": "Source-to-doc-Map ordnet jede \u00f6ffentliche Sourcefl\u00e4che Seite, Owner, Generator, Check und Readeraufgabe zu; umgekehrt verweist jede exhaustive Seite auf ihre Sources.",
+      "passCondition": "Source-to-doc-Map ordnet jede öffentliche Sourcefläche Seite, Owner, Generator, Check und Readeraufgabe zu; umgekehrt verweist jede exhaustive Seite auf ihre Sources.",
       "automaticFailure": "Verwaiste Source oder Seite bleibt ohne Fehler bestehen.",
       "state": "not-accepted",
       "evidence": [],
@@ -13422,7 +13422,7 @@
     },
     {
       "id": "A911-08",
-      "passCondition": "Generatoren sind deterministisch, besitzen einen read-only `--check`-Modus, ver\u00e4ndern dabei keine Datei und verwerfen stale Output bytegenau.",
+      "passCondition": "Generatoren sind deterministisch, besitzen einen read-only `--check`-Modus, verändern dabei keine Datei und verwerfen stale Output bytegenau.",
       "automaticFailure": "Ein Check regeneriert still oder akzeptiert semantisch veraltete Ausgabe.",
       "state": "not-accepted",
       "evidence": [],
@@ -13433,7 +13433,7 @@
     {
       "id": "A911-09",
       "passCondition": "Generated facts und authored explanation haben getrennte Bereiche und Owners; Autoren kopieren keine generierten Inventare manuell.",
-      "automaticFailure": "Zwei manuelle Autorit\u00e4ten k\u00f6nnen auseinanderlaufen.",
+      "automaticFailure": "Zwei manuelle Autoritäten können auseinanderlaufen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13443,7 +13443,7 @@
     {
       "id": "A911-10",
       "passCondition": "Removal und Rename entfernen oder migrieren Referenz, Links, Redirect und Ownership ohne stille historische Falschaussage.",
-      "automaticFailure": "Die Pr\u00fcfung testet nur Addition oder l\u00e4sst nach Removal/Rename eine alte Autorit\u00e4t bestehen.",
+      "automaticFailure": "Die Prüfung testet nur Addition oder lässt nach Removal/Rename eine alte Autorität bestehen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13452,8 +13452,8 @@
     },
     {
       "id": "A911-11",
-      "passCondition": "F\u00fcr jede der zehn Referenzfamilien beweist mindestens eine Add-, Change- und Remove-Mutation den Driftfehler und die richtige betroffene Seite.",
-      "automaticFailure": "Nur ein universeller Mutationstest oder feste Count\u00e4nderung deckt alle Familien ab.",
+      "passCondition": "Für jede der zehn Referenzfamilien beweist mindestens eine Add-, Change- und Remove-Mutation den Driftfehler und die richtige betroffene Seite.",
+      "automaticFailure": "Nur ein universeller Mutationstest oder feste Countänderung deckt alle Familien ab.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13462,8 +13462,8 @@
     },
     {
       "id": "A911-12",
-      "passCondition": "Ein unabh\u00e4ngiger Source-Auditor best\u00e4tigt den vollst\u00e4ndigen Suchraum und ein Maintainer reproduziert alle Generatoren aus sauberem Checkout ohne nicht deklarierte Werkzeuge.",
-      "automaticFailure": "Autorenselbstauskunft oder erfolgreicher aktueller Output gen\u00fcgt.",
+      "passCondition": "Ein unabhängiger Source-Auditor bestätigt den vollständigen Suchraum und ein Maintainer reproduziert alle Generatoren aus sauberem Checkout ohne nicht deklarierte Werkzeuge.",
+      "automaticFailure": "Autorenselbstauskunft oder erfolgreicher aktueller Output genügt.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13472,8 +13472,8 @@
     },
     {
       "id": "A912-01",
-      "passCondition": "Nur Seiten aus einem revisionsgebundenen positiven Publication-Manifest erscheinen in der Publication; AP-, Review-, Migrations-, Prompt-, tempor\u00e4re und lokale Evidence-Artefakte werden ausgeschlossen. Leserprosa enth\u00e4lt keine interne AP-/Review-/Migrationssprache oder Verweise auf interne Arbeitsdateien. Ein Negativtest injiziert eine unerwartete Markdown-Datei unter `docs/site` und beweist, dass sie weder Route noch Output erh\u00e4lt.",
-      "automaticFailure": "Ein unerwarteter Pfad wird wegen seiner Markdown-Endung publiziert, der Checker setzt alle Markdown-Dateien mit der Positivliste gleich, oder Leser m\u00fcssen interne Arbeitsgeschichte verstehen.",
+      "passCondition": "Nur Seiten aus einem revisionsgebundenen positiven Publication-Manifest erscheinen in der Publication; AP-, Review-, Migrations-, Prompt-, temporäre und lokale Evidence-Artefakte werden ausgeschlossen. Leserprosa enthält keine interne AP-/Review-/Migrationssprache oder Verweise auf interne Arbeitsdateien. Ein Negativtest injiziert eine unerwartete Markdown-Datei unter `docs/site` und beweist, dass sie weder Route noch Output erhält.",
+      "automaticFailure": "Ein unerwarteter Pfad wird wegen seiner Markdown-Endung publiziert, der Checker setzt alle Markdown-Dateien mit der Positivliste gleich, oder Leser müssen interne Arbeitsgeschichte verstehen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13482,8 +13482,8 @@
     },
     {
       "id": "A912-02",
-      "passCondition": "Jeder kanonische Leserweg ist aus Startseite und passender Rollen-/Aufgabennavigation in h\u00f6chstens drei sinnvollen Entscheidungen erreichbar.",
-      "automaticFailure": "Erreichbarkeit wird nur \u00fcber Volltextsuche oder einen globalen Dateibaum erreicht.",
+      "passCondition": "Jeder kanonische Leserweg ist aus Startseite und passender Rollen-/Aufgabennavigation in höchstens drei sinnvollen Entscheidungen erreichbar.",
+      "automaticFailure": "Erreichbarkeit wird nur über Volltextsuche oder einen globalen Dateibaum erreicht.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13493,7 +13493,7 @@
     {
       "id": "A912-03",
       "passCondition": "Redirects funktionieren im Serverpfad und im statischen Fallback; Ketten, Schleifen, tote Ziele, Anchorverlust und nicht registrierte entfernte Seiten schlagen fehl.",
-      "automaticFailure": "Eine Redirect-JSON-Datei ohne ausgef\u00fchrten Requesttest gilt als wirksam.",
+      "automaticFailure": "Eine Redirect-JSON-Datei ohne ausgeführten Requesttest gilt als wirksam.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13502,8 +13502,8 @@
     },
     {
       "id": "A912-04",
-      "passCondition": "Suche indexiert alle kanonischen Seiten, \u00dcberschriften, technische IDs und Synonyme, schlie\u00dft interne Artefakte aus und liefert f\u00fcr festgelegte Readerfragen das richtige Ziel in den oberen Ergebnissen.",
-      "automaticFailure": "Nur Indexgr\u00f6\u00dfe oder Suchfeldexistenz wird gepr\u00fcft.",
+      "passCondition": "Suche indexiert alle kanonischen Seiten, Überschriften, technische IDs und Synonyme, schließt interne Artefakte aus und liefert für festgelegte Readerfragen das richtige Ziel in den oberen Ergebnissen.",
+      "automaticFailure": "Nur Indexgröße oder Suchfeldexistenz wird geprüft.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13522,7 +13522,7 @@
     },
     {
       "id": "A912-06",
-      "passCondition": "Jedes Diagramm beantwortet eine definierte Leserfrage, besitzt Textalternative, Quellenbindung und Driftowner und stimmt mit Fluss, Richtung, Optionalit\u00e4t und Fehlergrenzen \u00fcberein.",
+      "passCondition": "Jedes Diagramm beantwortet eine definierte Leserfrage, besitzt Textalternative, Quellenbindung und Driftowner und stimmt mit Fluss, Richtung, Optionalität und Fehlergrenzen überein.",
       "automaticFailure": "Dekoratives Diagramm oder nicht belegte Kante.",
       "state": "not-accepted",
       "evidence": [],
@@ -13532,8 +13532,8 @@
     },
     {
       "id": "A912-07",
-      "passCondition": "Mobile, Tablet und Desktop bestehen definierte Layoutpr\u00fcfungen f\u00fcr Navigation, Tabellen, Code, Diagramme, Callouts und Suche ohne Informationsverlust oder horizontale Seitennavigation.",
-      "automaticFailure": "Nur Screenshots der Startseite oder visuelle Einzelpr\u00fcfung.",
+      "passCondition": "Mobile, Tablet und Desktop bestehen definierte Layoutprüfungen für Navigation, Tabellen, Code, Diagramme, Callouts und Suche ohne Informationsverlust oder horizontale Seitennavigation.",
+      "automaticFailure": "Nur Screenshots der Startseite oder visuelle Einzelprüfung.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13542,7 +13542,7 @@
     },
     {
       "id": "A912-08",
-      "passCondition": "Automatische Accessibility-Pr\u00fcfung und unabh\u00e4ngige Keyboard-/Screenreader-Probe decken Navigation, Suche, Dialoge, Links, \u00dcberschriften, Fokus, Kontrast, Reduced Motion und Diagrammalternativen ab.",
+      "passCondition": "Automatische Accessibility-Prüfung und unabhängige Keyboard-/Screenreader-Probe decken Navigation, Suche, Dialoge, Links, Überschriften, Fokus, Kontrast, Reduced Motion und Diagrammalternativen ab.",
       "automaticFailure": "Lighthouse-Score allein oder nur automatischer Axe-Lauf.",
       "state": "not-accepted",
       "evidence": [],
@@ -13552,8 +13552,8 @@
     },
     {
       "id": "A912-09",
-      "passCondition": "Alle lokalen Links, Anchors, Assets, Routen, Source-Revisions- und Zeilenbereiche werden im Repositorybuild und im gebauten Output gepr\u00fcft.",
-      "automaticFailure": "Nur Markdown-Links werden gepr\u00fcft; gebaute Routen, Assets, Anchors oder Sourcebereiche bleiben ungepr\u00fcft.",
+      "passCondition": "Alle lokalen Links, Anchors, Assets, Routen, Source-Revisions- und Zeilenbereiche werden im Repositorybuild und im gebauten Output geprüft.",
+      "automaticFailure": "Nur Markdown-Links werden geprüft; gebaute Routen, Assets, Anchors oder Sourcebereiche bleiben ungeprüft.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13562,8 +13562,8 @@
     },
     {
       "id": "A912-10",
-      "passCondition": "Kritische Aufgaben bleiben ohne JavaScript, externe Netzwerkverbindung, Hover oder Farbe verst\u00e4ndlich; optionale Interaktivit\u00e4t besitzt statischen Fallback.",
-      "automaticFailure": "Inhalt existiert ausschlie\u00dflich in Clientzustand oder Tooltip.",
+      "passCondition": "Kritische Aufgaben bleiben ohne JavaScript, externe Netzwerkverbindung, Hover oder Farbe verständlich; optionale Interaktivität besitzt statischen Fallback.",
+      "automaticFailure": "Inhalt existiert ausschließlich in Clientzustand oder Tooltip.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13572,8 +13572,8 @@
     },
     {
       "id": "A912-11",
-      "passCondition": "Publication-Build ist deterministisch und legt Route, Canonical URL, Redirect, Source-Abh\u00e4ngigkeit und Content-Hash maschinenlesbar offen.",
-      "automaticFailure": "Zwei saubere Builds unterscheiden sich ohne erkl\u00e4rte Toolchainursache.",
+      "passCondition": "Publication-Build ist deterministisch und legt Route, Canonical URL, Redirect, Source-Abhängigkeit und Content-Hash maschinenlesbar offen.",
+      "automaticFailure": "Zwei saubere Builds unterscheiden sich ohne erklärte Toolchainursache.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13582,8 +13582,8 @@
     },
     {
       "id": "A912-12",
-      "passCondition": "Fresh-Context-Nutzer aus Operator-, Plugin-, Plattform- und Pipeline-Rolle l\u00f6sen festgelegte Find-/Understand-/Act-Aufgaben; Befunde werden nach Aufgabe statt subjektivem Gefallen bewertet.",
-      "automaticFailure": "Autorendemo, Klickz\u00e4hlung oder \u201esieht gut aus\u201c gilt als Reader-Test.",
+      "passCondition": "Fresh-Context-Nutzer aus Operator-, Plugin-, Plattform- und Pipeline-Rolle lösen festgelegte Find-/Understand-/Act-Aufgaben; Befunde werden nach Aufgabe statt subjektivem Gefallen bewertet.",
+      "automaticFailure": "Autorendemo, Klickzählung oder „sieht gut aus“ gilt als Reader-Test.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13592,8 +13592,8 @@
     },
     {
       "id": "A913-01",
-      "passCondition": "Alle 261 Katalog-IDs besitzen einen vollst\u00e4ndigen Befund am finalen Commit; IDs, Seiten, Owner und Status stimmen maschinell \u00fcberein.",
-      "automaticFailure": "Fehlende, doppelte, pauschal gruppierte oder auf \u00e4lteren Commit gepr\u00fcfte ID.",
+      "passCondition": "Alle 261 Katalog-IDs besitzen einen vollständigen Befund am finalen Commit; IDs, Seiten, Owner und Status stimmen maschinell überein.",
+      "automaticFailure": "Fehlende, doppelte, pauschal gruppierte oder auf älteren Commit geprüfte ID.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13602,8 +13602,8 @@
     },
     {
       "id": "A913-02",
-      "passCondition": "F\u00fcr jeden Punkt sind Verhalten, Entscheidung, Konfiguration, Fehler/Recovery, Extension und Grenze vollst\u00e4ndig oder begr\u00fcndet nicht anwendbar.",
-      "automaticFailure": "Vorhandene \u00dcberschrift, Schema-Link oder gr\u00fcner Check ersetzt Inhalt.",
+      "passCondition": "Für jeden Punkt sind Verhalten, Entscheidung, Konfiguration, Fehler/Recovery, Extension und Grenze vollständig oder begründet nicht anwendbar.",
+      "automaticFailure": "Vorhandene Überschrift, Schema-Link oder grüner Check ersetzt Inhalt.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13612,7 +13612,7 @@
     },
     {
       "id": "A913-03",
-      "passCondition": "Drei getrennte Fresh-Context-Reviews pr\u00fcfen Quelltreue, Reader-Reproduzierbarkeit sowie Sprache/Architektur; jeder materielle Befund wird korrigiert und erneut gepr\u00fcft.",
+      "passCondition": "Drei getrennte Fresh-Context-Reviews prüfen Quelltreue, Reader-Reproduzierbarkeit sowie Sprache/Architektur; jeder materielle Befund wird korrigiert und erneut geprüft.",
       "automaticFailure": "Derselbe Autor nimmt sich selbst ab oder ein FAIL wird nur kommentiert.",
       "state": "not-accepted",
       "evidence": [],
@@ -13622,7 +13622,7 @@
     },
     {
       "id": "A913-04",
-      "passCondition": "Operator, Pipeline-Autor, Plugin-Entwickler, Plattform-Entwickler und Prism/Buster-Spezialist f\u00fchren ihre verbindlichen Readeraufgaben ohne Chat, Reviewordner oder Package-README aus.",
+      "passCondition": "Operator, Pipeline-Autor, Plugin-Entwickler, Plattform-Entwickler und Prism/Buster-Spezialist führen ihre verbindlichen Readeraufgaben ohne Chat, Reviewordner oder Package-README aus.",
       "automaticFailure": "Eine Persona oder nur der Happy Path fehlt.",
       "state": "not-accepted",
       "evidence": [],
@@ -13644,7 +13644,7 @@
     {
       "id": "A913-05",
       "passCondition": "Erfolgs-, Validierungsfehler-, Dependency-Ausfall-, Cancellation-, Wait/Resume-, Restart/Recovery-, unklarer-Effect- und Change/Removal-Wege liefern die dokumentierten Beobachtungen.",
-      "automaticFailure": "Ein Workflow wird aus einem \u00e4hnlichen Fall abgeleitet statt ausgef\u00fchrt.",
+      "automaticFailure": "Ein Workflow wird aus einem ähnlichen Fall abgeleitet statt ausgeführt.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13683,8 +13683,8 @@
     },
     {
       "id": "A913-06",
-      "passCondition": "Controlled-Language-Review erfasst Scope, Methode, technische Begriffe und gel\u00f6ste Befunde; kein Punkt behauptet formale ASD-STE100-Zertifizierung.",
-      "automaticFailure": "Readability-Score oder kurzer Linter gilt als vollst\u00e4ndige Sprachabnahme.",
+      "passCondition": "Controlled-Language-Review erfasst Scope, Methode, technische Begriffe und gelöste Befunde; kein Punkt behauptet formale ASD-STE100-Zertifizierung.",
+      "automaticFailure": "Readability-Score oder kurzer Linter gilt als vollständige Sprachabnahme.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13693,8 +13693,8 @@
     },
     {
       "id": "A913-07",
-      "passCondition": "Jede signifikante Entscheidung besitzt belegten oder ausdr\u00fccklich unbekannten Grund, Nutzen, Kosten, Status, Implementierungsstand und Neubewertungsbedingung.",
-      "automaticFailure": "Sourceverhalten wird als historische Begr\u00fcndung ausgegeben.",
+      "passCondition": "Jede signifikante Entscheidung besitzt belegten oder ausdrücklich unbekannten Grund, Nutzen, Kosten, Status, Implementierungsstand und Neubewertungsbedingung.",
+      "automaticFailure": "Sourceverhalten wird als historische Begründung ausgegeben.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13703,8 +13703,8 @@
     },
     {
       "id": "A913-08",
-      "passCondition": "Das kombinierte Mutationpaket f\u00fchrt jede der 28 vorregistrierten Varianten aus `config`, `schema`, `cli`, `contract`, `event`, `endpoint`, `store`, `secret`, `runtime-service`, `ops-tool`, `capability`, `plugin-registration`, `error-code` und `workflow` mit Add, Change und Remove ein; jede der 84 Mutationen scheitert am zust\u00e4ndigen Docs-Gate und nennt die erwartete betroffene Seite.",
-      "automaticFailure": "Eine Mutation bleibt gr\u00fcn, verwendet einen nachtr\u00e4glich gew\u00e4hlten Patch, trifft eine andere Sourcefl\u00e4che oder scheitert nur an einem fachfremden Buildfehler.",
+      "passCondition": "Das kombinierte Mutationpaket führt jede der 28 vorregistrierten Varianten aus `config`, `schema`, `cli`, `contract`, `event`, `endpoint`, `store`, `secret`, `runtime-service`, `ops-tool`, `capability`, `plugin-registration`, `error-code` und `workflow` mit Add, Change und Remove ein; jede der 84 Mutationen scheitert am zuständigen Docs-Gate und nennt die erwartete betroffene Seite.",
+      "automaticFailure": "Eine Mutation bleibt grün, verwendet einen nachträglich gewählten Patch, trifft eine andere Sourcefläche oder scheitert nur an einem fachfremden Buildfehler.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13714,7 +13714,7 @@
     {
       "id": "A913-09",
       "passCondition": "Alle Checks laufen aus sauberem Checkout; Evidence-Bundle bindet Commit, Toolversionen, Umgebung, Befehle, Exit-Codes, Logs, Skips und Reviewerbefunde.",
-      "automaticFailure": "Arbeitsbaum ist schmutzig, Evidenz ver\u00e4nderbar oder Umgebung unbekannt.",
+      "automaticFailure": "Arbeitsbaum ist schmutzig, Evidenz veränderbar oder Umgebung unbekannt.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13723,8 +13723,8 @@
     },
     {
       "id": "A913-10",
-      "passCondition": "Jede Nichtanwendbarkeit nennt Quellbeweis und Grund und wird unabh\u00e4ngig genehmigt; offene Produktgrenzen bleiben als aktuelle Limits mit Owner und Akzeptanzbedingung sichtbar.",
-      "automaticFailure": "`N/A` dient dazu, fehlende Dokumentation oder nicht gelaufene Pr\u00fcfung zu verstecken.",
+      "passCondition": "Jede Nichtanwendbarkeit nennt Quellbeweis und Grund und wird unabhängig genehmigt; offene Produktgrenzen bleiben als aktuelle Limits mit Owner und Akzeptanzbedingung sichtbar.",
+      "automaticFailure": "`N/A` dient dazu, fehlende Dokumentation oder nicht gelaufene Prüfung zu verstecken.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -13735,7 +13735,7 @@
     },
     {
       "id": "A913-11",
-      "passCondition": "Die AP10-L\u00f6schliste besitzt f\u00fcr jede alte Datei Inhaltsparit\u00e4t, kanonisches Ziel, Redirectbedarf, Referenzsuche und unabh\u00e4ngige Freigabe; das L\u00f6schen selbst bleibt AP10.",
+      "passCondition": "Die AP10-Löschliste besitzt für jede alte Datei Inhaltsparität, kanonisches Ziel, Redirectbedarf, Referenzsuche und unabhängige Freigabe; das Löschen selbst bleibt AP10.",
       "automaticFailure": "Alte Quellen werden pauschal nach Pfad oder Dateialter freigegeben.",
       "state": "not-accepted",
       "evidence": [],
@@ -13745,8 +13745,8 @@
     },
     {
       "id": "A913-12",
-      "passCondition": "Der finale Bericht nennt ausdr\u00fccklich alle bestandenen und nicht ausgef\u00fchrten Live-Gates. AP09 erh\u00e4lt nur dann `PASS`, wenn kein materieller Dokumentationsbefund offen ist.",
-      "automaticFailure": "\u201eAlles gr\u00fcn\u201c verschweigt Skips, Produktl\u00fccken oder begrenzte Evidenzklassen.",
+      "passCondition": "Der finale Bericht nennt ausdrücklich alle bestandenen und nicht ausgeführten Live-Gates. AP09 erhält nur dann `PASS`, wenn kein materieller Dokumentationsbefund offen ist.",
+      "automaticFailure": "„Alles grün“ verschweigt Skips, Produktlücken oder begrenzte Evidenzklassen.",
       "state": "not-accepted",
       "evidence": [],
       "reviews": [],
@@ -14389,7 +14389,7 @@
         "A98-06",
         "A98-13"
       ],
-      "description": "Failed-readiness cleanup and startup rollback abort a signal but await shutdown without an enforced completion race; adapter ignoring abort can keep startup pending. Actual tracked adapter-startup.ts151\u2013165 contradicts bounded rollback prose.",
+      "description": "Failed-readiness cleanup and startup rollback abort a signal but await shutdown without an enforced completion race; adapter ignoring abort can keep startup pending. Actual tracked adapter-startup.ts151–165 contradicts bounded rollback prose.",
       "evidenceBoundary": "Prior live reviewer messages identified finding; final /tmp report and probe artifacts unavailable after session migration. Source/prose revalidation and new independent full-scope acceptance required.",
       "correctionLimit": "No full requirement/gate acceptance. Publication changes require regeneration; authoritative issue fields remain current product facts, not status closures."
     },
@@ -14603,7 +14603,7 @@
         "A98-12",
         "A98-13"
       ],
-      "description": "Before You Start incorrectly conditioned CSI on Worker trust while maintained deploy guard1759/helper974\u2013981 always checks CSIDriver/csi.spiffe.io. Root now states unconditional driver registration and distinguishes socket/identity proof with adjacent exact source links. No product guard changed.",
+      "description": "Before You Start incorrectly conditioned CSI on Worker trust while maintained deploy guard1759/helper974–981 always checks CSIDriver/csi.spiffe.io. Root now states unconditional driver registration and distinguishes socket/identity proof with adjacent exact source links. No product guard changed.",
       "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
       "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
       "author": "/root",
@@ -15287,7 +15287,7 @@
         "A98-10",
         "A98-11"
       ],
-      "description": "Second fullSource review found3new exactsupport defects: generation49 missing across75NP; pathliteral50\u201351 missing; decoderstring1028\u20131038 missing in4explicitinteger empty-string claims. Root read actualpinned bodies then corrected fullcandidate; thirdfreshSource ongoing."
+      "description": "Second fullSource review found3new exactsupport defects: generation49 missing across75NP; pathliteral50–51 missing; decoderstring1028–1038 missing in4explicitinteger empty-string claims. Root read actualpinned bodies then corrected fullcandidate; thirdfreshSource ongoing."
     },
     {
       "id": "A98-ADMISSION-RECEIVER-SOURCE",
@@ -15368,7 +15368,7 @@
         "A98-10",
         "A98-11"
       ],
-      "description": "Author corrected all5groups across132records751cases. Exact pathwrapper61\u201368, skipaction320, selectorcall75, enums/wildcardbody and actual lazyMap implementation. Non-evidenceproperties/cases preserved. Final145f3e02 candidate under new fullfreshSource review; no approval.",
+      "description": "Author corrected all5groups across132records751cases. Exact pathwrapper61–68, skipaction320, selectorcall75, enums/wildcardbody and actual lazyMap implementation. Non-evidenceproperties/cases preserved. Final145f3e02 candidate under new fullfreshSource review; no approval.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/kubernetes-admission-receiver-writer/correction-3/report.md",
       "evidenceSha256": "e8adb6d237da67206933d78b36e6837da01a42cae2a12f88f08e0bd3a6080f59"
     },
@@ -15410,7 +15410,7 @@
         "A98-10",
         "A98-11"
       ],
-      "description": "Author corrected all AS01\u201309 groups:31 scalar/key semantics,18 Namespace request-vs-cache operation conditions,actual rule/selector/default/literal/parser/ordered-variable/CEL compiler/activation/budget proofs.132 identities and751 prior cases preserved;911current cases. Root verified nine artifacts and reran author mechanical checks. Requires full new independent Source review.",
+      "description": "Author corrected all AS01–09 groups:31 scalar/key semantics,18 Namespace request-vs-cache operation conditions,actual rule/selector/default/literal/parser/ordered-variable/CEL compiler/activation/budget proofs.132 identities and751 prior cases preserved;911current cases. Root verified nine artifacts and reran author mechanical checks. Requires full new independent Source review.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/admission-receiver-correction4-writer/report.md",
       "evidenceSha256": "947a926d905694037ccd7ec68dbe50bc2e8dcdfda4100dc438e482f9439c5cd5"
     },
@@ -15866,6 +15866,18 @@
         "A98-11"
       ],
       "description": "Actual v1 Pod root now has an authored selected receiver contract for disposable BuildKit preflight submission, null/empty/invalid body, narrow stored-Pod update/recovery and canonical metadata/TypeMeta delegation. Authenticated core ValidatePodCreate5601-5617 and required containers4025-4029 support the root facts; existing Pod route sources retained. New field identity adds root only, not generic Kubernetes alternatives. Root selection and remaining eight missing root factories still open; no canonical publication/full acceptance claimed."
+    },
+    {
+      "id": "A98-REQUEST-ROOT-AND-WORKLOAD-RECOVERY-CORRECTIONS",
+      "state": "source-correction-awaiting-root-selection-and-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Root authored actual TokenReview and DeleteOptions request roots, each five explicit request-body cases with endpoint/type/producer evidence. DELETE absent-body query branch differs from nonempty null/body branch; empty options do not cancel deletion, and TokenReview is nonpersistent with required token and separately checked output. Remaining six missing root factories and universal actual-root publication selection stay open. Workload candidate corrects F49 PDB maxUnavailable recovery to PDB identity/status, distinguishes zero PDB spec acceptance from empty-root metadata rejection, and qualifies StatefulSet restartPolicy update as Always-only even when template validation is skipped. Frozen independent FAILs remain immutable; no current complete Source/Reader/Quality/Astra acceptance."
     }
   ],
   "checks": [
@@ -16774,6 +16786,11 @@
       "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs",
       "state": "terminal-pass",
       "scope": "Pod root candidate13PASS0FAIL0SKIP session68876 including actualBuildKit shelloutput, actualregistry transformedJob selections and immutable legacyidentities. Actualroot$ selection stillnotactivated, remaining8missingrootfactories nothidden or accepted. New770workloadrecords requirefreshscope/semanticsreview."
+    },
+    {
+      "command": "GO_BINARY=/home/node/Documents/Codex/a98-evidence/argo-receiver-writer/go/bin/go node --test scripts/tests/auth-delete-receiver.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Session36015 observed16PASS0FAIL0SKIP. Includes original controller authentication/fenced-delete HTTP fixtures, actual BuildKit shell and registry Job selections. Earlier session19257 had15PASS1SKIP because bare go missing; superseded for this test scope only by qualified binary run. Pure root factory lookup separately returns one root and five cases for each request kind. No live Kubernetes/authentication/storage/eviction or full publication/acceptance claim."
     }
   ],
   "reviewAssignments": [
@@ -17794,7 +17811,7 @@
       "reportSha256": "d67bf879bdf5aba88bd5a9f7ed899ed80b660ccc04988ad76d890834a3b520a5",
       "verifiedArtifacts": 5885,
       "artifactManifestSha256": "48892a19abf7b5519f038c12131d7b0cc539e6b2f9806b9d863d007af54f463f",
-      "result": "Fourteen new finding groups CS01\u201302, NS01\u201303, AS01\u201309. Prior eight groups verified corrected; Admission45 behavioral failures. No package approval."
+      "result": "Fourteen new finding groups CS01–02, NS01–03, AS01–09. Prior eight groups verified corrected; Admission45 behavioral failures. No package approval."
     },
     {
       "agent": "/root/a98_apps_receiver_corrected_source_complete_fresh",
@@ -17820,7 +17837,7 @@
       "freshContext": true,
       "forkTurns": "none",
       "state": "completed-author-correction-not-acceptance",
-      "scope": "Exclusive Admission module AS01\u2013AS09;132records911cases; ownership released.",
+      "scope": "Exclusive Admission module AS01–AS09;132records911cases; ownership released.",
       "candidateSha256": "ea7b1eadcca0bf820ba177dfe2159dcad873218fe2b1c9487e00ef173da25d3a"
     },
     {
@@ -17859,7 +17876,7 @@
       "freshContext": true,
       "forkTurns": "none",
       "state": "delivered-ownership-released-pending-independent-review",
-      "scope": "Exclusive Apps module all15 C01\u2013C15 full-source correction groups; no inherited review acceptance."
+      "scope": "Exclusive Apps module all15 C01–C15 full-source correction groups; no inherited review acceptance."
     },
     {
       "agent": "/root/a98_cilium_api_receiver_writer",
@@ -17934,7 +17951,7 @@
       "freshContext": true,
       "forkTurns": "none",
       "state": "running",
-      "scope": "Exclusive status receiver module; F06\u2013F08 complete source corrections, preserve existing identities and narrowcase applicability. GlobalF05 remainsRootintegration."
+      "scope": "Exclusive status receiver module; F06–F08 complete source corrections, preserve existing identities and narrowcase applicability. GlobalF05 remainsRootintegration."
     },
     {
       "agent": "/root/a98_shared_metadata_complete_source_fresh",
@@ -18359,7 +18376,7 @@
         "scripts/generate-local-helm-authorities.mjs": "9cdd8eaa71b85adce505c0bde56aa521d78ab19dc7d8514045a622c7b852e16f",
         "scripts/docs-local-helm-field-authorities.json": "8ffc99fce70bc1ecfbe2cf09747c7ea230ab1d3057852a15a7ec260797ada09d"
       },
-      "scope": "Correct exact Argo399\u2013418 function pin and Buster CRDemptyenum actualnonemptyvalidator semantics; no product/test obligation changes",
+      "scope": "Correct exact Argo399–418 function pin and Buster CRDemptyenum actualnonemptyvalidator semantics; no product/test obligation changes",
       "reviewedArchive": "94fd165ae8177ec37bb16798bfed63cb8923f413",
       "acceptance": false
     },
@@ -18602,7 +18619,7 @@
       "distinctBoundariesPreserved": 201,
       "boundaryAppearancesPreserved": 486,
       "contextsPreserved": 36,
-      "scope": "All N01\u2013N34 dispositions,actual authored CSA/maintenance patches/Argo options and distinct embedded v0.36.1client dependency;N35 separate-provider aggregate proof retained.",
+      "scope": "All N01–N34 dispositions,actual authored CSA/maintenance patches/Argo options and distinct embedded v0.36.1client dependency;N35 separate-provider aggregate proof retained.",
       "rootIntegration": "Canonical API object update page linked from reference index; removed internal review/test-structure commentary from reader prose. Source-linked operation/runtime evidence distinctions retained.",
       "checks": "Author17focusedtests/syntax/ranges/structuraljoin/syntheticrender PASS; root133artifact/exactsubjects verified. Actual whole refs exit0:4905local links,2802anchors,7607repository paths,28307pinned links. No semantic/independent acceptance.",
       "accepted": false
@@ -18788,7 +18805,7 @@
       "moduleSha256": "b913527555b1cf1579fe8adaa8b0158bdd28c36c2198296c187fd5c4508a5cc7",
       "authorReaderSha256": "a7cd8f3250ad63624a25804daae1ac263def74d4634392d4e46f06bc5dfaf77e",
       "currentReaderSha256": "e20e4410b99a6bf6bca2a2fc800297cd58b7fa5bc948ffcb61f4ca6e928d034c",
-      "rootReaderFollowup": "Split two overly wide source spans; add previously bound PVC loss/repair explanation and explicit stop before PV lookup when volumeName is empty. Source read in author original pv_controller.go489\u2013555; no executed controller or live data recovery.",
+      "rootReaderFollowup": "Split two overly wide source spans; add previously bound PVC loss/repair explanation and explicit stop before PV lookup when volumeName is empty. Source read in author original pv_controller.go489–555; no executed controller or live data recovery.",
       "reportSha256": "df1e8bf62138700d17be9e8f7764977d766506e1691008e3a3a5d3237ad9c0c4",
       "artifactManifestSha256": "ca0411b3389c5786ed97cabb01642105b7cd88694442a2f29a31b18657a1f9a5",
       "verifiedSealedArtifacts": 54,
@@ -19433,7 +19450,7 @@
       "preservedRecords": 46,
       "scope": "Four retained object-item empty examples now distinguish {} validation from wrong-type [] decode; scope, required names and shortNames references use actual narrow original lines. Historical independent failures not waived.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/cluster-source-corrections-root",
-      "rootTests": "13 cluster/body/root tests PASS, zero skipped. New array-to-object rejection source bound read at decoder543\u2013560; actual scope364, requirednames458\u2013469, shortnames800\u2013804."
+      "rootTests": "13 cluster/body/root tests PASS, zero skipped. New array-to-object rejection source bound read at decoder543–560; actual scope364, requirednames458–469, shortnames800–804."
     },
     "integratedWorkloadFactory": {
       "author": "/root/output_discovery_integrated_freeze_writer",
@@ -19609,7 +19626,7 @@
       "records": 185,
       "changedEvidenceRecords": 61,
       "nonEvidenceDimensionsPreserved": true,
-      "scope": "Rule namespace call33\u201339, StatefulSet annotation removal83\u201399, address wrapper2292\u20132294 and actual shard hash/disable2397\u20132415; narrow actual immutable source claims",
+      "scope": "Rule namespace call33–39, StatefulSet annotation removal83–99, address wrapper2292–2294 and actual shard hash/disable2397–2415; narrow actual immutable source claims",
       "checks": "4 focused testsPASS0SKIP including authentic selectedmonitoring render; old185 non-evidence record dimensions deep-equal preserved",
       "evidence": "/home/node/Documents/Codex/a98-evidence/monitoring-source-span-correction-root",
       "independentHistoricalState": "Full initial185 source review not yet sealed; provisional124PASS61FAIL all822casesPASS, no retroactive acceptance"
@@ -19926,6 +19943,19 @@
       "checks": "18focusedintegrationtestsPASS0FAIL0SKIP before laterproducer gatewidening; finalnewsource link is citation-only",
       "evidence": "/home/node/Documents/Codex/a98-evidence/workload-delegation-final-correction-root/pod-readiness-correction.json",
       "limits": "Actual globaldiscovery remainsFAILunqualifiedcheck.stdout withmutableauthorgate; noallproducerjoinPASS/fullSource/Reader/Quality/Astra or package acceptance."
+    },
+    "requestRootAndRecoveryCorrections": {
+      "author": "/root",
+      "state": "candidate-pending-independent-review",
+      "baseRevision": "b238c9e18ae316898d0f03ebb50cfe2376d4e3ab",
+      "requestRootAdditions": [
+        "authentication.k8s.io/v1 TokenReview",
+        "v1 DeleteOptions"
+      ],
+      "remainingMissingRootFactories": 6,
+      "publicationSelection": "not-yet-activated",
+      "checks": "16PASS0FAIL0SKIP session36015",
+      "sourceInspection": "Primary files hash-matched archived provenance: TokenReview49–130, DELETE61–203, JSON identity46–63/116–215, apps validation200–260, policy validation47–86, disruption status1001–1036."
     }
   }
 }
