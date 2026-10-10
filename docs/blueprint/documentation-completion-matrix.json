@@ -19157,6 +19157,22 @@
         "sourceQualification": "Author original-source checks retained; independent complete source review remains required."
       },
       "rootChecks": "9 focused tests PASS, zero skipped. Authenticated monitoring render traversed; SPIRE archive integrity and selected fields checked. Root verified author seals. No independent semantic, publication, live or package acceptance."
+    },
+    "storedIdentityAndCredentials": {
+      "author": "/root",
+      "baseRevision": "4ab19434a1606e4ee430070dbf7c9d494c153d39",
+      "state": "author-candidate-pending-independent-review-and-publication",
+      "bodyRecords": 9,
+      "rootMetadataRecords": 102,
+      "envelopeRecords": 6,
+      "rootKinds": [
+        "Pod",
+        "ServiceAccount",
+        "Secret"
+      ],
+      "evidence": "/home/node/Documents/Codex/a98-evidence/identity-secret-root-writer",
+      "rootChecks": "2 actual authenticated render/join and unknown-field/GVK tests PASS with zero skipped. Prior metadata/envelope exports byte-equivalent excluding these three new kinds. Fresh 47 immutable originals and 135 prior spans checked; final 138 spans bounded. Narrow decoder array item/empty-array evidence added. Not independent semantic or live acceptance.",
+      "scope": "ServiceAccount automount consumer precedence; Secret stringData conversion, byte-key/size/type/immutable checks and later token/TLS/registry use; Pod graceful deletion/generation/status root metadata."
     }
   }
 }

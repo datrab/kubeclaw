@@ -17,6 +17,9 @@ const evidence = [
 const resources = [
   ['v1','ResourceQuota'],
   ['v1','LimitRange'],
+  ['v1','ServiceAccount'],
+  ['v1','Secret'],
+  ['v1','Pod'],
   ['rbac.authorization.k8s.io/v1','Role'],
   ['rbac.authorization.k8s.io/v1','RoleBinding'],
   ['batch/v1','Job'],
