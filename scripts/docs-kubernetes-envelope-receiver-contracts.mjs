@@ -31,6 +31,8 @@ const resources = [
   ['networking.k8s.io/v1','NetworkPolicy'],
   ['admissionregistration.k8s.io/v1','ValidatingAdmissionPolicy'],
   ['admissionregistration.k8s.io/v1','ValidatingAdmissionPolicyBinding'],
+  ['admissionregistration.k8s.io/v1','MutatingWebhookConfiguration'],
+  ['admissionregistration.k8s.io/v1','ValidatingWebhookConfiguration'],
   ['rbac.authorization.k8s.io/v1','ClusterRole'],
   ['rbac.authorization.k8s.io/v1','ClusterRoleBinding'],
   ['networking.k8s.io/v1','IngressClass'],

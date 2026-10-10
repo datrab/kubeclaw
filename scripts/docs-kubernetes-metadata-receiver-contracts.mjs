@@ -694,6 +694,10 @@ const identitySecretResources = [
 ];
 for(const r of identitySecretResources)for(const field of Object.keys(fields)){
  const record=rootMetadata(r,field);
+ if(field==='resourceVersion'){
+  record.invalidValue='A malformed storage resource-version string fails parsing; a stale nonzero version conflicts. This resource allows an empty version on ordinary replacement, which provides no authored optimistic precondition.';
+  record.cases=[...sourceCases(fields[field][1],record.omitted,record.nullValue,record.emptyValue,record.invalidValue),...record.cases.slice(4)];
+ }
  const typedOnly=value=>value.replace(' CRD complete-body coercion omits []; [{}] survives.','').replace(' CRD full-body coercion omits an empty [] before this selection; [{}] survives.','').replace(' CRD full create/replacement coercion omits [] and thus uses live fallback, while [{}] survives and selects reset.','');
  record.emptyValue=typedOnly(record.emptyValue);record.crossFieldConditions=record.crossFieldConditions.map(typedOnly);record.cases=record.cases.map(c=>({...c,sourceOutcome:typedOnly(c.sourceOutcome)}));
  record.crossFieldConditions.push('This is stored typed root metadata. These resources disallow create on update but allow unconditional ordinary replacement; use an explicit current resourceVersion when stale intent must be rejected. An absent object requires a create. Pod status is separate from ordinary update; Secret and ServiceAccount have no status route.','Metadata identifies the resource lifetime; labels and annotations do not encrypt credentials or grant permissions. Actual Secret content/type conversion and ServiceAccount/Pod admission remain separate receiving contracts.');
@@ -701,5 +705,30 @@ for(const r of identitySecretResources)for(const field of Object.keys(fields)){
   record.crossFieldConditions.push('Pod DELETE uses graceful deletion: an explicit grace period wins, otherwise the Pod terminationGracePeriodSeconds is used. Unscheduled or already Failed/Succeeded Pods select zero; a negative period becomes one second. Common deletion conditions and finalizers still apply. A delete response is not proof that a process or external effect is quiescent.');
   record.evidence.push(k('pkg/registry/core/pod/strategy.go',163,196,'Pod graceful-delete preparation selects grace and forces zero for unscheduled or completed Pods.'),k('pkg/registry/core/pod/strategy.go',1007,1013,'Effective spec inequality increments Pod generation.'),k('pkg/apis/core/validation/validation.go',282,285,'Pod names use DNS-subdomain validation.'));
  }else record.evidence.push(k('pkg/apis/core/validation/validation.go',313,321,'Secret and ServiceAccount use the declared name validation aliases.'),k('staging/src/k8s.io/apimachinery/pkg/api/validation/generic.go',71,74,'ServiceAccount name validation aliases DNS-subdomain validation.'));
+ receiverContracts.push(record);
+}
+
+// Actual cluster-scoped webhook registrations have conditional replacement and
+// track changes to Webhooks, not a nonexistent spec or status field.
+const webhookRootResources = [
+ {kind:'MutatingWebhookConfiguration',directory:'mutatingwebhookconfiguration',updateRange:[59,65],unconditionalRange:[96,98],nameRange:[342,344]},
+ {kind:'ValidatingWebhookConfiguration',directory:'validatingwebhookconfiguration',updateRange:[54,60],unconditionalRange:[95,97],nameRange:[230,232]},
+].map(r=>({...r,apiVersion:'admissionregistration.k8s.io/v1',namespaceScoped:false,unconditionalUpdate:false,
+ strategy:`pkg/registry/admissionregistration/${r.directory}/strategy.go`,strategyRange:[41,50],storageRange:[39,54],
+ nameEvidence:k('pkg/apis/admissionregistration/validation/validation.go',...r.nameRange,'Webhook configuration validates cluster-scoped ObjectMeta with DNS-subdomain names.'),
+ generation:'Create sets generation 1. Ordinary update increments restored generation only when the effective Webhooks list differs by reflect.DeepEqual. Root label or annotation changes alone do not advance this strategy counter. The resource has no spec field.',
+ status:'There is no status field or status endpoint in this registry. Registration and its generation do not prove the webhook endpoint is reachable, trusted, compatible or successfully processing admission requests.'}));
+for(const r of webhookRootResources)for(const field of Object.keys(fields)){
+ const record=rootMetadata(r,field);
+ if(field==='resourceVersion'){
+  record.omitted='Create leaves storage to assign a version. Ordinary replacement requires a nonzero current version; an absent version rejects rather than selecting unconditional update.';
+  record.nullValue='Fresh string null leaves an empty version. Create storage assigns it; ordinary replacement rejects the missing version.';
+  record.emptyValue='An empty version is not an accepted ordinary replacement precondition; this strategy disallows unconditional update.';
+  record.invalidValue='A malformed storage resource-version string fails parsing. A missing version rejects ordinary replacement, and a stale nonzero version conflicts.';
+  record.cases=[...sourceCases(fields[field][1],record.omitted,record.nullValue,record.emptyValue,record.invalidValue),...record.cases.slice(4)];
+ }
+ const typedOnly=value=>value.replace(' CRD complete-body coercion omits []; [{}] survives.','').replace(' CRD full-body coercion omits an empty [] before this selection; [{}] survives.','').replace(' CRD full create/replacement coercion omits [] and thus uses live fallback, while [{}] survives and selects reset.','');
+ record.emptyValue=typedOnly(record.emptyValue);record.crossFieldConditions=record.crossFieldConditions.map(typedOnly);record.cases=record.cases.map(c=>({...c,sourceOutcome:typedOnly(c.sourceOutcome)}));
+ record.crossFieldConditions.push('This is cluster-scoped stored typed root metadata. Ordinary replacement requires a current resourceVersion; no unconditional update or create on update is allowed. An absent registration requires a separate create. Endpoint namespace normalization does not change Service namespace fields inside a webhook client configuration.','Changing or deleting a registration can change admission coverage for later matching requests. Preserve administrative recovery access and observe the actual endpoint, trust configuration and admission behavior before treating a stored update as operational success.');
  receiverContracts.push(record);
 }

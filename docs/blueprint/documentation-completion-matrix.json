@@ -19172,7 +19172,18 @@
       ],
       "evidence": "/home/node/Documents/Codex/a98-evidence/identity-secret-root-writer",
       "rootChecks": "2 actual authenticated render/join and unknown-field/GVK tests PASS with zero skipped. Prior metadata/envelope exports byte-equivalent excluding these three new kinds. Fresh 47 immutable originals and 135 prior spans checked; final 138 spans bounded. Narrow decoder array item/empty-array evidence added. Not independent semantic or live acceptance.",
-      "scope": "ServiceAccount automount consumer precedence; Secret stringData conversion, byte-key/size/type/immutable checks and later token/TLS/registry use; Pod graceful deletion/generation/status root metadata."
+      "scope": "ServiceAccount automount consumer precedence; Secret stringData conversion, byte-key/size/type/immutable checks and later token/TLS/registry use; Pod graceful deletion/generation/status root metadata.",
+      "followupCorrection": "Clarify inherited resourceVersion invalid cases for all three new ordinary unconditional-update kinds; remove unrelated CRD replacement requirement. Existing independent acceptance is not claimed."
+    },
+    "webhookRootMetadata": {
+      "author": "/root",
+      "state": "candidate-pending-independent-review-and-source-bound-publication",
+      "metadataRecords": 68,
+      "envelopeRecords": 4,
+      "actualSelectedRootPaths": 14,
+      "evidence": "/home/node/Documents/Codex/a98-evidence/webhook-root-metadata-writer",
+      "checks": "7 focused tests PASS, no skipped. Actual selected root join PASS. Both immutable original strategies/storage/name validators inspected; source spans bounded against retained originals. Prior exports preserved except three explicit new Pod/ServiceAccount/Secret resourceVersion invalid-case clarifications.",
+      "scope": "Cluster-scoped DNS-subdomain identity; create generation1 and Webhooks-difference update increment; mandatory nonzero current replacement resourceVersion; no status or create-on-update; registration is not admission endpoint success."
     }
   }
 }
