@@ -15465,6 +15465,20 @@
       "description": "Root authored all15status boundaries51cases; controller/strategy/validator/Time/conditions/warnings cases. Combinedpolicy84present37missing. Every statusrecord has open serverapply ownership/omission route requirement and is explicitly not publishable.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/admission-status-root/report.md",
       "evidenceSha256": "7718535f920e4df63efd74dd14257add2a81a158b7f3b942747f1d74693b8e2f"
+    },
+    {
+      "id": "A98-CORE-API-RECEIVER-CANDIDATE",
+      "state": "authored-with-nine-available-source-proof-gap-groups",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Released9c30639e module joins272 complete schema identities acrossConfigMap42/Namespace49/PVC89/Service92;49authorartifacts verified. Nine known proofgapgroups affect200boundaries; fieldmanager/GC/delete/conditionproducers/configmapenv/storage/Serviceeffectiveconsumers remaindocumentation failures. No Source acceptance, and readerproofguard blocks gapmarkers.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/core-api-receiver-writer/report.md",
+      "evidenceSha256": "a44df4b414b71672c590eac2c37184e63b1f14a37c252edbcbcaa351c1f7c720"
     }
   ],
   "checks": [
@@ -17357,8 +17371,29 @@
       "model": "gpt-6.1-sol",
       "freshContext": true,
       "forkTurns": "none",
+      "state": "completed-author-candidate-with-proof-gaps",
+      "scope": "Exclusive newCore receiver module; full272 ConfigMap/Namespace/PVC/Service boundaries including metadata/status/envelopes.",
+      "candidateSha256": "9c30639ea6a9a2db61ab79bea7c49126c44d51d9c5d460adf17bbb14ec9a30f4",
+      "report": "/home/node/Documents/Codex/a98-evidence/core-api-receiver-writer/report.md",
+      "verifiedArtifacts": 49
+    },
+    {
+      "agent": "/root/a98_apps_receiver_correction2_writer",
+      "role": "writer",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
       "state": "running",
-      "scope": "Exclusive newCore receiver module; full272 ConfigMap/Namespace/PVC/Service boundaries including metadata/status/envelopes."
+      "scope": "Exclusive Apps module all15 C01–C15 full-source correction groups; no inherited review acceptance."
+    },
+    {
+      "agent": "/root/a98_cilium_api_receiver_writer",
+      "role": "writer",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "running",
+      "scope": "Exclusive newCilium module; fullCNP/CCNP1716baseline schema paths, actualpinnedCilium1.20.1 receivingimplementation."
     }
   ],
   "continuation": {
@@ -17829,12 +17864,12 @@
       "unprovenRecursiveContexts": 165,
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
-    "currentSourceHead": "b252ae045e65ab3216c9b34f47ffc356642de0cb",
-    "nextAction": "Commit rootAdmission emptyselector/status/referenceguard. Start freshfullNetworkAdmission/sharedSource on newimmutablecommit. Apps15group correction2 author andCore272author active. Close statusapply proof andArgo1900proof qualifications; remaining metadata/Cilium scope needed.",
-    "currentPushedRevision": "b252ae045e65ab3216c9b34f47ffc356642de0cb",
+    "currentSourceHead": "57c70224200c86cb9750e39db1eb0090aa982209",
+    "nextAction": "FreshfullNetwork/Admission selectedscope/sharedhelper Source on newimmutablecommit; Core known9groups200boundaries and statusapply/Argoproof obligations needactualconsumers. Apps15groups andCilium1716 writingparallel. Remaining1972schema registry paths afterCore/status join; no publication or AP09.8 acceptance.",
+    "currentPushedRevision": "57c70224200c86cb9750e39db1eb0090aa982209",
     "recursiveSchemaDiscovery": "Full13 current raw API kind schemas5698paths; unsupported structural branches now rejected deeply and unknown nested fragment keywords qualified. Updated helper requires new independent Source review.",
     "currentMutationObservation": "Original full config mutation at7e413cf6 terminalPASS exit0; no running original process. Current revised coverage needs new whole-gate evidence after missing receiver baseline is complete.",
-    "apiReceiverJoin": "Original inventory versioned registry now has3439 contract bindings and2259missing among5698 schema paths. Normalgate and API publicationrenderer reject missing; no complete generated reader output yet.",
+    "apiReceiverJoin": "Core272 andVAPstatus15 nowincluded; prior3439 plus287 =3726bindings1972missing among5698. This arithmetic comes from exact schema/registry joins, not a new original wholeinventory run. Per-field source-proof gaps remain explicit and publication is blocked.",
     "ciliumCompositionDiscovery": "ExactpinnedCilium anyOf branches onlyrequire alreadydeclared fields viaemptyproperties. Qualified presence-only traversal preserves originalbranches;858paths eachCNP/CCNP. Other newstructuralalternatives stillreject; privateactualauthority mutation verifiesreject.",
     "deploymentAuthorLastObservation": "1268unique authoredrecords =1267nonmetadataSpecboundaries+root.347workitems201projectedboundaries mapped; finalreport/checks stillpending. No independent acceptance.",
     "argoAuthor": "Released4d6b75cb1900records5843cases; per-fieldSourceproofgaps explicitlyopen; root integrated registry and verified exactschemajoin missing6metadata/envelope roots.",
