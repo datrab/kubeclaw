@@ -15647,6 +15647,33 @@
       "description": "Frozen3e61283a SourceF01/F02/F03/F04 corrected acrosscc430/current source: actualApplyidentitycallee, decodercaption, variable/schema/compiler/mapping/skippedcontext cases, eventhandlercachegate/shutdown/queueForget/noattemptcap/defaultdelayrules.15status147cases78captionpairs,54originalprimarylibraryfiles Gitblob/SHAverified. F05 completepublicinventorygeneration remainsblockedbyremainingmetadata/otheravailable-sourcegaps. New fullSource needed forunchanged+corrected+introducederrors; noReaderQualityAstra approval.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/admission-status-root/report.md",
       "evidenceSha256": "cc49a2ba6e4b405ca6201efec6f526af4f0d1df047568cf7542978d6e0d063a6"
+    },
+    {
+      "id": "A98-CILIUM-FRESH-BOUNDED-FAIL",
+      "state": "eleven-concrete-findings-correction-writer-running-exhaustive-review-still-required",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Fresh807ff reportreadfully;35artifacthashes rootverified.11concreteSource/controlfindings coverpeeremptyshadowing-wildcard, protocolnormalization, namedportingress/egressupdateasymmetry, headermismatch, statusreturn/ackerror, CIDRtype, narrowHTTP/ICMPcaptions, FQDNexpiry/persistence, sharedmetadata andrenderer oldguard. All1716records/8722cases haveledgers but completeManualSemanticReview=false andunqualifiedentriesFAIL. No completed exhaustiveSourceacceptance, testsorGoGraph proof. Freshcorrectionwriter retainedfullscope.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/cilium-complete-source-fresh/REPORT.md",
+      "evidenceSha256": "6976fbe41850dd4f66d8d968df8ecb4a7c11eed25d383ea3de85831394b19316",
+      "artifactManifestSha256": "6c94887f5ad0363f8357215d50fd785d51771d1630d107d72107188082de1a48"
+    },
+    {
+      "id": "A98-SHARED-INVENTORY-APPS-CLAIM-CORRECTIONS",
+      "state": "corrected-pending-complete-fresh-source-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Root reconciled3freshAppsSourcefindings inoriginalinventorydescriptions: port-nameuniquenesspercontainer notPod, shownimagevalidator requiresnonemptylength notOCIgrammar/whitespace, genericprobeemptyscalarstatement nowexactfieldandpresentProbezero-defaultqualified. Originalvalidation2722-2738/3886-3891 anddefaults233-246 readwithfreshsourceSHAverified. CompleteAppsSource stillrunning; noinheritedapproval."
     }
   ],
   "checks": [
@@ -17612,6 +17639,15 @@
       "forkTurns": "none",
       "state": "terminal-fail",
       "scope": "Immutable3e61283a15status111cases65captions;225dimensiondecisions;51freshprimarysources;75artifactsealrootverified. F01-F05;37metadata/envelope mandatorypaths fail.9sharedtestsPASS,actualinventory/renderinputFAIL. Rootcorrectionsnotcoveredbythisverdict."
+    },
+    {
+      "agent": "/root/a98_cilium_receiver_correction_writer",
+      "role": "writer",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "state": "running",
+      "scope": "ExclusiveCiliummodulecorrection11boundedfreshfindings;all1716records8722caseidentitiesretain;sharedmetadatarootseparate;cannotassumeuncheckedrestPASS."
     }
   ],
   "continuation": {
