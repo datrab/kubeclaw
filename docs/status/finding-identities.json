@@ -696,6 +696,10 @@
     {
       "id": "CILIUM-POLICY-EMPTY-001",
       "disposition": "Open"
+    },
+    {
+      "id": "PRISM-LEASE-PROFILE-001",
+      "disposition": "Open"
     }
   ]
 }

@@ -383,6 +383,40 @@ receiving source. The task decisions below explain what to select and verify.
 | Admit the native host | Select `NATIVE_WORKER_NODE_POLICY_FILE` through the host owner. Its policy must match the rendered node, native namespace, and policy digest. |
 | Plan an authorized live exercise | `PRISM_E2E_USER` selects the approved Tailscale caller. `PRISM_E2E_USE_LEASE` controls temporary namespace leasing; `PRISM_E2E_RUN_FAILURES` controls additional failure exercises. Run these only in the declared isolated acceptance environment. |
 
+#### Prism test lease admission and recovery
+
+The default temporary-lease path in `prism-e2e` writes
+`spec.capabilityProfile: storage`. The declared lease schema does not contain
+that field, and the controller has no storage-profile selection for it. Stop
+before using this path as evidence of a working storage configuration. The Prism
+maintainer must resolve the producer and receiver mismatch first.
+
+[The authored lease request](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/scripts/deploy.sh#L1853-L1871)
+and [the declared lease spec](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L34-L186)
+show this boundary. The controller uses
+[fixed namespace quota and limit settings](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/cmd/buster-namespace-controller/main.go#L931-L961).
+A successful lease response does not prove that this field selected storage.
+
+The reviewed Ops kubectl client defaults to strict field validation. If this
+unknown key reaches a server with strict validation, the request fails. A request
+that continues with unknown-field pruning loses the key from the stored spec.
+The last-applied annotation can still contain its text; that annotation is not a
+storage-profile input. Record the actual client and installed schema rather than
+assuming that a build input proves the executable used for an earlier run.
+[The reviewed client default](https://github.com/kubernetes/kubectl/blob/fde4e0d59d36fe2a47ecc1462cbb1cb572299cda/pkg/cmd/util/helpers.go#L480-L488)
+and [schema-directed pruning](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/apiextensions-apiserver/pkg/apiserver/schema/pruning/algorithm.go#L58-L113)
+are separate boundaries.
+
+If an attempted run already failed or timed out, retain the client version,
+context, lease name and error output. Inspect that exact lease and its namespace
+before retrying or deleting anything. The script installs its cleanup trap only
+after lease readiness and namespace checks; an earlier failure can leave
+resources without that trap.
+[Lease polling and cleanup setup](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/scripts/deploy.sh#L1873-L1901)
+define that recovery boundary. See the
+[open lease-input issue](../status/open-issues.md#prism-test-lease-requests-an-undeclared-storage-profile)
+for the required product correction and separate target-environment proof.
+
 The deploy script creates `PRISM_VALUES_OVERLAY` and
 `PRISM_AGENT_VALUES_OVERLAY` internally to preserve private overlay paths.
 Do not supply them as operator alternatives. The live-test Job receives

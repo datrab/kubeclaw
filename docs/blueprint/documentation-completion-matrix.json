@@ -19093,6 +19093,41 @@
       ],
       "remainingReview": "Every claim dimension for all197records plus full linked Buster entrypoint/grant/controller/runtime task chain remains a required new complete Fresh-Context review on corrected revision. Earlier bounded8PASS not whole surface acceptance. Reader/Quality/Astra untouched.",
       "checks": "cluster6/workload6 testsPASS; staticguidecheckPASS; refsFAIL3publishedanchors,3archiveemptydirectory observations classified separately."
+    },
+    "nodeRootMetadata": {
+      "author": "/root/node_root_metadata_receiver_writer",
+      "state": "candidate-not-independent-acceptance",
+      "metadataRecords": 68,
+      "envelopeRecords": 4,
+      "selectedContexts": 19,
+      "selectedBoundaryInstances": 1635,
+      "authorReportSha256": "0637e3960108b756d4144816e9680cf5dfc924a81c4e90552ef0ef33c03b9d3f",
+      "sealVerifiedFiles": 53,
+      "rootChecks": "Root24focused testsPASS/noSKIP including unknowninput7/commoncluster7/nodebody5/noderoot5. Priorserializedexports independently bytepreserved. Author111sourcebounds and19contextjoins mechanicallypass; no global semantic acceptance."
+    },
+    "authoredUnknownLeaseInput": {
+      "author": "/root/daemonset_csidriver_receiver_writer",
+      "state": "source/Unit/contractcandidate",
+      "field": "kubeclaw.forgestack.ai/v1alpha1/BusterNamespaceLease $.spec.capabilityProfile",
+      "authorReportSha256": "a651024eb2d50d28d270a9af2e8fba8f45427199fe8778a47d8062e2372ea912",
+      "sealVerifiedFiles": 41,
+      "actualTests": "7PASS; actualextractedconstructor localstubs failuresstop/poll/timeouts; no API/Live success",
+      "classification": "unsupported authoredinput outside declaredserved schema; no schemafabrication or storagecapability claim",
+      "readerTask": "docs/site/use/prism-studio.md#prism-test-lease-admission-and-recovery",
+      "productIssue": "PRISM-LEASE-PROFILE-001; open productproblem not documentationclosure",
+      "publication": "canonicalissue sourcedata/identity added; generatedview pending sourcebound separatecommit"
+    },
+    "newClusterFields": {
+      "owner": "/root",
+      "recordsAdded": 4,
+      "fields": [
+        "$.rules[].nonResourceURLs",
+        "$.rules[].nonResourceURLs[]",
+        "$.spec.names.categories",
+        "$.spec.names.categories[]"
+      ],
+      "state": "actualexpandeddiscoverycandidate pending Source review",
+      "sources": "Original pinned RBACvalidation103-125/RuleAllows178-193/URLmatch94-108/CRDcategoryvalidation810-815/discovery149-158 read; typednullstringsdistinctfromremoval; no author semantic selfacceptance"
     }
   }
 }

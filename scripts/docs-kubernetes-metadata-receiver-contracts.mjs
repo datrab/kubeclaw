@@ -649,3 +649,38 @@ function clusterRootMetadata(r,field) {
  return record;
 }
 receiverContracts.push(...clusterResources.flatMap(r=>Object.keys(fields).map(field=>clusterRootMetadata(r,field))));
+
+// Root receivers for the selected external node workloads. Append-only: the
+// previous providers and implicit custom-instance exports retain their bytes.
+const nodeRootResources = [
+ {apiVersion:'apps/v1',kind:'DaemonSet',namespaceScoped:true,strategy:'pkg/registry/apps/daemonset/strategy.go',strategyRange:[53,83],updateRange:[86,119],statusRange:[173,190],unconditionalRange:[162,164],storageRange:[41,64],nameEvidence:k('pkg/apis/apps/validation/validation.go',537,540,'ValidateDaemonSetName uses DNS-subdomain names; ValidateDaemonSet checks namespaced ObjectMeta.'),generation:'DaemonSet create clears status, sets generation 1 and raises TemplateGeneration to at least 1. Ordinary update preserves status and old TemplateGeneration before comparing effective spec. A changed template increments both TemplateGeneration and generation; another spec change increments generation. Root labels or annotations alone do not increment it.',status:'DaemonSet status preparation restores only old spec and its reset fields include spec. It does not generally restore root labels, annotations, finalizers or ownerReferences. Common metadata validation and field ownership still apply; status does not prove node coverage or Pod readiness.',garbageCollection:'DaemonSet defaults to DeleteDependents for all served versions. Explicit DeleteOptions and stored GC tokens have common precedence; deletion does not itself prove every node Pod or external effect was cleaned up.',garbageCollectionEvidence:k('pkg/registry/apps/daemonset/strategy.go',47,50,'DaemonSet default garbage collection is DeleteDependents.')},
+ {apiVersion:'storage.k8s.io/v1',kind:'CSIDriver',namespaceScoped:false,strategy:'pkg/registry/storage/csidriver/strategy.go',strategyRange:[47,63],updateRange:[97,120],unconditionalRange:[146,148],unconditionalUpdate:false,storageRange:[41,62],nameEvidence:k('pkg/apis/storage/validation/validation.go',422,431,'CSIDriver validates cluster-scoped ObjectMeta with DNS-subdomain names.'),generation:'CSIDriver create preparation does not initialize generation: omitted/null/zero stays zero, and a valid positive authored value survives the common nonnegative check. Common replacement preparation restores stored generation before this strategy; an effective spec change then increments it. Root metadata changes alone do not increment it. Disabled optional feature fields are dropped on create, and on update when not already present in the old object.',status:'CSIDriver has no status field or status subresource in this typed registry. Registration metadata does not prove CSI node-plugin availability, controller attachment, successful mounting or volume cleanup.'},
+];
+function nodeRootMetadata(resource,field) {
+ const record=rootMetadata(resource,field);
+ const typedOnly=value=>value
+  .replace(' CRD complete-body coercion omits []; [{}] survives.','')
+  .replace(' CRD full-body coercion omits an empty [] before this selection; [{}] survives.','')
+  .replace(' CRD full create/replacement coercion omits [] and thus uses live fallback, while [{}] survives and selects reset.','');
+ record.emptyValue=typedOnly(record.emptyValue);
+ record.crossFieldConditions=record.crossFieldConditions.map(typedOnly);
+ record.cases=record.cases.map(c=>({...c,sourceOutcome:typedOnly(c.sourceOutcome)}));
+ record.operationScope='Fresh complete JSON POST create or replacement update of an existing typed node resource on its selected REST endpoint. Status and apply are separate stated routes. DELETE uses DeleteOptions. Root cases do not initialize nested Pod templates or establish Helm/apply patch construction.';
+ record.crossFieldConditions.push('AllowCreateOnUpdate is false: replacement of an absent object does not create it. Read the current UID and resourceVersion after an uncertain result before retrying. The selected chart/client operation and installed consumer are separate from typed receiving behavior; release labels and namespaces do not grant authority or prove node/CSI readiness.');
+ record.evidence.push(k(resource.strategy,...(resource.kind==='DaemonSet'?[133,137]:[90,92]),'The selected resource rejects create on update.'));
+ if(field.startsWith('managedFields')) record.crossFieldConditions.push('Typed managedFields:[] survives fresh decoding and selects reset; null selects live fallback. This typed retained empty list is distinct from unstructured custom-instance pruning. A reset on an existing UID does not waive later apply ownership conflicts.');
+ if(field==='resourceVersion') record.invalidValue='An invalid resource-version string fails storage parsing; a stale nonzero version conflicts. '+(resource.unconditionalUpdate===false?'CSIDriver requires a nonempty version on replacement.':'DaemonSet allows an omitted version on ordinary replacement, which supplies no authored optimistic concurrency precondition.');
+ if(resource.kind==='CSIDriver'&&field==='generation') {
+  record.purpose='Carries the CSIDriver revision scalar; create leaves it authored or zero and effective spec updates increment it.';
+  record.omitted='Fresh omission leaves zero. CSIDriver create preparation does not initialize generation; effective spec updates can increment the stored value.';
+  record.nullValue='Fresh null leaves int64 zero. Create does not replace it with 1; ordinary replacement restores the stored generation before an effective spec change can increment it.';
+  record.emptyValue='0 remains zero on create. This differs from DaemonSet generation initialization; effective spec updates can increment it later.';
+  record.invalidValue='Negative generation fails common metadata validation. Noninteger or overflowing tokens fail int64 decoding. A submitted replacement generation is restored from storage before strategy comparison.';
+  record.changeImpact='Read generation together with the effective spec and actual installed driver observations. A spec update can increment generation, but registration has no status acknowledgement and the number does not prove node registration, mounting or cleanup.';
+  record.cases.push(itemCase('Positive authored create generation','A fresh POST supplies a valid positive int64 generation and a valid CSIDriver spec.','Create preparation does not overwrite generation; common validation requires nonnegative generation. Acceptance depends on the complete request.'),itemCase('Effective spec replacement','A versioned replacement changes an allowed effective spec field after feature-field dropping.','Common BeforeUpdate restores stored generation; the CSIDriver strategy increments it by one for an effective spec difference. A dropped unsupported new field alone does not establish a difference.'));
+ }
+ if(resource.kind==='DaemonSet'&&field==='generation') record.cases.push(itemCase('Template versus root metadata update','A replacement changes Pod-template labels, compared with a replacement changing only root labels.','Template labels are part of spec: an effective template change increments generation and TemplateGeneration. Root labels alone do not increment these strategy counters. Ordinary status is restored.'));
+ record.cases=[...sourceCases(fields[field][1],record.omitted,record.nullValue,record.emptyValue,record.invalidValue),...record.cases.slice(4)];
+ return record;
+}
+receiverContracts.push(...nodeRootResources.flatMap(resource=>Object.keys(fields).map(field=>nodeRootMetadata(resource,field))));

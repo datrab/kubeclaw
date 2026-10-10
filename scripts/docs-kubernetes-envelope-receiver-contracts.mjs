@@ -32,6 +32,8 @@ const resources = [
   ['rbac.authorization.k8s.io/v1','ClusterRoleBinding'],
   ['networking.k8s.io/v1','IngressClass'],
   ['apiextensions.k8s.io/v1','CustomResourceDefinition'],
+  ['apps/v1','DaemonSet'],
+  ['storage.k8s.io/v1','CSIDriver'],
 ];
 export const receiverContracts = resources.flatMap(([apiVersion,kind]) => ['apiVersion','kind'].map(field => ({
   kind,fieldPath:`$.${field}`,authoritySelector:{apiVersion,kind,fieldPath:`$.${field}`},
@@ -70,4 +72,9 @@ for (const record of receiverContracts.filter(record => ['ClusterRole','ClusterR
  record.crossFieldConditions[3] = 'These are typed built-in root identity records, including CustomResourceDefinition registration. Instances registered by that CRD use a separate unstructured receiver; endpoint defaulting here does not establish their identity behavior.';
  record.crossFieldConditions.push('These resources are cluster-scoped. TypeMeta identifies the object representation; metadata name and the endpoint identify its stored lifetime. Labels, release namespace and body kind/version do not grant permissions.');
  if (record.kind === 'CustomResourceDefinition') record.evidence.push(source('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresourcedefinition/etcd.go',42,64,'CRD registration storage constructs typed CustomResourceDefinition objects and installs its built-in create/update/reset strategies.'));
+}
+
+for (const record of receiverContracts.filter(record => ['DaemonSet','CSIDriver'].includes(record.kind))) {
+ record.crossFieldConditions.push(record.kind==='DaemonSet' ? 'DaemonSet is namespaced; the request namespace and metadata name identify its lifetime. Root identity does not initialize a nested Pod template or prove DaemonSet node coverage.' : 'CSIDriver is cluster-scoped; release namespace does not scope its registration or grant authority. Root identity does not prove an installed CSI plugin, mounting or volume cleanup.');
+ record.evidence.push(source(record.kind==='DaemonSet' ? 'pkg/registry/apps/daemonset/storage/storage.go' : 'pkg/registry/storage/csidriver/storage/storage.go',41,record.kind==='DaemonSet'?64:62,'The selected store constructs this typed object and installs its resource-specific strategies.'));
 }

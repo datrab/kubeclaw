@@ -7,9 +7,9 @@
     "original_total": 154,
     "original_locally_verified": 141,
     "original_incomplete": 13,
-    "additional_open": 10,
+    "additional_open": 11,
     "additional_integration_locally_verified": 5,
-    "total_open": 23,
+    "total_open": 24,
     "counting_policy": "Original IDs are unchanged. GitHub #7 and later source follow-ups are separate. Pending live acceptance does not reopen a locally closed finding.",
     "additional_followups_locally_verified": 1
   },
@@ -1497,7 +1497,7 @@
         "Nova runtime maintainers: adapter deadline consumers",
         "Platform configuration maintainers: validation and safe input range"
       ],
-      "current_state": "At revision 9d085bb20af0cc70201cc41801011b63c626301c, no maximum is enforced by the platform schema. On 2026-10-10, the original loader accepted 2147483648 and a synthetic adapter using the original normal-shutdown consumer rejected ADAPTER_SHUTDOWN_TIMEOUT after approximately 1.9 ms on Node.js v24.21.0. Node reported the overflow and 1 ms delay. The configuration references now require a stop outside 1\u20132,147,483,647 ms.",
+      "current_state": "At revision 9d085bb20af0cc70201cc41801011b63c626301c, no maximum is enforced by the platform schema. On 2026-10-10, the original loader accepted 2147483648 and a synthetic adapter using the original normal-shutdown consumer rejected ADAPTER_SHUTDOWN_TIMEOUT after approximately 1.9 ms on Node.js v24.21.0. Node reported the overflow and 1 ms delay. The configuration references now require a stop outside 1–2,147,483,647 ms.",
       "remaining_work": [
         "Runtime and platform configuration maintainers must define and enforce the supported timer input range at validation or the consumer boundary.",
         "Before consumer recreation, stop on an out-of-range value even if schema validation succeeds; retain the previous valid configuration.",
@@ -1608,6 +1608,71 @@
           "commit": "9d085bb20af0cc70201cc41801011b63c626301c",
           "url": "https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/my-values/infra/cilium-values.yaml#L37-L40",
           "scope": "Default policy enforcement mode remains a distinct setting."
+        }
+      ]
+    },
+    {
+      "id": "PRISM-LEASE-PROFILE-001",
+      "origin": "source-follow-up",
+      "title": "Prism test lease requests an undeclared storage profile",
+      "severity": "high",
+      "status": "open",
+      "problem": "The default prism-e2e temporary-lease request writes spec.capabilityProfile: storage, but the declared BusterNamespaceLease spec has no such field. The namespace controller has no storage-profile selection for it.",
+      "impact": "Strict field validation can reject the lease request. A request that proceeds after unknown-field pruning still does not select a storage profile. A successful lease or Ready phase is insufficient evidence of persistence.",
+      "components": [
+        "Prism end-to-end deploy command",
+        "BusterNamespaceLease schema",
+        "Namespace controller",
+        "kubectl request validation"
+      ],
+      "current_state": "The producer and declared receiver disagree. Namespace ResourceQuota and LimitRange values are fixed controller settings. No product correction, live admission, volume provision or mount is established. The script installs its RETURN cleanup trap only after lease readiness and namespace verification, so earlier failure requires state inspection.",
+      "remaining_work": [
+        "Owner: Prism maintainers, with the namespace-controller maintainer. Decide whether this producer should remove the unsupported field or whether a defined storage capability must be implemented and authorized.",
+        "Align the producer, served schema, controller behavior and operator procedure. Preserve validation and namespace isolation; accepting an unknown field is not a capability implementation.",
+        "Safe action: stop this lease-based exercise until the contract is repaired. If an attempt already ran, inspect the recorded lease and namespace before retry or cleanup."
+      ],
+      "reproduction": [
+        "Inspect cmd_prism_e2e in scripts/deploy.sh and the complete declared spec in the lease CRD. Confirm that the authored capabilityProfile field has no declared storage-profile receiver.",
+        "Record the actual PATH kubectl version and installed CRD/server before diagnosing an attempted request. Distinguish a rejected write, pruned stored spec and authored text in the last-applied annotation.",
+        "In a separately authorized isolated target, execute the repaired request and observe lease identity, namespace state and the claimed storage behavior. This target execution has not been performed."
+      ],
+      "acceptance_criteria": [
+        "Producer, schema and controller agree on the complete supported lease input. Unknown-field validation and namespace authorization remain enforced.",
+        "Local contract tests cover the corrected constructor and failure/cleanup boundaries; retain the exact source revision and outputs.",
+        "In an isolated target, the declared storage behavior is observed with claim/volume identity, binding and mount evidence where persistence is promised. A Ready lease alone is not that proof.",
+        "The operator guide and generated field reference describe the corrected input and its actual receiving authority."
+      ],
+      "live_validation": "Actual target admission, controller reconciliation and any promised storage provisioning/mounting are separate product closure evidence. No live result is claimed.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "Current source shows the unsupported authored field and fixed namespace quota/limit settings. Unknown-field validation/pruning and actual client versions are separate receiving boundaries; this finding does not assume the executable or installed CRD of a previous run.",
+        "prior_verification": "Source inspection only for this issue record. No live request or storage result is established.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "path": "scripts/deploy.sh",
+          "commit": "bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b",
+          "url": "https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/scripts/deploy.sh#L1853-L1871",
+          "scope": "Default-enabled temporary lease and undeclared capabilityProfile request."
+        },
+        {
+          "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+          "commit": "bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b",
+          "url": "https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L34-L186",
+          "scope": "Complete declared served spec boundary, without capabilityProfile."
+        },
+        {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "commit": "bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b",
+          "url": "https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/cmd/buster-namespace-controller/main.go#L931-L961",
+          "scope": "Fixed namespace ResourceQuota and LimitRange settings."
+        },
+        {
+          "path": "scripts/deploy.sh",
+          "commit": "bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b",
+          "url": "https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/scripts/deploy.sh#L1873-L1901",
+          "scope": "Phase loop, namespace verification and delayed cleanup trap installation."
         }
       ]
     }
