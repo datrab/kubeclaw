@@ -19045,8 +19045,26 @@
       "state": "authored-correction-pending-fresh-review",
       "scope": "supported Buster entry point, caller/controller authority, actual checked-manifest PVC restrictions and counting, observations, retention and uncertain cleanup",
       "generatedCatalogueLink": "authored AP08-catalogue-guidance updated; publication regeneration pending source-bound generated commit",
-      "rootChecks": "Buster guide check PASS:9pages/12suites/19providers; docs:check:refs FAIL solely3known missing generated Buster anchors, no new fixture/navigation failures. Full gates remain pending."
+      "rootChecks": "Buster guide check PASS:9pages/12suites/19providers; docs:check:refs FAIL solely3known missing generated Buster anchors, no new fixture/navigation failures. Full gates remain pending.",
+      "additionalReviewFinding": {
+        "reviewer": "/root/cluster_metadata_fixture_source_fresh",
+        "frozenRevision": "bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b",
+        "finding": "AP08operationNote falselysaidcleanupalwaysrelease; actualprovider134-136skipreleaseonretain",
+        "currentCorrection": "Conditions delete->release-success;retain->no-provider-release yetexpiry/controller policy",
+        "state": "candidate-awaiting-new-independent-review; frozenFAILpreserved"
+      }
     },
-    "remaining": "Generator/output discovery and exact receiver coverage, source-bound publication, full mutations/gates, fresh Source/Reader/Quality and Astra, then parity transition and remaining packages. No AP09.8 closure."
+    "remaining": "Generator/output discovery and exact receiver coverage, source-bound publication, full mutations/gates, fresh Source/Reader/Quality and Astra, then parity transition and remaining packages. No AP09.8 closure.",
+    "nodeWorkloads": {
+      "author": "/root/daemonset_csidriver_receiver_writer",
+      "state": "body-candidate-not-independent-acceptance",
+      "records": 272,
+      "actualSelectedContexts": 19,
+      "rootTests": "5PASS,noSKIP",
+      "authorReportSha256": "b9017299ab791e43a51151c3076f35820fd8913fc6cb31bfe4925b69b82a12bb",
+      "sealFilesVerified": 151,
+      "sourceLinksBounded": 377,
+      "materialRemaining": "DaemonSet and CSIDriver root metadata/envelope delegated but actualsharedexports have0records for both kinds. Explicit missingcoverage; no wholeobject19coveragePASS. Full independent Source/Reader/Quality/newgeneration required."
+    }
   }
 }
