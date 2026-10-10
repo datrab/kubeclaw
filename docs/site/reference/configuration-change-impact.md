@@ -3,9 +3,11 @@
 Status: current operational reference
 Audience: operator, maintainer
 Owner: platform operations
-Evidence: skills/nova/core/execution/engine-snapshots.ts; skills/nova/project/recovery.ts; skills/common/plugin-runtime/foundation/config/published-pair.ts; skills/prism/server/control-config.ts; skills/prism/config/native-worker.ts
+Evidence: skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execution/engine-runtime.ts; skills/nova/core/execution/engine-run.ts; skills/nova/core/execution/adapters.ts; skills/nova/core/execution/adapter-startup.ts; skills/nova/core/effects/coordinator.ts; skills/nova/core/effects/durable-invocation.ts; skills/common/plugin-runtime/foundation/config/platform.ts; skills/common/plugin-runtime/foundation/config/platform.schema.json; skills/nova/project/recovery.ts; skills/common/plugin-runtime/foundation/config/published-pair.ts; skills/prism/server/control-config.ts; skills/prism/config/native-worker.ts; skills/prism/control/product-decisions.ts; charts/kubeclaw/values.yaml; charts/kubeclaw/templates/deployment.yaml; charts/prism/values.schema.json; charts/prism/templates/workloads.yaml; charts/prism/templates/_product-decisions.tpl; charts/gitops/templates/applications.yaml
 Applies to: current configuration families
 Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
+Helm section verified: 2026-10-10 at source revision `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`; other families retain the evidence revisions below.
+Platform timeout section verified: 2026-10-10 at source revision `fe426bd75db277b04cf405cc2057063b75fa0a1d`.
 
 ## Impact classes
 
@@ -13,7 +15,8 @@ Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d
 | --- | --- |
 | Hot | The documented consumer watches or reads the value for each operation. Do not assume this class without an explicit watcher/read path. |
 | Restart | A process captures the value at startup; roll only the affected workload after validation. |
-| New run | Existing Nova run snapshots pin the graph, package set, or runtime authority. Continue with original inputs and use changed configuration only for a new identity. |
+| Recreate consumer | Reload validated configuration and construct fresh consumer objects. The CLI does this on a new invocation; another caller must perform its own reload and recreation. |
+| New run | Existing Nova run snapshots pin the graph, package set, or recorded runtime configuration subset. When a change violates those pins, continue with the original inputs and use the changed configuration only for a new identity. Platform timeout capture is a separate boundary, explained below. |
 | Republish | The `.swarm` authoring pair must be validated and atomically published together. |
 | Host prepare + restart | Root-owned capacity/identity or cgroup state must be reconciled before the worker restarts and reports ready. |
 | Data procedure | A persistent format, location, identity, or credential transition needs its component's explicit backup/restore or rotation procedure. Editing config alone is insufficient. |
@@ -24,14 +27,14 @@ Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d
 | --- | --- | --- |
 | `pipeline-platform.v2` package roots, trust, providers, grants, adapters, observers, isolation | New run | Recovery compares the recorded effective runtime and pinned packages. Validate registrations and grants; retain the prior file for active runs. |
 | Platform `storageRoot` | New run + data procedure if state must move | The new path selects another store; the loader does not copy run state. Verify durability, permissions, capacity, backup, and restore before cutover. |
-| Platform timeouts | New run; restart current CLI process | Runtime objects capture them. Persisted events are not rewritten. |
+| Platform `shutdownTimeoutMs` or `effectLockTtlMs` | Recreate consumer; use a new CLI invocation or restart the owning process if it loads configuration only at startup | Existing objects keep captured values. These two settings are absent from the recorded runtime configuration subset; a timeout-only change does not itself require a new run ID in that comparison. Apply the stop, drain, and recovery checks below. |
 | `nova-project.v2` root, module, coverage, agent, lint, source, final, or demo fields | New run | Compiler output or source binding can change the graph digest. Compile first and compare the recorded digest. |
 | `pipeline-definition.v2` field | New run | Recovery verifies pipeline ID and normalized graph digest. |
 | `.swarm/progress.json` or `.swarm/pipeline.json` | Republish; then new resolved plan/run where consumed | The two files are one generation. Re-run scaffold checks and plan resolution. Never hand-update one current copy. |
 | Provider schema/config, suite selection, coverage, matrix, limits | Republish + new resolved plan/run | Plan digest, provider config digest, links, coverage, or node identities can change. |
 | Plugin package content/version | New run by default | Registry snapshot pins package version/content digest. An active run accepts only its recorded package or an explicitly governed supported package transition. |
 | KubeClaw or Prism image digest | Restart; new run for any pipeline component used by that run | Workload executable bytes change. Render manifests, check digest pinning, and preserve a drain path. |
-| Helm resources, probes, replicas, service account, volumes | Restart/rollout | Kubernetes pod template changes. Check disruption budget, storage attachment, native worker replica constraint, and readiness. |
+| Helm resources, probes, replicas, service account, volumes | Rollout for a changed pod template; scale for a changed replica count | Classify the rendered receiver. Replicas are a Deployment setting; the other named pod fields can change its template. Check disruption budget, storage attachment, native worker replica constraint, and readiness. |
 | ConfigMap-backed startup configuration | Restart | Current services do not promise a live reload. Use a template checksum/generation to prove rollout. |
 | Secret-backed environment value | Restart + credential rotation procedure | Existing processes retain their environment. Coordinate old/new acceptance to avoid loss of access; do not print the credential. |
 | File-mounted signing key/CA/token | Restart unless its loader explicitly rereads for every action | Prism product authority captures configuration and key at composition. Coordinate controller trust before removing the old credential. |
@@ -39,6 +42,194 @@ Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d
 | Prism native pool limits, paths, node identity, policy digest | Host prepare + restart | Worker verifies a root-owned policy and actual cgroup state at readiness. Drain attempts, prepare the host, then restart the pinned worker. |
 | Prism database or artifact storage location/size | Data procedure + restart | Persistent stores are independent. Prove backup, restore, ownership, and application connectivity. A values edit does not move data. |
 | GitOps values source | Restart/rollout when the rendered workload changes | The controller reconciles declared Git state. Manual live edits are temporary and should not be the recorded change. |
+
+## Platform timeout capture and recovery
+
+The platform loader validates one file, resolves its paths, and freezes the
+loaded configuration. A file edit does not modify the object already passed
+to a running execution. The adapter runtime and effect coordinator receive
+their timeout values when `createAdapterRuntime` constructs them.
+
+| Setting | Accepted value and default | Consumer effect |
+| --- | --- | --- |
+| `shutdownTimeoutMs` | Required integer, at least 1 millisecond; no platform-loader fallback. | Sets activation/readiness wait limits, invocation cleanup deadlines, and the normal runtime shutdown deadline. Failed-start cleanup has a separate abort-only limit, explained below. Existing runtime objects retain their captured value. |
+| `effectLockTtlMs` | Optional integer from 60,000 to 86,400,000 milliseconds. When absent, the effect coordinator receives 300,000 milliseconds. | The coordinator passes the duration to durable-effect lock acquisition and renewal. Its renewal interval also derives from this captured duration. |
+
+These limits do not all enforce the same outcome. Activation and readiness
+waits, invocation cleanup, and normal runtime shutdown race their operation
+against a rejecting deadline. The host can stop waiting when that deadline
+expires; this does not prove that the adapter has stopped its work.
+Failed-readiness teardown, startup rollback, and cleanup of an adapter that
+activates after its deadline instead send a timed abort signal and await the
+adapter's shutdown promise. If the adapter ignores the signal and never
+settles, that cleanup can wait indefinitely. The readiness failure reaches
+the caller only after its teardown settles.
+
+Keep new work stopped and retain the adapter identity, timeout, unresolved
+effects, and observed shutdown result. An elapsed timer or a runtime shutdown
+timeout does not prove completed cleanup. Follow the
+[adapter startup and shutdown limits](../understand/plugin-runtime.md#activation-is-fail-closed)
+before deciding whether recovery is safe.
+
+Source: [startup wait deadlines](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-support.ts#L15-L18),
+[failed-readiness teardown and rollback](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L144-L165),
+[late-activation cleanup](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-support.ts#L20-L25),
+[invocation cleanup deadline](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-invocation-phase.ts#L38-L53),
+and [normal runtime shutdown deadline](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapters.ts#L74-L86).
+
+Process capture is different from persisted recovery authority. The recorded
+runtime configuration contains `providers`, `grants`, `adapters`,
+`activeAdapters`, `observers`, and optional `isolation`. It excludes both
+timeout fields. Recovery compares that subset and the pinned package set,
+versions, and content digests. It checks the pipeline graph separately.
+A timeout-only edit therefore does not cause a runtime-configuration mismatch
+in this comparison.
+
+Recovery prepares runtime authority from the supplied platform configuration
+and keeps the existing run ID. If its other recovery checks allow execution,
+it creates fresh adapter/effect objects from that platform, with its current
+timeouts. The CLI loads the selected platform file for its invocation. Thus a
+later recovery invocation can select different timing for the same identity;
+the stored snapshot does not restore the original values of these two fields.
+This is not a promise that recovery will succeed. Terminal runs, waits,
+unresolved effects, graph changes, and package/configuration drift still have
+their own stop conditions.
+
+Keep these distinctions when planning a timeout change:
+
+1. Preserve the previous platform file, its digest, and the two effective
+   timeout values. Validate the proposed file and record the new values,
+   including the fallback for an absent `effectLockTtlMs`.
+2. Before recreating the consumer, stop new work and drain active work through
+   the [run-control procedure](../use/operate.md#canonical-run-control-procedure).
+   Stop the change if effects or attempts remain unresolved. A shorter shutdown
+   allowance can end a deadline-controlled wait sooner or send a failed-start
+   cleanup abort sooner. It cannot force an uncooperative adapter to stop.
+   A changed lock duration can change effect timing. Do not use a restart to
+   bypass those conditions.
+3. If an interrupted run must retain its original timing, supply the preserved
+   platform values when following the recovery procedure. Do not depend on its
+   snapshot to recover them. If changed timing is intentional, assess its effect
+   on cleanup and locks before using the changed file.
+4. Reload the selected configuration and recreate its consumers at the supported
+   execution boundary. Verify the selected file and effective values and retain
+   the resulting run and effect evidence.
+
+Starting a new run after draining is a conservative operational choice when
+timing changes could affect unfinished work. It is not an implemented new-ID
+requirement caused solely by either platform timeout. This exception does not
+apply to stage `execution.timeoutMs`, which is part of the pinned graph, or to
+timeout values inside adapter configuration, which is part of the recorded
+runtime subset.
+
+> **Source evidence — platform timeouts and persisted authority**
+>
+> **Claim:** Platform timeout fields are validated and captured by consumers but are excluded from the runtime configuration subset compared during recovery. Recovery constructs consumers with the supplied platform and existing run ID after its other checks.
+>
+> **Implementation:** [platform validation and frozen load](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.ts#L51-L70); [prepared configuration subset](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-runtime.ts#L29-L41); [persisted configuration and package comparison](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-snapshots.ts#L28-L42); [graph comparison](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-snapshots.ts#L68-L73); [recovery preparation and retained identity](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-run.ts#L56-L69); [effect check and consumer construction](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-runtime.ts#L75-L87); [CLI platform load and recovery selection](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/cli.ts#L48-L60)
+>
+> [Adapter startup and invocation cleanup capture](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L100-L119); [readiness and failed-start cleanup](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L144-L164); [adapter shutdown deadline](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapters.ts#L74-L84); [effect-coordinator duration capture](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/coordinator.ts#L12-L31); [lock acquisition duration](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/durable-invocation.ts#L39-L45); [lock renewal and interval](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/durable-invocation.ts#L103-L109)
+>
+> **Contract or setting:** [required shutdown field](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L18); [timeout types and bounds](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L94-L96)
+>
+> **Test evidence:** On 2026-10-10, Node.js `v24.21.0` ran 11 isolated assertions using the pinned platform loader, runtime preparation, snapshot writer, and package/graph verifiers with a synthetic local plugin. All passed. The recorded subset omitted both timeout fields. Changed shutdown, changed lock duration, both changed, and absent lock duration passed those authority checks without rewriting the stored snapshot. Changed adapter configuration and changed stage execution timeout rejected at their respective pin checks. Invalid timeout bounds rejected at the platform loader.
+>
+> **Revision:** `fe426bd75db277b04cf405cc2057063b75fa0a1d`
+>
+> **Limit:** The local checks did not execute a pipeline or resume/recover it under changed timeouts. Consumer capture and recovery handoff were checked from source. No adapter deadline, live effect, lock renewal, drain, readiness, or external operation was exercised.
+
+## Helm render and runtime impact
+
+Compare effective rendered resources before selecting a restart. A values-file
+edit can produce the same manifest because an earlier map entry remains or a
+template selects a fallback. A changed manifest can also affect a Service,
+ConfigMap, Secret reference, or replica count without changing every pod.
+The [Helm collection rules](configuration-precedence.md#helm-collection-precedence)
+explain how the values reach the template.
+
+There are three separate checks:
+
+1. **Helm render:** Helm merges inputs, validates the complete effective values,
+   and runs template guards. Stop on a schema or template error. For example,
+   Prism rejects an empty `imagePullSecrets` list and empty or `Always` image
+   pull policies before producing a successful render. A restart cannot repair
+   this rejected input.
+2. **Kubernetes admission and reconciliation:** The API must accept each rendered
+   resource. The responsible controller must then reconcile it. Helm render
+   cannot prove that referenced Secrets, storage, nodes, or capacity exist.
+   An Argo CD Application rendered by the GitOps chart is still a declaration;
+   it is not proof that its resources were applied.
+3. **Runtime readiness:** New processes must load their environment and files,
+   pass their readiness checks, and complete the bounded operation required by
+   their component procedure. A changed pod template or a running pod alone
+   does not prove that the intended value reached its runtime consumer.
+
+The following effects follow from current local templates and loaders. The
+render observations were checked locally; controller actions and runtime
+effects were not executed on a cluster.
+
+| Effective change | Rendered receiver and required effect | Failure or unchanged-result boundary |
+| --- | --- | --- |
+| KubeClaw `extraEnv` changes or becomes `[]` | The `kubeclaw` container's pod-template environment changes. Once applied, the Deployment needs replacement pods for the new environment. | `[]` removes only entries supplied through `extraEnv`; it preserves environment entries emitted elsewhere by the template. Existing processes retain their startup environment. |
+| KubeClaw `nodeSelector` overlay becomes `{}` | Earlier selector keys remain in the pod template. This edit alone can leave scheduling unchanged. | An empty later map does not request removal. Compare the rendered template before assigning a rollout. |
+| KubeClaw `nodeSelector` overlay becomes `null` | In the checked ordered-file case, Helm removes the mapping and the template omits the selector. If the applied template changes, replacement pods use the remaining scheduling constraints. | Removal does not prove that a node can run the pod. Do not reuse this removal request for a schema that requires the field. |
+| KubeClaw nested resource map changes one request | Later supplied keys replace their earlier values; unspecified keys remain. A changed request is part of the pod template. | The local example changed CPU to `444m` and retained memory at `701Mi`; it did not check cluster capacity or resource admission. |
+| KubeClaw `gateway.url` becomes empty | The rendered `OPENCLAW_GATEWAY_URL` selects `http://127.0.0.1:<gateway.port>`. A changed environment field requires new pods. | The local render at port `19003` selected `http://127.0.0.1:19003`. It did not disable the destination or check gateway connectivity. |
+| KubeClaw `swarmConfigJson`, `semgrepConfigYaml`, or `eslintConfigMjs` becomes empty | The rendered swarm ConfigMap contains the corresponding checked-in file. Its checksum is part of the pod template; a changed payload changes that checksum. | Empty does not remove the file. An identical fallback payload can leave the checksum unchanged. The persistent-file rules below still determine what init copies. |
+| Prism `imagePullSecrets` changes to a valid nonempty list | The list is emitted in each application Deployment pod template. Replacement pods use the selected references. | Render validates names and array shape, not registry credentials or Secret existence. The whole list must satisfy its minimum and item contracts. |
+| Prism enabled `control.productDecisions.operators` changes to a valid list | The control pod template contains a configuration checksum and the JSON operator list in `PRISM_PRODUCT_OPERATORS`. Control loads the list and signing key at composition. A changed authority requires a control restart. | Validate uniqueness, maximum size, the enabled minimum, all dependent settings, and credential rotation conditions first. Schema-valid operators do not prove a working signing authority. |
+| Existing-Secret reference or data changes | A changed name/key in a pod template requires new pods. A data-only edit to the same Secret does not change that reference; environment consumers need an explicit rollout under the rotation procedure. | A synthetic local reference proved only the selected name/key. Neither Secret availability nor hot credential reload was established. |
+
+### ConfigMap payload and persistent startup files
+
+The KubeClaw init script copies `swarm.config.json` from the rendered ConfigMap
+to the configuration volume on each init execution. Before creating the runtime
+copy, it removes any authored top-level `discord_webhook_url` from that
+persistent source. It then creates the runtime copy and inserts
+`discord_webhook_url` only from a nonempty `DISCORD_WEBHOOK` environment value.
+With an empty environment value, the runtime copy has no webhook URL, even if
+the rendered ConfigMap contained one. Rendering that ConfigMap or expanding a
+compact configuration therefore does not prove the final startup value.
+This is a startup action, not a file watcher.
+
+Source: [copy and webhook removal](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L627-L633)
+and [runtime copy and environment insertion](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L673-L675).
+
+The same script treats `.semgrep.yml` and `eslint.config.mjs` differently. It
+copies them from the ConfigMap only if the target file is absent or
+`OVERRIDE_SWARM_CONFIG` is `true`. Helm sets that environment value from
+`swarmConfig.overrideOnRestart`, whose checked-in value is `false`. An existing
+policy file can therefore remain after a checksum-triggered restart even when
+the ConfigMap has changed. The script copies that retained file into the runtime
+directory. Follow [lint policy delivery and effective-digest checks](lint-policy.md#deployment-and-persistent-config-precedence)
+to inspect or replace these files. Preserve local policy edits before enabling
+replacement. Do not delete the persistent volume to force an update.
+
+The charts contain selected checksum paths, not a promise that every external
+ConfigMap or Secret edit triggers a rollout. KubeClaw hashes its gateway and
+swarm ConfigMap templates. Prism hashes enabled product-decision configuration
+and selected SPIFFE trust payloads. Inspect the exact affected annotation and
+pod template. If neither changes, use the consumer's documented restart or
+rotation procedure when startup-captured data has changed.
+Use the [maintenance render comparison](../use/maintenance.md#render-and-compare)
+before applying resources and the [credential rotation procedure](../use/maintenance.md#canonical-rotation-procedure)
+when credentials change.
+
+> **Source evidence — Helm changes at receiver boundaries**
+>
+> **Claim:** KubeClaw emits collection changes into pod fields and hashes selected ConfigMaps, but init preserves existing Semgrep/ESLint policies unless replacement is enabled. Prism Control captures authority inputs at startup; rendering does not prove live reload.
+>
+> **Implementation:** [KubeClaw template and checksum fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L19-L40); [environment collection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1393-L1395); [resource receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1442-L1442); [selector receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1655-L1662); [persistent swarm/policy copy conditions](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L627-L648); [runtime copies and webhook insertion](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L673-L681); [override environment selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1156-L1157)
+>
+> [Prism checksums and pull-secret receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L32-L50); [operator environment receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/_product-decisions.tpl#L16-L27); [Control startup snapshot](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-config.ts#L63-L72); [operator validation and signing-key load](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/control/product-decisions.ts#L23-L34); [GitOps desired revision and reconciliation settings](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L41-L64)
+>
+> **Contract or setting:** [policy replacement default](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L469-L474); [Prism image-policy schema](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L5-L28); [pull-secret list schema](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L94-L109); [operator collection constraints](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L141-L150); [enabled operator minimum](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L250-L258)
+>
+> **Test evidence:** The 2026-10-10 isolated Helm 3.22.0 checks on [Configuration precedence](configuration-precedence.md#helm-collection-precedence) asserted the rendered environment, selector, nested resource map, URL, file payloads, and synthetic Secret reference. Prism schema-negative cases exited one as expected. The init copy rules and startup capture were checked from source, not through a running pod.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`
+>
+> **Limit:** No API admission, Argo CD reconciliation, scheduling, pod replacement, persistent-volume init execution, runtime readiness, credential rotation, or rollback was executed for these Helm checks. Follow the affected component's procedure before applying a change.
 
 ## Safe change sequence
 
@@ -72,7 +263,7 @@ retrying. A timeout does not prove that an external operation did not happen.
 
 > **Source evidence — pinned recovery and startup capture**
 >
-> **Claim:** Nova recovery rejects graph/runtime/package drift, coupled project files commit as one generation, and Prism Control captures one environment snapshot at composition.
+> **Claim:** Nova recovery rejects graph, recorded runtime configuration subset, and package drift; coupled project files commit as one generation; Prism Control captures one environment snapshot at composition.
 >
 > **Implementation:** [graph and runtime recovery checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L28-L72); [coupled publication commit](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/published-pair.ts#L78-L113); [Control startup snapshot](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-config.ts#L67-L72)
 >

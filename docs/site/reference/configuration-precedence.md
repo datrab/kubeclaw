@@ -3,9 +3,11 @@
 Status: current cross-component reference
 Audience: operator, pipeline author, maintainer
 Owner: platform operations
-Evidence: skills/common/plugins/openclaw-agent-observer/src/index.ts; skills/common/plugins/openclaw-agent-observer/src/observer-support.ts; skills/common/plugins/openclaw-agent-observer/src/config.ts; skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts; skills/nova/core/test-gates/resolver.ts; tests/verification/e2e/support/platform-config.ts; charts/prism/templates/workloads.yaml
+Evidence: skills/common/plugins/openclaw-agent-observer/src/index.ts; skills/common/plugins/openclaw-agent-observer/src/observer-support.ts; skills/common/plugins/openclaw-agent-observer/src/config.ts; skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts; skills/nova/core/test-gates/resolver.ts; tests/verification/e2e/support/platform-config.ts; tests/verification/e2e/support/config-profiles/standard.json; tests/verification/e2e/real-run-workspace.mjs; charts/kubeclaw/values.yaml; charts/kubeclaw/templates/deployment.yaml; charts/kubeclaw/templates/configmap-swarm-config.yaml; charts/kubeclaw/templates/_helpers.tpl; charts/prism/values.schema.json; charts/prism/ci-values.yaml; charts/prism/templates/_product-decisions.tpl; charts/prism/templates/workloads.yaml; charts/gitops/templates/applications.yaml
 Applies to: current pipeline, project, chart, host, and Prism configuration
 Last verified: 2026-10-09 at source revision `10e95ee97567cd42357e95d2a443aee4732b359c`
+Helm sections verified: 2026-10-10 at source revision `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`; other families retain the evidence revisions below.
+Compact profile section verified: 2026-10-10 at source revision `fe426bd75db277b04cf405cc2057063b75fa0a1d`.
 
 ## The governing rule
 
@@ -32,9 +34,261 @@ Use this sequence to find an effective value:
 | Coupled `.swarm` files | Committed generation selected by `.scaffold-publication/current.json` | When publication metadata exists, loose `progress.json` and `pipeline.json` must match it. No fallback on damage. |
 | Helm | Chart defaults → supplied values files/CLI values in Helm's order → rendered manifest | The running process sees only the rendered result. GitOps can reapply its declared source after manual cluster edits. |
 | Kubernetes environment | Literal rendered value or selected ConfigMap/Secret key → fallback under the exact process loader condition | An empty value selects a fallback for `||` and shell `:-`, but stays explicit for `??` and shell `-`. A pod does not reload most environment values. Secret changes require rollout unless a component explicitly watches files. |
-| Compact swarm profile | Standard profile → recursive `overrides` → runtime-derived `project`, `repo_root`, `paths`, `run_id` → template substitution | Applies only to callers of the compact expander; it is not the pipeline-platform authority. |
+| Compact swarm profile expander | Standard profile → supplied webhook and context fields → validated recursive `overrides` → template substitution using the original `repo_root` input | Overrides can replace existing context fields. Placeholder input can differ from the effective root. The caller can make further changes after expansion; see the bounded flow below. This is not the pipeline-platform authority. |
 | Prism | Prism Helm values → rendered environment/files → defaults under each loader's empty-value rule → root-owned native pool policy for aggregate capacity | Environment cannot override host cgroup capacity. SPIFFE mode changes which credential variables are authoritative. |
 | Plugin configuration | Exact supplied stage/observer/adapter config → that consumer's implemented fallback; test-provider authored values → schema-default resolution → provider fallback | The registry validates stages, observers, and adapters without inserting defaults. Its test-provider resolver clones values and inserts schema defaults. Grants remain separate and cannot be created by plugin config. |
+
+## Compact profile inputs and overrides
+
+The compact expander converts the `standard` profile into a configuration
+object. It has its own input checks and merge. It does not merge into the
+`pipeline-platform.v2` file used by the Nova platform loader.
+
+The accepted top-level fields are `_doc`, `profile`, `features`, `tuning`,
+`overrides`, `discord_webhook_url`, `project`, `repo_root`, `paths`, and `run_id`.
+Before expansion, the input must select `profile: "standard"`. The `features`
+object must contain exactly `observability`, `buster`, and `discord_alerts`,
+each set to `true`. The `tuning` object must contain `safety_margins`,
+`retention`, `alerts`, `logs`, `checks`, and `determinism`, with the exact
+values shown below. These objects select the supported profile shape; they
+are not arbitrary feature switches. An unsupported profile, extra top-level
+key, incomplete feature/tuning object, or mismatched fixed value rejects.
+`overrides`, when supplied, must be an object, not an array or `null`.
+A supplied `discord_webhook_url` must be a string.
+
+The expander then performs these operations:
+
+1. Clone the standard profile.
+2. Insert a supplied `discord_webhook_url`, then supplied `project`,
+   `repo_root`, `paths`, and `run_id` context fields.
+3. Validate every override target against that resulting object. Each target
+   key must already exist. A nested object override requires an existing
+   object at that path, and each nested target key must also exist.
+4. Merge validated object overrides recursively. Replace each other supplied
+   value, including an array or `null`, at its existing target.
+5. Expand placeholders in strings, including strings inside arrays and maps.
+   The placeholder context contains only `repo_root` from the original input.
+
+An override can therefore replace a context field inserted in step 2. If that
+field is absent from both the profile and the supplied context, the override
+rejects. For example, `overrides.paths.example` requires `paths.example` to
+exist before override validation. The target check does not validate the type
+or bounds of every replacement value. Acceptance by this helper alone does
+not prove that a downstream consumer will accept the configuration.
+
+This complete input illustrates two different repository roots. Both paths
+are synthetic strings; the expander does not open either repository.
+
+```json
+{
+  "profile": "standard",
+  "features": { "observability": true, "buster": true, "discord_alerts": true },
+  "tuning": {
+    "safety_margins": "high", "retention": "high", "alerts": "rich",
+    "logs": "verbose", "checks": "strict", "determinism": "strict"
+  },
+  "project": "raw-project",
+  "repo_root": "/raw-repository",
+  "paths": { "example": "/raw-path" },
+  "run_id": "raw-run",
+  "overrides": {
+    "project": "override-project",
+    "repo_root": "/override-repository",
+    "paths": { "example": "${repo_root}/example" },
+    "run_id": "override-run"
+  }
+}
+```
+
+The checked expander result has `project: "override-project"`,
+`repo_root: "/override-repository"`, and `run_id: "override-run"`.
+However, `paths.example` becomes `/raw-repository/example`: substitution
+reads the original root, not the overridden effective root. A referenced
+placeholder rejects if its original context value is missing, is not a string,
+or contains only whitespace. The diagnostic mentions `REPO_ROOT`, but this
+expansion function does not read that environment variable.
+
+Check the caller before treating this output as final. The real end-to-end run
+builder supplies a worktree root and run ID before expansion. After expansion,
+it applies its own normalization, assigns the run ID again, selects a webhook
+from its environment or configuration, and applies scenario changes. Thus an
+expander override of `run_id` does not control that builder's final run ID.
+Inputs without compact authority fields (`profile`, `features`, `tuning`, or
+`overrides`) pass through the expander unchanged; the helper's compact checks
+do not validate that other input form.
+
+> **Source evidence — compact profile expansion**
+>
+> **Claim:** The expander inserts supplied context before validating and merging overrides. It substitutes placeholders with the original root input. Caller changes can follow expansion.
+>
+> **Implementation:** [`expandSwarmConfig` input checks](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L163-L183); [context, override, and substitution order](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L185-L199); [`assertOverrideTargets` and recursive merge](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L104-L128); [placeholder input guard and traversal](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L131-L149); [run-builder supplied context](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/real-run-workspace.mjs#L1500-L1520); [later run-builder changes](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/real-run-workspace.mjs#L1533-L1537)
+>
+> **Contract or setting:** [supported input fields and fixed feature/tuning values](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L19-L36); [known-path example defaults](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/config-profiles/standard.json#L46-L51)
+>
+> **Test evidence:** On 2026-10-10, Node.js `v24.21.0` ran 17 isolated assertions against the pinned expander. All passed. Checks covered supplied-context/webhook overrides, raw-root substitution, unknown and absent targets, object-over-scalar rejection, array/null replacement, nested-map preservation, empty overrides, missing/whitespace placeholder input, unsupported profile, fixed feature/tuning checks, extra top-level keys, invalid override shape, and noncompact pass-through. The repository-root example above produced the stated values.
+>
+> **Revision:** `fe426bd75db277b04cf405cc2057063b75fa0a1d`
+>
+> **Limit:** These checks execute the expander, not the complete run builder or a deployed consumer. Caller adjustments were checked from source. Expansion does not prove valid repositories, credentials, runtime paths, or downstream behavior.
+
+## Helm collection precedence
+
+A map is a set of named entries, such as `nodeSelector`. An array is an ordered
+list, such as `extraEnv`. A scalar is one value, such as `gateway.port`. These
+types have different merge rules. For the ordered values files checked with
+Helm 3.22.0, Helm reads chart defaults first and applies `-f` files from left to
+right. A later scalar replaces the earlier scalar. A later array replaces the
+whole earlier array; it does not append entries or merge entries by `name`.
+Helm merges maps recursively: later entries replace matching entries, but
+earlier entries remain when the later map does not supply their keys.
+
+Therefore, a later `{}` supplies no keys and does not clear an earlier map.
+A later `[]` replaces an earlier array with zero entries. In the checked
+KubeClaw `nodeSelector` case, a later YAML `null` removes the earlier mapping
+during value preparation. The template then omits `spec.template.spec.nodeSelector`.
+This is a removal request to Helm, not a `null` value delivered to a process.
+Do not transfer this result to a field whose schema requires the mapping or
+rejects the resulting absent or empty value.
+
+### Check an ordered overlay without a cluster
+
+Start in the repository root at the stated source revision. Use Helm 3.22.0
+and a new local directory for the three example files and rendered output.
+These values contain synthetic environment and scheduling entries. They are
+for a local render; they are not a deployment profile. Helm needs the chart
+files, but this check needs no Kubernetes credentials or existing Secret.
+
+Create `base.yaml` in that directory:
+
+```yaml
+extraEnv:
+  - name: HELM_PRECEDENCE_EXAMPLE
+    value: base
+nodeSelector:
+  pool: base
+gateway:
+  port: 19000
+  resources:
+    requests:
+      cpu: 333m
+      memory: 701Mi
+```
+
+Create `empty.yaml`:
+
+```yaml
+extraEnv: []
+nodeSelector: {}
+```
+
+Create `remove.yaml`:
+
+```yaml
+extraEnv: []
+nodeSelector: null
+```
+
+Use the files' paths in place of `example-dir`:
+
+```sh
+helm template precedence-example charts/kubeclaw --namespace default -f example-dir/base.yaml > example-dir/base-render.yaml
+helm template precedence-example charts/kubeclaw --namespace default -f example-dir/base.yaml -f example-dir/empty.yaml > example-dir/empty-render.yaml
+helm template precedence-example charts/kubeclaw --namespace default -f example-dir/base.yaml -f example-dir/remove.yaml > example-dir/remove-render.yaml
+```
+
+Inspect the `agent-nova` Deployment's pod template and its `kubeclaw` container.
+The first render contains `HELM_PRECEDENCE_EXAMPLE=base` and `nodeSelector.pool=base`.
+The second removes that environment entry but retains `nodeSelector.pool=base`.
+The third removes that environment entry and the complete `nodeSelector` block.
+It does not remove the chart's other environment entries. All three commands
+exited zero in the local check. Reversing the first two files restores the base
+environment entry because the populated array is then last.
+
+A further checked overlay replaced `pool` with `later`, added `zone: selected`,
+and replaced only `gateway.resources.requests.cpu` with `444m`. The rendered
+map contained both selector keys, and memory remained `701Mi`. Replacing
+`extraEnv` with one different entry removed the earlier entry completely.
+Two repeated `--set gateway.port=19002` and `--set gateway.port=19003` options
+after the files selected port `19003`. This evidence covers ordered files and
+repeated options of the same kind. It does not establish an ordering rule for
+every combination of different CLI option kinds or upgrade reuse options.
+
+Stop if Helm exits nonzero. Inspect its schema or template error before changing
+an overlay. A zero exit proves a local render only. Retain the input order,
+Helm version, source revision, output, and error stream. Remove the synthetic
+local files after inspection when you no longer need this evidence.
+
+### Validate the complete effective collection
+
+Helm validates merged values against the chart schema before it can produce a
+successful render. A valid item does not prove that its containing collection
+is valid. For Prism:
+
+| Field | Effective-value requirement | Checked failure |
+| --- | --- | --- |
+| `imagePullSecrets` | At least one item; each item has a nonempty `name` and no extra properties. | An explicit `[]` fails the array minimum. |
+| `control.productDecisions.operators` | Unique strings, at most 100 items; each string has 1–512 characters and no surrounding whitespace. When decisions are enabled, at least one operator is required. | Duplicate items, 101 items, and an enabled empty list fail schema validation. |
+| `images.control`, `images.studio`, `images.worker`, `images.ingestion` | Each image requires a repository, immutable digest, and `pullPolicy` of `IfNotPresent` or `Never`. | `Always` and an explicit empty `pullPolicy` fail for each of the four images. |
+
+Enabled product decisions also require their issuer, HTTPS origin/controller
+settings, credential references, and authenticated Tailscale ingress. The
+operator list alone does not enable a valid authority. For example, this
+render ends with a schema error, before Kubernetes can choose an image policy:
+
+```sh
+helm template precedence-example charts/prism --namespace default -f charts/prism/ci-values.yaml --set-string images.control.pullPolicy=
+```
+
+The CI file supplies synthetic image digests and a synthetic native host binding
+so that the unchanged baseline can render. It is not evidence of a real image,
+Secret, prepared host, or available worker. The baseline exited zero; the
+explicit empty policy exited one. Do not bypass schema validation to treat
+the rejected value as a supported configuration.
+
+The GitOps chart also has collection and scalar template guards. Empty
+`groups` fails with `release groups are required`. Its `revision` must contain
+exactly 40 lowercase hexadecimal characters; `main` fails with `revision must
+be a complete Git commit`. A local render with a synthetic complete revision,
+one group, and one destination succeeded. That render proves accepted input
+shape and the selected Application fields, not that the commit exists in Git
+or that Argo CD has reconciled it.
+
+### Trace the render to the actual receiver
+
+Merge is only the first decision. A template can apply another fallback.
+For KubeClaw, an empty `gateway.url` renders a local URL using `gateway.port`;
+it does not disable the gateway destination. Empty `swarmConfigJson`,
+`semgrepConfigYaml`, and `eslintConfigMjs` select the checked-in chart files
+for the rendered ConfigMap. They do not remove those policies. These results
+were checked against the rendered URL and all three file payloads.
+
+An existing-Secret setting selects a reference, not the credential's contents.
+The checked `auth.existingSecret=precedence-synthetic` and
+`auth.existingSecretKey=synthetic-key` rendered that name/key pair for
+`OPENCLAW_GATEWAY_TOKEN` and rendered no generated Secret. Helm did not check
+whether that Secret or key exists. Keep the pair in evidence and redact data.
+
+A schema `default` annotation does not establish insertion into rendered or
+runtime values. Check the chart's actual values, template fallback, rendered
+field, and process loader separately. The complete boundary is authored values
+→ Helm merge and validation → rendered manifest → Kubernetes admission and
+resource reconciliation → process startup and readiness. A local render stops
+before admission. See [Configuration change impact](configuration-change-impact.md#helm-render-and-runtime-impact)
+for the effect of each rendered change.
+
+> **Source evidence — Helm effective collections**
+>
+> **Claim:** Ordered overlays can clear a list without clearing a map; KubeClaw templates consume the resulting collections and apply field-specific fallbacks. Prism validates whole collections and image policies before rendering.
+>
+> **Implementation:** [KubeClaw extra environment receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1393-L1395); [scheduling receivers](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1655-L1662); [nested resource receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1442-L1442); [gateway URL fallback and token reference](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1296-L1299); [Secret reference selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/_helpers.tpl#L46-L62); [ConfigMap file fallbacks](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/configmap-swarm-config.yaml#L10-L27)
+>
+> **Contract or setting:** [KubeClaw collection defaults](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L518-L521); [Prism image policy contract](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L5-L28); [image reference bindings and pull-secret collection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L79-L109); [operator collection limits](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L141-L150); [enabled operator minimum](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L250-L258); [enabled authority template guards](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/_product-decisions.tpl#L1-L13); [GitOps revision and group guards](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L1-L5); [GitOps selected Application fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L41-L51)
+>
+> **Test evidence:** On 2026-10-10, Helm `v3.22.0+g144ca65` rendered an isolated copy of the pinned charts. Twenty-four assertions passed: ten successful renders and fourteen expected schema or template failures. The [ordered-overlay example](#check-an-ordered-overlay-without-a-cluster), reversed file order, recursive map preservation, whole-array replacement, repeated scalar CLI precedence, synthetic Secret reference, and file/URL fallbacks were checked. Prism checks covered the CI baseline, eight empty/`Always` policy failures, empty pull secrets, duplicate operators, 101 operators, and enabled empty operators. GitOps checks covered empty groups, accepted complete-revision shape, and branch-revision rejection.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`
+>
+> **Limit:** These checks prove the named local render results. They do not validate every field or schema combination, API admission, Secret availability, GitOps reconciliation, pod rollout, runtime load, readiness, or a live operation.
 
 ## Where defaults are applied
 
@@ -90,7 +344,7 @@ with an absent-only rule.
 >
 > [Command defaults and report-mode conditions](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/buster/plugins/direct-command/src/provider.js#L58-L84); [common command-runner environment rejection](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/command-runner/src/adapter.ts#L54-L59); [Buster empty-string fallback](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/docker/buster-runtime-entrypoint.sh#L178-L187)
 >
-> **Contract or setting:** [approval timeout type and range](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/plugins/human-approval/schemas/config.schema.json#L24-L29)
+> **Contract or setting:** [approval timeout type and range](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/plugins/human-approval/schemas/config.schema.json#L22-L29)
 >
 > **Test evidence:** [platform configuration contract checks](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65) passed locally with Node 24.21.0. This contract check does not execute a deployed plugin.
 >
@@ -108,7 +362,9 @@ These values are not interchangeable:
 - Empty array: explicit zero selections. Some fields accept it
   (`activeAdapters`); others reject it (`installationRoots`).
 - `null`: a value only where the schema explicitly admits it. Nova Blueprint
-  deliverable selectors use `null` to state “not declared.”
+  deliverable selectors use `null` to state “not declared.” Helm can instead
+  consume `null` as a removal request before schema validation, as in the
+  bounded `nodeSelector` example above.
 - `false`: explicit disablement. For example, `testAgentEnabled: false` does not
   disable provider execution.
 - Empty string: often invalid, but a few chart values use it as an unconfigured

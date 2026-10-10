@@ -14545,7 +14545,7 @@
       "id": "A98-PRISM-CSI-UNCONDITIONAL-PREREQUISITE",
       "reportedAtRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
       "reportedBy": "/root/a98_prism_reader_after_browser_fresh",
-      "state": "author-corrected-pending-fresh-full-reader-review",
+      "state": "independent-reader-partition-pass-source-quality-still-separate",
       "pages": [
         "docs/site/use/prism-studio.md"
       ],
@@ -14560,7 +14560,51 @@
       "description": "Before You Start incorrectly conditioned CSI on Worker trust while maintained deploy guard1759/helper974\u2013981 always checks CSIDriver/csi.spiffe.io. Root now states unconditional driver registration and distinguishes socket/identity proof with adjacent exact source links. No product guard changed.",
       "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-after-browser-fresh/report.md",
       "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
-      "author": "/root"
+      "author": "/root",
+      "currentReview": {
+        "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-csi-fresh/report.md",
+        "reportSha256": "d1d32fac8902e885fdcfd899a37499067761199a64950716ae803a933fe59dff"
+      }
+    },
+    {
+      "id": "A98-TIMEOUT-ABORT-ONLY-CLEANUP",
+      "reportedBy": "/root/a98_precedence_source_corrected_fresh",
+      "state": "root-corrected-pending-new-full-source-review",
+      "pages": [
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-precedence.md"
+      ],
+      "catalogueIds": [
+        "CFG-013",
+        "CFG-014"
+      ],
+      "acceptanceIds": [
+        "A98-11"
+      ],
+      "description": "Failed-readiness teardown, startup rollback and late activation cleanup only send timed abort and await shutdown; cannot claim bounded completion.",
+      "author": "/root",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-corrected-fresh/report.md",
+      "reportSha256": "4ac728bdb289345d20c64cee84d5d254190558a88bec852dd196c76d1f371b77"
+    },
+    {
+      "id": "A98-STARTUP-WEBHOOK-NORMALIZATION",
+      "reportedBy": "/root/a98_precedence_source_corrected_fresh",
+      "state": "root-corrected-pending-new-full-source-review",
+      "pages": [
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-precedence.md"
+      ],
+      "catalogueIds": [
+        "CFG-013",
+        "CFG-014"
+      ],
+      "acceptanceIds": [
+        "A98-11"
+      ],
+      "description": "Init deletes authored discord_webhook_url before runtime copy, then inserts only nonempty DISCORD_WEBHOOK; empty environment leaves no runtime webhook.",
+      "author": "/root",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-corrected-fresh/report.md",
+      "reportSha256": "4ac728bdb289345d20c64cee84d5d254190558a88bec852dd196c76d1f371b77"
     }
   ],
   "checks": [
@@ -14970,6 +15014,39 @@
       "logSha256": "9a508e5e9df114c6aadf3925ccee6ad202854f1ef079c3d13542a30ac807165c",
       "failure": "helm-secret-key-reference:add: environment semantic gap occurs before the complete required Helm Secret authority diagnostic; no finalPASS",
       "scope": "Immutable clean ec2 snapshot; preceding named mutations passed only. Correct complete fail-closed diagnostics, not regex/contract weakening."
+    },
+    {
+      "command": "npm run docs:drift:config:mutations",
+      "state": "live-verified-no-final-result",
+      "sessionId": 63228,
+      "revision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
+      "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-d57ac356.log",
+      "scope": "Original full runner in clean immutable checkout; keep observing same handle to terminal."
+    },
+    {
+      "command": "node scripts/docs-configuration-inventory.mjs",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "revision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
+      "log": "/home/node/Documents/Codex/a98-evidence/config-inventory-d57ac356-main.log",
+      "scope": "Raw inventory generation only; generated reader pages and independent semantic acceptance outstanding."
+    },
+    {
+      "command": "npm run docs:check:refs",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/home/node/Documents/Codex/a98-evidence/precedence-root-deadline-webhook-refs.log",
+      "scope": "3849 local links,1757 anchors,6735 repository paths,21044 pinned links; integrity only"
+    },
+    {
+      "command": "npm run docs:site-boundary:check",
+      "state": "terminal",
+      "exitCode": 0,
+      "result": "passed",
+      "log": "/home/node/Documents/Codex/a98-evidence/precedence-root-deadline-webhook-boundary.log",
+      "scope": "Reader-site boundary only; independent semantic reviews outstanding"
     }
   ],
   "reviewAssignments": [
@@ -15463,11 +15540,22 @@
       "forkTurns": "none",
       "freshContext": true,
       "readOnly": true,
-      "state": "running",
+      "state": "complete-scoped-pass",
       "scope": [
         "Whole corrected Prism canonical page and setup/journey/health/interruption/local-check partitions"
       ],
-      "scopeLimit": "Full affected critical fresh review; previous FAIL remains historical; no whole-package acceptance."
+      "scopeLimit": "Full affected critical fresh review; previous FAIL remains historical; no whole-package acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-csi-fresh/report.md",
+      "reportSha256": "d1d32fac8902e885fdcfd899a37499067761199a64950716ae803a933fe59dff",
+      "revision": "82049ca0c5b02c264805205220cdcc035641f955",
+      "partitionVerdicts": {
+        "OPR-010": "PASS",
+        "A98-02": "PASS",
+        "A98-04": "PASS",
+        "A98-06": "PASS",
+        "A98-12": "PASS",
+        "A98-13": "PASS"
+      }
     },
     {
       "agent": "/root/a98_precedence_source_corrected_fresh",
@@ -15477,19 +15565,77 @@
       "forkTurns": "none",
       "freshContext": true,
       "readOnly": true,
-      "state": "running",
+      "state": "complete-fail-released",
       "scope": [
         "Whole current corrected configuration-precedence.md",
         "Whole current corrected configuration-change-impact.md"
       ],
-      "scopeLimit": "Full affected critical fresh review; previous FAIL remains historical; no whole-package acceptance."
+      "scopeLimit": "Full affected critical fresh review; previous FAIL remains historical; no whole-package acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-corrected-fresh/report.md",
+      "reportSha256": "4ac728bdb289345d20c64cee84d5d254190558a88bec852dd196c76d1f371b77",
+      "partitionVerdicts": {
+        "CFG-013": "FAIL",
+        "CFG-014": "FAIL",
+        "A98-11": "FAIL",
+        "A98-10": "UNPROVEN"
+      }
+    },
+    {
+      "agent": "/root/a98_helm_collection_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "scope": [
+        "Helm and API collection semantics, complete affected generator path"
+      ],
+      "revision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
+      "scopeLimit": "Assigned partition only; no whole gate or package acceptance."
+    },
+    {
+      "agent": "/root/a98_prism_quality_current_fresh",
+      "role": "quality",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "scope": [
+        "Complete Prism canonical page and relevant linked navigation"
+      ],
+      "revision": "82049ca0c5b02c264805205220cdcc035641f955",
+      "scopeLimit": "Assigned partition only; no whole gate or package acceptance."
+    },
+    {
+      "agent": "/root/a98_precedence_source_deadlines_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "scope": [
+        "Complete corrected configuration-precedence.md",
+        "Complete corrected configuration-change-impact.md"
+      ],
+      "candidateBaseRevision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
+      "candidateHashes": {
+        "configuration-precedence.md": "f53780959590fa0600918a14e39636dcf431dd7209c13712dac9062336cb7762",
+        "configuration-change-impact.md": "212fad85100cd942269f054c656458f37f3dcad11d60050ffa82af1e0440a8e5"
+      },
+      "scopeLimit": "Full affected SOURCE partition only; no whole gate or package acceptance."
     }
   ],
   "continuation": {
     "stage": "Six collection/diagnostic source files released and checked; commit source then immutable original mutation suite. Canonical precedence/impact candidates remain frozen for new Source review, which is investigating readiness cleanup bounds.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Commit checked authored/source corrections; preserve frozen Helm source scope. Regenerate in separate commit against source SHA after scope release, run required gates and full mutation suite from clean corrected snapshot. Fix Helm collection/default/constraint findings; new full affected Source/Reader/Quality reviews and Astra still required.",
+    "next": "New full affected precedence Source review; Helm collection Source report and correction; Prism Quality review. Observe same full mutation handle. Commit sources before complete shared generated refresh; final individual reviews/gates and Astra still required. All AP01\u2013AP11 scope retained.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -15498,16 +15644,16 @@
       "/root/a98_operator_writer",
       "/root/a98_reference_writer"
     ],
-    "currentMutationSession": 24012,
-    "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-ec2a42ed.log",
-    "currentMutationSnapshot": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+    "currentMutationSession": 63228,
+    "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-d57ac356.log",
+    "currentMutationSnapshot": "/home/node/Documents/Codex/a98-evidence/config-mutations-d57ac356",
     "agents": [
       "/root/a98_prism_reader_csi_fresh",
       "/root/a98_precedence_source_corrected_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
-    "currentMutationState": "observed-terminal-fail-exit1-at-helm-secret-key-reference:add",
+    "currentMutationState": "live-verified-no-final-result",
     "consumerWriterFinished": {
       "agent": "/root/a98_config_writer",
       "paths": [
@@ -15725,7 +15871,7 @@
       "correctionState": "History API vs UI, data URLs and supporting failure range corrected; fresh full affected Reader review required"
     },
     "pluginSourceCorrectionState": "Author implemented F1-F6 and38helper tests; all70rows retained. Current pin, host namespaces, credential selector, boundary owners,11runtime consumer routes and9GNUflock dependencies corrected. Full fresh independent semantic Source review still required;0diagnostics is not acceptance.",
-    "currentMutationRevision": "ec2a42ed215a2fa7dbd3172ef70ef446084963a9",
+    "currentMutationRevision": "d57ac3568d29ae757173d15499ce48549c22eb4f",
     "priorSessionRevalidation": {
       "date": "2026-10-10",
       "session": 73994,
@@ -15773,8 +15919,8 @@
       },
       "scope": "Prism assigned partitions only; no whole gate/global acceptance or live success"
     },
-    "currentMutationExitCode": 1,
-    "currentMutationLogSha256": "9a508e5e9df114c6aadf3925ccee6ad202854f1ef079c3d13542a30ac807165c",
+    "currentMutationExitCode": null,
+    "currentMutationLogSha256": null,
     "prismBrowserWriterCompleted": {
       "agent": "/root/a98_prism_browser_boundary_writer",
       "report": "/home/node/Documents/Codex/a98-evidence/prism-browser-boundary-writer/report.md",
@@ -15818,6 +15964,19 @@
       "observedEmptyCollections": 35,
       "registryEntries": 1091,
       "accepted": false
+    },
+    "prismReaderThirdCompleted": {
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-reader-csi-fresh/report.md",
+      "reportSha256": "d1d32fac8902e885fdcfd899a37499067761199a64950716ae803a933fe59dff",
+      "verdict": "PASS-assigned-reader-partitions-only",
+      "revision": "82049ca0c5b02c264805205220cdcc035641f955",
+      "scope": "OPR010 and A98-02/04/06/12/13 Prism Reader only; exact browser failures and real-PG skip retained; no aggregate/live/native PASS"
+    },
+    "precedenceSourceSecondCompleted": {
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-source-corrected-fresh/report.md",
+      "reportSha256": "4ac728bdb289345d20c64cee84d5d254190558a88bec852dd196c76d1f371b77",
+      "verdict": "FAIL-two-material-findings",
+      "correction": "Root corrected phase-specific deadlines and authored webhook removal; new full independent Source review required."
     }
   },
   "productBoundaries": [
