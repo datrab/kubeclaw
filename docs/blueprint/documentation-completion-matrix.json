@@ -14998,7 +14998,7 @@
     {
       "id": "A98-ARGO-RESOURCE-WHITELIST-SOURCE-RANGE",
       "reportedBy": "/root/a98_api_collection_source_fresh",
-      "state": "root-corrected-pending-generator-check-and-new-source-review",
+      "state": "root-corrected-generator-checks-passed-pending-new-source-review",
       "pages": [
         "docs/site/reference/helm-values.md"
       ],
@@ -15017,7 +15017,7 @@
     {
       "id": "A98-BUSTER-EMPTY-CRD-ENUM",
       "reportedBy": "/root/a98_api_collection_source_fresh",
-      "state": "root-corrected-pending-regeneration-and-new-source-review",
+      "state": "root-corrected-generator-checks-passed-pending-new-source-review",
       "pages": [
         "docs/site/reference/helm-values.md"
       ],
@@ -15572,6 +15572,14 @@
       "sessionId": 14803,
       "log": "/home/node/Documents/Codex/a98-evidence/local-helm-argo-pin-correction.log",
       "scope": "Argo whitelist narrow pin correction only, before subsequent Buster enum correction; bounded maintenance/boolean controls, no independent content acceptance"
+    },
+    {
+      "command": "npm run docs:inventory:local-helm && npm run docs:inventory:local-helm:check",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "sessionId": 3734,
+      "log": "/home/node/Documents/Codex/a98-evidence/local-helm-buster-enum-correction.log",
+      "scope": "Registry regeneration1091 and original93Booleancontrols after Argo sourcepin + emptyCRDenum corrections; no independent content acceptance"
     }
   ],
   "reviewAssignments": [
@@ -16718,6 +16726,15 @@
       "report": "/home/node/Documents/Codex/a98-evidence/prism-model-route-writer/report.md",
       "state": "released-author-only",
       "scope": "Split actual reasoning/embedding credentials and closure across full journey;14 Bash blocks preserved; no independent/global/live acceptance"
+    },
+    "apiRootAdditionalCorrections": {
+      "sources": {
+        "scripts/generate-local-helm-authorities.mjs": "9cdd8eaa71b85adce505c0bde56aa521d78ab19dc7d8514045a622c7b852e16f",
+        "scripts/docs-local-helm-field-authorities.json": "8ffc99fce70bc1ecfbe2cf09747c7ea230ab1d3057852a15a7ec260797ada09d"
+      },
+      "scope": "Correct exact Argo399\u2013418 function pin and Buster CRDemptyenum actualnonemptyvalidator semantics; no product/test obligation changes",
+      "reviewedArchive": "94fd165ae8177ec37bb16798bfed63cb8923f413",
+      "acceptance": false
     }
   },
   "productBoundaries": [
