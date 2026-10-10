@@ -25,6 +25,19 @@ export function apiReceiverCoverage(apiVersion, kind, receiverContracts) {
     }
     assert(record.cases.length && record.evidence.length,
       `API_RECEIVER_CONTRACT_INCOMPLETE: ${apiVersion}/${kind} ${fieldPath} cases/evidence`);
+    for (const [index, entry] of record.cases.entries()) {
+      for (const name of ['name', 'condition', 'sourceOutcome']) assert(typeof entry?.[name] === 'string' && entry[name].trim(),
+        `API_RECEIVER_CASE_INCOMPLETE: ${apiVersion}/${kind} ${fieldPath} case ${index} ${name}`);
+    }
+    for (const [index, entry] of record.evidence.entries()) {
+      const range = typeof entry?.url === 'string'
+        ? entry.url.match(/^https:\/\/github\.com\/[^/]+\/[^/]+\/blob\/[a-f0-9]{40}\/[^#]+#L([1-9][0-9]*)(?:-L([1-9][0-9]*))?$/u) : null;
+      assert(range && Number(range[2] ?? range[1]) >= Number(range[1])
+        && typeof entry.claim === 'string' && entry.claim.trim(),
+      `API_RECEIVER_EVIDENCE_INCOMPLETE: ${apiVersion}/${kind} ${fieldPath} evidence ${index}`);
+    }
+    for (const name of ['crossFieldConditions', 'qualificationLimits']) assert(record[name].every((entry) => typeof entry === 'string' && entry.trim()),
+      `API_RECEIVER_CONTRACT_INCOMPLETE: ${apiVersion}/${kind} ${fieldPath} ${name}`);
     selected.set(fieldPath, record);
   }
   const boundaries = apiResourceFieldBoundaries(apiVersion, kind);

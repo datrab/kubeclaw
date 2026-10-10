@@ -342,6 +342,13 @@ export function apiResourceFieldBoundaries(apiVersion, kind) {
   assert(schema, `API_SCHEMA_AUTHORITY_MISSING: ${apiVersion}/${kind}`);
   const authority = apiFieldCollectionAuthority(apiVersion, kind, '$');
   const boundaries = [];
+  function hasStructure(branch) {
+    if (!branch || typeof branch !== 'object' || Array.isArray(branch)) return false;
+    if (branch.$ref || branch.properties || branch.items || typeof branch.additionalProperties === 'object') return true;
+    return ['allOf', 'anyOf', 'oneOf'].some((key) => (branch[key] ?? []).some(hasStructure))
+      || ['not', 'if', 'then', 'else'].some((key) => hasStructure(branch[key]))
+      || ['dependentSchemas', 'dependencies'].some((key) => Object.values(branch[key] ?? {}).some(hasStructure));
+  }
   function visit(raw, tokens, ancestors) {
     const identity = resolveReference(raw);
     const fieldPath = yamlFieldPath(tokens, { arrayWildcard: true });
@@ -353,18 +360,21 @@ export function apiResourceFieldBoundaries(apiVersion, kind) {
     // as {} and require their presence. They add no child boundary; retain the
     // complete alternative in the parent contract. Other structural variants
     // need a separately qualified traversal, rather than silent flattening.
-    for (const keyword of ['allOf', 'anyOf', 'oneOf']) {
-      for (const branch of node[keyword] ?? []) {
-        const hasStructure = branch.$ref || branch.properties || branch.items
-          || typeof branch.additionalProperties === 'object';
-        if (!hasStructure) continue;
+    assert(!Object.keys(node.patternProperties ?? {}).length,
+      `API_SCHEMA_PATTERN_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath}`);
+    const alternatives = [
+      ...['allOf', 'anyOf', 'oneOf'].flatMap((key) => (node[key] ?? []).map((branch) => [key, branch])),
+      ...['not', 'if', 'then', 'else'].filter((key) => node[key]).map((key) => [key, node[key]]),
+      ...['dependentSchemas', 'dependencies'].flatMap((key) => Object.values(node[key] ?? {}).map((branch) => [key, branch])),
+    ];
+    for (const [keyword, branch] of alternatives) {
+        if (!hasStructure(branch)) continue;
         const presenceOnly = Object.keys(branch).every((key) => ['properties', 'required'].includes(key))
           && Object.entries(branch.properties ?? {}).every(([name, child]) =>
             Object.hasOwn(node.properties ?? {}, name) && Object.keys(child).length === 0)
           && (branch.required ?? []).every((name) => Object.hasOwn(node.properties ?? {}, name));
         assert(presenceOnly,
           `API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath} ${keyword}`);
-      }
     }
     boundaries.push({ apiVersion, kind, fieldPath, authority: authority.authority,
       authoritySha256: authority.authoritySha256, contract });

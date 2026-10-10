@@ -66,19 +66,20 @@ test('a new structural alternative fails coverage instead of silently losing its
     fs.symlinkSync(path.join(repository, 'node_modules'), path.join(temporary, 'node_modules'), 'dir');
     const lock = JSON.parse(fs.readFileSync(path.join(repository, 'scripts/docs-api-authority-lock.json')));
     const swagger = JSON.parse(gunzipSync(fs.readFileSync(path.join(repository, lock.kubernetes.path))));
-    swagger.definitions['io.k8s.api.core.v1.Service'].properties.spec.anyOf = [
-      { properties: { newlyExposedAlternative: { type: 'string' } } },
-    ];
-    const bytes = Buffer.from(JSON.stringify(swagger));
-    const compressed = gzipSync(bytes);
-    Object.assign(lock.kubernetes, { contentSha256: digest(bytes), compressedSha256: digest(compressed), compressedSize: compressed.length });
-    fs.writeFileSync(path.join(temporary, lock.kubernetes.path), compressed);
-    const lockBytes = `${JSON.stringify(lock)}\n`;
-    fs.writeFileSync(path.join(temporary, 'scripts/docs-api-authority-lock.json'), lockBytes);
-    fs.writeFileSync(path.join(temporary, 'scripts/docs-api-authority-lock.sha256'), `${digest(lockBytes)}  docs-api-authority-lock.json\n`);
-    const fixture = await import(pathToFileURL(path.join(temporary, 'scripts/docs-api-schema-authorities.mjs')).href);
-    assert.throws(() => fixture.apiResourceFieldBoundaries('v1', 'Service'),
-      /API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: v1\/Service \$\.spec anyOf/);
+    for (const nested of [false, true]) {
+      const branch = { properties: { newlyExposedAlternative: { type: 'string' } } };
+      swagger.definitions['io.k8s.api.core.v1.Service'].properties.spec.anyOf = [nested ? { allOf: [branch] } : branch];
+      const bytes = Buffer.from(JSON.stringify(swagger));
+      const compressed = gzipSync(bytes);
+      Object.assign(lock.kubernetes, { contentSha256: digest(bytes), compressedSha256: digest(compressed), compressedSize: compressed.length });
+      fs.writeFileSync(path.join(temporary, lock.kubernetes.path), compressed);
+      const lockBytes = `${JSON.stringify(lock)}\n`;
+      fs.writeFileSync(path.join(temporary, 'scripts/docs-api-authority-lock.json'), lockBytes);
+      fs.writeFileSync(path.join(temporary, 'scripts/docs-api-authority-lock.sha256'), `${digest(lockBytes)}  docs-api-authority-lock.json\n`);
+      const fixture = await import(`${pathToFileURL(path.join(temporary, 'scripts/docs-api-schema-authorities.mjs')).href}?nested=${nested}`);
+      assert.throws(() => fixture.apiResourceFieldBoundaries('v1', 'Service'),
+        /API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: v1\/Service \$\.spec anyOf/);
+    }
   } finally {
     fs.rmSync(temporary, { recursive: true, force: true });
   }

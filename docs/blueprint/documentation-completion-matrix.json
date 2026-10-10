@@ -15301,6 +15301,48 @@
       ],
       "description": "132recordSourceFAIL: common Denycitation all132; dynamicmessage conditions mustbeafterTrimSpace6; overallmessage/audit errors supersede assertions9; exclusionprecedence citation52. Independentall132paths and actualrawfields mapped; no forcedprior182count.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/admission-receiver-source-fresh/findings.json"
+    },
+    {
+      "id": "A98-APPS-RECEIVER-SOURCE",
+      "state": "author-correction-in-progress",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Full independent SourceFAIL: retained null map key, seccomp nil requirements, projected branch semantics, token/selector/default ranges, exact constraints and unqualified consumer behavior. All15findings being corrected; 17statuspaths also required.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/apps-receiver-source-fresh/report.md",
+      "evidenceSha256": "ff6cfa30c33b8fe3be36812ae284ef9da68a39c44740a5840a9959ca155d8f5c"
+    },
+    {
+      "id": "A98-ADMISSION-RECEIVER-CORRECTION2",
+      "state": "corrected-pending-new-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Second complete SourceFAIL CF1wrongtoken body proof across132records, CF2numeric declarations9, CF3actual grammar22. Author released evidence-only75ce candidate preserving all132records751cases; new full fresh Source ongoing.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/kubernetes-admission-receiver-writer/correction-2/report.md",
+      "evidenceSha256": "45e6eaff6dbb99afc0ec7c144e1d9624758373bebe1cb0f2ee155f77097dc1a0"
+    },
+    {
+      "id": "A98-NETWORK-RECEIVER-CORRECTION3",
+      "state": "corrected-pending-new-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Third complete SourceFAIL array retention25, exact-key null5, label grammar5. Root added actual pinned decoder/map/grammar bodies; new9d candidate under fresh full Source review.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/network-receiver-source-complete-fresh/report.md",
+      "evidenceSha256": "ef99deba9d3cfdd8e2e701cc08fb5a6dff61f8d6d0ecde539eabd0544de4ab4b"
     }
   ],
   "checks": [
@@ -15951,6 +15993,42 @@
       "state": "terminal-pass",
       "scope": "8focusedtests actualauthority+receiver modules: deep/unselected/sharedschema paths, exactcollection constraints, status, unknownauthority, actualCilium presencealternatives, injectednovelstructuralalternative rejects, metadatagap, removedunusedfield, duplicate/extrapath. Mechanicaljoin only; not Source acceptance/runtime/publication.",
       "report": "/home/node/Documents/Codex/a98-evidence/recursive-schema-discovery-root/combined-tests.log"
+    },
+    {
+      "command": "npm run docs:drift:config:mutations",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "sessionId": 90473,
+      "revision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
+      "logSha256": "dd575dfb2de845f4e6b506690d8d566d55867e0ac8a739b6ba05050b2d7b46ee",
+      "exitFile": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.exit",
+      "scope": "Original full mutation runner observed terminalPASS on immutable7e source. Does not validate later source changes or replace independent content acceptance."
+    },
+    {
+      "command": "original pinned sigs.k8s.io/json go test -json ./...",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "testsPassed": 24,
+      "revision": "66452049f3d692768c39c797b21b793dce80314e",
+      "report": "/home/node/Documents/Codex/a98-evidence/kubernetes-decoder-unit-root/summary.json",
+      "reportSha256": "16290e4510c726b720e5e4e090a592115a824a141f4ef1bc15da2d06e33c08ab",
+      "scope": "13 unchanged original vendored files, structuralfixtures; retained map/list null, existing vs fresh value null, wrongtokens/overflow, strict errors. No real API/default/validation/CEL/controller/live or independent acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/api-schema-boundaries.test.mjs scripts/tests/api-receiver-coverage.test.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "testsPassed": 9,
+      "sessionId": 55835,
+      "scope": "Reject hidden nested structural variants and empty outcomes/unpinned evidence; actual Cilium presence constraints, complete boundary enumeration and named missing/extra contracts. Mechanical proof only. Network candidate9d; root helpers dirty over728.",
+      "sourceDigests": {
+        "scripts/docs-api-schema-authorities.mjs": "bc7c5334086dcdabccbe4d5a2f1583befcb1ed5eee1a7ac5c8987ba47667b857",
+        "scripts/docs-api-receiver-coverage.mjs": "c017a73e5b4b4b9006659ea189ca1ad28053007434199b853670b41dbce94041",
+        "scripts/tests/api-schema-boundaries.test.mjs": "51672d5df6c5547de5036e306cf490e04f1f187666e7d3d01ceacb9ddf8f5b63",
+        "scripts/tests/api-receiver-coverage.test.mjs": "269d18d2b88047fd0cfe9ea2aa5f84d2364548daf0d4440aa00b27cd7c7a78a0",
+        "scripts/docs-kubernetes-network-receiver-contracts.mjs": "9d164f1eaefb15b9d5ba59d305059ac55d22f75b72ba07e1fc1848a87e022250"
+      }
     }
   ],
   "reviewAssignments": [
@@ -16899,10 +16977,12 @@
       "freshContext": true,
       "forkTurns": "none",
       "readOnly": true,
-      "state": "running",
+      "state": "terminal-fail",
       "baseRevision": "dcbafcce6aa9f2ef463d2edda67f38bddb91e019",
       "candidateSha256": "b7f8c9f31fa7d3c5a6f6311989d4aa7da69c3fc2f839d74e62cef7bddcd55ee4",
-      "scope": "Complete122records120paths175boundaries69workitems newfreshreview, not findings-only. Not published integration."
+      "scope": "Complete122records120paths175boundaries69workitems newfreshreview, not findings-only. Not published integration.",
+      "report": "/home/node/Documents/Codex/a98-evidence/network-receiver-source-complete-fresh/report.md",
+      "reportSha256": "ef99deba9d3cfdd8e2e701cc08fb5a6dff61f8d6d0ecde539eabd0544de4ab4b"
     },
     {
       "agent": "/root/a98_admission_receiver_source_corrected_fresh",
@@ -16911,17 +16991,48 @@
       "freshContext": true,
       "forkTurns": "none",
       "readOnly": true,
-      "state": "running",
+      "state": "terminal-fail",
       "baseRevision": "dcbafcce6aa9f2ef463d2edda67f38bddb91e019",
       "candidateSha256": "8f8f945aa9b384296be754e0bf88e000749bb071d7e0592fcd5b31aedec8a577",
-      "scope": "Full132specpaths751cases; independentcoverage/primarysource reading after4findings corrections, including newerrors. No publishedintegration orglobalacceptance."
+      "scope": "Full132specpaths751cases; independentcoverage/primarysource reading after4findings corrections, including newerrors. No publishedintegration orglobalacceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/admission-receiver-source-corrected-fresh/report.md",
+      "reportSha256": "e667e7f55044da4aa7b41a204a615505a1ee3a499aeaa7ed7417eff11b42e324"
+    },
+    {
+      "agent": "/root/a98_apps_receiver_source_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "terminal-fail",
+      "baseRevision": "728a977ec4db75b0239092a1ad872b6242d9c16e",
+      "candidateSha256": "edb2843af2c4b3c083b5b17ea401428abe042e5f8a01feda3249e276c8dc608a",
+      "report": "/home/node/Documents/Codex/a98-evidence/apps-receiver-source-fresh/report.md",
+      "reportSha256": "ff6cfa30c33b8fe3be36812ae284ef9da68a39c44740a5840a9959ca155d8f5c",
+      "scope": "1268records6340cases347workitems;1037recordsFAIL231PASS;15findings,17adjacentstatuspaths required"
+    },
+    {
+      "agent": "/root/a98_network_admission_source_final_candidate_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "running",
+      "baseRevision": "728a977ec4db75b0239092a1ad872b6242d9c16e",
+      "scope": "CompleteNetwork122records707cases andAdmission132records751cases, not findings-only; same Source role, no Reader/Quality/global acceptance",
+      "candidateSha256": {
+        "network": "9d164f1eaefb15b9d5ba59d305059ac55d22f75b72ba07e1fc1848a87e022250",
+        "admission": "75ce1e7b320f5cb887d930676b861b24f9eb9c6ccb56be0b5b5fa8e8d1643c28"
+      }
     }
   ],
   "continuation": {
-    "stage": "Source7e fixes independently rereviewed; refs/config/boundary PASS, publication languageFAIL corrected in unfrozen sources; source-only prose commit pending; full original mutation running7e.",
+    "stage": "AP09.8 receiver authoring and complete fresh Source reviews. Network/admission exact proof corrections; Deployment15findings under correction; Argo1900owned boundaries not yet semantically complete.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Commit corrected source and matrix after released writers; regenerate against exact SHA separately; original bounded gates and new fresh complete affected reviews; retry full original mutation only after actual producer correction. No package/global acceptance.",
+    "next": "Finish all receiver semantic gaps and fresh full Source reviews; integrate with schema-driven inventory, then Sourcecommit and separate Generatedcommit. Run current full registered checks; fresh Source/Reader/Quality then Astra. No parity mass work before AP09.8 acceptance.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -16930,16 +17041,17 @@
       "/root/a98_operator_writer",
       "/root/a98_reference_writer"
     ],
-    "currentMutationSession": 63228,
-    "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-d57ac356.log",
-    "currentMutationSnapshot": "/home/node/Documents/Codex/a98-evidence/config-mutations-d57ac356",
+    "currentMutationSession": 90473,
+    "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
+    "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/a98_prism_reader_csi_fresh",
-      "/root/a98_precedence_source_corrected_fresh"
+      "/root/a98_kubernetes_apps_receiver_writer",
+      "/root/a98_argo_receiver_writer",
+      "/root/a98_network_admission_source_final_candidate_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
-    "currentMutationState": "terminal-fail",
+    "currentMutationState": "terminal-pass-old-source-snapshot",
     "consumerWriterFinished": {
       "agent": "/root/a98_config_writer",
       "paths": [
@@ -17205,7 +17317,7 @@
       },
       "scope": "Prism assigned partitions only; no whole gate/global acceptance or live success"
     },
-    "currentMutationExitCode": 1,
+    "currentMutationExitCode": 0,
     "currentMutationLogSha256": "8cbfc50b6250699feb18cc7977364d7d2dd6469f951976691531c58e30bd64db",
     "prismBrowserWriterCompleted": {
       "agent": "/root/a98_prism_browser_boundary_writer",

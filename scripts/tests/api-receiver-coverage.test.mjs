@@ -30,3 +30,13 @@ test('duplicate contracts and undocumented paths cannot hide by overwrite or exc
   assert.deepEqual(coverage.extra, ['$.spec.undocumentedField']);
   assert.throws(() => assertApiReceiverCoverage(coverage), /API_RECEIVER_PATH_OUTSIDE_AUTHORITY/);
 });
+
+test('empty case outcomes and unpinned evidence are rejected before marking contract presence', () => {
+  const record = receiverContracts.find((row) => row.kind === 'NetworkPolicy');
+  assert.throws(() => apiReceiverCoverage('networking.k8s.io/v1', 'NetworkPolicy',
+    [{ ...record, cases: [{ name: 'invalid', condition: 'wrong type', sourceOutcome: '' }] }]),
+  /API_RECEIVER_CASE_INCOMPLETE/);
+  assert.throws(() => apiReceiverCoverage('networking.k8s.io/v1', 'NetworkPolicy',
+    [{ ...record, evidence: [{ url: 'https://github.com/kubernetes/kubernetes/blob/master/example.go#L1-L5', claim: 'Unpinned source' }] }]),
+  /API_RECEIVER_EVIDENCE_INCOMPLETE/);
+});
