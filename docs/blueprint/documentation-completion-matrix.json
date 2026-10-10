@@ -16036,6 +16036,20 @@
         "A98-14"
       ],
       "description": "FE07-SOURCE-006 historical failure retained. RootMetadata mapString null-member cases now distinguish annotation consumers from label equality selectors. No annotation-selection behavior inferred from label matching. Full affected fresh Source review required."
+    },
+    {
+      "id": "A98-RESOURCEQUOTA-UNCONDITIONAL-UPDATE-EVIDENCE-WINDOW",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "New fresh Source finding on965: all34ResourceQuota rootmetadata captions used strategy127–129 WarningsOnUpdate for unconditional update. Corrected pinned window130–132 AllowUnconditionalUpdate; factual behavior unchanged. Historical reviewed failure remains; new complete affected Source verification required.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/resourcequota-unconditional-root-correction.json"
     }
   ],
   "checks": [
@@ -17093,6 +17107,11 @@
       "state": "terminal-pass",
       "scope": "228evidencefiles/156primaries exact bytes/SHA/Gitblob; report/memo integrity only, not semantic acceptance of corrected candidates.",
       "proof": "/home/node/Documents/Codex/a98-evidence/node-current-fe07-final-root-integrity.json"
+    },
+    {
+      "command": "Root verify authenticated ResourceQuota original130–132 and all34exported metadata citations",
+      "state": "terminal-pass",
+      "scope": "Narrow citation correction only; no independent Source acceptance. Frozen producer-v6 f4snapshot remains unchanged."
     }
   ],
   "reviewAssignments": [
@@ -20451,6 +20470,13 @@
       "rootVerifiedEvidenceFiles": 228,
       "rootVerifiedPrimaryFiles": 156,
       "limits": "61delegated metadata applicability plus root absent/null/empty task relevance and global discovery remain open. Preserved all five historical findings.14boundedtests passed; no API/live/global acceptance."
+    },
+    "resourceQuotaCitationCorrection": {
+      "state": "source-candidate-not-accepted",
+      "sourceFindingRevision": "965d4a3b7bdb36250c1bff2337883c6515f649d7",
+      "records": 34,
+      "newWindow": "130–132",
+      "proof": "/home/node/Documents/Codex/a98-evidence/resourcequota-unconditional-root-correction.json"
     }
   }
 }
