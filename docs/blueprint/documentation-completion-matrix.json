@@ -17087,6 +17087,12 @@
       "command": "node --test scripts/tests/docs-status.test.mjs",
       "state": "terminal-pass",
       "scope": "15PASS0FAIL0SKIP after reader-language source correction; generated issue view separately committed. Helm generated output still awaiting regeneration."
+    },
+    {
+      "command": "Root verify sealed final node Source evidence manifest, primary bytes and recorded authority blobs",
+      "state": "terminal-pass",
+      "scope": "228evidencefiles/156primaries exact bytes/SHA/Gitblob; report/memo integrity only, not semantic acceptance of corrected candidates.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/node-current-fe07-final-root-integrity.json"
     }
   ],
   "reviewAssignments": [
@@ -18307,13 +18313,23 @@
       "role": "writer",
       "state": "running-exclusive-six-files-not-source-stable",
       "scope": "Original-operation/output-role/markerless alias/fs async/stream qualifications; source-bound consumer recipes. No commits/push or independent acceptance. Workspace package source symlinks must bind frozen copies."
+    },
+    {
+      "agent": "/root/receiver_corrected_965_source_fresh",
+      "role": "Source",
+      "state": "running-fresh-context-read-only",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "965d4a3b7bdb36250c1bff2337883c6515f649d7",
+      "scope": "Complete dynamically derived affected receiver union: lifecycleCSI, StatefulSet names, projected Secret/ConfigMap qualifiers, Pod status and root annotation null-member cases. Individually bound Source semantics and separate actual applicability. Not Reader/Quality/global acceptance."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 remains unaccepted. Current producer closure is mutable; two fresh current receiver Source reviews continue on immutable fe07. Root integrates independently evidenced lifecycle/CSI corrections; new affected-scope review required.",
+    "stage": "AP09.8: new fresh corrected receiver Source review and immutable producer-v5 verification; no package acceptance",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Complete native producer output classification and immutable actual-context join; finish current complete Source reviews, correct findings, conduct new full affected fresh reviews, source-bound generation and required gates, then Reader/Quality/Astra. AP09.7 missing individual acceptance must also be recovered. No parity/deletion before AP09.8 approval.",
+    "next": "Observe producer-v5 suite38839/role39891/join50655 to terminal via owner; integrate stable six files only after bound evidence; independent producer Source review next. Complete fresh corrected receiver Source and remaining workload full Source. Regenerate stale configuration outputs, mandatory full mutation, then separate Reader/Quality/Astra. No mass parity before AP09.8 acceptance.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -19028,12 +19044,12 @@
       "accepted": false
     },
     "currentIndependentWork": {
-      "cluster212": "Complete fresh Source PASS212/1240cases; full fixture SOURCE PASS; publicationFAIL; evidence seal verified",
-      "identity253": "Complete fresh Source PASS253/1283cases, publicationFAIL3anchors; evidence verified113entries",
-      "outputDiscovery": "Author continues fullF03/F08 generic serialized sink role classification; newdocs-only helper authorized, finalreleasepending",
-      "runtimeDefaults": "Complete bounded independentSourcePASS,48actualcontexts/42Service/72Containerprobes; Sourcebound no globalacceptance",
-      "monitoring185": "Complete boundedSource185PASS0FAIL/822cases;53sealedentriesRootverified, no globalacceptance",
-      "workloadNodeDefaults": "Fullfrozen5d reviewer checkpoint251selectedFAIL; scope806selected239pending exclusions, corrections underway"
+      "sourceReviewer": "/root/receiver_corrected_965_source_fresh",
+      "sourceBinding": "965d4a3b7bdb36250c1bff2337883c6515f649d7",
+      "workloadReviewer": "/root/workload_current_fe07_source_fresh",
+      "producerWriter": "/root/producer_closure_eight_findings_writer",
+      "nodeReviewer": "sealed-final-historical-fail",
+      "scopeStatus": "individual requirements and gates remain unaccepted"
     }
   },
   "productBoundaries": [
@@ -20412,6 +20428,29 @@
       "selectionErrors": 0,
       "sha256": "c7c64711c77f8b59f46b51176742aac460f02879e08fb0804b7638ab562db7fc",
       "remaining": "Writer found unqualified process.stderr.write and console.error channels; next immutable overlay required before full producer review."
+    },
+    "nodeFe07FinalSource": {
+      "agent": "/root/node_current_fe07_source_fresh",
+      "state": "sealed-historical-fail-not-corrected-candidate-acceptance",
+      "receiverRevision": "fe07fc0848521ff40d6ca22c99cc948fddd476d6",
+      "records": 349,
+      "cases": 2490,
+      "semanticCasePass": 2474,
+      "semanticCaseFail": 16,
+      "semanticCaseUnreviewed": 0,
+      "captionsPass": 566,
+      "captionsFail": 2,
+      "recordConditionalPass": 334,
+      "recordFail": 15,
+      "applicabilityPass": 285,
+      "applicabilityBoundedNA": 3,
+      "applicabilityUnreviewed": 61,
+      "manifestSha256": "8f100d39e2a568321737bb7143779b700880c86c317dc3ba6af6b21cf6fd0f3f",
+      "reportSha256": "e0b471ffd4591f0138909351e5bf7c2bbf3a02157520fe904a551638125a4a6d",
+      "rootIntegrityProof": "/home/node/Documents/Codex/a98-evidence/node-current-fe07-final-root-integrity.json",
+      "rootVerifiedEvidenceFiles": 228,
+      "rootVerifiedPrimaryFiles": 156,
+      "limits": "61delegated metadata applicability plus root absent/null/empty task relevance and global discovery remain open. Preserved all five historical findings.14boundedtests passed; no API/live/global acceptance."
     }
   }
 }
