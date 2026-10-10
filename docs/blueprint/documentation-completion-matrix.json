@@ -18977,6 +18977,29 @@
         "Full actual-output generation and gates"
       ],
       "limits": "NoAPI/admission/controller execution; foreign CRDschema-language linked registration is distinct from recursively complete ownedBuster instance schema. ESLint authorfailed missingconfig, noPASSclaimed."
+    },
+    "namespaceAuthCompleteSourceReview": {
+      "revision": "d271cf712e1f882c0c64e0c6d9e8a5cd36f18508",
+      "reviewer": "/root/namespace_auth_complete_source_fresh",
+      "freshContext": true,
+      "verdict": "FAIL two concrete Source findings; all205selected records reviewed, pending0",
+      "reportSha256": "a405d72fd31c1aee3ee130af0fc67490a14556194c0a9e58bcd93aae2aaf3596",
+      "rootVerification": "Fullreportread and all87manifest artifacts verified from correct archive root. Ledgercounts205/205/pending0 and complete dimensions inspected; not globalacceptance.",
+      "findings": [
+        "LimitRange root empty case missed UUID identity preparation and zero-item spec",
+        "TokenReview shared evidence/invalid audience case lacked nonempty effective audience guard"
+      ],
+      "correctionCandidate": "Root LimitRange root empty/null distinctions and TokenReview audience guard corrected. Newfullfresh Source/Reader/Quality required, historicalFAILunchanged."
+    },
+    "ownedBusterLeaseFurtherSourceCorrectionCandidate": {
+      "state": "authored-not-independently-accepted",
+      "reviewerRunning": "/root/buster_all_fields_source_after_ports_fresh atf0995c544af41dcd5de5990820bc2c4e97bdafe3",
+      "changes": [
+        "Retained demoReadiness exposure provider purpose is committed tailscale-ingress only, not spec off variant",
+        "Seven array element purposes now describe one item and separate containing collection semantics",
+        "Removed volatile documentation-host lacks Go statement; require repository toolchain and actual revision/test result instead"
+      ],
+      "limits": "FullSource report not yet terminal; preliminary reviewerGo/compiler results not final accepted evidence; no Liveclaims."
     }
   }
 }

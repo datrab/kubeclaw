@@ -455,8 +455,8 @@ they do not receive namespace lifecycle authority or permission to forge status.
 Run `node --test scripts/tests/buster-lease-receiver.test.mjs` to check recursive
 contract coverage and the documented policy, retention, status and provenance
 boundaries. Run `go test ./cmd/buster-namespace-controller/...` for controller
-behavior when Go is available. The documentation host has no Go executable, so
-no Go test result is claimed here. Render the chart with the broker enabled and
+behavior with the Go toolchain required by the repository. Record the source
+revision and terminal test result. Render the chart with the broker enabled and
 exercise the selected configuration in the target cluster before deployment
 acceptance.
 
