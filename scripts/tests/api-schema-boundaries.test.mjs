@@ -1,5 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { gunzipSync, gzipSync } from 'node:zlib';
 import { apiResourceFieldBoundaries, apiFieldCollectionAuthority } from '../docs-api-schema-authorities.mjs';
 
 test('recursive discovery includes unselected Deployment volume alternatives', () => {
@@ -32,4 +38,48 @@ test('discovery includes status fields separately from spec fields and rejects u
   assert(rows.some((row) => row.fieldPath === '$.status.typeChecking.expressionWarnings[].warning'));
   assert(rows.some((row) => row.fieldPath === '$.spec.validations[].messageExpression'));
   assert.throws(() => apiResourceFieldBoundaries('v1', 'UnknownKind'), /API_SCHEMA_AUTHORITY_MISSING/);
+});
+
+test('Cilium presence alternatives retain their conditions and expose all declared directions', () => {
+  for (const kind of ['CiliumNetworkPolicy', 'CiliumClusterwideNetworkPolicy']) {
+    const rows = apiResourceFieldBoundaries('cilium.io/v2', kind);
+    const spec = rows.find((row) => row.fieldPath === '$.spec');
+    assert.deepEqual(spec.contract.anyOf.map((branch) => branch.required),
+      [['ingress'], ['ingressDeny'], ['egress'], ['egressDeny']]);
+    for (const direction of ['ingress', 'ingressDeny', 'egress', 'egressDeny']) {
+      assert(rows.some((row) => row.fieldPath === `$.spec.${direction}[]`));
+    }
+    assert(rows.some((row) => row.fieldPath === '$.spec.egress[].toFQDNs[].matchName'));
+    assert.equal(new Set(rows.map((row) => row.fieldPath)).size, rows.length);
+  }
+});
+
+test('a new structural alternative fails coverage instead of silently losing its field', async () => {
+  const repository = fileURLToPath(new URL('../../', import.meta.url));
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'api-boundary-mutation-'));
+  const digest = (bytes) => crypto.createHash('sha256').update(bytes).digest('hex');
+  try {
+    fs.mkdirSync(path.join(temporary, 'scripts/vendor/api-authorities'), { recursive: true });
+    for (const name of ['docs-api-schema-authorities.mjs', 'yaml-field-path.mjs']) {
+      fs.copyFileSync(path.join(repository, 'scripts', name), path.join(temporary, 'scripts', name));
+    }
+    fs.symlinkSync(path.join(repository, 'node_modules'), path.join(temporary, 'node_modules'), 'dir');
+    const lock = JSON.parse(fs.readFileSync(path.join(repository, 'scripts/docs-api-authority-lock.json')));
+    const swagger = JSON.parse(gunzipSync(fs.readFileSync(path.join(repository, lock.kubernetes.path))));
+    swagger.definitions['io.k8s.api.core.v1.Service'].properties.spec.anyOf = [
+      { properties: { newlyExposedAlternative: { type: 'string' } } },
+    ];
+    const bytes = Buffer.from(JSON.stringify(swagger));
+    const compressed = gzipSync(bytes);
+    Object.assign(lock.kubernetes, { contentSha256: digest(bytes), compressedSha256: digest(compressed), compressedSize: compressed.length });
+    fs.writeFileSync(path.join(temporary, lock.kubernetes.path), compressed);
+    const lockBytes = `${JSON.stringify(lock)}\n`;
+    fs.writeFileSync(path.join(temporary, 'scripts/docs-api-authority-lock.json'), lockBytes);
+    fs.writeFileSync(path.join(temporary, 'scripts/docs-api-authority-lock.sha256'), `${digest(lockBytes)}  docs-api-authority-lock.json\n`);
+    const fixture = await import(pathToFileURL(path.join(temporary, 'scripts/docs-api-schema-authorities.mjs')).href);
+    assert.throws(() => fixture.apiResourceFieldBoundaries('v1', 'Service'),
+      /API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: v1\/Service \$\.spec anyOf/);
+  } finally {
+    fs.rmSync(temporary, { recursive: true, force: true });
+  }
 });

@@ -15276,6 +15276,31 @@
       ],
       "description": "Full SourceFAIL: NR-S01 incorrect explicit-policyTypes requirement on2records; NR-S02 common fieldmanager citation omittedline572 across122; NR-S03 path-name citation omittedline25 across4. Root corrected all3 after reading original pinned implementations. No acceptance of corrected candidate yet.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/network-receiver-source-fresh/report.md"
+    },
+    {
+      "id": "A98-NETWORK-RECEIVER-CORRECTED-RANGES",
+      "state": "corrected-pending-new-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Second fullSource review found3new exactsupport defects: generation49 missing across75NP; pathliteral50–51 missing; decoderstring1028–1038 missing in4explicitinteger empty-string claims. Root read actualpinned bodies then corrected fullcandidate; thirdfreshSource ongoing."
+    },
+    {
+      "id": "A98-ADMISSION-RECEIVER-SOURCE",
+      "state": "author-corrected-pending-new-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "132recordSourceFAIL: common Denycitation all132; dynamicmessage conditions mustbeafterTrimSpace6; overallmessage/audit errors supersede assertions9; exclusionprecedence citation52. Independentall132paths and actualrawfields mapped; no forcedprior182count.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/admission-receiver-source-fresh/findings.json"
     }
   ],
   "checks": [
@@ -15920,6 +15945,12 @@
       "command": "isolated docs reference check source6fa4830a",
       "state": "terminal-fail",
       "scope": "3missing historical directories in AP03-progress, ap01-baseline/README and generated/reference/README. No directory fabrication or checker relaxation."
+    },
+    {
+      "command": "node --test scripts/tests/api-schema-boundaries.test.mjs scripts/tests/api-receiver-coverage.test.mjs",
+      "state": "terminal-pass",
+      "scope": "8focusedtests actualauthority+receiver modules: deep/unselected/sharedschema paths, exactcollection constraints, status, unknownauthority, actualCilium presencealternatives, injectednovelstructuralalternative rejects, metadatagap, removedunusedfield, duplicate/extrapath. Mechanicaljoin only; not Source acceptance/runtime/publication.",
+      "report": "/home/node/Documents/Codex/a98-evidence/recursive-schema-discovery-root/combined-tests.log"
     }
   ],
   "reviewAssignments": [
@@ -16808,11 +16839,13 @@
       "freshContext": true,
       "forkTurns": "none",
       "readOnly": false,
-      "state": "released-candidate-pending-independent-acceptance",
+      "state": "corrected-candidate-released-pending-independent-review",
       "exclusiveFiles": [
         "scripts/docs-kubernetes-admission-receiver-contracts.mjs"
       ],
-      "scopeLimit": "Source-backed recursive operational cases; no copied schema fact store; no independent selfacceptance."
+      "scopeLimit": "Source-backed recursive operational cases; no copied schema fact store; no independent selfacceptance.",
+      "candidateSha256": "8f8f945aa9b384296be754e0bf88e000749bb071d7e0592fcd5b31aedec8a577",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/kubernetes-admission-receiver-writer/correction-1/report.md"
     },
     {
       "agent": "/root/a98_network_receiver_source_fresh",
@@ -16836,10 +16869,13 @@
       "freshContext": true,
       "forkTurns": "none",
       "readOnly": true,
-      "state": "running",
+      "state": "completed-fail",
       "baseRevision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
       "candidateSha256": "9471984986a95045032bec7cc67e77a6068b84abf8d2fe214898c25e6508a85e",
-      "scope": "Full corrected122records120recursivepaths175boundaries69workitems; new independent reviewer, not previous findings-only check."
+      "scope": "Full122records120paths175boundaries69workitems: semantics all122PASS, exact support78FAIL44PASS.3newcitationfindings; no publication approval.",
+      "report": "/home/node/Documents/Codex/a98-evidence/network-receiver-source-corrected-fresh/report.md",
+      "reportSha256": "807e6b2a27b34a1e84fe0776b9787bba5b0b9b0e2f6993e27c8a00eff192ead9",
+      "rootVerifiedArtifacts": 17
     },
     {
       "agent": "/root/a98_admission_receiver_source_fresh",
@@ -16848,10 +16884,37 @@
       "freshContext": true,
       "forkTurns": "none",
       "readOnly": true,
-      "state": "running",
+      "state": "completed-fail",
       "baseRevision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
       "candidateSha256": "63411d10aaecd9773fc341611ad0f49ce85fd529eca4e81befb20ddb671580ca",
-      "scope": "All132recursive spec contracts and actual source/decoder/route cases. Findings already reported; no approval."
+      "scope": "Full132records721caseappearances; recursive132/132; original4documents62specappearances16boundarycontexts13scalarcontexts.4findings:2citation,2materialCELsemantics families. WholeSourceFAIL.",
+      "report": "/home/node/Documents/Codex/a98-evidence/admission-receiver-source-fresh/report.md",
+      "reportSha256": "0ccec699cf7e52ec7be427c821c8dd239571c187dcd68ec5d0a9ec175919edd3",
+      "rootVerifiedArtifacts": 5792
+    },
+    {
+      "agent": "/root/a98_network_receiver_source_complete_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "running",
+      "baseRevision": "dcbafcce6aa9f2ef463d2edda67f38bddb91e019",
+      "candidateSha256": "b7f8c9f31fa7d3c5a6f6311989d4aa7da69c3fc2f839d74e62cef7bddcd55ee4",
+      "scope": "Complete122records120paths175boundaries69workitems newfreshreview, not findings-only. Not published integration."
+    },
+    {
+      "agent": "/root/a98_admission_receiver_source_corrected_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "running",
+      "baseRevision": "dcbafcce6aa9f2ef463d2edda67f38bddb91e019",
+      "candidateSha256": "8f8f945aa9b384296be754e0bf88e000749bb071d7e0592fcd5b31aedec8a577",
+      "scope": "Full132specpaths751cases; independentcoverage/primarysource reading after4findings corrections, including newerrors. No publishedintegration orglobalacceptance."
     }
   ],
   "continuation": {
@@ -17325,7 +17388,10 @@
     "nextAction": "Sourcecommit releasedinventory and Workerpinrepair; rawinventory generation then explicitSHA core/platform/publication/governance; separate generatedcommit. Parallel3receiver module authors underway; all700K8s andArgoCiliumincompleteproof remainopen.",
     "currentPushedRevision": "145da1d0b30fb3b636c4b03fb3d3252819ee2bf5",
     "recursiveSchemaDiscovery": "Root added apiResourceFieldBoundaries to sole existing schema authority. Includes selected and unselected property/item/map paths, rejects cyclic/unqualified structural-composition/tuple traversal. Deployment spec nonmetadata1267 plus root makes1268; matches author reconciliation. Not yet consumed by inventory/site.",
-    "currentMutationObservation": "Original90473 process remains live at source7e413cf6; log advanced through default-precedence variants and nova-cli-flag:add/change. No terminal PASS; preserve same process. Current-source mutation coverage still required later."
+    "currentMutationObservation": "Original90473 process remains live at source7e413cf6; log advanced through default-precedence variants and nova-cli-flag:add/change. No terminal PASS; preserve same process. Current-source mutation coverage still required later.",
+    "apiReceiverJoin": "Root added apiReceiverCoverage plus strict completeness assertion. Traverses every resource boundary including metadata/status; retains schema and authoredcontract without inferringSourcePASS. No current inventory/site integration yet.",
+    "ciliumCompositionDiscovery": "ExactpinnedCilium anyOf branches onlyrequire alreadydeclared fields viaemptyproperties. Qualified presence-only traversal preserves originalbranches;858paths eachCNP/CCNP. Other newstructuralalternatives stillreject; privateactualauthority mutation verifiesreject.",
+    "deploymentAuthorLastObservation": "1268unique authoredrecords =1267nonmetadataSpecboundaries+root.347workitems201projectedboundaries mapped; finalreport/checks stillpending. No independent acceptance."
   },
   "productBoundaries": [
     {

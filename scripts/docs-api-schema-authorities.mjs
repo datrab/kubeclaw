@@ -349,12 +349,22 @@ export function apiResourceFieldBoundaries(apiVersion, kind) {
     assert(!ancestors.has(identity), `API_SCHEMA_RECURSIVE_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath}`);
     const node = resolveCollectionReference(raw);
     const contract = apiSchemaNodeContract(node);
-    // Structural composition needs a separately qualified traversal. Keeping
-    // its exact fragment in a contract is not proof that its fields were visited.
+    // The pinned Cilium direction alternatives redeclare existing properties
+    // as {} and require their presence. They add no child boundary; retain the
+    // complete alternative in the parent contract. Other structural variants
+    // need a separately qualified traversal, rather than silent flattening.
     for (const keyword of ['allOf', 'anyOf', 'oneOf']) {
-      assert(!(node[keyword] ?? []).some((branch) => branch.$ref || branch.properties
-        || branch.items || typeof branch.additionalProperties === 'object'),
-      `API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath} ${keyword}`);
+      for (const branch of node[keyword] ?? []) {
+        const hasStructure = branch.$ref || branch.properties || branch.items
+          || typeof branch.additionalProperties === 'object';
+        if (!hasStructure) continue;
+        const presenceOnly = Object.keys(branch).every((key) => ['properties', 'required'].includes(key))
+          && Object.entries(branch.properties ?? {}).every(([name, child]) =>
+            Object.hasOwn(node.properties ?? {}, name) && Object.keys(child).length === 0)
+          && (branch.required ?? []).every((name) => Object.hasOwn(node.properties ?? {}, name));
+        assert(presenceOnly,
+          `API_SCHEMA_COMPOSITION_BOUNDARY_UNQUALIFIED: ${apiVersion}/${kind} ${fieldPath} ${keyword}`);
+      }
     }
     boundaries.push({ apiVersion, kind, fieldPath, authority: authority.authority,
       authoritySha256: authority.authoritySha256, contract });
