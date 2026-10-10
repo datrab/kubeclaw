@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { gunzipSync, gzipSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
+import { discoverHelmSchemaApiOutputs, discoverExternalChartApiOutputs } from './docs-api-output-discovery.mjs';
 import { yamlFieldPath, yamlFieldPathTokens } from './yaml-field-path.mjs';
 
 const sha256 = (value) => crypto.createHash('sha256').update(value).digest('hex');
@@ -87,24 +88,18 @@ const kubernetesBytes = gunzipSync(kubernetesCompressed);
 assert.equal(sha256(kubernetesBytes), manifest.kubernetes.contentSha256, `CONFIG_YAML_AUTHORITY_DRIFT: ${kubernetesIdentity}: source bytes changed`);
 const kubernetesOpenApi = JSON.parse(kubernetesBytes);
 
-const builtinDefinitions = new Map([
-  ['v1/ConfigMap', 'io.k8s.api.core.v1.ConfigMap'],
-  ['v1/Namespace', 'io.k8s.api.core.v1.Namespace'],
-  ['v1/Pod', 'io.k8s.api.core.v1.Pod'],
-  ['v1/PersistentVolumeClaim', 'io.k8s.api.core.v1.PersistentVolumeClaim'],
-  ['v1/Secret', 'io.k8s.api.core.v1.Secret'],
-  ['v1/Service', 'io.k8s.api.core.v1.Service'],
-  ['v1/ServiceAccount', 'io.k8s.api.core.v1.ServiceAccount'],
-  ['apps/v1/Deployment', 'io.k8s.api.apps.v1.Deployment'],
-  ['networking.k8s.io/v1/Ingress', 'io.k8s.api.networking.v1.Ingress'],
-  ['networking.k8s.io/v1/NetworkPolicy', 'io.k8s.api.networking.v1.NetworkPolicy'],
-  ['admissionregistration.k8s.io/v1/ValidatingAdmissionPolicy', 'io.k8s.api.admissionregistration.v1.ValidatingAdmissionPolicy'],
-  ['admissionregistration.k8s.io/v1/ValidatingAdmissionPolicyBinding', 'io.k8s.api.admissionregistration.v1.ValidatingAdmissionPolicyBinding'],
-  ['rbac.authorization.k8s.io/v1/ClusterRole', 'io.k8s.api.rbac.v1.ClusterRole'],
-  ['rbac.authorization.k8s.io/v1/ClusterRoleBinding', 'io.k8s.api.rbac.v1.ClusterRoleBinding'],
-  ['rbac.authorization.k8s.io/v1/Role', 'io.k8s.api.rbac.v1.Role'],
-  ['rbac.authorization.k8s.io/v1/RoleBinding', 'io.k8s.api.rbac.v1.RoleBinding'],
-]);
+// Discover every served built-in GVK from the authenticated OpenAPI artifact.
+// A new actual producer kind must resolve its own authority, never a hand-list.
+const builtinDefinitions = new Map();
+for (const [definition, schema] of Object.entries(kubernetesOpenApi.definitions)) {
+  for (const gvk of schema['x-kubernetes-group-version-kind'] ?? []) {
+    const apiVersion = gvk.group ? `${gvk.group}/${gvk.version}` : gvk.version;
+    const key = `${apiVersion}/${gvk.kind}`;
+    assert(!builtinDefinitions.has(key) || builtinDefinitions.get(key) === definition,
+      `API_SCHEMA_GVK_DUPLICATE: ${key}`);
+    builtinDefinitions.set(key, definition);
+  }
+}
 
 let customResourceSchemas = null;
 function loadCustomResourceSchemas() {
@@ -138,11 +133,13 @@ function loadCustomResourceSchemas() {
         const chartDirectory = fs.readdirSync(temporary).map((name) => path.join(temporary, name)).find((candidate) => fs.statSync(candidate).isDirectory());
         const rendered = spawnSync('helm', ['template', 'api-authority', chartDirectory, '--include-crds', '--set', 'crds.install=true'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
         assert.equal(rendered.status, 0, `${authority.chartKey}: cannot render vendored CRD authority: ${rendered.stderr}`);
-        documents.push(...YAML.parseAllDocuments(rendered.stdout, { prettyErrors: false }).map((document) => ({ document, source: `${authority.chart}@${authority.version} rendered CRDs` })));
+        const chart = YAML.parse(fs.readFileSync(path.join(chartDirectory, 'Chart.yaml'), 'utf8'));
+        assert(/^v[0-9]+\.[0-9]+\.[0-9]+$/u.test(chart.appVersion), 'API_SCHEMA_APP_VERSION_INVALID');
+        documents.push(...YAML.parseAllDocuments(rendered.stdout, { prettyErrors: false }).map((document) => ({ document, source: `${authority.chart}@${authority.version} rendered CRDs`, appVersion: chart.appVersion })));
       }
       for (const item of documents) {
         const { document } = item;
-          if (document.errors.length) continue;
+          assert.equal(document.errors.length, 0, `API_SCHEMA_CRD_YAML_INVALID: ${item.source}`);
           const value = document.toJS();
           if (value?.kind !== 'CustomResourceDefinition') continue;
           for (const version of value.spec?.versions ?? []) {
@@ -150,6 +147,7 @@ function loadCustomResourceSchemas() {
             customResourceSchemas.set(key, {
               schema: version.schema?.openAPIV3Schema,
               authority: item.source,
+              upstreamReference: authority.chartKey === 'argocd' ? `https://github.com/argoproj/argo-cd/blob/${item.appVersion}/manifests/crds/${value.spec.names.singular}-crd.yaml` : item.source,
               archiveSha256: authority.crds
                 ? Object.values(authority.crds).find((crd) => crd.source === item.source)?.contentSha256
                 : archive.sha256,
@@ -160,7 +158,44 @@ function loadCustomResourceSchemas() {
       fs.rmSync(temporary, { recursive: true, force: true });
     }
   }
+  for (const { value, context } of discoverExternalChartApiOutputs(repositoryRoot)) {
+    if(value.kind!=='CustomResourceDefinition')continue;
+    for(const version of value.spec?.versions??[]) {
+      if(!version.served)continue;
+      const key=`${value.spec.group}/${version.name}/${value.spec.names.kind}`;
+      if(customResourceSchemas.has(key))continue;
+      const schema=structuredClone(version.schema?.openAPIV3Schema);
+      assert(schema,`API_SCHEMA_EXTERNAL_CRD_MISSING: ${context.profile}:${value.metadata.name}`);
+      customResourceSchemas.set(key,{schema,authority:`Authenticated actual ${context.profile} CRD registration ${value.metadata.name}`,archiveSha256:context.archiveSha256,upstreamReference:context.archivePath});
+    }
+  }
+  for (const { value, context } of discoverHelmSchemaApiOutputs(repositoryRoot)) {
+    if (value.kind !== 'CustomResourceDefinition') continue;
+    for (const version of value.spec?.versions ?? []) {
+      const key = `${value.spec.group}/${version.name}/${value.spec.names.kind}`;
+      const schema = structuredClone(version.schema?.openAPIV3Schema);
+      assert(schema, `API_SCHEMA_LOCAL_CRD_MISSING: ${context.path}`);
+      // Standard CRD envelope fields are served by Kubernetes independently of
+      // the custom spec/status schema. ObjectMeta remains opaque here, like the
+      // authenticated upstream CRD authorities, and gets its separate receiver.
+      schema.properties ??= {};
+      schema.properties.apiVersion ??= {type:'string'};
+      schema.properties.kind ??= {type:'string'};
+      schema.properties.metadata ??= {type:'object'};
+      if (customResourceSchemas.has(key)) {
+        const existing=customResourceSchemas.get(key);
+        assert(existing.owned && JSON.stringify(stable(existing.schema))===JSON.stringify(stable(schema)), `API_SCHEMA_OWNED_CONTEXT_VARIANT_UNQUALIFIED: ${key} ${context.path} ${context.profile}; qualify the configured schema authority before publication`);
+        continue;
+      }
+      customResourceSchemas.set(key, {schema, authority:`KubeClaw-owned CRD ${context.path}`,
+        archiveSha256:context.sourceDigest, upstreamReference:context.path, owned:true});
+    }
+  }
   return customResourceSchemas;
+}
+
+export function isProductOwnedApi(apiVersion, kind) {
+  return loadCustomResourceSchemas().get(`${apiVersion}/${kind}`)?.owned === true;
 }
 
 function resolveReference(schema) {
@@ -413,6 +448,11 @@ export function apiResourceFieldBoundaries(apiVersion, kind) {
     }
     boundaries.push({ apiVersion, kind, fieldPath, authority: authority.authority,
       authoritySha256: authority.authoritySha256, contract });
+    // A CRD registration embeds a schema definition, rather than a custom
+    // resource instance. Its keyword grammar is recursive and belongs to the
+    // linked apiextensions API reference. KubeClaw-owned served schemas are
+    // independently expanded completely by their own GVK below.
+    if(apiVersion==='apiextensions.k8s.io/v1'&&kind==='CustomResourceDefinition'&&fieldPath==='$.spec.versions[].schema.openAPIV3Schema')return;
     const next = new Set(ancestors).add(identity);
     for (const [name, child] of Object.entries(node.properties ?? {}).sort(([a], [b]) => a.localeCompare(b))) {
       visit(child, [...tokens, name], next);
@@ -429,4 +469,11 @@ export function apiResourceFieldBoundaries(apiVersion, kind) {
 
 export function apiAuthorityLock() {
   return manifest;
+}
+
+export function apiSchemaUpstreamReference(apiVersion, kind) {
+  if (builtinDefinitions.has(`${apiVersion}/${kind}`)) return manifest.kubernetes.source;
+  const schema = loadCustomResourceSchemas().get(`${apiVersion}/${kind}`);
+  assert(schema?.upstreamReference, `API_SCHEMA_REFERENCE_MISSING: ${apiVersion}/${kind}`);
+  return schema.upstreamReference;
 }

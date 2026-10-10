@@ -88,6 +88,14 @@
       "size": 326483,
       "version": "0.30.0"
     },
+    "spire-crds": {
+      "chart": "spire-crds",
+      "path": "scripts/vendor/external-helm-charts/e561d54dd2247552937f90c11e62a828ffcd85456a1b43162691500223bcac07.tgz",
+      "repository": "https://spiffe.github.io/helm-charts-hardened/",
+      "sha256": "e561d54dd2247552937f90c11e62a828ffcd85456a1b43162691500223bcac07",
+      "size": 4493,
+      "version": "0.6.0"
+    },
     "tailscale": {
       "chart": "tailscale-operator",
       "path": "scripts/vendor/external-helm-charts/c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",

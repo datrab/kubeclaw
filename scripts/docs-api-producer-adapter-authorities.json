@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "owner": "Documentation output adapter maintainers",
+  "closureCondition": "Review the changed original operation, refresh its exact adapter and mutation evidence, then update the authenticated source fingerprint; never update the hash alone.",
+  "sources": {
+    "scripts/deploy.sh": {
+      "sha256": "d5c0871f84d3524969dd8b9bb0f72631aa39a4884eda50437d9061cab515447f",
+      "operation": "Public deployment caller: local charts, immutable infrastructure charts, SPIRE installers, manifest transforms and native host configuration command."
+    },
+    "scripts/deploy-argocd.sh": {
+      "sha256": "22a6677539d482344788fecf8c22e6fb24fec5046c1a7b8ded6c429328becdc8",
+      "operation": "Actual Argo CD installer Helm operation and values/set-file bindings."
+    },
+    "scripts/deploy-cilium.sh": {
+      "sha256": "8b6a6bf4fa028f4f5f76adfe50783adae20024d92f06deb515a4e8c854b13b03",
+      "operation": "Actual Cilium installer Helm operation and values binding."
+    },
+    "scripts/deploy-ops-pod.sh": {
+      "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e",
+      "operation": "Actual Ops local chart installer operation and serialized overrides."
+    },
+    "scripts/render-litellm-deployment.mjs": {
+      "sha256": "036f4658360318ba7d503edb15fff1b7e1590dc5a42b34c20fbceab9c0181c9c",
+      "operation": "Pure manifest transform invoked by deploy.sh."
+    },
+    "scripts/render-postgresql-recovery.mjs": {
+      "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f",
+      "operation": "Pure recovery manifest transform; documentation renderer uses no cluster preflight."
+    },
+    "scripts/render-stateful-network-policies.mjs": {
+      "sha256": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
+      "operation": "Pure network-policy manifest transform invoked by deploy.sh."
+    },
+    "scripts/render-registry-local.mjs": {
+      "sha256": "5bf7d3dc0e65f312f697828ef2eaf32f28a8a03940b9548f221e616c8d168b51",
+      "operation": "Pure registry serve/gc/gc-dry-run manifest transform with validated offline input witnesses."
+    },
+    "scripts/render-native-worker-node.mjs": {
+      "sha256": "8f19768e2555221631a57c876e8a27400048486cce84c39c2fd06f1b99376a0e",
+      "operation": "Host configuration bundle and Helm values fragment; no Kubernetes API resource in its output file set."
+    },
+    "scripts/activate-native-worker-ax41.sh": {
+      "sha256": "10e71854efb95c16e5353f9e2f2617e9349323a715b69c76c73ac53693b22f15",
+      "operation": "Caller of the native host configuration bundle writer."
+    },
+    "scripts/repair-native-worker-pools-lifetime.sh": {
+      "sha256": "8e74b296c0d0108f620df0109f449ad4e9c4c2f9846369de122976c433cc3595",
+      "operation": "Caller of the native host configuration bundle writer."
+    },
+    "scripts/gitops-continuous.mjs": {
+      "sha256": "0373537e9e00e8d9f41fa64760e6ef9ed848fe7ffb00d5752413f0861e9d40fd",
+      "operation": "Public continuous GitOps caller serializes bootstrap source objects and local gitops chart Applications; its local chart is subject to recursive branch discovery."
+    },
+    "scripts/platform-surface-source-discovery.mjs": {
+      "sha256": "e0975c1095d664bde31f3b7ea87a60bd8050e8c94e85ab61e3a6dc9ca7c8941c",
+      "operation": "Documentation analysis renderer; source output is inspection data, its positive self-test guard is independently classified."
+    },
+    "scripts/check-local-helm-boolean-semantics.mjs": {
+      "sha256": "e2f83ac3010e582d84b38f5c5a8979c38415b9ab0831c56f49d4294ce061de02",
+      "operation": "Read-only semantic verification using local charts and explicitly guarded synthetic API-shaped fixtures."
+    },
+    "scripts/vendor-external-helm-authorities.mjs": {
+      "sha256": "eb77cec7c02faa985610941fd34ae9bfd7aba6f8f4449e70afee130979494174",
+      "operation": "Documentation evidence acquisition invokes helm pull; authenticated chart output discovery is separate."
+    },
+    "scripts/native-worker-deployment-preflight.mjs": {
+      "sha256": "2e98c9e9420baf85b4bca0d3f0ed4cf1f947f9a75f5bce845d6e5cd4819a46e3",
+      "operation": "Read-only Helm rendering and native policy validation before deployment; local output chart is discovered independently."
+    },
+    "scripts/updates/deployment-release.mjs": {
+      "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+      "operation": "Actual selected-release rendering/overlay validation caller for supported local chart roles; missing selected-release inputs remain a deployment prerequisite."
+    },
+    "scripts/check-cni-portability.mjs": {
+      "sha256": "c3f810aa1cb6555eb9f0639b2032d50e139ae17ed8500066e9f12c074f343823",
+      "operation": "Read-only verification of local Helm chart network-policy alternatives."
+    },
+    "scripts/check-role-image.sh": {
+      "sha256": "bba4349b814730af42e05603ec6ef329afc33ce9423d4b7c929a15e1328f7a71",
+      "operation": "Helm client version observation only; no Helm render/install operation in this exact source."
+    },
+    "scripts/remove-qdrant.sh": {
+      "sha256": "330e52e17f4a4c3d3cc49b4faf8fa4ea50ca067c84be5bac0d08d40a992c4a45",
+      "operation": "Helm uninstall removal operation with namespace/context; no new manifest output in this exact source."
+    }
+  }
+}

@@ -55,3 +55,53 @@ test('root metadata/envelope delegation and unknown API versions are explicit',(
  assert.deepEqual(select('apps/v2','DaemonSet',['$.spec']),[]);
  const keys=receiverContracts.map(r=>`${r.kind}:${r.fieldPath}`);assert.equal(new Set(keys).size,keys.length);
 });
+
+test('actual selected external node contexts include the three relevant omitted defaults and reject receiver drift',async()=>{
+ const {discoverExternalChartApiOutputs}=await import('../docs-api-output-discovery.mjs');
+ const {apiProductSelection}=await import('../docs-api-product-scope.mjs');
+ const root=new URL('../../',import.meta.url).pathname;
+ const outputs=discoverExternalChartApiOutputs(root).filter(o=>['DaemonSet','CSIDriver'].includes(o.context.kind));
+ assert.ok(outputs.some(o=>o.context.kind==='DaemonSet'));
+ assert.ok(outputs.some(o=>o.context.kind==='CSIDriver'));
+ for(const {context,value} of outputs){
+  const selection=apiProductSelection(context.apiVersion,context.kind,[context],receiverContracts,root);
+  const resolved=select(context.apiVersion,context.kind,selection.fieldPaths);
+  const required=context.kind==='DaemonSet'?['$.spec.template.spec.schedulerName']:['$.spec.seLinuxMount'];
+  if(context.kind==='DaemonSet' && value.spec.template.spec.volumes?.some(v=>v.secret)) required.push('$.spec.template.spec.volumes[].secret.defaultMode');
+  for(const path of required){
+   assert.ok(resolved.some(r=>r.fieldPath===path),`${context.path} ${context.profile}#${context.document}: ${path}`);
+   assert.ok(selection.applicability[path]?.length,`source applicability missing: ${path}`);
+   // Source-selected omissions must remain visible if their receiving record
+   // is removed; coverage must fail rather than hide the selected default.
+   const without=receiverContracts.filter(r=>!(r.kind===context.kind && r.fieldPath===path));
+   const mutated=apiProductSelection(context.apiVersion,context.kind,[context],without,root);
+   assert.ok(mutated.fieldPaths.includes(path),`removed receiver hid selected default: ${path}`);
+   assert.throws(()=>assert.ok(without.some(r=>r.kind===context.kind && r.fieldPath===path),`NODE_WORKLOADS_RECEIVER_GAP: ${path}`),/NODE_WORKLOADS_RECEIVER_GAP/);
+   assert.throws(()=>select(context.apiVersion,context.kind,[path+'Renamed']),/NODE_WORKLOADS_RECEIVER_GAP/);
+  }
+  assert.throws(()=>select(context.apiVersion,context.kind,[...selection.fieldPaths,'$.spec.futureSelectedCapability']),/NODE_WORKLOADS_RECEIVER_GAP/);
+ }
+});
+
+test('selected defaults retain parent, zero, gate, update and consumer distinctions',()=>{
+ const scheduler=get('DaemonSet','$.spec.template.spec.schedulerName');
+ const secret=get('DaemonSet','$.spec.template.spec.volumes[].secret.defaultMode');
+ const csi=get('CSIDriver','$.spec.seLinuxMount');
+ for(const record of [scheduler,secret,csi]){
+  for(const name of ['omitted-at-create','fresh-null','empty','invalid','update','consumer']) assert.ok(record.cases.some(c=>c.name===name && c.sourceOutcome),`${record.fieldPath}: ${name}`);
+  assert.ok(record.evidence.some(e=>e.url.includes('66452049f3d692768c39c797b21b793dce80314e')));
+  assert.ok(!JSON.stringify(record).match(/Deployment|ReplicaSet|registry-local|LiteLLM|registry-mirror/));
+ }
+ assert.match(scheduler.omitted,/default-scheduler/);
+ assert.match(scheduler.crossFieldConditions.join(' '),/required node affinity/);
+ assert.match(secret.omitted,/present SecretVolumeSource/);
+ assert.match(secret.nullValue,/no Secret source or defaultMode is fabricated/);
+ assert.match(secret.emptyValue,/zero is retained/);
+ assert.match(secret.invalidValue,/decimal 511/);
+ assert.match(secret.crossFieldConditions.join(' '),/Per-item mode overrides/);
+ assert.match(csi.omitted,/enabled.*false.*disabled.*nil/);
+ assert.match(csi.changeImpact,/old value nil.*drops.*old nonnil/);
+ assert.match(csi.crossFieldConditions.join(' '),/ReadWriteOncePod as its sole access mode/);
+ assert.match(csi.crossFieldConditions.join(' '),/Recursive.*opts out/);
+ assert.match(csi.crossFieldConditions.join(' '),/separate from fsGroup.*readOnly/);
+});

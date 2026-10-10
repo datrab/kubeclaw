@@ -19226,6 +19226,34 @@
       "upstreamOriginals": 4,
       "freshSourceReviewer": "/root/cluster_fixture_complete_source_corrected_fresh",
       "reviewScope": "full202records plus entire fixture task/source chain at following frozen source SHA; prior201 incomplete review remains historical"
+    },
+    "productOutputDiscoverySourceCandidate": {
+      "author": "/root/product_output_default_discovery_correction_writer",
+      "state": "source-candidate-not-publication-or-independent-acceptance",
+      "sourceFiles": 12,
+      "report": "/home/node/Documents/Codex/a98-evidence/product-output-default-discovery-correction-writer/report.md",
+      "reportSha256": "363492e8db3e67bd3cf7a984f04b7a919ef366e68c7925ebbed8600dcb5bd338",
+      "rootVerifiedSealAndSourceEntries": 28,
+      "rootChecks": "35 api-reference focused tests PASS, zero skipped, with explicitly selected private genuine Go1.26.3 binary. Author combined40PASS retained separately. Changed/new producer adapter authority fails closed.",
+      "currentMechanicalRefresh": "1199contexts; sourceStable=false, remaining receiver gaps; exploratory union not acceptance. OWN current schemas one byte-equivalent variant; differing configured schema profiles fail closed.",
+      "remaining": "Integrate committed actual Pod rows and new node defaults; resolve CronJob4selected claims; fresh source-stable allproducer replay then separate source-bound generated commit. Cilium6variable Secret byte classifications require independent Source review; full mutations/gates pending."
+    },
+    "nodeSelectedDefaults": {
+      "author": "/root/node_selected_defaults_correction_writer",
+      "state": "released-author-candidate-pending-independent-review-and-publication",
+      "addedRecords": 3,
+      "preservedRecords": 272,
+      "currentRecords": 275,
+      "fields": [
+        "DaemonSet $.spec.template.spec.schedulerName",
+        "DaemonSet $.spec.template.spec.volumes[].secret.defaultMode",
+        "CSIDriver $.spec.seLinuxMount"
+      ],
+      "rootVerifiedSealEntries": 122,
+      "rootTests": "7PASS, zero skipped, including authentic allselected external node contexts/defaults and removed-receiver detection",
+      "report": "/home/node/Documents/Codex/a98-evidence/node-selected-defaults-correction-writer/report.md",
+      "reportSha256": "016d71443679384ec9bb22e936cee1c6130c94c1485aca82c756f1c2c5a967dd",
+      "qualification": "Author/root source/render/contract checks, not independent semantic/global/live acceptance"
     }
   }
 }

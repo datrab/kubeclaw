@@ -11,7 +11,7 @@ import {
   table,
 } from './docs-generate-core.mjs';
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
-import { renderApiResourceReference, upstreamApiReference } from './docs-api-reference.mjs';
+import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamApiReference } from './docs-api-reference.mjs';
 
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -340,6 +340,7 @@ ${generatedEnd()}
 
 function renderHelmValues(configurationValues, configurationSchemas) {
   const valueFiles = configurationValues.files;
+  const rejectedApiProfiles = renderRejectedApiOutputProfiles(configurationValues.rejectedApiOutputProfiles,(source,line)=>`[${literalText(source)}](${pinnedSourceUrl(source,line,line)})`,root);
   const apiResourceSections = renderApiResourceReference(configurationValues.apiResources,
     (source, line) => `[${literalText(source)}](${pinnedSourceUrl(source, line, line)})`, configurationValues.apiMetadataReferences, root);
   const collectionSchemaKey = (schema) => JSON.stringify([schema.authority, schema.authoritySha256, schema.apiVersion, schema.kind, schema.resolvedPath]);
@@ -522,6 +523,8 @@ ${table(['File', 'Class', 'Documents', 'Recursive fields'], valueFiles.map((file
 Each field row separates the checked-in source from the runtime receiver. It follows local Helm templates, Argo CD value-file bindings, and Kubernetes resource authorities. An external chart or Kubernetes API owns validation when its schema is outside this repository. A field with no active deployment binding is identified as inactive instead of being presented as an effective option.
 
 ${fieldSections}
+
+${rejectedApiProfiles}
 
 ## Product API Field Reference
 

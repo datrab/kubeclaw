@@ -1,7 +1,16 @@
 import assert from 'node:assert/strict';
-import { apiProductSelection, assertProductApiContexts, productMetadataReferences, versionedApiReceiverRegistries } from './docs-api-product-scope.mjs';
+import { apiProductSelection, assertProductApiContexts, productMetadataReferences, productApiReceiverRecords } from './docs-api-product-scope.mjs';
 import { createHash } from 'node:crypto';
-import { apiResourceFieldBoundaries, apiAuthorityLock } from './docs-api-schema-authorities.mjs';
+import { apiResourceFieldBoundaries, apiSchemaUpstreamReference, isProductOwnedApi } from './docs-api-schema-authorities.mjs';
+import { discoverRejectedApiOutputProfiles } from './docs-api-output-discovery.mjs';
+
+export function renderRejectedApiOutputProfiles(profiles,sourceLink,sourceRoot) {
+  assert(Array.isArray(profiles),'API_REFERENCE_REJECTED_PROFILE_INVENTORY_MISSING');
+  assert.deepEqual(profiles,discoverRejectedApiOutputProfiles(sourceRoot),'API_REFERENCE_REJECTED_PROFILE_DRIFT');
+  if(!profiles.length)return '';
+  return '## Illustrative Values That Require Preparation\n\n'+profiles.map(profile=>
+    `${sourceLink(profile.profile,1)} is an illustrative input. Its unchanged standalone render stops with ${code(profile.observedError.split('\n')[0])}. No resource is emitted.\n\n${text(profile.safeStop)} ${text(profile.preparationCriterion)} Owner: ${text(profile.owner)}. Follow [configuration preparation](../${profile.canonicalProcedure.replace(/^docs\/site\//u,'')}).\n`).join('\n');
+}
 import { apiReceiverCoverage, assertApiReceiverCoverage } from './docs-api-receiver-coverage.mjs';
 import { implicitKubernetesObjectMetaReferences as canonicalMetadataReferences } from './docs-kubernetes-metadata-receiver-contracts.mjs';
 
@@ -62,10 +71,7 @@ function renderReceiverContract(receiver, key, fieldPath) {
 }
 
 export function upstreamApiReference(apiVersion, kind) {
-  const lock = apiAuthorityLock();
-  return apiVersion === 'cilium.io/v2' ? lock.customResources.cilium.crds[kind].source
-    : apiVersion === 'argoproj.io/v1alpha1' ? 'https://github.com/argoproj/argo-helm/releases/tag/argo-cd-' + lock.customResources.argoproj.version
-      : lock.kubernetes.source;
+  return apiSchemaUpstreamReference(apiVersion, kind);
 }
 
 const metadataAnchor = referenceId => `api-metadata-${createHash('sha256').update(referenceId).digest('hex').slice(0, 20)}`;
@@ -111,7 +117,7 @@ export function renderApiResourceReference(resources, sourceLink, metadataRefere
   }
   for (const resource of resources.filter(item => item.productSelection)) {
     const actual = apiProductSelection(resource.apiVersion, resource.kind, resource.sourceContexts,
-      versionedApiReceiverRegistries.get(resource.apiVersion) ?? [], sourceRoot);
+      productApiReceiverRecords(resource.apiVersion,resource.kind), sourceRoot);
     assert.deepEqual(resource.productSelection, actual, `API_PRODUCT_SELECTION_DRIFT: ${resource.apiVersion}/${resource.kind}`);
   }
   validateImplicitMetadataReferences(resources, metadataReferences);
@@ -143,7 +149,7 @@ export function renderApiResourceReference(resources, sourceLink, metadataRefere
     assert(Array.isArray(resource.extra) && !resource.extra.length,
       `API_REFERENCE_EXTRA_RECEIVERS: ${key}`);
     const joined = apiReceiverCoverage(resource.apiVersion, resource.kind,
-      resource.productSelection ? versionedApiReceiverRegistries.get(resource.apiVersion) ?? [] : resource.rows.map(row => row.receiverContract), resource.productSelection ?? null);
+      resource.productSelection ? productApiReceiverRecords(resource.apiVersion,resource.kind,resource.productSelection.fieldPaths) : resource.rows.map(row => row.receiverContract), resource.productSelection ?? null);
     assertApiReceiverCoverage(joined);
     for (const row of joined.rows) assert.deepEqual(rows.get(row.fieldPath).receiverContract,
       row.receiverContract, `API_REFERENCE_RECEIVER_IDENTITY_DRIFT: ${key} ${row.fieldPath}`);
@@ -163,16 +169,28 @@ export function renderApiResourceReference(resources, sourceLink, metadataRefere
         relatedReference + renderReceiverContract(receiver, key, row.fieldPath) +
         `<details>\n<summary>Pinned API schema constraints</summary>\n\n` +
         `Authority: ${text(row.authority)}. Content SHA-256: ${code(row.authoritySha256)}.\n\n` +
-        (resource.productSelection ? `[General field definitions and unused alternatives](${upstreamApiReference(resource.apiVersion, resource.kind)}).\n\n</details>` : `<pre><code>${text(JSON.stringify(row.contract, null, 2)).replaceAll('<br>', '\n')}</code></pre>\n\n</details>`);
+        (resource.productSelection && !isProductOwnedApi(resource.apiVersion,resource.kind) ? `[General field definitions and unused alternatives](${upstreamApiReference(resource.apiVersion, resource.kind)}).\n\n</details>` : `<pre><code>${text(JSON.stringify(row.contract, null, 2)).replaceAll('<br>', '\n')}</code></pre>\n\n</details>`);
+    }).join('\n\n');
+    const unsupported=(resource.productSelection?.authoredUnknownFields??[]).map(field=>{
+      assert.equal(field.schemaAuthority,null,`API_REFERENCE_UNKNOWN_SCHEMA_FABRICATED: ${key} ${field.fieldPath}`);
+      assert.equal(field.authorityRole,'authored-outside-served-schema',`API_REFERENCE_UNKNOWN_AUTHORITY_DRIFT: ${key} ${field.fieldPath}`);
+      const gap=field.receiverContract.implementationGap;
+      for(const name of ['owner','blockedStep','safeStop','acceptanceCondition'])assert(typeof gap?.[name]==='string'&&gap[name].trim(),`API_REFERENCE_UNKNOWN_IMPLEMENTATION_BOUNDARY_MISSING: ${key} ${field.fieldPath} ${name}`);
+      return `<a id="${anchor({apiVersion:resource.apiVersion,kind:resource.kind,fieldPath:field.fieldPath})}"></a>\n\n#### ${code(field.fieldPath)} — unsupported authored input\n\n`+
+        'This producer authors the field outside the declared served schema. It has no served schema property or controller capability contract.\n\n'+
+        `**Authored value:** ${code(JSON.stringify(field.authoredValue))}.\n\n`+renderReceiverContract(field.receiverContract,key,field.fieldPath)+
+        `\n\n**Unavailable operation:** ${text(gap.blockedStep)}. **Owner:** ${text(gap.owner)}.\n\n${text(gap.safeStop)}\n\n**Condition for support:** ${text(gap.acceptanceCondition)}\n\n`+
+        '[Prism lease admission and recovery](../use/prism-studio.md#prism-test-lease-admission-and-recovery).';
     }).join('\n\n');
     const upstream = upstreamApiReference(resource.apiVersion, resource.kind);
+    const authorityLink=!/^https?:\/\//u.test(upstream)?sourceLink(upstream,1):`[Pinned upstream schema or chart CRD authority](${upstream})`;
     const contexts = (resource.sourceContexts ?? []).map(context =>
       `- ${sourceLink(context.path, 1)}; YAML document ${text(context.document)}.`).join('\n');
     return `### ${text(resource.kind)} (${code(resource.apiVersion)})\n\n` +
-      (resource.productSelection ? `These fields describe checked-in resource choices and relevant omissions under present objects. General upstream alternatives remain available through the pinned schema authority shown for each field. Discovery limits: ${text(resource.productSelection.limits.join(' '))} ` : `These fields cover the full pinned API schema, including options absent from the checked-in manifests. `) +
+      (resource.productSelection ? `These fields describe checked-in resource choices and relevant omissions under present objects. General upstream alternatives remain available through the pinned schema authority shown for each field. Cluster applicability: ${text(resource.productSelection.limits.join(' '))} ` : `These fields cover the full pinned API schema, including options absent from the checked-in manifests. `) +
       `Expected outcomes below come from implementation sources. They do not report a live API request or deployment test.\n\n` +
-      `[Pinned upstream schema or chart CRD authority](${upstream}).\n\n` +
-      `Checked-in resource inputs:\n\n${contexts}\n\n${sections}`;
+      `${authorityLink}.\n\n` +
+      `Checked-in resource inputs:\n\n${contexts}\n\n${sections}${unsupported?`\n\n${unsupported}`:''}`;
   }).join('\n\n');
   return [resourceSections, renderImplicitMetadataReferences(resources, metadataReferences)].filter(Boolean).join('\n\n');
 }
