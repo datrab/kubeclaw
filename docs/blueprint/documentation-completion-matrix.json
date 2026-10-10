@@ -15986,6 +15986,19 @@
         "A98-11"
       ],
       "description": "Corrected frozen reviewer F54 repeats old item-null omission; current da40 already retained zero reference and enabled Pod ServiceAccount admission behavior. This correction adds direct kubelet runtime evidence1067–1084: empty names are skipped before Secret lookup, so retained item contributes no pull credential. Empty-object/empty-name descriptions also cover this effect; enabled admission remains a later Pod-create boundary, separate from template storage. Historical frozen FAILs remain unchanged."
+    },
+    {
+      "id": "A98-LIFECYCLE-CSI-ROUTE-QUALIFICATION-CORRECTION",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Current fresh Source findings distinguish lifecycle hook/probe descriptions, failed PostStart kill attempts and ignored NotFound stop errors; CSI fsGroup capability selection now separated from actual NodePublishVolume argument-transfer evidence. Immutable reviewed failures remain; current actual-output applicability and new full affected fresh review required."
     }
   ],
   "checks": [
@@ -16984,6 +16997,32 @@
       "command": "Root verify historical final evidence manifests against all recorded file sizes/SHA256",
       "state": "terminal-pass",
       "scope": "334 files of historical5d and5803files of historicald8 seals verified, zero mismatches. Both historical reviews remainFAIL/incomplete; no current Source/Reader/Quality/Astra or package acceptance."
+    },
+    {
+      "command": "npm run docs:platform-specialist-guides:check",
+      "state": "terminal-fail",
+      "exitCode": 1,
+      "scope": "Session20883, HEAD4f6773b6 with six mutable producer files. Failure: docs/generated/inventory/platform-surfaces.json stale in platform inventory subcheck. No current AP09.7 individual or Astra acceptance; regeneration must follow stable source-bound source commit.",
+      "log": "/home/node/Documents/Codex/a98-evidence/ap097-current-platform-check-4f6773b6.log",
+      "logSha256": "5305486a4167405e782077023f007d2a97ff98264a46172baa7483244137fa26"
+    },
+    {
+      "command": "Qualified original-source node --test daemonset-template-semantics, node-root-metadata-receiver, node-workloads-receiver",
+      "state": "terminal-pass",
+      "scope": "Session22307:15PASS0FAIL0SKIP after lifecycle/CSI corrections, including actual selected external node contexts on mutable producer candidate. Root integration checks only; no immutable all-producer join, independent semantic or package acceptance.",
+      "log": "/home/node/Documents/Codex/a98-evidence/lifecycle-csi-root-correction-tests.log"
+    },
+    {
+      "command": "node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/expanded-workload-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Session55650:13PASS0FAIL0SKIP after shared lifecycle corrections. Root integration only, not independent semantic acceptance.",
+      "log": "/home/node/Documents/Codex/a98-evidence/lifecycle-workload-root-correction-tests.log"
+    },
+    {
+      "command": "Root compare complete receiver exports against immutable fe07 baseline in separate comparison copy",
+      "state": "terminal-pass",
+      "scope": "Session3706: apps1285records/77changed, workload770/4changed, node277/13changed; identities and counts unchanged. Changed dimensions confined to lifecycle/grace claims and three CSI evidence lists. All other exported records byte-equivalent. Declared installed-dependency loader qualification; no immutable producer or whole-source semantic acceptance.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/lifecycle-csi-root-correction-audit.json"
     }
   ],
   "reviewAssignments": [
@@ -18207,10 +18246,10 @@
     }
   ],
   "continuation": {
-    "stage": "Released Deployment correction1 including17status paths joined into original API inventory; two independent complete Source reviews running while Argo author continues. Current complete-registry gate stillfails4159missing bindings; no package acceptance.",
+    "stage": "AP09.8 remains unaccepted. Current producer closure is mutable; two fresh current receiver Source reviews continue on immutable fe07. Root integrates independently evidenced lifecycle/CSI corrections; new affected-scope review required.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Read fullnew Source report and correct allbehavior/support/helper defects; newfreshfullreview. Finish/reuse allremainingAPI receiver registries inclcore/metadata/status, join and render fullcanonicalreference. Source/gen/currentgates/Reader/Quality/Astra. No massparity before AP09.8 approval.",
+    "next": "Complete native producer output classification and immutable actual-context join; finish current complete Source reviews, correct findings, conduct new full affected fresh reviews, source-bound generation and required gates, then Reader/Quality/Astra. AP09.7 missing individual acceptance must also be recovered. No parity/deletion before AP09.8 approval.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -18219,17 +18258,17 @@
       "/root/a98_operator_writer",
       "/root/a98_reference_writer"
     ],
-    "currentMutationSession": 90473,
+    "currentMutationSession": null,
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/a98_argo_receiver_writer",
-      "/root/a98_network_admission_source_corrected_complete_fresh",
-      "/root/a98_apps_receiver_corrected_source_complete_fresh"
+      "/root/producer_closure_eight_findings_writer",
+      "/root/workload_current_fe07_source_fresh",
+      "/root/node_current_fe07_source_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
-    "currentMutationState": "terminal-pass-old-source-snapshot",
+    "currentMutationState": "No current full mutation run live or accepted. Earlier snapshot runs are historical evidence only; last current complete run lacked PASS.",
     "consumerWriterFinished": {
       "agent": "/root/a98_config_writer",
       "paths": [
@@ -20263,6 +20302,31 @@
       "current": "New independent identities fork_turns none, GPT6.1Sol high, full current affected770+277Source scopes.",
       "producer": "Alias/fs-async/native-output closure still mutable; final snapshot must rebind local workspace package links to copied source rather than live node_modules realpaths.",
       "next": "Finish stable producer release; complete actual source/field join and generation; current independent Source/Reader/Quality andAstra still required."
+    },
+    "lifecycleAndCSICorrection": {
+      "state": "candidate-pending-new-full-affected-independent-review",
+      "reviewedSource": "fe07fc0848521ff40d6ca22c99cc948fddd476d6",
+      "reviewers": [
+        "/root/node_current_fe07_source_fresh",
+        "/root/workload_current_fe07_source_fresh"
+      ],
+      "findings": "Node independent lifecycle findings NODE-SRC-001–003; workload reviewer independently confirms two shared runtime qualifications in all four terminationGracePeriodSeconds records. CSI narrow caption lacks actual NodePublishVolume argument-transfer support.",
+      "correction": "Lifecycle clone descriptors and case outcomes name hooks; PostStart failure attempts kill; stop NotFound ignored. CSI capability selection and NodePublishVolume argument transfer now have separate narrow source spans.",
+      "primaries": "Root verified source ledger SHA256 and read pinned Kubernetes66452049 validation3503–3552/3593–3606, lifecycle76–104, runtime319–335/885–900, CSI249–264/300–313.",
+      "publicationApplicability": "Pending immutable current actual producer/field join. No publication or whole-package verdict inferred.",
+      "historicalVerdicts": "Original immutable fe07 FAILs retained; live correction is not reviewer acceptance.",
+      "rootChecks": "15node and13workload focused tests PASS without skips; complete-export comparison confines changes to77apps/4workload/13node records, counts/identities preserved. These checks do not replace new independent affected-scope review."
+    },
+    "priorAP097CurrentAudit": {
+      "state": "missing-current-independent-individual-and-Astra-acceptance",
+      "sourceRevision": "4f6773b63b42c09c93266f52c74e04e4646b34ca",
+      "observations": [
+        "Execution plan AP09.7 explicitly says internally completed and independent whole-plan acceptance open.",
+        "Current review-ledger has no AP09.7/A97 entry. Acceptance-evidence directory contains README only.",
+        "All12A97 gates in central matrix remain not-accepted with no evidence/reviews.",
+        "Current structural guide gate terminal FAIL for stale platform inventory; it cannot prove semantic or Reader acceptance even after regeneration."
+      ],
+      "remaining": "Complete current Source/Reader/Quality individual evidence and final Astra review against AP09.7 contract; reuse valid current content and checks after impact review."
     }
   }
 }
