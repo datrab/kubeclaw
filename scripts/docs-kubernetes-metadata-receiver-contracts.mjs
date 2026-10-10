@@ -319,7 +319,18 @@ function rootMetadata(r,field,{implicit=false}={}) {
   rec.omitted='When name and generateName are absent, LimitRange create preparation assigns a UUID name before resource validation. A supplied generateName is normally resolved earlier by the store. Read the returned final identity.';
   rec.nullValue='Fresh string null decodes to an empty name. With no earlier generated name, LimitRange create preparation assigns a UUID; common metadata and spec validation still apply.';
   rec.emptyValue='An explicit empty name follows the same create UUID fallback when the store has not already generated a name. This is not permission to rename an existing object on update.';
+  rec.invalidValue='An invalid supplied DNS-subdomain name fails validation. When name and generateName are both absent, create preparation supplies a UUID before validation. Replacement cannot rename an existing object.';
+  rec.cases=sourceCases(type,rec.omitted,rec.nullValue,rec.emptyValue,rec.invalidValue);
   rec.cases.push(itemCase('LimitRange unnamed create','A complete fresh create has no name or generateName.','Create preparation supplies a UUID name; validation then checks the populated name and spec. Inspect the returned identity before any retry.'));
+ }
+ if(r.uuidName&&field==='') {
+  rec.omitted='Fresh ObjectMeta is zero. With no supplied or generated name, LimitRange create preparation assigns a UUID before metadata and spec validation.';
+  rec.emptyValue='{} supplies no custom identity or labels. LimitRange create preparation can assign a UUID name; the complete spec and request authority remain required.';
+  rec.cases=sourceCases(type,rec.omitted,rec.nullValue,rec.emptyValue,rec.invalidValue);
+ }
+ if(r.uuidName&&field==='generateName') {
+  rec.omitted='No prefix generation occurs. If name is also absent, LimitRange create preparation supplies a UUID name before validation.';
+  rec.cases=sourceCases(type,rec.omitted,rec.nullValue,rec.emptyValue,rec.invalidValue);
  }
  if(r.kind==='Job'&&(field===''||field.startsWith('annotations')))addSelectedJobHooks(rec);
  if(r.isCRD){rec.qualificationLimits.push(selectedMetadataSurface(r,field)?'The cited paths qualify KubeClaw-authored CRD identity and metadata maps, their selected annotation values, and the stated controller dependencies. Other upstream metadata choices require their own receiving contract. API acceptance does not prove any later consumer effect.':'The named metadata consumers below are source-checked paths. Complete discovery of every Argo/Cilium controller, server, helper, cache and event consumer remains an open source-audit obligation. API acceptance does not prove any later consumer effect.');rec.canonicalReferenceId=referenceId;rec.crossFieldConditions.push(r.clientVersion);addConsumers(rec,r,field);addProductConsumers(rec,r,field);}
