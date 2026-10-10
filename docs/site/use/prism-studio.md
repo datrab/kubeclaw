@@ -27,7 +27,11 @@ A Nova approval wait is not a deployment prerequisite. Run deployment commands
 from `<repository-root>` on the administration machine.
 
 For [the Studio journey](#the-complete-studio-journey), first complete deployment
-and the selected service health checks. Verify the named human's private access.
+and the selected service health checks. Before submitting design work, verify
+[SPIFFE agent admission](#spiffe-agent-admission) on Control and the agent path,
+including the exact trusted agent identity. SPIFFE identifies workloads; Control
+also checks which identity may claim jobs and commit designs. A healthy HMAC
+worker does not enable this journey. Verify the named human's private access.
 Then use the original Nova run to submit its admitted architecture. Nova creates
 its approval wait after dispatch. Before a human changes or approves the design,
 verify that original request and wait; stop if dispatch or wait creation is
@@ -153,10 +157,76 @@ You need all of the following items:
 7. `gatewayToken-prism` in `openclaw-shared-secrets`.
 8. A valid Prism code bundle URL and a commit that matches the selected runtime receipt.
 9. The authorized operator issuer ID used by the Nova Prism stage.
+10. SPIFFE-enabled Control and a matched agent trust path with the exact identity
+    that Control permits. Complete [SPIFFE agent admission](#spiffe-agent-admission)
+    before Nova dispatch, a child round, or a natural-language revision.
 
 Stop if an identity, digest, Secret, or native host binding is unknown.
 Do not replace an unknown value with a new value during an active run.
 That action can make a durable request impossible to reconcile.
+
+### SPIFFE agent admission
+
+The governed journey requires SPIFFE mode on Control and the matched agent
+connection. The bridge must claim a durable job before it starts external work.
+Control requires the same trusted Prism Agent identity for job claim, job status,
+job finish, direction commit, and natural-language revision commit. CSI driver
+registration is a separate deployment prerequisite; it does not enable this
+application trust mode or grant agent permission.
+
+Before submitting design work, the release and workload-trust owners must verify:
+
+1. The selected service values and rendered Control environment enable SPIFFE:
+   `workerTrust.spiffe.enabled: true` produces `WORKER_TRUST_SPIFFE_ENABLED=true`.
+2. Control's `PRISM_TRUSTED_AGENT_SPIFFE_ID` equals the agent's issued workload
+   identity. The service chart constructs it as
+   `spiffe://<trust-domain>/ns/<agent-namespace>/sa/<agent-service-account>` from
+   the selected `workerTrust.spiffe` values. Each placeholder is that selected
+   value, not a new identity chosen during diagnosis.
+3. The selected agent release enables its SPIFFE path, receives its credential
+   and Workload API socket, and reaches Control through the matched trust proxy.
+   Follow [Worker Trust](worker-trust.md#canonical-worker-trust-procedure).
+4. An authorized isolated agent exercise proves job claim, direction commit,
+   and natural-language revision commit permission for that exact identity.
+   Keep this evidence separate from health probes and from the production
+   request's result.
+
+The service chart defaults SPIFFE to `false`; the development agent overlay
+enables it. Those inputs alone do not establish a matched selected release.
+If this prerequisite is absent or unverified, stop before design submission.
+The blocked step is the agent's job claim or result commit, even if Control can
+store a request and a HMAC worker can pass health checks. The release and trust
+owners must supply a matched configuration and prove the permissions above
+before the journey opens. This page provides no generic command to repair trust.
+
+If work was already admitted, preserve its original run, architecture, request,
+round, instruction/base revision, key, and job/fence identities. Stop new work
+and follow [Agent work blocked by trust](#agent-work-blocked-by-trust).
+Do not replay an uncertain launch or switch trust mode to clear an active
+worker error.
+
+> **Source evidence — mandatory agent trust**
+>
+> **Claim:** Internal agent jobs and design/revision commits require SPIFFE and
+> the exact configured agent identity; the bridge claims before external work.
+>
+> **Implementation:** [`handleAgentJobs` trust guard](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/agent-job-routes.ts#L8-L10) ·
+> [direction-commit guard](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L243-L245) ·
+> [revision-commit guard](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L263-L265) ·
+> [`AgentJobRunner.runOne` claim](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/agent-job-runner.mjs#L27-L30).
+>
+> **Contract or setting:** [Control's startup trust policy](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-config.ts#L22-L38) ·
+> [rendered mode and exact agent identity](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L127-L138) ·
+> [service trust defaults](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.yaml#L75-L84) ·
+> [agent-overlay enablement](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/my-values/prism-agent-values.yaml#L59-L60).
+>
+> **Test evidence:** No running-deployment agent claim or commit result is
+> established here. The required permission exercise remains unexecuted.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`.
+>
+> **Limit:** Source guards and selected configuration do not prove credential
+> delivery, proxy access, permission in a running deployment, or model completion.
 
 ### Current repository limit
 
@@ -227,7 +297,7 @@ Apply these task rules to the selected values:
 | Database, artifacts, and backup | Size the independent claims from measured growth and restore time. Local backup and byte ceilings do not provide off-host recovery or automatic expiry. |
 | Ingestion | Enable only with approved source policy and explicit positive CPU/memory requests and limits. Quarantine expiry does not delete published corpus or bundle data. |
 | Private Studio access | Bind the selected Tailscale hostname and operator namespace to the approved private-access record. Prove authorized and unauthorized access separately. |
-| SPIFFE trust | Configure the trust domain, namespaces, service accounts, CSI socket, and proxy images as one policy. An incomplete identity set blocks startup. |
+| SPIFFE trust | The governed agent journey requires SPIFFE-enabled Control and the exact trusted agent identity. Configure the trust domain, namespaces, service accounts, CSI socket, and proxy images as one policy; complete [agent admission](#spiffe-agent-admission) before submission. An incomplete identity set blocks startup. |
 | Personal preference | Select only an existing authenticated Prism subject in `control.pipelinePreferenceSubject`. Empty disables personal preference binding for pipeline rounds. |
 | Product decisions | Enable only with the separate operator, issuer, key, controller, CA, audience, and revision policy. This authority is distinct from design approval. |
 
@@ -269,7 +339,9 @@ root-managed pool policy. Missing or invalid admission values stop startup.
 > Native configuration [admits resource and engine identity](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/config/native-worker.ts#L4-L35) and [host scope and authentication](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/config/native-worker.ts#L38-L47). It also validates [supervisor paths and journal bounds](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/config/native-worker.ts#L50-L83).
 
 The following settings are required when their feature is active. They have no
-safe implied identity:
+safe implied identity. Control's SPIFFE trust and the matched agent path are
+mandatory for this governed journey. HMAC worker inspection remains a separate
+supported health boundary; it does not make agent work available.
 
 | Boundary | Required settings |
 | --- | --- |
@@ -341,7 +413,9 @@ Inspect the effective agent configuration for these task boundaries:
 - The Prism bridge uses its own named listener, bounded invocation, private
   temporary space, and restricted security context. Its `/health` and `/ready`
   probes do not prove a completed model request.
-- `workerTrust.spiffe` must match the platform identity policy and sidecar
+- `workerTrust.spiffe.enabled` must be `true` for this agent journey. Its identity
+  must equal Control's `PRISM_TRUSTED_AGENT_SPIFFE_ID` under the selected policy.
+  The remaining `workerTrust.spiffe` settings must match that policy and sidecar
   loopback Control destination. The common chart's generic bridge is a different surface.
 - The workspace installs Prism role and tool instructions. Those instructions
   guide the agent; server-side admission still owns permission and validity.
@@ -438,7 +512,8 @@ Inspect the render for:
 - one version-matched Prism agent image and code bundle;
 - the intended namespace, native node, pool namespace, and policy digest;
 - the expected database and runtime Secret names;
-- SPIFFE identities and Envoy sidecars when SPIFFE is enabled;
+- SPIFFE enabled on Control and the agent, exact matching agent identity, and
+  the required Envoy sidecars for this journey;
 - the Tailscale Ingress host;
 - PVC sizes, storage classes, backup jobs, and Pod resource limits.
 
@@ -519,6 +594,10 @@ bound_kubectl exec -n "$prism_namespace" deployment/agent-prism -c kubeclaw -- o
 ```
 
 If the worker is not ready, do not bypass the readiness probe.
+In **HMAC** mode, a shared secret authenticates each internal message and protects
+its content from changes. A **nonce** is a one-use request value; PostgreSQL
+retains its digest to reject replay. HMAC alone does not prevent replay or grant
+application permission. See [HMAC and nonce](../reference/glossary.md#hmac-and-nonce).
 Interpret each health result at its own boundary:
 
 | Signal | What it proves | What still needs a separate check |
@@ -537,6 +616,11 @@ values and render. The absent runtime release selection establishes no deployed
 mode. Use the canonical [Worker endpoints](../understand/prism-runtime.md#worker-endpoints)
 explanation for these boundaries. Keep admission closed on failed native
 reconciliation or, in HMAC mode, failed nonce-table access.
+
+Passing HMAC worker health does not open the governed design journey. Agent
+claim and direction/revision commits require the separate
+[SPIFFE agent admission](#spiffe-agent-admission) checks. Keep design submission
+closed until those checks succeed.
 
 > **Source evidence — worker and dependency health**
 >
@@ -558,7 +642,9 @@ The following status map applies to every step below at the recorded revision.
 “Implemented” means that the linked product code provides the operation; it does
 not mean that this deployment exercised it. The absent runtime release selection
 stops this checkout before deployment and the live journey. Verification did
-not include any live Studio-to-Nova step.
+not include any live Studio-to-Nova step. Agent work additionally remains
+unavailable until the selected release meets [SPIFFE agent admission](#spiffe-agent-admission);
+service health alone does not remove that boundary.
 
 | Step | Implemented operation and expected evidence | Verification boundary |
 | --- | --- | --- |
@@ -590,7 +676,12 @@ Perform one state-changing action at a time. Wait for its result before another
 edit, direction action, round, restore, approval, or signal. Keep the original
 project URL, actor, architecture, document revision, action, time, and non-secret
 request evidence. Include a returned key, event, job, approval, or bundle identity
-when available. Do not retain cookies, CSRF values, tokens, or private keys.
+when available. **CSRF** means cross-site request forgery: another site tries to
+make the browser submit an unwanted change. Prism's separate CSRF token must
+match its browser cookie and request header for a session write. It does not
+replace session authentication or permission checks. See
+[CSRF](../reference/glossary.md#csrf). Do not retain cookies, CSRF values, tokens,
+or private keys.
 
 | Operation | Retained identity and result | Response loss, reload, and retry boundary |
 | --- | --- | --- |
@@ -643,6 +734,11 @@ maintainers. Retain evidence and keep later approval, publication, and resume cl
 > **Limit:** Source and isolated client/database checks do not prove browser recovery, native execution, or a live journey.
 
 ### Step 1: Let Nova create the governed project
+
+Before dispatch, require the matched Control/agent SPIFFE configuration and
+trusted agent permission from [SPIFFE agent admission](#spiffe-agent-admission).
+Stop before submission if that evidence is absent. Control can store a request
+in HMAC mode while the agent cannot claim or commit its work.
 
 The normal pipeline path starts with the `kubeclaw.prism-design` stage.
 It verifies that the architecture artifact belongs to the same run, is JSON,
@@ -704,8 +800,16 @@ The governed Nova path is the supported operator journey.
 
 ### Step 3: Wait for exactly three directions
 
+The agent must use the SPIFFE identity permitted by Control to claim and commit
+this job. If directions remain pending, check
+[Agent work blocked by trust](#agent-work-blocked-by-trust) before treating the
+delay as a model/provider problem. Do not dispatch another request to test it.
+
 The Prism agent must commit exactly three materially different and valid Design
-Documents for one generation. Control checks:
+Documents for one generation. A **job fence** is the durable identity of the
+current job claim. The returned fence must still match the stored claim before
+Control can commit its result; an old claimant cannot commit a later claim's
+work. See [Job fence](../reference/glossary.md#job-fence). Control checks:
 
 - three entries exist;
 - their keys are unique;
@@ -774,6 +878,10 @@ Project content cannot select another person's subject.
 
 ### Step 5: Request another design round when needed
 
+Require the same [SPIFFE agent admission](#spiffe-agent-admission) evidence
+before requesting another round. A prior health result or direction set does
+not prove that the current agent path remains authorized.
+
 Studio offers **Request new design round** after all three directions are rejected.
 Confirm each rejection before requesting that new round.
 The pending-round button instead retries the stored request.
@@ -838,6 +946,11 @@ Changing only `baseRevision` converts an uncertain retry into a new operation.
 Do not use that change to clear a conflict.
 
 #### Natural-language revisions
+
+Before selecting **Propose change**, verify [SPIFFE agent admission](#spiffe-agent-admission)
+for Control and the current agent identity. A stored revision job cannot progress
+through HMAC-only Control. On a trust rejection, stop and preserve the original
+request through [Agent work blocked by trust](#agent-work-blocked-by-trust).
 
 Enter a concrete instruction and select **Propose change**.
 Studio stores one pending request with its base revision and idempotency key.
@@ -914,6 +1027,11 @@ integration works.
 The preview loader accepts only content-addressed assets from Control, limits the
 total bytes, checks media types, and encodes the asset bytes in `data:` URLs.
 Publication later creates independent worker-rendered screenshots and ARIA snapshots.
+An **ARIA snapshot** records the rendered view's accessibility tree: the roles,
+names, and states exposed to assistive software. It differs from a screenshot,
+which records visible pixels. ARIA means Accessible Rich Internet Applications.
+The snapshot is retained evidence, not proof that all accessibility checks pass.
+See [ARIA snapshot](../reference/glossary.md#aria-snapshot).
 
 > **Source evidence — preview boundary**
 >
@@ -1183,6 +1301,45 @@ revocation or data removal.
 > Nova's [operator CLI command set](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/nova/core/cli.ts#L21-L45) has no cancel command. Live abort and retirement have no verified outcome for this procedure.
 
 
+### Agent work blocked by trust
+
+Use this path when initial directions, a child round, or a natural-language
+revision remain pending and Control or the bridge records either exact error:
+
+- `Prism agent jobs require SPIFFE trust`: Control rejects the internal job
+  route family before the agent can claim, read, or finish a job.
+- `Prism agent tools require SPIFFE worker trust`: Control rejects direction
+  or natural-language revision commits before it reads their submitted body.
+
+An identity rejection with SPIFFE already enabled is a different case: the
+verified peer must equal Control's configured trusted agent identity. Retain
+the exact sanitized rejection. A pending job alone does not establish either
+trust failure; correlate it with the selected mode, identity, and error.
+
+1. Stop new dispatches, rounds, revisions, approval, publication, and Nova signals.
+2. Preserve the original run/wait, architecture, project/round, request/key,
+   instruction/base revision, job/fence, state, time, and sanitized error.
+3. Ask the release and workload-trust owners to compare the selected service
+   and agent configuration with [SPIFFE agent admission](#spiffe-agent-admission).
+4. Ask Prism maintainers to reconcile the original durable job and any external
+   outcome before they permit more work.
+
+The blocked step is agent claim or result commit. HMAC worker `/ready`, Control
+`SELECT 1`, and CSI registration cannot prove that step is available. The
+release/trust owners must supply a matched SPIFFE configuration and separately
+prove claim and commit permission for the exact agent identity. Prism
+maintainers must also establish the original job/result and current revision
+before the admitted journey can continue. Keep those permission and result
+records with the original identities. Do not create replacement keys/jobs,
+replay uncertain external work, or switch trust mode to clear an active worker
+error. This page supplies no generic trust-repair or job-replay command.
+
+> The [job-route guard](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/agent-job-routes.ts#L8-L10),
+> [direction guard](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L243-L245), and
+> [revision guard](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L263-L265)
+> require mode and exact peer permission. [Agent admission](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/control/agent-admission.ts#L16-L23)
+> separately refuses unresolved external work; trust repair does not resolve it.
+
 ### Child round interrupted
 
 Use this path for a Studio-requested child round, with the original authenticated
@@ -1377,6 +1534,8 @@ Never modify approval or baseline rows to renew their authority.
 
 ### Nova resume response lost
 
+Use this path also after any rejected resume. A rejection alone does not prove
+that the original submission failed to commit.
 Keep the original run, wait, signal file, signal ID/key, issuer, approval,
 architecture digest, and bundle digest. Do not create another run or decision.
 
@@ -1385,6 +1544,15 @@ architecture digest, and bundle digest. Do not create another run or decision.
 3. Check its durable wait, signal, resolution, dispatch, imported artifact, and final state.
 4. Verify the imported artifact matches the original approved bundle before claiming completion.
 5. Keep execution stopped if the audit cannot establish the signal's outcome.
+
+Read the exact rejection against that audit. Malformed envelope or payload input
+is a different case from a missing, expired, resolved, or invalidated wait.
+An issuer/type/digest mismatch requires a stop under canonical run control;
+it does not authorize changing the original identities. Only the Nova operator,
+after the audit proves the original wait is active, unexpired, and has no
+conflicting recorded signal, can decide whether the canonical contract permits
+submission. This page provides no general instruction to correct or replace
+a rejected signal.
 
 If the original wait remains active, use only the unchanged signal and canonical
 run-control procedure after checking expiry and recorded signal content.
@@ -1400,17 +1568,360 @@ run audit and restricted signal submission.
 
 ### Worker not ready
 
-1. Check `/health`, `/bootstrap`, and `/ready` separately.
-2. Inspect native worker reconciliation diagnostics.
-3. Verify the selected node, pool namespace, policy digest, engine content digest,
-   cgroup v2 pool, ownership store, and journal. In HMAC mode, also verify nonce
-   database access and migration state through worker `/ready`.
-4. Keep admission closed until all retained ownership is reconciled.
+Use this read-only diagnosis after a selected deployment fails worker health or
+smoke checks. Stop new evaluations and publication. Keep the original attempt
+identities and keep admission closed. These commands read health and logs; they
+do not submit an attempt, change a workload, or repair retained ownership.
 
-Reason: a healthy process can still be unsafe to admit because a previous attempt
-or process tree has unresolved ownership. Pod readiness uses `/bootstrap`; only
-HMAC-mode `/ready` also checks nonce-table access. Follow the [health signal
-boundaries](#4-verify-status-and-smoke-behavior) before interpreting a successful probe.
+Run from `<repository-root>` on the administration machine, in the original
+[bound cluster shell](install.md#bind-cluster-authority). Use the evidence revision
+and the selected image receipt recorded for this task. Follow
+[Supported Versions](install.md#supported-versions): this page adds no Kubernetes
+compatibility range. The administration machine needs Bash, Node.js 24, and the
+recorded `kubectl` version. The maintained worker image contains Node.js 24 and
+listens on port `8080`. The selected chart names its application container
+`worker`. Stop if the selected deployment uses another contract.
+
+Required namespace permissions are `get` deployments and Pods, `list` Pods,
+`create` on `pods/exec`, and `get` on `pods/log`. Exec permission allows the short
+diagnostic process; it does not authorize changing files or database state. No
+Secret read, environment dump, host shell, or cluster-admin permission is needed.
+If the container cannot start, retain its status and available logs and stop for
+the owners below; there is no running HTTP endpoint to inspect.
+
+#### 1. Select and record one worker
+
+Replace `<hmac-or-spiffe>` with `hmac` or `spiffe` from the approved selected
+values and render, not from the chart default. The code checks only the non-secret
+trust-mode flag in the Pod specification and compares it with that selection.
+Retain the selected release/configuration digests separately with this evidence.
+The evidence directory below is a new private local directory. It is outside
+workload storage; record its printed path for retention.
+
+```bash
+assert_cluster_binding
+test "$(bound_kubectl auth can-i get deployments.apps -n "$PRISM_NAMESPACE")" = yes
+test "$(bound_kubectl auth can-i get pods -n "$PRISM_NAMESPACE")" = yes
+test "$(bound_kubectl auth can-i list pods -n "$PRISM_NAMESPACE")" = yes
+test "$(bound_kubectl auth can-i create pods/exec -n "$PRISM_NAMESPACE")" = yes
+test "$(bound_kubectl auth can-i get pods/log -n "$PRISM_NAMESPACE")" = yes
+prism_worker_mode='<hmac-or-spiffe>'
+case "$prism_worker_mode" in hmac|spiffe) ;; *) exit 1 ;; esac
+prism_worker_pod="$(bound_kubectl get pods -n "$PRISM_NAMESPACE" -l app=prism-worker \
+  -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')"
+test -n "$prism_worker_pod"
+case "$prism_worker_pod" in *$'\n'*) printf 'STOP: more than one worker Pod\n' >&2; exit 1 ;; esac
+prism_worker_uid="$(bound_kubectl get pod "$prism_worker_pod" -n "$PRISM_NAMESPACE" -o jsonpath='{.metadata.uid}')"
+test -n "$prism_worker_uid"
+prism_worker_flag="$(bound_kubectl get pod "$prism_worker_pod" -n "$PRISM_NAMESPACE" \
+  -o jsonpath='{.spec.containers[?(@.name=="worker")].env[?(@.name=="WORKER_TRUST_SPIFFE_ENABLED")].value}')"
+case "$prism_worker_flag" in true) prism_observed_mode=spiffe ;; ''|false) prism_observed_mode=hmac ;; *) exit 1 ;; esac
+test "$prism_worker_mode" = "$prism_observed_mode"
+umask 077
+prism_worker_evidence="$(mktemp -d "${TMPDIR:-/tmp}/prism-worker-diagnosis.XXXXXX")"
+printf '%s\n' "$prism_worker_evidence"
+printf 'context=%s\nnamespace=%s\npod=%s\nuid=%s\nmode=%s\n' \
+  "$EXPECTED_CONTEXT" "$PRISM_NAMESPACE" "$prism_worker_pod" "$prism_worker_uid" \
+  "$prism_worker_mode" > "$prism_worker_evidence/binding.txt"
+bound_kubectl get deployment prism-worker -n "$PRISM_NAMESPACE" \
+  -o custom-columns='NAME:.metadata.name,REPLICAS:.spec.replicas,NODE:.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].values[*],POLICY:.spec.template.metadata.annotations.kubeclaw\.dev/native-worker-policy,IMAGE:.spec.template.spec.containers[?(@.name=="worker")].image' \
+  > "$prism_worker_evidence/deployment.txt"
+bound_kubectl get pod "$prism_worker_pod" -n "$PRISM_NAMESPACE" \
+  -o custom-columns='NAME:.metadata.name,UID:.metadata.uid,NODE:.spec.nodeName,PHASE:.status.phase,IMAGE:.spec.containers[?(@.name=="worker")].image,IMAGE_ID:.status.containerStatuses[?(@.name=="worker")].imageID,READY:.status.containerStatuses[?(@.name=="worker")].ready,RESTARTS:.status.containerStatuses[?(@.name=="worker")].restartCount,WAIT_REASON:.status.containerStatuses[?(@.name=="worker")].state.waiting.reason,EXIT_REASON:.status.containerStatuses[?(@.name=="worker")].lastState.terminated.reason' \
+  > "$prism_worker_evidence/pod-before.txt"
+```
+
+Every permission check must return `yes`. No Pod, multiple Pods, unknown mode,
+or a mode mismatch is a stop. Compare `deployment.txt` and `pod-before.txt` with
+the retained release: exactly one worker, the selected node, namespace, native
+policy digest, and worker image digest must match. An image tag alone is
+insufficient. Do not select another Pod merely to obtain a passing probe.
+
+#### 2. Query all three endpoints on that Pod
+
+The function below checks the Pod UID before each call. It runs three sequential
+loopback GET requests inside container `worker`. Each request has a five-second
+deadline and a 4 KiB response limit. The Kubernetes API request timeout is
+30 seconds. It sends no authentication header, because these health routes do
+not authenticate attempts. It opens no port-forward and creates no cluster resource.
+
+```bash
+assert_cluster_binding
+prism_worker_probes() {
+  local phase="$1" probe_status
+  case "$phase" in before|after) ;; *) return 1 ;; esac
+  assert_cluster_binding || return 1
+  test "$(bound_kubectl get pod "$prism_worker_pod" -n "$PRISM_NAMESPACE" \
+    -o jsonpath='{.metadata.uid}')" = "$prism_worker_uid" || return 1
+  if bound_kubectl --request-timeout=30s exec -n "$PRISM_NAMESPACE" \
+    "$prism_worker_pod" -c worker -- node -e '
+const errors = new Set(["PRISM_NATIVE_RECONCILIATION_REQUIRED", "PRISM_NONCE_DATABASE_UNAVAILABLE",
+  "PRISM_WORKER_STOPPING", "PRISM_WORKER_CAPACITY_EXCEEDED"]);
+(async () => {
+  for (const [endpoint, expected] of [["health", "alive"], ["bootstrap", "initialized"], ["ready", "ready"]]) {
+    let httpStatus = null;
+    try {
+      const response = await fetch(`http://127.0.0.1:8080/${endpoint}`, {
+        signal: AbortSignal.timeout(5000), redirect: "error"
+      });
+      httpStatus = response.status;
+      let text = "", size = 0;
+      for await (const chunk of response.body) {
+        size += chunk.length;
+        if (size > 4096) throw new Error("response limit");
+        text += Buffer.from(chunk).toString("utf8");
+      }
+      const body = JSON.parse(text);
+      const safe = {};
+      if (["alive", "initialized", "ready", "not-ready"].includes(body.status)) safe.status = body.status;
+      if (errors.has(body.error)) safe.error = body.error;
+      const valid = Object.keys(body).every(key => key === "status" || key === "error")
+        && safe.status && (body.error === undefined || safe.error);
+      console.log(JSON.stringify({endpoint: `/${endpoint}`, httpStatus, body: safe, sanitized: !valid}));
+      if (!valid || httpStatus !== 200 || safe.status !== expected || body.error !== undefined) process.exitCode = 1;
+    } catch {
+      console.log(JSON.stringify({endpoint: `/${endpoint}`, httpStatus, observation: "REQUEST_OR_BODY_FAILED"}));
+      process.exitCode = 1;
+    }
+  }
+})().catch(() => { process.exitCode = 1; });
+' > "$prism_worker_evidence/probes-$phase.jsonl" \
+    2> "$prism_worker_evidence/probes-$phase.stderr.txt"; then
+    probe_status=0
+  else
+    probe_status=$?
+  fi
+  printf '%s\n' "$probe_status" > "$prism_worker_evidence/probes-$phase.exit-status.txt"
+  cat "$prism_worker_evidence/probes-$phase.jsonl"
+  return "$probe_status"
+}
+if ! prism_worker_probes before; then
+  printf 'STOP: worker probes failed; collect diagnosis only\n' >&2
+fi
+```
+
+Expect three observations. A healthy worker returns `/health` HTTP `200` with
+`{"status":"alive"}`, `/bootstrap` HTTP `200` with `{"status":"initialized"}`,
+and `/ready` HTTP `200` with `{"status":"ready"}`. The saved probe exit status
+is `0` only for that combination. A `503` is retained, not discarded by the
+command. Nonzero exec status, missing observations, `sanitized: true`, or
+`REQUEST_OR_BODY_FAILED` requires a stop. The last value can mean no listener,
+timeout, or an unexpected body; it is not proof of a database or ownership cause.
+Read the saved stderr and Pod status without dumping its environment or Secrets.
+
+#### 3. Collect bounded worker diagnostics
+
+Use the same Pod and application container. This command reads at most 200 lines
+and 256 KiB from the last 15 minutes of the current container log. It retains
+exact diagnostic phases, codes, and counters from recognized structured records.
+The filter excludes arbitrary messages, connection strings, credentials, and
+unrecognized fields. An unknown native failure message becomes `UNRECOGNIZED_CODE`;
+do not print the raw message to discover its content.
+
+```bash
+assert_cluster_binding
+test "$(bound_kubectl get pod "$prism_worker_pod" -n "$PRISM_NAMESPACE" \
+  -o jsonpath='{.metadata.uid}')" = "$prism_worker_uid"
+prism_worker_log_filter() {
+  node -e '
+const readline = require("node:readline");
+const phases = new Set(["admission", "connect", "query", "idle", "cancel"]);
+const codes = new Set(["ADMISSION_LIMIT", "REQUEST_CANCELLED", "DEPENDENCY_DEADLINE", "PG_CONNECT_TIMEOUT", "PG_UNKNOWN",
+  "ECONNREFUSED", "ECONNRESET", "ETIMEDOUT", "EHOSTUNREACH", "ENETUNREACH", "ENOTFOUND", "EAI_AGAIN", "EPIPE"]);
+const lines = readline.createInterface({input: process.stdin});
+lines.on("line", line => {
+  const split = line.indexOf(" ");
+  const timestamp = line.slice(0, split);
+  if (!/^\d{4}-\d{2}-\d{2}T[0-9:.]+Z$/.test(timestamp)) return;
+  let event; try { event = JSON.parse(line.slice(split + 1)); } catch { return; }
+  if (!event || typeof event !== "object" || Array.isArray(event)) return;
+  if (event.event === "prism_nonce_dependency_failure" && phases.has(event.phase)
+      && typeof event.code === "string"
+      && (codes.has(event.code) || /^[0-9A-Z]{5}$/.test(event.code))) {
+    const safe = {timestamp, event: event.event, phase: event.phase, code: event.code};
+    for (const key of ["durationMs", "active", "open", "pending"]) {
+      if (Number.isSafeInteger(event[key]) && event[key] >= 0) safe[key] = event[key];
+    }
+    console.log(JSON.stringify(safe));
+  } else if (event.event === "prism_native_worker_failure") {
+    const code = /^(PRISM_NATIVE_|PRISM_WORKER_|WORKER_NATIVE_)[A-Z0-9_]+$/.test(event.code) ? event.code : "UNRECOGNIZED_CODE";
+    console.log(JSON.stringify({timestamp, event: event.event, code}));
+  } else if (event.event === "prism_native_worker_shutdown" && event.state === "ownership_reconciled") {
+    console.log(JSON.stringify({timestamp, event: event.event, state: event.state}));
+  }
+});
+'
+}
+set -o pipefail
+if bound_kubectl --request-timeout=30s logs -n "$PRISM_NAMESPACE" "$prism_worker_pod" \
+  -c worker --timestamps --since=15m --tail=200 --limit-bytes=262144 \
+  2> "$prism_worker_evidence/logs-current.stderr.txt" | prism_worker_log_filter \
+  > "$prism_worker_evidence/logs-current.jsonl"; then
+  printf '0\n' > "$prism_worker_evidence/logs-current.exit-status.txt"
+else
+  printf '%s\n' "$?" > "$prism_worker_evidence/logs-current.exit-status.txt"
+fi
+prism_worker_restarts="$(bound_kubectl get pod "$prism_worker_pod" -n "$PRISM_NAMESPACE" \
+  -o jsonpath='{.status.containerStatuses[?(@.name=="worker")].restartCount}')"
+if test "${prism_worker_restarts:-0}" -gt 0; then
+  if bound_kubectl --request-timeout=30s logs -n "$PRISM_NAMESPACE" "$prism_worker_pod" \
+    -c worker --previous --timestamps --tail=200 --limit-bytes=262144 \
+    2> "$prism_worker_evidence/logs-previous.stderr.txt" | prism_worker_log_filter \
+    > "$prism_worker_evidence/logs-previous.jsonl"; then
+    printf '0\n' > "$prism_worker_evidence/logs-previous.exit-status.txt"
+  else
+    printf '%s\n' "$?" > "$prism_worker_evidence/logs-previous.exit-status.txt"
+  fi
+fi
+cat "$prism_worker_evidence/logs-current.jsonl"
+bound_kubectl get pod "$prism_worker_pod" -n "$PRISM_NAMESPACE" \
+  -o custom-columns='UID:.metadata.uid,RESTARTS:.status.containerStatuses[?(@.name=="worker")].restartCount' \
+  > "$prism_worker_evidence/pod-after.txt"
+```
+
+A log command failure or an empty filtered file does not prove health. The
+failure can precede the time window, fall outside the retained lines, or have
+an unrecognized message. `--previous` reads only the prior container instance,
+not all restart history. Retain the collection bounds and missing-evidence
+condition. Do not restart or delete a Pod to manufacture another log window.
+Compare `pod-before.txt` with `pod-after.txt`. A changed UID or restart count
+means the observations cross different processes. Retain that fact and repeat
+selection before using the results as one worker-health observation.
+
+#### 4. Distinguish the boundary and stop at the repair owner
+
+| Observation | Meaning and safe action |
+| --- | --- |
+| `/health` succeeds; `/bootstrap` and `/ready` return `503` with `PRISM_NATIVE_RECONCILIATION_REQUIRED` | HTTP is alive, but native admission is closed. Do not infer a particular damaged file from this shared error. Stop for Prism maintainers and the native-host owner. |
+| No HTTP listener; `prism_native_worker_failure` contains a native code | Startup admission or ownership/journal recovery can have failed before HTTP starts. `WORKER_NATIVE_UNKNOWN_SCOPE`, `WORKER_NATIVE_OWNED_SCOPE_MISSING`, and `WORKER_NATIVE_SUPERVISOR_UNRESOLVED` identify different native failure classes. Retain the exact safe code; do not delete a scope or receipt. |
+| Any route returns `503` with `PRISM_WORKER_STOPPING` or `PRISM_WORKER_CAPACITY_EXCEEDED` | The HTTP lifecycle rejected admission before the route handler. `STOPPING` covers shutdown or an unsafe unresolved result; `CAPACITY_EXCEEDED` covers the active-request limit. These are different from native-reconciliation or nonce-table errors. Stop for Prism maintainers; do not force a restart or bypass the limit. |
+| `/bootstrap` succeeds; HMAC-mode `/ready` returns `503` with `PRISM_NONCE_DATABASE_UNAVAILABLE` | Native initialization passed; nonce-database access did not. Use the nonce event's phase/code below. Stop for the Prism database and credential owners. |
+| `/ready` succeeds in SPIFFE mode | This route skips the nonce-database check. It does not prove the proxy, trusted Control identity, or an authenticated attempt. Follow [Worker Trust](worker-trust.md#canonical-worker-trust-procedure) for that separate boundary. |
+| All three routes succeed | Only these three health boundaries passed. Preserve any prior failed or uncertain attempt; health does not reconcile its result. |
+
+For `prism_nonce_dependency_failure`, read the retained counters as event-time
+snapshots of this worker's private nonce database dependency:
+
+| Field | Meaning and limit |
+| --- | --- |
+| `durationMs` | Nonnegative, rounded elapsed milliseconds since this dependency operation began. For `idle`, the timer starts when the idle error is handled; this is not the connection's age. |
+| `active` | Admitted nonce dependency operations when the event is created. A failing admitted operation is still counted until its final decrement. The admission limit is four; an admission rejection does not increment this count. |
+| `open` | The database pool's `totalCount`: all its clients, including idle and checked-out clients. It is not a count of native scopes or Prism jobs. |
+| `pending` | The pool's `waitingCount`: requests waiting to acquire a database client. It is not a count of design jobs or native attempts. |
+
+An isolated nonzero counter does not prove a leak, a request still running now,
+or current health. Compare the event's phase and timestamp, the bounded log
+window, and repeated endpoint results. An absent counter is missing evidence,
+not zero. The [diagnostic fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-readiness.ts#L12-L19),
+[snapshot producer and idle timer](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-readiness.ts#L41-L55), and
+[admission and operation lifetime](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-readiness.ts#L59-L95)
+define these values.
+
+Interpret the phase before the code.
+The five-character SQL meanings below come from PostgreSQL's
+[error-code reference](https://www.postgresql.org/docs/17/errcodes-appendix.html).
+
+| Phase/code | Distinguishing observation and owner action |
+| --- | --- |
+| `admission` / `ADMISSION_LIMIT` | Four dependency operations are already active. This is local dependency capacity rejection, not proof of missing credentials or migration. Keep work stopped; Prism maintainers must investigate load and unsettled requests. |
+| `connect` / `ECONNREFUSED`, `ENOTFOUND`, `EAI_AGAIN`, `PG_CONNECT_TIMEOUT`, or another retained network code | The database connection could not be acquired. The network/database owner checks the selected destination and service path without printing `DATABASE_URL`. A connection code alone does not prove a bad password. |
+| `connect` / a five-character PostgreSQL code | PostgreSQL rejected connection setup. For example, `28P01` identifies password authentication failure. The database/credential owner must reconcile the existing runtime identity; do not rotate a Secret during this diagnosis. |
+| `query` / a five-character PostgreSQL code | Connection acquisition passed, but SQL failed. `42P01` identifies an absent table; `42501` identifies insufficient permission; `57014` identifies cancelled SQL. Retain migration/role evidence with the exact code. The database owner distinguishes a migration, grant, or deadline failure. |
+| `cancel` / `REQUEST_CANCELLED` or `DEPENDENCY_DEADLINE` | The request was aborted or its dependency deadline elapsed. Correlate time with `connect`/`query` events; cancellation alone does not prove missing schema or credentials. |
+| `idle` / retained code | An idle pool connection failed. Compare the fresh `/ready` result; this old event alone does not prove that the new check failed. |
+| Any phase / `PG_UNKNOWN`, or missing diagnostics | The safe observation cannot identify the underlying cause. Preserve that uncertainty and stop for the owner. Do not infer success or expose a connection string to obtain more detail. |
+
+Native repair is not an executable operator surface on this page. The native-host
+owner and Prism maintainers must reconcile the selected node/pool policy,
+engine digest, cgroup v2 pool, ownership records, and attempt journal through an
+owned recovery procedure. The blocked step is deciding the outcome of retained
+processes and attempts and changing their state safely. Do not edit the policy,
+ownership store, journal, or cgroup tree, start a second supervisor, move the
+worker to another node, or bypass `/bootstrap`. Startup recovery in product code
+does not supply a manual repair command. This boundary can be removed only when
+an authenticated, bounded recovery procedure proves original identity/result
+reconciliation and resource cleanup after the relevant native failure.
+
+Nonce-database repair also stops at owner action. The current evidence is the
+worker's actual read of `prism.worker_request_nonce`, not Control's `SELECT 1`
+or `pg_isready`. Use [Deployment failed during migration](#deployment-failed-during-migration)
+to preserve captured migration results, and [Credential Rotation](maintenance.md#credential-rotation)
+for its separate authority. Neither link authorizes SQL/grant changes or supplies
+a generic repair for this worker failure. The blocked step is safely restoring
+the selected runtime identity's access to the migrated nonce table without
+losing replay records. The database/credential owners must provide and validate
+that exact repair, then prove `/ready` succeeds and replay remains rejected.
+Do not erase nonce rows, change credentials, disable authentication, or switch
+trust mode to clear the error.
+
+#### 5. Repeat checks, retain evidence, and finish inspection
+
+After the owner completes a separately authorized repair, repeat the same three
+checks with `prism_worker_probes after`. The Pod UID check must still pass. If the
+repair replaced the Pod, preserve the first evidence directory and repeat this
+procedure from selection with a new directory and the new receipt. Never silently
+retarget the existing function. Repeat the log collection and preserve its first
+files before using the same output names. Stop on any remaining mismatch or failure.
+
+Require all three expected `200` bodies and exit status `0`. Then repeat the
+[selected status and smoke checks](#4-verify-status-and-smoke-behavior). These
+results still do not prove an authenticated worker attempt. Resume evaluation
+or publication only after the original uncertain attempt is reconciled and an
+authorized functional check succeeds for its exact input. This diagnosis adds
+no native attempt or live-success command.
+
+Retain the source/release/configuration identities, cluster binding, mode, Pod
+UID/node/image, restart observations, commands/time/bounds, all endpoint statuses
+and sanitized bodies, exit statuses, safe diagnostic records, repair-owner
+decision, and repeat results. No temporary cluster resource or port-forward was
+created. The probe process submits only its three bounded requests and then
+exits. An exec transport failure does not prove remote process completion;
+retain that uncertainty for the platform owner before claiming inspection cleanup.
+After copying the evidence to approved retained storage and verifying
+the copy, remove only this procedure's printed temporary directory. For example,
+`rm -r -- "$prism_worker_evidence"` is permitted only after that ownership and
+retention check; it is not a workload or durable-state cleanup action.
+
+> **Source evidence — executable worker inspection and repair boundary**
+>
+> **Claim:** Selected-Pod loopback health distinguishes process, native admission,
+> and HMAC nonce dependency. Logs expose safe nonce phases/codes and event-time
+> operation/pool counters; native startup can fail before HTTP admission. None
+> of these surfaces repairs retained state or counts native/design jobs.
+>
+> **Implementation:** [`serveReadiness`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-service.ts#L72-L86) ·
+> [`serveLocalHealth`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-service.ts#L95-L105) ·
+> [HTTP lifecycle stopping response](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-lifecycle.ts#L14-L17) ·
+> [HTTP lifecycle admission rejection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-lifecycle.ts#L43-L58) ·
+> [`WorkerNonceDatabase` diagnostic fields and safe codes](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-readiness.ts#L12-L29) ·
+> [nonce pool capacity and diagnostic counters](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-readiness.ts#L41-L56) ·
+> [connection, SQL, and cancellation reporting](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-readiness.ts#L59-L95) ·
+> [`runNativePrismWorker` startup and mode selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker.ts#L11-L26) ·
+> [native startup/failure events](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker.ts#L53-L60) ·
+> [`nativePrismExecution` journal recovery](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/native-worker-execution.ts#L10-L26) ·
+> [supervisor recovery and unresolved outcome](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/worker/core/worker/native-worker-ownership.ts#L179-L199) ·
+> [native ownership recovery and its stop codes](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/worker/core/worker/native-worker-ownership.ts#L244-L281).
+>
+> **Contract or setting:** The chart binds [one worker and policy](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L5-L9),
+> [Pod label and policy annotation](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L24-L36),
+> [node and container](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L55-L76),
+> [port `8080`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L81-L88),
+> [SPIFFE-mode flag](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L127-L138), and
+> [native mounts and health probes](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L143-L162).
+> The worker Service [selects that Pod's port `8080`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/services.yaml#L20-L23).
+> This inspection uses the Pod's own loopback; it does not prove the Service path.
+> The worker image [selects the pinned Node.js 24 base](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/docker/Dockerfile.prism-worker#L1-L4).
+>
+> **Test evidence:** The [local connection-refusal fixture](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/tests/worker-readiness.test.mts#L8-L21)
+> checks the safe `connect`/`ECONNREFUSED` diagnostic; its [real-PostgreSQL fixture](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/tests/worker-readiness.test.mts#L22-L41)
+> requires an isolated migrated database. No executed result for these fixtures
+> or installed-cluster inspection is claimed in this procedure.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`.
+>
+> **Limit:** These commands have no live selected-cluster result here. They do not
+> prove authenticated execution, native repair, database repair, Service reachability,
+> SPIFFE permission, or a completed Studio journey.
 
 ### Deployment failed during migration
 
@@ -1444,11 +1955,11 @@ directory-sync steps before it acknowledges an object.
 | --- | --- | --- | --- |
 | Local spike verifier reports that the Chromium executable does not exist at the fixed `1228` path | Fixed `executablePath` in the mobile-editor and preview-isolation configs | Exact error path, config, locked Playwright version, installation output | Follow [the local browser stop](#stop-at-the-fixed-spike-browser-path). Stop the spike and aggregate gates; package-local reinstallation does not supply that path. |
 | Studio shows no projects | Nova dispatch or Control admission | Nova stage result; Control request log; `prism.project` and active `design_request` | Reconcile the original dispatch. Do not create a replacement project. |
-| Project exists but has no directions | Prism agent job | `prism.agent_job` state, fence, result, and outcome; agent bridge log | Wait, reconcile, or escalate `needs_nova`. Do not replay an uncertain launch. |
+| Project exists but has no directions | Agent trust, durable job, or external outcome | Selected Control/agent SPIFFE mode and exact identity; `Prism agent jobs require SPIFFE trust` or `Prism agent tools require SPIFFE worker trust`; original job state/fence/result and sanitized bridge log | Follow [Agent work blocked by trust](#agent-work-blocked-by-trust) on a trust rejection. Stop for release/trust owners and Prism maintainers; healthy HMAC probes cannot enable agent work. Preserve original identities and never replay an uncertain launch. |
 | Studio says invalid session | Tailscale identity exchange or cookie forwarding | Studio proxy log; two `Set-Cookie` headers | Fix ingress/proxy handling. Do not weaken CSRF or session checks. |
-| New round remains pending | Retained request, current round, or blocked agent session | Stored request/key, generation ID and durable job state | Retry only the retained request when Studio offers it; stop on missing storage or unresolved predecessor. |
-| Visual edit reports revision conflict | Concurrent document change | Current document and revision history | Reload, compare, and author a new operation. |
-| Natural-language change remains pending or reload hides controls | Stored request, agent job, or Studio failure screen | Original key/instruction/base and `/v1/agent-jobs/{id}` receipt | Stop for Prism maintainer reconciliation. The helper contract does not provide recovery controls on the failure screen. |
+| New round remains pending | Agent trust, retained request, current round, or blocked agent session | Selected SPIFFE mode/identity and exact trust rejection; stored request/key, generation ID and durable job state | Stop on a [trust rejection](#agent-work-blocked-by-trust). Otherwise retry only the retained request when Studio offers it; stop on missing storage or unresolved predecessor. |
+| Visual edit reports revision conflict | Another edit committed, or the original edit committed before its reply disappeared | Original operation/base/actor/time, current document, and revision history | Stop and reconcile the original outcome through [Revision conflict](#revision-conflict) and [Typed edit or restore interrupted](#typed-edit-or-restore-interrupted). Author a new operation only after that uncertainty is resolved. |
+| Natural-language change remains pending or reload hides controls | Agent trust, stored request, agent job, or Studio failure screen | Selected SPIFFE mode/identity and exact trust rejection; original key/instruction/base and `/v1/agent-jobs/{id}` receipt | Follow [Agent work blocked by trust](#agent-work-blocked-by-trust) on a trust rejection; retain the original request. Stop for Prism maintainer reconciliation. The helper contract does not provide recovery controls on the failure screen. |
 | Restore or Undo reply disappears | Non-idempotent restore and history | Source revision ID, actor/time, current revision and stored operation | Do not repeat. Reconcile history through the original document and stop on ambiguity. |
 | Direction or preference action has an uncertain result | Client key lifetime and preference receipt | Original actor/action/key/event, current direction and durable preference evidence | Stop mutations. Reconcile the exact receipt; a new identity can create another event. |
 | Evaluation reply disappears | Pinned revision and native attempt | Embedded document identity, revision, worker key/receipt and readiness | Recheck unchanged input only after ownership is known; stop on conflicting input or uncertain worker state. |
@@ -1456,9 +1967,9 @@ directory-sync steps before it acknowledges an object.
 | Evaluation is blocked | Design Document quality | Exact finding ID, gate, target, and message | Correct the current document and evaluate again. |
 | Approval fails or its reply disappears | Approval insert, uniqueness, revision, digest, or architecture | Original request, current digest, approval constraint/error and canonical receipt | Stop. Reconcile the original approval before any repeat; use the interruption procedure. |
 | Publication fails or its reply disappears | Original approval, worker capture, artifact write, or baseline commit | Original approval ID, worker receipt, full log artifact, target ID and baseline record | Stop. Reconcile approval/publication separately; another Approve click cannot replay the original baseline request. |
-| Nova rejects resume | Wait, issuer, architecture, approval, or bundle identity | Nova signal validation and Prism stage reason | Correct the unsigned signal through the restricted Nova CLI. Issuer matching does not authenticate its caller. |
+| Nova rejects resume | Original run/wait state, signal validation, or Prism handoff identity | Audit of the original run/wait and the exact rejection code; unchanged original signal | Stop submissions and follow [Nova resume response lost](#nova-resume-response-lost). Distinguish malformed or mismatched input for a verified active wait from expired/resolved waits and terminal runs before any permitted submission under [run control](operate.md#canonical-run-control-procedure). Never replace identities to force acceptance. Issuer matching does not authenticate its caller. |
 | Nova rejects archive | Stored bytes or archive member contract | Exact `PRISM_ARCHIVE_*` error | Preserve evidence and diagnose. Do not bypass verification. |
-| Worker returns 503 on `/bootstrap` or `/ready` | Native reconciliation; HMAC-mode `/ready` can also fail on nonce-table access | Exact endpoint, selected authentication mode, readiness JSON error, and worker diagnostic event | Reconcile ownership or restore the HMAC nonce dependency before admission; a successful Pod probe does not prove nonce access. |
+| Worker returns 503 on `/bootstrap` or `/ready` | Native admission; HMAC-mode `/ready` can also fail on nonce-table access | Selected Pod/mode, all three HTTP statuses and sanitized JSON bodies, exact diagnostic phase/code | Follow [Worker not ready](#worker-not-ready) to collect bounded observations. Keep admission closed and stop for the named repair owner; a successful Pod probe does not prove nonce access. |
 
 Control currently writes request failures to process logs.
 Studio and ingestion write structured error records for unhandled request I/O.
@@ -1697,7 +2208,7 @@ and retained output for each live acceptance.
 | Durable native worker operation and restart journal | Implemented; native proof needs a prepared Linux host and isolated database | Claim native operation only with retained native gate evidence. |
 | PostgreSQL migration and pgvector retrieval | Implemented; native PostgreSQL proof needs configured test databases | Claim actual PostgreSQL behavior only when the native suite ran. |
 | Tailscale Studio ingress and SPIFFE service trust | Charted and checked structurally; live proof is environment-specific | Claim live identity only after cluster tests. |
-| Prism agent through OpenClaw and LiteLLM | Implemented deployment path; actual provider proof is live | Do not infer provider success from deterministic worker tests. |
+| Prism agent through OpenClaw and LiteLLM | Implemented path requires SPIFFE-enabled Control and the exact trusted agent identity; actual permission/provider proof is live | Stop before submission until [agent admission](#spiffe-agent-admission) is proved. Do not infer permission or provider success from healthy HMAC probes or deterministic worker tests. |
 | Corpus public-web acquisition | Acquisition code exists, but Control rejects `public-web` until a source policy is approved | Do not present public-web ingestion as an enabled operator feature. |
 | Ingestion service | Implemented but disabled by default | Enable only with explicit resource sizing and source policy. |
 | Browser archive download in Studio | Not implemented as a user action | Use the Nova governed handoff or an authorized artifact client. |
@@ -1740,6 +2251,8 @@ A Prism operator journey is complete only when all statements below are true:
 
 - the selected release and code bundle match one reviewed source commit;
 - Prism service and agent releases are ready;
+- Control and the agent use the matched SPIFFE trust configuration, and the
+  exact trusted agent identity has separate claim/commit permission evidence;
 - the native worker reports ready after ownership reconciliation; in HMAC mode,
   worker `/ready` also confirms nonce-table access;
 - Control stored the intended active architecture digest and revision;

@@ -14766,7 +14766,7 @@
       "report": "/home/node/Documents/Codex/a98-evidence/prism-diagnosis-source-fresh/report.md",
       "reportSha256": "7e55ee3ff633d43fd75d7d3f549218ea980a7acc0f465f3df671cf6d8b4a61ea",
       "reportedBy": "/root/a98_prism_diagnosis_source_fresh",
-      "state": "author-correction-in-progress",
+      "state": "author-corrected-pending-new-independent-source-reader-quality",
       "pages": [
         "docs/site/use/prism-studio.md"
       ],
@@ -14780,14 +14780,16 @@
         "A98-13"
       ],
       "description": "Retained durationMs/active/open/pending require exact nonce operation/pool/event-time definitions; no native-job or leak inference.",
-      "assignedAuthor": "/root/a98_prism_trust_counter_writer"
+      "assignedAuthor": "/root/a98_prism_trust_counter_writer",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/prism-trust-counter-writer/report.md",
+      "correctionReportSha256": "457d8fe359f41c7ecd1ff5488bed9b4113b22dc5d019676e8a46d864c500bac0"
     },
     {
       "id": "A98-PRISM-SPIFFE-AGENT-PREREQUISITE",
       "report": "/home/node/Documents/Codex/a98-evidence/prism-diagnosis-source-fresh/report.md",
       "reportSha256": "7e55ee3ff633d43fd75d7d3f549218ea980a7acc0f465f3df671cf6d8b4a61ea",
       "reportedBy": "/root/a98_prism_diagnosis_source_fresh",
-      "state": "author-correction-in-progress",
+      "state": "author-corrected-pending-new-independent-source-reader-quality",
       "pages": [
         "docs/site/use/prism-studio.md"
       ],
@@ -14801,7 +14803,9 @@
         "A98-13"
       ],
       "description": "Governed Studio agent claim/design/revision path requires SPIFFE Control plus trusted Agent identity; HMAC health does not establish that permission.",
-      "assignedAuthor": "/root/a98_prism_trust_counter_writer"
+      "assignedAuthor": "/root/a98_prism_trust_counter_writer",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/prism-trust-counter-writer/report.md",
+      "correctionReportSha256": "457d8fe359f41c7ecd1ff5488bed9b4113b22dc5d019676e8a46d864c500bac0"
     }
   ],
   "checks": [
@@ -15282,6 +15286,33 @@
       "exitCode": 1,
       "log": "/home/node/Documents/Codex/a98-evidence/precedence-overflow-root-boundary.log",
       "scope": "Current glossary lines196/224/248 contain source-inspection bookkeeping; frozen independent review input retained pending release."
+    },
+    {
+      "command": "node --test scripts/tests/docs-status.test.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "log": "/home/node/Documents/Codex/a98-evidence/product-boundaries-root-status-tests.log",
+      "scope": "15 original issue-register/provenance/render tests; no product closure or global acceptance"
+    },
+    {
+      "command": "npm run docs:status:generate then npm run docs:status:check",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "sourceRevision": "305092c8301a9312279004adb6ea1813d3472c5a",
+      "generatedCommit": "1c2265bef1c2f5d1fb5f4dd376af2c4f378b3a01",
+      "inputEvidence": "/home/node/Documents/Codex/a98-evidence/status-generation-305092c8-inputs.json",
+      "scope": "Only canonical current-product-limit status page; shared source lock/full generation remain pending"
+    },
+    {
+      "command": "Prism trust/counter author source, syntax, anchors, original stub-backed controls, preservation and boundary checks",
+      "state": "author-terminal-pass",
+      "report": "/home/node/Documents/Codex/a98-evidence/prism-trust-counter-writer/report.md",
+      "reportSha256": "457d8fe359f41c7ecd1ff5488bed9b4113b22dc5d019676e8a46d864c500bac0",
+      "fileHashes": {
+        "docs/site/use/prism-studio.md": "a4738017edbbb039cb12767e95daff922a686815cd36ebbe834d1e167b44dbaf",
+        "docs/site/reference/glossary.md": "25aa9f129ccaaa67badedc48cf73c3aa7693b0af851d03a3ea193d43115bc1db"
+      },
+      "scope": "Author implementation verification only;14bash/13interruption rows preserved; no independent/live/global acceptance"
     }
   ],
   "reviewAssignments": [
@@ -15950,6 +15981,18 @@
         "A98-12-source": "FAIL",
         "A98-13-source": "FAIL"
       }
+    },
+    {
+      "agent": "/root/a98_precedence_timer_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "state": "running",
+      "reviewedRevision": "9d085bb20af0cc70201cc41801011b63c626301c plus explicit pipeline-platform overlay9ab8e318fa7ccbd13c3d1562e02c0d4b1613232c4eaed9d78df0ba77ac94d17a",
+      "freshContext": true,
+      "readOnly": true,
+      "scopeLimit": "Two full configuration pages plus supplementary platform context; no global inventory/Reader/Quality/live acceptance"
     }
   ],
   "continuation": {
@@ -16356,6 +16399,18 @@
       "id": "DIRECT-COMMAND-ENVIRONMENT",
       "state": "documented-product-limit-pending-independent-verification",
       "description": "Direct-command supplies payload.environment; shipped common command-runner rejects environment before spawning. No compatible shipped executor is claimed."
+    },
+    {
+      "id": "NOVA-PLATFORM-TIMEOUT-RANGE-001",
+      "state": "open-product-work",
+      "authority": "docs/status/open-issues.json",
+      "description": "Platform schema accepts timeout above Node timer range. Source and original-loader/syntheticshutdown proof; no real recovery or product guard repair."
+    },
+    {
+      "id": "CILIUM-POLICY-EMPTY-001",
+      "state": "open-product-work",
+      "authority": "docs/status/open-issues.json",
+      "description": "Selected Cilium1.20.1 rejects both checked-in all-empty direction rules in source; no executedGo/admission/enforcement. No policy fix or proof of live isolation."
     }
   ]
 }

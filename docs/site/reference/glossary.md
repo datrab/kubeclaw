@@ -3,16 +3,16 @@
 Status: shared architecture and operator terminology; recovery and workload-credential definitions are source-backed
 Audience: all readers
 Owner: documentation
-Evidence: docs/site/understand/components-and-authority.md; docs/site/understand/request-state-recovery.md; docs/site/understand/deployment-and-trust.md; my-values/infra/spire-values.yaml; charts/prism/templates/configmap-worker-trust.yaml; skills/worker/core/worker/trust.ts
+Evidence: docs/site/understand/components-and-authority.md; docs/site/understand/request-state-recovery.md; docs/site/understand/deployment-and-trust.md; my-values/infra/spire-values.yaml; charts/prism/templates/configmap-worker-trust.yaml; skills/worker/core/worker/trust.ts; skills/prism/server/internal-auth.ts; skills/prism/server/control-server.ts; skills/prism/control/agent-jobs.ts; skills/prism/engine/render-operation.ts
 Applies to: KubeClaw platform terminology
-Last verified: 2026-10-09 for RPO, RTO, and SVID definitions; bounded source review only
+Last verified: 2026-10-09 for RPO, RTO, and SVID; 2026-10-10 for Prism request protection, job fence, and ARIA definitions; bounded source review only
 
 ## Purpose
 
 This glossary gives one plain meaning to each KubeClaw term.
 The architecture and operator pages use these meanings consistently.
-Use the same full name and definition at the first operational use of RPO, RTO,
-or SVID, and link that use to its canonical section below. Keep target values,
+Use the same definition at the first operational use of each term, and link
+that use to its canonical section below. Keep target values,
 measured results, identity verification, and application permission distinct.
 
 | Term | Plain meaning |
@@ -20,6 +20,7 @@ measured results, identity verification, and application permission distinct.
 | Activated registration | A registration that current configuration selected and the runtime loaded. Presence in a package is not activation. |
 | Adapter | A plugin registration that performs a controlled external effect for a named capability. |
 | Approval | An authorized signal that answers a stored wait. Approval is not a direct edit of lifecycle state. |
+| [ARIA snapshot](#aria-snapshot) | A record of a rendered view's accessibility tree, including roles, names, and states exposed to assistive software. |
 | Artifact | Stored output with an identity, namespace, content digest, size, and media information. |
 | Attempt | One bounded execution of one stage or worker operation. A retry creates another attempt. |
 | Buster | The test engine and role that executes fixed plans and returns facts and evidence. |
@@ -30,6 +31,7 @@ measured results, identity verification, and application permission distinct.
 | Cleanup state | Evidence that attempt-owned resources were removed, retained, or need reconciliation. |
 | Content digest | A value calculated from content. It detects changed bytes and binds stored evidence to an identity. |
 | Core | Nova Core when the text discusses pipeline lifecycle. “Worker Core” always names the neutral worker layer. |
+| [CSRF](#csrf) | Cross-site request forgery: another site tries to make the browser submit an unwanted change. A separate token protects Prism session writes. |
 | Durable | Stored so that the applicable process can restart without losing the record. Durability still depends on the storage system. |
 | Echo | The review specialist identity. Echo proposes findings but does not own lifecycle verdicts. |
 | Effect | An action outside the pure stage calculation, such as a network call, Git change, artifact write, or runtime dispatch. |
@@ -40,12 +42,15 @@ measured results, identity verification, and application permission distinct.
 | Forge | The implementation specialist identity used through Nova runtime dispatch. Forge is not a current runtime role manifest. |
 | Foundation | Shared runtime code for configuration, registry, validation, isolation, packages, artifacts, and observability. |
 | Graph | The fixed set of pipeline stages and their dependency, activation, and repair edges. |
+| [HMAC](#hmac-and-nonce) | Shared-secret message authentication that checks the sender's possession of a secret and protects message content from changes. |
 | Idempotency key | An identity that lets the receiver recognize a repeated request for the same intended operation. |
 | Invocation | One call to an activated stage, observer, adapter, provider, or specialist. |
+| [Job fence](#job-fence) | The durable identity of a job's current claim, which must still match before Control can commit its result. |
 | Lease | A short-lived contract that binds an attempt to its identity, deadline, grants, and limits. |
 | Lifecycle | The permitted movement from pending work to success, failure, blockage, cancellation, retry, or wait. |
 | Live acceptance | Evidence from the target running environment. Static implementation evidence and local tests do not replace it. |
 | Mutual TLS | A protected connection in which both endpoints authenticate with certificates. |
+| [Nonce](#hmac-and-nonce) | A one-use request value whose digest is retained to reject replay. |
 | Nova | The role and engine that compile and control the canonical pipeline lifecycle. |
 | Observer | A plugin registration that receives committed events for telemetry, notification, or another derived view. |
 | Pipeline | The complete controlled route from admitted input through stages to one terminal run state. |
@@ -134,6 +139,119 @@ must also permit that identity.
 > **Limit:** No fixed certificate lifetime, expiry exercise, or independent SPIRE
 > restore result is established here. Follow the
 > [certificate and SPIRE rotation boundary](../use/maintenance.md#certificate-and-spire-rotation).
+
+## HMAC and Nonce
+
+HMAC means hash-based message authentication code. The sender and receiver share
+a secret. The sender calculates a code from the message and the secret; the
+receiver checks that code before it accepts the message. This authenticates
+possession of that shared secret and detects changed content. It does not
+identify a particular human, grant application permission, or prevent replay
+by itself.
+
+A nonce is a one-use request value. In Prism's HMAC worker path,
+`x-prism-timestamp`, `x-prism-nonce`, and the body digest are bound by
+`x-prism-signature`. The receiver checks the time and signature, then retains
+the nonce digest in `prism.worker_request_nonce`. A previously consumed nonce
+is rejected. This replay check explains why HMAC-mode worker `/ready` must
+check the nonce table. SPIFFE-mode `/ready` does not run that database check.
+
+> **Source evidence — message authentication and replay state**
+>
+> **Claim:** HMAC binds time, nonce, and body; nonce storage rejects replay.
+>
+> **Implementation:** [`signInternalRequest`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/internal-auth.ts#L5-L16) ·
+> [`PostgresNonceStore.consume`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/internal-auth.ts#L35-L51) ·
+> [`verifyInternalRequest`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/internal-auth.ts#L52-L87).
+>
+> **Contract or setting:** [`serveReadiness`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/worker-service.ts#L72-L86)
+> selects the nonce check only in HMAC mode.
+>
+> **Test evidence:** The [connection-refusal fixture](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/tests/worker-readiness.test.mts#L8-L21)
+> checks safe dependency diagnostics. No new executed authentication or replay
+> result is claimed here.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`.
+>
+> **Limit:** A health response does not prove an authenticated worker attempt or
+> a human's identity. See [worker diagnosis](../use/prism-studio.md#worker-not-ready).
+
+## CSRF
+
+CSRF means cross-site request forgery. It is an attempt by another site to make
+the browser send an unwanted state-changing request through an existing session.
+Prism uses a separate `prism_csrf` cookie and `x-prism-csrf` request header.
+Control requires matching values on session writes. The token supplements
+session authentication; it does not replace caller permission checks. Keep its
+value, session cookies, and access tokens out of retained evidence.
+
+> **Source evidence — separate session-write protection**
+>
+> **Claim:** Control checks the signed session and a separate CSRF cookie/header.
+>
+> **Implementation:** [`authenticated`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L108-L123).
+>
+> **Contract or setting:** The [session route creates the separate token and cookies](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L152-L172).
+>
+> **Test evidence:** Browser cookie/header handling and private-ingress access
+> remain unverified in a running deployment.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`.
+>
+> **Limit:** Token matching alone does not prove the human's identity or private
+> access. See [Open Studio](../use/prism-studio.md#step-2-open-studio-and-choose-the-project).
+
+## Job Fence
+
+A job fence is the durable identity of the current job claim. Prism stores a
+new `fence` when a runner claims a job. Before Control commits the returned
+document or directions, it locks that job and checks the returned `jobId` and
+`fence` against the current record. The claim must be running and unexpired
+for a new result. An old runner therefore cannot commit work through a later
+claim. Exact replay of an already committed matching result is a separate case;
+the result digest must also match. A fence is a concurrency guard, not caller
+authentication or human approval.
+
+> **Source evidence — current claim and committed result**
+>
+> **Claim:** The stored fence identifies the claim permitted to commit a result.
+>
+> **Implementation:** [claim creation](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/control/agent-jobs.ts#L47-L53) ·
+> [`lockAgentResult`](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/control/agent-jobs.ts#L84-L97).
+>
+> **Contract or setting:** [Control passes the job and fence into the direction transaction](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L249-L262).
+>
+> **Test evidence:** Provider completion and result commit through a running
+> agent remain unverified here.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`.
+>
+> **Limit:** A matching fence does not establish approval or resolve an uncertain
+> external launch. See [direction completion](../use/prism-studio.md#step-3-wait-for-exactly-three-directions).
+
+## ARIA Snapshot
+
+ARIA means Accessible Rich Internet Applications. An ARIA snapshot records the
+rendered view's accessibility tree: the roles, names, and states exposed to
+assistive software. A screenshot records visible pixels. Prism retains both
+forms of evidence for each published preview. The snapshot is not a substitute
+for interactive accessibility checks or human preview review.
+
+> **Source evidence — separate visual and accessibility evidence**
+>
+> **Claim:** Browser capture records both a screenshot and the body's ARIA tree.
+>
+> **Implementation:** [screenshot and `ariaSnapshot` capture](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/engine/render-operation.ts#L118-L128).
+>
+> **Contract or setting:** [publication requires and stores the matching ARIA evidence](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-server.ts#L711-L734).
+>
+> **Test evidence:** Actual browser capture and publication remain unverified
+> here; no captured preview is established by this definition.
+>
+> **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`.
+>
+> **Limit:** A snapshot alone does not establish complete accessibility. See
+> [Test the preview](../use/prism-studio.md#step-8-test-the-preview).
 
 ## Similar Terms
 
