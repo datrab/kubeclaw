@@ -15794,6 +15794,30 @@
         "A98-11"
       ],
       "description": "Frozen F41: field-specific Job manualSelector update effect distinguishes create generated-label bypass from update; update preparation does not regenerate selector or edit existing Pods. Full preparation132-166 plus validation609-612,170-188,623-634 checked against original authenticated sources. Cron template remains false/nil constrained, effect deferred to later child. Historic FAIL retained pending fresh acceptance."
+    },
+    {
+      "id": "A98-JOB-SELECTOR-UPDATE-AND-OPERATION-SCOPE-CORRECTION",
+      "state": "source-correction-awaiting-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Frozen Job selector29 update case now states field immutability explicitly (batch ValidateJobSpecUpdate627), separately from existing invalid-case statement and template restrictions; flag changes do not regenerate it. Common boundary operationScope now conditions typed outcomes on actual selected producer/profile/client and explicitly distinguishes offline render from API writes; removes blanket Prism/ops/API-probe attribution to every kind. This is a candidate correction, not independent Source acceptance."
+    },
+    {
+      "id": "A98-CRON-SCHEDULE-ZONE-UPDATE-CORRECTION",
+      "state": "source-correction-awaiting-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Frozen F43: schedule/timeZone update cases now describe actual updateCronJob384-413 new-schedule parsing, UnParseableCronJobSchedule event on parse failure and next calculated requeue. Existing Job specs/execution remain separate; later scheduling checks still apply. Original immutable controller bytes already authenticated/hashverified and exact body independently read by Root. No live or independent acceptance claimed."
     }
   ],
   "checks": [
@@ -16682,6 +16706,11 @@
       "command": "KUBECLAW_DOCS_KUBERNETES_SOURCE_DIR=/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh node --test scripts/tests/daemonset-template-semantics.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/cronjob-deferred-child-defaults.test.mjs",
       "state": "terminal-pass",
       "scope": "12 testsPASS, zero failures/skips, terminal9576; original-source daemon check previously skipped now passed. Actual external node render/group check passed in preceding49852. Root separately hash-verified/read exact CSI mount236-248/358-416, storage521-545, lifecycle76-125, apps444-462, nodeaffinity55-105, Job preparation132-166 and validator update routes. No live/independent semantic/global acceptance."
+    },
+    {
+      "command": "KUBECLAW_DOCS_KUBERNETES_SOURCE_DIR=/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/cronjob-deferred-child-defaults.test.mjs",
+      "state": "terminal-pass",
+      "scope": "Final selector/scope/schedule/timeZone candidate:9passed0failed0skipped session15230 terminal. Earlier selector/scope9PASS40899 superseded by added schedule changes. Narrow checks/default original-source boundary only; Root manually read immutable updateCronJob384-413 and previously authenticated JobSpecUpdate623-634. Full Source/Reader/Quality acceptance absent."
     }
   ],
   "reviewAssignments": [
