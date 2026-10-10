@@ -120,7 +120,7 @@ function runtimeDefaultApplicability(kind, fieldPath, parent, resource, record) 
         if(kind==='CronJob')return {
           reason:'Relevant deferred child Job default: CronJob stores the nested JobSpec without running SetDefaults_Job. The controller copies it into a separate Job; Job create defaulting applies at that later boundary.',
           omission:'The stored CronJob template keeps this absent pointer nil. On subsequent child Job creation: '+job[1],
-          evidence:[defaultEvidence('pkg/apis/batch/v1/zz_generated.defaults.go','42-L53','CronJob default traversal calls SetDefaults_CronJob and PodSpec defaults, without SetDefaults_Job.'),defaultEvidence('pkg/controller/cronjob/utils.go','244-L266','getJobFromTemplate2 copies the template spec into a separate child Job.'),defaultEvidence('pkg/controller/cronjob/cronjob_controllerv2.go','604-L609','The controller submits the constructed child Job with CreateJob.'),defaultEvidence('pkg/apis/batch/v1/defaults.go',job[0],job[1])],
+          evidence:[defaultEvidence('pkg/apis/batch/v1/zz_generated.defaults.go','42-L369','The complete SetObjectDefaults_CronJob traversal calls CronJob, embedded PodSpec and child defaults, without SetDefaults_Job or SetDefaults_Pod.'),defaultEvidence('pkg/controller/cronjob/utils.go','244-L266','getJobFromTemplate2 copies the template spec into a separate child Job.'),defaultEvidence('pkg/controller/cronjob/cronjob_controllerv2.go','604-L609','The controller submits the constructed child Job with CreateJob.'),defaultEvidence('pkg/apis/batch/v1/defaults.go',job[0],job[1])],
         };
         return receivingDefault('pkg/apis/batch/v1/defaults.go',...job);
       }

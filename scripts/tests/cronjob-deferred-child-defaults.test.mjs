@@ -26,7 +26,7 @@ test('selected missing JobSpec defaults preserve the CronJob to child Job bounda
   assert.match(deferred.mechanism,/deferred child Job/);
   assert.match(immediate.mechanism,/present spec before validation/);
   assert.equal(deferred.materializedBy,undefined);
-  assert(deferred.evidence.some(row=>row.url.endsWith('/pkg/apis/batch/v1/zz_generated.defaults.go#L42-L53')));
+  assert(deferred.evidence.some(row=>row.url.endsWith('/pkg/apis/batch/v1/zz_generated.defaults.go#L42-L369')));
   assert(deferred.evidence.some(row=>row.url.endsWith('/pkg/controller/cronjob/cronjob_controllerv2.go#L604-L609')));
  }
  assert(!cron.applicability['$.spec.parallelism']);

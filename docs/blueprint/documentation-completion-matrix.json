@@ -19677,6 +19677,27 @@
       "state": "mechanical-unselected-not-semantic-NOT_APPLICABLE",
       "scope": "All239mechanicalexclusions and1189cases restoredUNREVIEWED pendingsemanticmateriality; oldunselectedN/Acheckpoint superseded.17of759selectedcaptionpairsFAIL,742PASS,wholecase/recordreviewongoing.",
       "qualification": "Hookreplaycannotproveomissionirrelevance; newJobselector/presentProbe materialdefaults illustrateinvalidexclusions. No wholeSourceacceptance."
+    },
+    "cronAndInheritedSourceCorrections": {
+      "author": "/root",
+      "state": "candidate-pending-new-independent-complete-source-review",
+      "scope": [
+        "CronJob complete generated visitor42-369 establishes absence of Job/Pod default-function calls; a prefix cannot prove whole-function absence. Existing nested-template immediate validation is retained.",
+        "CronJob concurrency policy update: observed-active Forbid limit, Replace deletion before replacement creation, fetch/delete/create error behavior and irreversible external effects.",
+        "Legacy embedded TZ schedule can survive compatibility validation while controller warns UnsupportedSchedule.",
+        "PVC source namespace gate rejects only nonempty pointed namespace when dataSource absent; nil/empty does not trigger that gate rejection.",
+        "PVC class-name pointer/nonempty guard2499 and annotation-upgrade condition2552 included.",
+        "envFrom two-source counting starts2935; limits regular-container loop starts396."
+      ],
+      "sourceEvidence": "/home/node/Documents/Codex/a98-evidence/cronjob-visitor-authority-root/root-correction-checks.json",
+      "checks": {
+        "qualifiedFocusedTests": 21,
+        "pass": 21,
+        "fail": 0,
+        "skip": 0,
+        "finalWorkloadRerunPass": 6
+      },
+      "limits": "Source inspection and focused integration only. No live Kubernetes/API execution, complete producer join, full independent Source acceptance, Reader/Quality/Astra or package acceptance."
     }
   }
 }
