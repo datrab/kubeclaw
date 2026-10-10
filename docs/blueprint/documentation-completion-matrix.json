@@ -15236,6 +15236,33 @@
       ],
       "description": "Independent exhaustive Source review yields700named missing receiver/case proof workitems and21findings16FAIL5UNPROVEN. Concrete family corrections do not satisfy whole recursive receiver contract; preserve every exposed optional field.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/kubernetes-api-contexts-source-fresh/semantic-context-ledger.json"
+    },
+    {
+      "id": "A98-HOST-WORKER-PIN-SEMANTICS",
+      "state": "author-corrected-pending-new-independent-review",
+      "catalogueIds": [
+        "OPL-003",
+        "OPL-004"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Independent fulltwo-pageSource review7f found Worker invocationclaim cited interfaces62-93 only. Root split interface contract and actual prepare/execute/measure/conditionalcleanup/evidence/finalmeasurement/termination narrowranges and stated terminationconditionality. OriginalfrozenreviewFAILretained.",
+      "report": "/home/node/Documents/Codex/a98-evidence/host-lifecycle-source-fresh/report.md"
+    },
+    {
+      "id": "A98-ARGO-CILIUM-RECURSIVE-SEMANTICS",
+      "state": "open",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "77context Sourcepartition39FAIL38UNPROVEN. Recursiveexposure shallow; absent receiver/default/variant/Secret/change qualification and generic actualArgo syncOptions effects. Ciliumzero-direction documentedproductlimitation is independentlysourceconfirmed and is not the defect.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/argo-cilium-source-fresh/boundaries.json"
     }
   ],
   "checks": [
@@ -15851,6 +15878,14 @@
       "exitCode": 0,
       "log": "/home/node/Documents/Codex/a98-evidence/host-lifecycle-root-publication.log",
       "scope": "Current authored host corrections and f68 generated outputs,147pages51plugins. Not final coherent generated revision or independent contents acceptance."
+    },
+    {
+      "command": "Kubernetes concrete21correction author private generation+probes+inventory checks",
+      "state": "terminal-pass",
+      "scope": "24boundedJSprobes270mechanicalchecks252unchangedschema copies3913paths2200scalarvalues805/286retained; not independentsemanticacceptance.",
+      "manifestSha256": "44022b96509d4c14e5a241b875ee17ba5df43b4ad561d76d31de71f3b76c0ee7",
+      "checkedArtifacts": 24,
+      "report": "/home/node/Documents/Codex/a98-evidence/kubernetes-field-semantics-writer/report.md"
     }
   ],
   "reviewAssignments": [
@@ -16638,7 +16673,7 @@
       "forkTurns": "none",
       "freshContext": true,
       "readOnly": false,
-      "state": "running",
+      "state": "completed-see-final-evidence",
       "exclusiveFiles": [
         "docs/site/extend/testing.md"
       ],
@@ -16651,7 +16686,7 @@
       "forkTurns": "none",
       "freshContext": true,
       "readOnly": true,
-      "state": "running",
+      "state": "completed-see-final-evidence",
       "reviewedRevision": "f68a7294abf0928c1aabf290c6a7e486c651a808",
       "scopeLimit": "All77baseline Argo/Cilium APIcollectioncontexts, recursive exposed boundaries/scalars/authored effective routes; expands if new publiccontexts found. Frozen f68 Source and generated snapshot; no later mutable acceptance."
     },
@@ -16671,6 +16706,79 @@
         "checkedArtifacts": 104,
         "mismatches": 0
       }
+    },
+    {
+      "agent": "/root/a98_host_lifecycle_source_fresh",
+      "role": "source",
+      "freshContext": true,
+      "forkTurns": "none",
+      "model": "gpt-6.1-sol",
+      "readOnly": true,
+      "state": "completed-fail",
+      "reviewedRevision": "7f92331d0eb60a809b2de1795a8f9d0871054980",
+      "scopeLimit": "All514testinglines262authoredpluginslines; OPL003004hostSourceboundariesPASS, wholeassignedSourceA98-02/13FAILfor Workerpinsemanticmismatch. Generatedmatrix/live/Reader/Quality excluded.",
+      "report": "/home/node/Documents/Codex/a98-evidence/host-lifecycle-source-fresh/report.md",
+      "reportSha256": "5185b9a8db88e21ed4f039191ecb9501ace9e2bce2e669309c29b906b2490edf",
+      "integrity": {
+        "checkedArtifacts": 8,
+        "mismatches": 0
+      }
+    },
+    {
+      "agent": "/root/a98_argo_cilium_source_fresh",
+      "role": "source",
+      "freshContext": true,
+      "forkTurns": "none",
+      "model": "gpt-6.1-sol",
+      "readOnly": true,
+      "state": "completed-fail",
+      "reviewedRevision": "f68a7294abf0928c1aabf290c6a7e486c651a808",
+      "scopeLimit": "77contexts661collection687scalaroccurrences1550recursiveboundaries;39FAIL38UNPROVENcontexts, fullreceivingsemanticsnotestablished. All77helpercontractscopyreproduced, unknownfieldnegativecontrolPASS; Sourceboundariesnotlive.",
+      "report": "/home/node/Documents/Codex/a98-evidence/argo-cilium-source-fresh/REPORT.md",
+      "manifestSha256": "37995bb6066c4a148976db6f2ddc50e23571cdaac6a126fb5a612e9c49efa0cb",
+      "integrity": {
+        "checkedArtifacts": 5777,
+        "mismatches": 0
+      }
+    },
+    {
+      "agent": "/root/a98_kubernetes_apps_receiver_writer",
+      "role": "author",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": false,
+      "state": "running",
+      "exclusiveFiles": [
+        "scripts/docs-kubernetes-apps-receiver-contracts.mjs"
+      ],
+      "scopeLimit": "Source-backed recursive operational cases; no copied schema fact store; no independent selfacceptance."
+    },
+    {
+      "agent": "/root/a98_kubernetes_network_receiver_writer",
+      "role": "author",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": false,
+      "state": "running",
+      "exclusiveFiles": [
+        "scripts/docs-kubernetes-network-receiver-contracts.mjs"
+      ],
+      "scopeLimit": "Source-backed recursive operational cases; no copied schema fact store; no independent selfacceptance."
+    },
+    {
+      "agent": "/root/a98_kubernetes_admission_receiver_writer",
+      "role": "author",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": false,
+      "state": "running",
+      "exclusiveFiles": [
+        "scripts/docs-kubernetes-admission-receiver-contracts.mjs"
+      ],
+      "scopeLimit": "Source-backed recursive operational cases; no copied schema fact store; no independent selfacceptance."
     }
   ],
   "continuation": {
@@ -17141,7 +17249,7 @@
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
     "currentSourceHead": "f68a7294abf0928c1aabf290c6a7e486c651a808",
-    "nextAction": "Integrate released Kubernetes semantic writer, Prism/platform language fixes, Secret producer and host-lifecycle corrections; source commit then explicit-SHA regeneration and separate generated commit; new affected-scope Source/Reader/Quality required."
+    "nextAction": "Sourcecommit releasedinventory and Workerpinrepair; rawinventory generation then explicitSHA core/platform/publication/governance; separate generatedcommit. Parallel3receiver module authors underway; all700K8s andArgoCiliumincompleteproof remainopen."
   },
   "productBoundaries": [
     {

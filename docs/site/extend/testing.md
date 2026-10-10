@@ -219,7 +219,20 @@ A role test proves packaging around that engine:
 6. Run one real task and one failure.
 7. Stop and restart while recoverable work exists.
 
-> **Attempt lifecycle:** [Worker Core invokes preparation, execution, termination, measurement, cleanup, and evidence hooks](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L62-L93).
+> **Attempt lifecycle:** The [operation interface defines required and optional functions](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L68-L80).
+> Worker Core applies the following conditions when it calls them:
+>
+> - [Preparation must finish synchronously](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L381-L389).
+> - [Execution starts after the remaining-time and cancellation checks](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L405-L418).
+> - [Measurement follows execution and its error handling](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L431-L449).
+> - [Cleanup runs when the operation supplies it](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L452-L462).
+> - [Evidence collection runs when the operation supplies it](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L497-L514).
+> - [Final measurement follows the completion functions](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L552-L560).
+>
+> [Termination has its own timeout](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L615-L627).
+> Worker Core calls it after an execution error and on cleanup failure or expiration,
+> as shown in the execution and cleanup links above.
+> It is not an unconditional step after every successful execution.
 >
 > **Role closure:** [The role checker verifies ownership, dependencies, capability providers, and plugin selection](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/scripts/check-runtime-role-manifests.mjs#L77-L145).
 
