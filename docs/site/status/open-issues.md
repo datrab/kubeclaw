@@ -13,7 +13,7 @@ Single machine-readable authority for currently incomplete technical work. The s
 
 Reproduction steps and completion criteria describe work to perform unless a record explicitly identifies completed execution. Native and live status stay separate. Source links are commit-pinned; mutable GitHub issue state has a read date.
 
-The register contains 23 current implementation issues.
+The register contains 24 current implementation issues.
 
 [Evidence and acceptance policy](../decisions/acceptance.md) and [live acceptance](acceptance.md) remain separate.
 
@@ -50,6 +50,7 @@ The register contains 23 current implementation issues.
 | [Prism spike tests require an unavailable fixed browser path](#prism-spike-tests-require-an-unavailable-fixed-browser-path) | open |
 | [Platform shutdown timeout can overflow the Node timer range](#platform-shutdown-timeout-can-overflow-the-node-timer-range) | open |
 | [Empty Cilium direction rules do not establish the intended default deny](#empty-cilium-direction-rules-do-not-establish-the-intended-default-deny) | open |
+| [Prism test lease requests an undeclared storage profile](#prism-test-lease-requests-an-undeclared-storage-profile) | open |
 
 ## Capability work is missing from the attempt budget
 
@@ -1345,3 +1346,63 @@ The 1.20.1 tag resolves to commit 7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc. Read
 - [my-values/infra/cilium-cluster-policies.yaml](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/my-values/infra/cilium-cluster-policies.yaml#L18-L39) — Workload default-deny intent with empty direction lists.
 - [my-values/infra/cilium-cluster-policies.yaml](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/my-values/infra/cilium-cluster-policies.yaml#L125-L136) — Hubble UI deny intent with an empty ingress list.
 - [my-values/infra/cilium-values.yaml](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/my-values/infra/cilium-values.yaml#L37-L40) — Default policy enforcement mode remains a distinct setting.
+
+## Prism test lease requests an undeclared storage profile
+
+Status: open. Severity: high.
+
+### Problem and impact
+
+The default prism-e2e temporary-lease request writes spec.capabilityProfile: storage, but the declared BusterNamespaceLease spec has no such field. The namespace controller has no storage-profile selection for it.
+
+Strict field validation can reject the lease request. A request that proceeds after unknown-field pruning still does not select a storage profile. A successful lease or Ready phase is insufficient evidence of persistence.
+
+### Components and current state
+
+- Prism end-to-end deploy command
+- BusterNamespaceLease schema
+- Namespace controller
+- kubectl request validation
+
+The producer and declared receiver disagree. Namespace ResourceQuota and LimitRange values are fixed controller settings. No product correction, live admission, volume provision or mount is established. The script installs its RETURN cleanup trap only after lease readiness and namespace verification, so earlier failure requires state inspection.
+
+### Remaining work
+
+- Owner: Prism maintainers, with the namespace-controller maintainer. Decide whether this producer should remove the unsupported field or whether a defined storage capability must be implemented and authorized.
+- Align the producer, served schema, controller behavior and operator procedure. Preserve validation and namespace isolation; accepting an unknown field is not a capability implementation.
+- Safe action: stop this lease-based exercise until the contract is repaired. If an attempt already ran, inspect the recorded lease and namespace before retry or cleanup.
+
+### Reproduction and verification procedure
+
+- Inspect cmd_prism_e2e in scripts/deploy.sh and the complete declared spec in the lease CRD. Confirm that the authored capabilityProfile field has no declared storage-profile receiver.
+- Record the actual PATH kubectl version and installed CRD/server before diagnosing an attempted request. Distinguish a rejected write, pruned stored spec and authored text in the last-applied annotation.
+- In a separately authorized isolated target, execute the repaired request and observe lease identity, namespace state and the claimed storage behavior. This target execution has not been performed.
+
+### Completion criteria
+
+- Producer, schema and controller agree on the complete supported lease input. Unknown-field validation and namespace authorization remain enforced.
+- Local contract tests cover the corrected constructor and failure/cleanup boundaries; retain the exact source revision and outputs.
+- In an isolated target, the declared storage behavior is observed with claim/volume identity, binding and mount evidence where persistence is promised. A Ready lease alone is not that proof.
+- The operator guide and generated field reference describe the corrected input and its actual receiving authority.
+
+### Separate environment acceptance
+
+Actual target admission, controller reconciliation and any promised storage provisioning/mounting are separate product closure evidence. No live result is claimed.
+
+### Dependencies
+
+No dependency on another entry in this register is established.
+
+### Current evidence boundary
+
+Current source shows the unsupported authored field and fixed namespace quota/limit settings. Unknown-field validation/pruning and actual client versions are separate receiving boundaries; this finding does not assume the executable or installed CRD of a previous run.
+
+- **Observed behavior:** Source inspection only for this issue record. No live request or storage result is established.
+- **implementation commit:** Not established.
+
+### Sources
+
+- [scripts/deploy.sh](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/scripts/deploy.sh#L1853-L1871) — Default-enabled temporary lease and undeclared capabilityProfile request.
+- [charts/kubeclaw/templates/buster-namespace-lease-crd.yaml](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L34-L186) — Complete declared served spec boundary, without capabilityProfile.
+- [cmd/buster-namespace-controller/main.go](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/cmd/buster-namespace-controller/main.go#L931-L961) — Fixed namespace ResourceQuota and LimitRange settings.
+- [scripts/deploy.sh](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/scripts/deploy.sh#L1873-L1901) — Phase loop, namespace verification and delayed cleanup trap installation.
