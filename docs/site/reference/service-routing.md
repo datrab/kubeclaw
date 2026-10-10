@@ -22,8 +22,11 @@ Use the deployment's release namespace and selected procedure. Raw manifests and
 | `my-values/prism-agent-values.yaml` | Agent release namespace/selector | Gateway 8080 → `prism-dispatch`; bridge disabled. Match the actual sidecar named port. |
 | `my-values/buster-values.yaml` | Agent release namespace/selector | Adds 18891 → `buster-plan`, supplied by the sidecar. |
 | `examples/nova-values.yaml` | Agent release namespace/selector | nodePort 30063 alone leaves default ClusterIP; the NodePort-only branch does not emit it. It is an inactive override, not an exposed port. |
-| GitOps LiteLLM `resources.yaml`; separate raw `my-values` LiteLLM manifest | `kubeclaw`; `app=litellm` | TCP 4000 → numeric 4000; GitOps requests NodePort 30050, raw my-values NodePort omits the number and requests allocation. |
-| GitOps registry-local; separate raw my-values registry-local | `kubeclaw`; `app=registry-local` | TCP 5001 → numeric 5000; GitOps NodePort 30051, raw my-values ClusterIP. Registry-mirror raw manifest is ClusterIP. |
+| GitOps LiteLLM `resources.yaml` | Explicit `kubeclaw`; `app=litellm` | TCP 4000 → numeric 4000; NodePort 30050. |
+| Direct apply of raw `my-values` LiteLLM manifest | Manifest omits namespace; the apply command/context selects it; `app=litellm` | TCP 4000 → numeric 4000; NodePort number omitted, so the API allocates it. |
+| `scripts/deploy.sh` LiteLLM procedure | Selected `NAMESPACE`, including workspace selection; `app=litellm` | Renderer/apply first requests allocation, then a merge patch replaces the single port list with `LITELLM_NODE_PORT`. Default 30050; procedure validates 30000–32767. Read the stored result after either step. |
+| GitOps registry-local | Explicit `kubeclaw`; `app=registry-local` | TCP 5001 → numeric 5000; NodePort 30051. |
+| Direct raw my-values registry-local or selected registry renderer | Raw input omits namespace; direct apply/context or script `NAMESPACE` selects it; `app=registry-local` | TCP 5001 → numeric 5000; ClusterIP. The separate raw registry-mirror is also ClusterIP in its selected apply namespace. |
 | Prometheus external-chart values | Namespace/selector from selected chart render | Values request NodePort 30030. Values alone are not a full render or a proof of the external chart's listener/selector. Use its pinned chart authority and generated inventory. |
 | `charts/prism/templates/services.yaml` | Release namespace; `app=prism-studio`, `prism-control`, `prism-worker` or enabled `prism-ingestion` | 80 → 8080 or 8080 → 8080; omitted type/protocol default ClusterIP/TCP. Conditional SPIFFE trust Services use 8443 → `worker-trust`. Inspect matching workload and trust policy. |
 | `charts/prism/templates/postgresql.yaml`, PostgreSQL enabled | Release namespace; `app=prism-postgresql` | 5432; omitted targetPort defaults to numeric 5432. |
@@ -32,6 +35,20 @@ Use the deployment's release namespace and selected procedure. Raw manifests and
 | `charts/ops-pod/templates/workload.yaml` | Release namespace; exact release-name label | Headless `clusterIP: None`, health 8080 → 8080; StatefulSet serviceName links stable network identity. The ops-mcp loopback listener is not exposed by this declaration. |
 
 Product evidence at revision `57ba25bbf55f53a55efc65ede06b0e0d90eb0a70`: [main Service template](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/kubeclaw/templates/service.yaml#L1-L36), [dedicated extra NodePort template](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/kubeclaw/templates/service-extra-nodeports.yaml#L1-L22), [Prism Services](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/prism/templates/services.yaml#L1-L39), and [Ops headless identity](https://github.com/datrab/kubeclaw/blob/57ba25bbf55f53a55efc65ede06b0e0d90eb0a70/charts/ops-pod/templates/workload.yaml#L8-L24). The exact selected raw/value paths are listed in the generated Helm reference.
+
+The deployment script initializes `NAMESPACE` from a nonempty environment value
+or `kubeclaw`; its selected workspace command can replace that namespace.
+For LiteLLM, a nonempty `LITELLM_NODE_PORT` environment value overrides 30050.
+The later port-list patch takes precedence over the rendered omission. The
+script's numeric range check does not prove that the cluster allocator permits
+or can allocate that port. Apply can succeed while the later patch fails, leaving
+the initially allocated port active. After an error or interrupted response,
+read the current Service namespace, UID and port list before repeating a change.
+See [environment inputs](environment-variables.md) and the pinned
+[namespace and port defaults](https://github.com/datrab/kubeclaw/blob/d52688cd8ca79337fc377a04e9a2ebeaa713b35f/scripts/deploy.sh#L82-L91),
+[workspace selection](https://github.com/datrab/kubeclaw/blob/d52688cd8ca79337fc377a04e9a2ebeaa713b35f/scripts/deploy.sh#L675-L684),
+[LiteLLM render, apply and patch](https://github.com/datrab/kubeclaw/blob/d52688cd8ca79337fc377a04e9a2ebeaa713b35f/scripts/deploy.sh#L1166-L1180),
+and [registry render and apply](https://github.com/datrab/kubeclaw/blob/d52688cd8ca79337fc377a04e9a2ebeaa713b35f/scripts/deploy.sh#L1195-L1216).
 
 Selectors select Pods only in the Service namespace. The broad agent release selector can match additional Pods with the same labels. A selector is not authorization. A numeric targetPort selects that number; a named targetPort must resolve with the matching protocol on the selected Pod. Declaring a container port does not start a listener.
 

@@ -26,6 +26,10 @@ jobs:
         with:
           go-version: "1.26.3"
           cache: false
+      - name: Set up documentation Helm renderer
+        uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
+        with:
+          version: "v3.22.0"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
       - name: Check docs workflow trigger coverage
@@ -83,6 +87,10 @@ jobs:
         with:
           go-version: "1.26.3"
           cache: false
+      - name: Set up documentation Helm renderer
+        uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
+        with:
+          version: "v3.22.0"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
       - name: Check docs workflow trigger coverage

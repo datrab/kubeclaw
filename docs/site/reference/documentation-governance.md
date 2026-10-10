@@ -56,12 +56,14 @@ The status generator reads the machine-owned issue register. See the
 ## Generator prerequisites
 
 Run documentation generators from the repository root with Node.js 24 and
-installed repository dependencies. API output discovery also requires Go
-1.26.3 on `PATH`. It uses the standard Go parser to inspect the controller's
-source; it does not build or run the controller. The documentation workflow
-pins the same Go version for both validation and trusted regeneration.
-Use `node --version` and `go version` to confirm the tools before generation.
-If either tool is absent, install it through the development environment's
+installed repository dependencies. API output discovery requires Helm
+3.22.0 and Go 1.26.3 on `PATH`. Helm renders local charts against the declared
+Kubernetes 1.35.0 API baseline; rendering does not deploy them. The Go helper
+uses the standard parser to inspect the controller's source. It does not build
+or run the controller. The documentation workflow
+pins the same Helm and Go versions for both validation and trusted regeneration.
+Use `node --version`, `helm version --short`, and `go version` to confirm the tools before generation.
+If a required tool is absent, install it through the development environment's
 approved toolchain procedure. A missing parser is a failed prerequisite, not
 permission to omit controller-produced API objects from the inventory.
 
