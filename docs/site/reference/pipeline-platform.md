@@ -294,8 +294,9 @@ configuration, observer configuration, or isolation can change executable
 authority and therefore requires a new run unless an explicit supported
 administrative package transition applies. Changing timeouts affects newly
 created runtime objects; it does not rewrite persisted events.
-The effect coordinator captures `effectLockTtlMs` when it is created, including
-the 300,000 ms default if the field is absent. Editing the file does not change
+Nova supplies `effectLockTtlMs` when it creates the effect coordinator.
+If the field is absent, Nova supplies the 300,000 ms default.
+The coordinator retains this duration. Editing the file does not change
 the duration in an existing coordinator.
 
 Source: [platform TTL passed at coordinator creation](https://github.com/datrab/kubeclaw/blob/94fd165ae8177ec37bb16798bfed63cb8923f413/skills/nova/core/execution/engine-runtime.ts#L77-L86)

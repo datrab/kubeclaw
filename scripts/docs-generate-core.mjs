@@ -208,18 +208,22 @@ Check required app namespace Secrets:
 \`\`\`bash
 assert_cluster_binding
 : "\${KUBECONFIG:?Set KUBECONFIG to the intended cluster binding}"
-: "\${KUBE_CONTEXT:?Set KUBE_CONTEXT to the intended context}"
+: "\${EXPECTED_CONTEXT:?Use EXPECTED_CONTEXT from the bound administration shell}"
 : "\${NAMESPACE:?Set NAMESPACE to the intended app namespace}"
-kubectl --kubeconfig "$KUBECONFIG" --context "$KUBE_CONTEXT" -n "$NAMESPACE" get secret openclaw-shared-secrets redis-secrets ghcr-secret git-deploy-key-nova git-deploy-key-buster
+bound_kubectl -n "$NAMESPACE" get secret openclaw-shared-secrets redis-secrets ghcr-secret git-deploy-key-nova git-deploy-key-buster
 \`\`\`
 
-Check Tailscale OAuth Secret:
+Check the Tailscale OAuth Secret. Use the namespace and Secret name selected for
+the deployment. These commands use the deployment script defaults when the
+variables are absent or empty. Set both variables first if the installation uses other values.
 
 \`\`\`bash
 assert_cluster_binding
 : "\${KUBECONFIG:?Set KUBECONFIG to the intended cluster binding}"
-: "\${KUBE_CONTEXT:?Set KUBE_CONTEXT to the intended context}"
-kubectl --kubeconfig "$KUBECONFIG" --context "$KUBE_CONTEXT" -n tailscale get secret operator-oauth
+: "\${EXPECTED_CONTEXT:?Use EXPECTED_CONTEXT from the bound administration shell}"
+TAILSCALE_OPERATOR_NAMESPACE="\${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}"
+TAILSCALE_OAUTH_SECRET_NAME="\${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}"
+bound_kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get secret "$TAILSCALE_OAUTH_SECRET_NAME"
 \`\`\`
 
 ## Secret Ownership And Failure Signals
