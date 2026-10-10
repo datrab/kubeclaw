@@ -19,7 +19,7 @@ function renderReceiverContract(receiver, key, fieldPath) {
     ...(receiver.evidence ?? []).map(item => item.claim)];
   // Explicit authoring obligations belong in internal evidence, never in
   // the product reference. Real product limits remain publishable prose.
-  assert(!prose.some(value => /OPEN (?:DOCUMENTATION|SHARED METADATA) PROOF|Available-source documentation gap|unclosed source-proof obligation/iu.test(String(value))),
+  assert(!prose.some(value => /OPEN (?:DOCUMENTATION|SHARED METADATA) PROOF|Available-source documentation gap|unclosed source-proof obligation|open source-audit obligation/iu.test(String(value))),
     `API_REFERENCE_UNRESOLVED_PROOF: ${key} ${fieldPath}`);
   for (const name of ['purpose', 'receiver', 'operationScope', 'omitted', 'nullValue', 'emptyValue', 'invalidValue', 'changeImpact']) {
     assert(typeof receiver[name] === 'string' && receiver[name].trim(),
@@ -62,7 +62,7 @@ function renderReceiverContract(receiver, key, fieldPath) {
 
 const metadataAnchor = referenceId => `api-metadata-${createHash('sha256').update(referenceId).digest('hex').slice(0, 20)}`;
 
-export function renderImplicitMetadataReferences(resources, references = []) {
+export function validateImplicitMetadataReferences(resources, references = []) {
   assert(Array.isArray(references), 'API_REFERENCE_METADATA_INVENTORY_MISSING');
   const expected = canonicalMetadataReferences.filter(reference => resources.some(resource =>
     resource.apiVersion === reference.apiVersion && resource.kind === reference.kind));
@@ -76,14 +76,20 @@ export function renderImplicitMetadataReferences(resources, references = []) {
   }
   for (const reference of expected) assert(seen.has(reference.referenceId),
     `API_REFERENCE_METADATA_MISSING: ${reference.referenceId}`);
-  return expected.map(reference => {
+  return expected;
+}
+
+export function renderImplicitMetadataReference(reference) {
     const fields = reference.contracts.map(receiver =>
       `#### ${code(receiver.fieldPath)}\n\n` + renderReceiverContract(receiver, reference.referenceId, receiver.fieldPath)).join('\n\n');
     return `<a id="${metadataAnchor(reference.referenceId)}"></a>\n\n` +
       `### Standard metadata for ${text(reference.kind)} (${code(reference.apiVersion)})\n\n` +
       `These standard Kubernetes metadata fields apply to this ${text(reference.scope.toLowerCase())} resource. ` +
       `The custom-resource schema exposes metadata as one object; these fields are described separately from its enumerated schema paths.\n\n${fields}`;
-  }).join('\n\n');
+}
+
+export function renderImplicitMetadataReferences(resources, references = []) {
+  return validateImplicitMetadataReferences(resources,references).map(renderImplicitMetadataReference).join('\n\n');
 }
 
 // Publication must not turn maintenance inventories with missing receivers
@@ -92,7 +98,7 @@ export function renderImplicitMetadataReferences(resources, references = []) {
 export function renderApiResourceReference(resources, sourceLink, metadataReferences = []) {
   assert(Array.isArray(resources) && resources.length,
     'API_REFERENCE_INVENTORY_MISSING');
-  const metadataSections = renderImplicitMetadataReferences(resources, metadataReferences);
+  validateImplicitMetadataReferences(resources, metadataReferences);
   const referenceMap = new Map(metadataReferences.map(reference => [reference.referenceId, reference]));
   const seenResources = new Set();
   const resourceSections = resources.map(resource => {
@@ -148,5 +154,5 @@ export function renderApiResourceReference(resources, sourceLink, metadataRefere
       `Expected outcomes below come from implementation sources. They do not report a live API request or deployment test.\n\n` +
       `Checked-in resource inputs:\n\n${contexts}\n\n${sections}`;
   }).join('\n\n');
-  return [resourceSections, metadataSections].filter(Boolean).join('\n\n');
+  return [resourceSections, renderImplicitMetadataReferences(resources, metadataReferences)].filter(Boolean).join('\n\n');
 }

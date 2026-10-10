@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { apiResourceFieldBoundaries } from '../docs-api-schema-authorities.mjs';
-import { renderApiResourceReference, renderImplicitMetadataReferences } from '../docs-api-reference.mjs';
+import { renderApiResourceReference, renderImplicitMetadataReferences, renderImplicitMetadataReference, validateImplicitMetadataReferences } from '../docs-api-reference.mjs';
 
 import { implicitKubernetesObjectMetaReferences } from '../docs-kubernetes-metadata-receiver-contracts.mjs';
 
@@ -75,16 +75,25 @@ test('internal open-proof notes cannot be published as product limitations', () 
 test('implicit metadata stays separate from schema rows and all references resolve', () => {
   const references=structuredClone(implicitKubernetesObjectMetaReferences);
   const resources=references.map(({apiVersion,kind})=>({apiVersion,kind}));
-  const output=renderImplicitMetadataReferences(resources,references);
+  assert.deepEqual(validateImplicitMetadataReferences(resources,references),references);
+  // Layout fixtures contain synthetic prose. The authored reference may have
+  // unresolved source obligations and must not supply a publication PASS.
+  const sample=fixture()[0].rows[0].receiverContract;
+  const synthetic=references.map(reference=>({...reference,contracts:reference.contracts.map(receiver=>({
+    ...structuredClone(sample),fieldPath:receiver.fieldPath
+  }))}));
+  const output=synthetic.map(renderImplicitMetadataReference).join('\n\n');
   assert.equal((output.match(/<a id="api-metadata-/gu)??[]).length,references.length);
   assert.equal((output.match(/#### <code>/gu)??[]).length,references.reduce((n,r)=>n+r.contracts.length,0));
   assert(!output.includes('<summary>Pinned API schema constraints</summary>'));
   for(const label of ['Receiver:','Operation:','Omitted:','JSON null:','Explicit empty value:','Invalid value:','Change effect:']) assert(output.includes(label));
   const missing=references.slice(1);
-  assert.throws(()=>renderImplicitMetadataReferences(resources,missing),/API_REFERENCE_METADATA_MISSING/);
-  assert.throws(()=>renderImplicitMetadataReferences(resources,[...references,references[0]]),/API_REFERENCE_METADATA_DUPLICATE/);
+  assert.throws(()=>validateImplicitMetadataReferences(resources,missing),/API_REFERENCE_METADATA_MISSING/);
+  assert.throws(()=>validateImplicitMetadataReferences(resources,[...references,references[0]]),/API_REFERENCE_METADATA_DUPLICATE/);
   const changed=structuredClone(references);changed[0].contracts[0].cases[0].sourceOutcome='Unverified replacement';
-  assert.throws(()=>renderImplicitMetadataReferences(resources,changed),/API_REFERENCE_METADATA_DRIFT/);
+  assert.throws(()=>validateImplicitMetadataReferences(resources,changed),/API_REFERENCE_METADATA_DRIFT/);
+  synthetic[0].contracts[0].qualificationLimits.push('Complete consumer discovery remains an open source-audit obligation.');
+  assert.throws(()=>renderImplicitMetadataReference(synthetic[0]),/API_REFERENCE_UNRESOLVED_PROOF/);
 });
 
 test('opaque metadata must link the matching canonical reference before publication', () => {
@@ -95,10 +104,15 @@ test('opaque metadata must link the matching canonical reference before publicat
       ...structuredClone(sample),kind:reference.kind,fieldPath:row.fieldPath,
       ...(row.fieldPath==='$.metadata'?{canonicalReferenceId:reference.referenceId}:{})
     }}))};
-  const output=renderApiResourceReference([resource],link,[reference]);
-  const target=output.match(/Create, update, ownership and deletion\]\(#(api-metadata-[a-f0-9]+)\)/u)?.[1];
-  assert(target);assert(output.includes(`<a id="${target}"></a>`));
-  assert.equal((output.match(/<a id="api-field-/gu)??[]).length,resource.rows.length);
+  const unresolved=reference.contracts.some(receiver=>receiver.qualificationLimits.some(value=>value.includes('open source-audit obligation')));
+  if(unresolved) {
+    assert.throws(()=>renderApiResourceReference([resource],link,[reference]),/API_REFERENCE_UNRESOLVED_PROOF/);
+  } else {
+    const output=renderApiResourceReference([resource],link,[reference]);
+    const target=output.match(/Create, update, ownership and deletion\]\(#(api-metadata-[a-f0-9]+)\)/u)?.[1];
+    assert(target);assert(output.includes(`<a id="${target}"></a>`));
+    assert.equal((output.match(/<a id="api-field-/gu)??[]).length,resource.rows.length);
+  }
   const metadata=resource.rows.find(row=>row.fieldPath==='$.metadata').receiverContract;
   metadata.canonicalReferenceId='wrong-kind';
   assert.throws(()=>renderApiResourceReference([resource],link,[reference]),/API_REFERENCE_METADATA_LINK_MISSING/);
