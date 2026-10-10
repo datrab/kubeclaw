@@ -13,7 +13,7 @@ Single machine-readable authority for currently incomplete technical work. The s
 
 Reproduction steps and completion criteria describe work to perform unless a record explicitly identifies completed execution. Native and live status stay separate. Source links are commit-pinned; mutable GitHub issue state has a read date.
 
-The register contains 21 current implementation issues.
+The register contains 23 current implementation issues.
 
 [Evidence and acceptance policy](../decisions/acceptance.md) and [live acceptance](acceptance.md) remain separate.
 
@@ -48,6 +48,8 @@ The register contains 21 current implementation issues.
 | [Four runtime verification paths fail before they prove their contracts](#four-runtime-verification-paths-fail-before-they-prove-their-contracts) | open |
 | [Prism OpenClaw tools lack general payload and request-lifetime limits](#prism-openclaw-tools-lack-general-payload-and-request-lifetime-limits) | open |
 | [Prism spike tests require an unavailable fixed browser path](#prism-spike-tests-require-an-unavailable-fixed-browser-path) | open |
+| [Platform shutdown timeout can overflow the Node timer range](#platform-shutdown-timeout-can-overflow-the-node-timer-range) | open |
+| [Empty Cilium direction rules do not establish the intended default deny](#empty-cilium-direction-rules-do-not-establish-the-intended-default-deny) | open |
 
 ## Capability work is missing from the attempt budget
 
@@ -1227,3 +1229,119 @@ Observed on 2026-10-10 at the pinned revision with unchanged product sources. Lo
 - [skills/prism/package.json](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/package.json#L40-L49) — Prism package browser tooling uses Playwright 1.62.1.
 - [package.json](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/package.json#L28-L41) — Spike and local aggregate command order.
 - [package.json](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/package.json#L277-L279) — Repository and production aggregates depend on the local aggregate.
+
+## Platform shutdown timeout can overflow the Node timer range
+
+Status: open. Severity: medium.
+
+### Problem and impact
+
+The platform schema accepts every integer shutdownTimeoutMs of at least 1 and has no maximum. Adapter deadline consumers pass the captured value to Node timers. Node.js 24.21.0 converts a delay above 2,147,483,647 milliseconds to 1 millisecond.
+
+A schema-valid increase can sharply shorten activation or readiness waits, invocation cleanup deadlines, normal shutdown deadlines, or failed-start abort timing. A loaded or recorded value is not proof of the actual timer delay.
+
+### Components and current state
+
+- Nova runtime maintainers: adapter deadline consumers
+- Platform configuration maintainers: validation and safe input range
+
+At revision 9d085bb20af0cc70201cc41801011b63c626301c, no maximum is enforced by the platform schema. On 2026-10-10, the original loader accepted 2147483648 and a synthetic adapter using the original normal-shutdown consumer rejected ADAPTER_SHUTDOWN_TIMEOUT after approximately 1.9 ms on Node.js v24.21.0. Node reported the overflow and 1 ms delay. The configuration references now require a stop outside 1–2,147,483,647 ms.
+
+### Remaining work
+
+- Runtime and platform configuration maintainers must define and enforce the supported timer input range at validation or the consumer boundary.
+- Before consumer recreation, stop on an out-of-range value even if schema validation succeeds; retain the previous valid configuration.
+- Keep rejecting deadlines separate from cleanup paths that only send an abort signal and await the adapter. A timer expiration does not prove external work stopped.
+
+### Reproduction and verification procedure
+
+- Load a complete otherwise-valid platform file with shutdownTimeoutMs set to 2147483648 using the original loadPlatformConfig; observe that validation accepts the value.
+- With a synthetic adapter whose shutdown remains pending, run the original AdapterRuntime shutdown and record the timer warning and ADAPTER_SHUTDOWN_TIMEOUT; release pending synthetic work afterwards.
+- Check the boundary 2147483647 with a synthetic operation that completes before the timer, then clear the timer. Do not leave a long-running timer or claim its entire duration was measured.
+
+### Completion criteria
+
+- The supported input range is explicit and enforced before an unsupported value reaches a Node timer.
+- Original loader and deadline-consumer tests cover the upper boundary and the first value above it, with exact assertions for acceptance or rejection.
+- All consumers using the platform shutdown duration preserve their documented rejection or abort behavior; unsupported values cannot silently become a shorter deadline.
+- The configuration reference, schema and consumer behavior agree at the implementing revision.
+
+### Separate environment acceptance
+
+Existing evidence is an original-source local loader and synthetic-adapter probe. No pipeline recovery, live adapter shutdown, deployed environment or external-operation cleanup was performed.
+
+### Dependencies
+
+No dependency on another entry in this register is established.
+
+### Current evidence boundary
+
+Observed original runtime behavior with unchanged product sources on Node.js v24.21.0; schema and consumer inspected at the pinned revision. The documented conversion agrees with [Node.js 24.21.0 timer semantics](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args).
+
+- **Observed behavior:** Overflow and boundary probes passed their behavioral assertions; those successes reproduce the input-range defect and do not close it. Pending synthetic operations were released.
+- **implementation commit:** Not established.
+
+### Sources
+
+- [skills/common/plugin-runtime/foundation/config/platform.schema.json](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/skills/common/plugin-runtime/foundation/config/platform.schema.json#L94-L96) — Schema requires minimum1 without a maximum.
+- [skills/nova/core/execution/adapters.ts](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/skills/nova/core/execution/adapters.ts#L74-L84) — Normal shutdown passes the configured delay directly to setTimeout.
+- [skills/nova/core/execution/adapter-startup.ts](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/skills/nova/core/execution/adapter-startup.ts#L144-L165) — Failed-readiness teardown and rollback use timed abort signals.
+- [skills/nova/core/execution/engine-runtime.ts](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/skills/nova/core/execution/engine-runtime.ts#L75-L87) — Consumer construction receives the platform shutdown timeout.
+
+## Empty Cilium direction rules do not establish the intended default deny
+
+Status: open. Severity: high.
+
+### Problem and impact
+
+The checked-in dtlabs-workload-default-deny clusterwide policy has empty ingress and egress lists; hubble-ui-private has an empty ingress list. Neither contains a nonempty ingress, ingress-deny, egress or egress-deny rule. The selected Cilium 1.20.1 parser rejects such a rule before processing enableDefaultDeny.
+
+Do not rely on these two objects as proof of workload isolation or Hubble UI ingress denial. Other independently effective policies can still apply; their actual coverage must be checked separately. Successful YAML parsing, CRD registration, apply or workload rollout does not prove enforcement of these objects.
+
+### Components and current state
+
+- Cilium deployment maintainers: selected controller version and policy status
+- Network policy maintainers: default-deny policy intent and traffic acceptance
+
+The deployment script selects Cilium 1.20.1 and applies the policy file at revision 9d085bb20af0cc70201cc41801011b63c626301c. The corresponding immutable Cilium implementation rejects a rule when all four rule lists are empty; both CNP and CCNP parsers call that validation. No Go parser, Kubernetes admission, controller status or traffic enforcement was executed.
+
+### Remaining work
+
+- Network policy maintainers must choose a valid policy representation for the intended deny behavior on the selected Cilium version and preserve the required exceptions.
+- Until that representation is independently validated, stop any release acceptance that relies on these two objects for isolation. Inspect accepted controller policy status and effective coverage rather than assuming enableDefaultDeny repairs an empty rule.
+- Keep YAML/schema, Kubernetes admission, controller parsing and actual network enforcement as separate evidence classes. Do not replace an empty direction with an allow-all rule as a shortcut.
+
+### Reproduction and verification procedure
+
+- Inspect the selected version in scripts/deploy-cilium.sh and the two named objects in my-values/infra/cilium-cluster-policies.yaml.
+- Against Cilium commit 7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc, inspect Rule.Sanitize and the CNP/CCNP Parse calls. The empty-rule rejection precedes default-deny processing. This is a source reproduction, not an executed Go test.
+- In a separately authorized representative target environment, inspect controller admission/status for both objects and run explicit positive and negative traffic cases for the intended workload and Hubble UI coverage.
+
+### Completion criteria
+
+- Both policy objects parse and are accepted by the actual selected controller with status retained.
+- Negative traffic cases demonstrate the intended ingress/egress denial and positive cases demonstrate each required exception.
+- Observed behavior is attributable to the corrected policies, with competing policies and selected endpoint labels recorded.
+- Deployment instructions, generated configuration reference and policy intent match the validated implementation and controller revision.
+
+### Separate environment acceptance
+
+Controller parsing, admission and representative traffic tests are required for product closure. Existing evidence is source-only; no successful enforcement or actual deployment failure is claimed.
+
+### Dependencies
+
+No dependency on another entry in this register is established.
+
+### Current evidence boundary
+
+The 1.20.1 tag resolves to commit 7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc. Read [Rule.Sanitize empty-rule rejection](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/api/rule_validation.go#L42-L46), [CNP validation](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/k8s/apis/cilium.io/v2/cnp_types.go#L195-L199) and [CCNP validation](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/k8s/apis/cilium.io/v2/ccnp_types.go#L101-L105). Retrieved implementation bytes matched the tag and immutable commit.
+
+- **Observed behavior:** Original deployment inputs and upstream implementation inspected. No local Go execution, admitted object, controller status or network traffic result exists for this finding.
+- **implementation commit:** Not established.
+
+### Sources
+
+- [scripts/deploy-cilium.sh](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/scripts/deploy-cilium.sh#L35-L43) — Selected version and application of the policy file.
+- [my-values/infra/cilium-cluster-policies.yaml](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/my-values/infra/cilium-cluster-policies.yaml#L18-L39) — Workload default-deny intent with empty direction lists.
+- [my-values/infra/cilium-cluster-policies.yaml](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/my-values/infra/cilium-cluster-policies.yaml#L125-L136) — Hubble UI deny intent with an empty ingress list.
+- [my-values/infra/cilium-values.yaml](https://github.com/datrab/kubeclaw/blob/9d085bb20af0cc70201cc41801011b63c626301c/my-values/infra/cilium-values.yaml#L37-L40) — Default policy enforcement mode remains a distinct setting.
