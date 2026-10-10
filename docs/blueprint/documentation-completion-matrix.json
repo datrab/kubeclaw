@@ -16134,6 +16134,20 @@
       ],
       "description": "Fresh462 reviewer found helper predicate caption still claiming mandatory divisibility. Corrected to exact helper43–54 boolean predicate, without implying validation must call it. Entire helper evidence union54records:22Deployment,8Job,8CronJob,8StatefulSet,8DaemonSet. Combined with273StatefulSet operation correction, total319changedrecords; no added or removed identities.",
       "proof": "/home/node/Documents/Codex/a98-evidence/stateful-compatibility-helper-root-export-audit.json"
+    },
+    {
+      "id": "A98-STATEFUL-VOLUME-PDB-SELECTOR-CORRECTED-CANDIDATE",
+      "state": "candidate-pending-fresh-complete422-source",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Qualifies generic StatefulSet volume validation when validator runs and PDB ANY-old-selector-error update relaxation of expression values only;46record181case delta. Full affected prior review union422records2731cases must be assessed independently. Historical FAILs preserved.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-validation-correction-writer/frozen-release.json"
     }
   ],
   "checks": [
@@ -17212,6 +17226,12 @@
       "command": "npm run docs:ap09:acceptance-contract:check",
       "state": "terminal-pass-structure-only-evidence-not-validated",
       "scope": "At c770:89points122fixtures evidenceValidated=false. Explicitly not individual content acceptance."
+    },
+    {
+      "command": "Stateful/PDB correction bounded focused tests + termination selection + original visitor",
+      "state": "terminal-pass-author-only",
+      "scope": "25uniquePASS0FAIL0SKIP in terminal groups. Initial7066/83725 missing with no terminal outcome; explicitly not successful. Independent Source pending.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-validation-correction-writer/checks.json"
     }
   ],
   "reviewAssignments": [
@@ -18502,13 +18522,13 @@
     {
       "agent": "/root/stateful_pdb_validation_correction_writer",
       "role": "Author",
-      "state": "running",
+      "state": "frozen-released-author-only25PASS",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
       "revision": "c770cf5d63f42b508d616b6b8c0dba79497beed7",
-      "scope": "Exclusive workload receiver factory. Stateful volume validation qualifiers and PDB selector compatibility; no product changes or self acceptance.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-validation-correction-writer"
+      "scope": "Complete46record181case delta;134historical failures addressed, full422followup pending; identities/create omission/typed-default facts preserved. No independent acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-validation-correction-writer/frozen-release.json"
     },
     {
       "agent": "/root/hugepages_quota_462_source_fresh",

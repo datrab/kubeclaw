@@ -784,7 +784,7 @@ for(const r of records.values())if(r.kind==='StatefulSet'&&/^\$\.spec\.template\
  const condition='For authored volumes whose names do not match a volumeClaimTemplate name: ';
  for(const field of ['omitted','nullValue','emptyValue','invalidValue'])r[field]=condition+r[field];
  r.cases=r.cases.map(c=>({...c,condition:condition+c.condition}));
- const replacement='After successful typed decoding, StatefulSet validation removes every authored volume whose name matches a volumeClaimTemplate and validates a generated PVC volume instead. Invalid source children or duplicate authored entries with that matching name do not pass through the original source validator. Other template fields and nonmatching volumes still require valid values. The controller also removes matching authored volumes and inserts the ordinal PVC reference with readOnly false; the authored source is not mounted. Typed decoding errors occur before this substitution. Immediate defaults can run before replacement but do not determine the resulting matching volume source.';
+ const replacement='After successful typed decoding, StatefulSet validation removes every authored volume whose name matches a volumeClaimTemplate and substitutes a generated PVC volume. When the generic Pod-template validator runs, it checks the replacement copy, including generated PVC volumes and nonmatching authored volumes. Invalid source children or duplicate authored entries with a matching name do not pass through the original source validator. An ordinary update can skip the generic Pod-template validator when validation of the stored old StatefulSetSpec reports any error. Independent StatefulSet checks still apply. The controller also removes matching authored volumes and inserts the ordinal PVC reference with readOnly false; the authored source is not mounted. Typed decoding errors occur before this substitution. Immediate defaults can run before replacement but do not determine the resulting matching volume source.';
  r.crossFieldConditions.push(replacement);
  r.cases.push({name:'matching-claim-template-volume-replacement',condition:'Successfully decoded volume name matches a volumeClaimTemplate name; the remaining StatefulSet and template meet their requirements.',sourceOutcome:replacement});
  r.evidence.push(av('101-114','StatefulSet validation constructs PVC volumes keyed by claim-template name.'),av('193-214','StatefulSet validation removes all authored volumes with matching names from the template copy before validation.'),source('pkg/controller/statefulset/stateful_set_utils.go','390-405','Claim templates receive ordinal claim identity.'),source('pkg/controller/statefulset/stateful_set_utils.go','411-433','Controller replaces matching authored volumes with generated PVC references and readOnly false.'));
@@ -799,10 +799,24 @@ for(const r of records.values())if(r.kind==='StatefulSet'){
  if(r.fieldPath==='$.spec.template'||/^\$\.spec\.template\.spec(?:$|\.)/.test(r.fieldPath)||/^\$\.spec\.volumeClaimTemplates(?:$|\[|\.)/.test(r.fieldPath)||r.fieldPath==='$.spec.serviceName'){
   const outcomes=new Map();
   for(const field of ['nullValue','emptyValue','invalidValue']){const old=r[field];r[field]=scope+old;outcomes.set(old,r[field]);}
-  r.cases=r.cases.map(c=>c.name==='omitted-at-create'?c:{...c,sourceOutcome:outcomes.get(c.sourceOutcome)??c.sourceOutcome});
+  r.cases=r.cases.map(c=>{
+   if(c.name==='omitted-at-create')return c;
+   const mapped=outcomes.get(c.sourceOutcome);
+   // Volume dimensions already include the claim-name qualifier. Their case
+   // outcomes still contain the original text, so equality alone misses them.
+   const volumeValueCase=/^\$\.spec\.template\.spec\.volumes(?:$|\[|\.)/.test(r.fieldPath)&&['explicit-null','explicit-null-at-typed-decode','explicit-empty-or-zero','explicit-empty-value','invalid-value-or-combination'].includes(c.name);
+   return {...c,sourceOutcome:mapped??(volumeValueCase?scope+c.sourceOutcome:c.sourceOutcome)};
+  });
  }
  r.cases.push({name:'old-invalid-spec-update-compatibility',condition:'An ordinary StatefulSet update reaches the parent validator and validation of the stored old StatefulSetSpec reports an error.',sourceOutcome:compatibility});
  r.evidence.push(av('238-254','Ordinary StatefulSet update selects compatibility options and skips generic Pod-template validation when old-spec validation reports an error.'),av('58-79','StatefulSet template validation conditionally calls the generic Pod-template validator while retaining selector matching and label/annotation checks.'),av('217-222','StatefulSet always requires Always restartPolicy and forbids activeDeadlineSeconds.'),av('258-268','StatefulSet update masks allowed changes before comparing the remaining spec fields for immutability.'),av('164-177','StatefulSet conditionally validates claim-template specs and nonempty serviceName; numeric spec checks still run.'));
+}
+// PDB update compatibility relaxes expression values only. The old-selector
+// helper tests the complete strict error list, despite its narrower name.
+for(const r of records.values())if(r.kind==='PodDisruptionBudget'&&r.fieldPath==='$.spec.selector'){
+ r.invalidValue='Create requires valid matchLabels keys and values, expression keys, supported operators, the required number of expression values and valid expression-value grammar. Ordinary update strictly checks the stored old selector first. Any error from that check enables AllowInvalidLabelValueInSelector for the new selector, which skips grammar validation of MatchExpressions.Values. The new expression values need not retain the old invalid values. matchLabels keys and values, expression keys, operators and value-count rules still require valid values. Typed decoding remains separate.';
+ r.cases=r.cases.map(c=>c.name==='invalid-value-or-combination'?{...c,sourceOutcome:r.invalidValue}:c);
+ r.evidence.push(source('pkg/registry/policy/poddisruptionbudget/strategy.go','89-96','PDB create sets AllowInvalidLabelValueInSelector false.'),source('pkg/registry/policy/poddisruptionbudget/strategy.go','112-117','Ordinary PDB update derives selector compatibility from the stored old budget and validates the new budget.'),source('pkg/registry/policy/poddisruptionbudget/strategy.go','178-184','Any error from strict validation of a nonnil old selector enables selector-value compatibility.'),source('pkg/apis/policy/validation/validation.go','68-70','PDB spec validation passes selector-value compatibility into ValidateLabelSelector.'),source('staging/src/k8s.io/apimachinery/pkg/apis/meta/v1/validation/validation.go','62-100','Selector compatibility skips only expression-value grammar; matchLabels, expression keys, operators and value-count checks remain strict.'));
 }
 export const receiverContracts=[...records.values()];
 export function workloadReceiverContracts(apiVersion,kind,exactBoundaries) {
