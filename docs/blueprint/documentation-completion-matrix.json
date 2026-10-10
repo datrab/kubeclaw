@@ -15304,7 +15304,7 @@
     },
     {
       "id": "A98-APPS-RECEIVER-SOURCE",
-      "state": "author-correction-in-progress",
+      "state": "author-corrected-pending-new-independent-review",
       "catalogueIds": [
         "CFG-009"
       ],
@@ -15312,9 +15312,9 @@
         "A98-10",
         "A98-11"
       ],
-      "description": "Full independent SourceFAIL: retained null map key, seccomp nil requirements, projected branch semantics, token/selector/default ranges, exact constraints and unqualified consumer behavior. All15findings being corrected; 17statuspaths also required.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/apps-receiver-source-fresh/report.md",
-      "evidenceSha256": "ff6cfa30c33b8fe3be36812ae284ef9da68a39c44740a5840a9959ca155d8f5c"
+      "description": "Author released correction1 e964 after all15original Source findings;1267nonmetadataSpec+$root+17status=1285records7712cases347workitems. Root read fullreport and verified subjectSHA; new complete fresh Source underway. No Source approval.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/kubernetes-apps-receiver-writer/correction-1/report.md",
+      "evidenceSha256": "bd92725c4756f9778f96754cb4b3f3bcbfabeef5ad00e0c1f9dec1a9c95adc5b"
     },
     {
       "id": "A98-ADMISSION-RECEIVER-CORRECTION2",
@@ -16125,6 +16125,18 @@
       "scope": "13resource types65contexts5698schema boundaries254registry contracts present5444missing. Exact unused alternatives and operation paths retained; only version-bound released registries integrated. Maintenance output is not acceptance.",
       "report": "/home/node/Documents/Codex/a98-evidence/api-resource-inventory-integration-root/summary.json",
       "reportSha256": "622fcd6cde2686fe5308c5eb642e945399f7bd013c65561b0eced57f7d2e4f81"
+    },
+    {
+      "command": "original config inventory maintenance mode with released Deployment registry",
+      "state": "terminal-pass-maintenance-only",
+      "exitCode": 0,
+      "scope": "1539contracts present4159missing,5698schema boundaries13kinds65contexts. Deployment1285join and104namedmetadata/envelopegaps; everycase/evidenceshapevalid. Not Source/Reader/Quality/fullgate acceptance.",
+      "sourceDigests": {
+        "scripts/docs-configuration-inventory.mjs": "20c2b69f26a586481d94301a3633c717ed5ea21d374ffea93f321ff7fe0415ca",
+        "scripts/docs-kubernetes-apps-receiver-contracts.mjs": "e96425368a043dd5bc23604577adf6016fd17e725c9553327c74bc590a315e58"
+      },
+      "report": "/home/node/Documents/Codex/a98-evidence/apps-receiver-integration-root/report.md",
+      "reportSha256": "5c4110ef32632c1589fe2ba03448e239900acdd773a6f2717eeb80ced4e536ca"
     }
   ],
   "reviewAssignments": [
@@ -17141,10 +17153,22 @@
         "admission": "145f3e02b3a3d3c2f0d690934cb3611d5d12a7438450da3f6a944ec4b1097571"
       },
       "scope": "NewcompleteNetwork122/707/175/69 plusAdmission132/751/95/29 and shared schema traversal/coverage helpers; whole scopes, no inheritedPASS, no Reader/Quality/globalapproval."
+    },
+    {
+      "agent": "/root/a98_apps_receiver_corrected_source_complete_fresh",
+      "role": "source-review",
+      "model": "gpt-6.1-sol",
+      "freshContext": true,
+      "forkTurns": "none",
+      "readOnly": true,
+      "state": "running",
+      "baseRevision": "8efd6186c0e0387ef721feabf133a6571785963e",
+      "candidateSha256": "e96425368a043dd5bc23604577adf6016fd17e725c9553327c74bc590a315e58",
+      "scope": "Full1285records7712cases347workitems plus independent raw/Helm/customsurface discovery; no inheritedauthorPASS. Metadata remains explicitglobalgap, no Reader/Quality/integrationapproval."
     }
   ],
   "continuation": {
-    "stage": "Complete fresh Source review ongoing: new scalar/list/map inheritance and Namespace DELETE semantic leads, helper structural keywords lack traversal/rejection. Root full API inventory discovery integrated and verified failclosed on current missing contracts. Deployment/Argo authors active.",
+    "stage": "Released Deployment correction1 including17status paths joined into original API inventory; two independent complete Source reviews running while Argo author continues. Current complete-registry gate stillfails4159missing bindings; no package acceptance.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
     "next": "Read fullnew Source report and correct allbehavior/support/helper defects; newfreshfullreview. Finish/reuse allremainingAPI receiver registries inclcore/metadata/status, join and render fullcanonicalreference. Source/gen/currentgates/Reader/Quality/Astra. No massparity before AP09.8 approval.",
@@ -17160,9 +17184,9 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/a98_kubernetes_apps_receiver_writer",
       "/root/a98_argo_receiver_writer",
-      "/root/a98_network_admission_source_corrected_complete_fresh"
+      "/root/a98_network_admission_source_corrected_complete_fresh",
+      "/root/a98_apps_receiver_corrected_source_complete_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
