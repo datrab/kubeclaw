@@ -17371,6 +17371,12 @@
       "state": "terminal-pass-integrity-and-membership-only",
       "scope": "All14 supplement artifacts match sealed manifest; all70 exact field paths present in author v8 selected paths. Neither integrity nor author membership establishes independent source acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-daemon-exact70-author-v8-membership-root.json"
+    },
+    {
+      "command": "Root exact historical838 finding-component and review-membership reconciliation",
+      "state": "terminal-pass-delta-and-membership-only",
+      "scope": "All original18+34+411+1 rejected components changed in current exports, no missing records. All20 additional historical PVC components also changed and within current422 Source scope. Four Job/CronJob resources parents outside422 require supplemental complete independent Source review; content changes alone are not acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/historical838-added20-pvc-current422-reconciliation.json"
     }
   ],
   "reviewAssignments": [
@@ -18713,7 +18719,8 @@
       "forkTurns": "none",
       "revision": "d8dec69cfbb3d13687c153d3c80b907455afcd18",
       "scope": "All62StatefulSet and8DaemonSet literal actual-selection assertions. Independent actual output/profile provenance, selection dependency equivalence, field normalization and wording semantics. No producer-family or global acceptance.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-complete-source-fresh"
+      "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-complete-source-fresh",
+      "supplementalScope": "After complete70: complete4 Job/CronJob resources parent records outside prior422 union, including cases/captions/typed create-update compatibility; separate bounded Source verdict."
     }
   ],
   "continuation": {
@@ -19466,7 +19473,9 @@
       },
       "applicability": "950UNREVIEWED; no exact historical producer join receipt",
       "state": "reviewer-reported-complete-conditional-semantics-seal-pending",
-      "qualification": "Historical revision only; current corrections require explicit reconciliation. Remaining63 dimensions are literal actual-selection assertions."
+      "qualification": "Historical revision only; current corrections require explicit reconciliation. Remaining63 dimensions are literal actual-selection assertions.",
+      "additionalPVCComponents": 20,
+      "reconciliation": "All20 current clauses changed and inside full422; 4other HugePages resource parent records outside422 assigned fresh supplemental Source review. No delta-only acceptance."
     }
   },
   "productBoundaries": [
