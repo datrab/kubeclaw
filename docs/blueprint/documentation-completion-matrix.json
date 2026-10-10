@@ -15770,6 +15770,30 @@
         "A98-11"
       ],
       "description": "F39/F40: replace generic Job-template immutability effect for backoffLimit, parallelism, suspend, activeDeadlineSeconds, completions and completionMode. Explain current failure counts, excess/active Pod deletion, deadline measurement and resume reset, selected NonIndexed count immutability and completion-mode immutability. CronJob nested changes explicitly affect later child Jobs, not existing Jobs. Pinned controller and validation evidence read/hash-verified. Frozen independent findings remain FAIL; no global acceptance."
+    },
+    {
+      "id": "A98-NODE-SELECTOR-ITEM-CONSUMER-CORRECTION",
+      "state": "source-correction-awaiting-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Frozen F30/F31/F36/F37/F38 corrections: full lifecycle runner76-125 establishes absent TCP dispatch; CSI helper358-416 returns attributes plus routing flag with actual caller236-248; retained null TokenRequest item is zero object not omission; retained null required NodeSelectorTerm is a zero term skipped by matcher, not absent preference; exact DaemonSet selector key omission may preserve a nonempty matching selector. Original controller/validator/helper bytes hash-verified. Unused CSI token alternatives remain outside actual publication obligation. Independent historic FAILs unchanged; fresh acceptance required."
+    },
+    {
+      "id": "A98-JOB-MANUALSELECTOR-UPDATE-CORRECTION",
+      "state": "source-correction-awaiting-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Frozen F41: field-specific Job manualSelector update effect distinguishes create generated-label bypass from update; update preparation does not regenerate selector or edit existing Pods. Full preparation132-166 plus validation609-612,170-188,623-634 checked against original authenticated sources. Cron template remains false/nil constrained, effect deferred to later child. Historic FAIL retained pending fresh acceptance."
     }
   ],
   "checks": [
@@ -16648,6 +16672,16 @@
       "command": "KUBECLAW_DOCS_KUBERNETES_SOURCE_DIR=/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh node --test scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/cronjob-deferred-child-defaults.test.mjs scripts/tests/cronjob-selected-claims.test.mjs",
       "state": "terminal-pass",
       "scope": "Final six Job scalar corrections:12 passed, zero failures/skips, session61245 terminal. Actual pinned job_controller.go SHA256e1ccf3faccc78647c9ddff13a2de4d109c4924d13207d19e155c3b2a5c968c87 and batch validator hash-verified/read. Checks preserve field/default/child boundaries; not independent semantic acceptance or live behavior."
+    },
+    {
+      "command": "node --test scripts/tests/node-workloads-receiver.test.mjs scripts/tests/daemonset-template-semantics.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs",
+      "state": "terminal-pass-with-skipped-source-check",
+      "scope": "15 pass, zero fail, one optional authenticated source test skipped because its source-directory environment variable was absent; actual external node selection render/default/drift check terminalPASS session49852. Original-source rerun follows with environment set; no independent/global acceptance."
+    },
+    {
+      "command": "KUBECLAW_DOCS_KUBERNETES_SOURCE_DIR=/home/node/Documents/Codex/a98-evidence/workload-node-corrected-complete-source-fresh node --test scripts/tests/daemonset-template-semantics.test.mjs scripts/tests/kubernetes-workload-receiver.test.mjs scripts/tests/cronjob-deferred-child-defaults.test.mjs",
+      "state": "terminal-pass",
+      "scope": "12 testsPASS, zero failures/skips, terminal9576; original-source daemon check previously skipped now passed. Actual external node render/group check passed in preceding49852. Root separately hash-verified/read exact CSI mount236-248/358-416, storage521-545, lifecycle76-125, apps444-462, nodeaffinity55-105, Job preparation132-166 and validator update routes. No live/independent semantic/global acceptance."
     }
   ],
   "reviewAssignments": [
