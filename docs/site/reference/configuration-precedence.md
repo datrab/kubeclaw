@@ -21,13 +21,14 @@ Use this sequence to find an effective value:
 1. Identify the process or registration that consumes the field.
 2. Identify the one loaded artifact or implemented merge for that consumer.
 3. Apply only the documented defaults and override order below.
-4. Record the effective value at the point the consumer loads it.
+4. Record the loaded value and check any later conversion at its actual
+   consumer. A schema-valid number can differ from the timer delay it produces.
 
 ## Precedence by family
 
 | Family | Resolution order and override rules | Important boundary |
 | --- | --- | --- |
-| Pipeline platform | Schema-required value → optional consumer default (`effectLockTtlMs` only) | One `--platform` file; no second file or project merge. Relative paths resolve from its canonical directory. |
+| Pipeline platform | Schema-required value → optional consumer default (`effectLockTtlMs` only) | One `--platform` file; no second file or project merge. Relative paths resolve from its canonical directory. `shutdownTimeoutMs` has no schema maximum, but Node timer delays above 2,147,483,647 ms become 1 ms. Check the [timer range and stop condition](configuration-change-impact.md#timer-range-and-stop-condition). |
 | Explicit pipeline graph | Exact `stage.config`/`stage.input` values → defaults or derived values implemented by that stage | Stage validation does not insert schema defaults. `pipeline-definition.v2` fields do not inherit from `nova-project.v2`; the compiler materializes a new graph. |
 | Nova project | Compiler constants → optional project fields → compiler-derived repository/source bindings | Array order does not control module order. The topological graph and ID tie-break do. |
 | `.swarm/pipeline.json` test nodes | Select suite templates and apply exclusions/overrides → add distinct suite and direct nodes → merge matrix configuration → resolve provider schema defaults and validate policy limits | Node-ID conflicts reject; direct nodes and suite additions do not override selected nodes. Scope concurrency may narrow a suite ceiling, never widen it. Provider plan output is resolved data, not another authoring layer. |

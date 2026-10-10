@@ -52,8 +52,39 @@ their timeout values when `createAdapterRuntime` constructs them.
 
 | Setting | Accepted value and default | Consumer effect |
 | --- | --- | --- |
-| `shutdownTimeoutMs` | Required integer, at least 1 millisecond; no platform-loader fallback. | Sets activation/readiness wait limits, invocation cleanup deadlines, and the normal runtime shutdown deadline. Failed-start cleanup has a separate abort-only limit, explained below. Existing runtime objects retain their captured value. |
+| `shutdownTimeoutMs` | The schema requires an integer of at least 1 millisecond, with no maximum or platform-loader fallback. Use 1–2,147,483,647 milliseconds for the Node timers. | Sets activation/readiness wait limits, invocation cleanup deadlines, and the normal runtime shutdown deadline. Larger schema-valid values become a 1 ms timer delay. Failed-start cleanup has a separate abort-only limit, explained below. Existing runtime objects retain their captured value. |
 | `effectLockTtlMs` | Optional integer from 60,000 to 86,400,000 milliseconds. When absent, the effect coordinator receives 300,000 milliseconds. | The coordinator passes the duration to durable-effect lock acquisition and renewal. Its renewal interval also derives from this captured duration. |
+
+### Timer range and stop condition
+
+Stop before recreating a consumer if `shutdownTimeoutMs` is outside
+1–2,147,483,647 milliseconds. Passing platform validation does not prove that
+the timer preserves the requested delay. The current schema has no maximum;
+the adapter passes the captured value directly to Node's `setTimeout`.
+Node changes a delay above 2,147,483,647 to 1 millisecond. A larger configured
+allowance can therefore sharply shorten a wait, shutdown deadline, or timed
+abort signal. Timer scheduling does not guarantee an exact elapsed duration.
+
+Source: [shutdown schema](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L94-L96),
+[shutdown timer consumer](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapters.ts#L74-L84),
+and [Node.js 24.21.0 timer behavior](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args).
+
+On 2026-10-10, the unchanged platform loader accepted `2147483648`.
+An isolated synthetic adapter's normal shutdown then rejected with
+`ADAPTER_SHUTDOWN_TIMEOUT` after about 1.9 ms on Node.js `v24.21.0`, which
+reported the overflow and 1 ms delay. A separate `2147483647` boundary check
+accepted the value and completed a synthetic readiness operation before the
+timer; the timer was cleared. The full long delay was not measured. Pending
+synthetic work was released. These checks did not execute a pipeline recovery,
+live adapter, or external operation.
+
+If the proposed delay is outside this range, retain the previous valid
+configuration and ask the runtime and platform configuration maintainers to
+resolve the input. Do not treat a successful schema check as approval to
+restart. A future loader or consumer guard must be checked at the boundary and
+above it; this reference does not claim such a guard already exists.
+
+### Deadline and cleanup outcomes
 
 These limits do not all enforce the same outcome. Activation and readiness
 waits, invocation cleanup, and normal runtime shutdown race their operation
@@ -99,7 +130,8 @@ Keep these distinctions when planning a timeout change:
 
 1. Preserve the previous platform file, its digest, and the two effective
    timeout values. Validate the proposed file and record the new values,
-   including the fallback for an absent `effectLockTtlMs`.
+   including the fallback for an absent `effectLockTtlMs`. Check the shutdown
+   timer range above even when platform validation succeeds. Stop on overflow.
 2. Before recreating the consumer, stop new work and drain active work through
    the [run-control procedure](../use/operate.md#canonical-run-control-procedure).
    Stop the change if effects or attempts remain unresolved. A shorter shutdown

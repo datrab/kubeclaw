@@ -14739,6 +14739,27 @@
       ],
       "description": "Direct nodes and suite additions compose distinct IDs, not higher-priority replacements. Existing selected/direct or add/template collisions reject. Suite overrides preserve uses; matrix/default/limit rules are separate.",
       "author": "/root"
+    },
+    {
+      "id": "A98-PLATFORM-TIMER-OVERFLOW",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-composition-source-fresh/report.md",
+      "reportSha256": "c2d68ce67960d43474a96110378d79e00733dbc14b16d2ac6d9b68cd9c567edf",
+      "reportedBy": "/root/a98_precedence_composition_source_fresh",
+      "state": "root-corrected-pending-new-full-source-review",
+      "pages": [
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/configuration-change-impact.md"
+      ],
+      "catalogueIds": [
+        "CFG-013",
+        "CFG-014"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Schema accepts shutdownTimeoutMs above Node timer range; original loader accepted2147483648 and original shutdown timer rejected after about1.9ms. Docs now distinguish schema acceptance, actual timer conversion, operational stop, owner and bounded probe limits. Product schema unchanged.",
+      "author": "/root"
     }
   ],
   "checks": [
@@ -15205,6 +15226,20 @@
       "result": "passed",
       "log": "/home/node/Documents/Codex/a98-evidence/precedence-composition-root-pins.json",
       "scope": "98 exact Git links valid and current source bytes equal pinned objects; not semantic acceptance."
+    },
+    {
+      "command": "npm run docs:check:refs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "log": "/home/node/Documents/Codex/a98-evidence/precedence-overflow-root-refs.log",
+      "scope": "All current link/path references; no substantive content acceptance"
+    },
+    {
+      "command": "npm run docs:site-boundary:check",
+      "state": "terminal-fail",
+      "exitCode": 1,
+      "log": "/home/node/Documents/Codex/a98-evidence/precedence-overflow-root-boundary.log",
+      "scope": "Current glossary lines196/224/248 contain source-inspection bookkeeping; frozen independent review input retained pending release."
     }
   ],
   "reviewAssignments": [
@@ -15832,6 +15867,25 @@
         "configuration-change-impact.md": "212fad85100cd942269f054c656458f37f3dcad11d60050ffa82af1e0440a8e5"
       },
       "scopeLimit": "Whole affected SOURCE partition only; no global acceptance."
+    },
+    {
+      "agent": "/root/a98_precedence_composition_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "state": "completed-rejection",
+      "reviewedRevision": "6426d88697e238231b76c4680abbe8cb4619f43a plus exact two-page overlays recorded in report",
+      "report": "/home/node/Documents/Codex/a98-evidence/precedence-composition-source-fresh/report.md",
+      "reportSha256": "c2d68ce67960d43474a96110378d79e00733dbc14b16d2ac6d9b68cd9c567edf",
+      "freshContext": true,
+      "readOnly": true,
+      "scopeLimit": "Full two-page Source partition only; no complete recursive inventory, Reader, Quality or live acceptance",
+      "gateVerdicts": {
+        "CFG-013": "FAIL",
+        "CFG-014": "FAIL",
+        "A98-11-source-partition": "FAIL"
+      }
     }
   ],
   "continuation": {
