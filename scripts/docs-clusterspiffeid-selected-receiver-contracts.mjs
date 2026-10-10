@@ -1,0 +1,76 @@
+/** Authored selected foreign receiver boundary; no admission or live result. */
+const api = 'spire.spiffe.io/v1alpha1';
+const kindName = 'ClusterSPIFFEID';
+const commit = '078ce2097356b5af7179dc8953ec4c0321b2ccd2';
+const source = (path,a,b,claim) => ({url:`https://github.com/spiffe/spire-controller-manager/blob/${commit}/${path}#L${a}-L${b}`,claim});
+const k = (path,a,b,claim) => ({url:`https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/${path}#L${a}-L${b}`,claim});
+const parse = source('api/v1alpha1/clusterspiffeid_webhook.go',95,168,'ParseClusterSPIFFEIDSpec requires a nonempty parseable Go template, converts present label selectors, and preserves hint.');
+const reconcile = source('pkg/spireentry/reconciler.go',448,531,'Nonfallback resources precede fallback; namespace and Pod selection precede per-Pod render and its failure accounting.');
+const registration = source('pkg/spireentry/reconciler.go',210,258,'Desired entries compete by registration key; create/update/delete reconcile current entries. A missing desired entry can remove an earlier registration.');
+const schemaEvidence = {url: "https://github.com/spiffe/helm-charts-hardened/blob/029f1985233ee3e47d2b579c355f95f4db6e115a/charts/spire-crds/templates/spire.spiffe.io_clusterspiffeids.yaml#L10-L258",claim:"Original template is byte-identical to the authenticated CRDs 0.6.0 archive member; it declares cluster scope, served v1alpha1, spec requirements, selected selector families and status subresource."};
+const server = [k('staging/src/k8s.io/apiextensions-apiserver/pkg/apiserver/customresource_handler.go',1406,1470,'CRD schema coercion preserves root identity and standard ObjectMeta while pruning unknown fields and nonnullable nulls.'),k('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresource/strategy.go',70,101,'The main CR resource strategy resets status when a status subresource is enabled.'),k('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresource/status_strategy.go',65,92,'The status strategy preserves the previous object outside submitted status.')];
+const paths = [
+ '$.apiVersion','$.kind','$.metadata','$.spec','$.spec.className','$.spec.fallback','$.spec.hint',
+ '$.spec.namespaceSelector','$.spec.namespaceSelector.matchExpressions','$.spec.namespaceSelector.matchExpressions[]','$.spec.namespaceSelector.matchExpressions[].key','$.spec.namespaceSelector.matchExpressions[].operator','$.spec.namespaceSelector.matchExpressions[].values','$.spec.namespaceSelector.matchExpressions[].values[]',
+ '$.spec.podSelector','$.spec.podSelector.matchLabels','$.spec.podSelector.matchLabels["*"]','$.spec.spiffeIDTemplate'
+];
+const clauses = {
+ '$.spec': ['Desired workload registration policy.', 'Required spec must contain spiffeIDTemplate; schema shape does not execute templates or register identities.','{} lacks the required spiffeIDTemplate and cannot produce an entry.','Changing desired policy can add, update or delete registrations; it does not revoke already issued SVIDs by itself.'],
+ '$.spec.className': ['Select the responsible controller class.', 'Fresh omission yields empty class; reconciliation accepts it only when watchClassless is true or the configured class is itself empty.','Empty class follows the same explicit class-selection predicate.','Changing class transfers or removes reconciliation eligibility; verify both controllers and entry ownership before interpreting identity availability.'],
+ '$.spec.fallback': ['Apply this policy only after successful nonfallback render for the Pod has been considered.', 'Fresh omission is false; this is the Go bool zero, not a schema default.','false makes this a nonfallback policy; true defers it and skips Pods for which a nonfallback entry was rendered.','A nonfallback render failure does not mark the Pod as covered and can leave a fallback eligible. Fallback is not an authorization fallback.'],
+ '$.spec.hint': ['Copy an entry hint into the SPIRE registration.', 'Fresh omission produces an empty hint.','Empty hint requests an empty hint, with server feature support checked during reconciliation.','Hint changes registration metadata; it neither selects Pods nor grants SPIRE administration.'],
+ '$.spec.spiffeIDTemplate': ['Construct each selected Pod identity with the configured trust domain, namespace and ServiceAccount.', 'Omission violates the required CRD child and the receiver rejects an empty SPIFFE ID template.','Empty string fails ParseClusterSPIFFEIDSpec.','A parseable template can fail execution, produce an invalid SPIFFE ID or use a different trust domain. The renderer rejects these results; changing a template changes the desired registration identity.']
+};
+const conditions = [
+ 'SPIRE chart 0.30.0 selects controller image 0.7.0; original upstream v0.7.0 resolves to this commit. SPIRE CRDs chart 0.6.0 archive SHA256 e561d54dd2247552937f90c11e62a828ffcd85456a1b43162691500223bcac07 supplies the served foreign schema. Image tags do not prove deployed binary identity.',
+ 'Actual three authenticated contexts are application:spire:install and installer:spire:install/upgrade. Namespace expressions exclude kube-system and kube-public; Pod matchLabels selects kubeclaw.dev/worker-trust="true". The exact keys and indices belong to the authority selector, even when the authored semantic family has a wildcard.',
+ 'Selection chooses registration candidates. The renderer adds k8s:pod-uid:<Pod UID> and the node-derived parent SPIFFE ID. Workload attestation, SVID issuance and authenticated connections remain separate receiving boundaries.',
+ 'Omission/null cases assume a present immediate parent and a fresh object. CRD structural pruning precedes required validation and controller typed decoding. Merge-patch null removes a member; apply ownership and admission mutations require their operation-specific checks.',
+ 'Recovery requires correcting selectors/template/class or restoring API access, inspecting current registrations and stats, then checking workload-issued identity and the actual authenticated consumer. Reconciliation runs on triggers and configured GC interval; this module proves no timing bound or live success.'
+];
+function canonical(path) {
+ if(typeof path!=='string') return null;
+ const normalized=path.replace(/\[\d+\]/g,'[]');
+ if(/^\$\.spec\.podSelector\.matchLabels\["(?:[^"\\]|\\.)+"\]$/.test(normalized))return '$.spec.podSelector.matchLabels["*"]';
+ return normalized;
+}
+function make(fieldPath) {
+ const p=canonical(fieldPath); let clause=clauses[p]; const evidence=[schemaEvidence,...server,parse,reconcile,registration];
+ let nullValue='The foreign schema does not declare nullable here. Structural null pruning and required checks determine admission; null does not supply an explicit empty typed value.';
+ let invalidValue='Incompatible types or CRD constraints can reject admission. Later parsing/rendering/API errors remain distinct from schema validity.';
+ if(p.includes('Selector')) {
+  const ns=p.includes('namespaceSelector');
+  clause=[ns?'Filter namespace labels before the configured ignored-namespace check.':'Filter Pod labels inside each selected namespace.', 'An absent selector has nil typed pointer and lists without a label restriction. An absent member contributes no requirement; other requirements still apply.', '{} or an empty requirements collection contributes no label requirement and can broaden selection. An explicit empty key/value is a present requirement and is separately validated.', 'Changing a label key, operator or value changes candidate membership and can remove or add registrations. AND combines the complete selector requirements; labels do not grant trust.'];
+  evidence.push(source('pkg/k8sapi/helpers.go',52,86,'Present selectors are list options; nil pointers produce no label restriction. Namespace scope remains on Pod lists.'),k('staging/src/k8s.io/apimachinery/pkg/apis/meta/v1/helpers.go',36,103,'LabelSelectorAsSelector validates matchLabels and In, NotIn, Exists, DoesNotExist expressions. Empty selectors become Everything.'));
+  if(p.endsWith('.key')){clause[1]='An absent key does not name a valid requirement.';clause[2]='Empty key fails label-key validation.';}
+  if(p.endsWith('.operator')){clause[1]='An absent operator is not one of the supported selector operators.';clause[2]='Empty operator is invalid; use In, NotIn, Exists or DoesNotExist.';}
+  if(p.endsWith('.values')||p.endsWith('.values[]')){clause[1]='Missing values are valid only for Exists/DoesNotExist; In/NotIn require at least one value.';clause[2]='[] is required for Exists/DoesNotExist and invalid for In/NotIn. A present string element, including an allowed empty label value, is not an omitted list.';}
+ }
+ if(p==='$.spec.className')evidence.push(source('pkg/spireentry/reconciler.go',294,296,'Class eligibility compares exact class name or explicitly enabled classless handling.'),source('pkg/spireentry/reconciler.go',391,409,'ListClusterSPIFFEIDs filters each spec class before registration state construction.'));
+ if(p==='$.spec.hint')evidence.push(source('pkg/spireentry/entries.go',119,130,'Hint is copied into the rendered entry.'),source('pkg/spireentry/reconciler.go',803,807,'Hint updates are omitted when the server reports Hint unsupported.'));
+ if(p==='$.spec.spiffeIDTemplate')evidence.push(source('pkg/spireentry/entries.go',72,157,'templateData exposes TrustDomain, ClusterName, ClusterDomain, PodMeta, PodSpec, NodeMeta and NodeSpec. Template execution and SPIFFE parsing enforce the configured trust domain.'));
+ if(p==='$.apiVersion'||p==='$.kind') {
+  const expected=p==='$.kind'?kindName:api;
+  clause=['Identify the served custom-resource endpoint.', 'Absent body identity does not establish the exact CR endpoint identity. Unstructured decoding requires actual kind.', 'Empty identity does not satisfy the required exact endpoint identity.', `Use ${expected} on its served endpoint. A string-only change does not migrate stored resources.`];
+  nullValue='Null supplies no required identity string.';
+  invalidValue=`Nonstring or mismatched identity fails decoding or exact CRD endpoint TypeMeta validation; expected ${expected}.`;
+  evidence.push(k('staging/src/k8s.io/apimachinery/pkg/runtime/serializer/json/json.go',164,190,'Unstructured decoding rereads actual body identity and requires kind.'),k('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresource/validator.go',115,133,'Custom-resource TypeMeta validation requires exact kind and group/version.'));
+ }
+ if(p==='$.metadata') {
+  clause=['Identify a cluster-scoped registration policy and its controller cache class label.', 'Missing metadata does not establish a named resource. Server UID/version identify its stored incarnation.', '{} supplies no name; create requires name or valid generateName. Namespace does not scope this cluster resource.', 'Name reuse creates a new UID. resourceVersion fences writes. spec.className controls reconciler eligibility; metadata label spire.spiffe.io/class-name can additionally filter controller cache membership and must agree with the actual configured cache filter.'];
+  evidence.push(k('staging/src/k8s.io/apiextensions-apiserver/pkg/apiserver/schema/objectmeta/coerce.go',62,110,'Incoming root metadata is coerced as standard ObjectMeta.'),k('staging/src/k8s.io/apiextensions-apiserver/pkg/registry/customresource/validator.go',46,74,'Standard ObjectMeta validation is separate from foreign schema properties.'),source('cmd/main.go',123,139,'Configured cache labels combine the explicit selector and class-name filter.'),source('api/v1alpha1/clusterspiffeid_types.go',138,151,'The resource is cluster-scoped, has standard ObjectMeta, and enables the status subresource.'));
+ }
+ return {kind:kindName,fieldPath,authoritySelector:{apiVersion:api,kind:kindName,fieldPath},purpose:clause[0],receiver:'Kubernetes unstructured CRD receiving boundary, SPIRE controller-manager 0.7.0 policy parser and entry reconciler',operationScope:'Selected custom-resource create/update, then asynchronous registration reconciliation; status is controller observation, not desired identity policy.',omitted:clause[1],nullValue,emptyValue:clause[2],invalidValue,changeImpact:clause[3],crossFieldConditions:[...conditions,'The optional admin/downstream/federation/DNS/TTL alternatives are not selected foreign body fields here. Their absence gives no invented administration or federation grant.'],cases:[{name:'selected-policy-change',condition:'The selected field changes in a present admitted spec.',sourceOutcome:clause[3]},{name:'registration-failure',condition:'SPIRE create/update fails or returns a non-OK item status.',sourceOutcome:'EntryFailures increments. Status update can also fail and is logged separately. Inspect real entries before retry conclusions; no issued SVID or consumer connection is proved.'}],evidence:[...evidence,source('pkg/spireentry/reconciler.go',280,291,'Stats status is updated only when changed; failed writes are logged.'),source('pkg/spireentry/reconciler.go',605,647,'Create/update failures count per-entry registration errors.'),source('pkg/reconciler/reconciler.go',76,118,'The loop repeats after trigger or configured GC interval, until context cancellation.')],qualificationLimits:['Source-derived selected receiver contract only; no live admission, controller, issuance, attestation or network check ran.','Foreign schema alternatives that KubeClaw does not select remain upstream reference scope; new selected paths require explicit authoring.','Local pure contract tests verify selection/authority integrity and documented branches, not upstream runtime execution.']};
+}
+export function clusterSPIFFEIDSelectedReceiverContracts(apiVersion=api,kind=kindName,exactBoundaries=paths.map(fieldPath=>({fieldPath}))) {
+ if(apiVersion!==api||kind!==kindName)throw new Error('CLUSTERSPIFFEID_SELECTED_IDENTITY_UNQUALIFIED');
+ if(!Array.isArray(exactBoundaries))throw new Error('CLUSTERSPIFFEID_SELECTED_BOUNDARIES_INVALID');
+ const seen=new Set();
+ return exactBoundaries.map(row=>{
+  if(!row||!paths.includes(canonical(row.fieldPath)))throw new Error(`CLUSTERSPIFFEID_SELECTED_PATH_UNAUTHORED: ${row?.fieldPath}`);
+  if((row.apiVersion&&row.apiVersion!==api)||(row.kind&&row.kind!==kindName))throw new Error('CLUSTERSPIFFEID_SELECTED_AUTHORITY_MISMATCH');
+  if(seen.has(row.fieldPath))throw new Error('CLUSTERSPIFFEID_SELECTED_DUPLICATE');
+  seen.add(row.fieldPath);return make(row.fieldPath);
+ });
+}
+export const receiverContracts=clusterSPIFFEIDSelectedReceiverContracts();

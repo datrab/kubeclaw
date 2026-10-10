@@ -16604,6 +16604,11 @@
       "command": "Pure full API registry schema/receiver join including246metadata records",
       "state": "terminal-pass",
       "scope": "5698paths13kinds, zero missing/extra;136implicit reference-only contracts are excluded from schema counts. Structural join only, not normalCLI/render/content acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/clusterspiffeid-selected-receiver.test.mjs scripts/tests/prometheus-selected-receiver.test.mjs",
+      "state": "terminal-pass",
+      "scope": "9 local unit/contract/render tests, zero skipped; not independent/global/live acceptance"
     }
   ],
   "reviewAssignments": [
@@ -19128,6 +19133,30 @@
       ],
       "state": "actualexpandeddiscoverycandidate pending Source review",
       "sources": "Original pinned RBACvalidation103-125/RuleAllows178-193/URLmatch94-108/CRDcategoryvalidation810-815/discovery149-158 read; typednullstringsdistinctfromremoval; no author semantic selfacceptance"
+    },
+    "selectedMonitoringAndIdentity": {
+      "baseRevision": "aae95af5d1dbb91db6347847855994712cf5c5cf",
+      "state": "released-author-candidates-integrated-pending-independent-review-and-source-bound-publication",
+      "monitoring": {
+        "author": "/root/monitoring_selected_receiver_writer",
+        "records": 185,
+        "selectedSchemaPaths": 149,
+        "selectedImplicitMetadataPaths": 36,
+        "ownTypeMetaRecords": 6,
+        "report": "/home/node/Documents/Codex/a98-evidence/prometheus-selected-receiver-writer/report.md",
+        "reportSha256": "de9e31a04f1edce109c3c9a431228dde494205f8374ccd95ea368281a5fff25e",
+        "verifiedSealEntries": 27
+      },
+      "identity": {
+        "author": "/root/clusterspiffeid_selected_receiver_writer",
+        "records": 18,
+        "contexts": 3,
+        "report": "/home/node/Documents/Codex/a98-evidence/clusterspiffeid-selected-receiver-writer/report.md",
+        "reportSha256": "0b2ff00447adbd440fcb23734dafde5c4f754740dcb8eaccc3935ec2ad139bc2",
+        "verifiedSealEntries": 5,
+        "sourceQualification": "Author original-source checks retained; independent complete source review remains required."
+      },
+      "rootChecks": "9 focused tests PASS, zero skipped. Authenticated monitoring render traversed; SPIRE archive integrity and selected fields checked. Root verified author seals. No independent semantic, publication, live or package acceptance."
     }
   }
 }
