@@ -26,6 +26,7 @@ import { receiverContracts as coreReceiverContracts } from './docs-kubernetes-co
 import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver-contracts.mjs';
 import { receiverContracts as ciliumReceiverContracts } from './docs-cilium-receiver-contracts.mjs';
 import { receiverContracts as envelopeReceiverContracts } from './docs-kubernetes-envelope-receiver-contracts.mjs';
+import { receiverContracts as metadataReceiverContracts } from './docs-kubernetes-metadata-receiver-contracts.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
@@ -2748,6 +2749,10 @@ const versionedApiReceiverRegistries = new Map([
   ['networking.k8s.io/v1', [...networkingReceiverContracts, ...envelopeReceiverContracts.filter(record => record.authoritySelector.apiVersion === 'networking.k8s.io/v1')]],
   ['admissionregistration.k8s.io/v1', [...admissionReceiverContracts, ...admissionStatusReceiverContracts, ...envelopeReceiverContracts.filter(record => record.authoritySelector.apiVersion === 'admissionregistration.k8s.io/v1')]],
 ]);
+for (const [apiVersion, records] of versionedApiReceiverRegistries) {
+  versionedApiReceiverRegistries.set(apiVersion, [...records,
+    ...metadataReceiverContracts.filter(record => record.authoritySelector.apiVersion === apiVersion)]);
+}
 
 function buildApiResourceInventory(files) {
   const resources = new Map();

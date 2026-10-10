@@ -15710,6 +15710,18 @@
         "A98-11"
       ],
       "description": "Root read full released writer report and verified30sealedartifacts/module SHA a2cdac9ab613b6a3189c84e3938c6201552553b0566551805390d007d2b23471.1716record/8722originalcaseidentities retained;472originalcasechanges;27distinctnewbranches682applicableinstances9404totalcases. Nine owned Cilium correction groups qualify exact headers/proxy, NotFound deferred acknowledgement, empty-family widening, numeric protocol normalization, named-range path asymmetry, CIDR identity, captions and FQDN state/recovery. Sharedmetadata obligation remains open; unchecked dimensions/cases remain unqualified. No global/live acceptance."
+    },
+    {
+      "id": "A98-METADATA-246-REGISTRY-INTEGRATION",
+      "state": "integrated-candidate-pending-independent-source-and-reference-rendering",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11"
+      ],
+      "description": "Root read released metadata author report; verified77original primary files byte lengths/SHA256/Gitblob identities and module b6b5e44bcef780d56facb8e511b684a2bf5c2335c16465c9bc6a437d29fc818d. One failed obsolete watcher lookup retained/excluded.246schema records now bind by exact APIversion. Actual pure13kind join5698paths zero missing/extra. Separate136implicit ObjectMeta records/4canonicalreferences require reader integration; no invented CRDschema children. Full independent Source needed; currentCLI/render/semantic/globalPASS not claimed."
     }
   ],
   "checks": [
@@ -16563,6 +16575,11 @@
       "exitCode": 0,
       "tests": 14,
       "scope": "Released Cilium correction candidate; schema/coverage/render guard tests. All14pass. Not complete semantic, API/live, publication or package acceptance."
+    },
+    {
+      "command": "Pure full API registry schema/receiver join including246metadata records",
+      "state": "terminal-pass",
+      "scope": "5698paths13kinds, zero missing/extra;136implicit reference-only contracts are excluded from schema counts. Structural join only, not normalCLI/render/content acceptance."
     }
   ],
   "reviewAssignments": [
