@@ -16023,6 +16023,19 @@
         "A98-14"
       ],
       "description": "Reader-site check terminal FAIL on nine source-inspection bookkeeping occurrences. Corrected three host lifecycle table cells, Kubernetes fixture heading metadata, issue-register generator input, and two configuration-inventory failure strings. Generated helm-values/status pages require revision-bound regeneration; independent Reader/Quality acceptance still open."
+    },
+    {
+      "id": "A98-ANNOTATION-NULL-LABEL-SELECTOR-CORRECTION",
+      "state": "candidate-pending-independent-review",
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "FE07-SOURCE-006 historical failure retained. RootMetadata mapString null-member cases now distinguish annotation consumers from label equality selectors. No annotation-selection behavior inferred from label matching. Full affected fresh Source review required."
     }
   ],
   "checks": [
@@ -17063,6 +17076,17 @@
       "command": "npm run docs:site-boundary:check",
       "state": "terminal-fail",
       "scope": "Root session76337: nine source-inspection bookkeeping findings across reader pages and issue-register input. Corrections prepared; generated pages remain stale until separate generated commit."
+    },
+    {
+      "command": "Root annotation-map null-case export audit and cluster/node metadata receiver tests",
+      "state": "terminal-pass",
+      "scope": "12tests PASS0FAIL0SKIP; direct audit rootMetadata annotation and label entries only. Initial overly broad audit failed on two separate nested template records, then scope corrected; no semantic acceptance claimed.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/annotation-null-case-root-correction-audit.json"
+    },
+    {
+      "command": "node --test scripts/tests/docs-status.test.mjs",
+      "state": "terminal-pass",
+      "scope": "15PASS0FAIL0SKIP after reader-language source correction; generated issue view separately committed. Helm generated output still awaiting regeneration."
     }
   ],
   "reviewAssignments": [
