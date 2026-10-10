@@ -156,15 +156,31 @@ runtime subset.
 
 > **Source evidence — platform timeouts and persisted authority**
 >
-> **Claim:** Platform timeout fields are validated and captured by consumers but are excluded from the runtime configuration subset compared during recovery. Recovery constructs consumers with the supplied platform and existing run ID after its other checks.
+> **Claim:** The loader validates platform timeout fields. Consumers capture them, but recovery excludes them from its runtime-configuration comparison. Recovery constructs consumers with the supplied platform and existing run ID after its other checks.
 >
-> **Implementation:** [platform validation and frozen load](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.ts#L51-L70); [prepared configuration subset](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-runtime.ts#L29-L41); [persisted configuration and package comparison](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-snapshots.ts#L28-L42); [graph comparison](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-snapshots.ts#L68-L73); [recovery preparation and retained identity](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-run.ts#L56-L69); [effect check and consumer construction](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-runtime.ts#L75-L87); [CLI platform load and recovery selection](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/cli.ts#L48-L60)
+> **Implementation:**
 >
-> [Adapter startup and invocation cleanup capture](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L100-L119); [readiness and failed-start cleanup](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L144-L164); [adapter shutdown deadline](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapters.ts#L74-L84); [effect-coordinator duration capture](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/coordinator.ts#L12-L31); [lock acquisition duration](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/durable-invocation.ts#L39-L45); [lock renewal and interval](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/durable-invocation.ts#L103-L109)
+> - [platform validation and frozen load](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.ts#L51-L70).
+> - [prepared configuration subset](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-runtime.ts#L29-L41).
+> - [persisted configuration and package comparison](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-snapshots.ts#L28-L42).
+> - [graph comparison](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-snapshots.ts#L68-L73).
+> - [recovery preparation and retained identity](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-run.ts#L56-L69).
+> - [effect check and consumer construction](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/engine-runtime.ts#L75-L87).
+> - [CLI platform load and recovery selection](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/cli.ts#L48-L60).
 >
-> **Contract or setting:** [required shutdown field](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L18); [timeout types and bounds](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L94-L96)
+> - [Adapter startup and invocation cleanup capture](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L100-L119).
+> - [readiness and failed-start cleanup](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapter-startup.ts#L144-L164).
+> - [adapter shutdown deadline](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/execution/adapters.ts#L74-L84).
+> - [effect-coordinator duration capture](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/coordinator.ts#L12-L31).
+> - [lock acquisition duration](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/durable-invocation.ts#L39-L45).
+> - [lock renewal and interval](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/nova/core/effects/durable-invocation.ts#L103-L109).
 >
-> **Test evidence:** On 2026-10-10, Node.js `v24.21.0` ran 11 isolated assertions using the pinned platform loader, runtime preparation, snapshot writer, and package/graph verifiers with a synthetic local plugin. All passed. The recorded subset omitted both timeout fields. Changed shutdown, changed lock duration, both changed, and absent lock duration passed those authority checks without rewriting the stored snapshot. Changed adapter configuration and changed stage execution timeout rejected at their respective pin checks. Invalid timeout bounds rejected at the platform loader.
+> **Contract or setting:**
+>
+> - [required shutdown field](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L18).
+> - [timeout types and bounds](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/skills/common/plugin-runtime/foundation/config/platform.schema.json#L94-L96).
+>
+> **Test evidence:** On 2026-10-10, Node.js `v24.21.0` ran 11 isolated assertions with a synthetic local plugin. They exercised the pinned loader, runtime preparation, snapshot writer, and package/graph verifiers. All passed. The recorded subset omitted both timeout fields. Changed shutdown, changed lock duration, both changed, and absent lock duration passed those authority checks without rewriting the stored snapshot. Changed adapter configuration and changed stage execution timeout rejected at their respective pin checks. Invalid timeout bounds rejected at the platform loader.
 >
 > **Revision:** `fe426bd75db277b04cf405cc2057063b75fa0a1d`
 >
@@ -251,17 +267,35 @@ when credentials change.
 >
 > **Claim:** KubeClaw emits collection changes into pod fields and hashes selected ConfigMaps, but init preserves existing Semgrep/ESLint policies unless replacement is enabled. Prism Control captures authority inputs at startup; rendering does not prove live reload.
 >
-> **Implementation:** [KubeClaw template and checksum fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L19-L40); [environment collection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1393-L1395); [resource receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1442-L1442); [selector receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1655-L1662); [persistent swarm/policy copy conditions](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L627-L648); [runtime copies and webhook insertion](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L673-L681); [override environment selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1156-L1157)
+> **Implementation:**
 >
-> [Prism checksums and pull-secret receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L32-L50); [operator environment receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/_product-decisions.tpl#L16-L27); [Control startup snapshot](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-config.ts#L63-L72); [operator validation and signing-key load](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/control/product-decisions.ts#L23-L34); [GitOps desired revision and reconciliation settings](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L41-L64)
+> - [KubeClaw template and checksum fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L19-L40).
+> - [environment collection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1393-L1395).
+> - [resource receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1442-L1442).
+> - [selector receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1655-L1662).
+> - [persistent swarm/policy copy conditions](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L627-L648).
+> - [runtime copies and webhook insertion](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L673-L681).
+> - [override environment selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1156-L1157).
 >
-> **Contract or setting:** [policy replacement default](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L469-L474); [Prism image-policy schema](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L5-L28); [pull-secret list schema](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L94-L109); [operator collection constraints](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L141-L150); [enabled operator minimum](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L250-L258)
+> - [Prism checksums and pull-secret receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/workloads.yaml#L32-L50).
+> - [operator environment receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/_product-decisions.tpl#L16-L27).
+> - [Control startup snapshot](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/server/control-config.ts#L63-L72).
+> - [operator validation and signing-key load](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/control/product-decisions.ts#L23-L34).
+> - [GitOps desired revision and reconciliation settings](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L41-L64).
 >
-> **Test evidence:** The 2026-10-10 isolated Helm 3.22.0 checks on [Configuration precedence](configuration-precedence.md#helm-collection-precedence) asserted the rendered environment, selector, nested resource map, URL, file payloads, and synthetic Secret reference. Prism schema-negative cases exited one as expected. The init copy rules and startup capture were checked from source, not through a running pod.
+> **Contract or setting:**
+>
+> - [policy replacement default](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L469-L474).
+> - [Prism image-policy schema](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L5-L28).
+> - [pull-secret list schema](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L94-L109).
+> - [operator collection constraints](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L141-L150).
+> - [enabled operator minimum](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L250-L258).
+>
+> **Test evidence:** On 2026-10-10, isolated Helm 3.22.0 checks asserted the rendered environment, selector, resource map, URL, file payloads, and synthetic Secret reference. See [Configuration precedence](configuration-precedence.md#helm-collection-precedence). Prism schema-negative cases exited one as expected. The init copy rules and startup capture were checked from source, not through a running pod.
 >
 > **Revision:** `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`
 >
-> **Limit:** No API admission, Argo CD reconciliation, scheduling, pod replacement, persistent-volume init execution, runtime readiness, credential rotation, or rollback was executed for these Helm checks. Follow the affected component's procedure before applying a change.
+> **Limit:** These Helm checks did not execute API admission, Argo CD reconciliation, scheduling, pod replacement, persistent-volume initialization, runtime readiness, credential rotation, or rollback. Follow the affected component's procedure before applying a change.
 
 ## Safe change sequence
 
@@ -295,9 +329,13 @@ retrying. A timeout does not prove that an external operation did not happen.
 
 > **Source evidence — pinned recovery and startup capture**
 >
-> **Claim:** Nova recovery rejects graph, recorded runtime configuration subset, and package drift; coupled project files commit as one generation; Prism Control captures one environment snapshot at composition.
+> **Claim:** Nova recovery rejects graph, recorded runtime configuration, and package drift. Coupled project files commit as one generation. Prism Control captures one environment snapshot at composition.
 >
-> **Implementation:** [graph and runtime recovery checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L28-L72); [coupled publication commit](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/published-pair.ts#L78-L113); [Control startup snapshot](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-config.ts#L67-L72)
+> **Implementation:**
+>
+> - [graph and runtime recovery checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L28-L72).
+> - [coupled publication commit](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/common/plugin-runtime/foundation/config/published-pair.ts#L78-L113).
+> - [Control startup snapshot](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-config.ts#L67-L72).
 >
 > **Contract or setting:** [run snapshot versions and integrity](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/execution/engine-snapshots.ts#L75-L109)
 >

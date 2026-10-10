@@ -15163,6 +15163,28 @@
       "acceptanceIds": [],
       "reportedBy": "independent-source-or-original-gate",
       "author": "/root"
+    },
+    {
+      "id": "A98-PUBLICATION-SIMPLIFIED-ENGLISH",
+      "state": "partially-corrected-pending-page-release-and-full-gate",
+      "pages": [
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/pipeline-platform.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/status/open-issues.md",
+        "docs/site/understand/plugin-runtime.md"
+      ],
+      "description": "Original publicationcheck at Source7e failed30passivevoice/longsentence findings. Root shortened unfrozen prose and preserved every source pin. Frozen Prism/platform need correction after review release; no lint policy changes.",
+      "author": "/root",
+      "reportedBy": "original publication gate",
+      "catalogueIds": [
+        "CFG-013",
+        "CFG-014"
+      ],
+      "acceptanceIds": [
+        "A98-13"
+      ]
     }
   ],
   "checks": [
@@ -15733,6 +15755,38 @@
       "state": "terminal-pass",
       "exitCode": 0,
       "scope": "147page metadata generation succeeded; original reader boundary passes; no independent content or actual HTML render acceptance"
+    },
+    {
+      "command": "refs original gate at Source7e413",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "log": "/home/node/Documents/Codex/a98-evidence/resumed-refs-7e413cf6.log",
+      "revision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "scope": "Mechanical gate only; publication has avoidable passive voice and sentence-length findings; no content or whole-package acceptance."
+    },
+    {
+      "command": "config original gate at Source7e413",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "log": "/home/node/Documents/Codex/a98-evidence/resumed-config-7e413cf6.log",
+      "revision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "scope": "Mechanical gate only; publication has avoidable passive voice and sentence-length findings; no content or whole-package acceptance."
+    },
+    {
+      "command": "publication original gate at Source7e413",
+      "state": "terminal-fail",
+      "exitCode": 1,
+      "log": "/home/node/Documents/Codex/a98-evidence/resumed-publication-7e413cf6.log",
+      "revision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "scope": "Mechanical gate only; publication has avoidable passive voice and sentence-length findings; no content or whole-package acceptance."
+    },
+    {
+      "command": "boundary original gate at Source7e413",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "log": "/home/node/Documents/Codex/a98-evidence/resumed-boundary-7e413cf6.log",
+      "revision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "scope": "Mechanical gate only; publication has avoidable passive voice and sentence-length findings; no content or whole-package acceptance."
     }
   ],
   "reviewAssignments": [
@@ -16473,10 +16527,43 @@
       "state": "completed-fail-corrections-require-new-fresh-review",
       "reviewedRevision": "94fd165ae8177ec37bb16798bfed63cb8923f413",
       "scopeLimit": "Current API collections/actual receiver/generator/helper SOURCE semantics; generated archived old output explicitly stale, private generation required; no whole-package/Reader/Quality/live acceptance"
+    },
+    {
+      "agent": "/root/a98_issuer_approval_source_resumed_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "reviewedRevision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "scopeLimit": "Full three authored pages at7e; own claims/264pins; freshreview after interrupted identity"
+    },
+    {
+      "agent": "/root/a98_literal_source_resumed_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "reviewedRevision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "scopeLimit": "Full affected literal and authority diagnostics at7e; bounded A98-10/11/14"
+    },
+    {
+      "agent": "/root/a98_operator_reader_current_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "freshContext": true,
+      "readOnly": true,
+      "state": "running",
+      "reviewedRevision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "scopeLimit": "Full nine operator pages/OPR001-010/OPL001-005 Readerapplicable A98-01..14 current snapshot"
     }
   ],
   "continuation": {
-    "stage": "AP09.8 source corrections: approval metadata, issuer replay, Argo ref-only and Cilium zero port; parallel literal-render and diagnostic producer writers; full mutation terminalFAIL recorded.",
+    "stage": "Source7e fixes independently rereviewed; refs/config/boundary PASS, publication languageFAIL corrected in unfrozen sources; source-only prose commit pending; full original mutation running7e.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
     "next": "Commit corrected source and matrix after released writers; regenerate against exact SHA separately; original bounded gates and new fresh complete affected reviews; retry full original mutation only after actual producer correction. No package/global acceptance.",
@@ -16899,15 +16986,13 @@
       "acceptance": false
     },
     "fullConfigurationMutation": {
-      "sessionId": 52712,
-      "state": "terminal-fail",
-      "revision": "25a0d2f2f2d7824b83928ca851c5df6c25cc88e8",
-      "worktree": "/home/node/Documents/Codex/a98-evidence/config-mutations-25a0d2f2",
-      "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-25a0d2f2.log",
-      "provenance": "Immutable tracked source plus explicitly selected installed node_modules symlink; no clean dependency-install proof; suite independently generates its baseline. Subsequent helper text/keyword corrections not this execution candidate.",
-      "exitCode": 1,
-      "cause": "external-chart-archive:content-change rejected with chart archive bytes changed assertion, but expected diagnostic pattern not matched",
-      "logSha256": "5dd818999b314a53802b215d3221247f63ac703df78838878d5f67b518947498"
+      "sessionId": 90473,
+      "state": "observed-live",
+      "revision": "7e413cf63e82fdc6104184a6be25f35420b15d80",
+      "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
+      "worktree": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6",
+      "exitFile": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.exit",
+      "provenance": "Immutable source; explicit installed node_modules symlink not clean dependency-install evidence; previous process absent verified before rerun."
     },
     "releasedCorrections": {
       "literalGenerator": {
@@ -16923,6 +17008,26 @@
         "sourceSha256": "dd10b7fcfb3b1cdc33782e690adca368d25665ac01dbc6e420299139c95809e4",
         "scope": "Authentic baseline; corrupted same-size and truncated Cilium archives; restored baseline; no full suite PASS"
       }
+    },
+    "source7eInterruptedRuns": {
+      "mutation": {
+        "sessionId": 48231,
+        "state": "process-absent-no-observed-terminal-status",
+        "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6.log"
+      },
+      "reviewers": [
+        "/root/a98_issuer_approval_source_fresh",
+        "/root/a98_literal_diagnostic_source_fresh"
+      ],
+      "reviewState": "Interrupted before reports; archive existence not acceptance; new fresh identities started."
+    },
+    "apiQualifiedSource93ca": {
+      "report": "/home/node/Documents/Codex/a98-evidence/api-qualified-source-fresh/report.md",
+      "state": "completed-fail",
+      "contextLedger": "/home/node/Documents/Codex/a98-evidence/api-qualified-source-fresh/semantic-context-ledger.json",
+      "failedContexts": 5,
+      "unprovenRecursiveContexts": 165,
+      "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     }
   },
   "productBoundaries": [

@@ -160,11 +160,21 @@ do not validate that other input form.
 >
 > **Claim:** The expander inserts supplied context before validating and merging overrides. It substitutes placeholders with the original root input. Caller changes can follow expansion.
 >
-> **Implementation:** [`expandSwarmConfig` input checks](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L163-L183); [context, override, and substitution order](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L185-L199); [`assertOverrideTargets` and recursive merge](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L104-L128); [placeholder input guard and traversal](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L131-L149); [run-builder supplied context](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/real-run-workspace.mjs#L1500-L1520); [later run-builder changes](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/real-run-workspace.mjs#L1533-L1537)
+> **Implementation:**
 >
-> **Contract or setting:** [supported input fields and fixed feature/tuning values](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L19-L36); [known-path example defaults](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/config-profiles/standard.json#L46-L51)
+> - [`expandSwarmConfig` input checks](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L163-L183).
+> - [context, override, and substitution order](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L185-L199).
+> - [`assertOverrideTargets` and recursive merge](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L104-L128).
+> - [placeholder input guard and traversal](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L131-L149).
+> - [run-builder supplied context](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/real-run-workspace.mjs#L1500-L1520).
+> - [later run-builder changes](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/real-run-workspace.mjs#L1533-L1537).
 >
-> **Test evidence:** On 2026-10-10, Node.js `v24.21.0` ran 17 isolated assertions against the pinned expander. All passed. Checks covered supplied-context/webhook overrides, raw-root substitution, unknown and absent targets, object-over-scalar rejection, array/null replacement, nested-map preservation, empty overrides, missing/whitespace placeholder input, unsupported profile, fixed feature/tuning checks, extra top-level keys, invalid override shape, and noncompact pass-through. The repository-root example above produced the stated values.
+> **Contract or setting:**
+>
+> - [supported input fields and fixed feature/tuning values](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/platform-config.ts#L19-L36).
+> - [known-path example defaults](https://github.com/datrab/kubeclaw/blob/fe426bd75db277b04cf405cc2057063b75fa0a1d/tests/verification/e2e/support/config-profiles/standard.json#L46-L51).
+>
+> **Test evidence:** On 2026-10-10, Node.js `v24.21.0` ran 17 isolated assertions against the pinned expander. All passed. Checks covered supplied-context and webhook overrides, raw-root substitution, unknown and absent targets, object-over-scalar rejection, array/null replacement, nested-map preservation, and empty overrides. They also covered missing or whitespace-only placeholder input, unsupported profiles, fixed feature/tuning checks, extra top-level keys, invalid override shape, and noncompact pass-through. The repository-root example above produced the stated values.
 >
 > **Revision:** `fe426bd75db277b04cf405cc2057063b75fa0a1d`
 >
@@ -319,9 +329,25 @@ for the effect of each rendered change.
 >
 > **Claim:** Ordered overlays can clear a list without clearing a map; KubeClaw templates consume the resulting collections and apply field-specific fallbacks. Prism validates whole collections and image policies before rendering.
 >
-> **Implementation:** [KubeClaw extra environment receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1393-L1395); [scheduling receivers](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1655-L1662); [nested resource receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1442-L1442); [gateway URL fallback and token reference](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1296-L1299); [Secret reference selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/_helpers.tpl#L46-L62); [ConfigMap file fallbacks](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/configmap-swarm-config.yaml#L10-L27)
+> **Implementation:**
 >
-> **Contract or setting:** [KubeClaw collection defaults](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L518-L521); [Prism image policy contract](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L5-L28); [image reference bindings and pull-secret collection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L79-L109); [operator collection limits](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L141-L150); [enabled operator minimum](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L250-L258); [enabled authority template guards](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/_product-decisions.tpl#L1-L13); [GitOps revision and group guards](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L1-L5); [GitOps selected Application fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L41-L51)
+> - [KubeClaw extra environment receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1393-L1395).
+> - [scheduling receivers](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1655-L1662).
+> - [nested resource receiver](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1442-L1442).
+> - [gateway URL fallback and token reference](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/deployment.yaml#L1296-L1299).
+> - [Secret reference selection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/_helpers.tpl#L46-L62).
+> - [ConfigMap file fallbacks](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/configmap-swarm-config.yaml#L10-L27).
+>
+> **Contract or setting:**
+>
+> - [KubeClaw collection defaults](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/values.yaml#L518-L521).
+> - [Prism image policy contract](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L5-L28).
+> - [image reference bindings and pull-secret collection](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L79-L109).
+> - [operator collection limits](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L141-L150).
+> - [enabled operator minimum](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/values.schema.json#L250-L258).
+> - [enabled authority template guards](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/prism/templates/_product-decisions.tpl#L1-L13).
+> - [GitOps revision and group guards](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L1-L5).
+> - [GitOps selected Application fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/gitops/templates/applications.yaml#L41-L51).
 >
 > **Test evidence:** On 2026-10-10, Helm `v3.22.0+g144ca65` rendered an isolated copy of the pinned charts. Twenty-four assertions passed: ten successful renders and fourteen expected schema or template failures. The [ordered-overlay example](#check-an-ordered-overlay-without-a-cluster), reversed file order, recursive map preservation, whole-array replacement, repeated scalar CLI precedence, synthetic Secret reference, and file/URL fallbacks were checked. Prism checks covered the CI baseline, eight empty/`Always` policy failures, empty pull secrets, duplicate operators, 101 operators, and enabled empty operators. GitOps checks covered empty groups, accepted complete-revision shape, and branch-revision rejection.
 >
@@ -377,7 +403,11 @@ with an absent-only rule.
 >
 > **Claim:** Registration validation preserves authored values; test-provider resolution inserts schema defaults in a clone; individual consumers apply their own fallbacks and collection rules.
 >
-> **Implementation:** [stage, observer, and adapter validation](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/configuration.ts#L48-L81); [test-provider resolution](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121); [validation and cloned default insertion](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/schema.ts#L94-L113)
+> **Implementation:**
+>
+> - [stage, observer, and adapter validation](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/configuration.ts#L48-L81).
+> - [test-provider resolution](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121).
+> - [validation and cloned default insertion](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/registry/schema.ts#L94-L113).
 >
 > [Stage configuration handoff](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/execution/stage-executor.ts#L70-L74); [adapter configuration handoff](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/execution/adapter-startup.ts#L50-L53); [approval timeout fallback](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/plugins/human-approval/src/approval.ts#L67-L80)
 >
@@ -444,7 +474,11 @@ retain its source name/key. Hashing a low-entropy token is not safe redaction.
 >
 > **Claim:** The observer merges registration, service and hook inputs. Later null and empty values remain explicit. Each defined merged key wins over its environment fallback before normalization.
 >
-> **Implementation:** [merge call and source order](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/index.ts#L192-L200); [defined-key merge](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts#L21-L29); [key selection and normalization](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/config.ts#L87-L111)
+> **Implementation:**
+>
+> - [merge call and source order](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/index.ts#L192-L200).
+> - [defined-key merge](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts#L21-L29).
+> - [key selection and normalization](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/src/config.ts#L87-L111).
 >
 > **Contract or setting:** [inline host-plugin schema](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#L9-L32)
 >
@@ -458,7 +492,10 @@ retain its source name/key. Hashing a low-entropy token is not safe redaction.
 >
 > **Claim:** Platform paths resolve from one canonical file, test scopes have an explicit template/project/policy resolution order, and compact profile overrides can change only known paths.
 >
-> **Implementation:** [platform load and path base](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/config/platform.ts#L36-L69); [suite expansion and lowest requested concurrency](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/test-gates/resolver.ts#L304-L353)
+> **Implementation:**
+>
+> - [platform load and path base](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/common/plugin-runtime/foundation/config/platform.ts#L36-L69).
+> - [suite expansion and lowest requested concurrency](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/test-gates/resolver.ts#L304-L353).
 >
 > [Suite overrides, direct nodes, and project concurrency](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/skills/nova/core/test-gates/resolver.ts#L354-L393); [known-path compact overrides](https://github.com/datrab/kubeclaw/blob/10e95ee97567cd42357e95d2a443aee4732b359c/tests/verification/e2e/support/platform-config.ts#L98-L129)
 >

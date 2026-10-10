@@ -1415,7 +1415,7 @@
         "Prism preview-isolation spike",
         "Prism maintainers: browser test configuration and supported verification environment"
       ],
-      "current_state": "At source revision ec2a42ed215a2fa7dbd3172ef70ef446084963a9, the fixed path remains in both configurations. Independent local execution completed locked bootstrap and all three package-local browser installations, then still failed before browser launch: twelve mobile tests and three preview tests. No supported browser-path override is implemented.",
+      "current_state": "At source revision ec2a42ed215a2fa7dbd3172ef70ef446084963a9, the fixed path remains in both configurations. Independent local execution completed locked bootstrap and all three package-local browser installations, then still failed before browser launch: twelve mobile tests and three preview tests. The implementation provides no supported browser-path override.",
       "remaining_work": [
         "Prism maintainers must replace the fixed path with a supported browser selection or provide and validate a compatible immutable managed browser installation.",
         "Until a supported installation exists, stop when the required executable is absent. Preserve the command, source revision and launch error; do not substitute a different browser build through a symlink.",
@@ -1497,7 +1497,7 @@
         "Nova runtime maintainers: adapter deadline consumers",
         "Platform configuration maintainers: validation and safe input range"
       ],
-      "current_state": "At revision 9d085bb20af0cc70201cc41801011b63c626301c, no maximum is enforced by the platform schema. On 2026-10-10, the original loader accepted 2147483648 and a synthetic adapter using the original normal-shutdown consumer rejected ADAPTER_SHUTDOWN_TIMEOUT after approximately 1.9 ms on Node.js v24.21.0. Node reported the overflow and 1 ms delay. The configuration references now require a stop outside 1–2,147,483,647 ms.",
+      "current_state": "At revision 9d085bb20af0cc70201cc41801011b63c626301c, no maximum is enforced by the platform schema. On 2026-10-10, the original loader accepted 2147483648 and a synthetic adapter using the original normal-shutdown consumer rejected ADAPTER_SHUTDOWN_TIMEOUT after approximately 1.9 ms on Node.js v24.21.0. Node reported the overflow and 1 ms delay. The configuration references now require a stop outside 1\u20132,147,483,647 ms.",
       "remaining_work": [
         "Runtime and platform configuration maintainers must define and enforce the supported timer input range at validation or the consumer boundary.",
         "Before consumer recreation, stop on an out-of-range value even if schema validation succeeds; retain the previous valid configuration.",
@@ -1514,7 +1514,7 @@
         "All consumers using the platform shutdown duration preserve their documented rejection or abort behavior; unsupported values cannot silently become a shorter deadline.",
         "The configuration reference, schema and consumer behavior agree at the implementing revision."
       ],
-      "live_validation": "Existing evidence is an original-source local loader and synthetic-adapter probe. No pipeline recovery, live adapter shutdown, deployed environment or external-operation cleanup was performed.",
+      "live_validation": "Existing evidence is an original-source local loader and synthetic-adapter probe. The probe did not perform pipeline recovery, live adapter shutdown, deployed-environment checks, or cleanup of external operations.",
       "dependencies": [],
       "evidence": {
         "assessment": "Observed original runtime behavior with unchanged product sources on Node.js v24.21.0; schema and consumer inspected at the pinned revision. The documented conversion agrees with [Node.js 24.21.0 timer semantics](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args).",
@@ -1560,7 +1560,7 @@
         "Cilium deployment maintainers: selected controller version and policy status",
         "Network policy maintainers: default-deny policy intent and traffic acceptance"
       ],
-      "current_state": "The deployment script selects Cilium 1.20.1 and applies the policy file at revision 9d085bb20af0cc70201cc41801011b63c626301c. The corresponding immutable Cilium implementation rejects a rule when all four rule lists are empty; both CNP and CCNP parsers call that validation. No Go parser, Kubernetes admission, controller status or traffic enforcement was executed.",
+      "current_state": "The deployment script selects Cilium 1.20.1 and applies the policy file at revision 9d085bb20af0cc70201cc41801011b63c626301c. The corresponding immutable Cilium implementation rejects a rule when all four rule lists are empty; both CNP and CCNP parsers call that validation. The checks did not execute a Go parser, Kubernetes admission, controller-status inspection, or traffic enforcement.",
       "remaining_work": [
         "Network policy maintainers must choose a valid policy representation for the intended deny behavior on the selected Cilium version and preserve the required exceptions.",
         "Until that representation is independently validated, stop any release acceptance that relies on these two objects for isolation. Inspect accepted controller policy status and effective coverage rather than assuming enableDefaultDeny repairs an empty rule.",
@@ -1569,10 +1569,10 @@
       "reproduction": [
         "Inspect the selected version in scripts/deploy-cilium.sh and the two named objects in my-values/infra/cilium-cluster-policies.yaml.",
         "Against Cilium commit 7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc, inspect Rule.Sanitize and the CNP/CCNP Parse calls. The empty-rule rejection precedes default-deny processing. This is a source reproduction, not an executed Go test.",
-        "In a separately authorized representative target environment, inspect controller admission/status for both objects and run explicit positive and negative traffic cases for the intended workload and Hubble UI coverage."
+        "In a separately authorized representative target environment, inspect admission and controller status for both objects. Run positive and negative traffic cases for the intended workload and Hubble UI coverage."
       ],
       "acceptance_criteria": [
-        "Both policy objects parse and are accepted by the actual selected controller with status retained.",
+        "Both policy objects parse, and the selected controller accepts them. Retain their controller status.",
         "Negative traffic cases demonstrate the intended ingress/egress denial and positive cases demonstrate each required exception.",
         "Observed behavior is attributable to the corrected policies, with competing policies and selected endpoint labels recorded.",
         "Deployment instructions, generated configuration reference and policy intent match the validated implementation and controller revision."
