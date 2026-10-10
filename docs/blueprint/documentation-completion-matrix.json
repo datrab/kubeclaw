@@ -17383,6 +17383,12 @@
       "state": "terminal-pass-author-only",
       "scope": "6workload tests plus5selected expanded tests PASS, exit0, no skips. Two producer integration tests excluded by explicit pattern due active producer edits. All770 records retain identity/cases/other properties;63scope-only changes62Stateful+1PDB. No independent corrected acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-selection-wording-root-author-delta.json"
+    },
+    {
+      "command": "Root independently verify sealed actual70 manifest and complete expanded historical838 ledgers",
+      "state": "terminal-pass-integrity-and-coverage-only",
+      "scope": "Actual70 all1451 sealed artifacts zero hasherrors. Historical950 record/5122case/14813dimension/878caption unique inventories and complete record-reference coverage match final expanded report. HistoricalFAIL retained; no corrected or package acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-root-seal-integrity.json"
     }
   ],
   "reviewAssignments": [
@@ -18719,14 +18725,15 @@
     {
       "agent": "/root/actual_selection_70_complete_source_fresh",
       "role": "Source",
-      "state": "running-exact70-current-output-provenance",
+      "state": "original70-sealed-supplemental5-running",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
       "revision": "d8dec69cfbb3d13687c153d3c80b907455afcd18",
       "scope": "All62StatefulSet and8DaemonSet literal actual-selection assertions. Independent actual output/profile provenance, selection dependency equivalence, field normalization and wording semantics. No producer-family or global acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-complete-source-fresh",
-      "supplementalScope": "After complete70: complete4 Job/CronJob resources parent records plus PDB maxUnavailable. Original immutable d8 review only; Root corrected wording must receive new fresh reviewer."
+      "supplementalScope": "After complete70: complete4 Job/CronJob resources parent records plus PDB maxUnavailable. Original immutable d8 review only; Root corrected wording must receive new fresh reviewer.",
+      "boundedOriginal70Verdict": "Independent union membership70PASS; literal wording62FAIL8PASS at d8. Corrected content unaccepted."
     }
   ],
   "continuation": {
@@ -19463,8 +19470,8 @@
     "historical838SourceCheckpoint": {
       "revision": "838949cc25755cf7abfb1b3944094d5ef3552ce8",
       "cases": {
-        "PASS": 4743,
-        "FAIL": 339,
+        "PASS": 4723,
+        "FAIL": 359,
         "N/A": 40,
         "UNREVIEWED": 0
       },
@@ -19473,15 +19480,20 @@
         "FAIL": 1
       },
       "dimensions": {
-        "PASS": 14320,
-        "FAIL": 430,
+        "PASS": 14300,
+        "FAIL": 450,
         "UNREVIEWED": 63
       },
       "applicability": "950UNREVIEWED; no exact historical producer join receipt",
-      "state": "reviewer-reported-complete-conditional-semantics-seal-pending",
+      "state": "complete-expanded-historical-report-root-ledger-verified-seal-pending",
       "qualification": "Historical revision only; current corrections require explicit reconciliation. Remaining63 dimensions are literal actual-selection assertions.",
       "additionalPVCComponents": 20,
-      "reconciliation": "All20 current clauses changed and inside full422; 4other HugePages resource parent records outside422 assigned fresh supplemental Source review. No delta-only acceptance."
+      "reconciliation": "All20 current clauses changed and inside full422; 4other HugePages resource parent records outside422 assigned fresh supplemental Source review. No delta-only acceptance.",
+      "records": {
+        "PASS": 683,
+        "FAIL": 248,
+        "UNREVIEWED": 19
+      }
     }
   },
   "productBoundaries": [
