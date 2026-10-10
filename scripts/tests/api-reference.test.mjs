@@ -105,3 +105,12 @@ test('opaque metadata must link the matching canonical reference before publicat
   metadata.canonicalReferenceId=reference.referenceId;
   assert.throws(()=>renderApiResourceReference([resource],link,[]),/API_REFERENCE_METADATA_MISSING/);
 });
+
+test('reader explanations retain their links and reject unsupported targets', () => {
+  const resources=fixture();
+  const receiver=resources[0].rows[0].receiverContract;
+  receiver.readerReferences=[{label:'ConfigMap consumption',target:'configuration-change-impact.md#configmap-consumption'}];
+  assert(renderApiResourceReference(resources,link).includes('[ConfigMap consumption](configuration-change-impact.md#configmap-consumption)'));
+  receiver.readerReferences[0].target='../missing.md#unknown';
+  assert.throws(()=>renderApiResourceReference(resources,link),/API_REFERENCE_READER_LINK_INVALID/);
+});

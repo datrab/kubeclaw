@@ -1713,4 +1713,11 @@ for(const kind of kinds){
  }
 }
 // A complete export is an authoring result, not documentation acceptance.
+for (const record of records.values()) {
+ if (record.kind === 'ConfigMap' && (record.fieldPath === '$' || record.fieldPath === '$.immutable'
+   || record.fieldPath.startsWith('$.data') || record.fieldPath.startsWith('$.binaryData'))) {
+  record.readerReferences = [{label:'ConfigMap consumption: cache, directory mounts, subPath and environment variables',
+   target:'configuration-change-impact.md#configmap-consumption'}];
+ }
+}
 export const receiverContracts=[...records.values()];

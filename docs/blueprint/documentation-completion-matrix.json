@@ -18281,6 +18281,22 @@
       "cases": 184,
       "captions": 93,
       "remaining": "F05 full inventory/generation/source-lock/publication checks are not waived."
+    },
+    "configMapCanonicalReaderLink": {
+      "owner": "/root",
+      "state": "author-linked-pending-independent-source-reader-quality",
+      "readerTarget": "docs/site/reference/configuration-change-impact.md#configmap-consumption",
+      "linkedRecords": 6,
+      "coreRecords": 272,
+      "claimPreservation": "All prior core contract claims and proof blockers unchanged; only readerReferences added to six ConfigMap boundaries.",
+      "checks": "17 focused tests PASS; exact contract comparison excluding new link property PASS; target heading exists. No live or publication acceptance."
+    },
+    "inventoryCheck00a8bae9": {
+      "revision": "00a8bae909a28ce222d85518d2d10d525c1f352b",
+      "exitCode": 1,
+      "log": "/home/node/Documents/Codex/a98-evidence/config-inventory-check-00a8bae9.log",
+      "logSha256": "0fdf73cce1deca9630ef3f9af6bc0fa833e63b1be37d1d279ae26bceb64bbe64",
+      "finding": "DOC_DRIFT_CONFIG: stale configuration-values.json and configuration-runtime-inputs.json; not waived."
     }
   },
   "productBoundaries": [

@@ -42,6 +42,12 @@ function renderReceiverContract(receiver, key, fieldPath) {
       `API_REFERENCE_EVIDENCE_INCOMPLETE: ${key} ${fieldPath}`);
     return `- [${text(item.claim)}](${item.url})`;
   }).join('\n');
+  const readerReferences = (receiver.readerReferences ?? []).map(item => {
+    assert(typeof item.label === 'string' && item.label.trim()
+      && /^[a-z0-9-]+\.md#[a-z0-9-]+$/u.test(item.target),
+    `API_REFERENCE_READER_LINK_INVALID: ${key} ${fieldPath}`);
+    return `- [${text(item.label)}](${item.target})`;
+  }).join('\n');
   return `${text(receiver.purpose)}\n\n` +
     `**Receiver:** ${text(receiver.receiver)}\n\n**Operation:** ${text(receiver.operationScope)}\n\n` +
     `**Omitted:** ${text(receiver.omitted)}\n\n**JSON null:** ${text(receiver.nullValue)}\n\n` +
@@ -50,7 +56,8 @@ function renderReceiverContract(receiver, key, fieldPath) {
     (receiver.crossFieldConditions.length ? `**Related conditions:**\n\n${receiver.crossFieldConditions.map(item => `- ${text(item)}`).join('\n')}\n\n` : '') +
     `**Examples and expected outcomes:**\n\n${cases}\n\n` +
     (receiver.qualificationLimits.length ? `**Scope and limits:**\n\n${receiver.qualificationLimits.map(item => `- ${text(item)}`).join('\n')}\n\n` : '') +
-    `**Implementation sources:**\n\n${evidence}\n\n` ;
+    `**Implementation sources:**\n\n${evidence}\n\n` +
+    (readerReferences ? `**Related procedures and explanations:**\n\n${readerReferences}\n\n` : '');
 }
 
 const metadataAnchor = referenceId => `api-metadata-${createHash('sha256').update(referenceId).digest('hex').slice(0, 20)}`;
