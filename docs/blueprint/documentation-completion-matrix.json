@@ -16271,7 +16271,7 @@
     },
     {
       "id": "A98-A511-ACTUAL-SELECTION-70",
-      "state": "open-independent-source-finding-fresh-provenance-review-running",
+      "state": "author-wording-correction-pending-new-independent-review",
       "catalogueIds": [
         "CFG-009"
       ],
@@ -16279,7 +16279,7 @@
         "A98-10",
         "A98-11"
       ],
-      "description": "Complete422 content clarification FAIL70: actual field-selection assertions require independent per-record output provenance. All70 normalized paths occur in author v8 replay; membership alone does not close finding.",
+      "description": "Independent d8 actual Helm outputs and receiver-default selection prove bounded all70 membership. Reviewer established blanket each-class wording FAIL62Stateful/PASS8Daemon. Root corrected62Stateful scopes plus shared PDB maxUnavailable scope; cases and other770 record properties unchanged. Original complete70+supplemental5 review seal pending; corrected content requires new fresh reviewer.",
       "proof": "/home/node/Documents/Codex/a98-evidence/stateful-pdb-a511-full422-source-selection-clarification/report.md"
     }
   ],
@@ -17377,6 +17377,12 @@
       "state": "terminal-pass-delta-and-membership-only",
       "scope": "All original18+34+411+1 rejected components changed in current exports, no missing records. All20 additional historical PVC components also changed and within current422 Source scope. Four Job/CronJob resources parents outside422 require supplemental complete independent Source review; content changes alone are not acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/historical838-added20-pvc-current422-reconciliation.json"
+    },
+    {
+      "command": "Root workload semantic tests and exact scope-only delta verification",
+      "state": "terminal-pass-author-only",
+      "scope": "6workload tests plus5selected expanded tests PASS, exit0, no skips. Two producer integration tests excluded by explicit pattern due active producer edits. All770 records retain identity/cases/other properties;63scope-only changes62Stateful+1PDB. No independent corrected acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-selection-wording-root-author-delta.json"
     }
   ],
   "reviewAssignments": [
@@ -18720,14 +18726,14 @@
       "revision": "d8dec69cfbb3d13687c153d3c80b907455afcd18",
       "scope": "All62StatefulSet and8DaemonSet literal actual-selection assertions. Independent actual output/profile provenance, selection dependency equivalence, field normalization and wording semantics. No producer-family or global acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/actual-selection-70-complete-source-fresh",
-      "supplementalScope": "After complete70: complete4 Job/CronJob resources parent records outside prior422 union, including cases/captions/typed create-update compatibility; separate bounded Source verdict."
+      "supplementalScope": "After complete70: complete4 Job/CronJob resources parent records plus PDB maxUnavailable. Original immutable d8 review only; Root corrected wording must receive new fresh reviewer."
     }
   ],
   "continuation": {
     "stage": "AP09.8: producer eight-family corrections and independent exact70 selection provenance; package not accepted",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Complete producer P01–P08 corrections and terminal checks; independently resolve all70 literal selection assertions. Seal historical950 Source and reconcile its findings against current corrections. Then stable-source generation, required mutations and separate Reader/Quality/Astra. No parity before AP09.8 acceptance.",
+    "next": "Seal original d8 complete70+supplemental5 Source and historical838 full review. Start NEW fresh Source reviewer for complete corrected affected63 records, actualselection provenance and retained typed/case/caption content. Producer P01–P08 full correction/checks still pending. Stable generation then full gates/Reader/Quality/Astra required.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
