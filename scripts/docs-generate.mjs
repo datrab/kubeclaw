@@ -110,6 +110,22 @@ function readJson(relPath) {
   return JSON.parse(fs.readFileSync(path.join(root, relPath), 'utf8'));
 }
 
+function literalText(value) {
+  // Schema and configuration strings are data, not authored Markdown. Encode
+  // Markdown punctuation as well as HTML characters so regexes, backticks and
+  // pipes survive both the table renderer and repository link inspection.
+  return String(value).replace(/[&<>"'\\`\[\]*_|~]/gu,
+    (character) => `&#${character.codePointAt(0)};`).replaceAll('\n', '<br>');
+}
+
+function literalCode(value) {
+  return `<code>${literalText(value)}</code>`;
+}
+
+function selectedValue(value) {
+  return value === '' ? `${literalCode('""')} (empty string)` : literalCode(String(value));
+}
+
 function stableWriteMap() {
   const deploy = readJson('docs/generated/inventory/deploy-script.json');
   const secrets = readJson('docs/generated/inventory/secret-setup.json');
@@ -174,9 +190,9 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
       schemaMeaning(field),
       `\`${field.type}\``,
       field.required ? 'yes' : 'no',
-      `\`${displayValue(field.default).replaceAll('`', '\\`')}\``,
+      selectedValue(displayValue(field.default)),
       [
-        ...field.constraints.map((constraint) => `\`${constraint.name}=${JSON.stringify(constraint.value)}\``),
+        ...field.constraints.map((constraint) => literalCode(`${constraint.name}=${JSON.stringify(constraint.value)}`)),
         ...field.branches.map((branch) => `branch \`${branch}\``),
       ].join('<br>') || 'none declared',
       `Owner: \`${field.ownerRole}\` (${evidenceLink(field.ownerEvidence)})<br>Consumers: ${field.consumers.map((consumer) => consumer === 'unknown' ? 'unknown' : evidenceLink(consumer)).join(', ')}`,
@@ -184,7 +200,7 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
   )}\n\n</details>`).join('\n\n');
   const swarm = configurationSchemas.swarm;
   const swarmTable = swarm ? table(['Field', 'Type and value', 'Required and constraint authority', 'Owner and consumers', 'Precedence and proof', 'Impact, failure, and closure'], swarm.fields.map((field) => [
-    `\`${field.path}\``, `\`${field.type}\`<br>\`${String(field.value).replaceAll('`', '\\`')}\``, `${field.required}: ${field.requiredReason}<br>${field.constraints.join('<br>') || 'none for structural container'}`,
+    `\`${field.path}\``, `\`${field.type}\`<br>${selectedValue(field.value)}`, `${field.required}: ${field.requiredReason}<br>${field.constraints.join('<br>') || 'none for structural container'}`,
     `Source: \`${field.ownerComponent}\` (${field.ownerEvidence})<br>Runtime: ${field.runtimeOwner}<br>${field.consumers.map((consumer) => `\`${consumer.path}:${consumer.line}\` (${consumer.kind})`).join('<br>')}`,
     `${field.precedence.join(' → ')}<br>${field.effectiveValueProof}`,
     `${field.changeImpact}<br>Failure: ${field.failureMeaning}${field.closureCondition ? `<br>Not a completed operator option. Authority owner: ${field.blockerOwner}; a versioned field contract is required.` : ''}`,
@@ -345,28 +361,29 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     return details.length > 0 ? `${linked}; ${details.join('; ')}` : linked;
   };
   const readerMeaning = (field) => {
+    const meaning = literalText(field.meaning.text);
     const collection = field.meaning.apiCollectionAuthority
       ? `<br>[Exact API collection contract](#${collectionSchemaAnchor(field.meaning.apiCollectionAuthority)})`
       : '';
-    if (field.meaning.status === 'inactive-profile') return `${field.meaning.text}<br>This file is not selected by a checked-in deployment path.`;
-    if (/blocker/u.test(field.meaning.status)) return `${field.meaning.text}${collection}<br>This field is not ready for operator use because its receiving behavior is not yet proved.<br>Owner: ${field.blockerOwner}. Required before use: ${field.closureCondition}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}`;
+    if (field.meaning.status === 'inactive-profile') return `${meaning}<br>This file is not selected by a checked-in deployment path.`;
+    if (/blocker/u.test(field.meaning.status)) return `${meaning}${collection}<br>This field is not ready for operator use because its receiving behavior is not yet proved.<br>Owner: ${field.blockerOwner}. Required before use: ${field.closureCondition}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}`;
     const authority = field.meaning.apiAuthority ? `<br>Behavior authority: ${field.meaning.apiAuthority}` : '';
     const semantic = field.meaning.semanticContractEvidence;
     const semanticAuthority = semantic
       ? `<br>Semantic contract: ${sourceLink(semantic.path, semantic.line, `${semantic.path}:${semantic.line}-${semantic.endLine}`, semantic.endLine)}`
       : '';
-    return `${field.meaning.text}${collection}${authority}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}${semanticAuthority}`;
+    return `${meaning}${collection}${authority}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}${semanticAuthority}`;
   };
   const schemaContractText = (node) => {
     if (!node) return 'This field has no contract at this boundary.';
     const { description, observedSchemaKeywords, schemaReferenceChain, referencedContract, ...constraints } = node;
-    return `${description?.replace(/\s+/gu, ' ').trim() ?? 'The schema supplies no description for this node.'}<br>Constraints and alternatives: \`${JSON.stringify(constraints)}\`<br>Keywords at this boundary: \`${JSON.stringify(observedSchemaKeywords)}\`${schemaReferenceChain ? `<br>Reference: \`${JSON.stringify(schemaReferenceChain)}\`<br>Referenced definition: ${schemaContractText(referencedContract)}` : ''}`;
+    return `${description === undefined ? 'The schema supplies no description for this node.' : literalText(description)}<br>Constraints and alternatives: ${literalCode(JSON.stringify(constraints))}<br>Keywords at this boundary: ${literalCode(JSON.stringify(observedSchemaKeywords))}${schemaReferenceChain ? `<br>Reference: ${literalCode(JSON.stringify(schemaReferenceChain))}<br>Referenced definition: ${schemaContractText(referencedContract)}` : ''}`;
   };
   const apiCollectionSections = [...apiCollectionSchemas.values()].sort((left, right) => collectionSchemaKey(left.schema).localeCompare(collectionSchemaKey(right.schema))).map(({ schema, fields }) => {
     const children = [...Object.entries(schema.children).map(([name, node]) => [`Child \`${name}\``, schemaContractText(node)]),
       ...Object.entries(schema.itemChildren).map(([name, node]) => [`Item child \`${name}\``, schemaContractText(node)])];
     const parents = schema.parentContracts.map((parent) => [`Parent \`${parent.path || '<API object>'}\``, schemaContractText(parent)]);
-    return `<a id="${collectionSchemaAnchor(schema)}"></a>\n\n### ${schema.kind}: \`${schema.resolvedPath}\`\n\nAuthority: ${schema.authority}. Content SHA-256: \`${schema.authoritySha256}\`. API: \`${schema.apiVersion}/${schema.kind}\`.\n\nThis section preserves the exact pinned schema descriptions. It describes accepted shape and the stated API behavior. Read the linked field row for the selected input, actual apply or loader receiver, operational consequence, and controller limit. A missing schema default does not prove that the controller inserts no default. A patch annotation does not select the client's apply mode.\n\n${table(['Boundary', 'Exact schema contract'], [
+    return `<a id="${collectionSchemaAnchor(schema)}"></a>\n\n### ${schema.kind}: ${schema.resolvedPath === '' ? 'API object root' : literalCode(schema.resolvedPath)}\n\nAuthority: ${schema.authority}. Content SHA-256: \`${schema.authoritySha256}\`. API: \`${schema.apiVersion}/${schema.kind}\`.\n\nThis section preserves the exact pinned schema descriptions. It describes accepted shape and the stated API behavior. Read the linked field row for the selected input, actual apply or loader receiver, operational consequence, and controller limit. A missing schema default does not prove that the controller inserts no default. A patch annotation does not select the client's apply mode.\n\n${table(['Boundary', 'Exact schema contract'], [
       ['Field', schemaContractText(schema.contract)], ['List item', schemaContractText(schema.item)],
       ['Map value', schemaContractText(schema.mapValue)], ...children, ...parents,
     ])}\n\nField sources:\n\n${fields.map((field) => `- ${sourceLink(field.source, field.line)} — document ${field.document}, \`${field.path}\`.`).join('\n')}\n`;
@@ -374,7 +391,7 @@ function renderHelmValues(configurationValues, configurationSchemas) {
   const consumerText = (field) => field.consumers.map((consumer) => {
     if (consumer === 'unknown') return 'Unknown';
     const location = consumer.path ? sourceLink(consumer.path, consumer.line ?? 1) : '`unresolved source`';
-    const condition = consumer.condition ? `<br>Condition: ${consumer.condition}` : '';
+    const condition = consumer.condition ? `<br>Condition: ${literalCode(consumer.condition)}` : '';
     const defaults = consumer.defaultProof ? `<br>Default selection: ${consumer.defaultProof}` : '';
     const receiver = consumer.receiver ? `<br>Receiver: ${consumer.receiver}` : '';
     return `${location}${consumer.authority ? `<br>${consumer.authority}` : ''}${receiver}${condition}${defaults}`;
@@ -435,8 +452,8 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     return `<details>\n<summary><code>${file.path}</code> — ${fields.length} discovered fields, including lists and maps</summary>\n\nSource evidence:\n\n${links}\n\n${table(['Field', 'Behavior', 'Type and selected value', 'Required state and limits', 'Source and runtime owner', 'Receiving source', 'Precedence and effective value', 'Change impact and failure'], fields.map((field) => [
       `\`${field.path}\``,
       `${readerMeaning(field)}${literalKeyOverride(field, file.sourceClass)}`,
-      `\`${field.type}\`<br>\`${String(field.value).replaceAll('`', '\\`')}\`<br>${selectedValueType(field)}`,
-      `${requiredState(field)}: ${field.requiredReason}<br>${field.constraints.length ? field.constraints.join('<br>') : 'No additional repository constraint.'}`,
+      `\`${field.type}\`<br>${selectedValue(field.value)}<br>${selectedValueType(field)}`,
+      `${requiredState(field)}: ${field.requiredReason}<br>${field.constraints.length ? field.constraints.map(literalText).join('<br>') : 'No additional repository constraint.'}`,
       `Source: ${field.ownerComponent} (\`${field.ownerEvidence}\`)<br>Runtime: ${field.runtimeOwner}`,
       consumerText(field),
       `${field.precedence.join(' → ')}<br>Proof: ${field.effectiveValueProof}`,
@@ -455,7 +472,7 @@ function renderHelmValues(configurationValues, configurationSchemas) {
       .join('\n');
     const fields = payload.fields.length
       ? table(['Field', 'Type', 'Selected checked-in value'], payload.fields.map((field) => [
-        `\`${field.path}\``, `\`${field.type}\``, `\`${String(field.value).replaceAll('`', '\\`')}\``,
+        `\`${field.path}\``, `\`${field.type}\``, selectedValue(field.value),
       ]))
       : 'This file is executable or tool-specific configuration rather than a YAML or JSON data tree. The inventory pins the complete file bytes and does not invent field behavior.';
     return `<details>\n<summary><code>${payload.path}</code> — ${payload.parseMode === 'recursive-yaml' || payload.parseMode === 'recursive-json' ? `${payload.leafFields} recursive fields` : 'complete opaque file'}</summary>\n\nSource: ${sourceLink(payload.path)}\n\nProved delivery steps:\n\n${chain}\n\nSource selection and retention:\n\n${payload.selectionPrecedence}\n\n${selection}\n\nRuntime reader boundary:\n\n${payload.readerBoundary}${unboundReader ? `\n\nRelated evidence that does not close the boundary:\n\n${unboundReader}` : ''}\n\n${fields}\n\n</details>`;
@@ -466,7 +483,7 @@ function renderHelmValues(configurationValues, configurationSchemas) {
       .join('<br>→<br>\n');
     const fields = payload.fields.length
       ? table(['Field', 'Type', 'Selected checked-in value'], payload.fields.map((field) => [
-        `\`${field.path}\``, `\`${field.type}\``, `\`${String(field.value).replaceAll('`', '\\`')}\``,
+        `\`${field.path}\``, `\`${field.type}\``, selectedValue(field.value),
       ]))
       : 'This file is executable or tool-specific configuration rather than a YAML or JSON data tree.';
     return `<details>\n<summary><code>${payload.path}</code> — ${payload.parseMode === 'recursive-yaml' || payload.parseMode === 'recursive-json' ? `${payload.leafFields} recursive fields` : 'complete opaque file'}</summary>\n\nSource: ${sourceLink(payload.path)}\n\nChecked-in reference and failure boundary:\n\n${references}\n\n${payload.deliveryGap}\n\n${fields}\n\n</details>`;

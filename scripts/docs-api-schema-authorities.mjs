@@ -73,17 +73,18 @@ if (process.argv.includes('--refresh-api-authorities')) {
   fs.writeFileSync(checksumPath, `${sha256(manifestBytes)}  ${path.basename(manifestPath)}\n`);
 }
 
-assert(fs.existsSync(manifestPath) && fs.existsSync(checksumPath), 'version-bound API authority lock is missing; run this module with --refresh-api-authorities');
+assert(fs.existsSync(manifestPath) && fs.existsSync(checksumPath), 'CONFIG_YAML_AUTHORITY_DRIFT: scripts/docs-api-authority-lock.json or scripts/docs-api-authority-lock.sha256 is missing; run this module with --refresh-api-authorities');
 const manifestBytes = fs.readFileSync(manifestPath);
 const [manifestChecksum, manifestName] = fs.readFileSync(checksumPath, 'utf8').trim().split(/\s+/u);
-assert.equal(manifestName, path.basename(manifestPath), 'API authority checksum names the wrong manifest');
-assert.equal(sha256(manifestBytes), manifestChecksum, 'API authority manifest bytes changed');
+assert.equal(manifestName, path.basename(manifestPath), 'CONFIG_YAML_AUTHORITY_DRIFT: scripts/docs-api-authority-lock.sha256 names the wrong manifest; expected scripts/docs-api-authority-lock.json');
+assert.equal(sha256(manifestBytes), manifestChecksum, 'CONFIG_YAML_AUTHORITY_DRIFT: scripts/docs-api-authority-lock.json API authority manifest bytes changed');
 const manifest = JSON.parse(manifestBytes);
+const kubernetesIdentity = `Kubernetes ${manifest.kubernetes.version} OpenAPI ${manifest.kubernetes.source} (${manifest.kubernetes.path})`;
 const kubernetesCompressed = fs.readFileSync(path.join(repositoryRoot, manifest.kubernetes.path));
-assert.equal(kubernetesCompressed.length, manifest.kubernetes.compressedSize, 'Kubernetes OpenAPI compressed byte count changed');
-assert.equal(sha256(kubernetesCompressed), manifest.kubernetes.compressedSha256, 'Kubernetes OpenAPI compressed bytes changed');
+assert.equal(kubernetesCompressed.length, manifest.kubernetes.compressedSize, `CONFIG_YAML_AUTHORITY_DRIFT: ${kubernetesIdentity}: compressed byte count changed`);
+assert.equal(sha256(kubernetesCompressed), manifest.kubernetes.compressedSha256, `CONFIG_YAML_AUTHORITY_DRIFT: ${kubernetesIdentity}: compressed bytes changed`);
 const kubernetesBytes = gunzipSync(kubernetesCompressed);
-assert.equal(sha256(kubernetesBytes), manifest.kubernetes.contentSha256, 'Kubernetes OpenAPI source bytes changed');
+assert.equal(sha256(kubernetesBytes), manifest.kubernetes.contentSha256, `CONFIG_YAML_AUTHORITY_DRIFT: ${kubernetesIdentity}: source bytes changed`);
 const kubernetesOpenApi = JSON.parse(kubernetesBytes);
 
 const builtinDefinitions = new Map([
@@ -113,22 +114,24 @@ function loadCustomResourceSchemas() {
   for (const authority of Object.values(manifest.customResources)) {
     const archive = archiveManifest.charts[authority.chartKey];
     assert(archive && archive.chart === authority.chart && archive.version === authority.version,
-      `${authority.chartKey}: custom-resource authority does not match the vendored chart`);
+      `CONFIG_YAML_AUTHORITY_DRIFT: scripts/external-helm-archives.json#charts.${authority.chartKey}: custom-resource authority ${authority.chart}@${authority.version} does not match the vendored chart`);
+    const archiveIdentity = `${authority.chartKey} ${authority.chart}@${authority.version} (${archive.path})`;
     const archiveBytes = fs.readFileSync(path.join(repositoryRoot, archive.path));
-    assert.equal(archiveBytes.length, archive.size, `${authority.chartKey}: chart archive byte count changed`);
-    assert.equal(sha256(archiveBytes), archive.sha256, `${authority.chartKey}: chart archive bytes changed`);
+    assert.equal(archiveBytes.length, archive.size, `CONFIG_YAML_AUTHORITY_DRIFT: ${archiveIdentity}: chart archive byte count changed`);
+    assert.equal(sha256(archiveBytes), archive.sha256, `CONFIG_YAML_AUTHORITY_DRIFT: ${archiveIdentity}: chart archive bytes changed`);
     const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-api-crd-'));
     try {
       const unpack = spawnSync('tar', ['-xzf', path.join(repositoryRoot, archive.path), '-C', temporary], { encoding: 'utf8' });
       assert.equal(unpack.status, 0, `${authority.chartKey}: cannot extract vendored CRD authority`);
       const documents = [];
       if (authority.crds) {
-        for (const crd of Object.values(authority.crds)) {
+        for (const [kind, crd] of Object.entries(authority.crds)) {
+          const crdIdentity = `${authority.chartKey} ${authority.chart}@${authority.version} ${kind} ${crd.source} (${crd.path})`;
           const compressed = fs.readFileSync(path.join(repositoryRoot, crd.path));
-          assert.equal(compressed.length, crd.compressedSize, `${authority.chartKey}: compressed CRD byte count changed`);
-          assert.equal(sha256(compressed), crd.compressedSha256, `${authority.chartKey}: compressed CRD bytes changed`);
+          assert.equal(compressed.length, crd.compressedSize, `CONFIG_YAML_AUTHORITY_DRIFT: ${crdIdentity}: compressed CRD byte count changed`);
+          assert.equal(sha256(compressed), crd.compressedSha256, `CONFIG_YAML_AUTHORITY_DRIFT: ${crdIdentity}: compressed CRD bytes changed`);
           const bytes = gunzipSync(compressed);
-          assert.equal(sha256(bytes), crd.contentSha256, `${authority.chartKey}: CRD source bytes changed`);
+          assert.equal(sha256(bytes), crd.contentSha256, `CONFIG_YAML_AUTHORITY_DRIFT: ${crdIdentity}: CRD source bytes changed`);
           documents.push(...YAML.parseAllDocuments(bytes.toString('utf8'), { prettyErrors: false }).map((document) => ({ document, source: crd.source })));
         }
       } else {

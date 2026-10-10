@@ -3,9 +3,9 @@
 Status: shared architecture and operator terminology; recovery and workload-credential definitions are source-backed
 Audience: all readers
 Owner: documentation
-Evidence: docs/site/understand/components-and-authority.md; docs/site/understand/request-state-recovery.md; docs/site/understand/deployment-and-trust.md; my-values/infra/spire-values.yaml; charts/prism/templates/configmap-worker-trust.yaml; skills/worker/core/worker/trust.ts; skills/prism/server/internal-auth.ts; skills/prism/server/control-server.ts; skills/prism/control/agent-jobs.ts; skills/prism/engine/render-operation.ts
+Evidence: docs/site/understand/components-and-authority.md; docs/site/understand/request-state-recovery.md; docs/site/understand/deployment-and-trust.md; my-values/infra/spire-values.yaml; charts/prism/templates/configmap-worker-trust.yaml; skills/worker/core/worker/trust.ts; skills/prism/server/internal-auth.ts; skills/prism/server/control-server.ts; skills/prism/control/agent-jobs.ts; skills/prism/engine/render-operation.ts; skills/nova/plugins/prism-design/src/stage.ts; skills/nova/core/execution/engine-run.ts
 Applies to: KubeClaw platform terminology
-Last verified: 2026-10-09 for RPO, RTO, and SVID; 2026-10-10 for Prism request protection, job fence, and ARIA definitions; bounded source review only
+Last verified: 2026-10-09 for RPO, RTO, and SVID; 2026-10-10 for Prism request protection, job fence, ARIA, and approval definitions; source definitions checked, deployment and live behavior unverified
 
 ## Purpose
 
@@ -19,7 +19,7 @@ measured results, identity verification, and application permission distinct.
 | --- | --- |
 | Activated registration | A registration that current configuration selected and the runtime loaded. Presence in a package is not activation. |
 | Adapter | A plugin registration that performs a controlled external effect for a named capability. |
-| Approval | An authorized signal that answers a stored wait. Approval is not a direct edit of lifecycle state. |
+| [Approval](#approval-publication-and-resume) | An authorization decision for a specified action. Prism records human approval for a design revision; publication and the Nova resume signal are separate. |
 | [ARIA snapshot](#aria-snapshot) | A record of a rendered view's accessibility tree, including roles, names, and states exposed to assistive software. |
 | Artifact | Stored output with an identity, namespace, content digest, size, and media information. |
 | Attempt | One bounded execution of one stage or worker operation. A retry creates another attempt. |
@@ -80,6 +80,25 @@ measured results, identity verification, and application permission distinct.
 | Uncertain effect | An external request that might have succeeded, although no trustworthy receipt is available. |
 | Wait | A durable pause that needs a matching signal, approval, orchestrator action, or cooldown. |
 | Worker Core | The neutral layer that controls worker attempts, claims, capacity, limits, cancellation, resources, recovery, and result binding. |
+
+## Approval, publication, and resume
+
+Approval is an authorization decision for a specified action. In Prism,
+Control stores the human decision for a design revision and returns its approval
+ID. This write does not publish a Baseline Bundle or answer a Nova wait.
+Publication is a separate write that checks the approved design before it
+creates or returns the bundle receipt. A separate Nova resume signal identifies
+the wait and carries the approved bundle references. Its issuer fields are
+caller-supplied and unsigned; matching those fields does not authenticate the
+caller. Use the owning runtime's allowed transition rather than editing
+lifecycle state directly.
+
+Source: [Prism approval record](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/prism/server/control-server.ts#L521-L565),
+[separate publication checks](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/prism/server/control-server.ts#L567-L609),
+[Prism wait and approval payload](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/plugins/prism-design/src/stage.ts#L8-L34),
+and [Nova resume validation and transition](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-run.ts#L82-L95).
+Follow the [Prism journey](../use/prism-studio.md) for the distinct operator steps
+and uncertain-outcome stop conditions.
 
 ## RPO
 

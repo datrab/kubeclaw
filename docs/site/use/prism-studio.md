@@ -6,6 +6,7 @@ Owner: Prism maintainers
 Evidence: skills/prism; skills/nova/plugins/prism-design; charts/prism; charts/kubeclaw; scripts/deploy.sh
 Evidence revision: `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`
 Applies to: the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage
+Last verified: 2026-10-10 against source revision `733b7417992c1bafaf5848d421c80ff76b73a9e4`; historical executed checks retain their own revisions below; no live journey result
 Historical executed checks: 2026-10-09 against `082db288f7bc5e686e47306d60cf4db7d8ba8cfc`; local deploy-script, Control configuration, and interruption checks passed; no browser recovery or live journey result is available. Source links were checked at the evidence revision; this does not change the execution revision.
 
 ## Purpose

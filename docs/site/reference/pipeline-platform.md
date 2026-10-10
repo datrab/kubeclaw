@@ -3,7 +3,7 @@
 Status: current configuration reference
 Audience: platform operator, pipeline operator, plugin author
 Owner: plugin runtime and Nova Core
-Evidence: skills/common/plugin-runtime/foundation/config/platform.schema.json; skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts; skills/common/plugin-runtime/foundation/registry/capabilities.ts; skills/common/plugin-runtime/foundation/registry/configuration.ts; skills/common/plugin-runtime/foundation/registry/activation.ts; skills/common/plugin-runtime/foundation/registry/discovery.ts; skills/common/plugin-runtime/foundation/registry/digest.ts; skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts; skills/common/plugin-runtime/foundation/isolation/runner.ts; skills/common/plugin-runtime/foundation/isolation/cgroup.ts; skills/nova/core/execution/adapter-startup.ts
+Evidence: skills/common/plugin-runtime/foundation/config/platform.schema.json; skills/common/plugin-runtime/foundation/config/platform.ts; skills/nova/core/execution/engine-runtime.ts; skills/nova/core/execution/engine-admin.ts; skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execution/engine-run.ts; skills/nova/core/lifecycle/wait-request.ts; skills/common/plugin-runtime/foundation/registry/capabilities.ts; skills/common/plugin-runtime/foundation/registry/configuration.ts; skills/common/plugin-runtime/foundation/registry/activation.ts; skills/common/plugin-runtime/foundation/registry/discovery.ts; skills/common/plugin-runtime/foundation/registry/digest.ts; skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts; skills/common/plugin-runtime/foundation/isolation/runner.ts; skills/common/plugin-runtime/foundation/isolation/cgroup.ts; skills/nova/core/execution/adapter-startup.ts
 Applies to: `pipeline-platform.v2`
 Last verified: 2026-10-10 at source revision `94fd165ae8177ec37bb16798bfed63cb8923f413`
 
@@ -41,8 +41,8 @@ interpolation at this boundary.
 | `storageRoot` | Non-empty path string | No default | Nova stores run snapshots, journals, effect locks, and observer records below this resolved root. |
 | `shutdownTimeoutMs` | Schema: integer ≥ 1, without a maximum. Operational Node timer range: 1–2,147,483,647 ms. | No default | Adapter wait, shutdown, and cleanup paths capture this duration. Node converts larger values to a 1 ms delay. Stop before consumer recreation on overflow; see [timer range and cleanup limits](configuration-change-impact.md#timer-range-and-stop-condition). A deadline does not prove that adapter work stopped. |
 | `effectLockTtlMs` | Optional integer from 60,000 through 86,400,000 | If absent, the effect coordinator uses 300,000 ms | Controls expiry of resource-effect locks. A larger value reduces premature reuse but delays recovery from an abandoned lock. |
-| `orchestratorIssuerId` | Non-empty string | No default | Identifies the orchestrator that may issue its governed decisions. |
-| `administrativeDecisionIssuers` | Unique array of closed `{type,id}` objects; `type` is `operator` or `administrator`; `id` is non-empty | `[]` is structurally valid | Core checks administrative decisions against these exact identities. Do not use a shared display name. |
+| `orchestratorIssuerId` | Non-empty string | No default | Sets the orchestrator identity in governed waits. Matching this identity does not authenticate the caller; see [Issuer policy and recorded decisions](#issuer-policy-and-recorded-decisions). |
+| `administrativeDecisionIssuers` | Unique array of closed `{type,id}` objects; `type` is `operator` or `administrator`; `id` is non-empty | `[]` is structurally valid | Core checks new administrative decisions against these identities after authenticating the actor. An exact recorded decision follows a separate replay path; see [Issuer policy and recorded decisions](#issuer-policy-and-recorded-decisions). |
 
 `externalTrust` has exactly these required fields:
 
@@ -304,6 +304,44 @@ and [captured TTL used for effects](https://github.com/datrab/kubeclaw/blob/94fd
 See [Configuration precedence](configuration-precedence.md) and
 [Configuration change impact](configuration-change-impact.md) for the
 cross-family rules.
+
+## Issuer policy and recorded decisions
+
+`orchestratorIssuerId` supplies the ID in a governed wait's
+`authorizedIssuer`, with type `orchestrator`. Nova checks the resume signal's
+wait ID, signal type, issuer type and ID, expiry, and issue time. The issuer
+fields in that signal are unsigned and supplied by the caller. Matching them
+is not proof of identity. Protect access to signal creation and the CLI as
+explained in [Approve or resume a wait](../use/operate.md#approve-or-resume-a-wait).
+
+Source: [governed wait identity](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/lifecycle/wait-request.ts#L5-L18)
+and [signal validation](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-snapshots.ts#L137-L144).
+
+For a new administrative decision, Core calls its authentication callback,
+requires the returned principal to equal the decision's actor, and checks that
+principal against the current `administrativeDecisionIssuers` list. A decision
+already recorded with the same decision ID or idempotency key must have the
+same canonical JSON content. Different content fails with
+`ADMIN_REOPEN_IDEMPOTENCY_CONFLICT`. An exact recorded decision skips the
+new-decision authentication and issuer-list check; other runtime, package,
+graph, and state checks still apply. Removing an issuer from the current list
+does not revoke this recorded replay path.
+
+Source: [recorded decision comparison and authorization](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-admin.ts#L57-L67).
+
+Neither issuer field is included in the recorded runtime-configuration
+comparison. A successful comparison therefore does not establish that issuer
+policy is unchanged. Resume reconstructs governed waits with the supplied
+orchestrator ID. Preserve the original inputs when continuing a run; do not
+change an actor, issuer, or idempotency key to clear a denial. Stop on
+`WAIT_ISSUER_DENIED`, `ADMIN_REOPEN_ACTOR_MISMATCH`,
+`ADMIN_REOPEN_ISSUER_DENIED`, or an idempotency conflict. Have the operator
+check the original wait or recorded decision and the caller's authority before
+retrying the supported operation.
+
+Source: [recorded configuration subset](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-runtime.ts#L34-L41),
+[configuration comparison](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-snapshots.ts#L28-L40),
+and [wait reconstruction during resume](https://github.com/datrab/kubeclaw/blob/93ca75a4694084e5bc216f9aa9c7d52c13b965c6/skills/nova/core/execution/engine-run.ts#L85-L93).
 
 ## Sensitive values
 

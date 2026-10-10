@@ -15078,6 +15078,91 @@
       "description": "Prefix wildcard accepted arbitrary x-kubernetes constraints after legitimate schema relock. Explicit12observedpinnedextension keys replace wildcard. Current real PodSpec baseline preserved; unknown ordinary/vendor keys now reject with exactdiagnostic.",
       "author": "/root",
       "evidence": "/home/node/Documents/Codex/a98-evidence/api-root-keyword-control/results.json"
+    },
+    {
+      "id": "A98-PLATFORM-ISSUER-REPLAY",
+      "state": "correction-in-progress-pending-fresh-independent-review",
+      "description": "New-decision authentication and current allowlist differ from exact canonical recorded-decision replay; wait issuer matching is not caller authentication. Root corrected linked section after source93ca FAIL.",
+      "pages": [
+        "docs/site/reference/pipeline-platform.md"
+      ],
+      "catalogueIds": [
+        "CFG-013"
+      ],
+      "acceptanceIds": [],
+      "reportedBy": "independent-source-or-original-gate",
+      "author": "/root"
+    },
+    {
+      "id": "A98-PRISM-APPROVAL-METADATA",
+      "state": "correction-in-progress-pending-fresh-independent-review",
+      "description": "Source733b found glossary approval conflation and missing mandatory Last verified. Root corrected both after file release; fresh affected review required.",
+      "pages": [
+        "docs/site/use/prism-studio.md",
+        "docs/site/reference/glossary.md"
+      ],
+      "catalogueIds": [
+        "OPR-010"
+      ],
+      "acceptanceIds": [],
+      "reportedBy": "independent-source-or-original-gate",
+      "author": "/root"
+    },
+    {
+      "id": "A98-ARGO-REF-ONLY-SOURCES",
+      "state": "correction-in-progress-pending-fresh-independent-review",
+      "description": "Source93ca found blanket chart/path requirement excludes legitimate ref-only Git values sources; root added exact upstream76-88 contract.",
+      "pages": [
+        "docs/site/reference/helm-values.md"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [],
+      "reportedBy": "independent-source-or-original-gate",
+      "author": "/root"
+    },
+    {
+      "id": "A98-CILIUM-ZERO-PORT",
+      "state": "correction-in-progress-pending-fresh-independent-review",
+      "description": "Source93ca found 1-65535 claim excludes parser-supported0; root corrected exact schema/parser and L7 restriction without claiming Go/live execution.",
+      "pages": [
+        "docs/site/reference/helm-values.md"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [],
+      "reportedBy": "independent-source-or-original-gate",
+      "author": "/root"
+    },
+    {
+      "id": "A98-API-MARKDOWN-LITERALS",
+      "state": "correction-in-progress-pending-fresh-independent-review",
+      "description": "Original generated93ca refs failed on12regex paths and392APIanchors despite170physicalIDs. Author correcting literal encoding and empty spans; independent acceptance pending.",
+      "pages": [
+        "docs/site/reference/helm-values.md"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [],
+      "reportedBy": "independent-source-or-original-gate",
+      "author": "/root"
+    },
+    {
+      "id": "A98-ARCHIVE-DRIFT-DIAGNOSTIC",
+      "state": "correction-in-progress-pending-fresh-independent-review",
+      "description": "Full25a mutation terminalFAIL: corrupted Cilium archive correctly rejected but assertion message lacks recognized semantic authority diagnostic. Producer correction delegated; fullPASS unproven.",
+      "pages": [
+        "scripts/docs-api-schema-authorities.mjs"
+      ],
+      "catalogueIds": [
+        "CFG-009"
+      ],
+      "acceptanceIds": [],
+      "reportedBy": "independent-source-or-original-gate",
+      "author": "/root"
     }
   ],
   "checks": [
@@ -15627,6 +15712,27 @@
       "sessionId": 3734,
       "log": "/home/node/Documents/Codex/a98-evidence/local-helm-buster-enum-correction.log",
       "scope": "Registry regeneration1091 and original93Booleancontrols after Argo sourcepin + emptyCRDenum corrections; no independent content acceptance"
+    },
+    {
+      "command": "npm run docs:drift:config:mutations",
+      "state": "terminal-fail",
+      "exitCode": 1,
+      "sessionId": 52712,
+      "revision": "25a0d2f2f2d7824b83928ca851c5df6c25cc88e8",
+      "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-25a0d2f2.log",
+      "scope": "external-chart-archive:content-change rejected with chart archive bytes changed assertion, but expected diagnostic pattern not matched"
+    },
+    {
+      "command": "node --check scripts/docs-configuration-inventory.mjs; git diff --check",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "scope": "Current root Argo ref-only, Cilium port0, issuer and approval prose corrections; syntax and whitespace only"
+    },
+    {
+      "command": "node scripts/docs-governance.mjs; node scripts/check-site-reader-boundary.mjs",
+      "state": "terminal-pass",
+      "exitCode": 0,
+      "scope": "147page metadata generation succeeded; original reader boundary passes; no independent content or actual HTML render acceptance"
     }
   ],
   "reviewAssignments": [
@@ -16364,16 +16470,16 @@
       "forkTurns": "none",
       "freshContext": true,
       "readOnly": true,
-      "state": "running",
+      "state": "completed-fail-corrections-require-new-fresh-review",
       "reviewedRevision": "94fd165ae8177ec37bb16798bfed63cb8923f413",
       "scopeLimit": "Current API collections/actual receiver/generator/helper SOURCE semantics; generated archived old output explicitly stale, private generation required; no whole-package/Reader/Quality/live acceptance"
     }
   ],
   "continuation": {
-    "stage": "Six collection/diagnostic source files released and checked; commit source then immutable original mutation suite. Canonical precedence/impact candidates remain frozen for new Source review, which is investigating readiness cleanup bounds.",
+    "stage": "AP09.8 source corrections: approval metadata, issuer replay, Argo ref-only and Cilium zero port; parallel literal-render and diagnostic producer writers; full mutation terminalFAIL recorded.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Parallel generator/API collection and Prism quality writers continue exclusive files. New whole two-page SOURCE review running; freeze contents. Original full d57 mutation terminal FAIL due obsolete constructor, isolated corrected constructor PASS. After released source corrections commit, shared full generation separate and NEW original full mutation against immutable source. All package/global obligations remain.",
+    "next": "Commit corrected source and matrix after released writers; regenerate against exact SHA separately; original bounded gates and new fresh complete affected reviews; retry full original mutation only after actual producer correction. No package/global acceptance.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -16794,11 +16900,29 @@
     },
     "fullConfigurationMutation": {
       "sessionId": 52712,
-      "state": "running",
+      "state": "terminal-fail",
       "revision": "25a0d2f2f2d7824b83928ca851c5df6c25cc88e8",
       "worktree": "/home/node/Documents/Codex/a98-evidence/config-mutations-25a0d2f2",
       "log": "/home/node/Documents/Codex/a98-evidence/config-mutations-25a0d2f2.log",
-      "provenance": "Immutable tracked source plus explicitly selected installed node_modules symlink; no clean dependency-install proof; suite independently generates its baseline. Subsequent helper text/keyword corrections not this execution candidate."
+      "provenance": "Immutable tracked source plus explicitly selected installed node_modules symlink; no clean dependency-install proof; suite independently generates its baseline. Subsequent helper text/keyword corrections not this execution candidate.",
+      "exitCode": 1,
+      "cause": "external-chart-archive:content-change rejected with chart archive bytes changed assertion, but expected diagnostic pattern not matched",
+      "logSha256": "5dd818999b314a53802b215d3221247f63ac703df78838878d5f67b518947498"
+    },
+    "releasedCorrections": {
+      "literalGenerator": {
+        "author": "/root/a98_api_markdown_writer",
+        "report": "/home/node/Documents/Codex/a98-evidence/api-markdown-writer/report.md",
+        "verifiedArtifacts": 88,
+        "sourceSha256": "c079e493d1f8cee4e472f50ba999f734bab7c0663ed88bb3dafff91764b49979",
+        "actualSiteRender": "unproven"
+      },
+      "archiveDiagnostic": {
+        "author": "/root/a98_archive_diagnostic_writer",
+        "evidence": "/home/node/Documents/Codex/a98-evidence/archive-diagnostic-writer/evidence.log",
+        "sourceSha256": "dd10b7fcfb3b1cdc33782e690adca368d25665ac01dbc6e420299139c95809e4",
+        "scope": "Authentic baseline; corrupted same-size and truncated Cilium archives; restored baseline; no full suite PASS"
+      }
     }
   },
   "productBoundaries": [
