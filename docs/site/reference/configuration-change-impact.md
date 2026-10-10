@@ -7,6 +7,7 @@ Evidence: skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execu
 Applies to: current configuration families
 Last verified: 2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 Helm section verified: 2026-10-10 at source revision `ec2a42ed215a2fa7dbd3172ef70ef446084963a9`; other families retain the evidence revisions below.
+ConfigMap consumption section verified: 2026-10-10 against Kubernetes source revision `66452049f3d692768c39c797b21b793dce80314e`.
 Platform timeout section verified: 2026-10-10 at source revision `fe426bd75db277b04cf405cc2057063b75fa0a1d`.
 
 ## Impact classes
@@ -35,13 +36,104 @@ Platform timeout section verified: 2026-10-10 at source revision `fe426bd75db277
 | Plugin package content/version | New run by default | Registry snapshot pins package version/content digest. An active run accepts only its recorded package or an explicitly governed supported package transition. |
 | KubeClaw or Prism image digest | Restart; new run for any pipeline component used by that run | Workload executable bytes change. Render manifests, check digest pinning, and preserve a drain path. |
 | Helm resources, probes, replicas, service account, volumes | Rollout for a changed pod template; scale for a changed replica count | Classify the rendered receiver. Replicas are a Deployment setting; the other named pod fields can change its template. Check disruption budget, storage attachment, native worker replica constraint, and readiness. |
-| ConfigMap-backed startup configuration | Restart | Current services do not promise a live reload. Use a template checksum/generation to prove rollout. |
+| [ConfigMap-backed startup configuration](#configmap-consumption) | Restart | Current services do not promise a live reload. Use a template checksum/generation to prove rollout. |
 | Secret-backed environment value | Restart + credential rotation procedure | Existing processes retain their environment. Coordinate old/new acceptance to avoid loss of access; do not print the credential. |
 | File-mounted signing key/CA/token | Restart unless its loader explicitly rereads for every action | Prism product authority captures configuration and key at composition. Coordinate controller trust before removing the old credential. |
 | Prism service URL, timeout, ingress limit, trust ID | Restart | Loaders capture one startup snapshot. Validate URL/number form and peer policy before rollout. |
 | Prism native pool limits, paths, node identity, policy digest | Host prepare + restart | Worker verifies a root-owned policy and actual cgroup state at readiness. Drain attempts, prepare the host, then restart the pinned worker. |
 | Prism database or artifact storage location/size | Data procedure + restart | Persistent stores are independent. Prove backup, restore, ownership, and application connectivity. A values edit does not move data. |
 | GitOps values source | Restart/rollout when the rendered workload changes | The controller reconciles declared Git state. Manual live edits are temporary and should not be the recorded change. |
+
+
+## ConfigMap consumption
+
+A successful ConfigMap update changes the API object. It does not prove that a
+container has read the new value. First identify how the container consumes it:
+a full directory mount, a `subPath` mount, an environment variable, or a
+separate API client. An application that reads a file only at startup still
+requires its documented restart, even when the mounted file changes.
+
+The following mechanisms describe Kubernetes v1.35.0. The Kubelet setting
+`configMapAndSecretChangeDetectionStrategy` selects its ConfigMap manager;
+a different server or Kubelet version needs its own verification.
+[manager selection](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet.go#L650-L669)
+
+| Manager | How a Kubelet read obtains the object |
+| --- | --- |
+| Get | Each manager read makes an API GET. It is not a continuous file or process refresh. [direct read](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/configmap/configmap_manager.go#L65-L67) |
+| Cache | Reads can use a local cached object. The default time to live is one minute; the Node-provided TTL can override it. An expired or errored entry triggers a fetch. [TTL and cache construction](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/configmap/configmap_manager.go#L110-L131); [Node TTL override](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L132-L154) |
+| Watch | Reads use the object populated by a list/watch cache. A read waits up to one second for initial synchronization and returns an error if synchronization fails. [initial synchronization and cache read](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/watch_based_manager.go#L310-L337) |
+
+For Cache, a failed refresh can return the previous cached object when one
+exists. A successful fetch with an older resource version does not replace
+that object. A NotFound result updates the cached result to absence. Thus a
+cache read is not proof that the API is reachable or that the latest edit has
+arrived. [refresh and retained cache result](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L176-L205)
+
+The cache manager adds a reference on the first registration of a Pod, or
+when an updated Pod introduces a new ConfigMap reference. It does not
+invalidate every existing reference on each Pod update. When the last
+reference is removed, it removes the cached item. [last reference removal](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L117-L128) [reference changes on registration](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/cache_based_manager.go#L223-L251)
+The Watch manager stops watching an object after it observes `immutable: true`.
+Use a new ConfigMap identity for changed immutable data and verify the new
+consumer before retiring the old one. [immutable watch stop](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/util/manager/watch_based_manager.go#L338-L358)
+
+### Directory mounts and subPath
+
+The ConfigMap volume plugin requests repeated setup. The volume manager marks
+mounted volumes for another setup when their plugin requires it. This makes a
+later payload refresh possible; it does not provide a fixed delivery deadline.
+[ConfigMap remount requirement](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/configmap/configmap.go#L81-L83) [volume remount marker](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/volumemanager/cache/actual_state_of_world.go#L800-L821)
+
+On a payload change, the atomic writer writes a new timestamped directory and
+applies permissions. On Linux, it publishes that directory by renaming the
+`..data` symbolic link. The files visible to the container point through this
+link. Later reads that resolve the updated path can reach the new payload.
+An application must still read and accept that content. [visible symbolic links](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L467-L483) [new directory and permissions](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L189-L211) [platform-specific publication](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L213-L244)
+
+Publication can partially succeed: after changing the link, creating visible
+links, removing obsolete links, or deleting the old directory can fail.
+An error therefore does not prove that all visible files retained their old
+content. Inspect the actual mounted path and Kubelet errors before retrying
+or deciding that a rollback succeeded. [errors after publication](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/atomic_writer.go#L247-L264)
+
+For a Linux `subPath` mount, the Kubelet resolves the symbolic links, opens the
+selected path and binds that opened file into the container. Inference from
+this mount path: changing the parent volume's `..data` link does not retarget
+that existing bind mount. Recreate the consumer mount through its supported
+workload procedure when new content is required. Do not use a wait period as
+proof that a `subPath` file refreshed. [resolved path and opened-file bind mount](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/volume/util/subpath/subpath_linux.go#L175-L226)
+
+### Environment variables
+
+`envFrom.configMapRef` and `env.valueFrom.configMapKeyRef` read `data`, not
+`binaryData`. The Kubelet reuses one fetched ConfigMap within an environment
+construction call. A missing optional object is skipped; a missing selected
+key is skipped only when that key reference is optional. Other fetch errors
+stop environment construction. [ConfigMap environment source](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L774-L802) [selected ConfigMap key](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L867-L893)
+
+The Kubelet processes `envFrom` first. Later sources can replace the same name,
+and explicit `env` entries can replace values supplied by `envFrom`. It passes
+the resulting key/value list in the new container configuration. [explicit entries and constructed environment](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L961-L967) [environment passed to runtime options](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L652-L656) [runtime option construction](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kuberuntime/kuberuntime_container.go#L343-L347) An API edit
+does not rewrite the environment of an already running container through this
+path. Recreate the container through its workload procedure and check the
+resulting application behavior. [environment source precedence](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L772-L774) [container environment configuration](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kuberuntime/kuberuntime_container.go#L396-L405)
+
+> **Source evidence — ConfigMap consumption**
+>
+> **Claim:** Manager reads, volume publication, Linux subPath mounts and container environment construction have different update boundaries.
+>
+> **Implementation:** The pinned links above identify the responsible Kubelet, volume writer and runtime configuration paths.
+>
+> **Contract or setting:** `configMapAndSecretChangeDetectionStrategy`, Pod ConfigMap volume references, `subPath`, `envFrom` and `env.valueFrom`.
+>
+> **Test evidence:** No Kubelet, mounted-file, container environment or live refresh exercise was executed for this section.
+>
+> **Check status:** Pinned original source bytes and the stated branches were inspected on 2026-10-10. This is source evidence, not a cluster result.
+>
+> **Revision:** `66452049f3d692768c39c797b21b793dce80314e`
+>
+> **Limit:** Cache propagation, volume setup, the actual container mount and application reload must all succeed. No end-to-end update deadline is established here.
 
 ## Platform timeout capture and recovery
 
