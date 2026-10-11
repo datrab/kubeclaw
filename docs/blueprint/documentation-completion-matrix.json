@@ -3386,6 +3386,7 @@
       ],
       "acceptanceIds": [
         "A97-05",
+        "A97-06",
         "A97-08",
         "A97-09",
         "A97-11",
@@ -3418,14 +3419,13 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L207",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Forge/Echo transport adapter, model host and result import contribute request and specialist roles. Concrete dispatch authentication/secret/allowed-target boundaries also contribute trust. The scoped Forge/Echo transport crosses granted runtime target, confidential secret resolution and authenticated external dispatch boundaries. Covering endpoint authentication under 05 does not substitute for the credential/trust contribution of 08. This is a scoped contribution, not acceptance of the complete package gate.",
+      "acceptanceMappingRationale": "Forge/Echo model-host dispatch, result import, lost response and retry use an implemented OpenClaw durable JSON result reader/publisher before cleanup, not only a transient HTTP response. Target grants, secrets and authenticated transport supply trust; no LiteLLM ownership follows merely from a model host. This is a scoped catalogue contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
           "A97-02",
           "A97-03",
           "A97-04",
-          "A97-06",
           "A97-07",
           "A97-10"
         ],
@@ -3433,7 +3433,7 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "COM-005",
@@ -3463,6 +3463,7 @@
       ],
       "acceptanceIds": [
         "A97-05",
+        "A97-06",
         "A97-07",
         "A97-08",
         "A97-11",
@@ -3495,14 +3496,13 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L208",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Invocation contexts, adapter/observer requests, deadline and delivery contribute communications and signals; lease grants/resource authorization and event namespace/run restrictions are trust boundaries. Catalogue explicitly calls out Invocation Authority and Context. Current core contexts reject absent grants, invalid resource scope and wrong event namespace/run identity under revocable leases. These are direct trust and least-privilege boundaries, not just request schemas or observer signals. This is a scoped contribution, not acceptance of the complete package gate.",
+      "acceptanceMappingRationale": "The three invocation types explicitly include authority/recovery, Effect and Observer Delivery. Runtime-wired effects, event, checkpoint and delivery journals determine repeat/stop after restart; revocable grants/resource/run/namespace limits determine trust. These are core invocation duties, not a named specialist product or infrastructure outage journey. This is a scoped catalogue contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
           "A97-02",
           "A97-03",
           "A97-04",
-          "A97-06",
           "A97-09",
           "A97-10"
         ],
@@ -3510,7 +3510,7 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "COM-006",
@@ -3619,6 +3619,7 @@
         "A97-02",
         "A97-05",
         "A97-06",
+        "A97-08",
         "A97-10",
         "A97-11",
         "A97-12"
@@ -3650,21 +3651,20 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L210",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Redis Streams/keys, Dedup-TTL, MAXLEN, replay/migration are explicitly store/data lifecycle surfaces, not only communications. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Redis writer/consumer streams, RESP boundaries, MAXLEN/dedup TTL/replay/migration require named Redis dependency, communication, data lifecycle and fault tracing. The selected RESP client additionally resolves a named passwordSecret through secrets.read and sends AUTH; this is a concrete credential-source/trust boundary, comparable to dispatch/HTTP auth duties. This is a scoped catalogue contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
           "A97-03",
           "A97-04",
           "A97-07",
-          "A97-08",
           "A97-09"
         ],
         "rule": "Excluded rows govern a different named infrastructure class, a distinct specialist role, or a separate complete inventory/journey not required by this catalogue scope. Incidental shared page or shared source path does not itself add the gate. General cross-cutting evidence, current-claim correctness and independent role rules still apply; exclusions do not waive package-level gates."
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "COM-008",
@@ -4788,7 +4788,8 @@
         "skills/common/plugins/telemetry-observer",
         "skills/common/plugins/telemetry-store",
         "skills/common/plugins/redis-transport",
-        "contracts/telemetry/v1"
+        "contracts/telemetry/v1",
+        "skills/nova/core/execution/engine-runtime.ts"
       ],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "authored",
@@ -4800,6 +4801,7 @@
       ],
       "acceptanceIds": [
         "A97-05",
+        "A97-06",
         "A97-07",
         "A97-11",
         "A97-12"
@@ -4831,14 +4833,13 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L225",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "The scope explicitly traces producer to adapter/transport/sink/query: active event/stream communication paths are also A97-05 facets. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Telemetry architecture explicitly separates canonical event authority from observer delivery/Redis/log/metric projections and traces producer/schema/observer/adapter/transport/sink/query/replay. The durable telemetry-store projection has its own writer/reader/capacity/remaining-data/replay authority, so store coverage is required as in TEL-005/006, not inferred from an incidental page topic. This is a scoped catalogue contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
           "A97-02",
           "A97-03",
           "A97-04",
-          "A97-06",
           "A97-08",
           "A97-09",
           "A97-10"
@@ -4847,7 +4848,7 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "TEL-002",
@@ -20937,7 +20938,7 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active"
+      "state": "completed mapping-only FAIL49PASS4FAIL; preserved historical result"
     },
     {
       "agent": "/root/pv_executable_class_final_complete_source_fresh",
@@ -20962,7 +20963,9 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active"
+      "state": "completed completeassignedSourcePASS",
+      "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-definition-permalink-corrected-full-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-definition-permalink-corrected-full-source-fresh-root-seal.json"
     },
     {
       "agent": "/root/pv_retirement_final_complete_reader_fresh",
@@ -20972,12 +20975,63 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active",
-      "scope": "Whole current ba7maintenance journey and sevenhelper references; independent reader-only firstpass; no global/liveclaim"
+      "state": "completed wholeboundedReaderPASS",
+      "scope": "Whole current ba7maintenance journey and sevenhelper references; independent reader-only firstpass; no global/liveclaim",
+      "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-complete-reader-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-complete-reader-fresh-root-seal.json"
+    },
+    {
+      "agent": "/root/pv_retirement_final_complete_quality_fresh",
+      "role": "quality",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "completed wholeauthoredboundedQualityPASS",
+      "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-complete-quality-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-complete-quality-fresh-root-seal.json",
+      "scopeLimit": "Wholecurrentretirement and7records; generatedpublication, live, package andAstraacceptance withheld"
+    },
+    {
+      "agent": "/root/ap097_durable_path_candidate_full_mapping_source_fresh",
+      "role": "source-mapping",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "completed mapping-only PASS53/636 transferred to canonical",
+      "report": "/home/node/Documents/Codex/a98-evidence/ap097-durable-path-candidate-full-mapping-source-fresh/report.md",
+      "scopeLimit": "Assigned scope only; no package/global/live acceptance"
+    },
+    {
+      "agent": "/root/python_environment_and_bootstrap_contracts_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "completed coupled FAIL; exact two credential contracts PASS",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-environment-and-bootstrap-contracts-complete-source-fresh/report.md",
+      "scopeLimit": "Assigned scope only; no package/global/live acceptance"
+    },
+    {
+      "agent": "/root/installation_complete_current_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active complete installation Reader review",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-complete-current-reader-fresh/report.md",
+      "scopeLimit": "Assigned scope only; no package/global/live acceptance"
     }
   ],
   "continuation": {
-    "stage": "AP09.8 remains open; database and memory three bounded independent Sol roles PASS; API helper Source FAIL2 corrective writer active",
+    "stage": "AP09.8 open; current storage guides bounded three-role PASS, AP09.7 mapping-only PASS, Python discovery coupled Source FAIL under correction",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
     "next": "Wait complete critical Source/mapping reports without author edits; finish retirement procedure writer; correct complete reported scopes then new independent reviews; generation and full mutations remain mandatory",
@@ -21445,8 +21499,8 @@
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
     "currentSourceHead": "57c70224200c86cb9750e39db1eb0090aa982209",
-    "nextAction": "Root completes Argo/Cilium metadata consumer classification; parallel Apps/Core/Status authors complete full corrections. Regenerate required current inventories/source-bound output only against committed source; full fresh Source then Reader/Quality/Astra before AP09.8 closure/parity.",
-    "currentPushedRevision": "57c70224200c86cb9750e39db1eb0090aa982209",
+    "nextAction": "Correct lexical/finite-flow scanner; semantically qualify exact changed Source dependencies; fresh complete coupled Source review and stable full API tests before Source commit and new generation",
+    "currentPushedRevision": "b6e4a0d774434b8c39b2575322436e3fba708914",
     "recursiveSchemaDiscovery": "Full13 current raw API kind schemas5698paths; unsupported structural branches now rejected deeply and unknown nested fragment keywords qualified. Updated helper requires new independent Source review.",
     "currentMutationObservation": "Original full config mutation at7e413cf6 terminalPASS exit0; no running original process. Current revised coverage needs new whole-gate evidence after missing receiver baseline is complete.",
     "apiReceiverJoin": "Core272 andVAPstatus15 nowincluded; prior3439 plus287 =3726bindings1972missing among5698. This arithmetic comes from exact schema/registry joins, not a new original wholeinventory run. Per-field source-proof gaps remain explicit and publication is blocked.",
@@ -22016,7 +22070,9 @@
     },
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
-      "/root/infrastructure_actual_invocation_correction_writer"
+      "/root/python_environment_literal_classification_correction_writer",
+      "/root/pv_named_admission_canonical_seed_correction_writer",
+      "/root/installation_complete_current_reader_fresh"
     ]
   },
   "productBoundaries": [
@@ -24943,17 +24999,17 @@
       }
     },
     "pvRetirementFinalCorrection": {
-      "state": "Author correction frozen; NEW complete independent Source review active; Reader and Quality pending; no acceptance",
+      "state": "Current distinct complete bounded Source/Reader/Quality PASS; generated publication and package/Astra acceptance pending",
       "author": "/root/pv_retirement_complete_procedure_correction_writer",
       "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-reference-access-final-correction-writer/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-reference-access-final-correction-writer-root-seal.json",
       "verifiedArtifacts": 69,
       "reportSha256": "96b0bc086a7495fec8bd50a495a958e7fcf0c63823a34dc6a757fd853ddbb14d",
-      "maintenanceSha256": "a10f719d3f8da7745affc89274191cf8a3e396aac57051c7f42b3e4d835e9d91",
+      "maintenanceSha256": "ba7eb39fb5159ba9621c13e50b328b15147e585f086c714a53f9309ec0d4d25b",
       "helperSha256": "02d9af8019e1300767aa0ca507607004aa6ee6e107fb455da3579af46e551f51",
       "authorChecks": "Nine snippet/refusal/capture, eight actual-script synthetic scenarios, four navigation tests rerun and passed; bounded author only",
       "priorAuthorBundle": "97-entry prior bundle artifact-integrity FAIL:96 saved entries match, overwritten navigation timing log missing; never awarded current independent acceptance",
-      "remaining": "Coupled registry/boundary integration; final Source permalink refresh after commit; new full distinct Source/Reader/Quality; generated output/publication/link gates and package acceptance",
+      "remaining": "Generated canonical references, publication/link gates, applicable package checks and final package Astra acceptance",
       "currentRootCorrection": {
         "sourceReport": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-discovery-permissions-complete-source-fresh/report.md",
         "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-discovery-permissions-complete-source-fresh-root-seal.json",
@@ -24961,7 +25017,7 @@
         "maintenanceSha256": "ba7eb39fb5159ba9621c13e50b328b15147e585f086c714a53f9309ec0d4d25b",
         "sourceRevision": "0403b262df2dba24747a19d1f8f42ef3334ef779",
         "reviewer": "/root/pv_retirement_definition_permalink_corrected_full_source_fresh",
-        "state": "Root author correction; NEW full independent Source active; Reader/Quality and publication pending"
+        "state": "CurrentdistinctSource/Reader/Quality allboundedPASS; publication/gates/packageAstra notaccepted"
       }
     },
     "integratedApiExecutableClassFinal": {
@@ -24996,6 +25052,61 @@
         "actualCheckout": "36script111shell; zero falsePV; actual1PATCH4ops7fields",
         "state": "No material Source finding remains in assigned scope; no package acceptance"
       }
+    },
+    "configurationGenerationB6e": {
+      "state": "observed-terminalFAIL",
+      "session": 77782,
+      "exitCode": 1,
+      "sourceHashesUnchanged": true,
+      "toolchainHashesUnchanged": true,
+      "result": "/home/node/Documents/Codex/a98-evidence/generation-b6e4a0d7/configuration-result.json",
+      "finding": "Pythonliteral BOOTSTRAP_RECIPES incorrectly classified as5executed environmentreceivers",
+      "correctionOwner": "/root/python_environment_literal_classification_correction_writer",
+      "scope": "No currentconfigurationgeneration orfullmutationPASS"
+    },
+    "ap097DurablePathCorrection": {
+      "state": "Complete independent mapping-only PASS53/636 transferred to canonical matrix by exact53row equality and73 unchanged authorities; content and all gates remain unaccepted",
+      "previousReview": "/home/node/Documents/Codex/a98-evidence/ap097-store-trust-corrected-full-mapping-source-fresh/report.md",
+      "previousVerdict": "mappingFAIL49PASS4FAIL",
+      "candidate": "/home/node/Documents/Codex/a98-evidence/ap097-durable-path-correction-candidate/candidate-matrix.json",
+      "candidateSha256": "09d844fc2056a5ac0b8f6735f885248c01da9839224197045ac2863936285320",
+      "reviewer": "/root/ap097_durable_path_candidate_full_mapping_source_fresh",
+      "changed": [
+        "COM-004",
+        "COM-005",
+        "COM-007",
+        "TEL-001"
+      ],
+      "report": "/home/node/Documents/Codex/a98-evidence/ap097-durable-path-candidate-full-mapping-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-durable-path-candidate-full-mapping-source-fresh-root-seal.json",
+      "requirements": 53,
+      "facets": 636,
+      "unchangedAuthorities": 73
+    },
+    "pythonEnvironmentCoupledSource": {
+      "state": "complete coupled Source FAIL; two exact credential contracts PASS only",
+      "reviewer": "/root/python_environment_and_bootstrap_contracts_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-environment-and-bootstrap-contracts-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-environment-and-bootstrap-contracts-complete-source-fresh-root-seal.json",
+      "findings": [
+        "Changed docs-config Source invalidates protected recipe",
+        "Class scope loses actual literal readers",
+        "Lambda and comprehension aliases cause false readers",
+        "Finite conditional key branch coverage needs join or explicit unsupported status"
+      ],
+      "correctionOwner": "/root/python_environment_literal_classification_correction_writer",
+      "qualificationOwner": "/root/pv_named_admission_canonical_seed_correction_writer",
+      "acceptance": "No package, generation, publication or full mutation PASS"
+    },
+    "integratedApiPythonEnvironment": {
+      "state": "observed terminal FAIL",
+      "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-python-environment-corrected/result.json",
+      "exitCode": 1,
+      "tests": 217,
+      "passed": 213,
+      "failed": 4,
+      "sourcesUnchanged": true,
+      "finding": "All4 failures: exact synthetic corpus test runtime-consumer-contracts dependency qualification changed; requires semantic review and legitimate Source binding, not guard weakening"
     }
   }
 }
