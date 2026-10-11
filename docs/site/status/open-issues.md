@@ -1194,7 +1194,7 @@ At source revision ec2a42ed215a2fa7dbd3172ef70ef446084963a9, the fixed path rema
 
 ### Reproduction and verification procedure
 
-- From a clean checkout at the stated revision, run npm ci and npm run bootstrap:prism:tests using the documented prerequisites.
+- Complete [Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation) in a disposable checkout at the stated revision. Then run npm run bootstrap:prism:tests using its documented prerequisites.
 - Install Chromium with the local Playwright CLI in skills/prism, spikes/prism/mobile-editor and spikes/prism/preview-isolation. Record each package version and selected browser build.
 - Run npm run verify --prefix spikes/prism/mobile-editor and npm run verify --prefix spikes/prism/preview-isolation. If the fixed 1228 executable is absent, both fail before launch despite completed installation.
 - Run npm run verify:prism. Its spike stage fails before later aggregate stages. verify:prism:repository and verify:prism:production begin with that same aggregate.

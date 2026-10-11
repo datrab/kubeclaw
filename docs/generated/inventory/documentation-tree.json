@@ -16,7 +16,7 @@
   "baselineFiles": 2915,
   "missingBaselineFiles": [],
   "counts": {
-    "canonical-reader-documentation": 159,
+    "canonical-reader-documentation": 162,
     "internal-documentation-input": 190,
     "legacy-extraction-source": 249,
     "deletable-remainder": 2335
@@ -19781,6 +19781,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/architecture/pipeline-test-gate-phase-9-parity-report.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/pipeline-unit-parity-report.mjs",
           "token": "docs/architecture/pipeline-test-gate-phase-9-parity-report.md",
           "inputUse": true
@@ -21315,6 +21320,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/architecture/pipeline-test-gate-suite-migration-playbook.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "tests/verification/contracts/check-pipeline-test-gate-traceability.mjs",
           "token": "docs/architecture/pipeline-test-gate-suite-migration-playbook.md",
           "inputUse": true
@@ -21498,6 +21508,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/architecture/pipeline-test-gate-suite-migration-status.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/generate-suite-migration-status.mjs",
           "token": "docs/architecture/pipeline-test-gate-suite-migration-status.json",
           "inputUse": false
@@ -21617,6 +21632,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/architecture/pipeline-test-gate-suite-migration-status.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/generate-suite-migration-status.mjs",
           "token": "docs/architecture/pipeline-test-gate-suite-migration-status.md",
           "inputUse": false
@@ -21664,6 +21684,11 @@
         },
         {
           "sourcePath": "scripts/check-suite-migration-workflow.mjs",
+          "token": "docs/architecture/pipeline-test-gate-suite-migration-templates.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/architecture/pipeline-test-gate-suite-migration-templates.md",
           "inputUse": false
         }
@@ -23019,6 +23044,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/architecture/pipeline-test-gate-unit-parity-ledger.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/pipeline-unit-parity-report.mjs",
           "token": "docs/architecture/pipeline-test-gate-unit-parity-ledger.json",
           "inputUse": true
@@ -24304,6 +24334,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/architecture/plugin-system-current-inventory.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/plugin-system-inventory.mjs",
           "token": "docs/architecture/plugin-system-current-inventory.md",
           "inputUse": false
@@ -24818,11 +24853,23 @@
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/blueprint/07-documentation-quality-standard.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/check-ap09-acceptance-contract.mjs",
+          "token": "docs/blueprint/07-documentation-quality-standard.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/blueprint/07-documentation-quality-standard.md",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "scripts/check-ap09-acceptance-contract.mjs"
+      ],
       "indirectExecutableConsumers": [],
-      "sha256": "98611ee84ac92a930cd54a0dd4f5d68fa274111228b4150f0fa5ad330efc3e28"
+      "sha256": "b3b55207ed0dfd864cbe15b5dd43def4a840dc65752c9ff69c2a90f129384185"
     },
     {
       "path": "docs/blueprint/AP03-progress.md",
@@ -25093,6 +25140,11 @@
           "sourcePath": "scripts/ap08-extension-inventory.mjs",
           "token": "docs/blueprint/AP08-audit-ledger.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/blueprint/AP08-audit-ledger.json",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -25134,7 +25186,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c452fa86a66098618425468534cdcfcea9b564422e7f638677c5a75aaa2a5c3e"
+      "sha256": "ade0f81c0fdd239e3bfc4b99ed3c988600bcae1c591362f27c0219da316562c6"
     },
     {
       "path": "docs/blueprint/AP08-local-verification.json",
@@ -25191,6 +25243,11 @@
         },
         {
           "sourcePath": "scripts/ap08-review-scope.mjs",
+          "token": "docs/blueprint/AP08-plan.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/blueprint/AP08-plan.md",
           "inputUse": false
         }
@@ -25393,6 +25450,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/blueprint/AP09-acceptance-contract.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check-refs.mjs",
           "token": "docs/blueprint/AP09-acceptance-contract.md",
           "inputUse": false
@@ -25417,7 +25479,7 @@
         "scripts/check-ap09-acceptance-contract.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "e6bc61179aa566296da713fff6f3986902531a414e9999ae485f59384f6179d8"
+      "sha256": "f49afdcdd3eca7e94589dec8c0a9359cfa0da9d4cc628b1c7fb8a31504e44e94"
     },
     {
       "path": "docs/blueprint/AP09-acceptance-fixtures.json",
@@ -25528,7 +25590,7 @@
         "scripts/check-ap09-acceptance-contract.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "95e7024d183afe215a2108dcaa6636cfa38159acc1aed5fe2d87021c9f89059a"
+      "sha256": "916c80bd070612bd7517c355cb41bf8ca7548d3145597e17ada179a50ddc2fab"
     },
     {
       "path": "docs/blueprint/README.md",
@@ -25814,7 +25876,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "5a440133f745c648342e42a6274e4b0b71c15d622313126cb6ff21b3f537a4e8"
+      "sha256": "6e540e4676c676db52c3b413492f29a930ad4830a04d07817a55aa8c68cbd1a6"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -25868,11 +25930,18 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/documentation-work-plan.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/check-ap09-acceptance-contract.mjs",
+          "token": "docs/blueprint/documentation-work-plan.md",
+          "inputUse": false
         }
       ],
-      "executableConsumers": [],
+      "executableConsumers": [
+        "scripts/check-ap09-acceptance-contract.mjs"
+      ],
       "indirectExecutableConsumers": [],
-      "sha256": "b31c86466313b8b3e7f330ef369140e3eee9f22bb54597337ad0ef044f54959b"
+      "sha256": "47ce9e4809235e1bf8720ed1de6b42837022595f28816f86b6b99fa3425c9eec"
     },
     {
       "path": "docs/blueprint/generated/ap08-extension-inventory.json",
@@ -25917,6 +25986,11 @@
           "sourcePath": "scripts/check-ap08-host-lifecycle-catalogue.mjs",
           "token": "docs/blueprint/generated/ap08-extension-inventory.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/blueprint/generated/ap08-extension-inventory.json",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -25948,6 +26022,11 @@
           "sourcePath": "scripts/ap08-extension-inventory.mjs",
           "token": "docs/blueprint/generated/ap08-extension-inventory.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/blueprint/generated/ap08-extension-inventory.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -25977,6 +26056,11 @@
         },
         {
           "sourcePath": "scripts/ap08-review-scope.mjs",
+          "token": "docs/blueprint/generated/ap08-repeat-review-scope.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/blueprint/generated/ap08-repeat-review-scope.json",
           "inputUse": false
         }
@@ -26701,7 +26785,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "6654a329158f494ae67847ce503a008ecaaa3c9cf44c8f12324396f2f8b6a5e2"
+      "sha256": "d48e70630077b69ea9339d7204942f3cdbcc9dbba6717ea2242237d62bd1ada1"
     },
     {
       "path": "docs/config/platform-surface-map.json",
@@ -26739,6 +26823,11 @@
         },
         {
           "sourcePath": "scripts/check-platform-surface-drift-mutations.mjs",
+          "token": "docs/config/platform-surface-map.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/config/platform-surface-map.json",
           "inputUse": false
         },
@@ -27229,6 +27318,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/generated/inventory/configuration-runtime-inputs.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate-core.mjs",
           "token": "docs/generated/inventory/configuration-runtime-inputs.json",
           "inputUse": false
@@ -27244,7 +27338,7 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "0c9aaeb7772d85daac6d43601b0f53434ee2a18ddfe0a2ee946b1a9e93ec55f2"
+      "sha256": "8ab1550b7ac382535b32e434eed920e0b62c7fbbd70840e32e0ed116912172f9"
     },
     {
       "path": "docs/generated/inventory/configuration-schemas.json",
@@ -27281,6 +27375,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/generated/inventory/configuration-schemas.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate.mjs",
           "token": "docs/generated/inventory/configuration-schemas.json",
           "inputUse": false
@@ -27293,7 +27392,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "85e3c211af748344a2132e6ee48ed6f07a712157e9ddb270e00bb80fd577421b"
+      "sha256": "cebde8405dca50122dc530c56c86f200497121a24d4360e8d6f562e8f98a49da"
     },
     {
       "path": "docs/generated/inventory/configuration-values.json",
@@ -27335,6 +27434,11 @@
           "inputUse": true
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/generated/inventory/configuration-values.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate.mjs",
           "token": "docs/generated/inventory/configuration-values.json",
           "inputUse": false
@@ -27350,7 +27454,7 @@
         "scripts/vendor-external-helm-authorities.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "d6130152638e938fc731dfdf028ca8427418c0ce78e6d66358ea524358f05b40"
+      "sha256": "86576d0f96d9787028c87e6d2b489f956b34d00284ef6ad34cdcbdc01fcf9467"
     },
     {
       "path": "docs/generated/inventory/deploy-script.json",
@@ -27413,6 +27517,11 @@
         },
         {
           "sourcePath": "docs/site/use/install.md",
+          "token": "docs/generated/inventory/deploy-script.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/generated/inventory/deploy-script.json",
           "inputUse": false
         },
@@ -27669,6 +27778,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/generated/inventory/documentation-source-revision.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate.mjs",
           "token": "docs/generated/inventory/documentation-source-revision.json",
           "inputUse": false
@@ -27693,7 +27807,7 @@
         "scripts/tests/plugin-dependency-boundaries.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "f360ad873ee678e5f92ecc58dac54cf7b2b58ccd75e4bf4f76540c24ae9e47a3"
+      "sha256": "37391b5d1580afa6e6130d9fb807799e9b6adb6f6b1faaf61564215402d5882c"
     },
     {
       "path": "docs/generated/inventory/documentation-tree.json",
@@ -27795,6 +27909,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/generated/inventory/operator-tasks.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/generate-operator-task-registry.mjs",
           "token": "docs/generated/inventory/operator-tasks.json",
           "inputUse": false
@@ -27852,6 +27971,11 @@
           "inputUse": true
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/generated/inventory/platform-surfaces.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate.mjs",
           "token": "docs/generated/inventory/platform-surfaces.json",
           "inputUse": false
@@ -27866,7 +27990,7 @@
         "scripts/check-platform-surface-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "1aa5330ac6949433ff9734fe41a60d488cfbf94d36b5d2634aa4bd57460a1918"
+      "sha256": "6b183789987165d6b7c1548c1496fac07df4f708cebcd5ca11681031d2a9284e"
     },
     {
       "path": "docs/generated/inventory/plugin-system.json",
@@ -27929,6 +28053,11 @@
         },
         {
           "sourcePath": "docs/review/evidence/resume-20260909/root/inventory.log",
+          "token": "docs/generated/inventory/plugin-system.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/generated/inventory/plugin-system.json",
           "inputUse": false
         },
@@ -28018,6 +28147,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/generated/inventory/secret-setup.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate-core.mjs",
           "token": "docs/generated/inventory/secret-setup.json",
           "inputUse": false
@@ -28090,6 +28224,11 @@
         },
         {
           "sourcePath": "docs/site/reference/workflows.md",
+          "token": "docs/generated/inventory/workflows.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/generated/inventory/workflows.json",
           "inputUse": false
         },
@@ -29170,6 +29309,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/operator-tasks.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-blueprint-generate.mjs",
           "token": "docs/operator-tasks.json",
           "inputUse": false
@@ -29433,6 +29577,11 @@
         },
         {
           "sourcePath": "scripts/cleanup-consolidated-branches.py",
+          "token": "docs/review/branch-cleanup-20260912/branches.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/review/branch-cleanup-20260912/branches.json",
           "inputUse": false
         }
@@ -125625,6 +125774,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/README.md",
           "inputUse": false
@@ -125772,6 +125926,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/decisions/core-and-plugins.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/decisions/core-and-plugins.md",
           "inputUse": false
         },
@@ -125947,6 +126106,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/decisions/runtime-and-operations.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/decisions/runtime-and-operations.md",
           "inputUse": false
@@ -125987,6 +126151,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/decisions/test-gate.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/decisions/test-gate.md",
           "inputUse": false
         },
@@ -126110,6 +126279,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/extend/README.md",
           "inputUse": false
@@ -126181,6 +126355,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/extend/buster.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/buster.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -126247,6 +126426,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/extend/contracts.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/contracts.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
@@ -126296,6 +126480,11 @@
           "sourcePath": "scripts/check-ap08-advanced-guides.mjs",
           "token": "docs/site/extend/effectful-plugin.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/effectful-plugin.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
@@ -126323,6 +126512,11 @@
         },
         {
           "sourcePath": "scripts/ap08-review-scope.mjs",
+          "token": "docs/site/extend/examples/minimal-stage/package.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/extend/examples/minimal-stage/package.json",
           "inputUse": false
         }
@@ -126359,6 +126553,11 @@
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/site/extend/examples/minimal-stage/plugin.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/examples/minimal-stage/plugin.json",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
@@ -126386,6 +126585,11 @@
         },
         {
           "sourcePath": "scripts/ap08-review-scope.mjs",
+          "token": "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
           "inputUse": false
         }
@@ -126417,6 +126621,11 @@
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
@@ -126444,6 +126653,11 @@
         },
         {
           "sourcePath": "scripts/ap08-review-scope.mjs",
+          "token": "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
           "inputUse": false
         }
@@ -126475,6 +126689,11 @@
           "sourcePath": "scripts/ap08-review-scope.mjs",
           "token": "docs/site/extend/examples/minimal-stage/src/stage.js",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/examples/minimal-stage/src/stage.js",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
@@ -126502,6 +126721,11 @@
         },
         {
           "sourcePath": "scripts/ap08-review-scope.mjs",
+          "token": "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
           "inputUse": false
         }
@@ -126585,6 +126809,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/first-plugin.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/extend/first-plugin.md",
           "inputUse": false
@@ -126637,6 +126866,11 @@
           "sourcePath": "scripts/check-ap08-host-lifecycle-catalogue.mjs",
           "token": "docs/site/extend/host-and-engine.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/host-and-engine.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
@@ -126674,6 +126908,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/extend/lint.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/extend/lint.md",
           "inputUse": false
         }
@@ -126737,6 +126976,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/extend/nova.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/nova.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
@@ -126779,6 +127023,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/extend/platform/buster.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/extend/platform/buster.md",
           "inputUse": false
         },
@@ -126830,6 +127079,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/extend/platform/prism.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/extend/platform/prism.md",
           "inputUse": false
         },
@@ -126961,7 +127215,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b0412b99aa6e9a36639ccdf360d85b9967cc2501bbf7638477e2c5a3fa27bb10"
+      "sha256": "c39c469b268d480fe259e32d633c7cdfbbcc361d12539de977cbc4c3302f8a32"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
@@ -126995,7 +127249,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "724f2045a1bdf084f006976addae37918960fe0c43668f1f9a4132426f89dafe"
+      "sha256": "affbdbe5acf0bd3025cd7de2bf14e86ce5fb8bcfd086d17ecce057c0d02e204e"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
@@ -127049,7 +127303,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "60897eefd90cddb21ba517bd8fadae9c261705318337a8f8a76ebf912a6db8af"
+      "sha256": "27e0457d84cee6d35044a67770bd19aec20f40bdafc470eeb8ab362992b0e235"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
@@ -127098,7 +127352,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "526034af3e08171bb979753db704b6c3cd8e81e25265501eebc04cbe41c66961"
+      "sha256": "250cfbeffaa10d85db8f2536367bc0f3880b78b1962fd82aa03915d775567d39"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
@@ -127147,7 +127401,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "e90fed8abd1305654a3dfa82c583bf82d6ad80497563cb8cdaeb6c61373b4e3d"
+      "sha256": "a125e257f3fb8723d850397f3d51334921f05f7fc2db970ef57572cbd61f0860"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
@@ -127196,7 +127450,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ef2a004db71c3b95e30921a23bd85ba60845f2ce064a7253fff582c75e939aec"
+      "sha256": "99457ece884d83be928028c399234964bd0d35bba415a08a64552e276b441cb0"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
@@ -127245,7 +127499,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "91b8cb09d189079bd8b6d9439e51f3de5c5d70cf279883c927a91c0ebcfbddbb"
+      "sha256": "122e450b32aa2a7627d65c24c064f7507d9b9fd9d50189800eb015deae35d03a"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
@@ -127294,7 +127548,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "523d286650aee819b03733f095649b7acf0aab9c1d2feceef6209899f3000269"
+      "sha256": "74761c42a7763f960cef4ed498c54ddfe08483e8aa5234b4f8d68117b551a676"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
@@ -127343,7 +127597,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "1cf5e7db1dbeec607d626fad2720dc478d11a509334c9e00602843ba5ba60782"
+      "sha256": "f99edcc88c7b5bda9df347c441c58185864a94a4d3982f1ae9edd4cc465d9abd"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
@@ -127392,7 +127646,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "2f606c7f681153248f2c0700735c2d382da624d22ebe98eb12d44f8ab36e042e"
+      "sha256": "57b609b705a42246d7dd9d4b1766103a4c1e4cc741049fdab19b848c0ddb0205"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
@@ -127441,7 +127695,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c44ba197fa4a92ace1461ce9d3778d6de93513284151826ebefc42f073aede85"
+      "sha256": "f3450a13f22200b6ee70a2b24e4718358a8e494516accd709dcbda00c0540793"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
@@ -127490,7 +127744,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b76f673fb03db6e50d41998554b7c0b8a08fb2578ff5eecf6449e6c05fc5c99a"
+      "sha256": "6038bbe032f12bcf5d64c46b68d01e4239664dff56af570d378ca805b7e28bf3"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
@@ -127539,7 +127793,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "124102a4fc5f7d911160010f221dd606da4c1788026320522ec003cdaeccd41e"
+      "sha256": "cf2e39c7fb5eb0010b6177e62309506821e0cc0d68cb5b92adf40fc37ebe73d7"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
@@ -127588,7 +127842,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "4978335b7fca73c553871364fd1713d06a11fff24e4e2d3b165cabeb0b3b9212"
+      "sha256": "db0958031e2fc3704adb365b28ebc50b1faf7a235b3777ef4013a3542812624c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
@@ -127637,7 +127891,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c08e55e53eed31594055c3e15875e259cdbaaf8a8b940355663abc81176a2fa5"
+      "sha256": "f3d217612443deb901809428b7fd92589c299e052b426b2e3d9c0f953821dc65"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
@@ -127681,7 +127935,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "d8a9518dffe67c673c1f216ebae8d9f165e472f8d91ae4de1405234e3aeb1781"
+      "sha256": "fab15e8ee594ebe9b13e29691c5239becd4549321a2e4671b092d2db908ed8f8"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
@@ -127725,7 +127979,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "003acce00509e59764dc5f85599badde46ff10239e6509cc1ba57e958d292fd3"
+      "sha256": "4d1e58373ef473401c959c45c5259fe47ad58a59d023ee6d0b246062089948ad"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
@@ -127774,7 +128028,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "e23a89bd310d67887f46f3080c05fb8f0abecf6a01ed28dd392918fffeff855e"
+      "sha256": "f65da73dd8bda5f2f3f8593e15c007a6444a867ea624e316092523a5a0a6f7b9"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
@@ -127823,7 +128077,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "791a2579373bd04ac67a7b17fa730edbde083806fc7d5cb03eb34d6d945cf409"
+      "sha256": "e871dd9bb3e0931d1aeabddd7dd28dc4de02b6a41615f5ed4ae5751b875c458c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
@@ -127877,7 +128131,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f21ec73b7e5f6c4199116add998c789c21d50bf692ac12e6eda26785f7e0d873"
+      "sha256": "26511103f84c999ca1de4bee151d2bd0bc18726dc2d4b92d969b40eab58d81dc"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
@@ -127931,7 +128185,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "e5ba9c09b7791088497e243e1b4bbaebeeb8a1b99a6c2b51f84b168d88476e57"
+      "sha256": "82ad7825c0b6e199c327e2af7f41d2dcff0a199297b03e51f9e49a25813f7da7"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
@@ -127980,7 +128234,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "882e3ba7932ed995c072cc0f97b2a7c5f73ebdbe0615da347b45aa5195b422e9"
+      "sha256": "59178a2048004ed0dea30fbf6f9c1eab170165e5529eef672eda312fe2a9cae9"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
@@ -128029,7 +128283,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "bb58673e8b4343660ff47402b25332720b9f2d65419220d6098e38224db48359"
+      "sha256": "644b6a368fff6c554eda53a42f256204547f3e24c9b1df11b40af85a69b8c865"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
@@ -128078,7 +128332,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ba66218a9a3a98cfc933ebd993bf0173b70ada64fc646013b9fed394754ca614"
+      "sha256": "81235242b71ace45ce444224e99a25fb950436b0fa42533e02ad0960495b6b9c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
@@ -128127,7 +128381,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ba51b5c2fef9d78d5b46b7dfbdbbcd360cce51ee1393f7effd7db75406c555b3"
+      "sha256": "a90981137ea8755d0ab2c4c96835a990d3eba7b5f77f89472f5385a5eed446a2"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
@@ -128181,7 +128435,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "dd35d7f78c17fc0ec3bfc757d050a9ef7ada5649bee06b2ee987b1eab4b17234"
+      "sha256": "e92fddec78da9602dcb99a022c80a2f53a955bf3584feb774d391d53f8107037"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
@@ -128230,7 +128484,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "9e664e113b35a9468849506814e9137c86f6dcf59660f5e0ab41c560808d8f99"
+      "sha256": "1714379f8d3d9340d24c619fa5b3ea99e8b53ebe29ea477454c7f15d792752df"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
@@ -128279,7 +128533,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "c3de6976663a20aaa1bb3af6c7931a5c341696f399cd70760f05f565f2c62407"
+      "sha256": "21f189902ff376aae5b122c25552009a7143a71e0e6730071fd352c7be324938"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
@@ -128328,7 +128582,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "cb9dde6755e19a93c9977eb03db090a65e696ee46dca6d2c975f3ec53772879d"
+      "sha256": "b5c797dcbc2bac1c7a446a31931e7e131be45441e73f02f75819f20c78997428"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
@@ -128377,7 +128631,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "05cf9a5d41abdc3c74a90ff9af0e299890555e157ee610b0be821d0898f1cf46"
+      "sha256": "dded9cc203fb5c5f41651a1ace35b654a27e5fcf1cd99387a08375538d0c5e6c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
@@ -128426,7 +128680,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "a0d403829fbbccb0e884718e0239c10f4d2f788a9bca95c99c631c63362f5376"
+      "sha256": "29df8fde9ffc8595b4cd89d3740b3dfa0e8ad947c4395d532781dc70b86db24c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
@@ -128475,7 +128729,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "03324a29542e55a086798e3d64ae09b2ddce19a9973c7752f722d7b29e33a96f"
+      "sha256": "f8dc5a53dcd82be374495c0cd391e51cbe0ea38c39bf53a75001c1dffe75fe03"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
@@ -128524,7 +128778,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "df21d036219e502471dbf6667feb9ba06544384fd4a66b7d0412457b482ae601"
+      "sha256": "c552051955d8162786d4bef000cc05e8c27b592d44b12c4a662922245c67949c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
@@ -128573,7 +128827,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "78dad9875690c4eff14c6741507bea81fab8a0d46a7356a1f7b428ad0b0ef4cc"
+      "sha256": "08e517ad45dd4a43d0607488686b9756a29dc0274e31499397385c3466c99f6f"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
@@ -128627,7 +128881,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "81cf9e68ff3ee0ddf78de8bab6f873abcfdceafb446283e6b84dc96de4ff5435"
+      "sha256": "928f9c5e5b84d5dd90d49cb389d43a88c47e6a73aadc862dbba5c4f093f07139"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
@@ -128681,7 +128935,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "00df22ddec94df7526dac59d2101bf3ec4cafa11ce9fb1e4db6a22ce816a59f7"
+      "sha256": "58c91854ea33b1e886df9875426afe0599957f10d90b9601baac9d4770ed2683"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
@@ -128730,7 +128984,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "9e81278894a3ce402dc5a015881c6ad5e9fdc5393bd0c05232876ef8f7bf3106"
+      "sha256": "aea988e352ed0ce14ed22ff8e2c50a397bca8a80398b787a2f955a1c4813ffa3"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
@@ -128779,7 +129033,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "55eef9fa9cd41c43ad5aa4abe14709a25f041ea1bea4390b00ccc29d7e1882ce"
+      "sha256": "cd05cd96e1d09960f1c2b2356c0fcd4a3c0b2390ed22704cea6ad2def265f72d"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
@@ -128828,7 +129082,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "de3c2e6102337878b4380b085008ef6f6706134360cc0b3c73bb9bd1e8288741"
+      "sha256": "e310ee92b62ea1b6fce6d4b0e381d1b5a8c5f8251be5b12138489e6c51429ff6"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
@@ -128877,7 +129131,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "799c4ae4251d66904f9140ad5ec94d98e77454966694ef25e9c322204094feac"
+      "sha256": "4b95deb6d40f40eb2fb0584be6827a72779952abf3bfc7185e30d22be27209b2"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
@@ -128926,7 +129180,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "e3175656fb6535c2530863f2e36a3bb77b7a05936759b52bbc23e4fc052a395d"
+      "sha256": "8fe623844d847562a2001ca4780ffd89711df39fbb6d8f8388630590b2b971b6"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
@@ -128975,7 +129229,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "453492f81af9a6efb997ef5011d58ca30752442b7766dd20a0a5005f9b1245b1"
+      "sha256": "a70c8de38db5c0b0bc25e80b6d6950cf7019de3e3157e42ea340c0c7439f51e1"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
@@ -129024,7 +129278,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "07b36a44c6f72d8ffd6c99dddcf932f55867479e28b16719dff38f5c740841cb"
+      "sha256": "4c3692f8a79955a22aa448594703eba627bf02c37fa6bf81e5270e9b68e7adbf"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
@@ -129073,7 +129327,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "9cce1b2c5cccd7789b55744b17f936b1a5feadf56aa1cddc817734f280afff3d"
+      "sha256": "c7d30c9b82365b9c03dd52b0ab4d008a385bd7c3a3560e48ce0c24de2275acd7"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
@@ -129122,7 +129376,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "b38dbc89926e08c985f188d96892a097a9e1e740fe4af0a86650423e970011ab"
+      "sha256": "6a485c692eea5e302e2a2d972d92b45c43b9adac83a68286fd85a9828de455ff"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
@@ -129171,7 +129425,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "abd5bf4aac158fa476e987fad9458723ec6f1246374d94cfede5c06f44bdaaeb"
+      "sha256": "5fa49b7028934ab9a319ec1e4f7ec5dade7e8584df6ac60e1229861d9d8951ab"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
@@ -129220,7 +129474,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "ee8aa39ad443b471cbe1a5dd9342b90250c235fbb8871980069d83c238461b9e"
+      "sha256": "d65cf87f56ebaf0b0bb712ae78cf7fc3a292ceec616a08058d57547274b25cf0"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
@@ -129269,7 +129523,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "87b543251a1569defbf87fc9c96f7c308545aed5e5e7aa1e74492cf5861a3b8f"
+      "sha256": "25d27e2fd1dc75745b0e6655e28a3e0b3afa7176fad5916cf27f32a2540e6030"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
@@ -129318,7 +129572,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "39dd24e8625192e0843493271a176ec08982830c76662b282e0ca478254fc9e9"
+      "sha256": "22a005e721862db71bc33074af824d970d035b5b627d8f852d2e3cc1fdb179b8"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
@@ -129367,7 +129621,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "49cd858e00355033d6b36edcd9338bc2ee011d9c613ec88090b04fdf074e1e80"
+      "sha256": "4acec9d8fd047ad241dc463d145b1fea8dad9867b83b7dc64146c8c1602bc627"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
@@ -129416,7 +129670,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "d5cb6444aafdc9a6acb9d8125cc57a5549d5f4fdd87cc52ca1a8277aa1076da4"
+      "sha256": "7b02e28e3ac7afe7c926f26b6beb5a662f3cd4f18a90996d4665e59938d2595b"
     },
     {
       "path": "docs/site/extend/testing.md",
@@ -129493,6 +129747,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/extend/testing.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/extend/testing.md",
           "inputUse": false
@@ -129500,7 +129759,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "cf1d28c2b80ef9fb89ad2c4cc36dfb0b144d22125fb333b152a25d515bea3b99"
+      "sha256": "5bd174d5805a74753ce8ef0ef2e747b21a586c609adaf90bd44f4fa80063a39c"
     },
     {
       "path": "docs/site/product-surfaces.md",
@@ -129548,6 +129807,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/product-surfaces.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/product-surfaces.md",
           "inputUse": false
         },
@@ -129623,6 +129887,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/README.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/README.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -129630,7 +129899,31 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "54e6ce781531dde29144079722ccf9ffc40737dc07455eaf4fc288b36066610e"
+      "sha256": "94599c7f09ee228104cb0e44803c07ea8d1c0786e7b8d13c8884a79f8a8dd08e"
+    },
+    {
+      "path": "docs/site/reference/api-object-updates.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/api-object-updates.md",
+      "expectedPath": "docs/site/reference/api-object-updates.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/reference/api-object-updates.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/reference/api-object-updates.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "9a871abf0f2ebf3b95b9ad83eaa7ead6bd5687e443c5cab78289a56f0dda6e51"
     },
     {
       "path": "docs/site/reference/buster-error-codes.md",
@@ -129723,6 +130016,11 @@
         },
         {
           "sourcePath": "scripts/check-buster-guides.mjs",
+          "token": "docs/site/reference/buster-error-codes.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/buster-error-codes.md",
           "inputUse": false
         },
@@ -130827,7 +131125,7 @@
           ]
         }
       ],
-      "sha256": "86c5539afb640920b53218d637b8a18405c715f4b9d4fc45d58f3e3a0052713e"
+      "sha256": "d8e50b5b04dfa54f2b0fe6529c1327cbdc5caa0225ab9376c50e0f0884b6557b"
     },
     {
       "path": "docs/site/reference/buster-provider-configuration.md",
@@ -130920,6 +131218,11 @@
         },
         {
           "sourcePath": "scripts/check-buster-guides.mjs",
+          "token": "docs/site/reference/buster-provider-configuration.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/buster-provider-configuration.md",
           "inputUse": false
         },
@@ -132075,6 +132378,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/buster-runtime-configuration.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-configuration-inventory.mjs",
           "token": "docs/site/reference/buster-runtime-configuration.md",
           "inputUse": false
@@ -132390,6 +132698,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/reference/buster-suites.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/buster-suites.md",
           "inputUse": false
         },
@@ -133562,7 +133875,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "2c26acafb038da4b67bf5c6a608ce386018e996a02e5caed37c57a20b029c3e7"
+      "sha256": "63a002841557c1167f9bafb6d719813be05b1eb78f587575977cc8a4dec54c06"
     },
     {
       "path": "docs/site/reference/cli.md",
@@ -133619,6 +133932,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/cli.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/reference/cli.md",
           "inputUse": false
@@ -133639,7 +133957,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "28750735705f4743456e0341dc47600d1052c350d1436874849034c6e598356e"
+      "sha256": "7fc45725595a46ae7c695ec42f4462407b9e2afbfa8c365751649bdbfcc59513"
     },
     {
       "path": "docs/site/reference/configuration-change-impact.md",
@@ -133676,6 +133994,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/configuration-change-impact.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/reference/configuration-change-impact.md",
           "inputUse": false
@@ -133683,7 +134006,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "a72a6946c411b40f6a1105c75e213817379cd3a0d22293735d8003e597380b5a"
+      "sha256": "4da1a58808c8f7d931045c1bcc6b3c98e8bb53f222e85a64adcb040e83974c2f"
     },
     {
       "path": "docs/site/reference/configuration-compatibility.md",
@@ -133716,6 +134039,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/reference/configuration-compatibility.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/configuration-compatibility.md",
           "inputUse": false
         },
@@ -133764,6 +134092,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/configuration-errors.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/reference/configuration-errors.md",
           "inputUse": false
@@ -133771,7 +134104,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "4e3d9b850a7055aa3a0008ffa71404ea548e0f9f6b63ee8b40b52e7f1cce2074"
+      "sha256": "5eb9efa3b4bf7382415664fbd76bfe33d49a9700c953caa8adac75d91b324c2c"
     },
     {
       "path": "docs/site/reference/configuration-precedence.md",
@@ -133808,6 +134141,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/configuration-precedence.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/reference/configuration-precedence.md",
           "inputUse": false
@@ -133815,7 +134153,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "cfc6f793308fd0a2c13ac91a24bc568480b6109867dddbf067b70b0760a88749"
+      "sha256": "2f002e12766479b159c91f62f19b8c5e910bc00b8106187e2bbf055089793637"
     },
     {
       "path": "docs/site/reference/documentation-governance.md",
@@ -133854,7 +134192,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "f65b4a0146e6455d51754011b23d93f2662501a56bb1e231bd386591d9c34f56"
+      "sha256": "6b285ba8c711cafa9b5c7ec6e26ce72492e270fa808977f4115ed075b71e78df"
     },
     {
       "path": "docs/site/reference/documentation-route-registry.json",
@@ -133937,6 +134275,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/endpoints.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate.mjs",
           "token": "docs/site/reference/endpoints.md",
           "inputUse": false
@@ -133949,7 +134292,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "05c0babba57315fcba33b443253525a0bee837bd8697b82ee9f7a14205a27560"
+      "sha256": "0c00d0128b4735fa130f2bb144dd3c3aa88c6656cbb2e46e4c3aabb368ac2f27"
     },
     {
       "path": "docs/site/reference/environment-variables.md",
@@ -134006,6 +134349,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/environment-variables.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/reference/environment-variables.md",
           "inputUse": false
@@ -134032,7 +134380,7 @@
         "tests/verification/contracts/check-worker-trust-documentation.mts"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "a901e958ad3f713f422a01a4d156179cb4a14b61b1d92f33c4e27b5027970669"
+      "sha256": "f9bc4d6ef829979606a2fdc7d12c72da36eedf7a6d86514abd0bfedc01d91ab0"
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
@@ -134061,7 +134409,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "a3c2be03bdc54063d0f85840b9e52757e4eb37f181158f15cd53b4f901b7f56b"
+      "sha256": "0878927ee61a4efaf1575a42056db805355dce50f0d3cc50c0e62f10d6498b16"
     },
     {
       "path": "docs/site/reference/glossary.md",
@@ -134100,7 +134448,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "2c9577b4009b97f3b0fbb289104ba77b5d87e392f3715229419af63939befd85"
+      "sha256": "27f7545cba244e7a3939c0680e6f4f2c0f422b5e20ecc46bee742fae1b06bcf0"
     },
     {
       "path": "docs/site/reference/helm-values.md",
@@ -134142,6 +134490,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/check-buster-guides.mjs",
+          "token": "docs/site/reference/helm-values.md",
+          "inputUse": true
+        },
+        {
           "sourcePath": "scripts/check-configuration-drift-mutations.mjs",
           "token": "docs/site/reference/helm-values.md",
           "inputUse": false
@@ -134153,6 +134506,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/reference/helm-values.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/helm-values.md",
           "inputUse": false
         },
@@ -134173,11 +134531,12 @@
         }
       ],
       "executableConsumers": [
+        "scripts/check-buster-guides.mjs",
         "scripts/check-configuration-drift-mutations.mjs",
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "ca38f1608cb3bff89c2b661ad39a59a07e4774064622fb038fdbe5b00d44823f"
+      "sha256": "384ca13e30b38b32651cb99444f8d4ead4380a9c4cdd6e2fbfc8a5eec45a560d"
     },
     {
       "path": "docs/site/reference/host-and-prism-configuration.md",
@@ -134210,6 +134569,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/reference/host-and-prism-configuration.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/host-and-prism-configuration.md",
           "inputUse": false
         },
@@ -134251,6 +134615,11 @@
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/reference/lint-policy-generated.md",
           "inputUse": true
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/lint-policy-generated.md",
+          "inputUse": false
         },
         {
           "sourcePath": "scripts/docs-governance.mjs",
@@ -134312,6 +134681,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/reference/lint-policy.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/lint-policy.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -134356,6 +134730,11 @@
         },
         {
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
+          "token": "docs/site/reference/lint-rules.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/lint-rules.md",
           "inputUse": false
         }
@@ -134411,6 +134790,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/nova-project.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-configuration-inventory.mjs",
           "token": "docs/site/reference/nova-project.md",
           "inputUse": false
@@ -134462,6 +134846,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/pipeline-definition.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/reference/pipeline-definition.md",
           "inputUse": false
@@ -134502,6 +134891,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/reference/pipeline-json.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/pipeline-json.md",
           "inputUse": false
         },
@@ -134550,6 +134944,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/pipeline-platform.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/reference/pipeline-platform.md",
           "inputUse": false
@@ -134557,7 +134956,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "d0f01b7c56f0bc4abc61d2d6aab788596cfb6d39e2318c0e2c5484075193e204"
+      "sha256": "1703b5d462e2a09aa1dafeaa94d96d1a901e510665b88a9321c16d8c39f0c43e"
     },
     {
       "path": "docs/site/reference/platform-surfaces-generated.md",
@@ -134589,6 +134988,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/platform-surfaces-generated.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-platform-surface-inventory.mjs",
           "token": "docs/site/reference/platform-surfaces-generated.md",
           "inputUse": false
@@ -134598,7 +135002,7 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "d067ad47a282a4b1b19172a7c0f9978513dea1911b542e2c295dfc35956bf5c8"
+      "sha256": "d560e08962c8705652e7207a13df5e6aeb9926eaf78974560a6561c6e0ca02a0"
     },
     {
       "path": "docs/site/reference/plugin-configuration.md",
@@ -134645,6 +135049,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/plugin-configuration.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-generate.mjs",
           "token": "docs/site/reference/plugin-configuration.md",
           "inputUse": false
@@ -134659,7 +135068,7 @@
         "scripts/check-configuration-drift-mutations.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "c01ee491eb9049ea232a97f4d7fc369eb84d5860af05541a57bd516026b06459"
+      "sha256": "67adcc096aec1281a8de5de37192a718251cc9fe6182881de01d9338430007ec"
     },
     {
       "path": "docs/site/reference/project-pipeline-publication.md",
@@ -134697,6 +135106,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/reference/project-pipeline-publication.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/project-pipeline-publication.md",
           "inputUse": false
         },
@@ -134775,6 +135189,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/secrets.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/reference/secrets.md",
           "inputUse": false
@@ -134812,7 +135231,26 @@
           ]
         }
       ],
-      "sha256": "97a4e983cf22b9d33851a88f4324d54ff99566a299d5e982cc09ad415dfe4fc7"
+      "sha256": "ad53c64093bb936c9a576f5671f8cb1109bea040e1e0c87e636c89f7480a5717"
+    },
+    {
+      "path": "docs/site/reference/service-routing.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/service-routing.md",
+      "expectedPath": "docs/site/reference/service-routing.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/reference/service-routing.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "0ec8899638dc4134d2eed79d63b3ffaf4971619e7e9dcd0c32032ed37f2a43ec"
     },
     {
       "path": "docs/site/reference/verification-commands.md",
@@ -134855,6 +135293,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/reference/verification-commands.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/verification-commands.md",
           "inputUse": false
         },
@@ -134913,6 +135356,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/reference/worker-profiles-and-roles.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/reference/worker-profiles-and-roles.md",
           "inputUse": false
@@ -134958,6 +135406,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/reference/workflows.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/reference/workflows.md",
           "inputUse": false
         },
@@ -135048,7 +135501,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "2dfdfc9aa443025c7f2e4408c44efe38501af22e5625631ea9036aa9812ff12e"
+      "sha256": "60977cedefe420f006b863f51a37f490665a49d9b6f3f532e74747e804c41ac4"
     },
     {
       "path": "docs/site/status/current.md",
@@ -135115,6 +135568,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/status/current.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/status/current.md",
           "inputUse": false
@@ -135145,6 +135603,11 @@
         },
         {
           "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/status/open-issues.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/site/status/open-issues.md",
           "inputUse": false
         },
@@ -135188,7 +135651,7 @@
         ".github/workflows/docs-checks.yaml"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "c6c34f19bad1e5ebb9dd3d8d3b8da0928c10f9a1cf096cfc575c03e4e9ad5246"
+      "sha256": "09fcef08f5ebe9ba0fd668f184d40b83d7a8c922814d5a7723055987948f20d9"
     },
     {
       "path": "docs/site/status/roadmap.md",
@@ -135233,6 +135696,11 @@
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/status/roadmap.md",
           "inputUse": true
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/status/roadmap.md",
+          "inputUse": false
         },
         {
           "sourcePath": "scripts/docs-check.mjs",
@@ -135336,6 +135804,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/understand/README.md",
           "inputUse": false
@@ -135393,6 +135866,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/understand/archviewer.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/archviewer.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -135439,13 +135917,18 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/understand/buster-namespace-controller.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/buster-namespace-controller.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "f25090a535e441a0116fcf198bbce23d9db6fdf29d1427ac23a8a1fb975ec230"
+      "sha256": "8fa2039748d66cba955226536e31a429a61215f74d3134a2e5b88fe101935681"
     },
     {
       "path": "docs/site/understand/buster.md",
@@ -135488,6 +135971,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/buster.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/buster.md",
           "inputUse": false
         }
@@ -135534,6 +136022,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/codex-integration.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/codex-integration.md",
           "inputUse": false
         }
@@ -135590,6 +136083,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/communication.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/communication.md",
           "inputUse": false
         }
@@ -135717,6 +136215,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/understand/data-and-state.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/data-and-state.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -135835,6 +136338,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/understand/echo.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/echo.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -135879,6 +136387,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/forge.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/forge.md",
           "inputUse": false
         }
@@ -135978,6 +136491,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/understand/openclaw.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/openclaw.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -136032,6 +136550,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/ops-mcp.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/ops-mcp.md",
           "inputUse": false
         }
@@ -136134,6 +136657,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/generated/inventory/configuration-values.json",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
           "token": "docs/site/understand/platform-and-operations.md",
           "inputUse": false
@@ -136179,7 +136707,17 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
+          "token": "docs/site/understand/platform-and-operations.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-local-helm-field-authorities.json",
           "token": "docs/site/understand/platform-and-operations.md",
           "inputUse": false
         },
@@ -136266,7 +136804,7 @@
         "scripts/check-core-architecture-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "d745b731d138128b5e047e8d4775196dc5c742cb4701d2f43a94ff6689686a39"
+      "sha256": "e73c573648376442965895dfd0118ac9a8dc8016e02c0992caa151d13960b097"
     },
     {
       "path": "docs/site/understand/prism-data.md",
@@ -136308,6 +136846,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/prism-data.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-governance.mjs",
           "token": "docs/site/understand/prism-data.md",
           "inputUse": false
@@ -136345,6 +136888,11 @@
         },
         {
           "sourcePath": "scripts/check-prism-guides.mjs",
+          "token": "docs/site/understand/prism-runtime.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/prism-runtime.md",
           "inputUse": false
         },
@@ -136401,6 +136949,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/prism.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/prism.md",
           "inputUse": false
         },
@@ -136532,6 +137085,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/understand/request-to-result.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/understand/request-to-result.md",
           "inputUse": false
@@ -136587,6 +137145,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/security-and-trust.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/security-and-trust.md",
           "inputUse": false
         },
@@ -136661,6 +137224,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/understand/telemetry.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/understand/telemetry.md",
           "inputUse": false
         }
@@ -136862,6 +137430,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/README.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/use/README.md",
           "inputUse": false
@@ -136872,7 +137445,7 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "30e0bcf74f160acb75f51aa051d2ca9285d790ab414bcd4804da9e404bb060b9"
+      "sha256": "d177e4cc6f3ec8e74c1f35bef32f0a5f3e64eff10b26589a4a1b4bdf3a8fabf4"
     },
     {
       "path": "docs/site/use/capacity.md",
@@ -136915,6 +137488,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/use/capacity.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/use/capacity.md",
           "inputUse": false
         },
@@ -136991,6 +137569,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/demo-delivery.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/use/demo-delivery.md",
           "inputUse": false
@@ -137011,7 +137594,7 @@
           ]
         }
       ],
-      "sha256": "3916b0942504d4a81274b370ed3413092699a114da0b26ee69bbff48edfa9ea5"
+      "sha256": "1b72efed3d07d535844a06983963fcb2d5a1c6c391650d39b26d3c82285be4fe"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -137068,6 +137651,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/diagnose.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/use/diagnose.md",
           "inputUse": false
@@ -137090,7 +137678,7 @@
           ]
         }
       ],
-      "sha256": "bc9d0c1023c80f42200802322e16506a2fd839cfa1a6c7bac846be41c9e83515"
+      "sha256": "f1dddfbfb5ad2a83d791c2c7cfbe59b180cf5a81858777ebf0175ce90473fbca"
     },
     {
       "path": "docs/site/use/install.md",
@@ -137162,14 +137750,30 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/install.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-rejected-output-profiles.json",
+          "token": "docs/site/use/install.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
+          "token": "docs/site/use/install.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/tests/api-reference.test.mjs",
           "token": "docs/site/use/install.md",
           "inputUse": false
         }
       ],
       "executableConsumers": [
         "scripts/check-operator-task-registry.mjs",
-        "scripts/deploy-cilium.sh"
+        "scripts/deploy-cilium.sh",
+        "scripts/tests/api-reference.test.mjs"
       ],
       "indirectExecutableConsumers": [
         {
@@ -137185,7 +137789,7 @@
           ]
         }
       ],
-      "sha256": "3d3ed7aef9384678d8c535aed1db4c7c6c0f320a542ac128ec2e9348c567b147"
+      "sha256": "3a3b25c53e7a3890152142adeadcc5e4d2d02b06d582f67fbb59d322b0f62c96"
     },
     {
       "path": "docs/site/use/maintenance.md",
@@ -137324,6 +137928,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/operate.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/use/operate.md",
           "inputUse": false
@@ -137413,6 +138022,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/plugins.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-publication.mjs",
           "token": "docs/site/use/plugins.md",
           "inputUse": false
@@ -137433,7 +138047,7 @@
           ]
         }
       ],
-      "sha256": "93517ed29d34d00743d6b2155a0c81b2949fa6e8edc3ae3cb088fc0b00692810"
+      "sha256": "5e3d5eca095390aefc77093ff5cd1f1bbd23d95192bd23d70baa44ba940026f3"
     },
     {
       "path": "docs/site/use/prism-studio.md",
@@ -137495,6 +138109,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/prism-studio.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-governance.mjs",
           "token": "docs/site/use/prism-studio.md",
           "inputUse": false
@@ -137517,7 +138136,7 @@
           ]
         }
       ],
-      "sha256": "bc3ce3f07ca3ad6fb7c5997754c1186f4e61676661e5185badbc4554485e3829"
+      "sha256": "fd38bf5b930cb9481c8d71f7c6d283c665896ada0088fed2cc4855ffec35bd69"
     },
     {
       "path": "docs/site/use/quickstart.md",
@@ -137574,6 +138193,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/quickstart.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "scripts/docs-check.mjs",
           "token": "docs/site/use/quickstart.md",
           "inputUse": false
@@ -137588,7 +138212,7 @@
         "scripts/check-operator-task-registry.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "f68730c2d841f16242c5c7c322fd4b626e0fbd0a90f22a69fa58ef4bbfd11769"
+      "sha256": "50c41894bf68f7bd7712781715456989f2da67ab0df352ce336260f5be37667e"
     },
     {
       "path": "docs/site/use/recovery.md",
@@ -137666,6 +138290,11 @@
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/use/recovery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/use/recovery.md",
           "inputUse": false
         },
@@ -137829,6 +138458,11 @@
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
           "token": "docs/site/use/workflows/buster-suite.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/workflows/buster-suite.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -137836,7 +138470,7 @@
         "scripts/check-platform-specialist-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "093b130609942009c4328af4ab30a6defe2129e6932aca45cd349cd174b98505"
+      "sha256": "ef23164f6badc2dad3c3c462811454a99c36ff104665df9b86179d6884f1cb00"
     },
     {
       "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
@@ -137864,6 +138498,11 @@
         },
         {
           "sourcePath": "scripts/check-buster-guides.mjs",
+          "token": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
           "token": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
           "inputUse": false
         }
@@ -137931,6 +138570,11 @@
           "sourcePath": "scripts/check-platform-specialist-guides.mjs",
           "token": "docs/site/use/workflows/examples/request-trace-success.json",
           "inputUse": true
+        },
+        {
+          "sourcePath": "scripts/docs-api-producer-adapter-authorities.json",
+          "token": "docs/site/use/workflows/examples/request-trace-success.json",
+          "inputUse": false
         }
       ],
       "executableConsumers": [
@@ -137938,6 +138582,30 @@
       ],
       "indirectExecutableConsumers": [],
       "sha256": "ad5e77b0b88753809f6117ea0d55c92147f814d0bfafd0b117b652b69e560eb7"
+    },
+    {
+      "path": "docs/site/use/workflows/kubernetes-fixture.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/kubernetes-fixture.md",
+      "expectedPath": "docs/site/use/workflows/kubernetes-fixture.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/kubernetes-fixture.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/kubernetes-fixture.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "2de41810ccf1d69b783c0c7237b141b84065f3493295636bba7d897662d8dee7"
     },
     {
       "path": "docs/spikes/prism-foundation-spikes.md",
@@ -138012,7 +138680,7 @@
         "scripts/tests/docs-status.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "eab447f90b4da37fab56b312ace321245acd0ee1f7903e47005c3bfa65ce7856"
+      "sha256": "713e27a2523d78421bc9a2d73dc398318a6f9e1babc58d4785818bd4a25302af"
     },
     {
       "path": "docs/status/open-issues.json",
@@ -138108,7 +138776,7 @@
         "scripts/tests/docs-status.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "27bc1d00585abace7169365cd6b201e15a43f8a6a3ff1513c94feeaa7d436ac0"
+      "sha256": "5fa5febebc7b07b1c681bf190e0474f53c9801fc33cab0b1df1b9cee665b4fd1"
     }
   ]
 }
