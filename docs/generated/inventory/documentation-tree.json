@@ -16,7 +16,7 @@
   "baselineFiles": 2915,
   "missingBaselineFiles": [],
   "counts": {
-    "canonical-reader-documentation": 162,
+    "canonical-reader-documentation": 167,
     "internal-documentation-input": 190,
     "legacy-extraction-source": 249,
     "deletable-remainder": 2335
@@ -25491,6 +25491,11 @@
       "locationValid": true,
       "consumers": [
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-baseline.json",
           "token": "docs/blueprint/AP09-acceptance-fixtures.json",
           "inputUse": false
@@ -25510,7 +25515,7 @@
         "scripts/check-ap09-acceptance-contract.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "94634456c70b599b3e2d871b0b5504c6537537dc1e2bb01e7e15e780b214d470"
+      "sha256": "f57e5e90551261dd2676042f110adf1cd967bcd9f713b87b0c13b7ac5e8585ae"
     },
     {
       "path": "docs/blueprint/AP09-completeness-audit.md",
@@ -25876,7 +25881,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "6e540e4676c676db52c3b413492f29a930ad4830a04d07817a55aa8c68cbd1a6"
+      "sha256": "c23e8531005bf0c56faa90bf06061eb6f436567d9971543c72d2be70f640cc69"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -26785,7 +26790,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "d48e70630077b69ea9339d7204942f3cdbcc9dbba6717ea2242237d62bd1ada1"
+      "sha256": "91f87227e9ce7b9e73bec76aa9f6d0617bacb4e78938761d1386e9b97c5e58e5"
     },
     {
       "path": "docs/config/platform-surface-map.json",
@@ -125795,7 +125800,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "ccf67f83b9d5a90270f3523d4f039478de5d19ea77a9fc8ae08573044207e668"
+      "sha256": "2de7f176f88e506296527893f456760566a8679b221a93042c7ebee32a729897"
     },
     {
       "path": "docs/site/decisions/README.md",
@@ -129803,7 +129808,7 @@
         {
           "sourcePath": "scripts/check-prism-guides.mjs",
           "token": "docs/site/product-surfaces.md",
-          "inputUse": true
+          "inputUse": false
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
@@ -129923,7 +129928,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "9a871abf0f2ebf3b95b9ad83eaa7ead6bd5687e443c5cab78289a56f0dda6e51"
+      "sha256": "79fba7526353f900dbc22e87ada41c2bfa17c7883f6a25e4b2e405e4779c35d1"
     },
     {
       "path": "docs/site/reference/buster-error-codes.md",
@@ -134006,7 +134011,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "4da1a58808c8f7d931045c1bcc6b3c98e8bb53f222e85a64adcb040e83974c2f"
+      "sha256": "c8e9a84b585bd96eb0d8e095e8a6188980f8a0584adbd7cca396f8a16e91854e"
     },
     {
       "path": "docs/site/reference/configuration-compatibility.md",
@@ -134448,7 +134453,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "27f7545cba244e7a3939c0680e6f4f2c0f422b5e20ecc46bee742fae1b06bcf0"
+      "sha256": "5ad457b77e66176c01ee5899ef46823d22bc499ba2a84ae2781a55f4cdad4e4a"
     },
     {
       "path": "docs/site/reference/helm-values.md",
@@ -134585,7 +134590,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "59658000da23d8dee93f7c62f7f7d4caa89dc9ba55d6b052004851d7d7b06469"
+      "sha256": "9620cde067243a73b53ba3c30eb3e31bb0e931129370339c9ec6ad801c46179c"
     },
     {
       "path": "docs/site/reference/lint-policy-generated.md",
@@ -135250,7 +135255,7 @@
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "0ec8899638dc4134d2eed79d63b3ffaf4971619e7e9dcd0c32032ed37f2a43ec"
+      "sha256": "3cf144a2d33a11150fe2e133c2b89b172010e4826882bb60d9ecea2711ecd339"
     },
     {
       "path": "docs/site/reference/verification-commands.md",
@@ -135651,7 +135656,7 @@
         ".github/workflows/docs-checks.yaml"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "09fcef08f5ebe9ba0fd668f184d40b83d7a8c922814d5a7723055987948f20d9"
+      "sha256": "fd44ed8f9f3fa20050edcab89c29ebea5ed7d542ccb7f940f44b5de301b6da43"
     },
     {
       "path": "docs/site/status/roadmap.md",
@@ -135928,7 +135933,7 @@
         "scripts/check-buster-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "8fa2039748d66cba955226536e31a429a61215f74d3134a2e5b88fe101935681"
+      "sha256": "22f779acc6f9c29d0d4afaf758d1ec1e02fa1de3a893422489101c80b606e998"
     },
     {
       "path": "docs/site/understand/buster.md",
@@ -136838,7 +136843,7 @@
         {
           "sourcePath": "scripts/check-prism-guides.mjs",
           "token": "docs/site/understand/prism-data.md",
-          "inputUse": true
+          "inputUse": false
         },
         {
           "sourcePath": "scripts/docs-ap09-catalogue.mjs",
@@ -137445,7 +137450,7 @@
         "scripts/check-prism-guides.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "d177e4cc6f3ec8e74c1f35bef32f0a5f3e64eff10b26589a4a1b4bdf3a8fabf4"
+      "sha256": "a55dd3d685ac8bfa61749ffddb97f99a375ff033d3a18d2b5bfefdd02a503f99"
     },
     {
       "path": "docs/site/use/capacity.md",
@@ -137565,6 +137570,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/demo-delivery.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
           "token": "docs/site/use/demo-delivery.md",
           "inputUse": false
         },
@@ -137970,7 +137980,7 @@
           ]
         }
       ],
-      "sha256": "5865d25a7181c90f0614f11b37b3253bce639a204e85fa84026523d3fb6614cb"
+      "sha256": "2e8bb10b2c5c144d463d41ee146c2eb57ebe61351d985c74df8cb13446599db4"
     },
     {
       "path": "docs/site/use/plugins.md",
@@ -138136,7 +138146,7 @@
           ]
         }
       ],
-      "sha256": "fd38bf5b930cb9481c8d71f7c6d283c665896ada0088fed2cc4855ffec35bd69"
+      "sha256": "337d7df912975f632ecd424e6419edf2cfe5a942bcb8123dd9c9badde22d1db1"
     },
     {
       "path": "docs/site/use/quickstart.md",
@@ -138411,6 +138421,35 @@
       "sha256": "6266a31e106846a9ca06850fa8b0f4216aad1288a91096daa2d3fd0784c69da7"
     },
     {
+      "path": "docs/site/use/workflows/README.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/README.md",
+      "expectedPath": "docs/site/use/workflows/README.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "scripts/docs-ap09-catalogue.mjs",
+          "token": "docs/site/use/workflows/README.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "5db7037bea825e2c75922af8dda38007f102de6ab5e05c15b692a1d0383d864f"
+    },
+    {
       "path": "docs/site/use/workflows/buster-suite.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -138441,6 +138480,11 @@
         },
         {
           "sourcePath": "docs/site/reference/generated-documentation-map.json",
+          "token": "docs/site/use/workflows/buster-suite.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
           "token": "docs/site/use/workflows/buster-suite.md",
           "inputUse": false
         },
@@ -138601,11 +138645,142 @@
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/site/use/workflows/kubernetes-fixture.md",
           "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/workflows/kubernetes-fixture.md",
+          "inputUse": false
         }
       ],
       "executableConsumers": [],
       "indirectExecutableConsumers": [],
-      "sha256": "2de41810ccf1d69b783c0c7237b141b84065f3493295636bba7d897662d8dee7"
+      "sha256": "c210323194a2c63056b4804684a100d593b7bcfdbc955a81a3b55695fa2bc540"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/wait-resume.md",
+      "expectedPath": "docs/site/use/workflows/wait-resume.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/workflows/wait-resume.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/wait-resume.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/wait-resume.md",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/README.md",
+          "token": "docs/site/use/workflows/wait-resume.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "2ef58f65bfaf863fe396379177e6158c11e5b87c2196ea650aed21d9d2872b99"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "expectedPath": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "e28df575a6b6b90c8d4f0f8c94ed1eb0ba1f6760d41a9e03398b9941fb1405d9"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "expectedPath": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/workflows/wait-resume/platform.template.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/wait-resume/platform.template.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/wait-resume/platform.template.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "expectedPath": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/AP09-acceptance-fixtures.json",
+          "token": "docs/site/use/workflows/wait-resume/signal.template.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/site/use/workflows/wait-resume/signal.template.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/site/use/workflows/wait-resume/signal.template.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/site/use/workflows/wait-resume.md",
+          "token": "docs/site/use/workflows/wait-resume/signal.template.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "5ca867de4e70a28a24f3cf7f6e74499ce6b9af5a98c45b7358e6b226dfee0ffd"
     },
     {
       "path": "docs/spikes/prism-foundation-spikes.md",
@@ -138776,7 +138951,7 @@
         "scripts/tests/docs-status.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "5fa5febebc7b07b1c681bf190e0474f53c9801fc33cab0b1df1b9cee665b4fd1"
+      "sha256": "cf357a33e0b4a8a2f8f61148779e10c9ebb340430d29fb418b9b05605995b5b2"
     }
   ]
 }
