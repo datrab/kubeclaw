@@ -6589,6 +6589,16 @@
           "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
           "verdict": "PASS",
           "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/pv_retirement_seven_records_reader_fresh",
+          "role": "reader",
+          "verdict": "FAIL",
+          "scope": "Whole bounded formerQdrant retirement reader procedure only; whole requirement remains notaccepted",
+          "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh/report.md",
+          "reportSha256": "25c2ab039a42e8247e10540b3151cd40ca853915ceb3d8539c3a85f4b03c9ee8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh-root-seal.json",
+          "verifiedArtifacts": 9
         }
       ],
       "openFindingIds": [
@@ -19990,16 +20000,44 @@
       "forkTurns": "none",
       "initialMode": "read-only",
       "revision": "9787e94c12719c30998b6824a249fd88b60c7032 plus exact per-report input hashes",
-      "state": "running; not accepted",
+      "state": "completed whole bounded procedure FAIL3; seven descriptions prose PASS",
       "scope": "Whole selected PV retirement reader task and seven receiver records; publication generation pending",
-      "tree": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh"
+      "tree": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh/report.md",
+      "reportSha256": "25c2ab039a42e8247e10540b3151cd40ca853915ceb3d8539c3a85f4b03c9ee8",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh-root-seal.json",
+      "verifiedArtifacts": 9
+    },
+    {
+      "agent": "/root/pv_named_canonical_corrected_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "51975b92ed5154b76c65793e55933b4d8659d05d plus exactf357/c64a/e3fa sourcehashes",
+      "state": "running; no acceptance",
+      "scope": "Whole current documentation helper/capability/canonical closure/cache/compiled12recipes27ops/publicconsumer/actualPV preservation",
+      "tree": "/home/node/Documents/Codex/a98-evidence/pv-named-canonical-corrected-complete-source-fresh"
+    },
+    {
+      "agent": "/root/ap097_all_requirement_mapping_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "51975b92ed5154b76c65793e55933b4d8659d05d plus separately hashed53 mapping projections",
+      "state": "running; no mapping acceptance",
+      "scope": "ALL53 AP09.7 requirement-to-contract mappings only; no content/gate/package acceptance",
+      "tree": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh"
     }
   ],
   "continuation": {
     "stage": "AP09.8 remains open; database and memory three bounded independent Sol roles PASS; API helper Source FAIL2 corrective writer active",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Complete API named-admission/canonical-seed correction and NEW whole Source review; complete PV Reader and correct its full procedure findings; source-bound regeneration and full configuration mutation remain mandatory",
+    "next": "Wait complete critical Source/mapping reports without author edits; finish retirement procedure writer; correct complete reported scopes then new independent reviews; generation and full mutations remain mandatory",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -20012,8 +20050,9 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/pv_named_admission_canonical_seed_correction_writer",
-      "/root/pv_retirement_seven_records_reader_fresh"
+      "/root/pv_named_canonical_corrected_complete_source_fresh",
+      "/root/pv_retirement_complete_procedure_correction_writer",
+      "/root/ap097_all_requirement_mapping_source_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -23610,7 +23649,35 @@
             "scope": "Full nine-file API unit suite only; does not override independent Source FAIL2"
           },
           "correctionOwner": "/root/pv_named_admission_canonical_seed_correction_writer",
-          "correctionEvidence": "/home/node/Documents/Codex/a98-evidence/pv-named-admission-canonical-seed-correction-writer"
+          "correctionEvidence": "/home/node/Documents/Codex/a98-evidence/pv-named-admission-canonical-seed-correction-writer",
+          "subsequentCandidate": {
+            "owner": "/root/pv_named_admission_canonical_seed_correction_writer",
+            "discoverySha256": "f3576c41006180edf300d5829333a185d5b163001372fef49f34175bba85d3d7",
+            "registrySha256": "c64a6acbf641f2b72696dcc2e7872bd1b03e0dcccb503f30b5737d292327e337",
+            "testSha256": "e3fa4c70e5f5f295f506431808fa7c218a26df5579d0f9016a0df5282a832a3a",
+            "state": "Frozen candidate root full9 API190PASS unchanged; independent whole Source found new supported executable-format omission; complete review pending; no acceptance",
+            "sourceReviewer": "/root/pv_named_canonical_corrected_complete_source_fresh",
+            "sourceEvidence": "/home/node/Documents/Codex/a98-evidence/pv-named-canonical-corrected-complete-source-fresh",
+            "rootApiEvidence": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-named-canonical-corrected",
+            "authorReport": "/home/node/Documents/Codex/a98-evidence/pv-named-admission-canonical-seed-correction-writer/report.md",
+            "authorRootSeal": "/home/node/Documents/Codex/a98-evidence/pv-named-admission-canonical-seed-correction-writer-root-seal.json",
+            "authorReportSha256": "1d4b2efcb577aca0930460c0659630dd0f8e151c386f47ff0f72369e81601987",
+            "authorVerifiedArtifacts": 128,
+            "rootApiRun": {
+              "exitCode": 0,
+              "tests": 190,
+              "passed": 190,
+              "failed": 0,
+              "skipped": 0,
+              "cancelled": 0,
+              "inputsUnchanged": true,
+              "evidence": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-named-canonical-corrected/result.json",
+              "scope": "Automated nine-file suite only; does not override independent new Source finding"
+            },
+            "sourceReviewInProgressFindings": [
+              "Supported .mts finite input is inventoried but skipped as executable; actual default Node reaches helper; whole supported input class assessment continuing"
+            ]
+          }
         }
       },
       "nativeFixtureFactCorrection": {
@@ -23620,6 +23687,21 @@
         "preservedObligations": "unsupported operator target, immutable application launch, API/model/budget requests, cutover and rollback remain",
         "evidence": "/home/node/Documents/Codex/a98-evidence/litellm-native-fixture-fact-correction-root/result.json",
         "independentReviewer": "/root/litellm_readonly_source_corrected_complete_fresh"
+      },
+      "pvRetirementReader": {
+        "state": "Whole bounded current retirement procedure FAIL3; all seven descriptions private prose PASS; no publication/live/package acceptance",
+        "reviewer": "/root/pv_retirement_seven_records_reader_fresh",
+        "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh/report.md",
+        "reportSha256": "25c2ab039a42e8247e10540b3151cd40ca853915ceb3d8539c3a85f4b03c9ee8",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh-root-seal.json",
+        "verifiedArtifacts": 9,
+        "findings": [
+          "F1 external concurrency prerequisite and actual missing PV/PVC identity fences",
+          "F2 exact selected claim/PV original and current identity/policy/storage observations",
+          "F3 executable read-only error distinctions and partial/lost-response safe stops"
+        ],
+        "correctionOwner": "/root/pv_retirement_complete_procedure_correction_writer",
+        "correctionEvidence": "/home/node/Documents/Codex/a98-evidence/pv-retirement-complete-procedure-correction-writer"
       }
     },
     "ap097IndividualAcceptanceMapping": {
