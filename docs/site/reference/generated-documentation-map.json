@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 147,
+  "pageCount": 152,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -1462,6 +1462,25 @@
       ]
     },
     {
+      "page": "docs/site/reference/api-object-updates.md",
+      "route": "/reference/api-object-updates/",
+      "contentKind": "authored",
+      "status": "source-backed reference; live update behavior unverified",
+      "audience": "operator, platform maintainer",
+      "owner": "platform operations",
+      "appliesTo": "authored Deployment update operations and the selected upstream source baselines",
+      "lastVerified": "pinned source revisions listed below; no live update result",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        "charts/gitops/templates/applications.yaml"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/buster-error-codes.md",
       "route": "/reference/buster-error-codes/",
       "contentKind": "generated",
@@ -1469,7 +1488,7 @@
       "audience": "pipeline author, operator, test maintainer",
       "owner": "buster",
       "appliesTo": "stable uppercase error codes constructed by the shipped Buster engine, providers, and execution adapters",
-      "lastVerified": "generated from the complete production source inventory on 2026-09-20",
+      "lastVerified": "generated from the complete production source inventory at cebe61ef2046263e4e373732227ae5f03107c1f6",
       "sourceDependencies": [
         "scripts/generate-buster-error-reference.mjs"
       ],
@@ -2157,6 +2176,27 @@
       ]
     },
     {
+      "page": "docs/site/reference/service-routing.md",
+      "route": "/reference/service-routing/",
+      "contentKind": "authored",
+      "status": "source-backed procedure; live routing unverified",
+      "audience": "operator, platform maintainer",
+      "owner": "platform networking",
+      "appliesTo": "supported local Service producers and the explicitly selected upstream source baselines",
+      "lastVerified": "2026-10-10; source and local renders checked, cluster behavior unverified",
+      "sourceDependencies": [
+        "charts/kubeclaw/templates/service.yaml",
+        "charts/prism/templates/services.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "scripts/docs-kubernetes-core-receiver-contracts.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/verification-commands.md",
       "route": "/reference/verification-commands/",
       "contentKind": "generated",
@@ -2355,13 +2395,14 @@
       "status": "implemented; disabled by default",
       "audience": "platform operator, Buster maintainer, fixture author",
       "owner": "buster",
-      "appliesTo": "Kubernetes-backed Buster fixtures and preview exposure",
-      "lastVerified": "source, chart, and controller inspection on 2026-09-19",
+      "appliesTo": "Kubernetes-backed Buster fixtures, dedicated demo credentials and preview retention",
+      "lastVerified": "local source and contract inspection on 2026-10-10",
       "sourceDependencies": [
         "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
         "charts/kubeclaw/templates/buster-namespace-controller.yaml",
         "charts/kubeclaw/templates/buster-namespace-fence.yaml",
-        "cmd/buster-namespace-controller"
+        "cmd/buster-namespace-controller",
+        "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
       ],
       "checks": [
         "npm run docs:buster-guides:check",
@@ -2552,7 +2593,7 @@
       "audience": "architecture reader, Nova developer, operator, incident responder",
       "owner": "Nova maintainers",
       "appliesTo": "`nova-project.v2`, `pipeline-definition.v2`, and the current Nova Core runtime",
-      "lastVerified": "source and contract inspection on 2026-09-19",
+      "lastVerified": "source and contract inspection on 2026-09-19; wait/resume and audit boundaries rechecked on 2026-10-11 at `929aadbad08b41e7a8504950f05dc0f526b706d6`",
       "sourceDependencies": [
         "skills/nova/project",
         "skills/nova/core",
@@ -2913,8 +2954,8 @@
       "status": "reproducible local contract rehearsal; no complete live demo-delivery journey is supplied",
       "audience": "product operator, acceptance participant, incident responder",
       "owner": "product operations",
-      "appliesTo": "source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
-      "lastVerified": "2026-09-21; compiler contract passed locally, full package test stopped because OpenSSL was absent; no live demo or human decision is claimed",
+      "appliesTo": "the selected KubeClaw source checkout; record its full commit SHA for each rehearsal",
+      "lastVerified": "2026-10-10 at source revision `96929f456d81cefa56a30ac50a2ba5aa27718ac9`; compiler contract passed locally, full package test failed because OpenSSL was absent; no live demo or human decision is claimed",
       "sourceDependencies": [
         "skills/nova/plugins/demo-handoff/tests",
         "skills/nova/project/demo.ts"
@@ -2995,7 +3036,7 @@
       "audience": "product operator, pipeline operator, Prism operator",
       "owner": "Nova Core and platform operations",
       "appliesTo": "pipeline-platform.v2 and current Prism deployment",
-      "lastVerified": "2026-09-21; schema validation passed and no live cluster result is available",
+      "lastVerified": "2026-09-21 schema validation; journal preservation and audit boundaries rechecked on 2026-10-11 at `929aadbad08b41e7a8504950f05dc0f526b706d6`; no live cluster result",
       "sourceDependencies": [
         "skills/nova/project/cli.ts",
         "skills/nova/core/cli.ts",
@@ -3039,7 +3080,7 @@
       "audience": "Prism operator, designer, incident responder, platform maintainer",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage",
-      "lastVerified": "2026-10-10 against source revision `733b7417992c1bafaf5848d421c80ff76b73a9e4`; historical executed checks retain their own revisions below; no live journey result",
+      "lastVerified": "2026-10-11 source-link and audit-boundary inspection against `8cba013ac84537cefbaa356b19fb236c1cf05587`; historical executed checks retain their own dates and revisions below; no live journey result",
       "sourceDependencies": [
         "skills/prism",
         "skills/nova/plugins/prism-design",
@@ -3116,6 +3157,27 @@
       ]
     },
     {
+      "page": "docs/site/use/workflows/README.md",
+      "route": "/use/workflows/",
+      "contentKind": "authored",
+      "status": "workflow task index; full wait/resume lifecycle and deployment execution open",
+      "audience": "pipeline authors and operators",
+      "owner": "product integration maintainers",
+      "appliesTo": "pipeline workflow selection; each guide states its contracts and execution prerequisites",
+      "lastVerified": "2026-10-11; workflow links and bounded wait/resume evidence; no successful full local lifecycle or deployment evidence",
+      "sourceDependencies": [
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/use/workflows/buster-suite.md",
       "route": "/use/workflows/buster-suite/",
       "contentKind": "authored",
@@ -3132,6 +3194,46 @@
       ],
       "checks": [
         "npm run docs:buster-guides:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/kubernetes-fixture.md",
+      "route": "/use/workflows/kubernetes-fixture/",
+      "contentKind": "authored",
+      "status": "implemented provider and capability; target-cluster validation required",
+      "audience": "operator, pipeline author",
+      "owner": "buster",
+      "appliesTo": "kubeclaw.kubernetes-fixture@1; package 1.0.0; configured Kubernetes fixture capability",
+      "lastVerified": "source bindings checked on 2026-10-11; no target-cluster result",
+      "sourceDependencies": [
+        "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/wait-resume.md",
+      "route": "/use/workflows/wait-resume/",
+      "contentKind": "authored",
+      "status": "source and bounded local checks available; full local lifecycle and deployment execution open",
+      "audience": "pipeline authors and operators",
+      "owner": "product integration maintainers; platform operations owns execution access",
+      "appliesTo": "`pipeline-definition.v2`, `pipeline-platform.v2`, `resume-signal.v2`",
+      "lastVerified": "2026-10-11; bounded source and contract evidence only; no successful full local lifecycle or deployment evidence",
+      "sourceDependencies": [
+        "skills/nova/plugins/human-approval",
+        "skills/nova/core/execution",
+        "skills/common/plugins/wait-store",
+        "skills/common/plugins/operator-messaging"
+      ],
+      "checks": [
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
