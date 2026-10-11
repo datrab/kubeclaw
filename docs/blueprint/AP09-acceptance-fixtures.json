@@ -89,7 +89,7 @@
       "fixturePaths": [], "injectedFaultId": "RESTORE-COMPONENT-OPERATOR-BOUNDARY",
       "requiredOutcomes": [
         { "id": "backup-checks-separated", "passCondition": "The participant identifies the executable LiteLLM backup/verify path and Prism matched-group backup/verification without treating either as application recovery." },
-        { "id": "litellm-boundary-correct", "passCondition": "The participant explains that the native LiteLLM test provisions both servers and roles itself and does not supply the operator target, immutable application launch, API/model/budget request checks, cutover, or rollback." },
+        { "id": "litellm-boundary-correct", "passCondition": "The participant explains that the native LiteLLM test requires two externally provisioned disposable PostgreSQL servers, creates test roles and databases on those supplied servers, and does not supply the operator target, immutable application launch, API/model/budget request checks, cutover, or rollback." },
         { "id": "prism-boundary-correct", "passCondition": "The participant identifies the Prism database proof as a temporary database on the same PostgreSQL service, not an isolated target or original-application-reader proof." },
         { "id": "safe-stop-and-evidence", "passCondition": "The participant stops before unsupported restore or cutover, retains source and backup identities plus logs and checksums, and removes only uniquely named manual Jobs." }
       ],

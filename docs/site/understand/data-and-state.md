@@ -192,7 +192,7 @@ in the identity table.
 | `S12` Inactive/library-only | `FileProducerOutbox` can hold unacknowledged producer records, but no production constructor was found at this revision. | The class has a durable-store lock, record digest, acknowledgement identity, and compaction method. These are library properties, not deployed guarantees. | A caller must supply record and byte limits. No active caller supplies them. | No production backup or restore contract applies. A future caller must define one before activation. | Do not diagnose a running outbox from this file name. If activated later, corruption, loss, and retirement rules must be documented with its concrete root and consumer. |
 | `S13` Persistent authority | OpenClaw, init, startup doctor, tools, and Git operations own agent config/workspace files. The gateway and pipeline readers consume them. | One replica, `ReadWriteOnce`, retained claims, stopped-gateway doctor rule, and Git commit/tree identity for committed source. Upstream OpenClaw files have no repository record fence. | Config defaults to 10 GiB and workspace to 20 GiB. No inner quota or TTL exists. | Scale the agent to zero. Back up the matched config/workspace pair plus independent Secret and Git identities. Restore privately, run the pinned doctor, and verify the exact checkout. | Corruption can stop startup; loss removes host state, memory, or uncommitted work. Reclone restores only committed Git data. Retire after exporting needed work, handling session/audit evidence, and revoking credentials. |
 | `S14` Persistent authority | Prism owns digest-addressed artifacts; the backup job owns immutable recovery groups. Control, ingestion, Worker, renderer, backup, and restore readers use them. | Artifacts use temporary writes, digest paths, no-replace publication, and file/directory synchronization. Backup groups use checksums, metadata, and atomic complete-group publication. | Artifacts and backups each request 100 GiB. Claims are retained. No automatic garbage collection or backup expiry exists. | Fence migrations and administrative deletion. Restore one verified database-and-artifact group into isolated targets and validate application references before cutover. | A missing referenced artifact or invalid group keeps Prism isolated. Keep the last verified group. Retire objects only after all database, baseline, report, and recovery references end. |
-| `S15` Persistent authority | LiteLLM owns models, keys, budgets, permissions, and encrypted configuration in its PostgreSQL database. LiteLLM writes and reads; the recovery job dumps and restores. | PostgreSQL transactions and the pinned application's migrations protect rows; database and encryption credentials are separate authorities. | Direct profile is 20 GiB; GitOps profile is 1 GiB. The recovery policy limits dump size and retained backup bytes. No row-retention scheduler exists. | Fence LiteLLM writes. Restore roles and an empty database, restore one verified dump, supply the matched keys, and validate real encrypted data before cutover. | Corruption, missing keys, or incompatible schema blocks service. Do not overwrite encrypted values. Retire only under LiteLLM data policy after backup and credential obligations end. |
+| `S15` Persistent authority | LiteLLM owns models, keys, budgets, permissions, and encrypted configuration in its PostgreSQL database. LiteLLM writes and reads; the recovery job dumps and restores. | PostgreSQL transactions and the pinned application's migrations protect rows; database and encryption credentials are separate authorities. | Direct profile is 20 GiB; GitOps profile is 1 GiB. The recovery policy limits dump size and retained backup bytes. Checked-in YAML selects no row-retention policy; effective LiteLLM settings can enable cleanup of aged diagnostic and accounting rows. See [row retention](#litellm-row-retention). | Fence LiteLLM writes. Restore roles and an empty database, restore one verified dump, supply the matched keys, and validate real encrypted data before cutover. | Corruption, missing keys, or incompatible schema blocks service. Do not overwrite encrypted values. Retire only under LiteLLM data policy after backup and credential obligations end. |
 | `S16` Persistent authority | Redis owns transport streams, pending entries, and finite dedup state; publishers write and configured consumers read. It never owns Nova lifecycle truth. | Authentication, Lua atomic dedup plus `XADD`, AOF policy in the direct profile, and `noeviction`. | Stream `MAXLEN`, dedup TTL, 1 GiB memory, and selected PVC profile bound retention. Direct PVC is 20 GiB; GitOps PVC is 2 GiB with chart-default persistence details. | Pause all publishers. Use the AOF-aware migration procedure, restore in isolation, and verify streams, pending entries, expiry, restart, and lost-ack behavior before client cutover. | Corruption or loss removes delivery and dedup history. Recover from Redis when required, then replay only from canonical owners. Retire after publishers and consumers no longer depend on the stream or dedup window. |
 | `S17` Persistent authority or cache as mapped | The local registry owns OCI blobs/manifests that have no other retained copy. The mirror owns only rebuildable upstream cache. Registry processes write; BuildKit and runtimes read. | One replica and single-writer PVC policy in the direct local profile; OCI digests verify content. The GitOps local profile is ephemeral. | Local capacity has no default and no automatic retention. Mirror is 5 GiB and permits cache deletion. | Fence pushes and garbage collection before local-registry backup. Restore empty storage and verify API, manifest, layer, and real pull. Recreate an empty mirror instead of restoring it. | Missing layers or digest mismatch block that image. Mirror loss only causes upstream pulls. Retire local content after release and rollback references end; retire cache after clients move. |
 | `S18` Persistent authority | Prometheus owns retained samples, Loki owns retained log copies, Grafana owns UI state, and Alloy owns its local read cursor. None owns product decisions. | Each product owns its store consistency. One intended Alloy collector per node prevents duplicate cursor ownership. | Prometheus: 15 days/20 GiB. Loki: 720 hours/20 GiB. Grafana: 5 GiB. Alloy host path has no declared quota. | No repository-tested backup or restore exists. Use product snapshot boundaries or stop writers. Restore data stores before Grafana; restore positions only with known source-file cutover. | Loss creates diagnostic gaps, duplicates, or lost dashboards, never product-state changes. Retire only after incident/retention obligations and safe collector cutover. |
@@ -540,8 +540,8 @@ LiteLLM master and salt keys. Recover those through their separate authority.
 The recovery policy requests a backup every 15 minutes, checks every 5 minutes,
 sets a two-hour maximum age, permits 64 GiB per dump, and reserves 100 GiB with a
 90 GiB retained-data ceiling. Configuration defines these objectives. It does
-not prove a live recovery time. There is no automatic deletion or off-node
-upload.
+not prove a live recovery time. The recovery script does not automatically
+delete completed backup groups or upload them off-node.
 
 > **Source evidence — LiteLLM persistence**
 >
@@ -555,6 +555,263 @@ upload.
 > credential binding, version, age, and archive](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/postgresql-recovery.sh#L101-L129).
 > [Restore rejects the source server and a nonempty target, then uses one
 > error-stopping transaction](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/scripts/postgresql-recovery.sh#L141-L156).
+
+### LiteLLM row retention
+
+The [checked-in gateway YAML selects no row-retention policy](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/my-values/infra/litellm-config.yaml#L1-L14).
+Both selected LiteLLM revisions can schedule deletion of old request-cost
+records (spend logs), request-routing sessions (autorouter sessions), and
+health-check records when their effective retention settings enable cleanup.
+[Direct scheduling](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L9588-L9629)
+and [GitOps scheduling](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L10008-L10049)
+are conditional. Database-stored settings can change and reschedule this job;
+see [direct setting application](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L6805-L6825)
+and [GitOps setting application](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L7162-L7182).
+The cleanup implementation [deletes aged rows in bounded batches](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py#L308-L336)
+from [these record tables](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py#L456-L505).
+
+Before assuming indefinite retention, identify the mounted configuration and
+database-stored values of `maximum_spend_logs_retention_period`,
+`maximum_autorouter_session_retention_period`, and
+`maximum_health_check_retention_period`. Cleanup can remove aged diagnostic or
+accounting rows before a later backup. A retained earlier dump can still contain
+those rows. Preserve the dumps and determine the effective policy before treating
+this difference as corruption. These settings do not define a common expiry for
+models, keys, or budgets, and do not delete retained backup groups.
+
+#### Read retention inputs without changing the service
+
+This procedure applies to the two [selected LiteLLM revisions](#selected-litellm-source-and-image-boundary).
+Run it from the bound independent administration machine. It reads one running
+LiteLLM Pod and its database; it does not change retention or start cleanup.
+Use `kubectl`, Python 3 with PyYAML in the selected container, and `psql` on the
+administration machine. Do not install tools into the running container.
+
+Before starting, the LiteLLM and database owners must identify the deployed
+profile, immutable image, upstream revision, database service and database
+name, applied schema-change history, and the exact Pod/container. They must
+supply an authorized read-only database connection profile privately. It must
+select that instance and a role with only the necessary read access. Use a
+libpq service file and password file through their private paths; never put a
+credential URL or password in a command, record, or shell trace. Cluster access
+must permit reading the selected Pod and executing this file-read command.
+The owners must confirm that the deployed `LiteLLM_Config` table is in `public`,
+with `param_name` as its unique text key and `param_value` as JSON or JSONB.
+The [direct schema](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma#L618-L623)
+and [GitOps schema](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/schema.prisma#L621-L626)
+describe the selected schema, but do not prove that live migrations completed.
+Stop if this instance, schema, read-only access, or tool selection is unverified.
+
+1. Bind the cluster as specified in [Bind Cluster Authority](../use/install.md#bind-cluster-authority).
+   Set `LITELLM_POD` to the owner's exact running Pod name and
+   `LITELLM_POD_UID` to its recorded UID. Keep its non-secret owner/image/mount
+   record with the observation time. Both repository profiles mount
+   `/app/config.yaml`; confirm that this is the selected container's actual
+   configuration file. The [direct mount](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/my-values/infra/litellm-deployment.yaml#L60-L74)
+   and [GitOps mount](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/gitops/platform/litellm/resources.yaml#L40-L50)
+   use `subPath`. A ConfigMap alone is insufficient: the `subPath` mount
+   can keep older bytes after a ConfigMap change.
+
+```bash
+assert_cluster_binding || exit 126
+set -euo pipefail
+umask 077
+test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get pod \
+  "$LITELLM_POD" -o jsonpath='{.metadata.uid}')" = "$LITELLM_POD_UID"
+kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" exec -i \
+  "$LITELLM_POD" -c litellm -- python - <<'PY'
+try:
+    import hashlib, json, re, yaml
+    raw = open('/app/config.yaml', 'rb').read()
+    config = yaml.safe_load(raw)
+    if not isinstance(config, dict):
+        raise ValueError()
+    g = config.get('general_settings', {})
+    if not isinstance(g, dict):
+        raise ValueError()
+    keys = ('maximum_spend_logs_retention_period',
+            'maximum_autorouter_session_retention_period',
+            'maximum_health_check_retention_period')
+    def safe(v):
+        if v is None or type(v) is int:
+            return v
+        if type(v) is str and re.fullmatch(r'[0-9]+(s|m|h|d|w|mo)', v):
+            return v
+        return {'uninterpreted_type': type(v).__name__, 'value_withheld': True}
+    print(json.dumps({'mounted_file_sha256': hashlib.sha256(raw).hexdigest(),
+        'settings': {k: {'present': k in g, 'value': safe(g.get(k))} for k in keys}}))
+except Exception:
+    raise SystemExit('LITELLM_RETENTION_CONFIG_READ_FAILED') from None
+PY
+```
+
+Expected result: one mounted-file digest and exactly three setting records.
+`present: false` differs from an explicit YAML null. The output withholds
+unexpected values instead of exposing arbitrary configuration strings.
+A missing Pod, changed UID, file-read failure, unavailable Python/PyYAML, or
+unexpected value stops this identification. File-read, import, parse, and
+mapping-shape failures return nonzero with only
+`LITELLM_RETENTION_CONFIG_READ_FAILED`; raw YAML, exception text and tracebacks
+are withheld. An empty/null document or a nonmapping `general_settings` is
+rejected. Keep this constant failure record and ask the owner to diagnose the
+configuration privately. Obtain a versioned owner procedure
+that exports only these fields and the exact mounted-file identity if this
+read command is unavailable. Do not dump the configuration or environment.
+
+2. In a dedicated query shell, set `PGSERVICE`, `PGSERVICEFILE`, and
+   `PGPASSFILE` to the owner's read-only service name and absolute private
+   service-file and password-file paths. Ordinary shell assignments are not
+   inherited by `psql`; the command block below explicitly exports them.
+   The owner must confirm that this service name exists in that exact file,
+   selects the verified source host/address, port, database and read-only user,
+   and contains the approved transport and authentication settings. The files
+   must be privately owned and readable; the password file must deny group and
+   other access. The service section must contain neither a `password` nor a
+   `passfile` setting for this password-file procedure. Do not print file
+   contents or selector values.
+
+   A [service-file field](https://www.postgresql.org/docs/18/libpq-pgservice.html)
+   overrides its corresponding environment value. A field omitted from the
+   service can still use an inherited variable or a built-in default. A direct
+   connection argument overrides the service. Therefore the block rejects
+   every other `PG*` shell input and supplies no host, user, database, password
+   or connection-string argument. In particular, inherited `PGPASSWORD` can
+   supply a password before the [password file](https://www.postgresql.org/docs/18/libpq-pgpass.html)
+   is considered. Reject it instead of silently using it. The selected service
+   must define all target identity and required security fields; owners must
+   approve any deliberately omitted default. Selector export and a clean
+   environment do not by themselves prove which server accepted a connection.
+
+   If the guard rejects an inherited input, stop and ask the owner for a clean
+   query shell with the same approved files. Do not dump the environment,
+   inspect secrets, or remove an input to guess a connection. Run this exact
+   projection only after the live schema and instance checks above:
+
+```bash
+set -euo pipefail
+umask 077
+for pg_input in ${!PG@}; do
+  case "$pg_input" in
+    PGSERVICE|PGSERVICEFILE|PGPASSFILE) ;;
+    *) printf '%s\n' 'LITELLM_RETENTION_PROFILE_INPUT_REJECTED' >&2; exit 126 ;;
+  esac
+done
+if test -z "${PGSERVICE-}" || test -z "${PGSERVICEFILE-}" || test -z "${PGPASSFILE-}"; then
+  printf '%s\n' 'LITELLM_RETENTION_PROFILE_INPUT_MISSING' >&2
+  exit 126
+fi
+for profile_path in "$PGSERVICEFILE" "$PGPASSFILE"; do
+  case "$profile_path" in
+    /*) ;;
+    *) printf '%s\n' 'LITELLM_RETENTION_PROFILE_PATH_INVALID' >&2; exit 126 ;;
+  esac
+  if ! test -f "$profile_path" || ! test -r "$profile_path"; then
+    printf '%s\n' 'LITELLM_RETENTION_PROFILE_FILE_UNAVAILABLE' >&2
+    exit 126
+  fi
+done
+export PGSERVICE PGSERVICEFILE PGPASSFILE
+psql --no-psqlrc --set=ON_ERROR_STOP=1 <<'SQL'
+BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY;
+SET LOCAL statement_timeout = '5s';
+SHOW transaction_read_only;
+WITH keys(key) AS (VALUES
+ ('maximum_spend_logs_retention_period'),
+ ('maximum_autorouter_session_retention_period'),
+ ('maximum_health_check_retention_period')),
+settings AS (
+ SELECT param_value::jsonb AS value FROM public."LiteLLM_Config"
+ WHERE param_name = 'general_settings'
+)
+SELECT keys.key, settings.value IS NOT NULL AS record_has_value,
+       jsonb_typeof(settings.value) AS record_type,
+       COALESCE(settings.value ? keys.key, false) AS key_present,
+       jsonb_typeof(settings.value -> keys.key) AS value_type,
+       CASE
+         WHEN jsonb_typeof(settings.value -> keys.key) = 'null' THEN 'null'
+         WHEN jsonb_typeof(settings.value -> keys.key) = 'number'
+           AND (settings.value ->> keys.key) ~ '^-?[0-9]+$'
+           THEN settings.value ->> keys.key
+         WHEN jsonb_typeof(settings.value -> keys.key) = 'string'
+           AND (settings.value ->> keys.key) ~ '^[0-9]+(s|m|h|d|w|mo)$'
+           THEN settings.value ->> keys.key
+         ELSE '[absent or withheld]'
+       END AS retention_value
+FROM keys LEFT JOIN settings ON true ORDER BY keys.key;
+ROLLBACK;
+SQL
+```
+
+Expected result: `transaction_read_only` is `on`, three rows and `ROLLBACK`.
+`record_type` must be `object` or null; stop for any other record shape.
+The query reads only the three retention fields from the `general_settings`
+record. A missing record, SQL null record, absent key and JSON null key are
+not an enabled policy. An unexpected type or withheld value needs owner
+interpretation against the selected parser. Do not broaden the query to whole
+records, Secrets, provider credentials, or key tables. On connection, schema,
+permission, timeout, or shape failure, stop; preserve the safe error and obtain
+the database owner's corrected read-only procedure. Do not try a write-capable
+profile or run a migration.
+
+3. Compare the mounted and stored observations with these rules.
+
+| Input or observation | Interpretation |
+| --- | --- |
+| Key absent from initial mounted settings and not applied from the database | No retention period for that record type; deletion is disabled. There is no built-in number of retention days for these three keys. |
+| Database key present and applied by the selected process | It overwrites the loaded value even when YAML also supplied that key. A changed value, including null, reschedules cleanup. |
+| Database key absent | The setter does not assign that key. It does not prove that the process has forgotten an earlier stored value or now equals the mounted file. |
+| Applied null, or a string that raises `ValueError` in the retention parser | The corresponding deletion path is disabled. Other unexpected types can fail parsing; do not call them a safe disabled policy without owner investigation. |
+| Integer | The retention parser treats it as days. Use an explicit string such as `7d` when the owner later changes policy. |
+| Explicit duration string | `s`, `m`, `h`, `d`, `w`, and `mo` mean seconds, minutes, hours, days, weeks, and calendar months. Zero can parse; do not assume zero disables deletion. Calendar-month seconds depend on parsing time. |
+
+Spend retention applies to `LiteLLM_SpendLogs.startTime` and its derived
+`LiteLLM_SpendLogToolIndex.start_time` rows. Autorouter retention applies to
+`LiteLLM_AutoRouterSession.last_turn_at`; health retention applies to
+`LiteLLM_HealthCheckTable.checked_at`. Each uses its own cutoff. These are
+current-database deletions, not changes to previously published backup groups.
+
+The authenticated admin-view `GET /config/field/info?field_name=<key>` reads
+stored settings and can fail for an absent field. It is not a loaded-value
+read. `GET /config/list?config_type=general_settings` reports loaded settings
+but falls back to the database when the loaded value is `None`.
+Its `stored_in_db` flag describes presence, not proof of successful application.
+Use the owner's private authenticated administration surface for these GETs;
+retain only these three fields, not the full response. Neither endpoint is an
+unconditional observation of the cleanup task in every running worker.
+
+**Effective runtime policy can remain unknown.** The mounted-file and SQL
+results prove inputs at their recorded times. They do not prove that each worker
+loaded the same inputs, that a database change was applied, that a scheduler
+ran, or that deletion succeeded. To claim an effective policy, the LiteLLM owner
+must supply a versioned read-only observation procedure bound to each relevant
+Pod/process and observation time. It must identify the loaded values, their
+parsed seconds or disabled/error result, the scheduled cleanup state, and any
+change between the input reads. Stop at this boundary if that observation is
+unavailable or conflicts with the inputs. Keep both dumps and mark the effective
+policy `unknown`; do not restart, change retention, or delete rows to make the
+observations agree.
+
+> **Source evidence — retention identification and its limit**
+>
+> Claim: database application overwrites present retention keys; the parser and
+> table-specific deletion paths determine cleanup, while administration reads
+> have the limits stated above.
+>
+> Implementation: [direct setter](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L6805-L6825),
+> [GitOps setter](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L7162-L7182),
+> [parser](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py#L176-L207),
+> [table cutoffs](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/db_transaction_queue/spend_log_cleanup.py#L456-L505),
+> [duration units](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/litellm_core_utils/duration_parser.py#L23-L98),
+> [direct field-info read](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L16810-L16879),
+> [GitOps field-info read](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L17342-L17411),
+> [GitOps config-list fallback](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/litellm/proxy/proxy_server.py#L17540-L17682),
+> and [direct config-list fallback](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py#L17004-L17140).
+>
+> Contract or setting: only the three named retention settings are projected.
+> Test evidence: local output-filter and query-shape checks; no deployed
+> input retrieval or cleanup execution has been demonstrated by this page.
+> Revision: the two selected upstream revisions above; KubeClaw `ebcc040`.
+> Limit: input evidence and source rules do not establish an observed live policy.
 
 ### Selected LiteLLM source and image boundary
 
@@ -651,7 +908,7 @@ The v1 resolver makes up to four migration attempts per setup call. After applyi
 migrations, it can generate and execute a schema difference; a nonempty database
 without a record of applied schema changes can enter its baseline-and-resolution path. These
 are writes, not read-only compatibility checks.
-[Migration attempts and baseline recovery](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py#L1018-L1130)
+[Migration attempts and baseline recovery](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py#L1018-L1137)
 and [schema-difference execution](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py#L416-L552)
 explain why the restored database must remain isolated from production writers.
 
@@ -768,7 +1025,7 @@ such proof.
 | Worker host | Ownership store, attempt metadata, input/result blobs, and output spools | Stop admission and hold the trusted supervisor boundary | Restore only to the proved host identity; validate ownership; replay attempts; reopen admission last | No automatic retirement or cross-host restore workflow |
 | Buster runtime | Complete `stateRoot` plus `runtimeRoot`: remote jobs, statuses, source archives or verified retained Git source, attempts, results, receipts, evidence, and reports | Stop remote admission, execution, and compaction | Restore the state store, result blobs, and job directories together; verify identities and digests; reconcile incomplete attempts; expose status last | Quiesced storage backup is operator work; file stores are not replicated |
 | Prism | One PostgreSQL dump plus the complete immutable artifact superset and group metadata | Stop migrations and administrative artifact deletion; normal immutable publication follows the group rule | Verify group; restore database and artifacts into isolated targets; start Prism readers; verify application references; cut over last | Scheduled local backup, verification, and SQL smoke proof exist; no automatic expiry or off-host copy |
-| LiteLLM | Full logical database dump, roles/ACL evidence, metadata, checksums, and independently retained master/salt and database credentials | Fence LiteLLM writes | Restore roles and empty database; restore dump; supply exact keys; validate LiteLLM API and encrypted values; cut over last | Scheduled local recovery job exists; no automatic cleanup or off-node copy |
+| LiteLLM | Full logical database dump, roles/ACL evidence, metadata, checksums, and independently retained master/salt and database credentials | Fence LiteLLM writes | Restore roles and empty database; restore dump; supply exact keys; validate LiteLLM API and encrypted values; cut over last | Scheduled local recovery job exists; no automatic backup-group deletion or off-node copy |
 | Redis | AOF-aware snapshot or fenced RDB plus stream, consumer, pending, and expiry evidence and external password authority | Pause writes and stop all publishers before source shutdown | Prepare a fresh compatible AOF data set; start isolated target; validate streams, pending entries, exact dedup expiry, lost-ACK replay, and restart; switch clients last | Migration tooling and native tests exist; cluster/CSI and power-loss acceptance remain environment work |
 | Telemetry projections | Sink store only when diagnostic retention requires it | Stop the sink writer or use its owned consistent snapshot | Restore after canonical Nova journals; replay only events beyond verified checkpoints | Projection recovery must never block restoration of lifecycle authority |
 | OpenClaw agent | One config PVC and one workspace PVC for the same agent; independent Secrets and committed Git remote remain outside the group | Scale that agent to zero; ensure startup doctor and Git init are not running | Restore config and workspace to private claims; restore Secrets from their own authority; run the pinned startup doctor; verify gateway and exact repository state | No automated backup, checksum manifest, restore test, RPO, or RTO |

@@ -160,6 +160,7 @@ Stop migrations, deletion, compaction, key rotation, and artifact restoration.
 Use the component-specific writer fence where required.
 
 Do not stop normal writers unless the selected backup contract requires it.
+If the component contract requires a stronger fence, follow that contract.
 Record the exact fence and its start time.
 
 ### 3. Run the Owned Backup Mechanism
@@ -302,35 +303,254 @@ Do not substitute a filesystem copy for a database restore.
 
 The selected installation can create `cronjob/litellm-postgresql-backup` and
 `pvc/litellm-postgresql-backup`. This is an executable backup and verification
-path, not a complete isolated operator restore. Start with the deployed source
-revision, its selected immutable LiteLLM image, externally owned master/salt
-keys, a healthy LiteLLM PostgreSQL service, and enough backup-PVC capacity. Run
-the following commands from the independently administered cluster context:
+path, not a complete isolated operator restore. Read the
+[selected LiteLLM source and image boundary](../understand/data-and-state.md#selected-litellm-source-and-image-boundary)
+and [rows and encryption inputs](../understand/data-and-state.md#rows-and-encryption-inputs)
+before selecting the application image or recovering keys. Start with the
+deployed source revision, its selected immutable LiteLLM image, externally owned
+master/salt keys, a healthy LiteLLM PostgreSQL service, and enough backup-PVC
+capacity.
+
+Before creating the manual backup Job, fence LiteLLM writes as required by its
+[backup-group contract](../understand/data-and-state.md#backup-groups).
+This component contract requires a stronger fence than the generic routine
+backup guidance. Use the database and LiteLLM owners' procedure for the deployed
+service. Stop before creating the Job if that procedure is missing or does not
+clearly specify how to apply and verify the writer fence. Record the fence and
+its start time.
+
+The storage owner must also supply an authorized way to read and export a
+completed directory from `pvc/litellm-postgresql-backup` without changing its
+bytes. It must bind the PVC UID and source directory to a private local copy,
+exclude symlinks, preserve the four files, and keep the source group immutable
+through the copy. A completed Pod cannot be assumed to support `exec` or
+`kubectl cp`. This page creates no access Pod and supplies no generic PVC-mount
+or encrypted-storage transfer command. Stop before Job creation if the actual
+PVC access/export and encrypted independent-storage transfer procedures are
+missing. Record their owner, version, access identity and destination authority.
+
+Use Bash and Python 3 on the independent administration machine. Set
+`set -euo pipefail` and `umask 077` in the bound administration
+shell. Set `LITELLM_BACKUP_JOB` to `litellm-backup-manual-<unique-id>`, where
+`<unique-id>` is a new lowercase DNS-label suffix. Set
+`LITELLM_BACKUP_EVIDENCE` to a new private directory outside the backup PVC.
+The cluster identity needs permission to create/read/delete this exact Job,
+read its Pod identity/status and read its logs. Stop on any command failure;
+keep the fence and all previous media while the owners diagnose the failure.
 
 ```bash
-assert_cluster_binding
-kubectl --context "<context>" -n "$NAMESPACE" create job \
-  --from=cronjob/litellm-postgresql-backup "litellm-backup-manual-<unique-id>"
-kubectl --context "<context>" -n "$NAMESPACE" wait \
-  --for=condition=complete "job/litellm-backup-manual-<unique-id>" --timeout=1860s
-kubectl --context "<context>" -n "$NAMESPACE" logs \
-  "job/litellm-backup-manual-<unique-id>"
+assert_cluster_binding || exit 126
+set -euo pipefail
+umask 077
+test ! -e "$LITELLM_BACKUP_EVIDENCE"
+mkdir -m 0700 "$LITELLM_BACKUP_EVIDENCE"
+kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" create job \
+  --from=cronjob/litellm-postgresql-backup "$LITELLM_BACKUP_JOB"
+LITELLM_BACKUP_JOB_UID=$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" \
+  get job "$LITELLM_BACKUP_JOB" -o jsonpath='{.metadata.uid}')
+test -n "$LITELLM_BACKUP_JOB_UID"
+printf '%s\n' "$LITELLM_BACKUP_JOB_UID" > "$LITELLM_BACKUP_EVIDENCE/job-uid.txt"
+kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" wait \
+  --for=condition=complete "job/$LITELLM_BACKUP_JOB" --timeout=1860s
+kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get pods \
+  -l "job-name=$LITELLM_BACKUP_JOB" \
+  -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.uid}{"\t"}{.status.phase}{"\t"}{range .metadata.ownerReferences[*]}{.kind}{":"}{.uid}{":"}{.controller}{","}{end}{"\n"}{end}' \
+  > "$LITELLM_BACKUP_EVIDENCE/pods.tsv"
+LITELLM_BACKUP_POD=$(python3 - "$LITELLM_BACKUP_EVIDENCE" <<'PY'
+import pathlib, sys
+p = pathlib.Path(sys.argv[1])
+uid = (p/'job-uid.txt').read_text().strip()
+rows = (p/'pods.tsv').read_text().splitlines()
+if len(rows) != 1: raise SystemExit('exactly one Job Pod is required')
+name, pod_uid, phase, owners = rows[0].split('\t')
+if 'Job:' + uid + ':true' not in owners.split(','): raise SystemExit('Job ownership differs')
+if phase != 'Succeeded': raise SystemExit('Pod did not succeed')
+(p/'pod-uid.txt').write_text(pod_uid + '\n')
+print(name)
+PY
+)
+test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get pod \
+  "$LITELLM_BACKUP_POD" -o jsonpath='{.metadata.uid}')" = \
+  "$(cat "$LITELLM_BACKUP_EVIDENCE/pod-uid.txt")"
+test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get job \
+  "$LITELLM_BACKUP_JOB" -o jsonpath='{.metadata.uid}')" = "$LITELLM_BACKUP_JOB_UID"
+kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" logs \
+  "$LITELLM_BACKUP_POD" -c backup > "$LITELLM_BACKUP_EVIDENCE/backup.log"
+LITELLM_BACKUP_GROUP=$(python3 - "$LITELLM_BACKUP_EVIDENCE/backup.log" <<'PY'
+import pathlib, re, sys
+paths = [s for s in pathlib.Path(sys.argv[1]).read_text().splitlines()
+         if re.fullmatch(r'/backups/litellm/backup-[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9]{8}', s)]
+if len(paths) != 1: raise SystemExit('one exact completed group path is required')
+print(paths[0])
+PY
+)
+printf '%s\n' "$LITELLM_BACKUP_GROUP" > "$LITELLM_BACKUP_EVIDENCE/group-path.txt"
 ```
 
-Expected output is one completed `backup-*` directory. A failed Job, old group,
-or unavailable PVC is a stop, not permission to delete earlier media.
+Expected observation: one succeeded Pod owned by the recorded Job UID, and one
+exact completed `/backups/litellm/backup-*` path in that Pod's log. The rendered
+Job runs `scheduled`: it can reuse a previously valid group younger than the
+backup interval. Its completion does not necessarily mean a fresh dump or a
+new consistency point. Preserve the recorded group name and metadata times;
+stop if they cannot meet the owner's required backup point. Failed Jobs,
+multiple Pods, missing paths, UID changes, capacity errors, or unavailable PVC
+access do not authorize deletion or an automatic retry.
 
-Copy the complete group to encrypted independent storage with the storage
-owner's mechanism and verify its checksums there. Retain the Job log, backup
-directory identity, source server version, immutable application image,
-credential-authority reference, and destination receipt. Then remove only the
-uniquely named manual Job:
+Use the storage owner's read-only export procedure to copy **that exact logged
+group**, not the directory currently called latest. Record the PVC UID, source
+path, copied path and receipt. The private export root must contain only that
+one completed `backup-*` directory. The storage owner must prevent any other
+process from publishing, editing or removing files there until verification
+and transfer finish. Do not point this procedure at the live backup PVC.
+
+Set `BACKUP_ROOT` to the absolute path of that private export root. Set
+`LITELLM_LOCAL_GROUP` to `"$BACKUP_ROOT/${LITELLM_BACKUP_GROUP##*/}"`.
+Set `LITELLM_RECOVERY_SCRIPT` to the absolute path of
+`scripts/postgresql-recovery.sh` from the recorded, approved repository revision;
+verify its SHA-256 against the owner's independent release record before use.
+The shell must receive these actual script inputs from the database and secret
+owners' private environment setup. Never source the copied `metadata.env` or
+print environment contents, credentials, master keys or salt keys.
+
+| Inputs | Required authority |
+| --- | --- |
+| `PGHOST`, `PGDATABASE`, `PGUSER`, `BACKUP_EXPECTED_SERVER_VERSION` | Recorded actual source profile/database and exact selected server version |
+| `BACKUP_APPLICATION_IMAGE`, `BACKUP_CREDENTIAL_AUTHORITY_REF` | Deployed immutable LiteLLM image and original external key-authority reference |
+| `LITELLM_MASTER_KEY`, optional `LITELLM_SALT_KEY` | Original independently recovered inputs; preserve absence versus presence of the salt key |
+| `BACKUP_MAXIMUM_BYTES`, `BACKUP_MAXIMUM_RETAINED_BYTES`, `BACKUP_MAXIMUM_AGE_SECONDS`, `BACKUP_MAXIMUM_DURATION_SECONDS` | Selected recovery policy, in bytes and seconds |
+
+The verifier requires `psql`, `pg_dump`, `pg_restore`, `flock`, `sha256sum`,
+`stat`, `du`, `timeout`, and `sync` on `PATH`, even though `verify` makes no SQL
+connection and does not restore data. These are the actual script prerequisites,
+not a request to use database administrator credentials for an offline check.
+For the supplementary checks below, also supply GNU `realpath`, `awk`, `cmp`,
+and GNU Bash in a compatible glibc recovery environment. BusyBox tools and
+Alpine/musl are not a supported substitute for these commands. Use the exact
+owner-selected PostgreSQL tools.
+The database owner must supply `EXPECTED_PG_RESTORE_VERSION` as the exact
+approved output of `pg_restore --version`, `EXPECTED_DUMP_CLIENT_VERSION` as
+its approved numeric dump version (major × 10000 + minor), and
+`EXPECTED_SOURCE_SYSTEM_IDENTIFIER` from the source database's recorded
+identity. Obtain these expectations independently of the copy. The owners must
+bind the selected profile, schema-change history, all required roles and key
+authority to this group. Metadata alone cannot establish that authority.
+
+Run from the private offline verification machine in the same Bash shell with
+`set -euo pipefail` and `umask 077`. The following checks freeze selection to the
+sole exported group, add owner/privacy/source/tool checks, then run the existing
+verifier:
 
 ```bash
-assert_cluster_binding
-kubectl --context "<context>" -n "$NAMESPACE" delete job \
-  "litellm-backup-manual-<unique-id>"
+set -euo pipefail
+umask 077
+shopt -s nullglob dotglob
+test "$(realpath -e -- "$BACKUP_ROOT")" = "$BACKUP_ROOT"
+test -d "$BACKUP_ROOT"
+exported_entries=("$BACKUP_ROOT"/*)
+test "${#exported_entries[@]}" -eq 1
+test "${exported_entries[0]}" = "$LITELLM_LOCAL_GROUP"
+test "${LITELLM_LOCAL_GROUP##*/}" = "${LITELLM_BACKUP_GROUP##*/}"
+test -d "$LITELLM_LOCAL_GROUP"
+for member in "$BACKUP_ROOT" "$LITELLM_LOCAL_GROUP" \
+  "$LITELLM_LOCAL_GROUP/database.dump" "$LITELLM_LOCAL_GROUP/archive-toc.txt" \
+  "$LITELLM_LOCAL_GROUP/metadata.env" "$LITELLM_LOCAL_GROUP/SHA256SUMS"; do
+  test ! -L "$member"
+  test "$(stat -c %u "$member")" = "$(id -u)"
+  member_mode=$(stat -c %a "$member")
+  (( (8#$member_mode & 077) == 0 ))
+done
+test "$(pg_restore --version)" = "$EXPECTED_PG_RESTORE_VERSION"
+selected_group=$(bash "$LITELLM_RECOVERY_SCRIPT" verify)
+test "$selected_group" = "$LITELLM_LOCAL_GROUP"
+printf '%s\n' "$selected_group" > "$LITELLM_BACKUP_EVIDENCE/verified-group.txt"
+read_metadata_field() {
+  awk -F= -v key="$1" '$1==key {count++; value=substr($0,length(key)+2)}
+    END {if(count!=1) exit 1; print value}' "$LITELLM_LOCAL_GROUP/metadata.env"
+}
+test "$(read_metadata_field source_system_identifier)" = "$EXPECTED_SOURCE_SYSTEM_IDENTIFIER"
+test "$(read_metadata_field dump_client_version_num)" = "$EXPECTED_DUMP_CLIENT_VERSION"
+test "$(read_metadata_field credential_authority_ref)" = "$BACKUP_CREDENTIAL_AUTHORITY_REF"
+test "$(read_metadata_field schema)" = full-custom-archive
+test "$(read_metadata_field credentials)" = external-authority-required
+pg_restore --list "$LITELLM_LOCAL_GROUP/database.dump" \
+  > "$LITELLM_BACKUP_EVIDENCE/archive-toc-verified.txt"
+cmp "$LITELLM_LOCAL_GROUP/archive-toc.txt" \
+  "$LITELLM_BACKUP_EVIDENCE/archive-toc-verified.txt"
+sha256sum "$LITELLM_LOCAL_GROUP/SHA256SUMS" \
+  > "$LITELLM_BACKUP_EVIDENCE/checksum-index-digest.txt"
 ```
+
+Expected result: every command exits zero and `verified-group.txt` contains
+exactly this copied group's absolute path. The native verifier checks the four
+required regular, non-symlink, singly linked files: `database.dump`,
+`archive-toc.txt`, `metadata.env`, and `SHA256SUMS`. The checksum index must have
+exactly three lines, each with one SHA-256 and exactly one of `database.dump`,
+`archive-toc.txt`, or `metadata.env`. It checks their bytes before accepting the
+format, database, selected application image, original key binding, selected
+server version, size and age. It also reads the archive catalogue.
+Any failed command rejects this copy; preserve it and the previous media for
+investigation. Do not retry with relaxed limits or different keys to obtain a
+successful result.
+
+The native CLI selects latest dynamically and cannot accept an explicit group
+argument. This procedure controls that limitation only by using an owner-frozen
+private root with one candidate and checking its returned identity. It is not
+proof that a later `verify` on the production PVC checked this group. If the
+copy cannot remain frozen or the candidate/path differs, stop before copy
+acceptance, fence release or deletion.
+
+Review the full archive listing with the database owner for the expected
+schema, applied migration history, ownership and access-control evidence.
+A readable catalogue and correct checksums do not prove that every SQL object
+or ciphertext will restore. Application recovery still requires the separate
+restore and application checks below. These offline steps have not been run
+against deployed backup media.
+
+> **Source evidence — copied group verification**
+>
+> Claim: the existing script verifies a dynamically selected group; the private
+> single-group export and returned-path comparison bind this invocation.
+> Implementation: [configuration/tools](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L11-L35),
+> [publication](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L56-L95),
+> [group verifier](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L97-L129),
+> [scheduled reuse and latest-only CLI](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L166-L185).
+> Contract or setting: the [rendered Job runs `scheduled`](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/render-postgresql-recovery.mjs#L63-L83).
+> Test evidence: local syntax and copy-selection checks; native media
+> verification, live Job execution and transfer have not been run here.
+> Revision: KubeClaw `ebcc04066d42c94b4a4e0fc85e3393dae3d61f78`.
+> Limit: offline integrity is not restore or application proof.
+
+After local verification and owner approval of the group's backup point,
+transfer the complete immutable group to encrypted independent storage with
+the storage owner's mechanism. Verify the same three hashes at the destination,
+using this exact group identity. If the destination can be read as a frozen
+private root with only that one group, repeat the offline check with its
+`BACKUP_ROOT` and `LITELLM_LOCAL_GROUP`, retaining the same owner inputs; otherwise require the storage owner's versioned verification
+procedure and receipt for all four objects. Record encryption/key authority,
+independent failure domain, exact destination object identities and retention.
+Stop before fence release or deletion if destination proof is missing.
+
+Retain the Job/Pod UIDs, log, exact group and PVC identity, source database and
+server version, immutable application image/schema selection, owner input
+record, checksum/archive/tool results, credential-authority references and
+copy receipt. Follow the owners' verified fence-release procedure only after
+all local and destination checks pass. Then check that the Job still has the
+recorded UID and remove only that uniquely named manual Job:
+
+```bash
+assert_cluster_binding || exit 126
+set -euo pipefail
+umask 077
+test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get job \
+  "$LITELLM_BACKUP_JOB" -o jsonpath='{.metadata.uid}')" = "$LITELLM_BACKUP_JOB_UID"
+kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" delete job "$LITELLM_BACKUP_JOB"
+```
+
+Confirm that this Job is absent after deletion. A cleanup failure remains an
+open operation; do not remove backup groups, scheduled Jobs, the PVC, or the
+namespace. Until fence release, a failed backup does not change the unchanged
+source database. The owners decide whether to release a fence after an aborted
+attempt; this page does not authorize bypassing its media checks.
 
 The repository script is a restore primitive, not target provisioning. It
 requires an already provisioned empty database, every dumped owner role,
@@ -342,9 +562,15 @@ one transaction
 [archive verification](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/postgresql-recovery.sh#L100-L138);
 [restore gates](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/postgresql-recovery.sh#L150-L173)).
 
-The native test supplies two disposable PostgreSQL servers and creates target
-roles and databases itself
-([test prerequisites and provisioning](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L18-L41)).
+The native test requires two externally provisioned disposable PostgreSQL
+servers. The caller supplies their private administrator connection URLs in
+`POSTGRES_NATIVE_SOURCE_URL` and `POSTGRES_NATIVE_DESTINATION_URL`, the exact
+selected PostgreSQL client directory in `POSTGRES_NATIVE_CLIENT_BIN`, and the
+pinned LiteLLM Python source runtime in `LITELLM_NATIVE_PYTHON`. Keep the URLs and
+credentials private. The harness creates roles and databases on those servers;
+it does not provision or start the servers
+([external prerequisites](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L12-L19);
+[role and database creation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L32-L41)).
 It proves schema, model/key rows, ownership, transactional failure, SQL
 authentication, and legacy/AES credential decryption
 ([restore and data checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L111-L137)).

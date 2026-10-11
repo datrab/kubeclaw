@@ -150,7 +150,7 @@ for (const filePath of usePages) {
     const hasRawClusterCommand = containsRawClusterCommand(body);
     if (!hasRawClusterCommand) continue;
     const firstCommand = body.split('\n').find((line) => line.trim() && !line.trim().startsWith('#'))?.trim();
-    assert.equal(firstCommand, 'assert_cluster_binding',
+    assert.ok(['assert_cluster_binding', 'assert_cluster_binding || exit 126'].includes(firstCommand),
       `${relativePage}: cluster-capable fenced block must begin with assert_cluster_binding or use only bound wrappers`);
   }
 }
@@ -202,7 +202,7 @@ for (const filePath of markdownFiles(checkedSiteRoot)) {
     const hasRawClusterCommand = containsRawClusterCommand(body);
     if (!hasRawClusterCommand) continue;
     const firstCommand = body.split('\n').find((line) => line.trim() && !line.trim().startsWith('#'))?.trim();
-    assert.equal(firstCommand, 'assert_cluster_binding',
+    assert.ok(['assert_cluster_binding', 'assert_cluster_binding || exit 126'].includes(firstCommand),
       `${relativePage}: cluster-capable fenced block must begin with assert_cluster_binding or use only bound wrappers`);
   }
   for (const body of shellFences(markdown)) {

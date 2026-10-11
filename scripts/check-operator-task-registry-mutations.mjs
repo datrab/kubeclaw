@@ -56,6 +56,8 @@ try {
   }, /operator-task markers and registry registrations differ/u);
 
   const fenceCases = new Map([
+    ['binding-ignore-failure.md', '```bash\nassert_cluster_binding || true\nkubectl get pods\n```\n'],
+    ['binding-success-exit.md', '```bash\nassert_cluster_binding || exit 0\nkubectl get pods\n```\n'],
     ['blockquote.md', '> ```bash\n> kubectl get pods\n> ```\n'],
     ['list.md', '- ```bash\n  kubectl get pods\n  ```\n'],
     ['deep-indented.md', '        ~~~sh\n        helm list\n        ~~~\n'],
@@ -76,6 +78,15 @@ try {
       OPERATOR_TASK_SITE_ROOT: fixtureSiteRoot,
     }, /cluster-capable fenced block must begin with assert_cluster_binding/u);
   }
+
+  const explicitStopRoot = path.join(temporaryRoot, 'explicit-binding-stop');
+  fs.mkdirSync(explicitStopRoot);
+  fs.writeFileSync(path.join(explicitStopRoot, 'bound.md'),
+    '```bash\nassert_cluster_binding || exit 126\nkubectl get pods\n```\n');
+  execFileSync(process.execPath, [path.join(root, 'scripts/check-operator-task-registry.mjs'), '--check'], {
+    cwd: root, env: { ...process.env, OPERATOR_TASK_SITE_ROOT: explicitStopRoot },
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
 
   const localTemplateRoot = path.join(temporaryRoot, 'local-template');
   fs.mkdirSync(localTemplateRoot);
