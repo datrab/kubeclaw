@@ -22123,6 +22123,48 @@
         "Counts identify inventory only; consumer selected actual source fields and conditions."
       ],
       "scope": "No whole-package, full mutation, Reader, Quality or live acceptance."
+    },
+    "bootstrapPublicFlowIntegrationChecks": {
+      "observedAt": "2026-10-11T13:42:57.388831+00:00",
+      "state": "Both supported-flow regressions corrected; root captured three-test run terminal PASS; independent review pending",
+      "newPublicResourceRegression": {
+        "session": 91361,
+        "exitCode": 0,
+        "passed": 1,
+        "expectedFailure": "API_PRODUCT_PYTHON_PUBLIC_OUTPUT_FLOW_UNQUALIFIED",
+        "scope": "New actual discover return constructs Namespace; fresh discovery must explicitly reject instead of returning only credential outputs."
+      },
+      "supportedFlowRegressionRun": {
+        "session": 5959,
+        "exitCode": 1,
+        "failed": 2,
+        "findings": [
+          "Supported Secret immutable and namespace initialization change rejected by whole-function AST recipe.",
+          "Supported original secret JSON transport transformation rejected by whole-function AST recipe."
+        ]
+      },
+      "correctionOwner": "/root/bootstrap_public_output_correction_writer",
+      "limit": "Moving author candidate; no independent acceptance or full-suite result. Preserve supported constructor capture while closing public output ancestry."
+    },
+    "bootstrapPublicFlowCorrection": {
+      "state": "corrected author checkpoint; new independent complete Source review pending",
+      "adapterSha256": "e3866d80aa4bdd82645873da4424835deeca876b13baf909093fd9c26e932d83",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/bootstrap-public-output-correction-writer/REPORT.md",
+      "authorReceipt": "/home/node/Documents/Codex/a98-evidence/bootstrap-public-output-correction-writer/receipt.json",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/bootstrap-public-correction-root-seal.json",
+      "verifiedArtifacts": 153,
+      "rootMaintainedRun": {
+        "session": 16129,
+        "exitCode": 0,
+        "passed": 3,
+        "capturedUnchanged": true,
+        "sourceFilesVerified": 5590,
+        "receipt": "/home/node/Documents/Codex/a98-evidence/javascript-channel-consumer-correction-writer/root-bootstrap-supported-and-public.json"
+      },
+      "authorTerminalCount": 59,
+      "authorMutationCount": 14,
+      "historicalFailedCandidate": "historical-before-supported-credential-correction/receipt.json",
+      "limit": "Author/bounded Source evidence only; no whole-package, full config mutation or independent PASS."
     }
   }
 }

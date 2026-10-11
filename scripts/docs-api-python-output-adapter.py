@@ -1,7 +1,9 @@
 """Execute original producer functions with no process, credential or network access."""
 import ast
 import contextlib
+import copy
 import io
+import ipaddress
 import hashlib
 import json
 import sys
@@ -10,6 +12,158 @@ from pathlib import Path
 
 source = Path(sys.argv[1]).read_text()
 tree = ast.parse(source)
+# Closed AST recipes bind each selected constructor, transfer and public sink.
+# They are deliberately finite: an unfamiliar source construct requires review,
+# even after generated artifacts or registry source digests are refreshed. These
+# recipes are compared as syntax trees, never as a module/source hash approval.
+BOOTSTRAP_RECIPES = r'''
+import ipaddress
+import json
+import os
+from pathlib import Path
+import secrets
+import subprocess
+import sys
+context = os.environ['KUBE_CONTEXT']
+namespace = os.environ.get('OPS_NAMESPACE', 'kubeclaw-ops')
+base = ['kubectl', '--context', context, '--request-timeout=20s']
+def kube(args, data=None):
+    result = subprocess.run(base + args, input=data, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if result.returncode:
+        raise SystemExit('kubectl failed during Ops Pod setup; check context, permissions and named resource availability')
+    return result.stdout
+def get(kind, name, ns=None):
+    args = ['get', kind, name, '--ignore-not-found', '-o', 'json']
+    if ns:
+        args += ['-n', ns]
+    text = kube(args).strip()
+    return json.loads(text) if text else None
+def apply_secret(name, values):
+    kube(['apply', '-f', '-'], json.dumps({'apiVersion': 'v1', 'kind': 'Secret', 'metadata': {'name': name, 'namespace': namespace}, 'type': 'Opaque', 'stringData': values}))
+def discover():
+    endpoints = get('endpoints', 'kubernetes', 'default')
+    service = get('service', 'kubernetes', 'default')
+    if not endpoints or not service:
+        raise SystemExit('Kubernetes API endpoint discovery failed')
+    addresses = [a['ip'] for s in endpoints.get('subsets', []) for a in s.get('addresses', [])]
+    addresses += service['spec'].get('clusterIPs', [service['spec']['clusterIP']])
+    cidrs = sorted({str(ipaddress.ip_network(ipaddress.ip_address(address))) for address in addresses})
+    ports = {p['port'] for s in endpoints.get('subsets', []) for p in s.get('ports', []) if p.get('name') == 'https'}
+    if not cidrs or len(ports) != 1:
+        raise SystemExit('Expected ready Kubernetes API addresses and one https endpoint port')
+    namespaces = [namespace]
+    requested = os.environ.get('OPS_READ_NAMESPACES', 'kubeclaw,argocd,kube-system,cilium,tailscale,spire-server,spire-system').split(',')
+    for name in requested:
+        name = name.strip()
+        if not name:
+            continue
+        if get('namespace', name):
+            namespaces.append(name)
+    cilium = get('crd', 'ciliumnetworkpolicies.cilium.io') is not None
+    return {'rbac': {'namespaces': list(dict.fromkeys(namespaces))}, 'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}
+def setup_secrets():
+    if not get('secret', 'codex-ops-bearer', namespace):
+        apply_secret('codex-ops-bearer', {'token': secrets.token_urlsafe(48)})
+    if os.environ.get('OPS_COPY_PULL_SECRET', '1') == '1' and (not get('secret', 'ghcr-secret', namespace)):
+        source = get('secret', 'ghcr-secret', os.environ.get('OPS_PULL_SECRET_SOURCE_NAMESPACE', 'kubeclaw'))
+        if not source:
+            raise SystemExit('Missing ghcr-secret. Create it in the Ops namespace or select a valid source namespace.')
+        kube(['apply', '-f', '-'], json.dumps({'apiVersion': 'v1', 'kind': 'Secret', 'metadata': {'name': 'ghcr-secret', 'namespace': namespace}, 'type': source['type'], 'data': source['data']}))
+    for variable, name, key in [('OPS_GITHUB_TOKEN_FILE', 'codex-ops-github', 'token'), ('OPS_TAILSCALE_AUTHKEY_FILE', 'codex-ops-tailscale', 'authkey')]:
+        if os.environ.get(variable):
+            value = Path(os.environ[variable]).read_text().strip()
+            if not value:
+                raise SystemExit(variable + ' contains an empty credential')
+            apply_secret(name, {key: value})
+    print('Ops credentials prepared; existing bearer and pull credentials retained')
+if __name__ == '__main__':
+    if sys.argv[1:] == ['discover']:
+        print(json.dumps(discover(), indent=2))
+    elif sys.argv[1:] == ['secrets']:
+        setup_secrets()
+    else:
+        raise SystemExit('Usage: bootstrap.py discover|secrets')
+'''
+
+def bootstrap_credential_recipe(actual, recipe):
+    """A finite constructor/roundtrip language; actual bytes still reach stubs."""
+    normalized = copy.deepcopy(actual)
+    dump = lambda node: ast.dump(node, include_attributes=False)
+    def finite_value(node):
+        if isinstance(node, ast.Constant): return isinstance(node.value, (str, int, float, bool, type(None)))
+        if isinstance(node, ast.Name): return node.id in ('name', 'namespace', 'values')
+        if isinstance(node, ast.Subscript): return isinstance(node.value, ast.Name) and node.value.id == 'source' and isinstance(node.slice, ast.Constant) and node.slice.value in ('type', 'data')
+        if isinstance(node, (ast.List, ast.Tuple)): return all(finite_value(value) for value in node.elts)
+        if isinstance(node, ast.Dict): return all(isinstance(key, ast.Constant) and isinstance(key.value, str) and finite_value(value) for key, value in zip(node.keys, node.values))
+        return False
+    # Preserve producer flow/branch/caller syntax, but evaluate all supported
+    # literal resource fields from actual source rather than freezing their bytes.
+    if actual.name in ('apply_secret', 'setup_secrets'):
+        expected_dicts = [node for node in ast.walk(recipe) if isinstance(node, ast.Dict) and any(isinstance(key, ast.Constant) and key.value == 'apiVersion' for key in node.keys)]
+        actual_dicts = [node for node in ast.walk(normalized) if isinstance(node, ast.Dict) and any(isinstance(key, ast.Constant) and key.value == 'apiVersion' for key in node.keys)]
+        if len(actual_dicts) != len(expected_dicts): return False
+        for constructor, selected in zip(actual_dicts, expected_dicts):
+            if not finite_value(constructor): return False
+            keys = [key.value for key in constructor.keys]
+            if len(keys) != len(set(keys)): return False
+            fields = dict(zip(keys, constructor.values))
+            if not all(isinstance(fields.get(key), ast.Constant) and fields[key].value == value for key, value in (('apiVersion', 'v1'), ('kind', 'Secret'))): return False
+            if not {'metadata', 'type'} <= set(fields) or not ({'stringData', 'data'} & set(fields)): return False
+            constructor.keys, constructor.values = copy.deepcopy(selected.keys), copy.deepcopy(selected.values)
+    if actual.name == 'kube':
+        # Optional data-only JSON roundtrip mutations before original transport.
+        # The mutable payload is derived only from original data; literal field
+        # changes are recaptured at the real subprocess input boundary.
+        if normalized.body and isinstance(normalized.body[0], ast.If) and dump(normalized.body[0].test) == dump(ast.Name(id='data', ctx=ast.Load())):
+            branch = normalized.body[0]
+            if branch.orelse or len(branch.body) < 3: return False
+            start, finish = branch.body[0], branch.body[-1]
+            if dump(start) != dump(ast.parse('payload = json.loads(data)').body[0]) or dump(finish) != dump(ast.parse('data = json.dumps(payload)').body[0]): return False
+            for item in branch.body[1:-1]:
+                if not isinstance(item, ast.Assign) or len(item.targets) != 1: return False
+                target = item.targets[0]
+                if not isinstance(target, ast.Subscript) or not isinstance(target.value, ast.Name) or target.value.id != 'payload' or not isinstance(target.slice, ast.Constant) or not isinstance(target.slice.value, str) or target.slice.value in ('apiVersion', 'kind') or not finite_value(item.value): return False
+            normalized.body.pop(0)
+        actual_calls = [node for node in ast.walk(normalized) if isinstance(node, ast.Call) and ast.unparse(node.func) == 'subprocess.run']
+        expected_call = next(node for node in ast.walk(recipe) if isinstance(node, ast.Call) and ast.unparse(node.func) == 'subprocess.run')
+        if len(actual_calls) != 1 or len(actual_calls[0].args) != 1: return False
+        command = actual_calls[0].args[0]
+        # Command construction always passes the original offline transport
+        # guard. A finite literal replacement cannot run a real process and
+        # must still fail that guard rather than gain an output exemption.
+        if dump(command) != dump(expected_call.args[0]) and not (isinstance(command, ast.List) and all(isinstance(value, ast.Constant) and isinstance(value.value, str) for value in command.elts)): return False
+        actual_calls[0].args[0] = copy.deepcopy(expected_call.args[0])
+    return dump(normalized) == dump(recipe)
+
+def bootstrap_audit_facts():
+    expected = ast.parse(BOOTSTRAP_RECIPES)
+    dump = lambda node: ast.dump(node, include_attributes=False)
+    actual_functions = {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
+    expected_functions = {node.name: node for node in expected.body if isinstance(node, ast.FunctionDef)}
+    facts = {}
+    for symbol, recipe in expected_functions.items():
+        nodes = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node.name == symbol]
+        actual = actual_functions.get(symbol)
+        facts[symbol] = {'symbol': symbol, 'operation': dump(actual) if actual else '',
+                         'sha256': hashlib.sha256(dump(actual).encode()).hexdigest() if actual else None,
+                         'qualified': len(nodes) == 1 and actual is not None and bootstrap_credential_recipe(actual, recipe)}
+    # Immutable imports, selected module inputs and the actual command dispatcher
+    # form separate dependencies. Reject shadowing/rebinding and module effects.
+    expected_module = [node for node in expected.body if not isinstance(node, ast.FunctionDef)]
+    actual_module = [node for node in tree.body if not isinstance(node, ast.FunctionDef) and not (isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant) and isinstance(node.value.value, str))]
+    module = ast.Module(body=actual_module, type_ignores=[])
+    normalized_module = copy.deepcopy(module)
+    for node in normalized_module.body:
+        if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name) and node.targets[0].id == 'namespace' and isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
+            node.value = copy.deepcopy(next(item.value for item in expected_module if isinstance(item, ast.Assign) and isinstance(item.targets[0], ast.Name) and item.targets[0].id == 'namespace'))
+    facts['public-dispatch-and-bindings'] = {'symbol': 'public-dispatch-and-bindings', 'operation': dump(module),
+        'sha256': hashlib.sha256(dump(module).encode()).hexdigest(),
+        'qualified': dump(normalized_module) == dump(ast.Module(body=expected_module, type_ignores=[])) and sorted(actual_functions) == sorted(expected_functions)}
+    groups = {'discover': ['discover', 'get', 'kube', 'public-dispatch-and-bindings'],
+              'secrets': ['setup_secrets', 'apply_secret', 'get', 'kube', 'public-dispatch-and-bindings']}
+    entries = {name: all(facts[symbol]['qualified'] for symbol in symbols) for name, symbols in groups.items()}
+    return facts, groups, entries
+
 def patch_profiles():
     """Run original patch construction and argv at the subprocess boundary."""
     assignments = [node for node in tree.body if isinstance(node, ast.Assign)]
@@ -64,10 +218,71 @@ def patch_profiles():
     results[0]['profileOutcomes'] = outcomes
     return results
 
+def bootstrap_discover_profiles():
+    """Run the original selected public main through offline read boundaries."""
+    facts, groups, entries = bootstrap_audit_facts()
+    assert all(entries.values()), 'API_PRODUCT_PYTHON_BOOTSTRAP_PUBLIC_FLOW_UNQUALIFIED'
+    program = ast.Module(body=[node for node in tree.body if isinstance(node, ast.Assign) or isinstance(node, ast.FunctionDef) and node.name in ('kube', 'get', 'discover') or isinstance(node, ast.If)], type_ignores=[])
+    results = []
+    for profile in ('ready', 'dual-stack', 'missing-endpoints', 'missing-service', 'empty-addresses', 'missing-port', 'multiple-ports', 'transport-failure', 'namespace-crd-absent'):
+        env = {'KUBE_CONTEXT': 'synthetic-offline', 'OPS_NAMESPACE': 'discovery-ops',
+               'OPS_READ_NAMESPACES': ' synthetic-present, ,synthetic-absent,synthetic-present '}
+        reads = []
+        def run(command, input=None, text=None, stdout=None, stderr=None):
+            prefix = ['kubectl', '--context', env['KUBE_CONTEXT'], '--request-timeout=20s']
+            assert isinstance(command, list) and command[:len(prefix)] == prefix and input is None and text is True and stdout == -1 and stderr == -1, 'API_PRODUCT_PYTHON_DISCOVER_TRANSPORT_UNQUALIFIED'
+            args = command[len(prefix):]
+            assert args[:1] == ['get'] and args[3:6] == ['--ignore-not-found', '-o', 'json'] and len(args) in (6, 8), 'API_PRODUCT_PYTHON_DISCOVER_READ_UNQUALIFIED'
+            if len(args) == 8: assert args[6] == '-n', 'API_PRODUCT_PYTHON_DISCOVER_NAMESPACE_UNQUALIFIED'
+            kind, name = args[1:3]
+            if kind == 'endpoints' and name == 'kubernetes':
+                assert args[-2:] == ['-n', 'default'], 'API_PRODUCT_PYTHON_DISCOVER_RECEIVER_UNQUALIFIED'
+                addresses = [] if profile == 'empty-addresses' else [{'ip': '192.0.2.1'}] + ([{'ip': '2001:db8::1'}] if profile == 'dual-stack' else [])
+                ports = [] if profile == 'missing-port' else [{'name': 'https', 'port': 6443}] + ([{'name': 'https', 'port': 443}] if profile == 'multiple-ports' else [])
+                response = None if profile == 'missing-endpoints' else {'subsets': [{'addresses': addresses, 'ports': ports}]}
+            elif kind == 'service' and name == 'kubernetes':
+                assert args[-2:] == ['-n', 'default'], 'API_PRODUCT_PYTHON_DISCOVER_RECEIVER_UNQUALIFIED'
+                ips = [] if profile == 'empty-addresses' else ['192.0.2.2'] + (['2001:db8::2'] if profile == 'dual-stack' else [])
+                response = None if profile == 'missing-service' else {'spec': {'clusterIP': '192.0.2.2', 'clusterIPs': ips}}
+            elif kind == 'namespace':
+                assert len(args) == 6 and name in ('synthetic-present', 'synthetic-absent'), 'API_PRODUCT_PYTHON_DISCOVER_RECEIVER_UNQUALIFIED'
+                response = {'metadata': {'name': name}} if name == 'synthetic-present' and profile != 'namespace-crd-absent' else None
+            elif kind == 'crd':
+                assert len(args) == 6 and name == 'ciliumnetworkpolicies.cilium.io', 'API_PRODUCT_PYTHON_DISCOVER_RECEIVER_UNQUALIFIED'
+                response = None if profile == 'namespace-crd-absent' else {'metadata': {'name': name}}
+            else: raise AssertionError('API_PRODUCT_PYTHON_DISCOVER_RECEIVER_UNQUALIFIED')
+            reads.append({'command': command, 'response': response})
+            return types.SimpleNamespace(returncode=1 if profile == 'transport-failure' else 0,
+                                         stdout=json.dumps(response) if response is not None else '', stderr='synthetic-sensitive-error')
+        namespace = {'__builtins__': {name: getattr(__import__('builtins'), name) for name in ('print','list','dict','set','sorted','str','len','SystemExit')},
+                     '__name__': '__main__', 'sys': types.SimpleNamespace(argv=['bootstrap.py', 'discover']),
+                     'json': json, 'ipaddress': ipaddress, 'os': types.SimpleNamespace(environ=env),
+                     'subprocess': types.SimpleNamespace(run=run, PIPE=-1)}
+        capture = io.StringIO()
+        try:
+            with contextlib.redirect_stdout(capture): exec(compile(program, sys.argv[1], 'exec'), namespace)
+            outcome = 'success'
+        except SystemExit as error:
+            outcome = 'SystemExit: ' + str(error)
+        expected = {'missing-endpoints': 'SystemExit: Kubernetes API endpoint discovery failed', 'missing-service': 'SystemExit: Kubernetes API endpoint discovery failed',
+                    'empty-addresses': 'SystemExit: Expected ready Kubernetes API addresses', 'missing-port': 'SystemExit: Expected ready Kubernetes API addresses',
+                    'multiple-ports': 'SystemExit: Expected ready Kubernetes API addresses', 'transport-failure': 'SystemExit: kubectl failed'}.get(profile, 'success')
+        assert outcome.startswith(expected), 'API_PRODUCT_PYTHON_DISCOVER_BRANCH_UNQUALIFIED'
+        public_bytes = capture.getvalue()
+        value = json.loads(public_bytes) if public_bytes else None
+        assert outcome == 'success' or not public_bytes, 'API_PRODUCT_PYTHON_DISCOVER_ERROR_PUBLICATION_UNQUALIFIED'
+        results.append({'profile': profile, 'outcome': outcome, 'value': value, 'publicBytes': public_bytes, 'inputs': reads, 'environment': env,
+                        'dependencies': [facts[symbol] for symbol in groups['discover']],
+                        'coverageLimitations': ['synthetic API read responses prove original public control/serialization only; no live permission, endpoint reachability or served CRD acceptance']})
+    return results
+
+if len(sys.argv) > 2 and sys.argv[2] == '--discover':
+    print(json.dumps(bootstrap_discover_profiles()))
+    sys.exit(0)
 if len(sys.argv) > 2 and sys.argv[2] == '--patch':
     print(json.dumps(patch_profiles()))
     sys.exit(0)
-if len(sys.argv) > 2 and sys.argv[2] == '--classify':
+if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
     # Bind names to their lexical owner. A parameter or local assignment masks
     # every outer binding, including imports; unrelated functions never qualify it.
     parents = {}
@@ -273,16 +488,63 @@ if len(sys.argv) > 2 and sys.argv[2] == '--classify':
             callers = [call for call in ast.walk(tree) if isinstance(call, ast.Call) and isinstance(call.func, ast.Name) and lookup(call.func) is scope]
             output['callerArguments'] = [{'expression': ast.unparse(call), 'positionalRoles': [role(arg, call) for arg in call.args], 'keywordNames': [keyword.arg for keyword in call.keywords], 'expandedKeys': [[key.value for key in keyword.value.keys] if isinstance(keyword.value, ast.Dict) and all(isinstance(key, ast.Constant) and isinstance(key.value, str) for key in keyword.value.keys) else None for keyword in call.keywords if keyword.arg is None]} for call in callers]
             output['capabilityEscapes'] = any(isinstance(ref, ast.Name) and lookup(ref) is scope and not (isinstance(parents.get(ref), ast.Call) and parents[ref].func is ref) for ref in ast.walk(tree))
-    print(json.dumps(outputs))
+    # Recognize this adapter family from actual declarations, not its filename.
+    # All public outputs in that family must join a closed producer/sink recipe.
+    bootstrap_family = any(isinstance(node, ast.FunctionDef) and node.name in ('discover', 'setup_secrets', 'apply_secret') for node in tree.body)
+    if bootstrap_family:
+        facts, groups, entries = bootstrap_audit_facts()
+        for output in outputs:
+            entry = None
+            kind = None
+            if output['function'] == 'apply_secret' and output['expression'].startswith('json.dumps('):
+                entry, kind = 'secrets', 'credential-submission'
+            elif output['function'] in ('setup_secrets', 'kube') and output['expression'].startswith('json.dumps('):
+                entry, kind = 'secrets', 'credential-submission'
+            elif output['function'] == 'setup_secrets' and output['expression'] == "print('Ops credentials prepared; existing bearer and pull credentials retained')":
+                entry, kind = 'secrets', 'credential-diagnostic'
+            elif output['function'] == '<module>' and output['expression'] in ('print(json.dumps(discover(), indent=2))', 'json.dumps(discover(), indent=2)'):
+                entry, kind = 'discover', 'config-info'
+            if entry and entries[entry]:
+                producer = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == ('discover' if entry == 'discover' else output['function']))
+                publication = next(node for node in ast.walk(tree) if isinstance(node, ast.Call) and node.lineno == output['line'] and ast.unparse(node) == output['expression'])
+                constructor = next(node for node in ast.walk(producer) if isinstance(node, ast.Return)).value if entry == 'discover' else publication.args[0]
+                transport = publication
+                if kind == 'credential-submission':
+                    transfer = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == 'kube')
+                    transport = next(node for node in ast.walk(transfer) if isinstance(node, ast.Call) and ast.unparse(node.func) == 'subprocess.run')
+                enclosing = []
+                ancestor = parents.get(publication)
+                while ancestor is not None:
+                    if isinstance(ancestor, ast.If): enclosing.append({'kind': 'if', 'line': ancestor.lineno, 'test': ast.unparse(ancestor.test)})
+                    if isinstance(ancestor, ast.For): enclosing.append({'kind': 'for', 'line': ancestor.lineno, 'target': ast.unparse(ancestor.target), 'iterable': ast.unparse(ancestor.iter)})
+                    ancestor = parents.get(ancestor)
+                output['bootstrapFlow'] = {'kind': kind, 'qualified': True, 'selectedEntryPoint': entry,
+                    'expression': output['expression'], 'producerLine': constructor.lineno, 'producerFunction': producer.name,
+                    'producerExpression': ast.unparse(constructor), 'consumerLine': transport.lineno, 'serializerLine': output['line'],
+                    'transportLine': transport.lineno, 'transportExpression': ast.unparse(transport), 'conditions': enclosing,
+                    'dependencies': [facts[symbol] for symbol in groups[entry]]}
+                output['role'] = 'api' if kind == 'credential-submission' else 'non-api'
+            else:
+                # An unresolved dynamic identity cannot inherit config/diagnostic
+                # acceptance. Retain concrete API roles and expose every other gap.
+                if output['role'] != 'api': output['role'] = 'unknown'
+                output['gap'] = 'bootstrap-public-output-unqualified'
+        audit = {'kind': 'bootstrap-public-output-audit', 'qualified': all(entries.values()) and all(output.get('bootstrapFlow', {}).get('qualified') for output in outputs),
+                 'entryPoints': entries, 'dependencies': list(facts.values()), 'outputs': outputs}
+    else:
+        audit = {'kind': 'non-bootstrap-output-audit', 'qualified': False, 'entryPoints': {}, 'dependencies': [], 'outputs': outputs}
+    print(json.dumps(audit if sys.argv[2] == '--audit' else outputs))
     sys.exit(0)
 # Compile only function definitions. Imports, module initialization and main
 # never execute. Every external capability is provided by an offline stub.
+facts, groups, entries = bootstrap_audit_facts()
+assert entries['secrets'] and entries['discover'], 'API_PRODUCT_PYTHON_BOOTSTRAP_PUBLIC_FLOW_UNQUALIFIED'
 initializers = [node for node in tree.body if isinstance(node, ast.Assign)]
 for node in initializers:
     for child in ast.walk(node):
         if isinstance(child, ast.Call):
             assert isinstance(child.func, ast.Attribute) and ast.unparse(child.func) == 'os.environ.get', 'API_PRODUCT_PYTHON_INITIALIZER_UNQUALIFIED'
-functions = ast.Module(body=initializers + [node for node in tree.body if isinstance(node, ast.FunctionDef)], type_ignores=[])
+functions = ast.Module(body=initializers + [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in ('kube', 'get', 'apply_secret', 'setup_secrets')], type_ignores=[])
 outputs = []
 outcomes = []
 for profile in ['missing', 'optional', 'retained', 'copy-disabled', 'custom-source', 'absent-source', 'empty-file', 'empty-tailscale', 'retained-optional', 'copy-noncanonical', 'transport-failure']:
