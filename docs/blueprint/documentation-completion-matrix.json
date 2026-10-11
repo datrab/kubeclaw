@@ -18639,6 +18639,41 @@
       "reviewer": "/root/installation_task_inventory_corrected_complete_source_fresh",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-source-fresh-root-seal.json",
       "acceptanceLimit": "Independent Reader scoped PASS does not compensate technical Source FAIL."
+    },
+    {
+      "id": "A98-20261011-CORRECTED-TRUST-RETIREMENT-SOURCE-F1",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "OPR-008"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-09",
+        "A98-13"
+      ],
+      "description": "Broad teardown re-enumerates names and deletes without original lifetime guards. Generic retirement lacks required externally enforced exclusion against new/replaced namespace/PVC/bindings, controllers and administrators for full deletion/verification window. Precheck alone is non-atomic.",
+      "authority": "scripts/deploy.sh:2780-2791;2806-2817",
+      "readerLocation": "docs/site/use/maintenance.md:1246",
+      "owner": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
+      "reviewer": "/root/trust_denial_retirement_corrected_full_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/trust-denial-retirement-corrected-full-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261011-CORRECTED-INSTALL-READER-R2",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-03",
+        "A98-13"
+      ],
+      "description": "Repeated probe_snapshot/probe_capture truncates fixed stdout/stderr/exit; cleanup archive omits error/status files. Preserve immutable ALL observation attempts before every recovery/cleanup recapture, commands/time/reasons/index and original creating identities.",
+      "readerLocation": "docs/site/use/install.md:666",
+      "owner": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
+      "reviewer": "/root/trust_denial_retirement_corrected_full_reader_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/trust-denial-retirement-corrected-full-reader-fresh-root-seal.json"
     }
   ],
   "checks": [
@@ -22102,6 +22137,37 @@
       "state": "active-complete-four-page-and-task-route-review",
       "sourceCommit": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
       "scope": "Entire installation/maintenance/operate/WorkerTrust reader route, current implementation and operator task/capability mappings; no global acceptance."
+    },
+    {
+      "agent": "/root/trust_denial_retirement_corrected_full_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-FAIL-complete-assigned-scope",
+      "sourceRevision": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
+      "report": "/home/node/Documents/Codex/a98-evidence/trust-denial-retirement-corrected-full-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/trust-denial-retirement-corrected-full-source-fresh-root-seal.json",
+      "reportSha256": "01edc4d676bbde897a2161a20a826cbade56253e3d6f125ad56f9c45097d12ee",
+      "verifiedArtifacts": 86,
+      "scope": "Complete four-page linked procedure/task-route Source;112 whole-file current pins,112 valid task routes. Generic retirement F1 remains; no package acceptance."
+    },
+    {
+      "agent": "/root/trust_denial_retirement_corrected_full_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-FAIL-complete-assigned-scope",
+      "report": "/home/node/Documents/Codex/a98-evidence/trust-denial-retirement-corrected-full-reader-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/trust-denial-retirement-corrected-full-reader-fresh-root-seal.json",
+      "reportSha256": "0148c71e26cd76292b03acf54b95acd4da01ac88461e7cbb3d815c34d335a448",
+      "verifiedArtifacts": 71,
+      "scope": "Complete4page linked Reader route:55shellblocks syntaxPASS; exactprivatefixtures reproduceR1namesonlyteardown/R2lostfailedread. No live/package acceptance."
     }
   ],
   "continuation": {
@@ -23144,8 +23210,8 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/trust_denial_retirement_corrected_full_source_fresh",
-      "/root/trust_denial_retirement_corrected_full_reader_fresh"
+      "/root/trust_denial_retirement_corrected_full_reader_fresh",
+      "/root/install_evidence_retirement_lifetime_complete_batch_writer"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -26365,11 +26431,11 @@
       "rootStaticSourceAndCapturedAuthCorrection": "/home/node/Documents/Codex/a98-evidence/static-source-codex-custody-root-correction/report.json",
       "rootStaticAndCapturedChecks": "11 selected capture controls PASS,12 protected historical-baseline controls PASS,27 production tests PASS before extra public-checkout control added; not fresh independent approval",
       "scannerCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "scannerFreeze": "6886 and f18 provisional qualifications WITHHELD. Actual callback/list/dict/alias helper capability gaps plus finite receiver-union exemption gaps require superseding full freeze/replay. No new scanner qualification applied.",
+      "scannerFreeze": "6886/f18/7b38 provisional freezes WITHHELD. Superseding singleton/unknown-alternative/module-attribute/dict-snapshot finite role-custody corrections +fullnative/receivingreplay in progress; no qualification.",
       "qualificationIntegrator": "/root/annotation_yaml_static_custody_authority_integrator",
       "docCorrectionWriter": "/root/trust_denial_retirement_complete_batch_writer",
-      "lastCompleteDocReader": "PASS assigned candidate2a3fe02 with247root-verifiedartifacts; newmodifiedcandidate requiresnewreview",
-      "lastCompleteDocSource": "FAIL1 at a2abcd45: obsolete checker heading and missing explicit live/test-double statement; 25 root-verified artifacts. Both corrected in3f3b417b; new complete independent reviews active.",
+      "lastCompleteDocReader": "FAIL2 fullcorrected Reader;71 verified artifacts. R1storage-lifetime exclusion andR2immutable failed-observation evidence. Corrected trust/signing/lifecycle/5retainedresource facetsPASS.",
+      "lastCompleteDocSource": "FAIL1 full corrected review;86 verified artifacts. Trustdenial/signing/lifecycle/receipt/5retainedresource facetsPASS, genericretirement lifetime exclusionFAIL.",
       "observedAt": "2026-10-11T21:35:42.906733+00:00",
       "fourPageCorrectionCommit": "a2abcd45b78b3ce2d54883f56295532b3601002e",
       "rootTrustAggregate": "Observed terminal0, Sources unchanged; static/contract/typecheck only.",
@@ -26387,7 +26453,9 @@
         "evidence": "/home/node/Documents/Codex/a98-evidence/root-current-operator-task-registry-gate/result.json",
         "observedEnd": "2026-10-11T21:36:45.787790+00:00",
         "acceptanceLimit": "Generator currentness, task/procedure structural checks and isolated mutation controls, not independent semantic or AP09.8 acceptance."
-      }
+      },
+      "documentationBatchWriter": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
+      "documentationBatchState": "Writer released after both complete terminal reviews; owns ONLY install+maintenance. Wholefamily correction underway."
     }
   }
 }
