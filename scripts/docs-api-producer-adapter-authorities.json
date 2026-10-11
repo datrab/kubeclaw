@@ -136,7 +136,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[\u2713]${NC} $1",
+          "${GREEN}[✓]${NC} $1",
           ";",
           "}",
           "warn",
@@ -152,7 +152,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[\u2717]${NC} $1",
+          "${RED}[✗]${NC} $1",
           ">&",
           "2",
           ";",
@@ -170,13 +170,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "\\n${BLUE}═══════════════════════════════════════${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "${BLUE}═══════════════════════════════════════${NC}",
           "}",
           "require_command",
           "()",
@@ -2887,7 +2887,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" \u2192 \" $3}",
+          "{print \"  \" $1 \" → \" $3}",
           "}",
           "reconcile_nova_retired_trust_mount",
           "()",
@@ -3605,7 +3605,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" \u2192 \" $3}",
+          "{print \"  \" $1 \" → \" $3}",
           "}",
           "cmd_image",
           "()",
@@ -5984,7 +5984,7 @@
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster BuildKit Production Preflight",
+          "Nova → Buster BuildKit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -5993,13 +5993,13 @@
           "\n",
           "$REPO_DIR/dist/verification/container-build-production-receipt.json",
           "log",
-          "Nova \u2192 Buster BuildKit production preflight passed",
+          "Nova → Buster BuildKit production preflight passed",
           "}",
           "cmd_nova_unit_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Unit Production Preflight",
+          "Nova → Buster Unit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -6008,13 +6008,13 @@
           "\n",
           "$REPO_DIR/dist/verification/unit-production-receipt.json",
           "log",
-          "Nova \u2192 Buster unit production preflight passed",
+          "Nova → Buster unit production preflight passed",
           "}",
           "cmd_nova_kubernetes_fixture_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Kubernetes Fixture Production Preflight",
+          "Nova → Buster Kubernetes Fixture Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -6439,13 +6439,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster Kubernetes fixture production preflight passed",
+          "Nova → Buster Kubernetes fixture production preflight passed",
           "}",
           "cmd_nova_http_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster HTTP Production Preflight",
+          "Nova → Buster HTTP Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -6860,13 +6860,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova \u2192 Buster HTTP production preflight passed",
+          "Nova → Buster HTTP production preflight passed",
           "}",
           "cmd_nova_api_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster API Production Preflight",
+          "Nova → Buster API Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7165,13 +7165,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster API production preflight passed",
+          "Nova → Buster API production preflight passed",
           "}",
           "cmd_nova_a11y_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Accessibility Production Preflight",
+          "Nova → Buster Accessibility Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7470,13 +7470,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster accessibility production preflight passed",
+          "Nova → Buster accessibility production preflight passed",
           "}",
           "cmd_nova_lighthouse_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Lighthouse Production Preflight",
+          "Nova → Buster Lighthouse Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -7775,13 +7775,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster Lighthouse production preflight passed",
+          "Nova → Buster Lighthouse production preflight passed",
           "}",
           "cmd_nova_visual_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Visual Regression Production Preflight",
+          "Nova → Buster Visual Regression Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8057,13 +8057,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster visual production preflight passed",
+          "Nova → Buster visual production preflight passed",
           "}",
           "cmd_nova_e2e_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster End-to-End Production Preflight",
+          "Nova → Buster End-to-End Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8339,13 +8339,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster end-to-end production preflight passed",
+          "Nova → Buster end-to-end production preflight passed",
           "}",
           "cmd_nova_security_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Security Production Preflight",
+          "Nova → Buster Security Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -8621,13 +8621,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster security production preflight passed",
+          "Nova → Buster security production preflight passed",
           "}",
           "cmd_nova_tailscale_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Tailscale Production Preflight",
+          "Nova → Buster Tailscale Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -9025,13 +9025,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova \u2192 Buster Tailscale production preflight passed",
+          "Nova → Buster Tailscale production preflight passed",
           "}",
           "cmd_nova_production_preflights",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Production Suite Preflights",
+          "Nova → Buster Production Suite Preflights",
           "require_command",
           "node",
           "local",
@@ -10123,7 +10123,7 @@
           "Unknown deployment command: $1",
           "fi",
           "echo",
-          "KubeClaw \u2014 Deployment CLI",
+          "KubeClaw — Deployment CLI",
           "echo",
           "",
           "echo",
@@ -10197,7 +10197,7 @@
           "echo",
           "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight",
           "echo",
-          "  buster-infra-smoke  Test Redis \u2192 deployed Buster \u2192 BuildKit \u2192 deploy \u2192 completion",
+          "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion",
           "echo",
           "  agents             Deploy agents (Nova + Buster) using image/runtime values",
           "echo",
@@ -12730,7 +12730,7 @@
           },
           {
             "kind": "FunctionDeclaration",
-            "syntax": "function conciseSignalValue(value, maximum = 180) {\n  const original = String(value ?? '');\n  const oneLine = original.replaceAll(/\\s+/gu, ' ').trim();\n  if (oneLine.length <= maximum) return oneLine;\n  const digest = createHash('sha256').update(original).digest('hex').slice(0, 12);\n  return `${oneLine.slice(0, maximum - 35).trimEnd()}\u2026 [${original.length} chars sha256:${digest}]`;\n}"
+            "syntax": "function conciseSignalValue(value, maximum = 180) {\n  const original = String(value ?? '');\n  const oneLine = original.replaceAll(/\\s+/gu, ' ').trim();\n  if (oneLine.length <= maximum) return oneLine;\n  const digest = createHash('sha256').update(original).digest('hex').slice(0, 12);\n  return `${oneLine.slice(0, maximum - 35).trimEnd()}… [${original.length} chars sha256:${digest}]`;\n}"
           },
           {
             "kind": "FunctionDeclaration",
@@ -30382,7 +30382,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[\u2713]${NC} $1"
+            "${GREEN}[✓]${NC} $1"
           ]
         },
         {
@@ -30398,7 +30398,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[\u2717]${NC} $1"
+            "${RED}[✗]${NC} $1"
           ]
         },
         {
@@ -30414,7 +30414,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
+            "n${BLUE}═══════════════════════════════════════${NC}"
           ]
         },
         {
@@ -30430,7 +30430,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
+            "${BLUE}═══════════════════════════════════════${NC}"
           ]
         },
         {
@@ -30853,14 +30853,14 @@
           "line": 1232,
           "command": "awk",
           "args": [
-            "{print \"  \" $1 \" \u2192 \" $3}"
+            "{print \"  \" $1 \" → \" $3}"
           ]
         },
         {
           "line": 1469,
           "command": "awk",
           "args": [
-            "{print \"  \" $1 \" \u2192 \" $3}"
+            "{print \"  \" $1 \" → \" $3}"
           ]
         },
         {
@@ -32999,7 +32999,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 140,
@@ -33009,7 +33009,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
         },
         {
           "line": 141,
@@ -33019,7 +33019,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
         },
         {
           "line": 142,
@@ -33029,7 +33029,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "err() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
+          "sourceEvidence": "err() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
         },
         {
           "line": 144,
@@ -33039,7 +33039,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
+          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
         },
         {
           "line": 145,
@@ -33049,7 +33049,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\""
+          "sourceEvidence": "  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\""
         },
         {
           "line": 146,
@@ -33059,7 +33059,7 @@
           "source": "scripts/deploy.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n}"
+          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\"\n}"
         },
         {
           "line": 166,
@@ -33589,7 +33589,7 @@
           "source": "scripts/deploy.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  log \"Infrastructure deployed. Pods:\"\n  kubectl get pods -n \"$NAMESPACE\" --no-headers | awk '{print \"  \" $1 \" \u2192 \" $3}'\n}"
+          "sourceEvidence": "  log \"Infrastructure deployed. Pods:\"\n  kubectl get pods -n \"$NAMESPACE\" --no-headers | awk '{print \"  \" $1 \" → \" $3}'\n}"
         },
         {
           "line": 1469,
@@ -33599,7 +33599,7 @@
           "source": "scripts/deploy.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Original deployment branch invokes the qualified Helm/infrastructure/pure renderer adapters and resource constructors. Other operations select paths, bools, digests and credentials, inspect live API objects/tables, or print framed operator diagnostics. Live API reads are external observations, not new source-owned resource constructors.",
-          "sourceEvidence": "  kubectl get pods -n \"$NAMESPACE\" -l app.kubernetes.io/name=kubeclaw --no-headers |\n    awk '{print \"  \" $1 \" \u2192 \" $3}'\n}"
+          "sourceEvidence": "  kubectl get pods -n \"$NAMESPACE\" -l app.kubernetes.io/name=kubeclaw --no-headers |\n    awk '{print \"  \" $1 \" → \" $3}'\n}"
         },
         {
           "line": 1599,
@@ -34454,7 +34454,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[\u2713]${NC} $1",
+          "${GREEN}[✓]${NC} $1",
           ";",
           "}",
           "warn",
@@ -34470,7 +34470,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[\u2717]${NC} $1",
+          "${RED}[✗]${NC} $1",
           ">&",
           "2",
           ";",
@@ -34488,13 +34488,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "\\n${BLUE}═══════════════════════════════════════${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "${BLUE}═══════════════════════════════════════${NC}",
           "}",
           "require_command",
           "()",
@@ -37062,7 +37062,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" \u2192 \" $3}",
+          "{print \"  \" $1 \" → \" $3}",
           "}",
           "reconcile_nova_retired_trust_mount",
           "()",
@@ -37780,7 +37780,7 @@
           "--no-headers",
           "|",
           "awk",
-          "{print \"  \" $1 \" \u2192 \" $3}",
+          "{print \"  \" $1 \" → \" $3}",
           "}",
           "cmd_image",
           "()",
@@ -39858,7 +39858,7 @@
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster BuildKit Production Preflight",
+          "Nova → Buster BuildKit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -39867,13 +39867,13 @@
           "\n",
           "$REPO_DIR/dist/verification/container-build-production-receipt.json",
           "log",
-          "Nova \u2192 Buster BuildKit production preflight passed",
+          "Nova → Buster BuildKit production preflight passed",
           "}",
           "cmd_nova_unit_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Unit Production Preflight",
+          "Nova → Buster Unit Production Preflight",
           "require_command",
           "kubectl",
           "run_nova_production_receipt_preflight",
@@ -39882,13 +39882,13 @@
           "\n",
           "$REPO_DIR/dist/verification/unit-production-receipt.json",
           "log",
-          "Nova \u2192 Buster unit production preflight passed",
+          "Nova → Buster unit production preflight passed",
           "}",
           "cmd_nova_kubernetes_fixture_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Kubernetes Fixture Production Preflight",
+          "Nova → Buster Kubernetes Fixture Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -40313,13 +40313,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster Kubernetes fixture production preflight passed",
+          "Nova → Buster Kubernetes fixture production preflight passed",
           "}",
           "cmd_nova_http_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster HTTP Production Preflight",
+          "Nova → Buster HTTP Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -40734,13 +40734,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova \u2192 Buster HTTP production preflight passed",
+          "Nova → Buster HTTP production preflight passed",
           "}",
           "cmd_nova_api_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster API Production Preflight",
+          "Nova → Buster API Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -41039,13 +41039,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster API production preflight passed",
+          "Nova → Buster API production preflight passed",
           "}",
           "cmd_nova_a11y_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Accessibility Production Preflight",
+          "Nova → Buster Accessibility Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -41344,13 +41344,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster accessibility production preflight passed",
+          "Nova → Buster accessibility production preflight passed",
           "}",
           "cmd_nova_lighthouse_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Lighthouse Production Preflight",
+          "Nova → Buster Lighthouse Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -41649,13 +41649,13 @@
           "$receipt_tmp",
           "$receipt_unsigned",
           "log",
-          "Nova \u2192 Buster Lighthouse production preflight passed",
+          "Nova → Buster Lighthouse production preflight passed",
           "}",
           "cmd_nova_visual_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Visual Regression Production Preflight",
+          "Nova → Buster Visual Regression Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -41931,13 +41931,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster visual production preflight passed",
+          "Nova → Buster visual production preflight passed",
           "}",
           "cmd_nova_e2e_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster End-to-End Production Preflight",
+          "Nova → Buster End-to-End Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -42213,13 +42213,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster end-to-end production preflight passed",
+          "Nova → Buster end-to-end production preflight passed",
           "}",
           "cmd_nova_security_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Security Production Preflight",
+          "Nova → Buster Security Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -42495,13 +42495,13 @@
           "$receipt_unsigned",
           ";",
           "log",
-          "Nova \u2192 Buster security production preflight passed",
+          "Nova → Buster security production preflight passed",
           "}",
           "cmd_nova_tailscale_preflight",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Tailscale Production Preflight",
+          "Nova → Buster Tailscale Production Preflight",
           "require_command",
           "kubectl",
           "local",
@@ -42899,13 +42899,13 @@
           "log",
           "Stored production receipt at $receipt_file",
           "log",
-          "Nova \u2192 Buster Tailscale production preflight passed",
+          "Nova → Buster Tailscale production preflight passed",
           "}",
           "cmd_nova_production_preflights",
           "()",
           "{",
           "header",
-          "Nova \u2192 Buster Production Suite Preflights",
+          "Nova → Buster Production Suite Preflights",
           "require_command",
           "node",
           "local",
@@ -43788,7 +43788,7 @@
           "Unknown deployment command: $1",
           "fi",
           "echo",
-          "KubeClaw \u2014 Deployment CLI",
+          "KubeClaw — Deployment CLI",
           "echo",
           "",
           "echo",
@@ -43862,7 +43862,7 @@
           "echo",
           "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight",
           "echo",
-          "  buster-infra-smoke  Test Redis \u2192 deployed Buster \u2192 BuildKit \u2192 deploy \u2192 completion",
+          "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion",
           "echo",
           "  agents             Deploy agents (Nova + Buster) using image/runtime values",
           "echo",
@@ -54372,7 +54372,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[\u2713]${NC} $1"
+            "${GREEN}[✓]${NC} $1"
           ]
         },
         {
@@ -54388,7 +54388,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[\u2717]${NC} $1"
+            "${RED}[✗]${NC} $1"
           ]
         },
         {
@@ -54588,7 +54588,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 26,
@@ -54598,7 +54598,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
         },
         {
           "line": 27,
@@ -54608,7 +54608,7 @@
           "source": "scripts/setup.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\n"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\n"
         },
         {
           "line": 30,
@@ -54648,7 +54648,7 @@
           "source": "scripts/setup.sh",
           "kind": "native-tool-or-selected-stream",
           "purpose": "Legacy opt-in repository Git setup; human git status/commit/push diagnostics and path/remote helpers. Git and user URL are external input authorities; no resource construction.",
-          "sourceEvidence": "# \u2500\u2500\u2500 Step 2: Verify repository hygiene \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nif [[ -f .dockerignore ]] && grep -qxF \"my-values/\" .dockerignore; then\n  log \".dockerignore excludes my-values/ from runtime image build contexts\""
+          "sourceEvidence": "# ─── Step 2: Verify repository hygiene ───────────────────────────────────\nif [[ -f .dockerignore ]] && grep -qxF \"my-values/\" .dockerignore; then\n  log \".dockerignore excludes my-values/ from runtime image build contexts\""
         },
         {
           "line": 60,
@@ -54804,7 +54804,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[\u2713]${NC} $1",
+          "${GREEN}[✓]${NC} $1",
           ";",
           "}",
           "warn",
@@ -54820,7 +54820,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[\u2717]${NC} $1",
+          "${RED}[✗]${NC} $1",
           ">&",
           "2",
           ";",
@@ -54866,7 +54866,7 @@
           ";",
           "then",
           "warn",
-          "Git already initialized \u2014 skipping init",
+          "Git already initialized — skipping init",
           "else",
           "git",
           "init",
@@ -57387,7 +57387,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${GREEN}[\u2713]${NC} $1"
+            "${GREEN}[✓]${NC} $1"
           ]
         },
         {
@@ -57403,7 +57403,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${RED}[\u2717]${NC} $1"
+            "${RED}[✗]${NC} $1"
           ]
         },
         {
@@ -57419,7 +57419,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
+            "n${BLUE}═══════════════════════════════════════${NC}"
           ]
         },
         {
@@ -57435,7 +57435,7 @@
           "command": "echo",
           "args": [
             "-e",
-            "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}"
+            "${BLUE}═══════════════════════════════════════${NC}"
           ]
         },
         {
@@ -58323,7 +58323,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
+          "sourceEvidence": "NC='\\033[0m'\nlog() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }"
         },
         {
           "line": 48,
@@ -58333,7 +58333,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "log() { echo -e \"${GREEN}[\u2713]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }"
+          "sourceEvidence": "log() { echo -e \"${GREEN}[✓]${NC} $1\"; }\nwarn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }"
         },
         {
           "line": 49,
@@ -58343,7 +58343,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
+          "sourceEvidence": "warn() { echo -e \"${YELLOW}[!]${NC} $1\"; }\nerr() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }"
         },
         {
           "line": 50,
@@ -58353,7 +58353,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "err() { echo -e \"${RED}[\u2717]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
+          "sourceEvidence": "err() { echo -e \"${RED}[✗]${NC} $1\" >&2; }\ninfo() { echo -e \"${BLUE}[i]${NC} $1\"; }\nheader() {"
         },
         {
           "line": 52,
@@ -58363,7 +58363,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
+          "sourceEvidence": "header() {\n  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\""
         },
         {
           "line": 53,
@@ -58373,7 +58373,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "  echo -e \"\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\""
+          "sourceEvidence": "  echo -e \"\\n${BLUE}═══════════════════════════════════════${NC}\"\n  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\""
         },
         {
           "line": 54,
@@ -58383,7 +58383,7 @@
           "source": "my-values/setup-secrets.sh",
           "kind": "framed-or-native-scalar-output",
           "purpose": "Original credential scalar helpers/from-file input and fixed Secret GET -> jq .data.DATABASE_URL field update -> apply; Secret constructors are independently adapted. Existing objects are external live reads; credentials remain private inputs.",
-          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}\"\n}"
+          "sourceEvidence": "  echo -e \"${BLUE} $1${NC}\"\n  echo -e \"${BLUE}═══════════════════════════════════════${NC}\"\n}"
         },
         {
           "line": 79,
@@ -58695,7 +58695,7 @@
           "{",
           "echo",
           "-e",
-          "${GREEN}[\u2713]${NC} $1",
+          "${GREEN}[✓]${NC} $1",
           ";",
           "}",
           "warn",
@@ -58711,7 +58711,7 @@
           "{",
           "echo",
           "-e",
-          "${RED}[\u2717]${NC} $1",
+          "${RED}[✗]${NC} $1",
           ">&",
           "2",
           ";",
@@ -58729,13 +58729,13 @@
           "{",
           "echo",
           "-e",
-          "\\n${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "\\n${BLUE}═══════════════════════════════════════${NC}",
           "echo",
           "-e",
           "${BLUE} $1${NC}",
           "echo",
           "-e",
-          "${BLUE}\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550${NC}",
+          "${BLUE}═══════════════════════════════════════${NC}",
           "}",
           "TMP_FILES=",
           "()",
@@ -60891,7 +60891,7 @@
           ">",
           "/dev/null",
           "log",
-          "Fixed DATABASE_URL: ${SRC_NS} \u2192 ${NAMESPACE}",
+          "Fixed DATABASE_URL: ${SRC_NS} → ${NAMESPACE}",
           "else",
           "log",
           "DATABASE_URL already correct (no ${SRC_NS} reference)",
@@ -62281,6 +62281,7 @@
       "scripts/docs-kubernetes-namespace-isolation-receiver-contracts.mjs",
       "scripts/docs-kubernetes-network-receiver-contracts.mjs",
       "scripts/docs-kubernetes-node-workloads-receiver-contracts.mjs",
+      "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
       "scripts/docs-kubernetes-webhook-selected-receiver-contracts.mjs",
       "scripts/docs-kubernetes-workload-receiver-contracts.mjs",
       "scripts/docs-lint-policy-reference.mjs",
@@ -62300,6 +62301,886 @@
       "scripts/docs-tree-boundary.mjs",
       "scripts/docs-yaml-field-authorities.mjs",
       "scripts/docs-yaml-inventory.mjs"
+    ],
+    "qualificationRequiredSources": [
+      "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs"
+    ],
+    "qualifications": [
+      {
+        "kind": "static-receiver-descriptions/v1",
+        "source": "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+        "sha256": "02d9af8019e1300767aa0ca507607004aa6ee6e107fb455da3579af46e551f51",
+        "reviewedRole": "Finite static receiver descriptions, source links and canonical task target; no imports, runtime inputs or output capabilities. Authorized candidate rebinding after navigation/access correction; fresh independent Source boundary review pending. Prior reviews do not approve this new source hash.",
+        "namedExports": [
+          "receiverContracts"
+        ],
+        "operationRecipe": {
+          "language": "TypeScript",
+          "statements": [
+            {
+              "kind": "FirstStatement",
+              "syntax": "const revision = '66452049f3d692768c39c797b21b793dce80314e';"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const productRevision = '8ef721ea0f41e4666a50740caa0616819306e97e';"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const source = (path, lines, claim) => ({\n  url: `https://github.com/kubernetes/kubernetes/blob/${revision}/${path}#L${String(lines).replace('-', '-L')}`, claim,\n});"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const producer = (lines, claim) => ({\n  url: `https://github.com/datrab/kubeclaw/blob/${productRevision}/scripts/remove-qdrant.sh#L${String(lines).replace('-', '-L')}`, claim,\n});"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const patch = (lines, claim) => source('vendor/gopkg.in/evanphx/json-patch.v4/patch.go', lines, claim);"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const handler = (lines, claim) => source('staging/src/k8s.io/apiserver/pkg/endpoints/handlers/patch.go', lines, claim);"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const controller = (lines, claim) => source('pkg/controller/volume/persistentvolume/pv_controller.go', lines, claim);"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const types = (lines, claim) => source('staging/src/k8s.io/api/core/v1/types.go', lines, claim);"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const paths = ['$', '$.spec', '$.spec.claimRef', '$.spec.claimRef.name', '$.spec.claimRef.namespace', '$.spec.claimRef.uid', '$.spec.persistentVolumeReclaimPolicy'];"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const operationScope = 'scripts/remove-qdrant.sh updates an existing PersistentVolume (PV), the cluster-wide record of a storage volume. A PersistentVolumeClaim (PVC) is a namespaced request to use that volume; claimRef records the referenced claim. Its UID identifies one lifetime of that claim. The script sends a core/v1 PATCH request with content type application/json-patch+json. JSON Patch is an ordered array of operations on the current object. Three test operations act as guards: each compares the current claimRef namespace, name or UID with the captured value. The final add operation sets persistentVolumeReclaimPolicy to Delete. The API server first converts its existing PV object to JSON; this conversion can omit empty fields, including empty strings and a missing claim reference. The cases below describe that JSON at the time the patch runs. They do not assert that malformed PVs can be stored. After applying the patch, the server converts the complete JSON result to a PV object with declared field types. Server admission rules can change or reject the update, and update validation checks the complete object. This request is not a new PV or a replacement spec; the absent, null and empty cases are not defaults for PV creation.';"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const recovery = 'After an uncertain response, stop and read the current PV and PVC identities, claimRef, reclaim policy, deletion state and controller events before another write. Preserve the original inventory and storage handle, the identifier used to locate the backing volume. A failed response or wait timeout does not establish whether the policy was stored, the PVC was deleted or storage deletion started. The storage owner must inspect the storage component responsible for volume creation or deletion (the provisioner) and the backing storage system (the backend) before a retry or recovery.';"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const conditions = [\n  'Run the retirement procedure only after the required export and retention decision. The script requires --delete-data, KUBE_CONTEXT, python3, helm and kubectl. The authenticated operator needs cluster-scoped PV get/list/watch/patch and namespaced PVC get/list/watch/delete access, plus workload/Secret deletion and dependent-workload/release-record observation rights. Verify the complete permissions with the owning authority through the retirement procedure; the kubeclaw namespace does not limit PV authority.',\n  'The script inventories kubeclaw PVCs with either of the two known Qdrant storage names or the selected Qdrant labels. Each selected PVC supplies its metadata name, UID and spec.volumeName. No bound volume name means no PV patch and no PV wait for that claim.',\n  'Cilium policy deletion runs only when the script discovery pipeline succeeds and finds its API. A failed discovery inside the if condition can skip that deletion, continue later PV/PVC writes and still return exit zero. Review captured stderr and read back named policy and original storage identities after invocation; keep cleanup unresolved and stop further operator writes until the owners reconcile the result.',\n  'Before uninstalling the Qdrant Helm release, the script reads each named PV and compares all three claimRef values. It then uninstalls that Helm release and removes the named remaining resources before sending each guarded PV patch. An earlier failure can leave some retirement steps complete. The later API tests check the reference again on the object used by the patch.',\n  'The test operations do not change claimRef. They must all succeed before add runs. The script does not test the PV metadata UID, resourceVersion (the API object version) or prior reclaim policy. Matching claimRef protects the selected PVC reference, not every concurrent PV change or every object with a reused PV name. The later PVC deletion uses the captured name without a UID precondition. Keep the retirement window free of replacement or rebinding and stop if current identities differ.',\n  'JSON Patch add replaces an existing object member or adds an absent member under an existing parent. It does not create a missing spec parent. The selected operation always writes Delete, including when the prior policy is absent, null or empty; omission of a patch operation would retain the prior member at patch application.',\n  'A stored Delete policy is destructive intent. The script next deletes the selected PVC and waits up to 180 seconds for its deletion, then waits up to 180 seconds for PV API deletion. PVC protection can delay removal of a claim that is still in use. PV finalizers are object entries that delay API removal until required cleanup completes. A storage driver connects Kubernetes to the backing storage system. These protections, server admission rules, controller availability, storage-driver deletion support and access to the backing storage system (the backend) can delay or prevent completion. The patch response alone proves no controller or backend result.',\n  'The PV controller repeatedly compares current state with the requested state; this is reconciliation. No claim reference (nil in the controller), a reference with an empty UID, and a reference to an existing matching claim take different paths. A PV is released from its bound claim when that claim is gone or its lifetime no longer matches. The controller can then mark the PV Released and begin the action selected by its reclaim policy. Delete schedules storage deletion separately from the patch. If an annotation marks the volume as migrated, deletion responsibility has moved from a storage plugin inside Kubernetes to a separate provisioner, the storage component responsible for creating or deleting backing volumes. The PV controller leaves deletion to that provisioner.',\n  'When a storage plugin inside Kubernetes handles deletion, the PV controller reads the current PV and rechecks whether it is released before calling the plugin. Plugin errors can record VolumeFailedDelete or a volume-in-use event. The controller retries deletion during later reconciliation. If a separate storage component handles deletion, that component remains responsible for its backend. Successful backend deletion can precede a failure to remove the finalizer or PV API object. Do not force-remove finalizers to hide this uncertainty.',\n  'Neither PV API absence nor the script completion message independently proves that all backend files, snapshots, replicas, exports or backups are erased. Verify the selected driver and backend with the storage owner. Changing the policy back cannot recover data already removed.',\n  'The producer comment states that PVC deletion alone can leave retained PVs and data. Inference: guarded Delete connects explicit data retirement to the selected claim lifetime. It adds an irreversible storage effect and depends on the component that deletes storage; reassess it if storage ownership or retention requirements change.',\n  recovery,\n];"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const evidence = [\n  producer('6-14', 'The script requires explicit data deletion and context selection and checks its three tools.'),\n  producer('18-43', 'Selected PVC names or labels supply name, UID and volumeName; each named PV must match the captured namespace/name/UID before the Helm release is uninstalled.'),\n  producer('46-55', 'The script uninstalls the Qdrant Helm release and removes named workload/access resources before the later PV patch loop.'),\n  producer('57-77', 'The producer sends three ordered test guards followed by add Delete, then deletes the PVC by name and waits for PV API deletion.'),\n  handler('323-340', 'The JSON patch mechanism encodes the current object, applies the patch and decodes the complete result into a typed object.'),\n  handler('372-378', 'JSON patch updates the record of which client manages fields and returns NotFound rather than creating a missing target.'),\n  handler('403-417', 'Malformed patch decoding returns BadRequest; JSON patch application failure returns HTTP 422 before producing an update object.'),\n  handler('691-705', 'The server applies the patch, runs admission rules that can change it and removes duplicate owner references before the API storage update.'),\n  patch('342-381', 'Following a nested JSON path requires an existing parent object or array that the library can read.'),\n  patch('383-395', 'Object-member add assigns the member even when it already exists.'),\n  patch('524-541', 'Add rejects a missing parent and assigns the supplied value to the selected member.'),\n  patch('182-198', 'Scalar test equality compares compact JSON values without converting incompatible values to strings.'),\n  patch('653-702', 'Test resolves its target and compares JSON values; a missing target cannot satisfy these non-null selected string expectations.'),\n  patch('807-838', 'Operations execute in array order and the first error returns no patched result.'),\n  source('pkg/registry/core/persistentvolume/strategy.go', '49-51', 'PersistentVolume is cluster scoped.'),\n  source('pkg/registry/core/persistentvolume/strategy.go', '92-94', 'PV update cannot create a missing volume.'),\n  source('pkg/registry/core/persistentvolume/strategy.go', '96-110', 'Update preparation preserves old status and drops disabled spec fields; validation checks the complete new PV and update constraints.'),\n  source('pkg/apis/core/validation/validation.go', '2015-2025', 'For the selected complete PV spec, validation checks membership in the supported policy set when the policy is nonempty.'),\n  source('pkg/apis/core/validation/validation.go', '1942-1945', 'The supported reclaim-policy set includes Delete.'),\n  source('pkg/apis/core/validation/validation.go', '2262-2306', 'PV update validates metadata and spec and keeps volume source and volume mode immutable under the shown update rules.'),\n  controller('576-602', 'No claim reference (nil) and an empty UID take unused or reserved paths rather than deletion after claim release.'),\n  controller('642-689', 'Reconciliation checks a different claim UID against the API, treats a missing old claim as released and invokes reclamation.'),\n  controller('1178-1215', 'The migration annotation transfers deletion responsibility to a separate provisioner; Delete schedules a separate deletion operation for other volumes.'),\n  controller('1321-1389', 'Deletion rereads the PV and checks release; errors, external deletion, retry and a later PV API deletion failure are separate outcomes.'),\n  controller('1392-1437', 'The deletion release check requires a nonnil claimRef and nonempty UID and checks the matching claim and its bound PV.'),\n  controller('1495-1540', 'A storage plugin inside Kubernetes performs backend deletion; a separate storage component handles external deletion. Finalizer removal can fail after storage deletion.'),\n];"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const limits = [\n  'These are pinned source expectations for Kubernetes v1.35.0 and the selected producer. No live API request, authorization check, admission-rule execution, controller reconciliation, storage-driver operation, storage erasure or recovery has been executed as evidence here.',\n  'The published API schema describes complete PV field shapes. It does not turn this partial JSON Patch into a CREATE body, add unselected required siblings, or establish the stored cluster state. Full PV provisioning choices remain in the upstream reference.',\n  'The target cluster can have different admission rules, controller settings, enabled Kubernetes features or storage drivers. The operator and storage owner must check the served version, live identities, finalizers and actual backend before destructive retirement. This contract does not select or qualify a particular former Qdrant PV driver.',\n  'The recorded wait is a client observation limit. It is not a storage deletion deadline or a promise of data recovery. A driver-specific deletion and audit check is required before reporting backend erasure.',\n];"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const definitions = {\n  '$': {\n    purpose: 'Set the existing volume selected from a former Qdrant PVC to Delete after checking its claim reference. This permits storage deletion after the bound claim is released.',\n    omitted: 'No PATCH request means no policy change. A missing named PV returns NotFound; JSON Patch does not create it.',\n    nullValue: 'A null PV target cannot satisfy the nested selected guards. JSON null as the operation-array body is not the four-operation retirement request and supplies no selected Delete operation.',\n    emptyValue: 'An empty operation array supplies no Delete operation. An empty current object lacks the nested guard paths and fails. An object body {} is not the required JSON Patch array.',\n    invalidValue: 'Malformed JSON or an incompatible operation-array shape fails patch decoding. A guard failure returns HTTP 422 from patch application. Conversion to declared PV field types, admission rules and complete-PV update checks can reject a result after the guards pass.',\n    changeImpact: `The patch changes only the requested policy member before admission rules and API-server update preparation run. The script uninstalls the Qdrant Helm release and removes the named resources before it sends the patch. It then deletes the PVC. The PV controller handles the resulting release of the bound volume and storage deletion separately; storage deletion is not guaranteed. ${recovery}`,\n    evidence: [types('366-385', 'The PV resource has TypeMeta, ObjectMeta, spec and status; this is the existing target, not the JSON Patch request body.')],\n  },\n  '$.spec': {\n    purpose: 'Traverse the stored volume specification to reach its claim reference and reclaim policy.',\n    omitted: 'The producer does not replace or supply spec. If the current spec is absent, the first nested guard fails; the patch does not create that parent object.',\n    nullValue: 'A null current spec supplies no child container and fails the selected guard traversal. The producer submits no null spec mutation.',\n    emptyValue: 'A current spec of {} lacks claimRef and fails the guards. The producer submits no empty replacement spec.',\n    invalidValue: 'A scalar, array or incompatible parent shape cannot supply the selected claimRef paths and policy object member. Any complete result must still pass PV spec update validation.',\n    changeImpact: 'The policy add retains unmentioned spec members at patch application. It does not reset the volume source, capacity or binding reference. API-server update preparation, admission rules and validation remain separate stages.',\n    evidence: [types('373-377', 'PV spec is an object member with declared field types; it describes the already stored volume.'), types('397-413', 'The stored spec contains claimRef and persistentVolumeReclaimPolicy.')],\n  },\n  '$.spec.claimRef': {\n    purpose: 'Use the current bound-claim reference as the ownership condition for the selected retirement patch.',\n    omitted: 'No claimRef is written by the producer. A missing current reference fails the namespace guard rather than creating a new binding.',\n    nullValue: 'A null current claimRef fails nested guard traversal; the selected patch does not clear the reference.',\n    emptyValue: '{} lacks namespace, name and UID and fails the guards. Empty or omitted claimRef is not authorization to erase an unclaimed volume.',\n    invalidValue: 'A wrong parent shape or a differing child fails the selected patch. These tests compare actual JSON values; they do not use the rules for creating an ObjectReference to establish ownership.',\n    changeImpact: 'All three matching children permit the later policy add. The reference itself stays unchanged at patch application; the PV controller checks later binding and release through reconciliation.',\n    evidence: [types('397-406', 'claimRef is an optional reference to an ObjectReference object; it records the binding to a claim.'), types('7390-7407', 'ObjectReference declares namespace, name and UID as optional string fields.')],\n  },\n  '$.spec.persistentVolumeReclaimPolicy': {\n    purpose: 'Set Delete on the selected existing PV so claim retirement can request deletion of its backing storage.',\n    omitted: 'The actual patch always includes add Delete. An absent current policy member is added after all guards pass; leaving out this operation would make no policy assignment at patch application.',\n    nullValue: 'A null current policy member is overwritten with the string Delete after the guards pass. The producer supplies no null policy value; null is not a selected request to erase this field or its backend.',\n    emptyValue: 'An empty current policy string is overwritten with Delete. An empty submitted add value is not produced by this retirement command and must not be treated as Delete.',\n    invalidValue: 'A missing or invalid spec parent prevents add. The selected nonempty string Delete is a supported reclaim policy; a different unsupported nonempty string fails complete-PV validation. A successful guard does not bypass conversion to declared PV field types, admission rules or update validation.',\n    changeImpact: `An existing Retain or other policy is replaced by Delete without testing its prior value. Data deletion can start after claim release and cannot be reversed by restoring policy. ${recovery}`,\n    evidence: [types('408-413', 'The policy is a typed string member on PV spec.'), types('450-463', 'Delete requests removal of the Kubernetes PV after claim release and requires a volume plugin that supports deletion. The shared controller evidence describes backend deletion; this declaration does not prove driver completion.')],\n  },\n};"
+            },
+            {
+              "kind": "ForOfStatement",
+              "syntax": "for (const [field, expected, lines, detail] of [\n  ['namespace', 'the exact string kubeclaw', '7390-7393', 'The controller locates the claim inside this namespace.'],\n  ['name', 'the captured selected PVC metadata.name', '7394-7397', 'The controller locates the claim by this name.'],\n  ['uid', 'the captured selected PVC metadata.uid', '7398-7401', 'The UID identifies the PVC lifetime. A same-name replacement claim is a different lifetime.'],\n]) {\n  definitions[`$.spec.claimRef.${field}`] = {\n    purpose: `Test current claimRef.${field} against ${expected} before allowing the policy add. ${detail}`,\n    omitted: `The producer always supplies this test, not a field assignment. An absent current member cannot match the selected nonempty string and fails the patch. No missing value is defaulted from request scope.`,\n    nullValue: 'A null current member does not equal the selected non-null string and fails the guard. The producer does not submit a null expectation or clear this member.',\n    emptyValue: 'An empty current string cannot match the captured valid PVC identity or kubeclaw namespace and fails. When the API server converts the existing PV to JSON, empty string fields can be absent; that absence also fails the selected expectation.',\n    invalidValue: `A different string or incompatible JSON value fails JSON-value comparison; it is not converted to the expected string. Passing the other two tests does not compensate for this failure.`,\n    changeImpact: `This operation makes no binding change. All three tests must pass on the current object used by the patch before Delete can be assigned. ${detail} ${recovery}`,\n    evidence: [types(lines, `ObjectReference declares ${field} as an optional string field; its omitempty JSON tag means an empty value can be omitted during conversion to JSON.`)],\n  };\n}"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "export const receiverContracts = paths.map(fieldPath => {\n  const definition = definitions[fieldPath];\n  return {\n    kind: 'PersistentVolume', fieldPath,\n    authoritySelector: {apiVersion: 'v1', kind: 'PersistentVolume', fieldPath},\n    receiver: 'The Kubernetes API server applies the patch through its bundled JSON Patch library, checks the resulting PV update and stores it. The PV controller then handles claim release and the selected storage-deletion action.',\n    operationScope, ...definition,\n    crossFieldConditions: [...conditions],\n    cases: [\n      {name: 'omitted-operation-or-target-member', condition: 'The request or selected operation is omitted, or its current target member is absent, as distinguished below.', sourceOutcome: definition.omitted},\n      {name: 'current-null-versus-submitted-null', condition: 'The current target boundary is null; the producer still sends its fixed non-null guards and Delete string.', sourceOutcome: definition.nullValue},\n      {name: 'current-empty-versus-empty-patch', condition: 'The current boundary has the stated empty value, or an empty operation array is supplied at the root.', sourceOutcome: definition.emptyValue},\n      {name: 'invalid-value-or-failed-precondition', condition: 'The stated malformed shape, incompatible value or ownership mismatch reaches the selected receiving stage.', sourceOutcome: definition.invalidValue},\n      {name: 'accepted-intent-versus-reclamation', condition: 'The policy update is stored but PVC/PV deletion or the backend effect is pending, failed or uncertain.', sourceOutcome: definition.changeImpact},\n      {name: 'uncertain-result-safe-stop', condition: 'The patch response, PVC delete or PV deletion wait is interrupted or times out.', sourceOutcome: recovery},\n    ],\n    evidence: [...evidence, ...definition.evidence],\n    qualificationLimits: [...limits],\n    readerReferences: [{label: 'Retire the former Qdrant installation and check storage ownership and deletion', target: '../use/maintenance.md#retire-the-former-qdrant-installation'}],\n  };\n});"
+            }
+          ]
+        },
+        "graphEdges": [
+          {
+            "source": "scripts/docs-api-product-scope.mjs",
+            "target": "scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs",
+            "kind": "import",
+            "operation": "import { receiverContracts as pvSelectedReceiverContracts } from './docs-kubernetes-pv-selected-receiver-contracts.mjs';"
+          },
+          {
+            "source": "scripts/docs-api-reference.mjs",
+            "target": "scripts/docs-api-product-scope.mjs",
+            "kind": "import",
+            "operation": "import { apiProductSelection, assertProductApiContexts, productMetadataReferences, productApiReceiverRecords } from './docs-api-product-scope.mjs';"
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "target": "scripts/docs-api-product-scope.mjs",
+            "kind": "import",
+            "operation": "import { apiProductSelection, discoverProductApiContexts, productMetadataReferences, productScopeLimits, productApiReceiverRecords } from './docs-api-product-scope.mjs';"
+          },
+          {
+            "source": "scripts/docs-generate.mjs",
+            "target": "scripts/docs-api-reference.mjs",
+            "kind": "import",
+            "operation": "import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamApiReference } from './docs-api-reference.mjs';"
+          }
+        ],
+        "documentationEntries": [
+          {
+            "name": "docs:drift:config:check",
+            "command": "node scripts/docs-configuration-inventory.mjs --check",
+            "source": "scripts/docs-configuration-inventory.mjs"
+          },
+          {
+            "name": "docs:generate",
+            "command": "node scripts/docs-generate.mjs",
+            "source": "scripts/docs-generate.mjs"
+          },
+          {
+            "name": "docs:generate:check",
+            "command": "node scripts/docs-generate.mjs --check",
+            "source": "scripts/docs-generate.mjs"
+          },
+          {
+            "name": "docs:inventory:config",
+            "command": "node scripts/docs-configuration-inventory.mjs",
+            "source": "scripts/docs-configuration-inventory.mjs"
+          },
+          {
+            "name": "docs:inventory:config:check",
+            "command": "node scripts/docs-configuration-inventory.mjs --check",
+            "source": "scripts/docs-configuration-inventory.mjs"
+          }
+        ],
+        "dynamicGraphOperations": [
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, file)).href)",
+            "operation": "async function verifyRuntimeConsumerSemantics() {\n  const importSource = (file) => import(pathToFileURL(path.join(root, file)).href);\n  const studio = await importSource('skills/prism/server/studio-config.ts');\n  assert.equal(studio.loadStudioConfig({}).control.href, 'http://prism-control:8080/');\n  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_URL: '' }), /Invalid URL/u);\n  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_URL: 'https://control.invalid' }).control.href, 'https://control.invalid/');\n  assert.throws(() => studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '' }), /PRISM_STUDIO_CONTROL_TIMEOUT_INVALID/u);\n  assert.equal(studio.loadStudioConfig({ PRISM_CONTROL_TIMEOUT_MS: '12' }).controlTimeoutMs, 12);\n  for (const value of [undefined, '', 'https://bridge.invalid']) {\n    const environment = value === undefined ? {} : { PRISM_CONTROL_URL: value };\n    const actual = vm.runInNewContext(sourceProgramPart('skills/prism/server/agent-bridge.mjs', 'controlUrl', 'initializer'), { process: { env: environment } });\n    assert.equal(actual, value || 'http://127.0.0.1:28080');\n  }\n  let requested, requestOptions;\n  const post = vm.runInNewContext(`${sourceProgramPart('skills/prism/openclaw-plugin/index.mjs', 'post', 'function')}; post`, {\n    process: { env: { PRISM_CONTROL_URL: 'https://environment.invalid' } }, URL,\n    fetch: async (url, options) => { requested = String(url); requestOptions = options; return { ok: true, json: async () => ({}) }; },\n  });\n  await post('/test', {}, { controlUrl: 'https://plugin.invalid' }); assert.equal(requested, 'https://plugin.invalid/test');\n  assert.equal(Object.hasOwn(requestOptions, 'signal'), false, 'OpenClaw post unexpectedly has a configured timeout');\n  await post('/test', {}, { controlUrl: '' }); assert.equal(requested, 'https://environment.invalid/test');\n  await assert.rejects(() => post('/test', {}, { controlUrl: 'malformed' }), /Invalid URL/u);\n  const bootstrap = await importSource('skills/prism/config/database-bootstrap.ts');\n  const completeBootstrap = { ADMIN_DATABASE_URL: 'postgresql://admin.invalid/db', PRISM_MIGRATOR_PASSWORD: 'm', PRISM_RUNTIME_PASSWORD: 'r', PRISM_READONLY_PASSWORD: 'q' };\n  assert.equal(bootstrap.prismDatabaseBootstrapConfig(completeBootstrap).adminUrl, completeBootstrap.ADMIN_DATABASE_URL);\n  for (const name of Object.keys(completeBootstrap)) assert.throws(() => bootstrap.prismDatabaseBootstrapConfig({ ...completeBootstrap, [name]: '' }), new RegExp(`${name} is required`, 'u'));\n  const observer = await importSource('skills/common/plugins/openclaw-agent-observer/src/config.ts');\n  const observerSource = read('skills/common/plugins/openclaw-agent-observer/src/config.ts');\n  const pairs = [...observerSource.matchAll(/configuredValue\\(config, env, '([^']+)', '([^']+)'\\)/gu)].map((match) => [match[1], match[2]]);\n  const observerEnv = Object.fromEntries(pairs.map(([key, name]) => [name, key === 'enabled' ? 'true' : key === 'redisHost' ? ' redis.invalid ' : key === 'redisPassword' ? ' secret ' : key === 'redisUsername' ? ' user ' : key === 'redisNetworkIsolation' ? 'isolated' : key === 'redisTls' ? 'false' : key === 'hookPriority' ? '0' : key === 'redisPort' ? '6379' : '2']));\n  const resolved = observer.resolveAgentObserverConfig({}, observerEnv);\n  assert.equal(resolved.enabled, true); assert.equal(resolved.redisHost, 'redis.invalid'); assert.equal(resolved.redisPassword, 'secret'); assert.equal(resolved.hookPriority, 0);\n  assert.equal(observer.resolveAgentObserverConfig({ enabled: false, redisHost: '' }, observerEnv).enabled, false);\n  assert.equal(observer.resolveAgentObserverConfig({ redisHost: '' }, observerEnv).redisHost, undefined);\n  assert.equal(observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_ENABLED: 'unexpected' }).enabled, false);\n  assert.throws(() => observer.resolveAgentObserverConfig({ enabled: null }, observerEnv), /enabled must be configured/u);\n  for (const [key, name] of pairs.filter(([key]) => !key.startsWith('redis') && key !== 'enabled')) {\n    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '' }), /required|configured/u, name);\n    assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: 'not-a-number' }), /integer/u, name);\n    if (key !== 'hookPriority') assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, [name]: '0' }), /positive integer/u, name);\n  }\n  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, REDIS_PORT: '65536' }), /between 1 and 65535/u);\n  assert.throws(() => observer.resolveAgentObserverConfig({}, { ...observerEnv, OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES: '5242881' }), /cannot exceed/u);\n  assert.equal(observer.resolveAgentObserverConfig({ redisTls: null }, observerEnv).redisTls, false);\n  assert.equal(observer.resolveAgentObserverConfig({ redisPort: null }, observerEnv).redisPort, undefined);\n  assert.equal(observer.resolveAgentObserverConfig({ hookPriority: ' ' }, observerEnv).hookPriority, 0);\n  assert.throws(() => observer.resolveAgentObserverConfig({ maxQueuePerStream: ' ' }, observerEnv), /positive integer/u);\n  const support = await importSource('skills/common/plugins/openclaw-agent-observer/src/observer-support.ts');\n  assert.deepEqual(support.mergeConfigInputs({ enabled: true, redisHost: 'registration' }, { redisHost: 'service' }, { enabled: undefined, redisHost: '' }), { enabled: true, redisHost: '' });\n  assert.deepEqual(support.mergeConfigInputs({ enabled: true }, { enabled: null }), { enabled: null });\n  for (const [key] of pairs) {\n    const field = flattenSchema(JSON.parse(read('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json')).configSchema).find((item) => item.path === `$.${key}`);\n    const rule = schemaRuntimeValidationRules('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema', field);\n    assert(rule?.accepted && rule.omission && rule.empty && rule.failure, `${key}: inline observer runtime contract is incomplete`);\n    assert.match(rule.omission, /Registration configuration.*service configuration.*hook configuration/u);\n  }\n  const transport = await importSource('skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts');\n  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'localhost', port: 6379 }), /Secure Redis transport policy violation/u);\n  assert.equal(transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, networkIsolation: 'documented' }).policy.networkIsolation, true);\n  assert.throws(() => transport.resolveRedisTransportConfig({ host: 'redis.invalid', port: 6379, enforceSecureMode: false }), /restricted to localhost/u);\n  const controlConfig = await importSource('skills/prism/server/control-config.ts');\n  const controlEnvironment = { PRISM_SESSION_SECRET: 'session', PRISM_INGRESS_SECRET: 'ingress', PRISM_INGESTION_SECRET: 'ingestion', PRISM_DISPATCH_SECRET: 'dispatch', PRISM_WORKER_SECRET: 'worker' };\n  assert.equal(controlConfig.loadControlServerConfig(controlEnvironment).dispatchSecret, 'dispatch');\n  for (const name of Object.keys(controlEnvironment)) assert.throws(() => controlConfig.loadControlServerConfig({ ...controlEnvironment, [name]: '' }), new RegExp(`${name} is required`, 'u'));\n  assert.throws(() => controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: '' }), /invalid platform pipeline preference subject/u);\n  assert.equal(controlConfig.loadControlConfig({ PRISM_PIPELINE_PREFERENCE_SUBJECT: `user-${'a'.repeat(24)}` }).pipelinePreferenceSubject, `user-${'a'.repeat(24)}`);\n  const spiffe = { ...controlEnvironment, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_NOVA_SPIFFE_ID: 'nova', PRISM_TRUSTED_WORKER_SPIFFE_ID: 'worker', PRISM_CONTROL_SPIFFE_ID: 'control', PRISM_TRUSTED_AGENT_SPIFFE_ID: 'agent', PRISM_DISPATCH_SECRET: '', PRISM_WORKER_SECRET: '' };\n  assert.equal(controlConfig.loadControlServerConfig(spiffe).dispatchSecret, '');\n  assert.throws(() => controlConfig.loadControlServerConfig({ ...spiffe, PRISM_TRUSTED_NOVA_SPIFFE_ID: '' }), /trust policy is incomplete/u);\n  const ingestionTtl = sourceProgramPart('skills/prism/server/ingestion.ts', 'configuredQuarantineTtl', 'initializer');\n  const ingestionClamp = sourceProgramPart('skills/prism/server/ingestion.ts', 'quarantineTtl', 'initializer');\n  for (const [raw, expected] of [[undefined, 3600000], ['', 60000], ['-1', 60000], ['86400001', 86400000]]) {\n    const configured = vm.runInNewContext(ingestionTtl, { process: { env: raw === undefined ? {} : { PRISM_QUARANTINE_TTL_MS: raw } }, Number });\n    assert.equal(vm.runInNewContext(ingestionClamp, { configuredQuarantineTtl: configured, Math }), expected);\n  }\n  const chartText = read('charts/kubeclaw/templates/deployment.yaml');\n  const healthSource = chartText.slice(chartText.indexOf(\"<<'HEALTH_SCRIPT'\") + \"<<'HEALTH_SCRIPT'\".length, chartText.indexOf('\\n              HEALTH_SCRIPT'));\n  const healthAst = ts.createSourceFile('generated-health.mjs', healthSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);\n  const enabledNode = healthAst.statements.find((statement) => ts.isFunctionDeclaration(statement) && statement.name?.text === 'enabled');\n  assert(enabledNode, 'embedded health boolean helper is missing');\n  for (const [raw, fallback, expected] of [[undefined, true, true], ['', true, true], ['TRUE', false, true], ['yes', false, true], [' true ', true, false], ['unexpected', true, false]]) {\n    const enabled = vm.runInNewContext(`${enabledNode.getText(healthAst)}; enabled`, { process: { env: raw === undefined ? {} : { TEST: raw } } });\n    assert.equal(enabled('TEST', fallback), expected);\n  }\n  const bare = environmentOccurrences('charts/example/templates/workload.yaml', 'env:\\n  - {name: REDIS_HOST, value: redis}\\nscript: |\\n  printf \"%s\" \"$REDIS_HOST\"\\n');\n  assert(bare.some((occurrence) => occurrence.name === 'REDIS_HOST' && occurrence.kind === 'embedded-shell-env'));\n  const ops = await importSource('tools/ops-mcp/src/config.mjs');\n  assert.equal(ops.loadOpsMcpConfig({}).defaultNamespace, 'kubeclaw');\n  assert.throws(() => ops.loadOpsMcpConfig({ OPS_DEFAULT_NAMESPACE: '' }), /OPS_ALLOWED_NAMESPACES/u);\n  const kube = await importSource('tools/ops-mcp/src/kubernetes.mjs');\n  assert.equal(typeof kube.createKubeRequest({ api: 'https://api.invalid' }), 'function');\n  for (const api of ['', 'http://api.invalid', 'https://user:pass@api.invalid', 'https://api.invalid/path', 'https://api.invalid/#fragment']) assert.throws(() => kube.createKubeRequest({ api }), /Invalid URL|HTTPS origin/u);\n  const dispatch = await importSource('skills/common/plugins/runtime-dispatch/src/adapter.ts');\n  const activate = (target) => dispatch.activate({ config: { targets: { sample: target } } });\n  for (const target of [{ endpoint: 'http://127.0.0.1:8080', tokenSecret: 'valid-secret' }, { endpoint: 'https://runtime.invalid', tokenSecret: 'valid-secret' }, { endpoint: 'http://localhost:8080', authentication: 'spiffe-proxy' }]) await activate(target).shutdown();\n  for (const endpoint of ['ftp://runtime.invalid', 'https://user:pass@runtime.invalid', 'https://runtime.invalid/#fragment', 'http://runtime.invalid']) assert.throws(() => activate({ endpoint, tokenSecret: 'valid-secret' }), /RUNTIME_CONFIG_INVALID/u);\n  for (const tokenSecret of ['', '../secret', 'UPPER', 'a'.repeat(129)]) assert.throws(() => activate({ endpoint: 'https://runtime.invalid', tokenSecret }), /RUNTIME_CONFIG_INVALID:tokenSecret/u);\n  assert.throws(() => activate({ endpoint: 'https://runtime.invalid', authentication: 'spiffe-proxy' }), /RUNTIME_CONFIG_INVALID:spiffeProxy/u);\n  const ajv = new Ajv2020({ strict: false }); addFormats(ajv);\n  const openapiSchema = JSON.parse(read('skills/buster/plugins/openapi/schemas/config.schema.json'));\n  const bodySchema = openapiSchema.properties.operations.items.properties.body;\n  assert.equal(ajv.compile(bodySchema)(''), true);\n  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(bodySchema)[0]), /wrong type/u);\n  assert.equal(schemaType({ properties: { value: { type: 'string' } } }), 'unspecified');\n  assert.equal(ajv.compile({ properties: { value: { type: 'string' } } })(''), true);\n  for (const schema of [{}, { default: 12, description: 'Annotation only' }, { anyOf: [{ type: 'integer' }, {}] }, { items: { type: 'integer' } }]) {\n    assert.equal(ajv.compile(schema)(''), true, 'unconstrained or type-specific keyword wrongly rejected a string');\n    assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(schema)[0]), /wrong (?:declared )?type/u);\n  }\n  const branches = { type: 'string', allOf: [{ minLength: 1 }] };\n  assert.equal(ajv.compile(branches)(''), false);\n  assert.doesNotMatch(schemaEmptyBehavior(flattenSchema(branches)[1]), /wrong type/u);\n  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-openapi-body-contract-'));\n  try {\n    fs.mkdirSync(path.join(workspace, 'repository')); fs.mkdirSync(path.join(workspace, 'evidence'));\n    const provider = await importSource('skills/buster/plugins/openapi/src/provider.js');\n    const invocation = { testIdentity: 'body-empty', configuration: { values: { specFile: 'spec.json', url: 'https://endpoint.invalid', operations: [{ operationId: 'sample', body: '' }] } }, inputs: [], workspace: { repository: 'repository', evidence: 'evidence' }, timeoutMs: 1000 };\n    for (const [requestSchema, expected, expectedCalls] of [[{ type: 'string' }, 'passed', 1], [{ type: 'string', minLength: 1 }, 'failed', 0], [{ type: 'object' }, 'failed', 0]]) {\n      fs.writeFileSync(path.join(workspace, 'repository/spec.json'), JSON.stringify({ openapi: '3.1.0', paths: { '/sample': { post: { operationId: 'sample', requestBody: { required: true, content: { 'application/json': { schema: requestSchema } } }, responses: { '204': { description: 'empty success' } } } } } }));\n      let calls = 0;\n      const result = await provider.provider().execute(invocation, { workspaceRoot: workspace, signal: new AbortController().signal, async invoke(capability, request) { calls++; assert.equal(capability, 'network.http'); assert.equal(request.payload.body, JSON.stringify('')); return { status: 204, body: '', headers: {} }; } });\n      assert.equal(result.outcome, expected); assert.equal(calls, expectedCalls);\n    }\n  } finally { fs.rmSync(workspace, { recursive: true, force: true }); }\n  console.log('PASS actual runtime consumer contracts: Prism source precedence, observer overrides/normalization/guards, Redis security, Ops API origins, dispatch URL/auth/secret identifiers, unconstrained and operation-validated OpenAPI bodies. No network calls or live commands.');\n}",
+            "hints": [
+              "--root"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href)",
+            "operation": "async function verifyConfigurationSchemaSemantics() {\n  const ajv = new Ajv2020({ strict: false, allErrors: true }); addFormats(ajv);\n  const ruleCase = (schema, examples, expectedKeywords) => {\n    const fields = flattenSchema(schema);\n    const projected = structuredClone(schema);\n    for (const keyword of expectedKeywords) {\n      const constraint = fields[0].constraints.find((item) => item.name === keyword);\n      assert.deepEqual(constraint?.value, schema[keyword], `recursive rule ${keyword} was lost or changed`);\n      projected[keyword] = constraint.value;\n    }\n    const validator = ajv.compile(projected);\n    for (const [value, expected] of examples) assert.equal(validator(value), expected,\n      `recursive rule validation differs for ${JSON.stringify(value)}: ${JSON.stringify(validator.errors)}`);\n  };\n  const commandSchema = JSON.parse(read('skills/common/plugins/command-runner/schemas/config.schema.json'));\n  ruleCase(commandSchema.properties.executableCatalog,\n    [[{ node: '/usr/bin/node' }, true], [{ 'invalid key': '/usr/bin/node' }, false]], ['propertyNames']);\n  const dispatchSchema = JSON.parse(read('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'));\n  const paired = dispatchSchema.properties.targets.additionalProperties;\n  ruleCase({ type: 'object', properties: paired.properties, dependentRequired: paired.dependentRequired },\n    [[{}, true], [{ resultEndpoint: 'https://result.invalid', resultTokenSecret: 'result-token' }, true],\n      [{ resultEndpoint: 'https://result.invalid' }, false], [{ resultTokenSecret: 'result-token' }, false]], ['dependentRequired']);\n  for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {\n    const blocking = JSON.parse(read(schemaPath)).properties.policy.properties.blocking.properties;\n    ruleCase(blocking.priorities, [[['P0'], true], [['P1'], false], [[], false]], ['allOf']);\n    ruleCase(blocking.categories, [[['correctness', 'security', 'contract'], true], [['correctness', 'security'], false]], ['allOf']);\n    const branch = flattenSchema(blocking.priorities).find((field) => field.branches.includes('allOf[0]'));\n    assert.deepEqual(branch?.constraints.find((item) => item.name === 'contains')?.value, { const: 'P0' });\n  }\n  ruleCase({ type: 'array', items: { type: 'integer' }, contains: { const: 7 }, minContains: 2, maxContains: 3 },\n    [[[7, 7], true], [[7, 7, 7], true], [[7], false], [[7, 7, 7, 7], false], [[], false]], ['contains', 'minContains', 'maxContains']);\n  assert.throws(() => flattenSchema({ type: 'object', propertyNames: { unsupportedValidation: true } }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  assert.throws(() => flattenSchema({ type: 'array', unevaluatedItems: false }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  const referenceSiblings = flattenSchema({ $defs: { value: { type: 'string', pattern: '^A' } }, $ref: '#/$defs/value', pattern: 'Z$' });\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === '^A')));\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === 'Z$')));\n  assert.throws(() => flattenSchema({ $ref: 'https://unbound.invalid/schema' }), /CONFIG_SCHEMA_UNSUPPORTED_REFERENCE/u);\n  assert.equal(schemaPublishedValue('$.targets.{*}.maxInputTokens', 120000), 120000);\n  assert.equal(schemaPublishedValue('$.targets.{*}.tokenizerEncoding', 'o200k_base'), 'o200k_base');\n\n\n  const registry = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href);\n  const schemaApi = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href);\n  const approvalPath = fs.realpathSync(path.join(root, 'skills/nova/plugins/human-approval/schemas/config.schema.json'));\n  const approvalValidator = schemaApi.validateReferencedSchema(read('skills/nova/plugins/human-approval/schemas/config.schema.json'), approvalPath);\n  const stage = { type: 'approval', config: { target: 'operator', issuerId: 'authorized-operator' } };\n  const entry = { package: { root: path.dirname(path.dirname(approvalPath)), manifest: { id: 'fixture' } }, registration: { id: 'approval', configSchema: 'schemas/config.schema.json' } };\n  const snapshot = { stages: new Map([['approval', entry]]), observers: new Map(), adapters: new Map(), schemas: new Map([[approvalPath, approvalValidator]]) };\n  registry.validateRuntimeRegistrationConfiguration(snapshot, new Set(['fixture:approval']), { stages: [stage], observers: new Map(), adapters: new Map() });\n  assert.equal(Object.hasOwn(stage.config, 'timeoutMinutes'), false, 'stage validation inserted a schema default');\n  const approval = await import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href);\n  assert.equal(approval.parseApprovalConfig(stage.config).timeoutMinutes, 60);\n  assert.equal(approval.parseApprovalConfig({ ...stage.config, timeoutMinutes: 5 }).timeoutMinutes, 5);\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: '' }), { code: 'REGISTRY_RESULT_INVALID' });\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: 0 }), { code: 'REGISTRY_RESULT_INVALID' });\n  for (const family of ['observers', 'adapters']) {\n    const familySnapshot = { ...snapshot, stages: new Map(), [family]: new Map([['fixture:approval', entry]]) };\n    const config = { ...stage.config }; const configured = { stages: [], observers: new Map(), adapters: new Map(), [family]: new Map([['fixture:approval', config]]) };\n    registry.validateRuntimeRegistrationConfiguration(familySnapshot, new Set(['fixture:approval']), configured);\n    assert.equal(Object.hasOwn(config, 'timeoutMinutes'), false, `${family} validation inserted a default`);\n  }\n  const providerSchemaPath = 'fixture-provider-schema';\n  const providerValidator = schemaApi.validateReferencedSchema(JSON.stringify({ type: 'object', properties: { enabled: { type: 'boolean', default: true }, selections: { type: 'array', items: { type: 'string' }, default: ['default'] } } }), providerSchemaPath);\n  const providerSnapshot = { schemas: new Map([[providerSchemaPath, providerValidator]]), testProviderContracts: new Map([['fixture@1', { configSchemaPath: providerSchemaPath, configSchemaDigest: 'sha256:fixture' }]]) };\n  const input = {}; const resolved = registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', input);\n  assert.deepEqual(resolved.values, { enabled: true, selections: ['default'] }); assert.deepEqual(input, {});\n  assert.deepEqual(registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', { enabled: false, selections: [] }).values, { enabled: false, selections: [] });\n  const defaultField = { path: '$.timeoutMinutes', type: 'integer', required: false, default: 60, constraints: [], branches: [] };\n  const runtimeDefault = schemaRuntimeFallback('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField);\n  assert.equal(runtimeDefault.value, approval.parseApprovalConfig(stage.config).timeoutMinutes);\n  assert.doesNotMatch(schemaDefaultBehavior('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField, runtimeDefault), /registry.*inserts/iu);\n\n  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-config-semantics-'));\n  try {\n    fs.mkdirSync(path.join(fixtureRoot, 'repository')); fs.mkdirSync(path.join(fixtureRoot, 'evidence'));\n    const direct = await import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href);\n    const invocation = { configuration: { values: { executable: 'node', resultMode: 'exit-code' } }, limits: { logBytes: 4096, processes: 4, memoryBytes: 1048576, cpuMillis: 1000, artifactFiles: 8, artifactBytes: 4096 }, timeoutMs: 1000, workspace: { repository: 'repository', evidence: 'evidence' } };\n    let payload; const context = { workspaceRoot: fixtureRoot, signal: new AbortController().signal, log() {}, async invoke(capability, request) { assert.equal(capability, 'command.execute'); payload = request.payload; return { exitCode: 0, signal: null, records: [] }; } };\n    assert.equal((await direct.provider().execute(invocation, context)).outcome, 'passed');\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' }); assert.equal(payload.workingDirectory, path.join(fixtureRoot, 'repository'));\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: [], environment: {} } } }, context);\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' });\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: ['--version'], environment: { PUBLIC: 'value' } } } }, context);\n    assert.deepEqual(payload.args, ['--version']); assert.deepEqual(payload.environment, { PUBLIC: 'value', CI: 'true' });\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { executable: 'node', resultMode: 'junit-required', reports: [] } } }, context), /DIRECT_COMMAND_REPORT_REQUIRED/u);\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, reports: [{ id: 'report', path: 'result.xml', mediaType: 'application/junit+xml', format: 'junit' }] } } }, context), /DIRECT_COMMAND_REPORTS_FORBIDDEN/u);\n    const runner = await import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href);\n    const instance = runner.activate({ config: { allowedExecutables: [process.execPath], allowedWorkingRoots: [path.join(fixtureRoot, 'repository')], executableCatalog: { node: process.execPath }, maxOutputBytes: 4096, maxExecutionMs: 1000, terminationGraceMs: 10 } });\n    await assert.rejects(() => instance.invoke({ request: { capability: 'command.execute', operation: 'run', resource: { type: 'command.executable', canonicalId: 'catalog:node' }, payload }, signal: context.signal, fence: { assertCurrent() {} } }), /COMMAND_ENVIRONMENT_DENIED/u);\n    await instance.shutdown();\n  } finally { fs.rmSync(fixtureRoot, { recursive: true, force: true }); }\n  const newSecret = enrichSecretFacts(shellSecretFacts('scripts/new-secret-source.sh', 'kubectl create secret generic unowned-semantic-secret --from-literal=opaque=fixture\\n'));\n  assert.equal(newSecret.length, 1); assert.deepEqual(newSecret[0].keys, ['opaque']); assert.equal(newSecret[0].semanticStatus, 'secret-authority-blocker');\n  console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');\n}",
+            "hints": [
+              "--root",
+              "skills/common/plugin-runtime/foundation/registry/configuration.ts"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href)",
+            "operation": "async function verifyConfigurationSchemaSemantics() {\n  const ajv = new Ajv2020({ strict: false, allErrors: true }); addFormats(ajv);\n  const ruleCase = (schema, examples, expectedKeywords) => {\n    const fields = flattenSchema(schema);\n    const projected = structuredClone(schema);\n    for (const keyword of expectedKeywords) {\n      const constraint = fields[0].constraints.find((item) => item.name === keyword);\n      assert.deepEqual(constraint?.value, schema[keyword], `recursive rule ${keyword} was lost or changed`);\n      projected[keyword] = constraint.value;\n    }\n    const validator = ajv.compile(projected);\n    for (const [value, expected] of examples) assert.equal(validator(value), expected,\n      `recursive rule validation differs for ${JSON.stringify(value)}: ${JSON.stringify(validator.errors)}`);\n  };\n  const commandSchema = JSON.parse(read('skills/common/plugins/command-runner/schemas/config.schema.json'));\n  ruleCase(commandSchema.properties.executableCatalog,\n    [[{ node: '/usr/bin/node' }, true], [{ 'invalid key': '/usr/bin/node' }, false]], ['propertyNames']);\n  const dispatchSchema = JSON.parse(read('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'));\n  const paired = dispatchSchema.properties.targets.additionalProperties;\n  ruleCase({ type: 'object', properties: paired.properties, dependentRequired: paired.dependentRequired },\n    [[{}, true], [{ resultEndpoint: 'https://result.invalid', resultTokenSecret: 'result-token' }, true],\n      [{ resultEndpoint: 'https://result.invalid' }, false], [{ resultTokenSecret: 'result-token' }, false]], ['dependentRequired']);\n  for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {\n    const blocking = JSON.parse(read(schemaPath)).properties.policy.properties.blocking.properties;\n    ruleCase(blocking.priorities, [[['P0'], true], [['P1'], false], [[], false]], ['allOf']);\n    ruleCase(blocking.categories, [[['correctness', 'security', 'contract'], true], [['correctness', 'security'], false]], ['allOf']);\n    const branch = flattenSchema(blocking.priorities).find((field) => field.branches.includes('allOf[0]'));\n    assert.deepEqual(branch?.constraints.find((item) => item.name === 'contains')?.value, { const: 'P0' });\n  }\n  ruleCase({ type: 'array', items: { type: 'integer' }, contains: { const: 7 }, minContains: 2, maxContains: 3 },\n    [[[7, 7], true], [[7, 7, 7], true], [[7], false], [[7, 7, 7, 7], false], [[], false]], ['contains', 'minContains', 'maxContains']);\n  assert.throws(() => flattenSchema({ type: 'object', propertyNames: { unsupportedValidation: true } }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  assert.throws(() => flattenSchema({ type: 'array', unevaluatedItems: false }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  const referenceSiblings = flattenSchema({ $defs: { value: { type: 'string', pattern: '^A' } }, $ref: '#/$defs/value', pattern: 'Z$' });\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === '^A')));\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === 'Z$')));\n  assert.throws(() => flattenSchema({ $ref: 'https://unbound.invalid/schema' }), /CONFIG_SCHEMA_UNSUPPORTED_REFERENCE/u);\n  assert.equal(schemaPublishedValue('$.targets.{*}.maxInputTokens', 120000), 120000);\n  assert.equal(schemaPublishedValue('$.targets.{*}.tokenizerEncoding', 'o200k_base'), 'o200k_base');\n\n\n  const registry = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href);\n  const schemaApi = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href);\n  const approvalPath = fs.realpathSync(path.join(root, 'skills/nova/plugins/human-approval/schemas/config.schema.json'));\n  const approvalValidator = schemaApi.validateReferencedSchema(read('skills/nova/plugins/human-approval/schemas/config.schema.json'), approvalPath);\n  const stage = { type: 'approval', config: { target: 'operator', issuerId: 'authorized-operator' } };\n  const entry = { package: { root: path.dirname(path.dirname(approvalPath)), manifest: { id: 'fixture' } }, registration: { id: 'approval', configSchema: 'schemas/config.schema.json' } };\n  const snapshot = { stages: new Map([['approval', entry]]), observers: new Map(), adapters: new Map(), schemas: new Map([[approvalPath, approvalValidator]]) };\n  registry.validateRuntimeRegistrationConfiguration(snapshot, new Set(['fixture:approval']), { stages: [stage], observers: new Map(), adapters: new Map() });\n  assert.equal(Object.hasOwn(stage.config, 'timeoutMinutes'), false, 'stage validation inserted a schema default');\n  const approval = await import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href);\n  assert.equal(approval.parseApprovalConfig(stage.config).timeoutMinutes, 60);\n  assert.equal(approval.parseApprovalConfig({ ...stage.config, timeoutMinutes: 5 }).timeoutMinutes, 5);\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: '' }), { code: 'REGISTRY_RESULT_INVALID' });\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: 0 }), { code: 'REGISTRY_RESULT_INVALID' });\n  for (const family of ['observers', 'adapters']) {\n    const familySnapshot = { ...snapshot, stages: new Map(), [family]: new Map([['fixture:approval', entry]]) };\n    const config = { ...stage.config }; const configured = { stages: [], observers: new Map(), adapters: new Map(), [family]: new Map([['fixture:approval', config]]) };\n    registry.validateRuntimeRegistrationConfiguration(familySnapshot, new Set(['fixture:approval']), configured);\n    assert.equal(Object.hasOwn(config, 'timeoutMinutes'), false, `${family} validation inserted a default`);\n  }\n  const providerSchemaPath = 'fixture-provider-schema';\n  const providerValidator = schemaApi.validateReferencedSchema(JSON.stringify({ type: 'object', properties: { enabled: { type: 'boolean', default: true }, selections: { type: 'array', items: { type: 'string' }, default: ['default'] } } }), providerSchemaPath);\n  const providerSnapshot = { schemas: new Map([[providerSchemaPath, providerValidator]]), testProviderContracts: new Map([['fixture@1', { configSchemaPath: providerSchemaPath, configSchemaDigest: 'sha256:fixture' }]]) };\n  const input = {}; const resolved = registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', input);\n  assert.deepEqual(resolved.values, { enabled: true, selections: ['default'] }); assert.deepEqual(input, {});\n  assert.deepEqual(registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', { enabled: false, selections: [] }).values, { enabled: false, selections: [] });\n  const defaultField = { path: '$.timeoutMinutes', type: 'integer', required: false, default: 60, constraints: [], branches: [] };\n  const runtimeDefault = schemaRuntimeFallback('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField);\n  assert.equal(runtimeDefault.value, approval.parseApprovalConfig(stage.config).timeoutMinutes);\n  assert.doesNotMatch(schemaDefaultBehavior('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField, runtimeDefault), /registry.*inserts/iu);\n\n  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-config-semantics-'));\n  try {\n    fs.mkdirSync(path.join(fixtureRoot, 'repository')); fs.mkdirSync(path.join(fixtureRoot, 'evidence'));\n    const direct = await import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href);\n    const invocation = { configuration: { values: { executable: 'node', resultMode: 'exit-code' } }, limits: { logBytes: 4096, processes: 4, memoryBytes: 1048576, cpuMillis: 1000, artifactFiles: 8, artifactBytes: 4096 }, timeoutMs: 1000, workspace: { repository: 'repository', evidence: 'evidence' } };\n    let payload; const context = { workspaceRoot: fixtureRoot, signal: new AbortController().signal, log() {}, async invoke(capability, request) { assert.equal(capability, 'command.execute'); payload = request.payload; return { exitCode: 0, signal: null, records: [] }; } };\n    assert.equal((await direct.provider().execute(invocation, context)).outcome, 'passed');\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' }); assert.equal(payload.workingDirectory, path.join(fixtureRoot, 'repository'));\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: [], environment: {} } } }, context);\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' });\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: ['--version'], environment: { PUBLIC: 'value' } } } }, context);\n    assert.deepEqual(payload.args, ['--version']); assert.deepEqual(payload.environment, { PUBLIC: 'value', CI: 'true' });\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { executable: 'node', resultMode: 'junit-required', reports: [] } } }, context), /DIRECT_COMMAND_REPORT_REQUIRED/u);\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, reports: [{ id: 'report', path: 'result.xml', mediaType: 'application/junit+xml', format: 'junit' }] } } }, context), /DIRECT_COMMAND_REPORTS_FORBIDDEN/u);\n    const runner = await import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href);\n    const instance = runner.activate({ config: { allowedExecutables: [process.execPath], allowedWorkingRoots: [path.join(fixtureRoot, 'repository')], executableCatalog: { node: process.execPath }, maxOutputBytes: 4096, maxExecutionMs: 1000, terminationGraceMs: 10 } });\n    await assert.rejects(() => instance.invoke({ request: { capability: 'command.execute', operation: 'run', resource: { type: 'command.executable', canonicalId: 'catalog:node' }, payload }, signal: context.signal, fence: { assertCurrent() {} } }), /COMMAND_ENVIRONMENT_DENIED/u);\n    await instance.shutdown();\n  } finally { fs.rmSync(fixtureRoot, { recursive: true, force: true }); }\n  const newSecret = enrichSecretFacts(shellSecretFacts('scripts/new-secret-source.sh', 'kubectl create secret generic unowned-semantic-secret --from-literal=opaque=fixture\\n'));\n  assert.equal(newSecret.length, 1); assert.deepEqual(newSecret[0].keys, ['opaque']); assert.equal(newSecret[0].semanticStatus, 'secret-authority-blocker');\n  console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');\n}",
+            "hints": [
+              "--root",
+              "skills/common/plugin-runtime/foundation/registry/schema.ts"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href)",
+            "operation": "async function verifyConfigurationSchemaSemantics() {\n  const ajv = new Ajv2020({ strict: false, allErrors: true }); addFormats(ajv);\n  const ruleCase = (schema, examples, expectedKeywords) => {\n    const fields = flattenSchema(schema);\n    const projected = structuredClone(schema);\n    for (const keyword of expectedKeywords) {\n      const constraint = fields[0].constraints.find((item) => item.name === keyword);\n      assert.deepEqual(constraint?.value, schema[keyword], `recursive rule ${keyword} was lost or changed`);\n      projected[keyword] = constraint.value;\n    }\n    const validator = ajv.compile(projected);\n    for (const [value, expected] of examples) assert.equal(validator(value), expected,\n      `recursive rule validation differs for ${JSON.stringify(value)}: ${JSON.stringify(validator.errors)}`);\n  };\n  const commandSchema = JSON.parse(read('skills/common/plugins/command-runner/schemas/config.schema.json'));\n  ruleCase(commandSchema.properties.executableCatalog,\n    [[{ node: '/usr/bin/node' }, true], [{ 'invalid key': '/usr/bin/node' }, false]], ['propertyNames']);\n  const dispatchSchema = JSON.parse(read('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'));\n  const paired = dispatchSchema.properties.targets.additionalProperties;\n  ruleCase({ type: 'object', properties: paired.properties, dependentRequired: paired.dependentRequired },\n    [[{}, true], [{ resultEndpoint: 'https://result.invalid', resultTokenSecret: 'result-token' }, true],\n      [{ resultEndpoint: 'https://result.invalid' }, false], [{ resultTokenSecret: 'result-token' }, false]], ['dependentRequired']);\n  for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {\n    const blocking = JSON.parse(read(schemaPath)).properties.policy.properties.blocking.properties;\n    ruleCase(blocking.priorities, [[['P0'], true], [['P1'], false], [[], false]], ['allOf']);\n    ruleCase(blocking.categories, [[['correctness', 'security', 'contract'], true], [['correctness', 'security'], false]], ['allOf']);\n    const branch = flattenSchema(blocking.priorities).find((field) => field.branches.includes('allOf[0]'));\n    assert.deepEqual(branch?.constraints.find((item) => item.name === 'contains')?.value, { const: 'P0' });\n  }\n  ruleCase({ type: 'array', items: { type: 'integer' }, contains: { const: 7 }, minContains: 2, maxContains: 3 },\n    [[[7, 7], true], [[7, 7, 7], true], [[7], false], [[7, 7, 7, 7], false], [[], false]], ['contains', 'minContains', 'maxContains']);\n  assert.throws(() => flattenSchema({ type: 'object', propertyNames: { unsupportedValidation: true } }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  assert.throws(() => flattenSchema({ type: 'array', unevaluatedItems: false }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  const referenceSiblings = flattenSchema({ $defs: { value: { type: 'string', pattern: '^A' } }, $ref: '#/$defs/value', pattern: 'Z$' });\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === '^A')));\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === 'Z$')));\n  assert.throws(() => flattenSchema({ $ref: 'https://unbound.invalid/schema' }), /CONFIG_SCHEMA_UNSUPPORTED_REFERENCE/u);\n  assert.equal(schemaPublishedValue('$.targets.{*}.maxInputTokens', 120000), 120000);\n  assert.equal(schemaPublishedValue('$.targets.{*}.tokenizerEncoding', 'o200k_base'), 'o200k_base');\n\n\n  const registry = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href);\n  const schemaApi = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href);\n  const approvalPath = fs.realpathSync(path.join(root, 'skills/nova/plugins/human-approval/schemas/config.schema.json'));\n  const approvalValidator = schemaApi.validateReferencedSchema(read('skills/nova/plugins/human-approval/schemas/config.schema.json'), approvalPath);\n  const stage = { type: 'approval', config: { target: 'operator', issuerId: 'authorized-operator' } };\n  const entry = { package: { root: path.dirname(path.dirname(approvalPath)), manifest: { id: 'fixture' } }, registration: { id: 'approval', configSchema: 'schemas/config.schema.json' } };\n  const snapshot = { stages: new Map([['approval', entry]]), observers: new Map(), adapters: new Map(), schemas: new Map([[approvalPath, approvalValidator]]) };\n  registry.validateRuntimeRegistrationConfiguration(snapshot, new Set(['fixture:approval']), { stages: [stage], observers: new Map(), adapters: new Map() });\n  assert.equal(Object.hasOwn(stage.config, 'timeoutMinutes'), false, 'stage validation inserted a schema default');\n  const approval = await import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href);\n  assert.equal(approval.parseApprovalConfig(stage.config).timeoutMinutes, 60);\n  assert.equal(approval.parseApprovalConfig({ ...stage.config, timeoutMinutes: 5 }).timeoutMinutes, 5);\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: '' }), { code: 'REGISTRY_RESULT_INVALID' });\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: 0 }), { code: 'REGISTRY_RESULT_INVALID' });\n  for (const family of ['observers', 'adapters']) {\n    const familySnapshot = { ...snapshot, stages: new Map(), [family]: new Map([['fixture:approval', entry]]) };\n    const config = { ...stage.config }; const configured = { stages: [], observers: new Map(), adapters: new Map(), [family]: new Map([['fixture:approval', config]]) };\n    registry.validateRuntimeRegistrationConfiguration(familySnapshot, new Set(['fixture:approval']), configured);\n    assert.equal(Object.hasOwn(config, 'timeoutMinutes'), false, `${family} validation inserted a default`);\n  }\n  const providerSchemaPath = 'fixture-provider-schema';\n  const providerValidator = schemaApi.validateReferencedSchema(JSON.stringify({ type: 'object', properties: { enabled: { type: 'boolean', default: true }, selections: { type: 'array', items: { type: 'string' }, default: ['default'] } } }), providerSchemaPath);\n  const providerSnapshot = { schemas: new Map([[providerSchemaPath, providerValidator]]), testProviderContracts: new Map([['fixture@1', { configSchemaPath: providerSchemaPath, configSchemaDigest: 'sha256:fixture' }]]) };\n  const input = {}; const resolved = registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', input);\n  assert.deepEqual(resolved.values, { enabled: true, selections: ['default'] }); assert.deepEqual(input, {});\n  assert.deepEqual(registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', { enabled: false, selections: [] }).values, { enabled: false, selections: [] });\n  const defaultField = { path: '$.timeoutMinutes', type: 'integer', required: false, default: 60, constraints: [], branches: [] };\n  const runtimeDefault = schemaRuntimeFallback('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField);\n  assert.equal(runtimeDefault.value, approval.parseApprovalConfig(stage.config).timeoutMinutes);\n  assert.doesNotMatch(schemaDefaultBehavior('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField, runtimeDefault), /registry.*inserts/iu);\n\n  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-config-semantics-'));\n  try {\n    fs.mkdirSync(path.join(fixtureRoot, 'repository')); fs.mkdirSync(path.join(fixtureRoot, 'evidence'));\n    const direct = await import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href);\n    const invocation = { configuration: { values: { executable: 'node', resultMode: 'exit-code' } }, limits: { logBytes: 4096, processes: 4, memoryBytes: 1048576, cpuMillis: 1000, artifactFiles: 8, artifactBytes: 4096 }, timeoutMs: 1000, workspace: { repository: 'repository', evidence: 'evidence' } };\n    let payload; const context = { workspaceRoot: fixtureRoot, signal: new AbortController().signal, log() {}, async invoke(capability, request) { assert.equal(capability, 'command.execute'); payload = request.payload; return { exitCode: 0, signal: null, records: [] }; } };\n    assert.equal((await direct.provider().execute(invocation, context)).outcome, 'passed');\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' }); assert.equal(payload.workingDirectory, path.join(fixtureRoot, 'repository'));\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: [], environment: {} } } }, context);\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' });\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: ['--version'], environment: { PUBLIC: 'value' } } } }, context);\n    assert.deepEqual(payload.args, ['--version']); assert.deepEqual(payload.environment, { PUBLIC: 'value', CI: 'true' });\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { executable: 'node', resultMode: 'junit-required', reports: [] } } }, context), /DIRECT_COMMAND_REPORT_REQUIRED/u);\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, reports: [{ id: 'report', path: 'result.xml', mediaType: 'application/junit+xml', format: 'junit' }] } } }, context), /DIRECT_COMMAND_REPORTS_FORBIDDEN/u);\n    const runner = await import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href);\n    const instance = runner.activate({ config: { allowedExecutables: [process.execPath], allowedWorkingRoots: [path.join(fixtureRoot, 'repository')], executableCatalog: { node: process.execPath }, maxOutputBytes: 4096, maxExecutionMs: 1000, terminationGraceMs: 10 } });\n    await assert.rejects(() => instance.invoke({ request: { capability: 'command.execute', operation: 'run', resource: { type: 'command.executable', canonicalId: 'catalog:node' }, payload }, signal: context.signal, fence: { assertCurrent() {} } }), /COMMAND_ENVIRONMENT_DENIED/u);\n    await instance.shutdown();\n  } finally { fs.rmSync(fixtureRoot, { recursive: true, force: true }); }\n  const newSecret = enrichSecretFacts(shellSecretFacts('scripts/new-secret-source.sh', 'kubectl create secret generic unowned-semantic-secret --from-literal=opaque=fixture\\n'));\n  assert.equal(newSecret.length, 1); assert.deepEqual(newSecret[0].keys, ['opaque']); assert.equal(newSecret[0].semanticStatus, 'secret-authority-blocker');\n  console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');\n}",
+            "hints": [
+              "--root",
+              "skills/nova/plugins/human-approval/src/approval.ts"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href)",
+            "operation": "async function verifyConfigurationSchemaSemantics() {\n  const ajv = new Ajv2020({ strict: false, allErrors: true }); addFormats(ajv);\n  const ruleCase = (schema, examples, expectedKeywords) => {\n    const fields = flattenSchema(schema);\n    const projected = structuredClone(schema);\n    for (const keyword of expectedKeywords) {\n      const constraint = fields[0].constraints.find((item) => item.name === keyword);\n      assert.deepEqual(constraint?.value, schema[keyword], `recursive rule ${keyword} was lost or changed`);\n      projected[keyword] = constraint.value;\n    }\n    const validator = ajv.compile(projected);\n    for (const [value, expected] of examples) assert.equal(validator(value), expected,\n      `recursive rule validation differs for ${JSON.stringify(value)}: ${JSON.stringify(validator.errors)}`);\n  };\n  const commandSchema = JSON.parse(read('skills/common/plugins/command-runner/schemas/config.schema.json'));\n  ruleCase(commandSchema.properties.executableCatalog,\n    [[{ node: '/usr/bin/node' }, true], [{ 'invalid key': '/usr/bin/node' }, false]], ['propertyNames']);\n  const dispatchSchema = JSON.parse(read('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'));\n  const paired = dispatchSchema.properties.targets.additionalProperties;\n  ruleCase({ type: 'object', properties: paired.properties, dependentRequired: paired.dependentRequired },\n    [[{}, true], [{ resultEndpoint: 'https://result.invalid', resultTokenSecret: 'result-token' }, true],\n      [{ resultEndpoint: 'https://result.invalid' }, false], [{ resultTokenSecret: 'result-token' }, false]], ['dependentRequired']);\n  for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {\n    const blocking = JSON.parse(read(schemaPath)).properties.policy.properties.blocking.properties;\n    ruleCase(blocking.priorities, [[['P0'], true], [['P1'], false], [[], false]], ['allOf']);\n    ruleCase(blocking.categories, [[['correctness', 'security', 'contract'], true], [['correctness', 'security'], false]], ['allOf']);\n    const branch = flattenSchema(blocking.priorities).find((field) => field.branches.includes('allOf[0]'));\n    assert.deepEqual(branch?.constraints.find((item) => item.name === 'contains')?.value, { const: 'P0' });\n  }\n  ruleCase({ type: 'array', items: { type: 'integer' }, contains: { const: 7 }, minContains: 2, maxContains: 3 },\n    [[[7, 7], true], [[7, 7, 7], true], [[7], false], [[7, 7, 7, 7], false], [[], false]], ['contains', 'minContains', 'maxContains']);\n  assert.throws(() => flattenSchema({ type: 'object', propertyNames: { unsupportedValidation: true } }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  assert.throws(() => flattenSchema({ type: 'array', unevaluatedItems: false }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  const referenceSiblings = flattenSchema({ $defs: { value: { type: 'string', pattern: '^A' } }, $ref: '#/$defs/value', pattern: 'Z$' });\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === '^A')));\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === 'Z$')));\n  assert.throws(() => flattenSchema({ $ref: 'https://unbound.invalid/schema' }), /CONFIG_SCHEMA_UNSUPPORTED_REFERENCE/u);\n  assert.equal(schemaPublishedValue('$.targets.{*}.maxInputTokens', 120000), 120000);\n  assert.equal(schemaPublishedValue('$.targets.{*}.tokenizerEncoding', 'o200k_base'), 'o200k_base');\n\n\n  const registry = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href);\n  const schemaApi = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href);\n  const approvalPath = fs.realpathSync(path.join(root, 'skills/nova/plugins/human-approval/schemas/config.schema.json'));\n  const approvalValidator = schemaApi.validateReferencedSchema(read('skills/nova/plugins/human-approval/schemas/config.schema.json'), approvalPath);\n  const stage = { type: 'approval', config: { target: 'operator', issuerId: 'authorized-operator' } };\n  const entry = { package: { root: path.dirname(path.dirname(approvalPath)), manifest: { id: 'fixture' } }, registration: { id: 'approval', configSchema: 'schemas/config.schema.json' } };\n  const snapshot = { stages: new Map([['approval', entry]]), observers: new Map(), adapters: new Map(), schemas: new Map([[approvalPath, approvalValidator]]) };\n  registry.validateRuntimeRegistrationConfiguration(snapshot, new Set(['fixture:approval']), { stages: [stage], observers: new Map(), adapters: new Map() });\n  assert.equal(Object.hasOwn(stage.config, 'timeoutMinutes'), false, 'stage validation inserted a schema default');\n  const approval = await import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href);\n  assert.equal(approval.parseApprovalConfig(stage.config).timeoutMinutes, 60);\n  assert.equal(approval.parseApprovalConfig({ ...stage.config, timeoutMinutes: 5 }).timeoutMinutes, 5);\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: '' }), { code: 'REGISTRY_RESULT_INVALID' });\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: 0 }), { code: 'REGISTRY_RESULT_INVALID' });\n  for (const family of ['observers', 'adapters']) {\n    const familySnapshot = { ...snapshot, stages: new Map(), [family]: new Map([['fixture:approval', entry]]) };\n    const config = { ...stage.config }; const configured = { stages: [], observers: new Map(), adapters: new Map(), [family]: new Map([['fixture:approval', config]]) };\n    registry.validateRuntimeRegistrationConfiguration(familySnapshot, new Set(['fixture:approval']), configured);\n    assert.equal(Object.hasOwn(config, 'timeoutMinutes'), false, `${family} validation inserted a default`);\n  }\n  const providerSchemaPath = 'fixture-provider-schema';\n  const providerValidator = schemaApi.validateReferencedSchema(JSON.stringify({ type: 'object', properties: { enabled: { type: 'boolean', default: true }, selections: { type: 'array', items: { type: 'string' }, default: ['default'] } } }), providerSchemaPath);\n  const providerSnapshot = { schemas: new Map([[providerSchemaPath, providerValidator]]), testProviderContracts: new Map([['fixture@1', { configSchemaPath: providerSchemaPath, configSchemaDigest: 'sha256:fixture' }]]) };\n  const input = {}; const resolved = registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', input);\n  assert.deepEqual(resolved.values, { enabled: true, selections: ['default'] }); assert.deepEqual(input, {});\n  assert.deepEqual(registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', { enabled: false, selections: [] }).values, { enabled: false, selections: [] });\n  const defaultField = { path: '$.timeoutMinutes', type: 'integer', required: false, default: 60, constraints: [], branches: [] };\n  const runtimeDefault = schemaRuntimeFallback('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField);\n  assert.equal(runtimeDefault.value, approval.parseApprovalConfig(stage.config).timeoutMinutes);\n  assert.doesNotMatch(schemaDefaultBehavior('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField, runtimeDefault), /registry.*inserts/iu);\n\n  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-config-semantics-'));\n  try {\n    fs.mkdirSync(path.join(fixtureRoot, 'repository')); fs.mkdirSync(path.join(fixtureRoot, 'evidence'));\n    const direct = await import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href);\n    const invocation = { configuration: { values: { executable: 'node', resultMode: 'exit-code' } }, limits: { logBytes: 4096, processes: 4, memoryBytes: 1048576, cpuMillis: 1000, artifactFiles: 8, artifactBytes: 4096 }, timeoutMs: 1000, workspace: { repository: 'repository', evidence: 'evidence' } };\n    let payload; const context = { workspaceRoot: fixtureRoot, signal: new AbortController().signal, log() {}, async invoke(capability, request) { assert.equal(capability, 'command.execute'); payload = request.payload; return { exitCode: 0, signal: null, records: [] }; } };\n    assert.equal((await direct.provider().execute(invocation, context)).outcome, 'passed');\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' }); assert.equal(payload.workingDirectory, path.join(fixtureRoot, 'repository'));\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: [], environment: {} } } }, context);\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' });\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: ['--version'], environment: { PUBLIC: 'value' } } } }, context);\n    assert.deepEqual(payload.args, ['--version']); assert.deepEqual(payload.environment, { PUBLIC: 'value', CI: 'true' });\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { executable: 'node', resultMode: 'junit-required', reports: [] } } }, context), /DIRECT_COMMAND_REPORT_REQUIRED/u);\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, reports: [{ id: 'report', path: 'result.xml', mediaType: 'application/junit+xml', format: 'junit' }] } } }, context), /DIRECT_COMMAND_REPORTS_FORBIDDEN/u);\n    const runner = await import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href);\n    const instance = runner.activate({ config: { allowedExecutables: [process.execPath], allowedWorkingRoots: [path.join(fixtureRoot, 'repository')], executableCatalog: { node: process.execPath }, maxOutputBytes: 4096, maxExecutionMs: 1000, terminationGraceMs: 10 } });\n    await assert.rejects(() => instance.invoke({ request: { capability: 'command.execute', operation: 'run', resource: { type: 'command.executable', canonicalId: 'catalog:node' }, payload }, signal: context.signal, fence: { assertCurrent() {} } }), /COMMAND_ENVIRONMENT_DENIED/u);\n    await instance.shutdown();\n  } finally { fs.rmSync(fixtureRoot, { recursive: true, force: true }); }\n  const newSecret = enrichSecretFacts(shellSecretFacts('scripts/new-secret-source.sh', 'kubectl create secret generic unowned-semantic-secret --from-literal=opaque=fixture\\n'));\n  assert.equal(newSecret.length, 1); assert.deepEqual(newSecret[0].keys, ['opaque']); assert.equal(newSecret[0].semanticStatus, 'secret-authority-blocker');\n  console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');\n}",
+            "hints": [
+              "--root",
+              "skills/buster/plugins/direct-command/src/provider.js"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href)",
+            "operation": "async function verifyConfigurationSchemaSemantics() {\n  const ajv = new Ajv2020({ strict: false, allErrors: true }); addFormats(ajv);\n  const ruleCase = (schema, examples, expectedKeywords) => {\n    const fields = flattenSchema(schema);\n    const projected = structuredClone(schema);\n    for (const keyword of expectedKeywords) {\n      const constraint = fields[0].constraints.find((item) => item.name === keyword);\n      assert.deepEqual(constraint?.value, schema[keyword], `recursive rule ${keyword} was lost or changed`);\n      projected[keyword] = constraint.value;\n    }\n    const validator = ajv.compile(projected);\n    for (const [value, expected] of examples) assert.equal(validator(value), expected,\n      `recursive rule validation differs for ${JSON.stringify(value)}: ${JSON.stringify(validator.errors)}`);\n  };\n  const commandSchema = JSON.parse(read('skills/common/plugins/command-runner/schemas/config.schema.json'));\n  ruleCase(commandSchema.properties.executableCatalog,\n    [[{ node: '/usr/bin/node' }, true], [{ 'invalid key': '/usr/bin/node' }, false]], ['propertyNames']);\n  const dispatchSchema = JSON.parse(read('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'));\n  const paired = dispatchSchema.properties.targets.additionalProperties;\n  ruleCase({ type: 'object', properties: paired.properties, dependentRequired: paired.dependentRequired },\n    [[{}, true], [{ resultEndpoint: 'https://result.invalid', resultTokenSecret: 'result-token' }, true],\n      [{ resultEndpoint: 'https://result.invalid' }, false], [{ resultTokenSecret: 'result-token' }, false]], ['dependentRequired']);\n  for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {\n    const blocking = JSON.parse(read(schemaPath)).properties.policy.properties.blocking.properties;\n    ruleCase(blocking.priorities, [[['P0'], true], [['P1'], false], [[], false]], ['allOf']);\n    ruleCase(blocking.categories, [[['correctness', 'security', 'contract'], true], [['correctness', 'security'], false]], ['allOf']);\n    const branch = flattenSchema(blocking.priorities).find((field) => field.branches.includes('allOf[0]'));\n    assert.deepEqual(branch?.constraints.find((item) => item.name === 'contains')?.value, { const: 'P0' });\n  }\n  ruleCase({ type: 'array', items: { type: 'integer' }, contains: { const: 7 }, minContains: 2, maxContains: 3 },\n    [[[7, 7], true], [[7, 7, 7], true], [[7], false], [[7, 7, 7, 7], false], [[], false]], ['contains', 'minContains', 'maxContains']);\n  assert.throws(() => flattenSchema({ type: 'object', propertyNames: { unsupportedValidation: true } }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  assert.throws(() => flattenSchema({ type: 'array', unevaluatedItems: false }), /CONFIG_SCHEMA_UNSUPPORTED_KEYWORD/u);\n  const referenceSiblings = flattenSchema({ $defs: { value: { type: 'string', pattern: '^A' } }, $ref: '#/$defs/value', pattern: 'Z$' });\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === '^A')));\n  assert(referenceSiblings.some((field) => field.path === '$' && field.constraints.some((rule) => rule.name === 'pattern' && rule.value === 'Z$')));\n  assert.throws(() => flattenSchema({ $ref: 'https://unbound.invalid/schema' }), /CONFIG_SCHEMA_UNSUPPORTED_REFERENCE/u);\n  assert.equal(schemaPublishedValue('$.targets.{*}.maxInputTokens', 120000), 120000);\n  assert.equal(schemaPublishedValue('$.targets.{*}.tokenizerEncoding', 'o200k_base'), 'o200k_base');\n\n\n  const registry = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href);\n  const schemaApi = await import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href);\n  const approvalPath = fs.realpathSync(path.join(root, 'skills/nova/plugins/human-approval/schemas/config.schema.json'));\n  const approvalValidator = schemaApi.validateReferencedSchema(read('skills/nova/plugins/human-approval/schemas/config.schema.json'), approvalPath);\n  const stage = { type: 'approval', config: { target: 'operator', issuerId: 'authorized-operator' } };\n  const entry = { package: { root: path.dirname(path.dirname(approvalPath)), manifest: { id: 'fixture' } }, registration: { id: 'approval', configSchema: 'schemas/config.schema.json' } };\n  const snapshot = { stages: new Map([['approval', entry]]), observers: new Map(), adapters: new Map(), schemas: new Map([[approvalPath, approvalValidator]]) };\n  registry.validateRuntimeRegistrationConfiguration(snapshot, new Set(['fixture:approval']), { stages: [stage], observers: new Map(), adapters: new Map() });\n  assert.equal(Object.hasOwn(stage.config, 'timeoutMinutes'), false, 'stage validation inserted a schema default');\n  const approval = await import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href);\n  assert.equal(approval.parseApprovalConfig(stage.config).timeoutMinutes, 60);\n  assert.equal(approval.parseApprovalConfig({ ...stage.config, timeoutMinutes: 5 }).timeoutMinutes, 5);\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: '' }), { code: 'REGISTRY_RESULT_INVALID' });\n  assert.throws(() => approvalValidator.validate({ ...stage.config, timeoutMinutes: 0 }), { code: 'REGISTRY_RESULT_INVALID' });\n  for (const family of ['observers', 'adapters']) {\n    const familySnapshot = { ...snapshot, stages: new Map(), [family]: new Map([['fixture:approval', entry]]) };\n    const config = { ...stage.config }; const configured = { stages: [], observers: new Map(), adapters: new Map(), [family]: new Map([['fixture:approval', config]]) };\n    registry.validateRuntimeRegistrationConfiguration(familySnapshot, new Set(['fixture:approval']), configured);\n    assert.equal(Object.hasOwn(config, 'timeoutMinutes'), false, `${family} validation inserted a default`);\n  }\n  const providerSchemaPath = 'fixture-provider-schema';\n  const providerValidator = schemaApi.validateReferencedSchema(JSON.stringify({ type: 'object', properties: { enabled: { type: 'boolean', default: true }, selections: { type: 'array', items: { type: 'string' }, default: ['default'] } } }), providerSchemaPath);\n  const providerSnapshot = { schemas: new Map([[providerSchemaPath, providerValidator]]), testProviderContracts: new Map([['fixture@1', { configSchemaPath: providerSchemaPath, configSchemaDigest: 'sha256:fixture' }]]) };\n  const input = {}; const resolved = registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', input);\n  assert.deepEqual(resolved.values, { enabled: true, selections: ['default'] }); assert.deepEqual(input, {});\n  assert.deepEqual(registry.resolveTestProviderConfiguration(providerSnapshot, 'fixture@1', { enabled: false, selections: [] }).values, { enabled: false, selections: [] });\n  const defaultField = { path: '$.timeoutMinutes', type: 'integer', required: false, default: 60, constraints: [], branches: [] };\n  const runtimeDefault = schemaRuntimeFallback('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField);\n  assert.equal(runtimeDefault.value, approval.parseApprovalConfig(stage.config).timeoutMinutes);\n  assert.doesNotMatch(schemaDefaultBehavior('skills/nova/plugins/human-approval/schemas/config.schema.json', defaultField, runtimeDefault), /registry.*inserts/iu);\n\n  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-config-semantics-'));\n  try {\n    fs.mkdirSync(path.join(fixtureRoot, 'repository')); fs.mkdirSync(path.join(fixtureRoot, 'evidence'));\n    const direct = await import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href);\n    const invocation = { configuration: { values: { executable: 'node', resultMode: 'exit-code' } }, limits: { logBytes: 4096, processes: 4, memoryBytes: 1048576, cpuMillis: 1000, artifactFiles: 8, artifactBytes: 4096 }, timeoutMs: 1000, workspace: { repository: 'repository', evidence: 'evidence' } };\n    let payload; const context = { workspaceRoot: fixtureRoot, signal: new AbortController().signal, log() {}, async invoke(capability, request) { assert.equal(capability, 'command.execute'); payload = request.payload; return { exitCode: 0, signal: null, records: [] }; } };\n    assert.equal((await direct.provider().execute(invocation, context)).outcome, 'passed');\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' }); assert.equal(payload.workingDirectory, path.join(fixtureRoot, 'repository'));\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: [], environment: {} } } }, context);\n    assert.deepEqual(payload.args, []); assert.deepEqual(payload.environment, { CI: 'true' });\n    await direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, args: ['--version'], environment: { PUBLIC: 'value' } } } }, context);\n    assert.deepEqual(payload.args, ['--version']); assert.deepEqual(payload.environment, { PUBLIC: 'value', CI: 'true' });\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { executable: 'node', resultMode: 'junit-required', reports: [] } } }, context), /DIRECT_COMMAND_REPORT_REQUIRED/u);\n    await assert.rejects(() => direct.provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, reports: [{ id: 'report', path: 'result.xml', mediaType: 'application/junit+xml', format: 'junit' }] } } }, context), /DIRECT_COMMAND_REPORTS_FORBIDDEN/u);\n    const runner = await import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href);\n    const instance = runner.activate({ config: { allowedExecutables: [process.execPath], allowedWorkingRoots: [path.join(fixtureRoot, 'repository')], executableCatalog: { node: process.execPath }, maxOutputBytes: 4096, maxExecutionMs: 1000, terminationGraceMs: 10 } });\n    await assert.rejects(() => instance.invoke({ request: { capability: 'command.execute', operation: 'run', resource: { type: 'command.executable', canonicalId: 'catalog:node' }, payload }, signal: context.signal, fence: { assertCurrent() {} } }), /COMMAND_ENVIRONMENT_DENIED/u);\n    await instance.shutdown();\n  } finally { fs.rmSync(fixtureRoot, { recursive: true, force: true }); }\n  const newSecret = enrichSecretFacts(shellSecretFacts('scripts/new-secret-source.sh', 'kubectl create secret generic unowned-semantic-secret --from-literal=opaque=fixture\\n'));\n  assert.equal(newSecret.length, 1); assert.deepEqual(newSecret[0].keys, ['opaque']); assert.equal(newSecret[0].semanticStatus, 'secret-authority-blocker');\n  console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');\n}",
+            "hints": [
+              "--root",
+              "skills/common/plugins/command-runner/src/adapter.ts"
+            ]
+          }
+        ],
+        "unresolvedModuleOperations": [
+          {
+            "source": "scripts/check-ap08-effectful-guide.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "e37fdf35d00d84370f841ecce9a848d2ba923cbdd680bc13a40a22df184455f6",
+            "hints": [
+              "..",
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "scripts/check-ap08-effectful-guide.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/effects/identity.ts')).href)",
+            "operationSha256": "cd2b2596fe713204410154e1c03df87428ab0094a714d6bf50051d06682fb2cc",
+            "hints": [
+              "..",
+              "skills/nova/core/effects/identity.ts"
+            ]
+          },
+          {
+            "source": "scripts/check-ap08-effectful-guide.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/plugins/blueprint-sync/src/stage.ts')).href)",
+            "operationSha256": "e2425fd5a1b432b923d23c3dfae5ff4164ee2b7f876e1ac6a56deffe420649e6",
+            "hints": [
+              "..",
+              "skills/nova/plugins/blueprint-sync/src/stage.ts"
+            ]
+          },
+          {
+            "source": "scripts/check-ap08-minimal-plugin.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "e37fdf35d00d84370f841ecce9a848d2ba923cbdd680bc13a40a22df184455f6",
+            "hints": [
+              "..",
+              "skills/nova/core/src/index.ts"
+            ]
+          },
+          {
+            "source": "scripts/check-ap08-minimal-plugin.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/execution/engine-runtime.ts')).href)",
+            "operationSha256": "a34a5bb2c9caeef62aeca9eb82749e5f3834a7fe0800bddb00ef554b688f514c",
+            "hints": [
+              "..",
+              "skills/nova/core/execution/engine-runtime.ts"
+            ]
+          },
+          {
+            "source": "scripts/check-core-architecture-guides.mjs",
+            "expression": "import(pathToFileURL(path.join(root,\n  'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts')).href)",
+            "operationSha256": "e95967a94f6574e73f78cc3d3d06be4ee16d019fff2a4be68287d1221c63a631",
+            "hints": [
+              "..",
+              "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts"
+            ]
+          },
+          {
+            "source": "scripts/check-platform-specialist-guides.mjs",
+            "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
+            "operationSha256": "7ee198b79c5c7c3c21e63ff57fd03b7ad27cd8f233b8b7e49d58a73d18686f85",
+            "hints": [
+              "..",
+              "charts/kubeclaw/files/config"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, file)).href)",
+            "operationSha256": "b7e20c77a3e54c1f69a76780ba210044e6b18d6aa26a40ec1e8f82890382e271",
+            "hints": [
+              "--root"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+            "hints": [
+              "--root",
+              "skills/common/plugin-runtime/foundation/registry/configuration.ts"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+            "hints": [
+              "--root",
+              "skills/common/plugin-runtime/foundation/registry/schema.ts"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+            "hints": [
+              "--root",
+              "skills/nova/plugins/human-approval/src/approval.ts"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+            "hints": [
+              "--root",
+              "skills/buster/plugins/direct-command/src/provider.js"
+            ]
+          },
+          {
+            "source": "scripts/docs-configuration-inventory.mjs",
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed",
+            "hints": [
+              "--root",
+              "skills/common/plugins/command-runner/src/adapter.ts"
+            ]
+          },
+          {
+            "source": "scripts/docs-lint-policy-reference.mjs",
+            "expression": "import(path.join(\n  root, 'skills/nova/plugins/lint/src/engine/tool-registry.ts'))",
+            "operationSha256": "ade2110fbe7ee1d00ed7b25bea0c4876c140d053cf65bd9babfd13ec5cc17847",
+            "hints": [
+              "..",
+              "skills/nova/plugins/lint/src/engine/tool-registry.ts"
+            ]
+          },
+          {
+            "source": "scripts/docs-lint-policy-reference.mjs",
+            "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
+            "operationSha256": "7ee198b79c5c7c3c21e63ff57fd03b7ad27cd8f233b8b7e49d58a73d18686f85",
+            "hints": [
+              "..",
+              "charts/kubeclaw/files/config"
+            ]
+          },
+          {
+            "source": "scripts/updates/check-renovate.mjs",
+            "expression": "import(pathToFileURL(`${renovate}/dist/modules/manager/custom/regex/index.js`))",
+            "operationSha256": "f26a92f09b064a8a8d5b21d1f768ec0c9e6d0e6f8dde478aa8289239373e21c7",
+            "hints": [
+              "/usr/local/renovate"
+            ]
+          },
+          {
+            "source": "scripts/updates/check-renovate.mjs",
+            "expression": "import(pathToFileURL(`${renovate}/dist/workers/repository/update/branch/auto-replace.js`))",
+            "operationSha256": "c58d04ee402b3ef5d4f6a49e39c3d10c1e83191b05408ca658c301b8aad972be",
+            "hints": [
+              "/usr/local/renovate"
+            ]
+          },
+          {
+            "source": "scripts/updates/check-renovate.mjs",
+            "expression": "import(pathToFileURL(`${renovate}/dist/config/global.js`))",
+            "operationSha256": "224bee0f50d1aa5b08999e431df0c12045834547bdcd9a7693674dd9846fb51b",
+            "hints": [
+              "/usr/local/renovate"
+            ]
+          },
+          {
+            "source": "skills/buster/engine/test-gates/provider-child.mjs",
+            "expression": "import(pathToFileURL(command.modulePath).href)",
+            "operationSha256": "7ba39d5ac689a95f850fbd9b36616bc9c0e53573dce46a4ee68ccdf03fa21b00",
+            "hints": []
+          },
+          {
+            "source": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+            "expression": "import(pathToFileURL(command.modulePath).href)",
+            "operationSha256": "92f943125dde721feb4e58ecd302ddbb2b1a0188295ba4b4ee7af3956300d45b",
+            "hints": []
+          },
+          {
+            "source": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+            "expression": "import(pathToFileURL(command.modulePath).href)",
+            "operationSha256": "92f943125dde721feb4e58ecd302ddbb2b1a0188295ba4b4ee7af3956300d45b",
+            "hints": []
+          },
+          {
+            "source": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+            "expression": "import(pathToFileURL(`${entry.package.root}/${entry.registration.module}`).href)",
+            "operationSha256": "ad9269138c113776d32c11d9de9a5dc42c33da196db2fce463245eef4fbaeee7",
+            "hints": []
+          },
+          {
+            "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+            "expression": "require(name)",
+            "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0",
+            "hints": []
+          },
+          {
+            "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+            "expression": "require(name)",
+            "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0",
+            "hints": []
+          },
+          {
+            "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+            "expression": "require(name)",
+            "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0",
+            "hints": []
+          },
+          {
+            "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+            "expression": "require(name)",
+            "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0",
+            "hints": []
+          },
+          {
+            "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+            "expression": "import(pathToFileURL(modulePath).href)",
+            "operationSha256": "5cc87864b98ca34840541a357ee2c6a385acac3f2cbb8765cff64e04c4dc241a",
+            "hints": []
+          }
+        ]
+      }
+    ],
+    "unresolvedModuleInputAuthorities": [
+      {
+        "source": "scripts/check-ap08-effectful-guide.mjs",
+        "semanticClass": "fixed-repository-modules",
+        "sourceSha256": "4f0b49bacdc544f77f66d14237496e824004836008387a25866cfb1d01766b21",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "e37fdf35d00d84370f841ecce9a848d2ba923cbdd680bc13a40a22df184455f6"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/effects/identity.ts')).href)",
+            "operationSha256": "cd2b2596fe713204410154e1c03df87428ab0094a714d6bf50051d06682fb2cc"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/plugins/blueprint-sync/src/stage.ts')).href)",
+            "operationSha256": "e2425fd5a1b432b923d23c3dfae5ff4164ee2b7f876e1ac6a56deffe420649e6"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository from import.meta.dirname",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts",
+            "skills/nova/core/effects/identity.ts",
+            "skills/nova/plugins/blueprint-sync/src/stage.ts"
+          ]
+        },
+        "authorityInputs": []
+      },
+      {
+        "source": "scripts/check-ap08-minimal-plugin.mjs",
+        "semanticClass": "fixed-repository-modules",
+        "sourceSha256": "5fb5e2db66603a145edb2ab0abd5cbe3739a7a90e808ecde138cd08eca134dfa",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/src/index.ts')).href)",
+            "operationSha256": "e37fdf35d00d84370f841ecce9a848d2ba923cbdd680bc13a40a22df184455f6"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/core/execution/engine-runtime.ts')).href)",
+            "operationSha256": "a34a5bb2c9caeef62aeca9eb82749e5f3834a7fe0800bddb00ef554b688f514c"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository from import.meta.dirname",
+          "modulePaths": [
+            "skills/nova/core/src/index.ts",
+            "skills/nova/core/execution/engine-runtime.ts"
+          ]
+        },
+        "authorityInputs": []
+      },
+      {
+        "source": "scripts/check-core-architecture-guides.mjs",
+        "semanticClass": "fixed-repository-modules",
+        "sourceSha256": "05e0c0421afda55921950e88adbb005e3455111830ee0953204c1f0f0ebce01e",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(root,\n  'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts')).href)",
+            "operationSha256": "e95967a94f6574e73f78cc3d3d06be4ee16d019fff2a4be68287d1221c63a631"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository from import.meta.dirname",
+          "modulePaths": [
+            "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts"
+          ]
+        },
+        "authorityInputs": []
+      },
+      {
+        "source": "scripts/check-platform-specialist-guides.mjs",
+        "semanticClass": "finite-repository-modules",
+        "sourceSha256": "9f7b8f23fef60e0bcba5bf1dac855e808c26090488ad70ee2927e5681d26da1b",
+        "operations": [
+          {
+            "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
+            "operationSha256": "7ee198b79c5c7c3c21e63ff57fd03b7ad27cd8f233b8b7e49d58a73d18686f85"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository from import.meta.dirname",
+          "modulePaths": [
+            "charts/kubeclaw/files/config/eslint.config.mjs",
+            "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+            "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+            "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "scripts/docs-lint-policy-reference.mjs",
+            "sha256": "e7c01dff95b2c87df7d1cef6378c330d7f82a67687d4e02783c8d74c09ede191"
+          }
+        ]
+      },
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "semanticClass": "finite-documentation-runtime-semantics",
+        "sourceSha256": "e8c2274e1e35ff38af6a443ddf92a67b0623a386d221afa86589934732e849df",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(path.join(root, file)).href)",
+            "operationSha256": "b7e20c77a3e54c1f69a76780ba210044e6b18d6aa26a40ec1e8f82890382e271"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/configuration.ts')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugin-runtime/foundation/registry/schema.ts')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/nova/plugins/human-approval/src/approval.ts')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/buster/plugins/direct-command/src/provider.js')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed"
+          },
+          {
+            "expression": "import(pathToFileURL(path.join(root, 'skills/common/plugins/command-runner/src/adapter.ts')).href)",
+            "operationSha256": "8bdbec08e9102d0d8bd5c43ed99a3e7d7701b843be8b0c997aa0083e2209faed"
+          }
+        ],
+        "inputConstraints": {
+          "root": "selected source checkout; documented --root option",
+          "modulePaths": [
+            "skills/prism/server/studio-config.ts",
+            "skills/prism/config/database-bootstrap.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+            "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
+            "skills/prism/server/control-config.ts",
+            "tools/ops-mcp/src/config.mjs",
+            "tools/ops-mcp/src/kubernetes.mjs",
+            "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+            "skills/buster/plugins/openapi/src/provider.js",
+            "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+            "skills/common/plugin-runtime/foundation/registry/schema.ts",
+            "skills/nova/plugins/human-approval/src/approval.ts",
+            "skills/buster/plugins/direct-command/src/provider.js",
+            "skills/common/plugins/command-runner/src/adapter.ts"
+          ]
+        },
+        "authorityInputs": []
+      },
+      {
+        "source": "scripts/docs-lint-policy-reference.mjs",
+        "semanticClass": "finite-repository-modules",
+        "sourceSha256": "e7c01dff95b2c87df7d1cef6378c330d7f82a67687d4e02783c8d74c09ede191",
+        "operations": [
+          {
+            "expression": "import(path.join(\n  root, 'skills/nova/plugins/lint/src/engine/tool-registry.ts'))",
+            "operationSha256": "ade2110fbe7ee1d00ed7b25bea0c4876c140d053cf65bd9babfd13ec5cc17847"
+          },
+          {
+            "expression": "import(path.join(root, 'charts/kubeclaw/files/config', file))",
+            "operationSha256": "7ee198b79c5c7c3c21e63ff57fd03b7ad27cd8f233b8b7e49d58a73d18686f85"
+          }
+        ],
+        "inputConstraints": {
+          "root": "repository from import.meta.dirname",
+          "modulePaths": [
+            "skills/nova/plugins/lint/src/engine/tool-registry.ts",
+            "charts/kubeclaw/files/config/eslint.config.mjs",
+            "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+            "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+            "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs"
+          ]
+        },
+        "authorityInputs": []
+      },
+      {
+        "source": "scripts/updates/check-renovate.mjs",
+        "semanticClass": "external-renovate-fixed-suffixes",
+        "sourceSha256": "592ecf7c723f28a60809e031ee0781a69c3f4507878836ec8c3d0068055cd574",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(`${renovate}/dist/modules/manager/custom/regex/index.js`))",
+            "operationSha256": "f26a92f09b064a8a8d5b21d1f768ec0c9e6d0e6f8dde478aa8289239373e21c7"
+          },
+          {
+            "expression": "import(pathToFileURL(`${renovate}/dist/workers/repository/update/branch/auto-replace.js`))",
+            "operationSha256": "c58d04ee402b3ef5d4f6a49e39c3d10c1e83191b05408ca658c301b8aad972be"
+          },
+          {
+            "expression": "import(pathToFileURL(`${renovate}/dist/config/global.js`))",
+            "operationSha256": "224bee0f50d1aa5b08999e431df0c12045834547bdcd9a7693674dd9846fb51b"
+          }
+        ],
+        "inputConstraints": {
+          "root": "RENOVATE_PACKAGE_ROOT or /usr/local/renovate; external dependency authority",
+          "moduleSuffixes": [
+            "/dist/modules/manager/custom/regex/index.js",
+            "/dist/workers/repository/update/branch/auto-replace.js",
+            "/dist/config/global.js"
+          ]
+        },
+        "authorityInputs": [
+          {
+            "path": "versions.json",
+            "sha256": "00a5c00ee4b7ef19d756e06ce315dfb033d39467be3762d8fdd47e354ec4ae28"
+          }
+        ]
+      },
+      {
+        "source": "skills/buster/engine/test-gates/provider-child.mjs",
+        "semanticClass": "registered-package-protocol-module",
+        "sourceSha256": "ce2bd1ddef2b283e5f3ea866c4a03deabfbb36ff3fabe06d73836d1c71611977",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(command.modulePath).href)",
+            "operationSha256": "7ba39d5ac689a95f850fbd9b36616bc9c0e53573dce46a4ee68ccdf03fa21b00"
+          }
+        ],
+        "inputConstraints": {
+          "moduleInput": "command.modulePath",
+          "parent": "skills/buster/engine/test-gates/provider-loader.ts",
+          "guards": [
+            "canonicalModule: canonical file inside package root",
+            "verifiedSnapshot: matching package digest before and after copy",
+            "registered entrypoint + initialize protocol + function export"
+          ],
+          "boundary": "registered package/snapshot; excludes repository documentation helper outside that package"
+        },
+        "authorityInputs": [
+          {
+            "path": "skills/buster/engine/test-gates/provider-loader.ts",
+            "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85"
+          },
+          {
+            "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+            "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+            "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+            "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+            "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+            "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+          }
+        ]
+      },
+      {
+        "source": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+        "semanticClass": "registered-package-protocol-module",
+        "sourceSha256": "31a4f4435fbe9137521e8c610d6dac0905ce01fa0b2589062362270ae109c77c",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(command.modulePath).href)",
+            "operationSha256": "92f943125dde721feb4e58ecd302ddbb2b1a0188295ba4b4ee7af3956300d45b"
+          }
+        ],
+        "inputConstraints": {
+          "moduleInput": "command.modulePath",
+          "parent": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+          "guards": [
+            "copied package digest verified",
+            "canonical module file inside copied package root",
+            "registered entrypoint + adapt protocol + function export"
+          ],
+          "boundary": "registered package snapshot"
+        },
+        "authorityInputs": [
+          {
+            "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+            "sha256": "0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9"
+          },
+          {
+            "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+            "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+            "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+            "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+            "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+            "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+          }
+        ]
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+        "semanticClass": "registered-package-protocol-module",
+        "sourceSha256": "2851d7491792b3c4831386346c8eac79abfe79c1e3f1f9f2d415a834aad59d8c",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(command.modulePath).href)",
+            "operationSha256": "92f943125dde721feb4e58ecd302ddbb2b1a0188295ba4b4ee7af3956300d45b"
+          }
+        ],
+        "inputConstraints": {
+          "moduleInput": "command.modulePath",
+          "parent": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+          "guards": [
+            "canonicalModule: realpath file inside package root",
+            "permission fs-read limited to child and canonical package root",
+            "validated stage/observer protocol + function export"
+          ],
+          "boundary": "registered isolated package"
+        },
+        "authorityInputs": [
+          {
+            "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+            "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+            "sha256": "36c9c5e668f4599f46524f5599898037bdb0600d4fdca7527985ef809af7587b"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+            "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+            "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+            "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+            "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+            "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+          }
+        ]
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "semanticClass": "trusted-package-registration-module",
+        "sourceSha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+        "operations": [
+          {
+            "expression": "import(pathToFileURL(`${entry.package.root}/${entry.registration.module}`).href)",
+            "operationSha256": "ad9269138c113776d32c11d9de9a5dc42c33da196db2fce463245eef4fbaeee7"
+          }
+        ],
+        "inputConstraints": {
+          "moduleInput": "entry.package.root/entry.registration.module",
+          "guards": [
+            "registry build assertPackageFile canonical package containment",
+            "package discovery + trusted provenance",
+            "package content digest checked before and after import audit",
+            "trusted_first_party branch + registered function export"
+          ],
+          "boundary": "validated registered package"
+        },
+        "authorityInputs": [
+          {
+            "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+            "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+            "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+            "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+            "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+            "sha256": "a7a28379c6f8409576a12169c6bc23070dbb66a41e0f041fc8b95310b29eb42e"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+            "sha256": "764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+            "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+          }
+        ]
+      },
+      {
+        "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "semanticClass": "bounded-builtins-and-trusted-registration",
+        "sourceSha256": "a7a28379c6f8409576a12169c6bc23070dbb66a41e0f041fc8b95310b29eb42e",
+        "operations": [
+          {
+            "expression": "require(name)",
+            "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0"
+          },
+          {
+            "expression": "require(name)",
+            "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0"
+          },
+          {
+            "expression": "require(name)",
+            "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0"
+          },
+          {
+            "expression": "require(name)",
+            "operationSha256": "ba0f2213e279c1cc9f943017a7a82bc4d260d2f17a1bde4c050191157dca88f0"
+          },
+          {
+            "expression": "import(pathToFileURL(modulePath).href)",
+            "operationSha256": "5cc87864b98ca34840541a357ee2c6a385acac3f2cbb8765cff64e04c4dc241a"
+          }
+        ],
+        "inputConstraints": {
+          "moduleInput": "fixed node:* keys for require loops; argv modulePath from trusted import-audit parent",
+          "guards": [
+            "fixed builtin object-entry/array domains",
+            "registration path from validated registry package entry",
+            "trusted import-audit argv from parent",
+            "function export checked + process/global effect audit"
+          ],
+          "boundary": "Node builtins or trusted registration inside approved package"
+        },
+        "authorityInputs": [
+          {
+            "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+            "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+            "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+            "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+            "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+            "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+            "sha256": "764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+            "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+          }
+        ]
+      }
     ]
   }
 }

@@ -15,11 +15,438 @@ const syntheticDigest = 'a'.repeat(64);
 // dependency/vendor trees are external authorities; docs are publication inputs.
 // Experimental spikes are not supported deployment or extension entry points.
 const producerRoots=['scripts','skills','ops','tools','bin','cmd','docker','packaging','plugins','contracts','my-values'];
+const documentationGraphCache=new Map();
+const documentationModuleSyntaxCache=new Map();
+const documentationQualificationCache=new Map();
+// Finite reviewed node:module admissions. The first three retain loader
+// custody; the others are a builtin-name inventory, a source-text transform,
+// and synchronization of already-denied builtin methods in the pinned audit.
+// Neither runtime export enumeration nor registry refresh extends this domain.
+const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default','builtinModules','stripTypeScriptTypes','syncBuiltinESMExports']);
+// Reviewed input-authority recipes are Source trust anchors, separately from
+// refreshable operation fingerprints. Each recipe binds the actual consumer
+// class, complete primary source, and its caller/input guards. Extending this
+// authority requires a Source-reviewed recipe change here, not a JSON digest
+// refresh. These recipes never permit unsupported capability custody.
+const reviewedDocumentationModuleInputRecipes = [
+  {
+    "source": "scripts/check-ap08-effectful-guide.mjs",
+    "semanticClass": "fixed-repository-modules",
+    "recipeSha256": "a86fb35689810c4e1568ecdfe45cfcd6e34220205bfbb18823e9664ee0f272df"
+  },
+  {
+    "source": "scripts/check-ap08-minimal-plugin.mjs",
+    "semanticClass": "fixed-repository-modules",
+    "recipeSha256": "ab83a00ce984358968adf6cb37759466728cf3bc88c26940ca973849dfa73ec8"
+  },
+  {
+    "source": "scripts/check-core-architecture-guides.mjs",
+    "semanticClass": "fixed-repository-modules",
+    "recipeSha256": "ab5fb57a7ffdf464bc13863d99a473e7777e66c955d5000d832c252ec80a9606"
+  },
+  {
+    "source": "scripts/check-platform-specialist-guides.mjs",
+    "semanticClass": "finite-repository-modules",
+    "recipeSha256": "1a39c77b1e82bedca9893d1dbb45a40a0c3c3b2c232544426c61200b1d8612b4"
+  },
+  {
+    "source": "scripts/docs-configuration-inventory.mjs",
+    "semanticClass": "finite-documentation-runtime-semantics",
+    "recipeSha256": "f42395d02bca9aff6bd023da499f20ecfbd2be5b673fd4e7bfe2461fd71467a2"
+  },
+  {
+    "source": "scripts/docs-lint-policy-reference.mjs",
+    "semanticClass": "finite-repository-modules",
+    "recipeSha256": "6b2621b4148a1f076fc31de00dcfd861aca37de1b4653bdf4b1661a0994a2a39"
+  },
+  {
+    "source": "scripts/updates/check-renovate.mjs",
+    "semanticClass": "external-renovate-fixed-suffixes",
+    "recipeSha256": "fc8489286987e3174cd03cbd34707bf2a0f178d178a70b317bc21808a0ea4662"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/provider-child.mjs",
+    "semanticClass": "registered-package-protocol-module",
+    "recipeSha256": "ec70a11fd98a46732dd43735c9a808becff2a08d3eaab9f85d63e45cdc699cec"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+    "semanticClass": "registered-package-protocol-module",
+    "recipeSha256": "7ec35db726b183051561c7669495df97b3471688dd096ab602919459cc124d87"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+    "semanticClass": "registered-package-protocol-module",
+    "recipeSha256": "1363bc462cb721195d60d4795ddd4bae95ee05fe57f4dbf39461a4ab2ed13ca7"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+    "semanticClass": "trusted-package-registration-module",
+    "recipeSha256": "51b1ae22deae4eeba9d3117d7370bf75c62891ce092249b4da74ce5eefd4641d"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+    "semanticClass": "bounded-builtins-and-trusted-registration",
+    "recipeSha256": "9a2f6a0acee7925512c0ed9cc9f244a82f52fa284fa19f98fee16a32015bd928"
+  }
+];
+function documentationModuleInputAuthority(root,boundary,graph) {
+  const recipes=boundary.unresolvedModuleInputAuthorities??[],facts=[];
+  for(const operation of graph.dynamicOperations) {
+    assert(!operation.unqualifiedCapabilityTransfer,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; unsupported ${operation.capability} custody: ${operation.expression}`);
+    const recipe=recipes.find(recipe=>recipe.source===operation.source);
+    const anchor=reviewedDocumentationModuleInputRecipes.find(anchor=>anchor.source===operation.source&&anchor.semanticClass===recipe?.semanticClass);
+    assert(anchor&&hash(JSON.stringify(recipe))===anchor.recipeSha256,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; unresolved operation has no reviewed semantic input authority`);
+    assert(recipe.operations.some(selected=>selected.expression===operation.expression&&selected.operationSha256===hash(operation.operation)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; operation is outside its semantic input recipe`);
+    const inputs=[{path:recipe.source,sha256:recipe.sourceSha256},...recipe.authorityInputs];
+    for(const input of inputs) {
+      const file=path.join(root,input.path);
+      assert(fs.existsSync(file)&&fs.realpathSync(file)===path.resolve(file)&&hash(fs.readFileSync(file))===input.sha256,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; input/caller authority changed: ${input.path}`);
+      facts.push(input);
+    }
+    for(const selected of recipe.inputConstraints.modulePaths??[]) {
+      const file=path.join(root,selected);
+      assert(fs.existsSync(file),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${operation.source}; finite selected module missing: ${selected}`);
+      const canonical=path.relative(root,fs.realpathSync(file)).replaceAll(path.sep,'/');
+      assert(!(boundary.qualifications??[]).some(record=>record.source===canonical),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${operation.source}; selected module resolves to qualified metadata: ${selected}`);
+      facts.push({path:selected,canonical,sha256:hash(fs.readFileSync(file))});
+    }
+  }
+  return hash(JSON.stringify(facts));
+}
+function documentationEntryPoints(scripts,documentationOnly=true) {
+  const entries=[];
+  for(const [name,command]of Object.entries(scripts))if(!documentationOnly||name.startsWith('docs:')||name.startsWith('verify:docs:'))for(const match of command.matchAll(/\b((?:scripts|skills|ops|tools|bin|cmd|docker|packaging|plugins|contracts|my-values)\/[A-Za-z0-9_./-]+\.(?:[cm]?js|ts))\b/gu))entries.push({name,command,source:match[1]});
+  for(const [name,command]of Object.entries(scripts))if(!documentationOnly||name.startsWith('docs:')||name.startsWith('verify:docs:'))for(const match of command.matchAll(/\bnode(?:\s+(?:--[A-Za-z0-9_=./:-]+|-[A-Za-z]+|--))*\s+['"]?((?:\.\/)?(?:scripts|skills|ops|tools|bin|cmd|docker|packaging|plugins|contracts|my-values)\/[A-Za-z0-9_./-]+)/gu))if(!entries.some(entry=>entry.name===name&&entry.source===path.posix.normalize(match[1])))entries.push({name,command,source:path.posix.normalize(match[1])});
+  return entries.sort((a,b)=>a.name.localeCompare(b.name)||a.source.localeCompare(b.source));
+}
+
+// One admission domain covers roots, finite seeds and transferred local inputs.
+// CommonJS falls back to its JS compiler for unregistered extensions; ESM
+// does not. JSON is passive only on the actual canonical JSON loader branch.
+const nodeExecutableSource=source=>/\.(?:[cm]?js|[cm]?ts)$/u.test(source);
+function nodeModuleInputClass(source,kind) {
+  const basename=path.posix.basename(source),extension=path.posix.extname(source);
+  if(nodeExecutableSource(source))return 'executable';
+  if(extension==='.json'&&(kind!=='require'&&kind!=='entry'||basename!=='.json'))return 'passive-json';
+  assert(extension!=='.node',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported native module input`);
+  assert(kind==='require'||kind==='entry',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported ${kind} executable input`);
+  return 'commonjs-fallback';
+}
+// This source is an actual native test, not a guarded arbitrary-module loader.
+// Its synthetic role binds the complete test, owning package command and
+// declared test-input contract. Any drift or product reachability rejects.
+const reviewedSyntheticNodeTests=[{
+  source:'skills/prism/integration/corpus-pool.mts',sha256:'993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7',
+  package:'skills/prism/package.json',script:'test:corpus-pool',command:'node integration/corpus-pool.mts',
+  authorityInputs:[{path:'skills/prism/package.json',sha256:'19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c'},{path:'scripts/docs-runtime-consumer-contracts.mjs',sha256:'7cc530f43693188691d2485e5bdef0c57de9307696b957c060ef6356a021dfaa'}]
+},{
+  source:'skills/prism/integration/engine-capture-retention.mts',sha256:'83e1cbdd48b997c5fd0d59f183bd6057d82e10df9ba25e2e7e7f4162a0eac74a',
+  package:'skills/prism/package.json',script:'test:engine:native-retention',command:'node --expose-gc integration/engine-capture-retention.mts',
+  authorityInputs:[{path:'skills/prism/package.json',sha256:'19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c'}]
+}];
+function syntheticNodeTestSources(root,packageBytes) {
+  const selected=new Set(),definition=JSON.parse(packageBytes);
+  const publicTargets=value=>typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(publicTargets):[];
+  for(const recipe of reviewedSyntheticNodeTests) {
+    const file=path.join(root,recipe.source);if(!fs.existsSync(file)){const owningPackage=path.join(root,recipe.package);assert(!fs.existsSync(owningPackage)||hash(fs.readFileSync(owningPackage))!==recipe.authorityInputs.find(input=>input.path===recipe.package).sha256,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; synthetic test Source missing`);continue;}
+    for(const input of [{path:recipe.source,sha256:recipe.sha256},...recipe.authorityInputs]) {
+      const authority=path.join(root,input.path);
+      assert(fs.existsSync(authority)&&fs.realpathSync(authority)===path.resolve(authority)&&hash(fs.readFileSync(authority))===input.sha256,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; synthetic test Source/caller authority changed: ${input.path}`);
+    }
+    assert(JSON.parse(fs.readFileSync(path.join(root,recipe.package),'utf8')).scripts?.[recipe.script]===recipe.command,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; synthetic test command changed`);
+    for(const command of Object.values(definition.scripts??{})) {
+      assert(!command.includes(recipe.source),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; new unreviewed package invocation of synthetic test`);
+      for(const match of command.matchAll(/\bnode(?:\s+(?:--[A-Za-z0-9_=./:-]+|-[A-Za-z]+|--))*\s+['"]?((?:\.\/)?(?:scripts|skills|ops|tools|bin|cmd|docker|packaging|plugins|contracts|my-values)\/[A-Za-z0-9_./-]+)/gu)){const entry=path.join(root,path.posix.normalize(match[1]));assert(!fs.existsSync(entry)||fs.realpathSync(entry)!==fs.realpathSync(file),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; synthetic test has new canonical package invocation`);}
+    }
+    for(const target of [definition.bin,definition.main,definition.exports].flatMap(publicTargets)) {
+      const absolute=path.resolve(root,target);
+      assert(!fs.existsSync(absolute)||fs.realpathSync(absolute)!==fs.realpathSync(file),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${recipe.source}; synthetic test has package public reachability`);
+    }
+    selected.add(recipe.source);
+  }
+  return selected;
+}
+
+function nodeProductExecutableSources(root,packageBytes) {
+  const syntheticTests=syntheticNodeTestSources(root,packageBytes),all=walkProductSources(root,producerRoots,()=>true),selected=new Set(all.filter(source=>nodeExecutableSource(source)&&!syntheticTests.has(source)));
+  const definition=JSON.parse(packageBytes),invoked=[];
+  for(const command of Object.values(definition.scripts??{}))for(const match of command.matchAll(/\bnode(?:\s+(?:--[A-Za-z0-9_=./:-]+|-[A-Za-z]+|--))*\s+['"]?((?:\.\/)?(?:scripts|skills|ops|tools|bin|cmd|docker|packaging|plugins|contracts|my-values)\/[A-Za-z0-9_./-]+)/gu))invoked.push(path.posix.normalize(match[1]));
+  const packageTargets=value=>typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(packageTargets):[];
+  invoked.push(...[definition.bin,definition.main,definition.exports].flatMap(packageTargets).map(source=>source.replace(/^\.\//u,'')));
+  for(const source of all)if(!syntheticTests.has(source)&&(invoked.includes(source)||/^#![^\n]*(?:\/|\s)node(?:\s|$)/u.test(fs.readFileSync(path.join(root,source),'utf8').split('\n',1)[0])))selected.add(source);
+  return [...selected].sort();
+}
+
+function documentationModuleGraph(root,packageBytes,boundary={}) {
+  const syntheticTests=syntheticNodeTestSources(root,packageBytes),rootSources=nodeProductExecutableSources(root,packageBytes),files=[],sourceClasses=new Map(),rootAliases=[],rootPaths=new Set(rootSources);
+  function admit(source,kind) {
+    assert(!syntheticTests.has(source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; synthetic native test acquired by ${kind}`);
+    const selected=nodeModuleInputClass(source,kind);
+    if(selected==='passive-json'){const bytes=fs.readFileSync(path.join(root,source),'utf8');try{JSON.parse(bytes.replace(/^\uFEFF/u,''));}catch{assert.fail(`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; invalid passive JSON input`);}}
+    sourceClasses.set(source,selected);return selected;
+  }
+  for(const source of rootSources){const canonical=path.relative(root,fs.realpathSync(path.join(root,source))).replaceAll(path.sep,'/');if(canonical!==source)rootAliases.push({source,target:canonical});assert(!canonical.startsWith('../')&&!canonical.split('/').some(part=>['node_modules','vendor','.git'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root module escapes repository authority`);admit(canonical,'entry');if(!files.includes(canonical))files.push(canonical);}
+  // These are actual finite loader inputs from reviewed recipes. Include their
+  // module bytes and imports even when they live outside the execution roots.
+  const finiteClosure=new Set(),seedAliases=[],seedPaths=new Set();
+  for(const recipe of boundary.unresolvedModuleInputAuthorities??[])if(reviewedDocumentationModuleInputRecipes.some(anchor=>anchor.source===recipe.source&&anchor.semanticClass===recipe.semanticClass&&anchor.recipeSha256===hash(JSON.stringify(recipe))))for(const source of recipe.inputConstraints.modulePaths??[])if(fs.existsSync(path.join(root,source))) {
+    const canonical=path.relative(root,fs.realpathSync(path.join(root,source))).replaceAll(path.sep,'/');
+    assert(!canonical.startsWith('../')&&!path.isAbsolute(canonical)&&!canonical.split('/').some(part=>['node_modules','vendor','.git'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; finite selected module escapes repository authority: ${source}`);
+    // Node resolves a selected symlink before resolving its relative imports.
+    // Keep the resolution path as a cache fact, but scan only canonical bytes
+    // with the canonical identity. This also applies to already-root seeds.
+    admit(canonical,'dynamic-import');seedPaths.add(source);finiteClosure.add(canonical);
+    if(canonical!==source){seedAliases.push({source,target:canonical});const index=files.indexOf(source);if(index!==-1)files.splice(index,1);}
+    if(!files.includes(canonical))files.push(canonical);
+  }
+  const inputs=files.map(source=>[source,fs.readFileSync(path.join(root,source))]);
+  const directoryAliases=[];
+  const excluded=new Set(['node_modules','vendor','.git','dist','test','tests','fixtures']);
+  function inspectDirectory(source) {
+    const absolute=path.join(root,source);if(!fs.existsSync(absolute))return;
+    if(fs.lstatSync(absolute).isSymbolicLink()){if(fs.statSync(absolute).isDirectory())directoryAliases.push({source,target:path.relative(root,fs.realpathSync(absolute)).replaceAll(path.sep,'/'),directory:true});return;}
+    if(fs.statSync(absolute).isDirectory())for(const entry of fs.readdirSync(absolute,{withFileTypes:true}))if(!excluded.has(entry.name)&&(entry.isDirectory()||entry.isSymbolicLink()))inspectDirectory(path.posix.join(source,entry.name));
+  }
+  producerRoots.forEach(inspectDirectory);directoryAliases.sort((a,b)=>a.source.localeCompare(b.source));
+  function canonicalDependency(source) {
+    const canonical=path.relative(root,fs.realpathSync(path.join(root,source))).replaceAll(path.sep,'/');
+    assert(!canonical.startsWith('../')&&!path.isAbsolute(canonical)&&!canonical.split('/').some(part=>['node_modules','vendor','.git'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; cached module input escapes repository authority`);
+    return canonical;
+  }
+  const dependencyFacts=paths=>[...paths].sort().map(source=>{const file=path.join(root,source);return fs.existsSync(file)?[source,canonicalDependency(source),hash(fs.readFileSync(file))]:[source,null];});
+  const graphKey=(selected,dependencyPaths)=>hash(JSON.stringify([hash(packageBytes),directoryAliases,dependencyFacts(seedPaths),dependencyFacts(rootPaths),selected.map(([source,bytes])=>[source,fs.realpathSync(path.join(root,source)),hash(bytes)]).sort((a,b)=>a[0].localeCompare(b[0])),dependencyFacts(dependencyPaths)]));
+  const cached=documentationGraphCache.get(root);
+  // A cached closure must still bind every bridge's current bytes and canonical
+  // path. On change, rebuild from primary inputs so removed edges cannot retain
+  // stale consumers. ASTs are reused only for identical complete source bytes.
+  const cacheInputs=[...inputs];
+  if(cached)for(const source of cached.closureSources)if(!files.includes(source)&&fs.existsSync(path.join(root,source))){canonicalDependency(source);cacheInputs.push([source,fs.readFileSync(path.join(root,source))]);}
+  if(cached&&cached.inputKey===graphKey(cacheInputs,cached.dependencyPaths))return cached;
+  const edges=[],dynamicOperations=[],unresolvedLocalOperations=[],aliases=[...directoryAliases,...rootAliases,...seedAliases],dependencyPaths=new Set([...seedPaths,...rootPaths]);
+  const packageDefinition=JSON.parse(packageBytes),packageImports=packageDefinition.imports??{};
+  function targetFor(source,specifier,kind) {
+    let packageRelative=false;
+    if(specifier.startsWith('#')){const mapped=packageImports[specifier];if(typeof mapped==='string'){specifier=mapped;packageRelative=true;}else return null;}
+    if(specifier===packageDefinition.name&&typeof packageDefinition.exports==='string'){specifier=packageDefinition.exports;packageRelative=true;}
+    if(specifier.startsWith('file:')){try{specifier=decodeURIComponent(new URL(specifier).pathname);}catch{return null;}}
+    if(path.isAbsolute(specifier)){if(!specifier.startsWith(path.resolve(root)+path.sep))return null;specifier='./'+path.relative(root,specifier).replaceAll(path.sep,'/');packageRelative=true;}
+    if(!specifier.startsWith('.'))return null;
+    let target=path.posix.normalize(path.posix.join(packageRelative?'':path.posix.dirname(source),specifier));
+    if(target.startsWith('../'))return null;
+    if(!fs.existsSync(path.join(root,target))&&target.endsWith('.js')&&fs.existsSync(path.join(root,target.slice(0,-3)+'.ts')))target=target.slice(0,-3)+'.ts';
+    if(!fs.existsSync(path.join(root,target)))for(const extension of ['.mjs','.js','.ts','/index.mjs','/index.js','/index.ts'])if(fs.existsSync(path.join(root,target+extension))){target+=extension;break;}
+    if(!fs.existsSync(path.join(root,target))||!fs.statSync(path.join(root,target)).isFile())return null;
+    dependencyPaths.add(target);
+    const canonical=path.relative(root,fs.realpathSync(path.join(root,target))).replaceAll(path.sep,'/');
+    if(canonical!==target)aliases.push({source:target,target:canonical});
+    if(finiteClosure.has(source))assert(!canonical.startsWith('../')&&!canonical.split('/').some(part=>['node_modules','vendor','.git'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; finite local dependency escapes repository authority: ${target}`);
+    assert(!canonical.startsWith('../')&&!canonical.split('/').some(part=>['node_modules','vendor','.git'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; local dependency escapes repository authority: ${target}`);
+    admit(canonical,kind);
+    if(finiteClosure.has(source))finiteClosure.add(canonical);
+    // Every actual local transfer enters the same finite AST inventory, even
+    // when its parent was an ordinary product root rather than a recipe seed.
+    if(!files.includes(canonical)){files.push(canonical);inputs.push([canonical,fs.readFileSync(path.join(root,canonical))]);}
+    return canonical;
+  }
+  for(const [source,bytes]of inputs) {
+    assert(sourceClasses.has(source),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; missing module input admission`);
+    if(sourceClasses.get(source)==='passive-json')continue;
+    const canonical=path.relative(root,fs.realpathSync(path.join(root,source))).replaceAll(path.sep,'/');if(canonical!==source)aliases.push({source,target:canonical});
+    const syntaxKey=hash(bytes),syntaxEntry=documentationModuleSyntaxCache.get(path.join(root,source));
+    const tree=syntaxEntry?.key===syntaxKey?syntaxEntry.tree:ts.createSourceFile(source,bytes.toString(),ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
+    assert(!tree.parseDiagnostics.length,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; executable input syntax is outside the finite scanner`);
+    documentationModuleSyntaxCache.set(path.join(root,source),{key:syntaxKey,tree});
+    const declarations=new Map(),writes=[],importCapabilities=new Map();
+    for(const statement of tree.statements)if(ts.isImportDeclaration(statement)&&ts.isStringLiteralLike(statement.moduleSpecifier)&&['module','node:module'].includes(statement.moduleSpecifier.text)) {
+      const clause=statement.importClause;if(clause?.name)importCapabilities.set(clause.name.text,'node-module');
+      if(clause?.namedBindings&&ts.isNamespaceImport(clause.namedBindings))importCapabilities.set(clause.namedBindings.name.text,'node-module');
+      for(const element of clause?.namedBindings?.elements??[]) {
+        const selected=element.propertyName?.text??element.name.text;
+        assert(reviewedNodeModuleNamedImports.has(selected),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unreviewed node:module named admission: ${selected}`);
+        if(selected==='createRequire')importCapabilities.set(element.name.text,'create-require');
+        if(selected==='Module'||selected==='default')importCapabilities.set(element.name.text,'node-module');
+      }
+    }
+    const scopeOf=node=>{for(let parent=node.parent;parent;parent=parent.parent)if(ts.isBlock(parent)||ts.isFunctionLike(parent)||ts.isSourceFile(parent))return parent;return tree;};
+    function declarationsIn(node){
+      if(ts.isVariableDeclaration(node)&&ts.isIdentifier(node.name)&&node.initializer){const choices=declarations.get(node.name.text)??[];choices.push({value:node.initializer,scope:scopeOf(node)});declarations.set(node.name.text,choices);}
+      if(ts.isVariableDeclaration(node)&&ts.isObjectBindingPattern(node.name)&&node.initializer)for(const element of node.name.elements)if(ts.isIdentifier(element.name)){const property=element.dotDotDotToken?null:element.propertyName?ts.isIdentifier(element.propertyName)||ts.isStringLiteralLike(element.propertyName)?element.propertyName.text:ts.isComputedPropertyName(element.propertyName)?ts.isStringLiteralLike(element.propertyName.expression)?element.propertyName.expression.text:'createRequire':null:element.name.text;const choices=declarations.get(element.name.text)??[];choices.push({value:node.initializer,property,scope:scopeOf(node)});declarations.set(element.name.text,choices);}
+      if(ts.isBinaryExpression(node)&&node.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&node.operatorToken.kind<=ts.SyntaxKind.LastAssignment&&ts.isIdentifier(node.left))writes.push(node);
+      ts.forEachChild(node,declarationsIn);
+    }declarationsIn(tree);
+    function bindingFor(node){for(let parent=node.parent;parent;parent=parent.parent){const choices=(declarations.get(node.text)??[]).filter(choice=>choice.scope===parent);if(choices.length)return choices.filter(choice=>choice.value.end<node.pos).at(-1)??choices[0];}return null;}
+    const declarationFor=node=>bindingFor(node)?.value??null;
+    const assignedValues=node=>writes.filter(write=>write.left.text===node.text&&declarationFor(write.left)===declarationFor(node)).map(write=>write.right);
+    function literal(node,seen=new Set()) {
+      if(!node||seen.has(node))return null;seen=new Set([...seen,node]);
+      if(ts.isStringLiteralLike(node))return node.text;
+      if(ts.isParenthesizedExpression(node)||ts.isAsExpression(node))return literal(node.expression,seen);
+      if(ts.isIdentifier(node))return assignedValues(node).length?null:literal(declarationFor(node),seen);
+      if(ts.isBinaryExpression(node)&&node.operatorToken.kind===ts.SyntaxKind.PlusToken){const left=literal(node.left,seen),right=literal(node.right,seen);return left!==null&&right!==null?left+right:null;}
+      if(ts.isTemplateExpression(node)){let value=node.head.text;for(const span of node.templateSpans){const item=literal(span.expression,seen);if(item===null)return null;value+=item+span.literal.text;}return value;}
+      return null;
+    }
+    function hints(node,seen=new Set()) {
+      if(!node||seen.has(node))return [];seen.add(node);
+      if(ts.isStringLiteralLike(node))return [node.text];
+      if(ts.isIdentifier(node))return [...hints(declarationFor(node),seen),...assignedValues(node).flatMap(value=>hints(value,seen))];
+      const result=[];ts.forEachChild(node,child=>{result.push(...hints(child,seen));});return result;
+    }
+    const propertyOf=node=>ts.isPropertyAccessExpression(node)?node.name.text:ts.isElementAccessExpression(node)?literal(node.argumentExpression):null;
+    function loaderCapability(node,seen=new Set()) {
+      if(!node||seen.has(node))return null;seen=new Set([...seen,node]);
+      if(ts.isParenthesizedExpression(node)||ts.isAsExpression(node)||ts.isNonNullExpression(node))return loaderCapability(node.expression,seen);
+      if(ts.isAwaitExpression(node)&&loaderCapability(node.expression,seen)==='node-module-promise')return 'node-module';
+      if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword&&['module','node:module'].includes(literal(node.arguments[0])))return 'node-module-promise';
+      if(ts.isIdentifier(node)) {
+        const binding=bindingFor(node),initial=binding?loaderCapability(binding.value,seen):importCapabilities.get(node.text)??(node.text==='require'?'require':null);
+        const projected=binding?.property?initial==='node-module'&&binding.property==='createRequire'?'create-require':initial==='node-module'&&['default','Module'].includes(binding.property)?'node-module':null:initial;
+        return projected??assignedValues(node).map(value=>loaderCapability(value,seen)).find(Boolean)??null;
+      }
+      if(propertyOf(node)==='createRequire'&&loaderCapability(node.expression,seen)==='node-module')return 'create-require';
+      if(['default','Module'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='node-module')return 'node-module';
+      if(['call','apply'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='require')return 'require-forwarder';
+      if(['call','apply'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='create-require')return 'create-require-forwarder';
+      if(ts.isCallExpression(node)) {
+        const forwarded=['call','apply','bind'].includes(propertyOf(node.expression));
+        const capability=loaderCapability(forwarded?node.expression.expression:node.expression,seen);
+        if(propertyOf(node.expression)==='bind')return capability;
+        if(capability==='create-require'||capability==='create-require-forwarder')return 'require';
+        if(capability==='require'&&['module','node:module'].includes(literal(requireArgument(node))))return 'node-module';
+      }
+      return null;
+    }
+    function requireArgument(node) {
+      const forwarding=propertyOf(node.expression);
+      if(['call','apply','bind'].includes(forwarding)&&loaderCapability(node.expression.expression)==='require') {
+        if(forwarding==='apply')return node.arguments[1]&&ts.isArrayLiteralExpression(node.arguments[1])&&!node.arguments[1].elements.some(ts.isSpreadElement)?node.arguments[1].elements[0]??null:null;
+        // A bound receiver with no module argument is not yet a load. Its later
+        // invocation is a require capability; bound module arguments themselves
+        // are transfers and must already invalidate documentation qualification.
+        return node.arguments[1]??null;
+      }
+      if(loaderCapability(node.expression)==='require-forwarder')return null;
+      return loaderCapability(node.expression)==='require'?node.arguments[0]??null:undefined;
+    }
+    function capabilityCustodyQualified(node,capability) {
+      const parent=node.parent;if(!parent)return false;
+      // Declaration names and import binding syntax do not read a capability.
+      if((ts.isVariableDeclaration(parent)||ts.isBindingElement(parent))&&parent.name===node)return true;
+      if(ts.isImportClause(parent)||ts.isImportSpecifier(parent)||ts.isNamespaceImport(parent))return true;
+      if((ts.isPropertyAccessExpression(parent)||ts.isPropertyAssignment(parent))&&parent.name===node)return true;
+      if(ts.isVariableDeclaration(parent)&&parent.initializer===node) {
+        // Admission must match declarationsIn's finite projection grammar.
+        // Nested/array/defaulted bindings are custody escapes, never aliases
+        // whose resulting identifiers can silently lose their capability.
+        if(!ts.isIdentifier(parent.name)&&(capability!=='node-module'||!ts.isObjectBindingPattern(parent.name)||parent.name.elements.some(element=>!ts.isIdentifier(element.name)||element.initializer||element.dotDotDotToken||!reviewedNodeModuleNamedImports.has(element.propertyName?ts.isIdentifier(element.propertyName)||ts.isStringLiteralLike(element.propertyName)?element.propertyName.text:ts.isComputedPropertyName(element.propertyName)?literal(element.propertyName.expression):null:element.name.text))))return false;
+        for(let owner=parent;owner;owner=owner.parent)if(ts.isVariableStatement(owner))return !owner.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.ExportKeyword);
+        return true;
+      }
+      if(ts.isBinaryExpression(parent)&&parent.right===node&&parent.operatorToken.kind===ts.SyntaxKind.EqualsToken&&ts.isIdentifier(parent.left))return true;
+      if(ts.isBinaryExpression(parent)&&parent.left===node&&ts.isIdentifier(node)&&parent.operatorToken.kind===ts.SyntaxKind.EqualsToken)return true;
+      if(ts.isParenthesizedExpression(parent)||ts.isAsExpression(parent)||ts.isNonNullExpression(parent))return true;
+      if(capability==='node-module-promise')return ts.isAwaitExpression(parent);
+      if((ts.isPropertyAccessExpression(parent)||ts.isElementAccessExpression(parent))&&parent.expression===node)return loaderCapability(parent)!==null;
+      if(ts.isCallExpression(parent)&&parent.expression===node)return ['require','require-forwarder','create-require','create-require-forwarder'].includes(capability);
+      return false;
+    }
+    function visit(node) {
+      if(ts.isExportDeclaration(node)&&node.moduleSpecifier&&['module','node:module'].includes(literal(node.moduleSpecifier)))dynamicOperations.push({source,expression:node.getText(tree),operation:node.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability:'node-module-export'});
+      const capability=loaderCapability(node);
+      if(capability&&!capabilityCustodyQualified(node,capability))dynamicOperations.push({source,expression:node.getText(tree),operation:node.parent?.getText(tree)??node.getText(tree),hints:[],unqualifiedCapabilityTransfer:true,capability});
+      let argument,kind;
+      if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier){argument=node.moduleSpecifier;kind=ts.isImportDeclaration(node)?'import':'re-export';}
+      if(ts.isImportEqualsDeclaration(node)&&ts.isExternalModuleReference(node.moduleReference)){argument=node.moduleReference.expression;kind='import-equals';assert(!['module','node:module'].includes(literal(argument)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported node:module import-assignment admission`);}
+      if(ts.isCallExpression(node)) {
+        const requireInput=requireArgument(node);
+        if(node.expression.kind===ts.SyntaxKind.ImportKeyword){argument=node.arguments[0];kind='dynamic-import';}
+        else if(requireInput!==undefined&&!(propertyOf(node.expression)==='bind'&&requireInput===null)){argument=requireInput;kind='require';}
+        else if(node.arguments.some(argument=>['node-module','create-require','create-require-forwarder','require','require-forwarder'].includes(loaderCapability(argument)))){argument=null;kind='require-capability-escape';}
+      }
+      if(kind) {
+        const specifier=literal(argument),target=specifier===null?null:targetFor(source,specifier,kind);
+        if(target)edges.push({source,target,kind,operation:node.getText(tree)});
+        else if(specifier===null||specifier.startsWith('#')||specifier.startsWith('.')||specifier.startsWith('file:')||path.isAbsolute(specifier)) {
+          let owner=node;for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionDeclaration(parent))owner=parent;
+          dynamicOperations.push({source,expression:node.getText(tree),operation:owner.getText(tree),hints:hints(argument)});
+        } else if(specifier.startsWith('.')||specifier.startsWith('file:')||path.isAbsolute(specifier)) {
+          // This source may enter the finite closure through an edge discovered
+          // later. Retain its unresolved local edge rather than losing it when
+          // it was initially scanned as an ordinary root.
+          unresolvedLocalOperations.push({source,expression:node.getText(tree),operation:node.getText(tree),hints:hints(argument)});
+        }
+      }
+      ts.forEachChild(node,visit);
+    }
+    visit(tree);
+    // A selected module may reach a source already scanned as a product root.
+    // Propagate its existing edges too, to complete the same local closure.
+    let expanded=true;
+    while(expanded){expanded=false;for(const edge of edges)if(finiteClosure.has(edge.source)&&!finiteClosure.has(edge.target)) {
+      assert(!edge.target.startsWith('../')&&!edge.target.split('/').some(part=>['node_modules','vendor','.git'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${edge.source}; finite dependency escapes repository authority`);
+      finiteClosure.add(edge.target);expanded=true;
+      if(!files.includes(edge.target)){files.push(edge.target);inputs.push([edge.target,fs.readFileSync(path.join(root,edge.target))]);}
+    }}
+  }
+  dynamicOperations.push(...unresolvedLocalOperations.filter(operation=>finiteClosure.has(operation.source)));
+  const graph={inputKey:graphKey(inputs,dependencyPaths),edges,dynamicOperations,aliases,closureSources:[...files],executableSources:files.filter(source=>sourceClasses.get(source)!=='passive-json'),dependencyPaths:[...dependencyPaths]};documentationGraphCache.set(root,graph);return graph;
+}
+const documentationEdgeOrder=(a,b)=>a.source.localeCompare(b.source)||a.target.localeCompare(b.target)||a.kind.localeCompare(b.kind)||a.operation.localeCompare(b.operation);
+function assertDocumentationToolQualifications(root,boundary,packageBytes) {
+  const records=boundary.qualifications??[],required=boundary.qualificationRequiredSources??[];
+  for(const source of required)assert(records.some(record=>record.source===source),`DOCUMENTATION_TOOL_QUALIFICATION_MISSING: ${source}`);
+  if(!records.length)return;
+  for(const record of records)assert(fs.existsSync(path.join(root,record.source))&&hash(fs.readFileSync(path.join(root,record.source)))===record.sha256,`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${record.source}; renewed source review is required`);
+  const graph=documentationModuleGraph(root,packageBytes,boundary),entries=documentationEntryPoints(JSON.parse(packageBytes).scripts??{});
+  const inputAuthorityKey=documentationModuleInputAuthority(root,boundary,graph);
+  const qualificationKey=hash(JSON.stringify([graph.inputKey,inputAuthorityKey,boundary]));if(documentationQualificationCache.get(root)===qualificationKey)return;
+  const docsReachable=new Set(entries.map(entry=>entry.source));let changed=true;
+  while(changed){changed=false;for(const edge of graph.edges)if(docsReachable.has(edge.source)&&!docsReachable.has(edge.target)){docsReachable.add(edge.target);changed=true;}}
+  for(const record of records) {
+    const source=record.source,file=path.join(root,source);
+    assert(record.kind==='static-receiver-descriptions/v1'&&boundary.sources.includes(source)&&fs.existsSync(file),`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${source}`);
+    const bytes=fs.readFileSync(file);
+    assert.equal(hash(bytes),record.sha256,`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${source}; renewed source review is required`);
+    assert.deepEqual(producerAdapterOperationRecipe(source,bytes.toString()),record.operationRecipe,`DOCUMENTATION_TOOL_QUALIFICATION_OPERATION_DRIFT: ${source}; a digest refresh does not qualify a changed operation`);
+    const ancestors=new Set([source]);changed=true;
+    while(changed){changed=false;for(const edge of graph.edges)if(ancestors.has(edge.target)&&!ancestors.has(edge.source)){ancestors.add(edge.source);changed=true;}}
+    for(const alias of graph.aliases)assert(![...ancestors].some(ancestor=>ancestor===alias.target||alias.directory&&ancestor.startsWith(alias.target+'/'))||ancestors.has(alias.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; symlink ${alias.source}`);
+    for(const consumer of ancestors)assert(docsReachable.has(consumer),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; ${consumer}`);
+    for(const entry of documentationEntryPoints(JSON.parse(packageBytes).scripts??{},false))if(!entry.name.startsWith('docs:')&&!entry.name.startsWith('verify:docs:'))assert(!ancestors.has(entry.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; package invocation ${entry.name}`);
+    const packageDefinition=JSON.parse(packageBytes);
+    function publicTargets(value){return typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(publicTargets):[];}
+    for(const target of [...publicTargets(packageDefinition.bin),...publicTargets(packageDefinition.exports),...publicTargets(packageDefinition.main)]) {
+      const selected=path.posix.normalize(target.replace(/^\.\//u,'')),absolute=path.join(root,selected);
+      const canonical=fs.existsSync(absolute)?path.relative(root,fs.realpathSync(absolute)).replaceAll(path.sep,'/'):selected;
+      assert(!ancestors.has(canonical),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; package public target ${target}`);
+    }
+    const actualEdges=graph.edges.filter(edge=>ancestors.has(edge.target)).sort(documentationEdgeOrder);
+    assert.deepEqual(actualEdges,[...record.graphEdges].sort(documentationEdgeOrder),`DOCUMENTATION_TOOL_QUALIFICATION_GRAPH_DRIFT: ${source}; reviewed dependency transfers changed`);
+    const actualEntries=entries.filter(entry=>ancestors.has(entry.source));
+    assert.deepEqual(actualEntries,record.documentationEntries,`DOCUMENTATION_TOOL_QUALIFICATION_GRAPH_DRIFT: ${source}; documentation invocation authority changed`);
+    const selectedStem=path.posix.basename(source).replace(/\.[^.]+$/u,'');
+    const relevantDynamics=graph.dynamicOperations.filter(operation=>ancestors.has(operation.source)||operation.hints.some(hint=>{const basename=path.posix.basename(hint);return basename&&selectedStem.startsWith(basename.replace(/\.[^.]+$/u,''));}));
+    assert.deepEqual(relevantDynamics,record.dynamicGraphOperations??[],`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unresolved dependency operation or caller changed`);
+    // A new runtime-selected loader can reach this source without mentioning its
+    // name. Freeze the full unresolved-loader inventory, including operation
+    // custody, rather than granting an exclusion based on literal hints alone.
+    const unresolvedOperations=graph.dynamicOperations.map(({source,expression,operation,hints})=>({source,expression,operationSha256:hash(operation),hints}));
+    assert.deepEqual(unresolvedOperations,record.unresolvedModuleOperations??[],`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unresolved module consumer inventory changed`);
+  }
+  documentationQualificationCache.set(root,qualificationKey);
+}
+function nodeOutputExecutableSources(root) {
+  const packageFile=path.join(root,'package.json'),packageBytes=fs.existsSync(packageFile)?fs.readFileSync(packageFile):Buffer.from('{}');
+  return documentationGraphCache.get(root)?.executableSources??nodeProductExecutableSources(root,packageBytes);
+}
 function documentationToolSources(root) {
   const file=path.join(root,'package.json');if(!fs.existsSync(file))return new Set();
-  const scripts=JSON.parse(fs.readFileSync(file,'utf8')).scripts??{};const result=new Set();const queue=[];const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const qualifiedBoundary=new Set(fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')).documentationToolBoundary?.sources??[]:[]);
-  for(const [name,command]of Object.entries(scripts))if(name.startsWith('docs:')||name.startsWith('verify:docs:'))for(const match of command.matchAll(/\b(scripts\/docs-[A-Za-z0-9_-]+\.mjs)\b/gu))queue.push(match[1]);
+  const packageBytes=fs.readFileSync(file);const scripts=JSON.parse(packageBytes).scripts??{};const result=new Set();const queue=[];const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const boundary=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')).documentationToolBoundary??{}:{};const qualifiedBoundary=new Set(boundary.sources??[]);
+  assertDocumentationToolQualifications(root,boundary,packageBytes);
+  for(const entry of documentationEntryPoints(scripts))queue.push(entry.source);
   while(queue.length){const source=queue.pop();if(result.has(source)||!qualifiedBoundary.has(source)||!fs.existsSync(path.join(root,source)))continue;result.add(source);const bytes=fs.readFileSync(path.join(root,source),'utf8');for(const helper of bytes.matchAll(/new URL\('\.\/(docs-[A-Za-z0-9_-]+\.(?:py|go))',import\.meta\.url\)/gu)){const target=path.posix.join(path.dirname(source),helper[1]);if(qualifiedBoundary.has(target))result.add(target);}for(const match of bytes.matchAll(/(?:from\s*|import\s*\()(['"])(\.\.?\/[^'"]+)\1/gu)){const target=path.posix.normalize(path.posix.join(path.dirname(source),match[2]));if(/^scripts\/docs-[^/]+\.mjs$/u.test(target))queue.push(target);}}
+  for(const record of boundary.qualifications??[])result.add(record.source);
   return result;
 }
 function assertNativeSerializationRoles(root,source,bytes,language) {
@@ -437,6 +864,10 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
 // filename list. Every source position and every changed byte remain bound.
 const scriptOutputCache=new Map();
 export function discoverScriptApiOutputs(root) {
+  // Qualification includes graph metadata (for example directory symlinks)
+  // that may leave the producer byte inventory unchanged. Validate it before
+  // returning cached API output.
+  const validatedDocumentationTools=documentationToolSources(root);
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
   const inputKey=hash(JSON.stringify(sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])));
@@ -444,7 +875,7 @@ export function discoverScriptApiOutputs(root) {
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
   const classifiedDependencies=new Set();
   const result=[];
-  for(const source of walkProductSources(root,producerRoots,file=>!/\.(?:[cm]?js|ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
+  for(const source of walkProductSources(root,producerRoots,file=>!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     let unqualified=bytes;
     if(/(?:^|\/)Dockerfile(?:\.|$)/u.test(source)){
@@ -476,7 +907,7 @@ export function discoverScriptApiOutputs(root) {
     }
     assert(!/^#!.*(?:ruby|perl|php|lua|java|deno)|(?:^|[;\n]|<\?php)\s*(?:puts|warn|print|io\.write|echo|printf)\b|std::cout|System\.out\.|apiVersion|kubectl[^\n]*(?:apply|create)|client\.(?:create|apply)|JSON\.(?:generate|dump)|json_encode\s*\(|serde_json::to_(?:string|writer)|writeValueAsString\s*\(|cJSON_Print\s*\(|json_dumps\s*\(/u.test(unqualified),`API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED: ${source}`);
   }
-  const documentationLanguageTools=documentationToolSources(root);
+  const documentationLanguageTools=validatedDocumentationTools;
   for(const source of walkProductSources(root,producerRoots,file=>/\.py$/u.test(file)&&!documentationLanguageTools.has(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     const roles=assertNativeSerializationRoles(root,source,bytes,'Python');
@@ -496,8 +927,8 @@ export function discoverScriptApiOutputs(root) {
       result.push({value:output.value,context:{apiVersion:receiver?.apiVersion??output.value.apiVersion,kind:receiver?.kind??output.value.kind,path:source,document:index,sourceDigest:hash(bytes),producer:'python-offline-original',profile:output.profile,inputs:caller,inputDigest:hash(JSON.stringify({environment:output.environment,responses:output.inputs,caller:caller.map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]),adapter:hash(fs.readFileSync(new URL('./docs-api-python-output-adapter.py',import.meta.url)))})),outputDigest:hash(JSON.stringify(output.value)),offlineInputs:output.inputs,...(output.profileOutcomes?{profileOutcomes:output.profileOutcomes}:{}),...(output.coverageLimitations?{coverageLimitations:output.coverageLimitations}:{}),...(receiver?{requestMethod:'PATCH',requestOperation:'kubectl-patch',requestPatchType:receiver.patchType,requestReceiver:receiver,patchOperations:output.patchOperations}:{})}});
     });
   }
-  const documentationTools=documentationToolSources(root);
-  const sources=walkProductSources(root,producerRoots,file=>/\.(?:[cm]?js|ts)$/u.test(file)&&!documentationTools.has(file));
+  const documentationTools=validatedDocumentationTools;
+  const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classifyOutputRoles=createSerializedOutputRoleClassifier(root,sources);
   for(const source of sources) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -772,7 +1203,7 @@ export function discoverGoApiOutputs(root) {
 const nonApiOutputClassifications=new Map();
 export function discoverScriptOutputRoleClassifications(root) {
   const documentationTools=documentationToolSources(root);
-  const sources=walkProductSources(root,producerRoots,file=>/\.(?:[cm]?js|ts)$/u.test(file)&&!documentationTools.has(file));
+  const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
   return sources.flatMap(source=>classify(source).map(role=>({...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))})));
 }

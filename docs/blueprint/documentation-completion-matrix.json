@@ -2190,6 +2190,7 @@
       ],
       "acceptanceIds": [
         "A97-05",
+        "A97-06",
         "A97-07",
         "A97-08",
         "A97-09",
@@ -2223,21 +2224,20 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L174",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Echo request/result and observer-event surfaces remain drift-controlled; 07 contributes observer signals only, not certification truth. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Fixed subject, findings, evidence, certification and policy are Echo specialist/request/signal/trust duties; required immutable report and bundle persistence also contributes store authority. Evidence and certification cannot omit immutable evidence-store authority. Required reports/bundles are stored, identity/digest checked and retained as artifacts; this is not merely an event signal. This is a scoped contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
           "A97-02",
           "A97-03",
           "A97-04",
-          "A97-06",
           "A97-10"
         ],
         "rule": "Excluded rows govern a different named infrastructure class, a distinct specialist role, or a separate complete inventory/journey not required by this catalogue scope. Incidental shared page or shared source path does not itself add the gate. General cross-cutting evidence, current-claim correctness and independent role rules still apply; exclusions do not waive package-level gates."
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "SPC-006",
@@ -2251,7 +2251,10 @@
         "skills/prism/openclaw-plugin",
         "skills/common/plugins/openclaw-agent-observer",
         "skills/common/plugins/openclaw-agent-events",
-        "skills/common/plugins/runtime-dispatch"
+        "skills/common/plugins/runtime-dispatch",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/storage/index.ts",
+        "skills/prism/storage/migrations/014_agent_jobs.sql"
       ],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "authored",
@@ -2263,6 +2266,7 @@
       ],
       "acceptanceIds": [
         "A97-05",
+        "A97-06",
         "A97-07",
         "A97-08",
         "A97-09",
@@ -2296,21 +2300,20 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L175",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "OpenClaw hooks/tools produce event/request surfaces; their discovery/activation cannot be excluded from drift because this is a host integration. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Host discovery/activation, tools/hooks, State, upgrade/removal and diagnosis span requests, events, host trust and OpenClaw role. Accepted Redis records and durable Prism job result state survive host removal; these require a store contribution. The catalogue explicitly requires State and removal in one host operating architecture. Accepted Redis stream/dead-letter records outlive host teardown, and Prism tool effects reconcile against durable fenced job state. In-memory queues do not erase the actual stored side. This is a scoped contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
           "A97-02",
           "A97-03",
           "A97-04",
-          "A97-06",
           "A97-10"
         ],
         "rule": "Excluded rows govern a different named infrastructure class, a distinct specialist role, or a separate complete inventory/journey not required by this catalogue scope. Incidental shared page or shared source path does not itself add the gate. General cross-cutting evidence, current-claim correctness and independent role rules still apply; exclusions do not waive package-level gates."
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "SPC-007",
@@ -2508,7 +2511,9 @@
         "docker/Dockerfile.archviewer",
         "docker/archviewer.nginx.conf",
         "charts/kubeclaw/templates/archviewer.yaml",
-        "tests/verification/reliability/archviewer-native.test.mjs"
+        "tests/verification/reliability/archviewer-native.test.mjs",
+        "my-values/nova-values.yaml",
+        "charts/kubeclaw/templates/deployment.yaml"
       ],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "authored",
@@ -2521,6 +2526,7 @@
       "acceptanceIds": [
         "A97-01",
         "A97-05",
+        "A97-06",
         "A97-08",
         "A97-09",
         "A97-11",
@@ -2553,13 +2559,12 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L179",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Archviewer is explicitly a current sidecar service with URL/health endpoint; drift on its runtime-service/endpoint cannot be excluded. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Optional sidecar, URL/health, Basic auth and Tailnet/Cilium trust contribute dependency, request, security and specialist role. Existing read-only design directory has a real reader and storage/lifetime boundary even without an implemented publisher. Design input/publication and lifecycle consume the existing Nova workspace directory. Read-only service ownership and absent publisher are a store boundary, not absence of a store. Omitting 06 hides real Reader, writer-unknown, persistence/remaining-data and loss/restore limits. This is a scoped contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-02",
           "A97-03",
           "A97-04",
-          "A97-06",
           "A97-07",
           "A97-10"
         ],
@@ -2567,7 +2572,7 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "PLG-001",
@@ -3368,7 +3373,8 @@
         "skills/common/plugins/redis-transport",
         "charts/kubeclaw",
         "charts/prism",
-        "tests/verification/reliability"
+        "tests/verification/reliability",
+        "skills/common/plugins/runtime-dispatch"
       ],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "authored",
@@ -3380,6 +3386,7 @@
       ],
       "acceptanceIds": [
         "A97-05",
+        "A97-08",
         "A97-09",
         "A97-11",
         "A97-12"
@@ -3411,7 +3418,7 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L207",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Forge/Echo communication and host/result import support 05/09; drift and complete independent matrix review are retained. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Forge/Echo transport adapter, model host and result import contribute request and specialist roles. Concrete dispatch authentication/secret/allowed-target boundaries also contribute trust. The scoped Forge/Echo transport crosses granted runtime target, confidential secret resolution and authenticated external dispatch boundaries. Covering endpoint authentication under 05 does not substitute for the credential/trust contribution of 08. This is a scoped contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
@@ -3420,14 +3427,13 @@
           "A97-04",
           "A97-06",
           "A97-07",
-          "A97-08",
           "A97-10"
         ],
         "rule": "Excluded rows govern a different named infrastructure class, a distinct specialist role, or a separate complete inventory/journey not required by this catalogue scope. Incidental shared page or shared source path does not itself add the gate. General cross-cutting evidence, current-claim correctness and independent role rules still apply; exclusions do not waive package-level gates."
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "COM-005",
@@ -3458,6 +3464,7 @@
       "acceptanceIds": [
         "A97-05",
         "A97-07",
+        "A97-08",
         "A97-11",
         "A97-12"
       ],
@@ -3488,7 +3495,7 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L208",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Stage/adapter/observer requests and delivery include 05/07. This is not a named infrastructure, store-inventory or security-policy requirement. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Invocation contexts, adapter/observer requests, deadline and delivery contribute communications and signals; lease grants/resource authorization and event namespace/run restrictions are trust boundaries. Catalogue explicitly calls out Invocation Authority and Context. Current core contexts reject absent grants, invalid resource scope and wrong event namespace/run identity under revocable leases. These are direct trust and least-privilege boundaries, not just request schemas or observer signals. This is a scoped contribution, not acceptance of the complete package gate.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
@@ -3496,7 +3503,6 @@
           "A97-03",
           "A97-04",
           "A97-06",
-          "A97-08",
           "A97-09",
           "A97-10"
         ],
@@ -3504,7 +3510,7 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md"
     },
     {
       "id": "COM-006",
@@ -20903,8 +20909,10 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active",
-      "baseRevision": "bcf1d131242913f98427dcb7e01050a7529139a2"
+      "state": "completed mapping-onlyFAIL48PASS5FAIL",
+      "baseRevision": "bcf1d131242913f98427dcb7e01050a7529139a2",
+      "report": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh-root-seal.json"
     },
     {
       "agent": "/root/pv_retirement_final_discovery_permissions_complete_source_fresh",
@@ -20915,8 +20923,57 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
+      "state": "completed bounded Source FAIL1 definition; substantive facets PASS",
+      "baseRevision": "bcf1d131242913f98427dcb7e01050a7529139a2",
+      "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-discovery-permissions-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-discovery-permissions-complete-source-fresh-root-seal.json"
+    },
+    {
+      "agent": "/root/ap097_store_trust_corrected_full_mapping_source_fresh",
+      "role": "source-mapping",
+      "scope": "All53 AP09.7 row mappings/all636 applicability decisions; no content/gate acceptance",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active"
+    },
+    {
+      "agent": "/root/pv_executable_class_final_complete_source_fresh",
+      "role": "source",
+      "scope": "Entire supported documentation/public acquisition graph, executable input class, protected recipes and actualseven PVfields; not package acceptance",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "completed bounded critical Source PASS",
+      "report": "/home/node/Documents/Codex/a98-evidence/pv-executable-class-final-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-executable-class-final-complete-source-fresh-root-seal.json",
+      "scopeLimit": "Entire assigned actualacquisition/admission/recipe graph only; no content, Reader, Quality, global, package or liveacceptance"
+    },
+    {
+      "agent": "/root/pv_retirement_definition_permalink_corrected_full_source_fresh",
+      "role": "source",
+      "scope": "Entire current former-Qdrant procedure/sevenrecords/navigation/currentSourcecitations; not live/publication/package acceptance",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active"
+    },
+    {
+      "agent": "/root/pv_retirement_final_complete_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
       "state": "active",
-      "baseRevision": "bcf1d131242913f98427dcb7e01050a7529139a2"
+      "scope": "Whole current ba7maintenance journey and sevenhelper references; independent reader-only firstpass; no global/liveclaim"
     }
   ],
   "continuation": {
@@ -24839,7 +24896,50 @@
           }
         ],
         "state": "Four missing facets corrected; NEW all53 independent mapping review active; no content or gate acceptance",
-        "newReviewer": "/root/ap097_four_facet_corrected_full_mapping_source_fresh"
+        "newReviewer": "/root/ap097_four_facet_corrected_full_mapping_source_fresh",
+        "nextCorrection": {
+          "previousReviewer": "/root/ap097_four_facet_corrected_full_mapping_source_fresh",
+          "verdict": "mapping-onlyFAIL48PASS5FAIL;631PASS5FAILindividualfacets",
+          "report": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh/report.md",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-four-facet-corrected-full-mapping-source-fresh-root-seal.json",
+          "changes": [
+            {
+              "id": "SPC-005",
+              "added": "A97-06",
+              "sourceDependenciesAdded": []
+            },
+            {
+              "id": "SPC-006",
+              "added": "A97-06",
+              "sourceDependenciesAdded": [
+                "skills/prism/control/agent-jobs.ts",
+                "skills/prism/storage/index.ts",
+                "skills/prism/storage/migrations/014_agent_jobs.sql"
+              ]
+            },
+            {
+              "id": "SPC-010",
+              "added": "A97-06",
+              "sourceDependenciesAdded": [
+                "my-values/nova-values.yaml",
+                "charts/kubeclaw/templates/deployment.yaml"
+              ]
+            },
+            {
+              "id": "COM-004",
+              "added": "A97-08",
+              "sourceDependenciesAdded": [
+                "skills/common/plugins/runtime-dispatch"
+              ]
+            },
+            {
+              "id": "COM-005",
+              "added": "A97-08",
+              "sourceDependenciesAdded": []
+            }
+          ],
+          "state": "Author corrected five Source-grounded facets and missing primary dependencies; NEW complete mapping review pending; no content/gate acceptance"
+        }
       }
     },
     "pvRetirementFinalCorrection": {
@@ -24853,7 +24953,49 @@
       "helperSha256": "02d9af8019e1300767aa0ca507607004aa6ee6e107fb455da3579af46e551f51",
       "authorChecks": "Nine snippet/refusal/capture, eight actual-script synthetic scenarios, four navigation tests rerun and passed; bounded author only",
       "priorAuthorBundle": "97-entry prior bundle artifact-integrity FAIL:96 saved entries match, overwritten navigation timing log missing; never awarded current independent acceptance",
-      "remaining": "Coupled registry/boundary integration; final Source permalink refresh after commit; new full distinct Source/Reader/Quality; generated output/publication/link gates and package acceptance"
+      "remaining": "Coupled registry/boundary integration; final Source permalink refresh after commit; new full distinct Source/Reader/Quality; generated output/publication/link gates and package acceptance",
+      "currentRootCorrection": {
+        "sourceReport": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-discovery-permissions-complete-source-fresh/report.md",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-final-discovery-permissions-complete-source-fresh-root-seal.json",
+        "correction": "resourceVersion corrected to opaque object version; exactlyone helperSourcepermalink refreshed to currentSourcecommit0403b262 range13–29",
+        "maintenanceSha256": "ba7eb39fb5159ba9621c13e50b328b15147e585f086c714a53f9309ec0d4d25b",
+        "sourceRevision": "0403b262df2dba24747a19d1f8f42ef3334ef779",
+        "reviewer": "/root/pv_retirement_definition_permalink_corrected_full_source_fresh",
+        "state": "Root author correction; NEW full independent Source active; Reader/Quality and publication pending"
+      }
+    },
+    "integratedApiExecutableClassFinal": {
+      "state": "observed-terminal-PASS",
+      "session": 7529,
+      "exitCode": 0,
+      "tests": 199,
+      "pass": 199,
+      "fail": 0,
+      "skipped": 0,
+      "sourceHashesUnchanged": true,
+      "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-executable-class-final/result.json",
+      "scope": "All9 dynamically discovered API test files; not independent semantic or package acceptance",
+      "independentSourceReviewer": "/root/pv_executable_class_final_complete_source_fresh"
+    },
+    "apiExecutableClassFinalAuthor": {
+      "state": "Author frozen and artifactintegrity verified; independent fullSource active; no acceptance",
+      "author": "/root/pv_named_admission_canonical_seed_correction_writer",
+      "report": "/home/node/Documents/Codex/a98-evidence/pv-executable-input-class-correction-writer/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-executable-input-class-correction-writer-root-seal.json",
+      "verifiedArtifacts": 2813,
+      "reportSha256": "3c9097133fd2a415514e551f1cfbc8e134a8a1f815c0362b67708632d9c8253e",
+      "checks": "25focusedPASS/128privatePASS;12inputrecipes27operations;36script111shell outputs withzero falsehelperPV,real1PATCH4ops7fields; sourceprotected2native synthetic roles; no universalruntime/liveclaim",
+      "independentSource": {
+        "reviewer": "/root/pv_executable_class_final_complete_source_fresh",
+        "verdict": "PASS boundedcompletecriticalSource",
+        "report": "/home/node/Documents/Codex/a98-evidence/pv-executable-class-final-complete-source-fresh/report.md",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-executable-class-final-complete-source-fresh-root-seal.json",
+        "ownBroadProbes": 128,
+        "ownAdditionalProbes": 12,
+        "ownFocusedTests": 25,
+        "actualCheckout": "36script111shell; zero falsePV; actual1PATCH4ops7fields",
+        "state": "No material Source finding remains in assigned scope; no package acceptance"
+      }
     }
   }
 }

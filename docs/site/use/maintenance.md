@@ -127,79 +127,394 @@ verified media through the canonical restore procedure.
 ### Retire the Former Qdrant Installation
 
 Use this procedure only for the former `qdrant` release in namespace `kubeclaw`.
-Qdrant is not a current platform dependency. This procedure deletes its selected
-claims and changes their bound volumes to reclaim policy `Delete`. It is not a
-general storage cleanup command.
+Qdrant is not a current platform dependency. A PersistentVolumeClaim (PVC) is a
+namespaced request to use storage. A PersistentVolume (PV) is the cluster-wide
+record of a volume. Its `claimRef` identifies the claim by namespace, name, and
+UID. A UID identifies one lifetime of an object. `resourceVersion` is an opaque
+version of the object. The reclaim policy selects the action after claim release.
+This procedure sets `Delete` on selected bound PVs and deletes selected PVCs.
+It is not a general storage cleanup command.
 
 Run from an independent administration host and the pinned source checkout.
-Use the [supported tools](README.md#version-and-tool-boundary), Bash, Python 3,
-Helm, and kubectl. Complete the cluster binding with `NAMESPACE=kubeclaw`.
-Set `KUBE_CONTEXT` to the bound `EXPECTED_CONTEXT` in your kubeconfig.
-The administrator needs reads of claims and cluster-scoped volumes, permission
-to patch those volumes, Helm release removal, and deletion of the named
-workloads, services, Secrets, policies, and claims. Do not grant broader access
-merely to make the command succeed.
+Use Bash, Python 3, Helm, kubectl, and the
+[shared version and tool boundary](README.md#version-and-tool-boundary).
+Record actual client, server, and storage-driver versions. The platform owner
+must accept that combination; the repository supplies no compatibility matrix.
+Complete [Bind Cluster Authority](install.md#bind-cluster-authority) with
+`NAMESPACE=kubeclaw`. Keep that bound shell and its read-only `KUBECONFIG`.
 
-Before starting, stop former Qdrant consumers. The storage owner must approve
-data deletion and identify every selected claim and volume. Keep a final backup
-and an isolated restore result if the data must remain recoverable. Stop if a
-selected resource is shared, ownership is uncertain, or the backup is incomplete.
+The authenticated administrator needs PVC get/list/watch/delete access in
+`kubeclaw` and PV get/list/watch/patch access at cluster scope. Deletion waits first get the object. If it remains present, positive-timeout
+waits list/watch that resource with a name selector. Named StatefulSet deletion and Helm release removal also need
+the relevant dependent-workload get/list/watch permissions in `kubeclaw`, plus
+Helm release-record reads/deletion and removal permissions for the installed
+release resources. The platform owner must verify the exact resource/verb
+combinations for the installed release and selected clients before any
+destructive request; use scoped grants where the authority supports them.
+The script deletes StatefulSet `qdrant`, Services `qdrant` and `qdrant-headless`, Secrets
+`qdrant-auth` and `qdrant-tls`, and NetworkPolicy `kubeclaw-qdrant-ingress`.
+It attempts to delete the same-named CiliumNetworkPolicy only when its own API
+discovery succeeds and matches `ciliumnetworkpolicies.cilium.io`. Successful
+discovery before invocation does not guarantee successful discovery inside
+the script. Confirm removal later through a successful named read-back.
+Inventory and diagnosis need discovery, workload/event reads, and, when used,
+StorageClass, CSIDriver, VolumeAttachment, and controller-log reads. Confirm
+these permissions with the platform owner before starting. Do not grant broader
+access merely to make a failed command succeed. Namespace selection does not
+limit PV authority.
 
-1. Confirm the context's API server and cluster identity independently. From the
-   checkout, inspect the release and claims without changing them:
+#### Establish the deletion window
+
+Complete the [decommission prerequisites](#canonical-decommission-procedure)
+and [retained evidence decisions](#controlled-retirement) first. Stop former
+Qdrant consumers and writers. The storage owner must approve each selected
+claim and backing volume for deletion. Record the data owner, backup location,
+retention end date, disposal owner, and isolated restore result if the data must
+remain recoverable. Keep backups and audit evidence outside the target storage.
+Stop on shared storage, uncertain ownership, incomplete backup, or missing
+required restore proof.
+
+**Before any destructive operation, the platform and storage owners must
+confirm a window that excludes concurrent PVC replacement, PV recreation under
+a reused name, rebinding, and competing policy edits.** Identify and suspend
+competing administrators and desired-state controllers through their owning
+authorities. Keep the exclusion in effect until all uncertain results are
+reconciled. Storage deletion controllers must remain available. Stopping
+consumers alone does not establish this window. Stop before running the script
+if the owners cannot establish or maintain it.
+
+The script has no concurrency fence. Its initial read compares only the PV
+`claimRef` namespace/name/UID with the selected PVC. Its later JSON Patch tests
+those same three fields before adding `persistentVolumeReclaimPolicy=Delete`.
+It does not test PV UID, `resourceVersion`, or the prior policy. The later PVC
+delete uses the captured **name without a UID precondition**. The external window
+and the original/current comparisons below are required because these guards
+do not exclude replacement objects or competing edits.
+
+#### Capture and compare the exact storage inventory
+
+1. Select a new private evidence directory outside Git, disposable project
+   storage, and the target volumes. `<evidence-dir>` is an absolute directory
+   owned by the operator and retained by the audit owner. Do not store Secret
+   values, kubeconfig contents, volume credentials, or unfiltered annotations.
+   Capture versions and the release/resource names:
 
    ```bash
-   assert_cluster_binding
-   : "${KUBE_CONTEXT:?Set the intended kubeconfig context}"
-   if [ "$KUBE_CONTEXT" != "$EXPECTED_CONTEXT" ] || [ "$NAMESPACE" != kubeclaw ]; then
-     printf '%s\n' 'Qdrant retirement requires the bound context and kubeclaw namespace' >&2
-     exit 1
-   fi
-   helm --kube-context "$KUBE_CONTEXT" --namespace kubeclaw list --all
-   kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get pvc -o json
+   assert_cluster_binding || exit 126
+   test "$NAMESPACE" = kubeclaw || exit 126
+   export KUBE_CONTEXT="$EXPECTED_CONTEXT"
+   export QDRANT_EVIDENCE="<evidence-dir>"
+   case "$QDRANT_EVIDENCE" in /*) ;; *) exit 126 ;; esac
+   umask 077
+   test ! -e "$QDRANT_EVIDENCE" || exit 126
+   mkdir -m 0700 -- "$QDRANT_EVIDENCE"
+   git rev-parse HEAD > "$QDRANT_EVIDENCE/source.txt"
+   kubectl --context "$KUBE_CONTEXT" version -o json > "$QDRANT_EVIDENCE/versions.json"
+   helm version --short > "$QDRANT_EVIDENCE/helm-version.txt"
+   python3 --version > "$QDRANT_EVIDENCE/python-version.txt"
+   helm --kube-context "$KUBE_CONTEXT" --namespace kubeclaw list --all \
+     > "$QDRANT_EVIDENCE/releases-before.txt"
+   kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get \
+     statefulset/qdrant service/qdrant service/qdrant-headless \
+     secret/qdrant-auth secret/qdrant-tls networkpolicy/kubeclaw-qdrant-ingress \
+     --ignore-not-found -o name > "$QDRANT_EVIDENCE/resources-before.txt"
+   kubectl --context "$KUBE_CONTEXT" api-resources -o name \
+     > "$QDRANT_EVIDENCE/api-resources.txt"
    ```
 
-   The script selects claims named `qdrant-storage-qdrant-0` or
-   `qdrant-snapshots-qdrant-0`, or claims whose instance and name labels identify
-   Qdrant. It also accepts the legacy `app` name label. Retain the original
-   claim names, UIDs, bound-volume names, and volume reclaim policies privately.
-   For each bound volume, compare its `claimRef` namespace, name, and UID with
-   the claim. A name alone is not ownership proof.
-2. After the storage owner's deletion decision, run:
+   If `ciliumnetworkpolicies.cilium.io` is present in the discovery file, also
+   capture the named policy. If discovery is denied or fails, stop; absence
+   from failed discovery is not proof that the API is absent.
 
    ```bash
-   assert_cluster_binding
-   KUBE_CONTEXT="$EXPECTED_CONTEXT" bash scripts/remove-qdrant.sh --delete-data
+   assert_cluster_binding || exit 126
+   kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get \
+     ciliumnetworkpolicy/kubeclaw-qdrant-ingress --ignore-not-found -o name \
+     > "$QDRANT_EVIDENCE/cilium-policy-before.txt"
    ```
 
-   The script checks all selected bound-volume ownership before removing the
-   release. It removes the named workloads, credentials, and network policies.
-   For each bound volume, a JSON Patch tests the original claim namespace, name,
-   and UID before setting reclaim policy `Delete`. It then deletes the claim and
-   waits up to 180 seconds for the volume's API deletion. A failed ownership test
-   stops the command. An unbound selected claim has no volume patch.
-3. Retain the command exit status and output. Compare a new release, workload,
-   policy, Secret, claim, and volume inventory with the recorded identities.
-   Success means the selected Kubernetes resources are absent. API deletion does
-   not prove that the storage driver erased underlying data; obtain the storage
-   owner's disposal evidence separately. Roll out updated agents to remove
-   former Qdrant health probes.
+2. Set `QDRANT_SNAPSHOT=before` and run this read-only capture. Python uses only
+   its standard library. It retains selected identity fields, not Secret data
+   or arbitrary metadata. It reads each selected full PV response in memory
+   and writes the fields needed for comparison. The storage handle is the
+   identifier used to locate the backing volume; keep it private.
 
-If any command fails, stop and preserve the original inventory and observations.
-Some earlier deletions can already have succeeded. Diagnose permissions,
-ownership tests, finalizers, attachments, and provisioner errors before an
-owner-approved continuation; do not force-delete resources or blindly rerun the
-whole procedure. `--ignore-not-found` permits absence, but does not prove a
-previous deletion or erase result. There is no rollback after storage deletion.
-Recovery requires the retained backup and the storage owner's restore procedure.
-The script removes its temporary claim files on exit, so retain the inventory
-before running it. No live retirement result is established by this guide.
+   ```bash
+   assert_cluster_binding || exit 126
+   export QDRANT_SNAPSHOT=before
+   ```
+
+   ```bash
+   assert_cluster_binding || exit 126
+   case "$QDRANT_SNAPSHOT" in before|current) ;; *) exit 126 ;; esac
+   mkdir -m 0700 -- "$QDRANT_EVIDENCE/$QDRANT_SNAPSHOT" || exit 126
+   kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get pvc -o json |
+     python3 -c '
+   import json, pathlib, sys
+   directory = pathlib.Path(sys.argv[1])
+   selected = []
+   for claim in json.load(sys.stdin)["items"]:
+       m, s = claim["metadata"], claim["spec"]
+       labels = m.get("labels", {})
+       known = m["name"] in ("qdrant-storage-qdrant-0", "qdrant-snapshots-qdrant-0")
+       owned = (labels.get("app.kubernetes.io/instance") == "qdrant" and
+                labels.get("app.kubernetes.io/name", labels.get("app")) == "qdrant")
+       if known or owned:
+           selected.append({"name": m["name"], "uid": m["uid"],
+               "resourceVersion": m["resourceVersion"], "volumeName": s.get("volumeName", "-"),
+               "storageClassName": s.get("storageClassName"),
+               "deletionTimestamp": m.get("deletionTimestamp"), "finalizers": m.get("finalizers", [])})
+   with (directory / "claims.json").open("x") as stream:
+       json.dump(selected, stream, indent=2)
+   with (directory / "claims.tsv").open("x") as stream:
+       for claim in selected:
+           print(claim["name"], claim["uid"], claim["volumeName"], sep="\t", file=stream)
+   ' "$QDRANT_EVIDENCE/$QDRANT_SNAPSHOT"
+   while IFS=$'\t' read -r claim uid volume; do
+     test "$volume" != - || continue
+     assert_cluster_binding || exit 126
+     kubectl --context "$KUBE_CONTEXT" get pv "$volume" -o json |
+       python3 -c '
+   import json, sys
+   pv = json.load(sys.stdin)
+   m, s = pv["metadata"], pv["spec"]
+   csi = s.get("csi", {})
+   print(json.dumps({"name": m["name"], "uid": m["uid"], "resourceVersion": m["resourceVersion"],
+       "claimRef": {key: s.get("claimRef", {}).get(key) for key in ("namespace", "name", "uid")},
+       "policyPresent": "persistentVolumeReclaimPolicy" in s,
+       "policy": s.get("persistentVolumeReclaimPolicy"), "storageClassName": s.get("storageClassName"),
+       "driver": csi.get("driver"), "storageHandle": csi.get("volumeHandle"),
+       "sourceTypes": sorted(set(s) - {"capacity", "accessModes", "claimRef", "persistentVolumeReclaimPolicy",
+           "storageClassName", "mountOptions", "volumeMode", "nodeAffinity", "volumeAttributesClassName"}),
+       "deletionTimestamp": m.get("deletionTimestamp"), "finalizers": m.get("finalizers", []),
+       "phase": pv.get("status", {}).get("phase")}, indent=2))
+   ' > "$QDRANT_EVIDENCE/$QDRANT_SNAPSHOT/pv-$volume.json"
+   done < "$QDRANT_EVIDENCE/$QDRANT_SNAPSHOT/claims.tsv"
+   ```
+
+   The selector is exactly the two known names **OR** instance label `qdrant`
+   **AND** name label `qdrant`. The legacy `app` label is used only when
+   `app.kubernetes.io/name` is absent, not when that label is empty, null, or a
+   different value. Known names are selected even without labels; selection
+   alone is not ownership approval. Review every row with the storage owner.
+
+3. For each bound claim, require PV `claimRef` to equal `kubeclaw`, the captured
+   PVC name, and its UID. Record PVC name/UID/volumeName, PV name/UID/version,
+   all three reference values, original policy presence/value, storage class,
+   driver, storage handle, and the storage owner's authority reference. A
+   non-CSI source requires the owner to identify its actual plugin, backing
+   location, and disposal procedure from the recorded source type; missing
+   CSI fields are not proof of missing storage. For a CSI volume, inspect the
+   exact discovered driver and class names with the read-only queries below.
+   If the class is absent, ask the owner to resolve the actual provisioning
+   authority. Never substitute today's default class for a captured volume.
+
+   An unbound selected claim (`volumeName` absent) is recorded with `-`. It has
+   no PV patch and no PV wait, but the script still deletes the PVC by name.
+   The owner must confirm that no allocation or provisioning is in progress
+   and no binding will occur during the window. Stop on incomplete identity,
+   changed binding, missing PV, deleting object, mismatched reference, unknown
+   driver/backend owner, or inability to retain the inventory. An empty
+   selection does not prove earlier storage was erased; reconcile known former
+   volumes with the owner before treating absence as completion.
+
+4. Immediately before invocation, set `QDRANT_SNAPSHOT=current` and repeat the
+   capture block in step 2, without changing or overwriting `before`. Compare
+   selected row sets and every recorded field. PVC/PV names and UIDs, bound
+   volume, reference triplet, storage class/source/driver/handle, and original
+   policy must match. Review any `resourceVersion` change with the platform
+   owner against current state, even if the visible fields match; version
+   changes can come from controllers. Do not silently accept a changed policy,
+   null or absent value. The script always writes `Delete`, replacing an
+   existing member or adding an absent member after its guards pass. Stop and
+   establish a new reviewed plan on a difference. These reads are observations,
+   not an atomic guard; the external exclusion remains mandatory.
+
+   ```bash
+   assert_cluster_binding || exit 126
+   export QDRANT_SNAPSHOT=current
+   ```
+
+#### Run once and read back the result
+
+After both owners confirm the unchanged inventory and active exclusion, run
+one destructive command. Capture its output and status; do not pipe it through
+a command that loses the script's exit status.
+
+```bash
+assert_cluster_binding || exit 126
+if KUBE_CONTEXT="$EXPECTED_CONTEXT" bash scripts/remove-qdrant.sh --delete-data \
+  > "$QDRANT_EVIDENCE/retirement-output.txt" 2>&1; then
+  qdrant_status=0
+else
+  qdrant_status=$?
+fi
+printf '%s\n' "$qdrant_status" > "$QDRANT_EVIDENCE/retirement-status.txt"
+```
+
+The script prechecks all selected bound PV references, then uninstalls Helm and
+removes the named remaining workload/access resources. Only then does it patch
+each PV, delete its PVC, wait up to 180 seconds for that PVC, and wait up to
+180 seconds for PV API deletion. A later failure can leave earlier claims or
+resources removed. A stored `Delete` policy permits irreversible storage
+removal after release. Neither a patch response nor a wait duration proves
+storage deletion. Review output for the last completed operation, but reconcile
+current state even on exit zero.
+
+The script runs its Cilium API-discovery pipeline inside an `if`. Bash does
+not stop the script when that pipeline fails. For example, a discovery
+`Forbidden` error can skip Cilium policy deletion, permit later PV patches and
+PVC deletions, and still produce exit zero. Output is redirected during this
+invocation; the operator inspects it after the script returns. This procedure
+does not provide an automatic stop before those later writes. Review both
+standard output and standard error in the captured file, and perform the
+full original-identity and named-resource read-back even after exit zero. A
+discovery error or missing Cilium removal observation leaves cleanup uncertain.
+Stop further operator writes, retain the exclusion, and have the platform and
+storage owners reconcile all preceding and later effects. If successful
+discovery shows the API, require a successful named policy read-back; absence
+from a failed discovery or a failed read is not proof of removal.
+
+Deletion-wait access can fail after the server accepted a deletion. In the
+pinned kubectl source, `delete --wait` can tolerate a Forbidden or unsupported
+wait result and return success. Thus an exit status alone cannot prove that
+the object is gone. The separate PV `wait` also needs list/watch access while
+the object remains present. Read back the original identities and deletion
+state through the owning authority before any continuation on a denied wait.
+
+For **each original row**, copy `<claim-name>`, `<pv-name>`, and
+`<original-pvc-uid>` from `before`, not from a new selection. Run the PVC query
+for all rows; run the PV and PV-event queries only for bound rows. These queries
+show identities, policy, deletion state, and finalizers (entries that delay API
+removal until required cleanup completes). Save their output and status in new
+private observation files; do not overwrite the originals. `--ignore-not-found`
+permits a successful empty result, but an API error does not prove absence.
+
+```bash
+assert_cluster_binding || exit 126
+kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get pvc "<claim-name>" \
+  --ignore-not-found -o custom-columns='NAME:.metadata.name,UID:.metadata.uid,VERSION:.metadata.resourceVersion,PV:.spec.volumeName,DELETING:.metadata.deletionTimestamp,FINALIZERS:.metadata.finalizers'
+kubectl --context "$KUBE_CONTEXT" get pv "<pv-name>" --ignore-not-found \
+  -o custom-columns='NAME:.metadata.name,UID:.metadata.uid,VERSION:.metadata.resourceVersion,CLAIMNS:.spec.claimRef.namespace,CLAIM:.spec.claimRef.name,CLAIMUID:.spec.claimRef.uid,POLICY:.spec.persistentVolumeReclaimPolicy,DRIVER:.spec.csi.driver,HANDLE:.spec.csi.volumeHandle,CLASS:.spec.storageClassName,PHASE:.status.phase,DELETING:.metadata.deletionTimestamp,FINALIZERS:.metadata.finalizers'
+kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get events \
+  --field-selector 'involvedObject.uid=<original-pvc-uid>' --sort-by=.metadata.creationTimestamp
+kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get pods \
+  -o custom-columns='NAME:.metadata.name,PHASE:.status.phase,CLAIMS:.spec.volumes[*].persistentVolumeClaim.claimName'
+```
+
+For a bound row, `<original-pv-uid>` is the original PV UID. Inspect cluster
+attachments and the discovered storage authority. Replace `<storage-class>`
+and `<driver>` only with present, verified values from the inventory. Omit a
+class or CSI-driver query when that field is absent; the owner must identify
+the applicable non-CSI or migrated provisioner instead.
+
+```bash
+assert_cluster_binding || exit 126
+kubectl --context "$KUBE_CONTEXT" get events --all-namespaces \
+  --field-selector 'involvedObject.uid=<original-pv-uid>' --sort-by=.metadata.creationTimestamp
+kubectl --context "$KUBE_CONTEXT" get volumeattachments.storage.k8s.io \
+  -o custom-columns='NAME:.metadata.name,PV:.spec.source.persistentVolumeName,DRIVER:.spec.attacher,NODE:.spec.nodeName,ATTACHED:.status.attached,ATTACHERROR:.status.attachError.message,DETACHERROR:.status.detachError.message'
+kubectl --context "$KUBE_CONTEXT" get storageclass "<storage-class>" \
+  -o custom-columns='NAME:.metadata.name,PROVISIONER:.provisioner,POLICY:.reclaimPolicy'
+kubectl --context "$KUBE_CONTEXT" get csidriver "<driver>" \
+  -o custom-columns='NAME:.metadata.name,ATTACHREQUIRED:.spec.attachRequired'
+```
+
+The class policy is a provisioning setting, not proof of the current PV policy.
+Match attachment rows by the original PV name and verify its UID separately.
+A missing attachment does not prove backend deletion. Event retention is
+limited; no event is not proof of success. The provisioner is the component
+that creates or deletes backing storage; the backend is the storage system it
+uses. The storage owner must identify the actual controller namespace, workload,
+and container, including migration if present. Inspect that exact controller:
+
+```bash
+assert_cluster_binding || exit 126
+kubectl --context "$KUBE_CONTEXT" --namespace "<controller-namespace>" get \
+  "<controller-kind>/<controller-name>" \
+  -o custom-columns='NAME:.metadata.name,UID:.metadata.uid,READY:.status.readyReplicas,DESIRED:.spec.replicas'
+kubectl --context "$KUBE_CONTEXT" --namespace "<controller-namespace>" logs \
+  "<controller-kind>/<controller-name>" -c "<controller-container>" --since=30m
+```
+
+Use a time range that covers the recorded attempt. Inspect logs privately and
+retain only sanitized lines for the original handle/UID and deletion result.
+Do not publish credentials or backend configuration. For a controller managed
+outside Kubernetes, obtain equivalent health and deletion observations from
+its owner. This repository does not supply a driver-specific backend command.
+Stop until the owner supplies its read-only lookup and disposal audit for the
+original handle, including retained snapshots, replicas, exports, and backups.
+
+#### Distinguish failure before another write
+
+On any failed or uncertain operation, stop further writes, retain the exclusion,
+and preserve output, status, original policy, current stored policy, identities,
+deleting state, events, and owner observations. Use the queries above before
+choosing a continuation. The following observations require different actions:
+
+| Observation | Distinguishing check | Safe action |
+| --- | --- | --- |
+| Binding, tool, read, or initial ownership precheck fails | Check exit/output; compare current PVC UID/volume and PV reference with `before` | No script removal precedes a failed initial precheck. Correct access or tools through their owners; on identity mismatch stop and obtain a new plan. A pre-existing deletion remains possible. |
+| `Forbidden` or `Unauthorized` | Identify the denied request/resource/verb in output; ask the authority to verify that exact permission and read back earlier resources | Stop. A denial of one request does not undo earlier removals. Do not widen grants or rerun blindly. |
+| Discovery fails inside the script, including `Forbidden`, even with exit zero | Review captured stderr and the named Cilium policy; read back every original PVC/PV and named release/access resource | Cilium deletion can have been skipped while later storage writes completed. Stop further operator writes and require platform/storage-owner reconciliation. No automatic interruption prevented those effects. |
+| Later patch rejects a test, reports 422, validation failure, admission denial, conflict, or NotFound | Read the same PV name and compare original UID/reference/policy/version; inspect the returned error | Earlier Helm/access removal can already be complete. Preserve both states; resolve ownership or admission with the platform owner. Matching claimRef alone is insufficient. |
+| Patch response is lost or interrupted | Read original PV/PVC identities, policy and deletion state; ask the storage owner for the original handle's result | No response does not mean no write. `Delete` may already be stored and deletion may have started. Stop until reconciled; do not resend the patch. |
+| PVC deletion fails, loses its response, or times out | Query the original name; distinguish absence, original UID with deletion timestamp/finalizers, and a different UID; inspect using Pods/events | A different UID is a replacement: stop. An original terminating claim needs the owner to resolve remaining consumers/protection. Absence permits only owner reconciliation of PV/backend state. Do not delete the name again. |
+| PV wait times out | Query original PV UID/reference/policy/phase/deleting state, attachments, events, and controller health/logs | A retained original PV can be waiting for claim release, controller work, finalizer cleanup, attachment release, or backend deletion. Keep writes stopped while the platform/storage owners identify that path. |
+| Protection/finalizers, attachments, volume-in-use or `VolumeFailedDelete` errors remain | Compare remaining Pod claim use, attachment state/errors and provisioner/backend receipt | Owners resolve the actual consumer, detach, controller, authorization or storage failure. Do not force-delete objects or remove finalizers; backend removal can precede failed API cleanup. |
+| Original PVC/PV APIs are absent, but backend outcome is unknown | Require successful API reads plus the owner's lookup/audit for the original storage handle | Record API absence only. Stop disposal acceptance until storage evidence distinguishes removed data from retained/unknown data. |
+
+Controllers can continue deletion while the script is stopped. A controller
+retry is not authority for an operator retry. Any continuation requires owners
+to reconcile each original resource and backend effect, confirm the exclusion,
+and specify the exact remaining operation and new evidence. There is no general
+partial-resume command. Do not blindly repeat the script or change the policy
+back as rollback. A policy change cannot recover erased data. After storage
+removal, recovery requires retained verified media and the storage owner's
+restore procedure.
+
+#### Verify completion and retain evidence
+
+Repeat the release, named workload/access, and original PVC/PV observations.
+Repeat successful API discovery through the platform authority, and read back
+the named Cilium policy if the API is present. If discovery fails, keep Cilium
+cleanup unresolved; do not treat the script's skipped branch as API absence. Expected Kubernetes result: the former release and named
+resources are absent, each original selected claim is absent, and each bound
+original PV is absent, with successful reads and no replacement UID. An unbound
+row has only a claim-removal result. Record unexpected new selected claims and
+stop; do not expand removal scope. Obtain separate storage-owner disposal
+receipts for each original handle and the selected retention decisions. API
+absence and the script's completion message do not prove backend erasure.
+Roll out updated agents through their approved deployment procedure to remove
+former Qdrant health probes.
+
+Retain the owners' approvals and window record, actual versions, source commit,
+original/current inventories, original policy and storage identity, sanitized
+output/status/timestamps, observations, backend receipts, backup/restore proof,
+retention end date, recovery owner, and unresolved cleanup. The script deletes
+its temporary claim inventory on exit; that inventory is not retained evidence.
+Release the exclusion only after owner reconciliation. Dispose of temporary
+administration access through its credential owner after verification; retain
+required audit and recovery data until its recorded retention end. No live
+retirement, backend erasure, or restore result is established by this guide.
 
 > **Source evidence — bounded Qdrant retirement**
 >
-> [The command requires explicit context and deletion intent, then selects claims](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L6-L31).
-> [It verifies bound-volume ownership before release and resource removal](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L33-L55).
-> [The conditional volume patch tests ownership before claim deletion and bounded waits](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L57-L77).
+> **Claim:** The fixed selector captures claim name/UID/volumeName, prechecks the reference, removes release/access resources, then applies three reference tests plus `add Delete`, deletes PVCs by name, and waits for PVC/PV API deletion.
+>
+> **Implementation:** [Intent, context, tools, and temporary inventory](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L6-L18); [exact selection](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L20-L30); [precheck](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L35-L43); [release/resource removal](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L46-L55); [patch and waits](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L57-L77).
+>
+> **Contract or setting:** [The seven selected existing-PV receiving contracts](https://github.com/datrab/kubeclaw/blob/0403b262df2dba24747a19d1f8f42ef3334ef779/scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs#L13-L29) explain the ordered patch, guard limits, and controller/backend boundary. These source expectations use Kubernetes v1.35.0, not a live compatibility claim. [The API server rejects malformed or failed JSON patches](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/apiserver/pkg/endpoints/handlers/patch.go#L403-L417). [Deletion reconciliation is separate](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1321-L1389), and [backend removal can precede finalizer failure](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1495-L1540).
+>
+> **Wait permissions and limit:** [Positive-timeout deletion waits get, then list/watch the named resource](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/kubectl/pkg/cmd/wait/delete.go#L45-L51), with [the selected list/watch calls](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/kubectl/pkg/cmd/wait/delete.go#L79-L89). [The delete command invokes that wait and can tolerate a denied or unsupported wait](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/kubectl/pkg/cmd/delete/delete.go#L460-L477). These pinned client expectations do not prove the operator's actual permissions.
+>
+> **Reason:** The [producer comment](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L33-L34) says PVC deletion alone can leave retained PVs and data. Inference: setting `Delete` connects approved claim retirement to storage disposal. The historical reason for these specific incomplete concurrency guards is unknown. Platform operations owns reassessment when ownership, drivers, or retention requirements change.
+>
+> **Test evidence:** Local command syntax, synthetic exact selection, sanitized capture, read-only observation, discovery-denial and binding-refusal checks do not execute retirement against Kubernetes.
+>
+> **Revision:** Product sources checked at `51975b92ed5154b76c65793e55933b4d8659d05d`; selected upstream expectations at `66452049f3d692768c39c797b21b793dce80314e`.
+>
+> **Limit:** No live authorization, admission, controller, driver, data-disposal, or recovery result is established. External exclusion and owner-supplied backend observations remain mandatory prerequisites.
 
 ## Supported Versions
 
