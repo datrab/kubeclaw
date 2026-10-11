@@ -292,8 +292,8 @@ export function discoverProductApiContexts(root) {
 }
 
 export function assertProductApiContexts(resources, root) {
-  const normalize = rows => rows.map(({ apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPatchType, requestReceiver, patchOperations }) =>
-    JSON.stringify([apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPatchType, requestReceiver, patchOperations])).sort();
+  const normalize = rows => rows.map(({ apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions }) =>
+    JSON.stringify([apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions])).sort();
   const actual = resources.flatMap(resource => resource.sourceContexts.map(context =>
     ({ ...context, apiVersion: resource.apiVersion, kind: resource.kind })));
   assert.deepEqual(normalize(actual), normalize(discoverProductApiContexts(root)), 'API_PRODUCT_DISCOVERY_DRIFT: resource or source document omitted, added or changed');
@@ -335,6 +335,41 @@ export function jsonPatchSelectedEntries(apiVersion, kind, operations) {
     if (hasFrom) entries.push({ actual: pointer(operation.from, false), node: undefined, role: 'source', operationIndex: index, operation: op, pointer: operation.from });
     return entries;
   });
+}
+
+export function inheritedSecretFieldSelection(apiVersion, kind, transfer) {
+  const authority = apiResourceFieldBoundaries(apiVersion, kind);
+  assert(apiVersion === 'v1' && kind === 'Secret'
+    && transfer.sourceReceiver?.apiVersion === apiVersion && transfer.sourceReceiver?.kind === kind
+    && transfer.sourceReceiver?.requestMethod === 'GET', 'API_PRODUCT_INHERITED_SECRET_RECEIVER_UNQUALIFIED');
+  assert(Array.isArray(transfer.retainedRootFields) && Array.isArray(transfer.excludedRootFields)
+    && Array.isArray(transfer.removedPaths) && Array.isArray(transfer.rewrittenPaths), 'API_PRODUCT_INHERITED_SECRET_TRANSFORM_UNQUALIFIED');
+  const rootFields = new Set(authority.map(row => tokens(row.fieldPath)[0]).filter(Boolean));
+  const retained = new Set(transfer.retainedRootFields), excluded = new Set(transfer.excludedRootFields);
+  assert(retained.size === transfer.retainedRootFields.length && excluded.size === transfer.excludedRootFields.length
+    && [...retained].every(key => rootFields.has(key) && !excluded.has(key))
+    && [...excluded].every(key => rootFields.has(key))
+    && [...rootFields].every(key => retained.has(key) || excluded.has(key)), 'API_PRODUCT_INHERITED_SECRET_FIELD_SET_UNQUALIFIED');
+  const removed = transfer.removedPaths.map(field => {
+    const parts = tokens(field);
+    assert(parts[0] === 'metadata' && parts.length === 2, 'API_PRODUCT_INHERITED_SECRET_REMOVAL_UNQUALIFIED');
+    apiFieldSchemaAuthority(apiVersion, kind, field);
+    return parts;
+  });
+  const isRemoved = parts => removed.some(prefix => parts.length >= prefix.length && matches(prefix, parts.slice(0, prefix.length)));
+  const boundaries = authority.filter(child => {
+    const parts = tokens(child.fieldPath);
+    return !parts.length || retained.has(parts[0]) && !isRemoved(parts);
+  });
+  const metadataPaths = new Set();
+  for (const boundary of boundaries) {
+    if (tokens(boundary.fieldPath)[0] === 'metadata') metadataPaths.add(canonical(boundary.fieldPath));
+  }
+  for (const rewrite of transfer.rewrittenPaths) {
+    assert(rewrite.fieldPath === '$.metadata.namespace' && !isRemoved(tokens(rewrite.fieldPath))
+      && Object.hasOwn(rewrite, 'value'), 'API_PRODUCT_INHERITED_SECRET_REWRITE_UNQUALIFIED');
+  }
+  return { boundaries, metadataPaths: [...metadataPaths].sort(), rewrites: transfer.rewrittenPaths };
 }
 
 // Re-read source documents, not a stored totals/selected-path assertion. Each
@@ -402,8 +437,8 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         }
       }
       if (boundary) {
-        add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: actualPath, sourceDigest: context.sourceDigest, ...(patchEvidence ?? {}) });
-        if(!jsonPatch&&kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
+        add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: actualPath, sourceDigest: context.sourceDigest, ...(context.conditions?.length ? { conditions: context.conditions } : {}), ...(context.requestMethod ? { requestMethod: context.requestMethod, ...(context.requestAlternatives ? { requestAlternatives: context.requestAlternatives } : {}) } : {}), ...(patchEvidence ?? {}) });
+        if(context.requestMethod!=='PATCH'&&kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
           const receiverDefault=runtimeDefaultApplicability(kind,actualPath,{},value,records.get(boundary.fieldPath));
           const child=authority.find(row=>matches(tokens(row.fieldPath),[...actual,0]));
           assert(receiverDefault?.materializes?.[0]==='Persistent'&&child,`API_PRODUCT_EMPTY_ARRAY_DEFAULT_UNQUALIFIED: ${actualPath}`);
@@ -420,6 +455,23 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
           return;
         }
         if(node.__docsSupportedSchemaPassthrough) {
+          const transfer = node.__docsSupportedSchemaPassthrough;
+          if (transfer.validation === 'source-bound-kubernetes-get-sanitize-createOrPatch') {
+            assert(actual.length === 0 && context.producer === 'go-shape'
+              && typeof context.factoryExpression === 'string' && Array.isArray(context.factoryDependencies),
+              'API_PRODUCT_INHERITED_SECRET_SOURCE_UNQUALIFIED');
+            const inherited = inheritedSecretFieldSelection(apiVersion, kind, transfer);
+            for (const child of inherited.boundaries) add(child, {
+              reason:'inherited-served-secret-field', path:context.path, document:context.document,
+              fieldPath:child.fieldPath, sourceDigest:context.sourceDigest, ...transfer,
+              requestMethod:context.requestMethod, requestAlternatives:context.requestAlternatives,
+              factoryExpression:context.factoryExpression, factoryDependencies:context.factoryDependencies,
+              ...(context.conditions?.length ? { conditions:context.conditions } : {}),
+              valueStatus:'Existing source value is not fetched by documentation discovery.' });
+            inherited.metadataPaths.forEach(field => metadataPaths.add(field));
+            inherited.rewrites.forEach(rewrite => visit(rewrite.value, tokens(rewrite.fieldPath)));
+            return;
+          }
           assert(boundary,`API_PRODUCT_PASSTHROUGH_AUTHORITY_MISSING: ${context.path} ${actualPath}`);
           for(const child of authority.filter(row=>tokens(row.fieldPath).length>actual.length&&matches(tokens(boundary.fieldPath),tokens(row.fieldPath).slice(0,actual.length))))add(child,{reason:'supported-public-object-serialized-without-member-filter',path:context.path,document:context.document,fieldPath:child.fieldPath,sourceDigest:context.sourceDigest,...node.__docsSupportedSchemaPassthrough});
           return;
@@ -442,6 +494,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       continue;
     }
     visit(value);
+    if (context.requestMethod === 'PATCH') continue;
     // Presence is local to the actual object, before array indices become a
     // coverage identity. One item cannot suppress another item's default.
     for (let index = 0; index < instances.length; index += 1) {

@@ -16436,6 +16436,48 @@
       "description": "Each of three source-wide read-only contracts permits a newly appended actual kubectl create sink with no receipt refresh.",
       "proof": "/home/node/Documents/Codex/a98-evidence/producer-js-shell-complete-corrected-source-root-seal.json",
       "mappingState": "Assigned criterion contribution, no whole gate accepted."
+    },
+    {
+      "id": "A98-CURRENT-INGRESS-PATCH-RESOURCEVERSION",
+      "state": "open-author-confirmed-actual-current-omission",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Actual ensureOwnedExposure adds metadata.resourceVersion to previewIngress before merge PATCH (exposure-generation.go62). Constructor-only discovery omits the selected field; unchanged24 current constructor values prove preservation, not complete actual submission coverage. Native author revising factory-to-submission provenance and auditing original callers before refreeze.",
+      "source": "cmd/buster-namespace-controller/exposure-generation.go:62",
+      "owner": "/root/native_submission_effects_correction_writer",
+      "mappingState": "Whole gate remains open; source association is explicit, catalogue mapping pending."
+    },
+    {
+      "id": "A98-CURRENT-GO-ACTUAL-RBAC-APPEND",
+      "state": "open-author-confirmed-actual-current-omission",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Actual namespaceRole resources arrays lose initial core/apps entries because shape evaluator blocks earlier lexical reference inside append. Prior object preservation retains wrong leaf values. Native author correcting chronological binding and source-defined conditional alternatives; no approval from baseline equality.",
+      "source": "cmd/buster-namespace-controller/main.go:1016",
+      "owner": "/root/native_submission_effects_correction_writer",
+      "mappingState": "Actual selected producer contribution; full gate remains open."
+    },
+    {
+      "id": "A98-CURRENT-GO-ACTUAL-COPIED-SECRET-TRANSFER",
+      "state": "open-author-confirmed-actual-current-omission",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Original copySecrets fetches live Secret, sanitizeSecret rewrites namespace/removes selected metadata and forwards whole remaining body via createOrPatch. No selected inherited-transfer row is emitted because shape helper lacks static body identity. Add source-bound inferred Secret receiver and exact preserved/removed served-field selection; no fabricated live values or blanket unknown schema claim.",
+      "source": "cmd/buster-namespace-controller/main.go:1399",
+      "owner": "/root/native_submission_effects_correction_writer",
+      "mappingState": "Actual selected producer contribution; full gate remains open."
     }
   ],
   "checks": [
@@ -17666,6 +17708,17 @@
       "baseRevision": "59db71c556b995a3bfb35e5d538f145994cfce7a",
       "rootReceipt": "/home/node/Documents/Codex/a98-evidence/json-patch-selected-field-root-correction.json",
       "acceptanceLimit": "Bounded author tests. Shared discovery/native modules concurrently edited; no immutable complete producer/fullsuite/receiver approval. No pre-run file seal claimed. Stable fullsuite and independent review required."
+    },
+    {
+      "command": "node --test scripts/tests/api-product-json-patch.test.mjs",
+      "state": "observed-terminal-pass-bounded-author",
+      "exitCode": 0,
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "baseRevision": "d1b3b77c8c497ed56ccc342bddfb5b95b26222ad",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/patch-required-default-selection-root-correction.json",
+      "acceptanceLimit": "Bounded author candidate check; imports in shared workingtree moving, no immutable wholeproducer/suite acceptance. Pre-run seal not claimed. Prior5testreceipt preserved."
     }
   ],
   "reviewAssignments": [
@@ -21843,6 +21896,46 @@
         "CSI empty-list patch without create default materialization"
       ],
       "limit": "Bounded author tests. Shared discovery/native modules concurrently edited; no immutable complete producer/fullsuite/receiver approval. No pre-run file seal claimed. Stable fullsuite and independent review required."
+    },
+    "patchRequiredDefaultSelectionCorrection": {
+      "observedAt": "2026-10-11T12:25:51.167684+00:00",
+      "baseRevision": "d1b3b77c8c497ed56ccc342bddfb5b95b26222ad",
+      "command": "node --test scripts/tests/api-product-json-patch.test.mjs",
+      "sessionId": 99295,
+      "observedExitCode": 0,
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "filesAfterRun": {
+        "scripts/docs-api-product-scope.mjs": "34f124b89af6fe10c8c53da90a43e54923ccbc36b496ae0d871cdd167c917012",
+        "scripts/tests/api-product-json-patch.test.mjs": "343d28453c233e40b98c04d8b596ed4c9119f639b76ffb0dfd9ec5a8d2b664d0"
+      },
+      "change": "Generic merge PATCH now also skips required/schema-default sibling materialization; inline CSI empty-list create default suppressed for every PATCH. Actual selected Deployment partial body selects only root/spec/replicas.",
+      "limit": "Bounded author candidate check; imports in shared workingtree moving, no immutable wholeproducer/suite acceptance. Pre-run seal not claimed. Prior5testreceipt preserved."
+    },
+    "patchSecretSelectedFieldCorrection": {
+      "scope": "Root-owned JSON/merge PATCH and inherited Secret selection tests; not a full-suite or independent review",
+      "start": "2026-10-11T12:53:22.540541+00:00",
+      "before": {
+        "scripts/docs-api-product-scope.mjs": "933d25cba2b200cef703354c8fa77661df7ae3b95acafebf4440e0e32ca90527",
+        "scripts/tests/api-product-json-patch.test.mjs": "356f2433272501fb9d3322e27d15caea4d26fa4c3583b6467bce7e7403e3f864"
+      },
+      "command": [
+        "node",
+        "--test",
+        "scripts/tests/api-product-json-patch.test.mjs"
+      ],
+      "exitCode": 0,
+      "end": "2026-10-11T12:53:38.872306+00:00",
+      "after": {
+        "scripts/docs-api-product-scope.mjs": "933d25cba2b200cef703354c8fa77661df7ae3b95acafebf4440e0e32ca90527",
+        "scripts/tests/api-product-json-patch.test.mjs": "356f2433272501fb9d3322e27d15caea4d26fa4c3583b6467bce7e7403e3f864"
+      },
+      "logSha256": "c4d91d4b628f7505a244ee20892168f672606559700b10e97d1771b7a0426caa",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/root-patch-secret-selection-current.json",
+      "tests": 8,
+      "passed": 8,
+      "limit": "Root-owned file hashes stable. Shared imported discovery/adapters remain author candidates; full stable integrated suite and fresh independent source review pending. No acceptance point closed."
     }
   }
 }
