@@ -578,6 +578,15 @@ test('original Python producer changes and module environment initialization alt
  fs.rmSync(path.join(fixture,'ops/pod/renamed.py'));assert.deepEqual(discoverScriptApiOutputs(fixture),[]);
  });
 });
+test('original Python transport transformations are discovered and unsupported transports fail closed',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),source='ops/pod/bootstrap.py',producer=fs.readFileSync(path.join(repository,source),'utf8');
+ const transform='if data:\n        payload = json.loads(data)\n        payload["immutable"] = True\n        data = json.dumps(payload)\n    result = subprocess.run(base + args, input=data,';
+ sourceFixture({[source]:producer.replace('result = subprocess.run(base + args, input=data,',transform),'scripts/deploy-ops-pod.sh':'python3 ops/pod/bootstrap.py secrets\n'},root=>{
+  const outputs=discoverScriptApiOutputs(root);assert(outputs.length);assert(outputs.every(output=>output.value.kind==='Secret'&&output.value.immutable===true));
+  fs.writeFileSync(path.join(root,source),producer.replace('subprocess.run(base + args,','subprocess.run(["curl", "https://example.invalid"],'));
+  assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_PYTHON_ADAPTER_FAILED/);
+ });
+});
 import { discoverNonApiOutputClassifications } from '../docs-api-output-discovery.mjs';
 test('actual local kubeconfig sink is classified without ignoring API-shaped Config submissions',()=> {
  const root=path.resolve(import.meta.dirname,'../..');const classifications=discoverNonApiOutputClassifications(root);
@@ -714,6 +723,16 @@ test('changing an original shell sink cannot reuse its source operation recipe',
  sourceFixture({[source]:bytes,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{
   assert.doesNotThrow(()=>discoverShellApiOutputs(root));fs.writeFileSync(path.join(root,source),bytes.replace('s/x/y/','s/x/z/'));assert.throws(()=>discoverShellApiOutputs(root),/SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/);
  });
+});
+test('refreshed shell sink metadata cannot replace the selected consumer or forward unbound stdin',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json';
+ const selected=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')).shellRawOutputContracts[0];
+ for(const bytes of ['#!/bin/sh\ntee /dev/null\n','#!/bin/sh\ncat\n','#!/bin/sh\nsed -n p\n'])for(const replaceEvidence of [false,true]) {
+  const contract=structuredClone(selected),source=contract.source;
+  contract.sinks=shellRawOutputSinks(source,bytes);contract.operationRecipe=shellRawOutputOperationRecipe(source,bytes);
+  contract.sinkConsumers=contract.sinks.map(sink=>({...selected.sinkConsumers[0],source,line:sink.line,command:sink.command,channel:sink.channel??'command-output',argumentsDigest:createHash('sha256').update(JSON.stringify(sink.args)).digest('hex'),...(replaceEvidence?{kind:'native-tool-or-selected-stream',sourceEvidence:bytes}:{})}));
+  sourceFixture({[source]:bytes,[authority]:JSON.stringify({shellRawOutputContracts:[contract]})},root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED/));
+ }
 });
 test('markerless serialized roots in an unsupported public language fail qualification',()=>{
  sourceFixture({'bin/new.rb':'require "json"\nputs JSON.generate(JSON.parse(ARGV[0]))\n'},root=>assert.throws(()=>discoverScriptApiOutputs(root),/PRODUCER_LANGUAGE_UNQUALIFIED/));
@@ -902,6 +921,49 @@ test('qualified native C control writes and Docker build records reject changed 
  for(const file of walkProductSources(repository,['docker','ops','tools'],file=>/(?:^|\/)Dockerfile(?:\.|$)/u.test(file)))sourceFixture({[file]:fs.readFileSync(path.join(repository,file),'utf8')},root=>assert.doesNotThrow(()=>discoverScriptApiOutputs(root),file));
 });
 
+test('workspace output authority survives relocation only with locally bound runtime dependencies',()=>{
+ const source='bin/native.mjs',workspace='contracts/fixture',authority='scripts/docs-api-producer-adapter-authorities.json';
+ sourceFixture({[source]:"import{validate}from'@kubeclaw/fixture';const result=validate(JSON.parse(process.argv[2]));console.log(JSON.stringify({...result}));",[workspace+'/package.json']:JSON.stringify({name:'@kubeclaw/fixture',type:'module',exports:'./index.mjs'}),[workspace+'/index.mjs']:"export function validate(input){return {status:'ok'};}"},root=>{
+  fs.mkdirSync(path.join(root,'node_modules/@kubeclaw'),{recursive:true});
+  fs.symlinkSync(path.join(root,workspace),path.join(root,'node_modules/@kubeclaw/fixture'));
+  const selectors=[{expression:'JSON.stringify({...result})'}],facts=deriveNativeOperationFacts(root,source,selectors),factsDigest=nativeOperationFactDigest(facts);
+  fs.mkdirSync(path.join(root,'scripts'),{recursive:true});
+  fs.writeFileSync(path.join(root,authority),JSON.stringify({nonApiOutputContracts:[{source,sink:'console.log',expression:'JSON.stringify({...result})',basis:'fixture fixed validated response',operations:[{source,selectors,factsDigest}]}]}));
+  const relocated=fs.mkdtempSync(path.join(os.tmpdir(),'api-workspace-relocation-'));
+  try {
+   fs.cpSync(root,relocated,{recursive:true});
+   // A shared node_modules link still executes the original workspace. Its
+   // escaped authority paths must not qualify the copied source receipt.
+   assert.notEqual(nativeOperationFactDigest(deriveNativeOperationFacts(relocated,source,selectors)),factsDigest);
+   assert(classifySerializedOutputRoles(relocated,source,[source]).every(output=>output.basis!=='fixture fixed validated response'));
+   fs.unlinkSync(path.join(relocated,'node_modules/@kubeclaw/fixture'));
+   fs.symlinkSync(path.join(relocated,workspace),path.join(relocated,'node_modules/@kubeclaw/fixture'));
+   assert.equal(nativeOperationFactDigest(deriveNativeOperationFacts(relocated,source,selectors)),factsDigest);
+   assert.deepEqual(discoverScriptApiOutputs(relocated),[]);
+   fs.writeFileSync(path.join(relocated,workspace+'/index.mjs'),'export function validate(input){return input;}');
+   assert.throws(()=>discoverScriptApiOutputs(relocated),/API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED/);
+   fs.writeFileSync(path.join(relocated,workspace+'/index.mjs'),"export function validate(input){return {apiVersion:'v1',kind:'ConfigMap',metadata:{name:'added'}};}");
+   assert.throws(()=>discoverScriptApiOutputs(relocated),/API_PRODUCT_SCRIPT_(?:OUTPUT_IDENTITY|OUTPUT_ROLE)_UNQUALIFIED/);
+  } finally {fs.rmSync(relocated,{recursive:true,force:true});}
+ });
+});
+
+test('refreshed native receipts cannot conceal returned API identity through runtime package constructors',()=>{
+ const source='bin/native.mjs',pkg='node_modules/@kubeclaw/fixture/',authority='scripts/docs-api-producer-adapter-authorities.json';
+ for(const invocation of ['validate(JSON.parse(process.argv[2]))','alias(JSON.parse(process.argv[2]))','through(()=>validate(JSON.parse(process.argv[2])))'])for(const published of ['value','{...value}','[value]']) {
+  const expression=`JSON.stringify(${published})`,bytes=`import{validate,through}from'@kubeclaw/fixture';const alias=validate;const value=${invocation};console.log(${expression});`;
+  sourceFixture({[source]:bytes,[pkg+'package.json']:JSON.stringify({name:'@kubeclaw/fixture',type:'module',exports:{import:'./index.mjs'}}),[pkg+'index.mjs']:"export{validate,through}from'./validation.mjs';",[pkg+'validation.mjs']:"export function validate(input){return {status:'ok'};}export function through(operation){return operation();}"},root=>{
+   const operation={source,selectors:[{expression}]},registry={nonApiOutputContracts:[{source,sink:'console.log',expression,basis:'fixture closed diagnostic response',operations:[operation]}]};
+   function refresh(){operation.factsDigest=nativeOperationFactDigest(deriveNativeOperationFacts(root,source,operation.selectors));fs.mkdirSync(path.join(root,'scripts'),{recursive:true});fs.writeFileSync(path.join(root,authority),JSON.stringify(registry));}
+   refresh();assert.deepEqual(discoverScriptApiOutputs(root),[]);
+   fs.writeFileSync(path.join(root,pkg+'validation.mjs'),"export function validate(input){return {apiVersion:'v1',kind:'Secret',metadata:{name:'hidden'}};}export function through(operation){return operation();}");
+   refresh();
+   assert(classifySerializedOutputRoles(root,source,[source]).every(output=>output.role!=='non-api'),`${invocation}: ${published}`);
+   assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_(?:OUTPUT_IDENTITY|OUTPUT_ROLE)_UNQUALIFIED/);
+  });
+ }
+});
+
 test('native operation facts bind runtime package validators through reexports',()=>{
  const source='bin/native.mjs',pkg='node_modules/@kubeclaw/fixture/',bytes="import{validate}from'@kubeclaw/fixture';const value=validate(JSON.parse(process.argv[2]));console.log(JSON.stringify(value));";
  const registry={nonApiOutputContracts:[{source,sink:'console.log',expression:'JSON.stringify(value)',basis:'fixture validated local diagnostic',operations:[{source,selectors:[{expression:'JSON.stringify(value)'}]}]}]};
@@ -975,6 +1037,41 @@ test('native Go transport receipt binds aliases, callbacks and returned capabili
   assert.doesNotThrow(()=>discoverGoApiOutputs(root));
   fs.writeFileSync(path.join(root,'cmd/buster-namespace-controller/unchecked.go'),'package main\nimport("context";"os")\n'+added+'\n');
   assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/);
+ });
+});
+
+test('native Go transport receipts reject refreshed unknown incoming bodies and replaced transfer recipes',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json';
+ const registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8'));
+ const selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith('cmd/buster-namespace-controller/'))};
+ const paths=[...new Set(selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path))))];
+ const files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')])),added='cmd/buster-namespace-controller/unchecked.go',main='cmd/buster-namespace-controller/main.go';
+ const variants={
+  direct:'func unchecked(c *controller){c.kube(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
+  alias:'func unchecked(c *controller){send:=c.kube;send(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
+  alias_constructor_gap:'func unchecked(c *controller){send:=c.kube;send(context.Background(),"POST","/api/v1/namespaces",map[string]interface{}{"apiVersion":"v1","kind":"Namespace","metadata":map[string]interface{}{"name":"alias"}},"application/json",nil)}',
+  callback:'func unchecked(c *controller){invoke(c.kube)}\nfunc invoke(send func(context.Context,string,string,interface{},string,interface{})error){send(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
+  returned:'func capability(c *controller)func(context.Context,string,string,interface{},string,interface{})error{return c.kube}\nfunc unchecked(c *controller){capability(c)(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
+  global:'var send func(context.Context,string,string,interface{},string,interface{})error\nfunc unchecked(c *controller){send=c.kube;send(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
+  payload:'func unchecked(c *controller){requestPayload(os.Args[1]);_=context.Background()}',
+  map_address:'func unchecked(c *controller){body:=map[string]interface{}{"apiVersion":"v1","kind":"Namespace"};json.Unmarshal([]byte(os.Args[1]),&body);c.kube(context.Background(),"POST","/api/v1/namespaces",body,"application/json",nil)}',
+  supported_constructor:'func unchecked(c *controller){body:=map[string]interface{}{"apiVersion":"v1","kind":"Namespace","metadata":map[string]interface{}{"name":"qualification"}};c.kube(context.Background(),"POST","/api/v1/namespaces",body,"application/json",nil)}',
+  replaced_request:null,replaced_payload:null,
+ };
+ for(const [name,body]of Object.entries(variants))sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
+  if(body)fs.writeFileSync(path.join(root,added),'package main\nimport("context";"os";"encoding/json")\n'+body+'\n');
+  if(name==='replaced_request')fs.writeFileSync(path.join(root,main),files[main].replace('resp, err := c.httpClient.Do(req)','req.Body = io.NopCloser(strings.NewReader(os.Args[1]))\n\tresp, err := c.httpClient.Do(req)'));
+  if(name==='replaced_payload')fs.writeFileSync(path.join(root,main),files[main].replace('data, err := json.Marshal(body)','body = os.Args[1]\n\tdata, err := json.Marshal(body)'));
+  const inputs=body?[...paths,added]:paths;
+  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(inputs.map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);
+  const actual=JSON.parse(run.stdout),refreshed=structuredClone(selected);
+  for(const contract of refreshed.nativeLanguageSerializationContracts)for(const receipt of contract.outputs){
+   const output=actual.find(output=>path.relative(root,output.path)===contract.source&&output.function===receipt.function&&output.expression===receipt.expression);assert(output);
+   receipt.operationDigest=createHash('sha256').update(output.operation).digest('hex');receipt.dependencyFacts=output.dependencies.map(fact=>({...fact,path:path.relative(root,fact.path)}));receipt.dependencyFactsDigest=createHash('sha256').update(JSON.stringify(receipt.dependencyFacts)).digest('hex');
+  }
+  fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));
+  if(name==='supported_constructor')assert(discoverGoApiOutputs(root).some(output=>output.value.kind==='Namespace'&&output.value.metadata.name==='qualification'));
+  else assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/,name);
  });
 });
 

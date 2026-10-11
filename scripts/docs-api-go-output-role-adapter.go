@@ -21,14 +21,15 @@ type input struct {
 	Path string `json:"path"`
 }
 type output struct {
-	Path         string          `json:"path"`
-	Line         int             `json:"line"`
-	Role         string          `json:"role"`
-	Expression   string          `json:"expression"`
-	Function     string          `json:"function"`
-	Value        string          `json:"value,omitempty"`
-	Operation    string          `json:"operation,omitempty"`
-	Dependencies []operationFact `json:"dependencies"`
+	Path                   string          `json:"path"`
+	Line                   int             `json:"line"`
+	Role                   string          `json:"role"`
+	Expression             string          `json:"expression"`
+	Function               string          `json:"function"`
+	Value                  string          `json:"value,omitempty"`
+	Operation              string          `json:"operation,omitempty"`
+	Dependencies           []operationFact `json:"dependencies"`
+	TransportBodyQualified *bool           `json:"transportBodyQualified,omitempty"`
 }
 type operationFact struct {
 	Path   string `json:"path"`
@@ -158,6 +159,10 @@ func main() {
 		return facts
 	}
 	out := []output{}
+	transportQualification := map[string]bool{}
+	for pkg, decls := range declarations {
+		transportQualification[pkg] = qualifyTransportBodies(decls)
+	}
 	for _, in := range inputs {
 		fset := token.NewFileSet()
 		file, err := parser.ParseFile(fset, in.Path, nil, 0)
@@ -188,7 +193,12 @@ func main() {
 					break
 				}
 			}
-			return output{in.Path, fset.Position(n.Pos()).Line, role, syntax(n), function, value, operation, factsFor(in.Path, function)}
+			record := output{Path: in.Path, Line: fset.Position(n.Pos()).Line, Role: role, Expression: syntax(n), Function: function, Value: value, Operation: operation, Dependencies: factsFor(in.Path, function)}
+			if function == "kube" || function == "requestPayload" {
+				qualified := transportQualification[filepath.Dir(in.Path)]
+				record.TransportBodyQualified = &qualified
+			}
+			return record
 		}
 		// Parser objects identify lexical declarations, unlike a file-global name map.
 		bindings := map[*ast.Object]ast.Expr{}
@@ -625,4 +635,307 @@ func main() {
 		})
 	}
 	json.NewEncoder(os.Stdout).Encode(out)
+}
+
+// qualifyTransportBodies proves a closed submission grammar independently of
+// receipt digests. Maps are product constructor inputs (including dynamic field
+// values); an opaque whole document, a returned transport capability or a
+// callback cannot borrow the serializer's reviewed role.
+func qualifyTransportBodies(decls map[string][]declaration) bool {
+	functions := map[string][]*ast.FuncDecl{}
+	owners := map[*ast.Object]*ast.FuncDecl{}
+	values := map[*ast.Object][]ast.Expr{}
+	parents := map[ast.Node]ast.Node{}
+	calls := []*ast.CallExpr{}
+	roots := []ast.Node{}
+	for _, choices := range decls {
+		for _, decl := range choices {
+			roots = append(roots, decl.node)
+			if fn, ok := decl.node.(*ast.FuncDecl); ok {
+				functions[fn.Name.Name] = append(functions[fn.Name.Name], fn)
+				if fn.Type.Params != nil {
+					for _, field := range fn.Type.Params.List {
+						for _, name := range field.Names {
+							if name.Obj != nil {
+								owners[name.Obj] = fn
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	// Declarations can share a GenDecl; inspect each AST node only once.
+	visited := map[ast.Node]bool{}
+	for _, root := range roots {
+		if visited[root] {
+			continue
+		}
+		visited[root] = true
+		stack := []ast.Node{}
+		ast.Inspect(root, func(n ast.Node) bool {
+			if n == nil {
+				stack = stack[:len(stack)-1]
+				return true
+			}
+			if len(stack) > 0 {
+				parents[n] = stack[len(stack)-1]
+			}
+			stack = append(stack, n)
+			switch v := n.(type) {
+			case *ast.CallExpr:
+				calls = append(calls, v)
+			case *ast.AssignStmt:
+				for i, lhs := range v.Lhs {
+					if id, ok := lhs.(*ast.Ident); ok && id.Obj != nil {
+						if i < len(v.Rhs) {
+							values[id.Obj] = append(values[id.Obj], v.Rhs[i])
+						} else if len(v.Rhs) == 1 {
+							values[id.Obj] = append(values[id.Obj], v.Rhs[0])
+						}
+					}
+				}
+			case *ast.RangeStmt:
+				if id, ok := v.Value.(*ast.Ident); ok && id.Obj != nil {
+					values[id.Obj] = append(values[id.Obj], v.X)
+				}
+			case *ast.ValueSpec:
+				for i, id := range v.Names {
+					if id.Obj != nil && i < len(v.Values) {
+						values[id.Obj] = append(values[id.Obj], v.Values[i])
+					}
+				}
+			}
+			return true
+		})
+	}
+	nameOf := func(e ast.Expr) string {
+		switch v := e.(type) {
+		case *ast.Ident:
+			return v.Name
+		case *ast.SelectorExpr:
+			return v.Sel.Name
+		}
+		return ""
+	}
+	var safe func(ast.Expr, map[ast.Expr]bool) bool
+	safe = func(e ast.Expr, seen map[ast.Expr]bool) bool {
+		if e == nil || seen[e] {
+			return false
+		}
+		seen[e] = true
+		defer delete(seen, e)
+		switch v := e.(type) {
+		case *ast.ParenExpr:
+			return safe(v.X, seen)
+		case *ast.CompositeLit:
+			if _, ok := v.Type.(*ast.MapType); ok {
+				return true
+			}
+			if array, ok := v.Type.(*ast.ArrayType); ok {
+				if _, mapElement := array.Elt.(*ast.MapType); mapElement {
+					for _, element := range v.Elts {
+						if !safe(element, seen) {
+							return false
+						}
+					}
+					return true
+				}
+			}
+			return false
+		case *ast.Ident:
+			if v.Name == "nil" {
+				return true
+			}
+			if v.Obj == nil {
+				return false
+			}
+			if assignments := values[v.Obj]; len(assignments) > 0 {
+				for node := range parents {
+					address, ok := node.(*ast.UnaryExpr)
+					if !ok || address.Op != token.AND {
+						continue
+					}
+					id, ok := address.X.(*ast.Ident)
+					if ok && id.Obj == v.Obj {
+						return false
+					}
+				}
+				for _, rhs := range assignments {
+					if appendCall, ok := rhs.(*ast.CallExpr); ok && nameOf(appendCall.Fun) == "append" && len(appendCall.Args) > 0 && nameOf(appendCall.Args[0]) == v.Name {
+						for _, argument := range appendCall.Args[1:] {
+							if !safe(argument, seen) {
+								return false
+							}
+						}
+						continue
+					}
+					if !safe(rhs, seen) {
+						return false
+					}
+				}
+				return true
+			}
+			// The existing Secret-copy producer reads a typed map through a
+			// body-free Kubernetes GET before applying its explicit sanitizer.
+			// No other address-taking use may populate that whole document.
+			readMap := false
+			addressesSafe := true
+			for node, parent := range parents {
+				address, ok := node.(*ast.UnaryExpr)
+				if !ok || address.Op != token.AND {
+					continue
+				}
+				id, ok := address.X.(*ast.Ident)
+				if !ok || id.Obj != v.Obj {
+					continue
+				}
+				call, ok := parent.(*ast.CallExpr)
+				if !ok || nameOf(call.Fun) != "kube" || len(call.Args) != 6 || call.Args[5] != address {
+					addressesSafe = false
+					continue
+				}
+				method, ok := call.Args[1].(*ast.SelectorExpr)
+				body, nilBody := call.Args[3].(*ast.Ident)
+				if !ok || nameOf(method.X) != "http" || method.Sel.Name != "MethodGet" || !nilBody || body.Name != "nil" {
+					addressesSafe = false
+					continue
+				}
+				readMap = true
+			}
+			if readMap && addressesSafe {
+				return true
+			}
+			fn := owners[v.Obj]
+			if fn == nil || ast.IsExported(fn.Name.Name) {
+				return false
+			}
+			index := 0
+			found := false
+			for _, field := range fn.Type.Params.List {
+				for _, name := range field.Names {
+					if name.Obj == v.Obj {
+						found = true
+						break
+					}
+					index++
+				}
+				if found {
+					break
+				}
+			}
+			if !found {
+				return false
+			}
+			for node, parent := range parents {
+				expr, ok := node.(ast.Expr)
+				if !ok || nameOf(expr) != fn.Name.Name {
+					continue
+				}
+				if declaration, ok := parent.(*ast.FuncDecl); ok && declaration.Name == expr {
+					continue
+				}
+				if selector, ok := parent.(*ast.SelectorExpr); ok && selector.Sel == expr {
+					continue
+				}
+				call, ok := parent.(*ast.CallExpr)
+				if !ok || call.Fun != expr {
+					return false
+				}
+			}
+			any := false
+			for _, call := range calls {
+				if nameOf(call.Fun) == fn.Name.Name {
+					if index >= len(call.Args) || !safe(call.Args[index], seen) {
+						return false
+					}
+					any = true
+				}
+			}
+			return any
+		case *ast.CallExpr:
+			if nameOf(v.Fun) == "deepCopyMap" && len(v.Args) == 1 {
+				choices := functions["deepCopyMap"]
+				if len(choices) != 1 {
+					return false
+				}
+				var buf bytes.Buffer
+				format.Node(&buf, token.NewFileSet(), choices[0])
+				closed := `func deepCopyMap(value map[string]interface{}) map[string]interface{} { data, err := json.Marshal(value); if err != nil { return map[string]interface{}{} }; var out map[string]interface{}; if err := json.Unmarshal(data, &out); err != nil { return map[string]interface{}{} }; return out }`
+				normalize := func(text string) string { return strings.Join(strings.Fields(strings.ReplaceAll(text, ";", "")), "") }
+				return normalize(buf.String()) == normalize(closed) && safe(v.Args[0], seen)
+			}
+			choices := functions[nameOf(v.Fun)]
+			if len(choices) != 1 {
+				return false
+			}
+			any := false
+			qualified := true
+			ast.Inspect(choices[0].Body, func(n ast.Node) bool {
+				if _, nested := n.(*ast.FuncLit); nested {
+					return false
+				}
+				if ret, ok := n.(*ast.ReturnStmt); ok && len(ret.Results) > 0 {
+					any = true
+					qualified = qualified && safe(ret.Results[0], seen)
+				}
+				return true
+			})
+			return any && qualified
+		}
+		return false
+	}
+	// A capability must be invoked directly. Aliases, callbacks, globals, method
+	// returns and containers require an explicit new qualification, even if their
+	// declaration digests have been refreshed in the authority registry.
+	for node, parent := range parents {
+		expr, ok := node.(ast.Expr)
+		if !ok {
+			continue
+		}
+		name := nameOf(expr)
+		if name != "kube" && name != "requestPayload" {
+			continue
+		}
+		if fn, ok := parent.(*ast.FuncDecl); ok && fn.Name == expr {
+			continue
+		}
+		// The selector's name identifier is not itself a method value.
+		if selector, ok := parent.(*ast.SelectorExpr); ok && selector.Sel == expr {
+			continue
+		}
+		call, ok := parent.(*ast.CallExpr)
+		if !ok || call.Fun != expr {
+			return false
+		}
+		if name == "kube" {
+			if len(call.Args) != 6 || !safe(call.Args[3], map[ast.Expr]bool{}) {
+				return false
+			}
+		}
+		if name == "requestPayload" {
+			// Direct constructor calls may use the serializer too. The transport's
+			// body parameter is checked through every kube submission above;
+			// other callers must independently prove their whole-map origin.
+			var owner *ast.FuncDecl
+			for p := ast.Node(call); p != nil; p = parents[p] {
+				if fn, ok := p.(*ast.FuncDecl); ok {
+					owner = fn
+					break
+				}
+			}
+			if len(call.Args) != 1 {
+				return false
+			}
+			if owner != nil && owner.Name.Name == "kube" {
+				id, ok := call.Args[0].(*ast.Ident)
+				if !ok || id.Name != "body" || owners[id.Obj] != owner {
+					return false
+				}
+			} else if !safe(call.Args[0], map[ast.Expr]bool{}) {
+				return false
+			}
+		}
+	}
+	return true
 }

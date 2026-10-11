@@ -17545,6 +17545,15 @@
       "state": "terminal-pass-author-only",
       "scope": "Currentcanonicaloperatorregistry after correcting demo-readiness selflink and explicitliveproductgap. No deploymentexecutionclaimed.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/operator-current-demo-boundary.log"
+    },
+    {
+      "command": "node scripts/docs-configuration-inventory.mjs",
+      "revision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+      "state": "terminal-fail",
+      "exitCode": 1,
+      "log": "/home/node/Documents/Codex/a98-evidence/integrated-30b6-config-generate.log",
+      "logSha256": "5fdb8019e1c235b66441d2a313999bd7a3878f7eb77a8867b3d604ce1c90d220",
+      "finding": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED scripts/retire-attempt-result.mjs:70. Private reused node_modules workspace links resolve original checkout; runtime authority fact paths differ. Correct private links and rerun; no gate weakening/output exemption."
     }
   ],
   "reviewAssignments": [
@@ -18974,6 +18983,60 @@
       "revision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84",
       "scope": "Complete affected host/Prism configuration, Studio and operations reader paths and unsigned wait/resume fixture. Not only prior findings; no global AP09.8 or Source/Quality acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/reader-wait-host-studio-fresh"
+    },
+    {
+      "agent": "/root/integrated_runtime_boundaries_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+      "state": "completed-bounded-source-pass-execution-open",
+      "report": "/home/node/Documents/Codex/a98-evidence/integrated-runtime-boundaries-source-fresh/SOURCE-REVIEW.md",
+      "reportSha256": "ac7b947e981a7003edb2687d80e27c5a41ff414ac89c9f77cbbebfd928659f4a",
+      "scope": "Complete Nova/operate/wait-resume plus inputs; integrated Studio signal and recovery journey; open Prism notification issue. Assigned NVC-009, FLW-008, OPR-004, CFG-010 and OPR-010 contributions, not entire configuration inventory.",
+      "result": "PASS Source documentation contribution; full local lifecycle and mandatory deployment EXEC-WAIT-RESUME remain FAIL/open. No package/Reader/Quality/Astra acceptance.",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/integrated-runtime-boundaries-source-root-receipt.json"
+    },
+    {
+      "agent": "/root/integrated_runtime_boundaries_quality_fresh",
+      "role": "quality",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+      "state": "completed-bounded-static-pass-execution-gates-fail",
+      "report": "/home/node/Documents/Codex/a98-evidence/integrated-runtime-boundaries-quality-fresh/review.md",
+      "reportSha256": "6fbbde96c0c15374bd8b089214b0b382d15756102779ad8e3ffa36dc76e3adad",
+      "scope": "Full four affected reader pages Nova Core/operate/wait-resume/Studio and three templates; technical English, reasoning and operational explanation.",
+      "result": "No material static Quality corrections; full A98-05/A99-11/A913-05 FAIL from missing required execution. No global/package acceptance.",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/integrated-runtime-boundaries-quality-root-receipt.json"
+    },
+    {
+      "agent": "/root/integrated_runtime_boundaries_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+      "state": "completed-bounded-documentation-pass-execution-open",
+      "report": "/home/node/Documents/Codex/a98-evidence/integrated-runtime-boundaries-reader-fresh/report.md",
+      "reportSha256": "60f396d0bc349e09ace92e211b05b01619b3bb0e737b373a268abcd8fd9b0130",
+      "scope": "Full Nova/operate/wait-resume with3templates/Studio; reader-decisions before source inspection.",
+      "result": "No material reader contradiction.55 syntax checks and3template schema checks PASS; exact fixed flock prerequisite FAIL. Required A98-05/A99-11/A913-05 executable evidence FAIL/open; no package/global acceptance."
+    },
+    {
+      "agent": "/root/native_producer_discovery_source_complete_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+      "state": "completed-fail-incomplete-complete-semantic-acceptance",
+      "report": "/home/node/Documents/Codex/a98-evidence/native-producer-discovery-source-complete-fresh/REPORT.md",
+      "reportSha256": "1a417dc118604ffae14aee981d03ccf8473a75b28c33dd1d71e611920e508a15",
+      "result": "Four independently reproduced N01–N04 semantic failures.27 bounded historical controls PASS; allS01–S11 accounted with explicit UNREVIEWED/incomplete scopes.162native contracts/fulljoin/currentreceiver acceptance not established.",
+      "next": "BatchJS/Go/shell/Python corrections; newcompletefreshindependent affectedreview, including explicit remainingS02/S06/S08 and individualconsumer authority scope."
     }
   ],
   "continuation": {
@@ -20013,7 +20076,8 @@
         "scripts/docs-api-python-output-adapter.py",
         "scripts/tests/api-reference.test.mjs"
       ]
-    }
+    },
+    "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged."
   },
   "productBoundaries": [
     {
@@ -21463,6 +21527,61 @@
       ],
       "proof": "/home/node/Documents/Codex/a98-evidence/producer-v8-root-actual-join-verification.json",
       "limitations": "External dependency contents pointer-bound with selected tool hashes, not newly fully authenticated; native isolation binary not rebuilt; controlled witnesses do not prove live deployment."
+    },
+    "workspaceRelocationCorrection": {
+      "author": "/root/script_output_qualification_correction_writer",
+      "report": "/home/node/Documents/Codex/a98-evidence/script-output-qualification-correction-writer/author-report.json",
+      "reportSha256": "5afcf166923a16ccbc4980f898b88f7674145c15738174670f8a80cdfb1e9d8f",
+      "previousTestedFileSha256": "698c7fe4eefc86a110caa78754b650f10460fdb2f70075610451741e19847dda",
+      "result": "110PASS0FAIL qualified tool; original/correctly rebound script discovery terminal0 35outputs each. Final hash capture with author confirmation no edits since start; no invented prerun seal.",
+      "correction": "Private workspace dependencies rebound; no classifier/registry change for relocation.",
+      "state": "superseded-author-candidate-by-independent-semantic-finding"
+    },
+    "nativeProducerFreshSourceFinding": {
+      "reviewer": "/root/native_producer_discovery_source_complete_fresh",
+      "revision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+      "state": "completed-independent-fail",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/native-producer-discovery-source-complete-fresh/js-refreshed-api-validator-result.json",
+      "finding": "Imported/reexported validator emitting literal API resource can be hidden by refreshing only native operation factsDigest; concreteApiRoot does not follow imported call before generic nonAPI contract.",
+      "correctionOwner": "/root/script_output_qualification_correction_writer",
+      "acceptance": "Not accepted; complete immutable review and semantic correction/new tests/new independent review required.",
+      "findings": [
+        "N01 imported JS APIconstructor hidden by refreshedfacts",
+        "N02 unknown Go aliasedsubmission hidden by refreshedfacts",
+        "N03 rawshellstdin forwarding hidden by refreshedconsumer metadata",
+        "N04 original Python kube transport overwritten by offlineadapter"
+      ],
+      "report": "/home/node/Documents/Codex/a98-evidence/native-producer-discovery-source-complete-fresh/REPORT.md"
+    },
+    "runtimeBoundaryRoleReviews": "Distinct fresh Source, Reader, Quality complete at immutable30b: bounded documentation PASS, required execution gatesFAIL/open; no global acceptance.",
+    "reboundInventoryGeneration": {
+      "revision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+      "state": "terminal-fail",
+      "exitCode": 1,
+      "log": "/home/node/Documents/Codex/a98-evidence/integrated-30b6-config-rebound-generate.log",
+      "logSha256": "47d52a9c6c1b2e42cf4f6f824bd9c960e186fa1c32df29a5d38ff0d1747ecedb",
+      "finding": "CONFIG_SEMANTIC_GAP PATH/KUBECLAW_DOCS_GO_BINARY receivingdocs helper sources lackcontracts. Rootadded precise ownconsumer contracts; actualenvironmentcoverage436names terminal0. Fullnewsourcegeneration remainsrequired."
+    },
+    "pythonOriginalTransportCorrection": {
+      "owner": "/root",
+      "state": "targeted-author-candidate-pending-fullsuite-freshreview",
+      "file": "scripts/docs-api-python-output-adapter.py",
+      "sha256": "73e1c90a911e6b737007ba4b6affd6e695af64a3e4cc2fb18d2032fc9ffbc032",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/python-original-transport-root-correction/receipt.json",
+      "result": "Actualoriginalkube retained, only subprocess boundary stubbed. Existing7(profile,value) outputs byte-meaning equivalent. Addedimmutablefield recognized inall7outputs; unsupportedcommandexplicitlyrejected. Sharedmaintainedtestadded by JSowner pending.",
+      "followup": "SupportedoriginalmoduleNamespace regression fixed; bothoriginalPythonmaintainedtests actual2PASS. Full114rerun pending; prior113PASS/1FAIL preserved."
+    },
+    "producerSemanticCorrectionCandidate": {
+      "state": "tested-author-candidate-not-independent-acceptance",
+      "authors": [
+        "/root/script_output_qualification_correction_writer",
+        "/root/native_go_incoming_semantic_writer",
+        "/root"
+      ],
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/producer-semantic-correction-root-integrity.json",
+      "report": "/home/node/Documents/Codex/a98-evidence/script-output-qualification-correction-writer/semantic-imported-api-correction/author-report-final.json",
+      "result": "114tests114PASS0FAIL;7candidatehashes and1685sourceinputs/toolbytes beforeafter andcurrent verifiedbyRoot. Exact4semanticfailures corrected with maintainedmutationcontrols; first113/114 failure andactualnamespacefollowup retained.",
+      "next": "Sourcecommit, fullboundgeneration, newfreshcompleteSource semanticreview with individualremainingcriteria/consumercoverage. NoA98/catalogue/gatesclosed."
     }
   }
 }

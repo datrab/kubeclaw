@@ -219,28 +219,35 @@ for profile in ['missing', 'optional', 'retained', 'copy-disabled']:
     if profile == 'optional':
         env.update(OPS_GITHUB_TOKEN_FILE='synthetic/github', OPS_TAILSCALE_AUTHKEY_FILE='synthetic/tailscale')
     inputs = []
-    def kube(args, data=None):
-        inputs.append({'args': args, 'response': 'synthetic'})
-        if args[0] == 'apply':
-            outputs.append({'value': json.loads(data), 'profile': profile, 'inputs': list(inputs), 'environment': env})
-            return ''
+    def offline_run(command, input=None, text=None, stdout=None, stderr=None):
+        # Keep the original kube function: collect bytes only after its actual
+        # argument and serialization transformations, at the external boundary.
+        prefix = ['kubectl', '--context', env['KUBE_CONTEXT'], '--request-timeout=20s']
+        assert isinstance(command, list) and command[:len(prefix)] == prefix, 'API_PRODUCT_PYTHON_TRANSPORT_UNQUALIFIED'
+        assert text is True and stdout == -1 and stderr == -1, 'API_PRODUCT_PYTHON_TRANSPORT_OPTIONS_UNQUALIFIED'
+        args = command[len(prefix):]
+        inputs.append({'args': args, 'command': command, 'response': 'synthetic'})
+        if args == ['apply', '-f', '-']:
+            value = json.loads(input)
+            assert isinstance(value, dict) and value.get('apiVersion') and value.get('kind'), 'API_PRODUCT_PYTHON_RESOURCE_IDENTITY_UNQUALIFIED'
+            outputs.append({'value': value, 'profile': profile, 'inputs': list(inputs), 'environment': env})
+            return types.SimpleNamespace(returncode=0, stdout='')
+        assert input is None and len(args) == 8 and args[:2] == ['get', 'secret'] and args[3:7] == ['--ignore-not-found', '-o', 'json', '-n'], 'API_PRODUCT_PYTHON_TRANSPORT_OPERATION_UNQUALIFIED'
         if args[:3] == ['get', 'secret', 'ghcr-secret'] and args[-1] == 'kubeclaw':
-            return json.dumps({'type': 'kubernetes.io/dockerconfigjson', 'data': {'.dockerconfigjson': 'c3ludGhldGlj'}})
+            return types.SimpleNamespace(returncode=0, stdout=json.dumps({'type': 'kubernetes.io/dockerconfigjson', 'data': {'.dockerconfigjson': 'c3ludGhldGlj'}}))
+        assert args[2] in ['codex-ops-bearer', 'ghcr-secret'] and args[-1] == namespace['namespace'], 'API_PRODUCT_PYTHON_TRANSPORT_READ_UNQUALIFIED'
         if profile == 'retained':
-            return json.dumps({'metadata': {'name': args[2]}})
-        return ''
+            return types.SimpleNamespace(returncode=0, stdout=json.dumps({'metadata': {'name': args[2]}}))
+        return types.SimpleNamespace(returncode=0, stdout='')
     class SyntheticPath:
         def __init__(self, name):
             assert name in ['synthetic/github', 'synthetic/tailscale'], 'API_PRODUCT_PYTHON_FILE_UNQUALIFIED'
         def read_text(self):
             return 'synthetic-safe-payload'
-    def blocked(*args, **kwargs):
-        raise RuntimeError('API_PRODUCT_PYTHON_EXTERNAL_EFFECT_BLOCKED')
     namespace = {'__builtins__': {name: getattr(__import__('builtins'), name) for name in ['print','list','dict','set','sorted','str','len','SystemExit','RuntimeError']}, 'json': json, 'os': types.SimpleNamespace(environ=env), 'namespace': 'discovery-ops',
                  'Path': SyntheticPath, 'secrets': types.SimpleNamespace(token_urlsafe=lambda size: 'synthetic-token'),
-                 'subprocess': types.SimpleNamespace(run=blocked), 'base': [], 'kube': kube}
+                 'subprocess': types.SimpleNamespace(run=offline_run, PIPE=-1), 'base': []}
     exec(compile(functions, sys.argv[1], 'exec'), namespace)
-    namespace['kube'] = kube
     with contextlib.redirect_stdout(io.StringIO()):
         namespace['setup_secrets']()
 print(json.dumps(outputs))

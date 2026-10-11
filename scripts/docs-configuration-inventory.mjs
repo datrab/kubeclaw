@@ -168,6 +168,29 @@ const addEnvironmentConsumerContract = (name, sourcePath, contract) => {
   ENVIRONMENT_CONSUMER_CONTRACTS.set(`${name}:${sourcePath}`, contract);
 };
 
+addEnvironmentConsumerContract('PATH', 'scripts/docs-api-output-discovery.mjs', environmentContract({
+  purpose: 'Selects executable lookup directories for the documentation resource-discovery helpers. Python helpers receive only this environment entry; Go helpers inherit the process environment.',
+  acceptedForm: 'The host executable-search path, with directories separated by the host path delimiter.',
+  defaultBehavior: 'Uses the parent process PATH. The helper does not supply its own search path.',
+  emptyBehavior: 'An empty value is forwarded unchanged. An absent value supplies no authored search path; the host process launcher determines executable lookup.',
+  invalidBehavior: 'A path that cannot resolve the required Python or Go executable causes helper launch or parsing to fail.',
+  precedence: 'The process PATH controls Python lookup and default Go lookup. A present KUBECLAW_DOCS_GO_BINARY selects the Go command instead.',
+  impact: 'Changing the path can select different local tools and change discovery results. Use trusted, compatible tools when generating documentation.',
+  failure: 'The corresponding API_PRODUCT helper parse or operation error stops generation. No live Kubernetes command is authorized by this setting.',
+  required: 'conditional',
+}));
+addEnvironmentConsumerContract('KUBECLAW_DOCS_GO_BINARY', 'scripts/docs-api-output-discovery.mjs', environmentContract({
+  purpose: 'Selects the Go executable used to parse product resource constructors and serialized-output roles for documentation.',
+  acceptedForm: 'An executable Go command name or filesystem path accepted by the host process launcher. The helper does not validate the Go version or path before launch.',
+  defaultBehavior: 'An absent value selects go through the process executable-search path.',
+  emptyBehavior: 'An explicitly empty string is retained by the nullish fallback and fails executable launch; it does not select go.',
+  invalidBehavior: 'A missing, non-executable, incompatible or unsuccessful Go command fails the helper parse check.',
+  precedence: 'A present process value wins over the literal go command; PATH resolves a command name. No configuration file overrides this selection.',
+  impact: 'Changing this setting changes the local tool that runs the offline Go parsing helpers. Select a trusted tool compatible with the repository.',
+  failure: 'API_PRODUCT_GO_PRODUCER_PARSE_FAILED stops resource discovery and generation. This setting does not select the product runtime Go executable.',
+  required: 'conditional',
+}));
+
 const busterControllerSource = 'cmd/buster-namespace-controller/main.go';
 const busterControllerContracts = {
   KUBECLAW_NAMESPACE: environmentContract({

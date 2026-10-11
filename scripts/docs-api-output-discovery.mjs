@@ -36,6 +36,7 @@ function nativeOutputConsumerMatches(output,contracts,root) {
  // Digests only invalidate reviewed facts. A role also requires the actual
  // operation to satisfy its consumer grammar; a generic diagnostic label does
  // not authorize a new root, writer, HTTP client or output argument.
+ if(output.transportBodyQualified===false)return false;
  function nativeHttpResponseRecipe(){
   // These are selected, inspected router/response constructor declarations,
   // not a source-module exemption. The routers return the ready envelope,
@@ -45,6 +46,41 @@ function nativeOutputConsumerMatches(output,contracts,root) {
   const constructors={commitProduct:'9db306489982efa4fcb213ee4caa1bfef05175192f077394afa91ba94bc7785d',productReceipt:'093407fbd5fa71a9de7898572aea6a12558779a0782c8c8fcd9cea0502716a3e',productRecords:'53b4c7b8218adbf86e8812eccc803314c5376925c7ab51e6afcf26a2bb3ff1bd',productSubject:'d6ae13944edccd2862149794296a5f0424f9fc69d6863c4e34da06dfcf687da1'};
   if(output.function==='readinessHandler')constructors.readyResponse='c337ca7727f6328352cf424c29e619f67b6d009806a7789de10a7048b4bd04c1';
   return routers[output.function]===hash(output.operation)&&Object.entries(constructors).every(([symbol,sha256])=>output.dependencies?.some(fact=>fact.symbol===symbol&&fact.sha256===sha256));
+ }
+ function nativeTransportRecipe(kind,operation) {
+  // These closed transfer recipes preserve the selected body through JSON
+  // encoding and request construction. Incoming bodies are qualified by the
+  // AST adapter separately. Adding a replacement body/request invalidates this
+  // grammar even if every registry digest is refreshed.
+  const payload=`func requestPayload(body interface{}) (io.Reader, error) {
+   if body == nil { return nil, nil }
+   data, err := json.Marshal(body)
+   if err != nil { return nil, err }
+   return bytes.NewReader(data), nil
+  }`;
+  const request=`func (c *controller) kube(ctx context.Context, method string, path string, body interface{}, contentType string, out interface{}) error {
+   payload, err := requestPayload(body)
+   if err != nil { return err }
+   req, err := http.NewRequestWithContext(ctx, method, c.apiURL+kubePath(path), payload)
+   if err != nil { return err }
+   token, err := os.ReadFile(c.tokenPath)
+   if err != nil { return fmt.Errorf("read Kubernetes ServiceAccount token: %w", err) }
+   credential := strings.TrimSpace(string(token))
+   if credential == "" { return errors.New("Kubernetes ServiceAccount token is empty") }
+   req.Header.Set("Authorization", "Bearer "+credential)
+   req.Header.Set("Accept", "application/json")
+   if body != nil { req.Header.Set("Content-Type", contentType) }
+   resp, err := c.httpClient.Do(req)
+   if err != nil { return err }
+   defer resp.Body.Close()
+   responseBody, err := io.ReadAll(resp.Body)
+   if err != nil { return err }
+   if err := kubeResponseError(resp.StatusCode, responseBody); err != nil { return err }
+   if out == nil || len(responseBody) == 0 { return nil }
+   return json.Unmarshal(responseBody, out)
+  }`;
+  const compact=value=>value.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`[^`]*`|\s+|;/gu,token=>/^["'`]/u.test(token)?token:'');
+  return compact(operation)===compact(kind==='go-kubernetes-payload'?payload:request);
  }
  function semanticConsumer(consumer){
   const expression=output.expression,operation=output.operation??'';
@@ -70,8 +106,8 @@ function nativeOutputConsumerMatches(output,contracts,root) {
     }`;
     return operation.replace(/\s+/gu,'').replaceAll(';','')===closedLog.replace(/\s+/gu,'').replaceAll(';','')&&['json.Marshal(record)','fmt.Println(string(data))','fmt.Println(`{"level":"error","component":"buster-namespace-controller","message":"failed to marshal log"}`)'].includes(expression);
    }
-   case 'go-kubernetes-payload':return expression==='json.Marshal(body)'&&/if body == nil/u.test(operation)&&/return bytes.NewReader\(data\), nil/u.test(operation);
-   case 'go-kubernetes-request':return expression==='c.httpClient.Do(req)'&&/payload, err := requestPayload\(body\)/u.test(operation)&&/http.NewRequestWithContext\(ctx, method, c.apiURL\+kubePath\(path\), payload\)/u.test(operation)&&/req.Header.Set\("Authorization", "Bearer "\+credential\)/u.test(operation)&&/json.Unmarshal\(responseBody, out\)/u.test(operation);
+   case 'go-kubernetes-payload':return output.transportBodyQualified===true&&expression==='json.Marshal(body)'&&nativeTransportRecipe(consumer.kind,operation);
+   case 'go-kubernetes-request':return output.transportBodyQualified===true&&expression==='c.httpClient.Do(req)'&&nativeTransportRecipe(consumer.kind,operation);
    case 'go-native-http-response':return /^json\.NewEncoder\(w\)(?:\.Encode\(result\))?$/u.test(expression)&&nativeHttpResponseRecipe()&&/w.Header\(\).Set\("Content-Type", "application\/json"\)/u.test(operation)&&/authenticate(?:Transport|Ready)\(/u.test(operation)&&/\/v1\/demo-(?:ready|product)/u.test(operation);
    case 'python-native-state':return (output.operation.match(/Name\(id='data', ctx=Store\(\)\)/gu)??[]).length===1&&!/attr='(?:update|setdefault|clear|pop|popitem)'/u.test(output.operation)&&!output.capabilityEscapes&&output.callerArguments?.length&&output.callerArguments.every(call=>call.positionalRoles.every(role=>role==='non-api')&&call.expandedKeys.every(keys=>keys!==null)&&!([...call.keywordNames.filter(Boolean),...call.expandedKeys.flat()].includes('apiVersion')&&[...call.keywordNames.filter(Boolean),...call.expandedKeys.flat()].includes('kind')))&&/^(?:temp.write_text\(json.dumps\(data\) \+ '\\n'\)|json.dumps\(data\))$/u.test(expression)&&operation.includes("Constant(value='phase')")&&operation.includes("Constant(value='observedAt')")&&operation.includes("Constant(value='pairingVerified')")&&operation.includes("Call(func=Attribute(value=Name(id='time', ctx=Load()), attr='time'");
    case 'python-process-exit-diagnostic':return expression==="print(f'Codex app-server failed to become ready (exit {child.poll()}).', flush=True)"&&operation.includes("Call(func=Attribute(value=Name(id='child', ctx=Load()), attr='poll'")&&operation.includes("attr='Popen'");
@@ -780,6 +816,47 @@ export function shellRawOutputOperationRecipe(source,bytes) {
  return {...producerAdapterOperationRecipe(source,shell),heredocs};
 }
 const shellOutputCache=new Map();
+function shellOutputConsumerMatches(source,bytes,sink,consumer) {
+ if(consumer.source!==source||consumer.line!==sink.line||consumer.command!==sink.command||consumer.argumentsDigest!==hash(JSON.stringify(sink.args))||!consumer.purpose||typeof consumer.sourceEvidence!=='string'||!consumer.sourceEvidence)return false;
+ // Consumer evidence is executable source context, not a free-standing role
+ // label. It must still cover the actual selected command at its source line.
+ let found=false;
+ for(let offset=bytes.indexOf(consumer.sourceEvidence);offset>=0;offset=bytes.indexOf(consumer.sourceEvidence,offset+1)){
+  const first=bytes.slice(0,offset).split('\n').length,last=first+consumer.sourceEvidence.split('\n').length-1;
+  if(first<=sink.line&&sink.line<=last){found=true;break;}
+ }
+ if(!found)return false;
+ const channel=sink.channel??'command-output';
+ if(consumer.channel&&consumer.channel!==channel)return false;
+ if(consumer.kind==='captured-operation')return channel==='command-substitution';
+ if(!['framed-or-native-scalar-output','declared-child-operation','native-tool-or-selected-stream','fixed-native-text-transform'].includes(consumer.kind))return false;
+ if(consumer.kind==='framed-or-native-scalar-output'&&!['echo','printf'].includes(sink.command))return false;
+ const streamTools=new Set(['cat','tee','sed','awk','gawk','head','tail','cut','paste','sort','uniq','tr','dd','base64','jq','yq']);
+ if(!streamTools.has(sink.command))return true;
+ // Stream filters cannot inherit a native role while reading caller stdin.
+ // Require a selected pipe, a named input, or the exact scalar-trim recipe.
+ const context=bytes.split('\n').slice(Math.max(0,sink.line-3),sink.line).join('\n').replace(/\\\n[ \t]*/gu,' ');
+ const command=sink.command.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&');
+ if(new RegExp(`\\|\\s*${command}(?:\\s|$)`,'u').test(context))return true;
+ const args=sink.args;
+ if(sink.command==='tee')return false; // tee arguments are destinations.
+ if(sink.command==='cat')return args.some(value=>value!=='-'&&!value.startsWith('-'));
+ if(['sed','awk','gawk','jq','yq'].includes(sink.command)){
+  const positional=[];
+  for(let index=0;index<args.length;index++){
+   if(['-v','-F','-f','-e'].includes(args[index])){index++;continue;}
+   if(args[index]==='--arg'||args[index]==='--argjson'){index+=2;continue;}
+   if(!args[index].startsWith('-'))positional.push(args[index]);
+  }
+  if(positional.length>1&&positional.at(-1)!=='-')return true;
+  const scalarTrim=`{ sub(/^[[:space:]]+/, "", $0) sub(/[[:space:]]+$/, "", $0) gsub(/^"|"$/, "", $0) gsub(/^'|'$/, "", $0) print }`;
+  return ['awk','gawk'].includes(sink.command)&&positional.length===1&&positional[0].replace(/\s+/gu,'')===scalarTrim.replace(/\s+/gu,'');
+ }
+ if(['head','tail','cut'].includes(sink.command)){
+  for(let index=0;index<args.length;index++){if(['-n','-c','-d','-f'].includes(args[index])){index++;continue;}if(args[index]!=='-'&&!args[index].startsWith('-'))return true;}
+ }
+ return false;
+}
 export function discoverShellApiOutputs(root) {
   const sources=walkProductSources(root,[...producerRoots,'my-values'],file=>/\.sh$/u.test(file));
   const authority='scripts/docs-api-producer-adapter-authorities.json';
@@ -791,7 +868,7 @@ export function discoverShellApiOutputs(root) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     if(/(?:^|\n)\s*helm\s/u.test(bytes)||/\bnode\b[^\n]*render-[A-Za-z0-9-]+\.mjs/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const sourceDigest=hash(bytes);
-    const rawSinks=shellRawOutputSinks(source,bytes);if(rawSinks.length){const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):{};const contract=(registry.shellRawOutputContracts??[]).find(record=>record.source===source&&JSON.stringify(record.sinks)===JSON.stringify(rawSinks)&&JSON.stringify(record.operationRecipe)===JSON.stringify(shellRawOutputOperationRecipe(source,bytes)));assert(contract,`API_PRODUCT_SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED: ${source}:${rawSinks[0].line}`);assert(contract.sinkConsumers?.length===rawSinks.length&&contract.sinkConsumers.every((consumer,index)=>consumer.source===source&&consumer.line===rawSinks[index].line&&consumer.command===rawSinks[index].command&&consumer.argumentsDigest===hash(JSON.stringify(rawSinks[index].args))&&consumer.kind&&consumer.purpose&&consumer.sourceEvidence),`API_PRODUCT_SHELL_CONSUMER_UNQUALIFIED: ${source}`);classifications.push({source,sourceDigest,role:contract.role,basis:contract.basis,sinks:rawSinks,consumer:contract.consumer});}
+    const rawSinks=shellRawOutputSinks(source,bytes);if(rawSinks.length){const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):{};const contract=(registry.shellRawOutputContracts??[]).find(record=>record.source===source&&JSON.stringify(record.sinks)===JSON.stringify(rawSinks)&&JSON.stringify(record.operationRecipe)===JSON.stringify(shellRawOutputOperationRecipe(source,bytes)));assert(contract,`API_PRODUCT_SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED: ${source}:${rawSinks[0].line}`);assert(contract.sinkConsumers?.length===rawSinks.length,`API_PRODUCT_SHELL_CONSUMER_UNQUALIFIED: ${source}`);for(const [index,consumer]of contract.sinkConsumers.entries())assert(shellOutputConsumerMatches(source,bytes,rawSinks[index],consumer),`API_PRODUCT_SHELL_CONSUMER_UNQUALIFIED: ${source}:${rawSinks[index].line}:${rawSinks[index].command}`);classifications.push({source,sourceDigest,role:contract.role,basis:contract.basis,sinks:rawSinks,consumer:contract.consumer});}
     const scalarize=value=>value.replace(/\$\{[^}\n]+\}|\$[A-Za-z_][A-Za-z0-9_]*/gu,'discovery');
     let document=0;
     const add=(value,line,profile,request={})=>outputs.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:document++,sourceDigest,producer:'shell-shape',line,profile,...request,outputDigest:hash(JSON.stringify(value))}});
