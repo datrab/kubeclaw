@@ -528,8 +528,12 @@ It binds to the exact source, run, result, and exposed demo.
 Check result artifacts through their owning store.
 Verify content digests before sharing or importing them.
 
-For final Tailnet exposure, use the registered pipeline stage and its receipt.
-The [result and demo-readiness procedure](#inspect-results-and-demo-readiness) defines the supported entry point.
+For exposure and handoff, follow [Deliver a Demo](demo-delivery.md#canonical-demo-delivery-procedure).
+That procedure supplies a local contract rehearsal and identifies the additional
+authorities required for live delivery. KubeClaw does not supply a complete
+live demo-delivery journey. Stop before Tailnet exposure until product
+operations has registered the deployment procedure, stage configuration,
+exposure receipts, and cleanup required by that canonical procedure.
 
 ## Operate Prism
 

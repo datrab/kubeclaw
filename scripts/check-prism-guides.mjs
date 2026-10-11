@@ -197,9 +197,14 @@ for (const file of ['charts/prism/values.yaml', 'my-values/prism-agent-values.ya
       `canonical selected value differs for ${file}:${leaf.path}`);
     const row = section.split('\n').find((line) => line.startsWith(`| \`${leaf.path}\` |`));
     assert(row, `canonical Helm reference does not publish ${file}:${leaf.path}`);
-    const displayValue = String(field.value ?? 'null').replaceAll('|', '&#124;')
-      .replaceAll('`', '&#96;').replaceAll('\n', '<br>');
-    assert(row.includes(`| \`${field.type}\`<br>\`${displayValue}\`<br>`),
+    // The canonical renderer uses HTML code spans for literal values so that
+    // Markdown punctuation remains data. Match that cell, including its empty
+    // string label, without accepting a different type or selected value.
+    const displayValue = String(field.value === '' ? '""' : field.value)
+      .replace(/[&<>"'\\`\[\]*_|~]/gu,
+        (character) => `&#${character.codePointAt(0)};`).replaceAll('\n', '<br>');
+    const emptyLabel = field.value === '' ? ' (empty string)' : '';
+    assert(row.includes(`| \`${field.type}\`<br><code>${displayValue}</code>${emptyLabel}<br>`),
       `canonical Helm reference has a stale type or selected value for ${file}:${leaf.path}`);
   }
   if (file === 'charts/prism/values.yaml') helmFields = discovered;

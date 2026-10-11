@@ -1016,7 +1016,7 @@ operations. Each operation identifies the document elements to change:
 
 - insert a node;
 - remove a node;
-- duplicate a subtree;
+- copy a subtree shown in the editor;
 - move a node;
 - change node properties exposed by the editor;
 - apply an atomic operation batch.
@@ -1025,6 +1025,13 @@ The visual editor has no control for changing responsive properties.
 Its available property controls are defined in the
 [layout and text fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-config.tsx#L37-L64)
 and [generic block fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-config.tsx#L71-L94).
+
+An editor copy uses the projected properties to
+[construct new nodes](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-adapter.ts#L169-L191)
+and [insert them](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-adapter.ts#L235-L249).
+It does not copy node-specific state patches, responsive patches, or flow
+triggers. Copied buttons use the `primary` variant and `preview-action` action.
+Check the resulting content and behavior before using the copy.
 
 Every operation carries `baseRevision`.
 Control applies it only to the current revision and creates a new immutable

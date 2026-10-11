@@ -16284,7 +16284,7 @@
     },
     {
       "id": "A98-STATEFUL-MAXUNAVAILABLE-NOTFOUND",
-      "state": "author-correction-pending-new-fresh-source-review",
+      "state": "bounded-independent-source-pass-other-roles-and-package-open",
       "catalogueIds": [
         "CFG-009"
       ],
@@ -16292,8 +16292,9 @@
         "A98-10",
         "A98-11"
       ],
-      "description": "Fresh Source at c1c295 established retained crossfield incorrectly said all deletion errors stop. Root distinguishes NotFound continued deletion count/CurrentReplicas decrement, adds817–826pinned sourcecaption. Full original63review continues; correction unaccepted.",
-      "proof": "/home/node/Documents/Codex/a98-evidence/stateful-notfound-root-author-complete-record-delta.json"
+      "description": "Freshcomplete425Source independently validates all63records424cases1423components1783captions including correctedNotFound branch. Historicalc1FAIL retained. No globalproducer/Reader/Quality/Astraacceptance.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/stateful-notfound-root-author-complete-record-delta.json",
+      "independentProof": "/home/node/Documents/Codex/a98-evidence/stateful-425-recovery-source-fresh/report.md"
     },
     {
       "id": "A98-EARLY-READER-CORRECTIONS",
@@ -16327,6 +16328,23 @@
       "proof": "/home/node/Documents/Codex/a98-evidence/reader-plain-language-fixture-writer/report.json",
       "sourceRevision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84",
       "mappingState": "author-derived; fresh reviewer independently verifies applicability"
+    },
+    {
+      "id": "A98-STUDIO-PROJECTED-COPY-AND-DEMO-ENTRY-BOUNDARY",
+      "state": "author-corrected-awaiting-complete-new-fresh-reader",
+      "catalogueIds": [
+        "OPR-010",
+        "OPR-004",
+        "FLW-008"
+      ],
+      "acceptanceIds": [
+        "A98-05",
+        "A98-12",
+        "A98-13"
+      ],
+      "description": "Immutable554Reader found unsupportedresponsiveediting, projectedcopyvsdomaincopy ambiguity, and demoTailnetselflink hiding no completeLivejourney. Rootlimitsvisualproperties/copysemantics includingbuttondefaults andlinkscanonicaldemo withliveStopboundary. Current554completeReader stillinprogress; newcandidate notaccepted.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/reader-wait-host-studio-fresh",
+      "mappingState": "provisional pendingcompleteReaderreport"
     }
   ],
   "checks": [
@@ -17509,6 +17527,24 @@
       "state": "terminal-pass-author-only",
       "scope": "Complete current canonical operator registry after fixed flock prerequisite, before narrow citation span refinement. Same procedure semantics retained; fresh Reader remains pending.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/operator-after-flock-prerequisite.log"
+    },
+    {
+      "command": "node scripts/check-prism-guides.mjs",
+      "state": "terminal-pass-author-only",
+      "scope": "Complete5guides/source/currentselectedvalues after correcting literalvaluecell parser. Prior claimed Helm scalarstaleness withdrawn: scalar/sourceDigest matched; former failure was formatterfalsepositive.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/prism-guides-current-copy-boundary.log"
+    },
+    {
+      "command": "Prism literal cell complete checker baseline and negative mutations",
+      "state": "terminal-pass-author-only",
+      "scope": "ActualbaselinePASS; wrongtype/wrongvalue/missingemptystringlabel independentlymadecheckerFAIL. Earlier empty-testfixtureselectionerror retained, corrected fromactualcurrentinventory. No loosenedselectedvalue/typecheck.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/prism-literal-formatting-mutation-results.json"
+    },
+    {
+      "command": "node scripts/check-operator-task-registry.mjs",
+      "state": "terminal-pass-author-only",
+      "scope": "Currentcanonicaloperatorregistry after correcting demo-readiness selflink and explicitliveproductgap. No deploymentexecutionclaimed.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/operator-current-demo-boundary.log"
     }
   ],
   "reviewAssignments": [
@@ -18905,13 +18941,17 @@
     {
       "agent": "/root/stateful_425_recovery_source_fresh",
       "role": "Source",
-      "state": "running",
+      "state": "sealed-bounded-source-pass",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
       "revision": "425be378fa25d26835a5418d65bfd457e151cc16",
       "scope": "Fresh full63 source review with all424 cases and current captions. Interrupted prior attempt is not acceptance.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-425-recovery-source-fresh"
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-425-recovery-source-fresh/report.md",
+      "verdict": "PASS63records424cases1423components1783captions; zeroFAIL/UNREVIEWED insideassignedSourceScope. GlobalproducerOPEN, noReader/Quality/Astra/AP09.8acceptance.",
+      "manifestSHA256": "2e4940b03f27db586123c387a235572f7422be26cb2c8c4fe53e0de695888304",
+      "rootIntegrity": "/home/node/Documents/Codex/a98-evidence/stateful-425-recovery-root-seal-integrity.json",
+      "evidenceLimits": "67 fresh authenticatedprimaryfiles and6boundedtests; historicalrawrendersreusedexplicitly and revalidated, not newlyexecuted."
     },
     {
       "agent": "/root/reader_plain_language_fixture_writer",
@@ -18940,7 +18980,7 @@
     "stage": "AP09.8: producer eight-family corrections and independent exact70 selection provenance; package not accepted",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish six producer correction files and full fresh Source63. Correct plain language/unsigned wait fixture. Stable canonical generation, all required gates and fresh Reader/Quality/Sol then Astra acceptance remain required. AP09.8 not accepted; no mass parity or deletion.",
+    "next": "Seal full554Reader, newcorrected completeaffected Reader/Quality then fullAP09.8roles after stablegeneration. Source63boundedPASS sealed13459artifactsRootintegrityzeroerrors. Producer6files allfamilies/nativecontracts stillopen; freshcompleteproducerSource and mandatoryfullmutations/gates required. No massparity/deletion.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
