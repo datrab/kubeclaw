@@ -292,11 +292,49 @@ export function discoverProductApiContexts(root) {
 }
 
 export function assertProductApiContexts(resources, root) {
-  const normalize = rows => rows.map(({ apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields }) =>
-    JSON.stringify([apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields])).sort();
+  const normalize = rows => rows.map(({ apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPatchType, requestReceiver, patchOperations }) =>
+    JSON.stringify([apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPatchType, requestReceiver, patchOperations])).sort();
   const actual = resources.flatMap(resource => resource.sourceContexts.map(context =>
     ({ ...context, apiVersion: resource.apiVersion, kind: resource.kind })));
   assert.deepEqual(normalize(actual), normalize(discoverProductApiContexts(root)), 'API_PRODUCT_DISCOVERY_DRIFT: resource or source document omitted, added or changed');
+}
+
+// A patch selects submitted pointer targets, not a reconstructed live object.
+// Test values are preconditions; move/copy retain existing source contents.
+export function jsonPatchSelectedEntries(apiVersion, kind, operations) {
+  assert(Array.isArray(operations), 'API_PRODUCT_JSON_PATCH_ARRAY_REQUIRED');
+  const authority = apiResourceFieldBoundaries(apiVersion, kind);
+  const pointer = (value, appendAllowed) => {
+    assert(typeof value === 'string' && (value === '' || value.startsWith('/')), 'API_PRODUCT_JSON_PATCH_POINTER_INVALID');
+    const actual = [];
+    for (const [index, raw] of (value === '' ? [] : value.slice(1).split('/')).entries()) {
+      assert(!/~(?:[^01]|$)/u.test(raw), 'API_PRODUCT_JSON_PATCH_POINTER_ESCAPE_INVALID');
+      const key = raw.replaceAll('~1', '/').replaceAll('~0', '~');
+      const parent = authority.find(row => matches(tokens(row.fieldPath), actual));
+      if (parent?.contract.type === 'array') {
+        const append = key === '-';
+        assert(append ? appendAllowed && index === value.slice(1).split('/').length - 1 : /^(?:0|[1-9][0-9]*)$/u.test(key), 'API_PRODUCT_JSON_PATCH_ARRAY_INDEX_INVALID');
+        const item = append ? 0 : Number(key);
+        assert(Number.isSafeInteger(item), 'API_PRODUCT_JSON_PATCH_ARRAY_INDEX_INVALID');
+        actual.push(item);
+      } else actual.push(key);
+    }
+    return actual;
+  };
+  return operations.flatMap((operation, index) => {
+    assert(operation && typeof operation === 'object' && !Array.isArray(operation), 'API_PRODUCT_JSON_PATCH_OPERATION_INVALID');
+    const { op } = operation;
+    assert(['add', 'remove', 'replace', 'move', 'copy', 'test'].includes(op), 'API_PRODUCT_JSON_PATCH_OPERATION_UNQUALIFIED');
+    const hasValue = ['add', 'replace', 'test'].includes(op);
+    const hasFrom = ['move', 'copy'].includes(op);
+    assert(!hasValue || Object.hasOwn(operation, 'value'), 'API_PRODUCT_JSON_PATCH_VALUE_REQUIRED');
+    assert(!hasFrom || typeof operation.from === 'string', 'API_PRODUCT_JSON_PATCH_FROM_REQUIRED');
+    assert(Object.keys(operation).every(key => ['op', 'path', ...(hasValue ? ['value'] : []), ...(hasFrom ? ['from'] : [])].includes(key)), 'API_PRODUCT_JSON_PATCH_MEMBER_UNQUALIFIED');
+    const entries = [{ actual: pointer(operation.path, ['add', 'move', 'copy'].includes(op)), node: hasValue ? operation.value : undefined,
+      role: op === 'test' ? 'precondition' : 'destination', operationIndex: index, operation: op, pointer: operation.path }];
+    if (hasFrom) entries.push({ actual: pointer(operation.from, false), node: undefined, role: 'source', operationIndex: index, operation: op, pointer: operation.from });
+    return entries;
+  });
 }
 
 // Re-read source documents, not a stored totals/selected-path assertion. Each
@@ -326,8 +364,15 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       assert(document && !document.errors.length, `API_PRODUCT_DOCUMENT_MISSING: ${context.path}#${context.document}`);
       value = document.toJS();
     }
-    assert(value?.apiVersion === apiVersion && value?.kind === kind, `API_PRODUCT_RESOURCE_DRIFT: ${context.path}#${context.document}`);
+    const jsonPatch = context.requestPatchType === 'json';
+    if (jsonPatch) {
+      assert(context.requestMethod === 'PATCH' && context.requestReceiver?.apiVersion === apiVersion && context.requestReceiver?.kind === kind
+        && typeof context.requestReceiver?.name === 'string' && context.requestReceiver.name.length > 0, 'API_PRODUCT_JSON_PATCH_RECEIVER_UNQUALIFIED');
+      assert.deepEqual(value, context.patchOperations, 'API_PRODUCT_JSON_PATCH_BODY_DRIFT');
+    }
+    assert(jsonPatch || value?.apiVersion === apiVersion && value?.kind === kind, `API_PRODUCT_RESOURCE_DRIFT: ${context.path}#${context.document}`);
     const instances = [];
+    let patchEvidence = null;
     function visit(node, actual = []) {
       if(context.inferredIdentity&&actual.length===1&&['apiVersion','kind'].includes(actual[0]))return;
       const actualPath = yamlFieldPath(actual);
@@ -357,8 +402,8 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         }
       }
       if (boundary) {
-        add(boundary, { reason: actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: actualPath, sourceDigest: context.sourceDigest });
-        if(kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
+        add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: actualPath, sourceDigest: context.sourceDigest, ...(patchEvidence ?? {}) });
+        if(!jsonPatch&&kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
           const receiverDefault=runtimeDefaultApplicability(kind,actualPath,{},value,records.get(boundary.fieldPath));
           const child=authority.find(row=>matches(tokens(row.fieldPath),[...actual,0]));
           assert(receiverDefault?.materializes?.[0]==='Persistent'&&child,`API_PRODUCT_EMPTY_ARRAY_DEFAULT_UNQUALIFIED: ${actualPath}`);
@@ -384,6 +429,17 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       }
       if (Array.isArray(node)) node.forEach((item, index) => visit(item, [...actual, index]));
       else if (node && typeof node === 'object') Object.entries(node).forEach(([key, item]) => visit(item, [...actual, key]));
+    }
+    if (jsonPatch) {
+      for (const entry of jsonPatchSelectedEntries(apiVersion, kind, value)) {
+        const { actual, node, ...evidence } = entry;
+        patchEvidence = evidence;
+        // Include traversed containers without assigning them invented values.
+        for (let length = 0; length < actual.length; length += 1) visit(undefined, actual.slice(0, length));
+        visit(node, actual);
+      }
+      // Neither schema defaults nor required siblings describe a partial patch.
+      continue;
     }
     visit(value);
     // Presence is local to the actual object, before array indices become a

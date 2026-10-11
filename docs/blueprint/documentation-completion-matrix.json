@@ -16397,6 +16397,45 @@
       "description": "Refreshing actual Redis invocation structural receipts accepts unchanged outputs despite five new rendered lifecycle field paths.",
       "proof": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
       "mappingState": "Criterion contribution; requirement mapping remains to be refined, no full point accepted."
+    },
+    {
+      "id": "A98-1C-JS-NAMESPACE-DEFAULT",
+      "state": "open-independent-source-fail",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Refreshed runtime namespace/default API constructors inherit non-api role and disappear.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-js-shell-complete-corrected-source-root-seal.json",
+      "mappingState": "Assigned criterion contribution, no whole gate accepted."
+    },
+    {
+      "id": "A98-1C-SHELL-CAPTURED-CALLER-INPUT",
+      "state": "open-independent-source-fail",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Current named-file and captured-stdin contexts forward API bodies but refreshed receipts return no API outputs.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-js-shell-complete-corrected-source-root-seal.json",
+      "mappingState": "Assigned criterion contribution, no whole gate accepted."
+    },
+    {
+      "id": "A98-1C-KUBECTL-CALL-IDENTITY",
+      "state": "open-independent-source-fail",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Each of three source-wide read-only contracts permits a newly appended actual kubectl create sink with no receipt refresh.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/producer-js-shell-complete-corrected-source-root-seal.json",
+      "mappingState": "Assigned criterion contribution, no whole gate accepted."
     }
   ],
   "checks": [
@@ -17616,6 +17655,17 @@
       "logSha256": "88f1a115744d15f8be1959371427f151cdc6c120c7b099b4b0daa8b2fa9ee9d0",
       "rootReceipt": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
       "acceptanceLimit": "Actual generation ended0; seven Source bytes revalidated against immutable commit and private run tree. Independent complete actual-source scope FAIL; no config mutation/receiver/global acceptance."
+    },
+    {
+      "command": "node --test scripts/tests/api-product-json-patch.test.mjs",
+      "state": "observed-terminal-pass-bounded-author",
+      "exitCode": 0,
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "baseRevision": "59db71c556b995a3bfb35e5d538f145994cfce7a",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/json-patch-selected-field-root-correction.json",
+      "acceptanceLimit": "Bounded author tests. Shared discovery/native modules concurrently edited; no immutable complete producer/fullsuite/receiver approval. No pre-run file seal claimed. Stable fullsuite and independent review required."
     }
   ],
   "reviewAssignments": [
@@ -19127,6 +19177,19 @@
       "reportSha256": "feacb7e0204700354155e0d9086b9f952ef7a88c5261d701fd8c492d5047cada",
       "rootReceipt": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
       "result": "Complete assigned accounting with material actual submitted-output/selected installer omissions; bounded positives do not grant acceptance."
+    },
+    {
+      "agent": "/root/producer_js_shell_complete_corrected_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "revision": "1c0a89fcae9a61fd5dd2d2d694cdc67352da8ff1",
+      "state": "completed-fail-semantic-closure-incomplete",
+      "report": "/home/node/Documents/Codex/a98-evidence/producer-js-shell-complete-corrected-source-fresh/REPORT.md",
+      "reportSha256": "b8976d4cd2878bb9b8be86fdd2e9d9f3a5146a219c3710994e95dd22d21ffae8",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/producer-js-shell-complete-corrected-source-root-seal.json",
+      "result": "162records29shell907sinks7capabilities20callers3commandfamilies individually accounted. J01 namespace/default, H01 named/captured shell, C01source-wide kubectl contract FAIL. Actual per-consumer semantics remain NOT_CHECKED."
     }
   ],
   "continuation": {
@@ -21757,6 +21820,29 @@
         },
         "limit": "Generation completion only. Full selected actual scope FAIL; not mutations or semantic acceptance."
       }
+    },
+    "jsonPatchSelectionCorrection": {
+      "observedAt": "2026-10-11T12:20:27.048075+00:00",
+      "baseRevision": "59db71c556b995a3bfb35e5d538f145994cfce7a",
+      "command": "node --test scripts/tests/api-product-json-patch.test.mjs",
+      "sessionId": 99112,
+      "observedExitCode": 0,
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "filesAfterRun": {
+        "scripts/docs-api-product-scope.mjs": "880b80afcce91d6d9fb9a5381403b1387063ee5261e7c13097bdd4f0e56bda72",
+        "scripts/tests/api-product-json-patch.test.mjs": "b447c1df30cb9e850ea6e0a2f92d621abb2ec656e4260d0c5d2c13bbdab5aed2"
+      },
+      "scope": [
+        "Original-form guarded webhook JSON Patch field selection",
+        "Source/destination/precondition distinction",
+        "Escaped metadata key and literal numeric map key",
+        "Submitted append value without requiredsiblings",
+        "Malformed pointer/unsupportedoperation/unknown servedfield rejection",
+        "CSI empty-list patch without create default materialization"
+      ],
+      "limit": "Bounded author tests. Shared discovery/native modules concurrently edited; no immutable complete producer/fullsuite/receiver approval. No pre-run file seal claimed. Stable fullsuite and independent review required."
     }
   }
 }
