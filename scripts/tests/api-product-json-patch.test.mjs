@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import YAML from 'yaml';
-import { apiProductSelection, jsonPatchSelectedEntries, inheritedSecretFieldSelection, serializedSecretFieldSelection, versionedApiReceiverRegistries } from '../docs-api-product-scope.mjs';
+import { apiProductSelection, jsonPatchSelectedEntries, inheritedSecretFieldSelection, serializedSecretFieldSelection, jsonSecretFieldSelection, versionedApiReceiverRegistries } from '../docs-api-product-scope.mjs';
 
 const apiVersion = 'admissionregistration.k8s.io/v1';
 const kind = 'ValidatingWebhookConfiguration';
@@ -249,4 +249,87 @@ test('partial merge rejects missing receivers, conflicting identities and non-ob
   for (const value of [{kind:'ConfigMap',data:{}},{apiVersion:'apps/v1',data:{}}])
     assert.throws(()=>selectPartialMerge(value),/API_PRODUCT_MERGE_PATCH_IDENTITY_CONFLICT/);
   assert.throws(()=>selectPartialMerge({data:{}},{requestPatchType:undefined}),/API_PRODUCT_RESOURCE_DRIFT/);
+});
+
+function jsonSecret() { return {
+  "operation": "source-bound-kubernetes-get-json-field-transform-apply",
+  "sourceReceiver": {
+    "apiVersion": "v1",
+    "kind": "Secret",
+    "resource": "secret",
+    "requestMethod": "GET",
+    "format": "json",
+    "name": "litellm-secrets",
+    "nameExpression": "litellm-secrets",
+    "namespaceExpression": "$NAMESPACE"
+  },
+  "retainedRootFields": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "data",
+    "immutable",
+    "type"
+  ],
+  "excludedRootFields": [
+    "stringData"
+  ],
+  "removedPaths": [],
+  "rewrittenPaths": [
+    {
+      "fieldPath": "$.data.DATABASE_URL",
+      "valueStatus": "source-derived-base64-of-selected-decoded-url-text"
+    }
+  ],
+  "structuredTransforms": [
+    {
+      "tool": "jq",
+      "argv": [
+        "--arg",
+        "val",
+        "$(echo -n \"$new_url\" | base64 -w0)",
+        ".data.DATABASE_URL = $val"
+      ],
+      "fieldPath": "$.data.DATABASE_URL",
+      "valueSource": {
+        "GETjsonpath": ".data.DATABASE_URL",
+        "decode": "base64 -d",
+        "textTransform": {
+          "tool": "sed",
+          "argv": [
+            "s/${SRC_NS}/${NAMESPACE}/g"
+          ],
+          "patternExpression": "${SRC_NS}",
+          "replacementExpression": "${NAMESPACE}",
+          "scope": "global BRE per line (not literal/structural namespace guarantee)"
+        },
+        "encode": "base64 -w0"
+      }
+    }
+  ],
+  "unknownLiveValues": true
+}; }
+
+test('JSON Secret field transfer retains server metadata and records a symbolic DATABASE_URL rewrite', () => {
+  const selected=jsonSecretFieldSelection('v1','Secret',jsonSecret());
+  assert.ok(selected.metadataPaths.includes('$.metadata.uid'));
+  assert.ok(selected.metadataPaths.includes('$.metadata.resourceVersion'));
+  assert.ok(selected.boundaries.some(row=>row.fieldPath==='$.data'));
+  assert.equal(selected.boundaries.some(row=>row.fieldPath.startsWith('$.stringData')),false);
+  assert.deepEqual(selected.rewrites,jsonSecret().rewrittenPaths);
+  assert.equal(Object.hasOwn(selected.rewrites[0],'value'),false);
+});
+
+test('JSON Secret field transfer rejects changed source, transforms, field filters and invented live values', () => {
+  const mutations=[
+    t=>{t.sourceReceiver.name='other';}, t=>{t.sourceReceiver.format='yaml';},
+    t=>{t.structuredTransforms[0].valueSource.decode='base64';},
+    t=>{t.structuredTransforms[0].valueSource.textTransform.argv=['s/${SRC_NS}/${NAMESPACE}/'];},
+    t=>{t.structuredTransforms[0].argv[3]='.data.OTHER = $val';},
+    t=>{t.rewrittenPaths[0].value='invented';}, t=>{t.removedPaths=['$.metadata.uid'];},
+    t=>{t.retainedRootFields=t.retainedRootFields.filter(field=>field!=='metadata');},
+    t=>{t.retainedRootFields.push('unknownRoot');},t=>{t.unknownLiveValues=false;},
+  ];
+  for(const mutate of mutations){const transfer=jsonSecret();mutate(transfer);
+    assert.throws(()=>jsonSecretFieldSelection('v1','Secret',transfer),/API_PRODUCT_(?:JSON|INHERITED)_SECRET_/);}
 });

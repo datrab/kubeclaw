@@ -404,6 +404,31 @@ export function serializedSecretFieldSelection(apiVersion, kind, transfer) {
     valueStatus: 'Live source values are not fetched. Text substitution is not a structural namespace rewrite and can also change scalar or annotation text.' };
 }
 
+export function jsonSecretFieldSelection(apiVersion, kind, transfer) {
+  assert(transfer.operation === 'source-bound-kubernetes-get-json-field-transform-apply'
+    && transfer.unknownLiveValues === true && transfer.removedPaths?.length === 0,
+    'API_PRODUCT_JSON_SECRET_SOURCE_UNQUALIFIED');
+  assert.deepEqual(transfer.sourceReceiver, {apiVersion:'v1',kind:'Secret',resource:'secret',
+    requestMethod:'GET',format:'json',name:'litellm-secrets',nameExpression:'litellm-secrets',namespaceExpression:'$NAMESPACE'},
+    'API_PRODUCT_JSON_SECRET_RECEIVER_UNQUALIFIED');
+  assert.deepEqual(transfer.rewrittenPaths, [{fieldPath:'$.data.DATABASE_URL',
+    valueStatus:'source-derived-base64-of-selected-decoded-url-text'}], 'API_PRODUCT_JSON_SECRET_REWRITE_UNQUALIFIED');
+  assert.deepEqual(transfer.structuredTransforms, [{tool:'jq',
+    argv:['--arg','val','$(echo -n "$new_url" | base64 -w0)','.data.DATABASE_URL = $val'],
+    fieldPath:'$.data.DATABASE_URL',valueSource:{GETjsonpath:'.data.DATABASE_URL',decode:'base64 -d',
+      textTransform:{tool:'sed',argv:['s/${SRC_NS}/${NAMESPACE}/g'],patternExpression:'${SRC_NS}',
+        replacementExpression:'${NAMESPACE}',scope:'global BRE per line (not literal/structural namespace guarantee)'},
+      encode:'base64 -w0'}}], 'API_PRODUCT_JSON_SECRET_TRANSFORM_UNQUALIFIED');
+  assert(Array.isArray(transfer.retainedRootFields) && Array.isArray(transfer.excludedRootFields)
+    && ['apiVersion','kind','metadata','data','type','immutable'].every(field => transfer.retainedRootFields.includes(field))
+    && transfer.excludedRootFields.every(field => field === 'stringData'), 'API_PRODUCT_JSON_SECRET_FIELD_FILTER_UNQUALIFIED');
+  // The full GET object survives. Record its transformed field symbolically;
+  // do not materialize an invented live URL or remove server metadata.
+  const inherited = inheritedSecretFieldSelection(apiVersion, kind, {...transfer,rewrittenPaths:[]});
+  return {...inherited,rewrites:transfer.rewrittenPaths,structuredTransforms:transfer.structuredTransforms,
+    valueStatus:'Live source values are not fetched. DATABASE_URL is rewritten through the selected decode, text substitution, encode and JSON assignment; this does not establish a structural namespace rewrite.'};
+}
+
 // Re-read source documents, not a stored totals/selected-path assertion. Each
 // context digest binds changes, removals and renames to the maintenance gate.
 export function apiProductSelection(apiVersion, kind, contexts, receivers, root = process.cwd()) {
@@ -535,6 +560,27 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         }
         if(node.__docsSupportedSchemaPassthrough) {
           const transfer = node.__docsSupportedSchemaPassthrough;
+          if (transfer.structuredTransforms || transfer.operation === 'source-bound-kubernetes-get-json-field-transform-apply') {
+            const producer = context.forwardedProducer;
+            assert(actual.length === 0 && context.producer === 'shell-shape'
+              && requestMethod === 'APPLY' && context.requestOperation === 'kubectl-apply'
+              && producer?.qualified === true && producer.path === context.path
+              && Number.isInteger(producer.line) && producer.line > 0
+              && producer.command === 'kubectl' && producer.constructorFunction === 'rewrite_litellm_database_url_namespace'
+              && JSON.stringify(producer.argv) === JSON.stringify(['get','secret','litellm-secrets','-n','$NAMESPACE','-o','json'])
+              && Array.isArray(producer.dependencies) && producer.dependencies.length > 0
+              && JSON.stringify(producer.structuredTransforms) === JSON.stringify(transfer.structuredTransforms),
+              'API_PRODUCT_JSON_SECRET_SOURCE_UNQUALIFIED');
+            const inherited = jsonSecretFieldSelection(apiVersion, kind, transfer);
+            for (const child of inherited.boundaries) add(child, {
+              reason:'inherited-served-secret-json-field-transfer', path:context.path,
+              document:context.document,fieldPath:child.fieldPath,sourceDigest:context.sourceDigest,
+              ...transfer,forwardedProducer:producer,requestMethod:context.requestMethod,
+              requestOperation:context.requestOperation,requestInvocation:context.requestInvocation,
+              valueStatus:inherited.valueStatus });
+            inherited.metadataPaths.forEach(field => metadataPaths.add(field));
+            return;
+          }
           if (transfer.serializedTransforms || transfer.operation === 'source-bound-kubernetes-get-serialized-text-transform-apply') {
             const producer = context.forwardedProducer;
             assert(actual.length === 0 && context.producer === 'shell-shape'
