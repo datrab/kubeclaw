@@ -510,7 +510,7 @@ checks for an adapter that ignores abort and never settles.
 >
 > **Test evidence:** The contract fixture [uses stalled readiness with a shutdown that settles](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs#L448-L474). This page records no executed result for that fixture.
 >
-> **Revision:** `7c85236b9a1992466ceb33b64f657062be57b4dd`
+> **Revision:** `4f089958db97a551f406c157d774bda143a38946`
 >
 > **Limit:** The fixture does not establish bounded failed-start cleanup when shutdown ignores abort. No live cleanup outcome is established here.
 
