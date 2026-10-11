@@ -20,6 +20,7 @@ import { receiverContracts as admissionReceiverContracts } from './docs-kubernet
 import { receiverContracts as admissionStatusReceiverContracts } from './docs-kubernetes-admission-status-contracts.mjs';
 import { receiverContracts as deploymentReceiverContracts } from './docs-kubernetes-apps-receiver-contracts.mjs';
 import { receiverContracts as coreReceiverContracts } from './docs-kubernetes-core-receiver-contracts.mjs';
+import { receiverContracts as pvSelectedReceiverContracts } from './docs-kubernetes-pv-selected-receiver-contracts.mjs';
 import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver-contracts.mjs';
 import { receiverContracts as ciliumReceiverContracts } from './docs-cilium-receiver-contracts.mjs';
 import { receiverContracts as envelopeReceiverContracts } from './docs-kubernetes-envelope-receiver-contracts.mjs';
@@ -758,7 +759,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
 }
 
 export const versionedApiReceiverRegistries = new Map([
-  ['v1', [...workloadReceiverContracts.filter(record=>record.kind==='Pod'), ...coreReceiverContracts, ...identitySecretContracts, ...namespaceIsolationContracts.filter(record=>record.authoritySelector.apiVersion==='v1'), ...authDeleteContracts.filter(record=>record.kind==='DeleteOptions'), ...envelopeReceiverContracts.filter(record=>record.authoritySelector.apiVersion==='v1')]],
+  ['v1', [...workloadReceiverContracts.filter(record=>record.kind==='Pod'), ...coreReceiverContracts, ...pvSelectedReceiverContracts, ...identitySecretContracts, ...namespaceIsolationContracts.filter(record=>record.authoritySelector.apiVersion==='v1'), ...authDeleteContracts.filter(record=>record.kind==='DeleteOptions'), ...envelopeReceiverContracts.filter(record=>record.authoritySelector.apiVersion==='v1')]],
   ['apiextensions.k8s.io/v1', [...clusterConfigurationContracts.filter(record=>record.kind==='CustomResourceDefinition'), ...envelopeReceiverContracts.filter(record=>record.authoritySelector.apiVersion==='apiextensions.k8s.io/v1')]],
   ['rbac.authorization.k8s.io/v1', [...clusterConfigurationContracts.filter(record=>['ClusterRole','ClusterRoleBinding'].includes(record.kind)), ...namespaceIsolationContracts.filter(record=>record.authoritySelector.apiVersion==='rbac.authorization.k8s.io/v1'), ...envelopeReceiverContracts.filter(record=>record.authoritySelector.apiVersion==='rbac.authorization.k8s.io/v1')]],
   ['authentication.k8s.io/v1', authDeleteContracts.filter(record=>record.kind==='TokenReview')],

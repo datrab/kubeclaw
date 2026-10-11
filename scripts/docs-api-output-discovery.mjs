@@ -1791,6 +1791,7 @@ export function discoverTransformedApiOutputs(root) {
 // code. Defaults are selected inputs; runtime/cluster-dependent substitutions
 // remain explicit failures. Tokenization precedes expansion so JSON and escaped
 // Helm paths retain their original single argv boundaries.
+const installerTokenCache=new Map();
 function installerShell(root, sourcePath) {
   const source=fs.readFileSync(path.join(root,sourcePath),'utf8').replace(/\\\n[ \t]*/gu,' ');
   const variables={REPO_DIR:root,SCRIPT_DIR:path.join(root,'scripts')};
@@ -1810,9 +1811,16 @@ function installerShell(root, sourcePath) {
     if(!/[`$]/u.test(value))variables[assignment[1]]=value;
   }
   const tokens=text=>{
+    // Python inherits cwd and the complete environment. Keep those inputs in
+    // the successful-token key; errors must still name the current source.
+    const key=hash(JSON.stringify([text,process.cwd(),Object.entries(process.env).sort(([left],[right])=>left.localeCompare(right))]));
+    const cached=installerTokenCache.get(key);
+    if(cached)return cached.slice();
     const parsed=spawnSync('python3',['-c','import json,shlex,sys; print(json.dumps(shlex.split(sys.stdin.read())))'],{input:text,encoding:'utf8'});
     assert.equal(parsed.status,0,`API_PRODUCT_INSTALLER_PARSE_FAILED: ${sourcePath}`);
-    return JSON.parse(parsed.stdout);
+    const result=JSON.parse(parsed.stdout);
+    installerTokenCache.set(key,result.slice());
+    return result;
   };
   const invocations=source.split('\n').filter(line=>/^\s*helm upgrade --install\s/u.test(line)).map(tokens);
   return {source,variables,expand,tokens,invocations};
