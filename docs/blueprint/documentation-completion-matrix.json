@@ -16345,6 +16345,58 @@
       "description": "Immutable554Reader found unsupportedresponsiveediting, projectedcopyvsdomaincopy ambiguity, and demoTailnetselflink hiding no completeLivejourney. Rootlimitsvisualproperties/copysemantics includingbuttondefaults andlinkscanonicaldemo withliveStopboundary. Current554completeReader stillinprogress; newcandidate notaccepted.",
       "proof": "/home/node/Documents/Codex/a98-evidence/reader-wait-host-studio-fresh",
       "mappingState": "provisional pendingcompleteReaderreport"
+    },
+    {
+      "id": "A98-1C-GO-SUBMITTED-MAP-EFFECTS",
+      "state": "open-independent-source-fail",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Alias/helper effects, publication order and literal Secret PATCH produce incorrect or missing selected fields after refreshed receipts.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
+      "mappingState": "Criterion contribution; requirement mapping remains to be refined, no full point accepted."
+    },
+    {
+      "id": "A98-1C-PYTHON-ORIGINAL-WEBHOOK-PATCH",
+      "state": "open-independent-source-fail",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Original JSON Patch to ValidatingWebhookConfiguration and added selected paths disappear from producer discovery.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
+      "mappingState": "Criterion contribution; requirement mapping remains to be refined, no full point accepted."
+    },
+    {
+      "id": "A98-1C-INSTALLER-SPIRE-IDENTITY",
+      "state": "open-independent-source-fail",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Substring chart matching confuses spire with spire-crds and omits actual37-object installer profile.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
+      "mappingState": "Criterion contribution; requirement mapping remains to be refined, no full point accepted."
+    },
+    {
+      "id": "A98-1C-INFRASTRUCTURE-ACTUAL-ARGV",
+      "state": "open-independent-source-fail",
+      "catalogueIds": [],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Refreshing actual Redis invocation structural receipts accepts unchanged outputs despite five new rendered lifecycle field paths.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
+      "mappingState": "Criterion contribution; requirement mapping remains to be refined, no full point accepted."
     }
   ],
   "checks": [
@@ -17554,6 +17606,16 @@
       "log": "/home/node/Documents/Codex/a98-evidence/integrated-30b6-config-generate.log",
       "logSha256": "5fdb8019e1c235b66441d2a313999bd7a3878f7eb77a8867b3d604ce1c90d220",
       "finding": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED scripts/retire-attempt-result.mjs:70. Private reused node_modules workspace links resolve original checkout; runtime authority fact paths differ. Correct private links and rerun; no gate weakening/output exemption."
+    },
+    {
+      "command": "node scripts/docs-configuration-inventory.mjs",
+      "revision": "1c0a89fcae9a61fd5dd2d2d694cdc67352da8ff1",
+      "state": "observed-terminal-pass",
+      "exitCode": 0,
+      "log": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-config-generate.log",
+      "logSha256": "88f1a115744d15f8be1959371427f151cdc6c120c7b099b4b0daa8b2fa9ee9d0",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
+      "acceptanceLimit": "Actual generation ended0; seven Source bytes revalidated against immutable commit and private run tree. Independent complete actual-source scope FAIL; no config mutation/receiver/global acceptance."
     }
   ],
   "reviewAssignments": [
@@ -19037,6 +19099,34 @@
       "reportSha256": "1a417dc118604ffae14aee981d03ccf8473a75b28c33dd1d71e611920e508a15",
       "result": "Four independently reproduced N01–N04 semantic failures.27 bounded historical controls PASS; allS01–S11 accounted with explicit UNREVIEWED/incomplete scopes.162native contracts/fulljoin/currentreceiver acceptance not established.",
       "next": "BatchJS/Go/shell/Python corrections; newcompletefreshindependent affectedreview, including explicit remainingS02/S06/S08 and individualconsumer authority scope."
+    },
+    {
+      "agent": "/root/producer_go_python_complete_corrected_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "1c0a89fcae9a61fd5dd2d2d694cdc67352da8ff1",
+      "state": "completed-fail",
+      "report": "/home/node/Documents/Codex/a98-evidence/producer-go-python-complete-corrected-source-fresh/REPORT.md",
+      "reportSha256": "4bad443527c00f2fbd58432f7a926b59cc4d6f889dd1b081b89d33ac839d59b9",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
+      "result": "Complete assigned accounting with material actual submitted-output/selected installer omissions; bounded positives do not grant acceptance."
+    },
+    {
+      "agent": "/root/producer_infrastructure_join_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "1c0a89fcae9a61fd5dd2d2d694cdc67352da8ff1",
+      "state": "completed-fail",
+      "report": "/home/node/Documents/Codex/a98-evidence/producer-infrastructure-join-complete-source-fresh/REPORT.md",
+      "reportSha256": "feacb7e0204700354155e0d9086b9f952ef7a88c5261d701fd8c492d5047cada",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/integrated-1c0a89-review-generation-root-seal.json",
+      "result": "Complete assigned accounting with material actual submitted-output/selected installer omissions; bounded positives do not grant acceptance."
     }
   ],
   "continuation": {
@@ -21582,6 +21672,91 @@
       "report": "/home/node/Documents/Codex/a98-evidence/script-output-qualification-correction-writer/semantic-imported-api-correction/author-report-final.json",
       "result": "114tests114PASS0FAIL;7candidatehashes and1685sourceinputs/toolbytes beforeafter andcurrent verifiedbyRoot. Exact4semanticfailures corrected with maintainedmutationcontrols; first113/114 failure andactualnamespacefollowup retained.",
       "next": "Sourcecommit, fullboundgeneration, newfreshcompleteSource semanticreview with individualremainingcriteria/consumercoverage. NoA98/catalogue/gatesclosed."
+    },
+    "producer1cFreshFindingsAndGeneration": {
+      "recordedAt": "2026-10-11T12:13:32.117816+00:00",
+      "revision": "1c0a89fcae9a61fd5dd2d2d694cdc67352da8ff1",
+      "reviews": {
+        "producer-go-python-complete-corrected-source-fresh": {
+          "revision": "1c0a89fcae9a61fd5dd2d2d694cdc67352da8ff1",
+          "report": "/home/node/Documents/Codex/a98-evidence/producer-go-python-complete-corrected-source-fresh/REPORT.md",
+          "reportSha256": "4bad443527c00f2fbd58432f7a926b59cc4d6f889dd1b081b89d33ac839d59b9",
+          "artifactsVerified": {
+            "REPORT.md": "4bad443527c00f2fbd58432f7a926b59cc4d6f889dd1b081b89d33ac839d59b9",
+            "per-record.json": "2442c0d1ec845a9ba48b48a576f7a1e89b28047b1396625037926ca617abc698",
+            "binding.json": "60dc884427cd1e0fe7e0467523dcf892a2a25e1cb3b65f48ee4f54ef2d1704ba",
+            "probe-go.mjs": "b22ceb70dc7ea8fe4c02880a952610c79954243d0c4aa6acb8bbdf4a30a969ef",
+            "probe-go-more.mjs": "7f33c758c9aa1222fe18582eef3276cd3fbd6e20fc7c89f1eb3957606a70b666",
+            "semantic-variants-result.json": "8882df621df90580bad2b91f504a70a87274a1c839002c44c50cadec5919411d",
+            "current-discovery.json": "0d65c6688e5327246f656e87ca4413e6e6424524cfae346f9b43e13f43a5822c",
+            "mutation-runtime.go": "087ce5a8c42e4457ba9e8985b37ba38004da9497d414c077f911aa89360b81e0",
+            "mutation-runtime.jsonl": "97c74566187799700e5320c8963e4bddf36f5c4d7ca3bddaea5b414ca9611b80",
+            "probe-python.py": "8854482d9f0b63d3206c0acea73d04e602e863b48e530d38bd217f14137a802c",
+            "python-results.json": "fb50317dc235b9849ec8a8aec173e01a2f6b268bf6f6cfa17e13fc5ffeb989b1",
+            "python-role-facts.json": "51b1ae8a68710b656ddabcd901f4bb7281bc33adcd4ce889b0cd5f7fe157e893",
+            "probe-python-patch.mjs": "007cec518fdd083ba77adad2981ccdf9c3adc25e8d30555ebcd4098a5b6bbd4d",
+            "python-patch-results.json": "8b132d89d621facdb4b873d4db2ce669361ea43c53bfe33933e1b99ecb9c65d4",
+            "probe-python-current.mjs": "81ee8cf6c5cba763ab4e1ffa1bf7f60fc8381bcdc40d50ffa37313558d15af3d",
+            "python-current-discovery.json": "843e60f0242d337a7d5fa3638325371183d5627f308ffc42f4c9a40d473ff284",
+            "probe-environment.mjs": "572350b346dcd3fe1a1c5067de0931bce26e951d7f21ce54b6750f9084a9cac0",
+            "environment-results.json": "5fd0a5f276aa0181a892512c7ef11866cd6accf4b866975929be277a4ac39def"
+          },
+          "verdict": "FAIL"
+        },
+        "producer-infrastructure-join-complete-source-fresh": {
+          "revision": "1c0a89fcae9a61fd5dd2d2d694cdc67352da8ff1",
+          "report": "/home/node/Documents/Codex/a98-evidence/producer-infrastructure-join-complete-source-fresh/REPORT.md",
+          "reportSha256": "feacb7e0204700354155e0d9086b9f952ef7a88c5261d701fd8c492d5047cada",
+          "artifactsVerified": {
+            "binding.json": "9425ea6462d495ea57a588db4580e02856f4b4175de0aba6f60723702b587541",
+            "gitops-original-tests.log": "f2ed049c53c6851a864510f552c5fa8b410653a5bb2df9b4fa85b46b96ed5337",
+            "selected-scope-tests.log": "10601f5b747ccd997ec91714748fb00d690cc97454f7dea07a74ebb81ed1811e",
+            "selected-authorities.mjs": "329257c41aec4e9a2758cce545d7084ae5c80c1a7670ca34e732894202296aef",
+            "selected-authorities.json": "66b762bfafe2858eea50a774c2567ad2e8e2bd03ff89c930a37bbea7e0db90db",
+            "selected-authorities.log": "792c0a30090e4e9e542bf22ffdd484a6323766f70e361091d7c632aa0edaba1c",
+            "infrastructure-mutation.mjs": "f656249f4e456eaaa1fe7932fd9eeac54655f4ba592315f03bf403ea0e99283c",
+            "infrastructure-mutation.json": "a067cb9733fece2799590ae725d9d7b3e060d9c8247307cb5d407843091ca2e4",
+            "infrastructure-mutation.log": "4d361e86cb538abd13915f3f2c4dfaf8128eeaa3357a4bdb428c6b0352fe834a",
+            "spire-installer-proof.mjs": "f73331193c54817ef3ad3c0a027d0c35792dfb41fdc9d67065e4a86df0cf42d4",
+            "spire-installer-proof.json": "fe6c68bb79e3d98f6d8a046d393e14027991a15c0db0f9ace672e58008e0a16e",
+            "spire-installer-proof.log": "a52bd8c84b03c53102732d5221f24f187dce2a581b1e80e45a2d55b7b53761d9",
+            "REPORT.md": "feacb7e0204700354155e0d9086b9f952ef7a88c5261d701fd8c492d5047cada"
+          },
+          "verdict": "FAIL"
+        }
+      },
+      "generation": {
+        "exitCode": 0,
+        "end": {
+          "endedAt": "2026-10-11T12:09:00.833819+00:00",
+          "exitCode": 0,
+          "logSha256": "88f1a115744d15f8be1959371427f151cdc6c120c7b099b4b0daa8b2fa9ee9d0"
+        },
+        "sourceInputsRevalidated": {
+          "scripts/docs-api-output-discovery.mjs": "709ae497cfcb5942df3f1f7bcc954badd18ea2ba8febfdb90949a8972ad18af9",
+          "scripts/docs-api-output-role-classification.mjs": "06e8024143188a14c1e05d87ea278bf7ef6b3f39b44aeaed075b86b1823ba8d7",
+          "scripts/docs-api-go-output-role-adapter.go": "5fc249cb46751333a29204fb4fb1bf8019b9b797833d2bbede533c70e03c367c",
+          "scripts/docs-api-python-output-adapter.py": "73e1c90a911e6b737007ba4b6affd6e695af64a3e4cc2fb18d2032fc9ffbc032",
+          "scripts/docs-configuration-inventory.mjs": "554d298a392f3b8264f849f19e6d7124ceba5d282034ad24406d0f32936558f5",
+          "scripts/docs-api-producer-adapter-authorities.json": "1b7594e8fda28cf02bd767feb0288107b5454186a362277001a296d2636b844d",
+          "scripts/tests/api-reference.test.mjs": "2ddfd26b5c2c95c5ef5288ba606025fc5e19e2ae6b63c2ae994cf611d969c146"
+        },
+        "outputs": {
+          "docs/generated/inventory/configuration-values.json": {
+            "sha256": "028b18b2344fbee2dd9d79a660f0d5e739c91bc91d4e5a9624b9a425e7b1a3f6",
+            "bytes": 109176892
+          },
+          "docs/generated/inventory/configuration-schemas.json": {
+            "sha256": "cebde8405dca50122dc530c56c86f200497121a24d4360e8d6f562e8f98a49da",
+            "bytes": 3300894
+          },
+          "docs/generated/inventory/configuration-runtime-inputs.json": {
+            "sha256": "61e7961e59adf958181303067edfd8d13b3374318b1d5b9b1b0649c1019890a6",
+            "bytes": 3144108
+          }
+        },
+        "limit": "Generation completion only. Full selected actual scope FAIL; not mutations or semantic acceptance."
+      }
     }
   }
 }

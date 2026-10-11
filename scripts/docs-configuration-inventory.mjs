@@ -187,7 +187,7 @@ addEnvironmentConsumerContract('KUBECLAW_DOCS_GO_BINARY', 'scripts/docs-api-outp
   invalidBehavior: 'A missing, non-executable, incompatible or unsuccessful Go command fails the helper parse check.',
   precedence: 'A present process value wins over the literal go command; PATH resolves a command name. No configuration file overrides this selection.',
   impact: 'Changing this setting changes the local tool that runs the offline Go parsing helpers. Select a trusted tool compatible with the repository.',
-  failure: 'API_PRODUCT_GO_PRODUCER_PARSE_FAILED stops resource discovery and generation. This setting does not select the product runtime Go executable.',
+  failure: 'An empty command throws a Node launch-argument error before parsing. A missing or unsuccessful executable stops discovery with API_PRODUCT_GO_PRODUCER_PARSE_FAILED. Both failures stop generation. This setting does not select the product runtime Go executable.',
   required: 'conditional',
 }));
 
