@@ -77,7 +77,7 @@ test('merge patch selects actual submitted fields without full replacement requi
     const bytes = YAML.stringify(value);
     fs.writeFileSync(path.join(root,'patch.yaml'),bytes);
     const selected = apiProductSelection(value.apiVersion,value.kind,[{path:'patch.yaml',document:0,
-      sourceDigest:createHash('sha256').update(bytes).digest('hex'),requestMethod:'PATCH',inferredIdentity:true}],
+      sourceDigest:createHash('sha256').update(bytes).digest('hex'),requestMethod:'MethodPatch',inferredIdentity:true}],
       versionedApiReceiverRegistries.get(value.apiVersion),root);
     assert.deepEqual(selected.fieldPaths,['$','$.spec','$.spec.replicas']);
     assert.equal(selected.applicability['$.spec.replicas'][0].reason,'authored-resource-field');
@@ -136,5 +136,20 @@ test('symbolic inherited sequence checks appended authored values without claimi
     delete value.spec.template.spec.containers.__docsSupportedSequenceAppend.items[0].inventedUnservedField;
     value.spec.template.spec.containers.__docsSupportedSequenceAppend.spread=true;
     assert.throws(()=>selectValue(value),/SEQUENCE_APPEND_UNQUALIFIED/);
+  } finally {fs.rmSync(root,{recursive:true,force:true});}
+});
+
+
+test('native partial lease PATCH resolves inherited finalizers through ObjectMeta authority', () => {
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'api-native-finalizers-'));
+  try {
+    const value={apiVersion:'kubeclaw.forgestack.ai/v1alpha1',kind:'BusterNamespaceLease',
+      metadata:{finalizers:{__docsDynamicExpression:'append(item.Metadata.Finalizers, c.finalizer)',
+        __docsSupportedSequenceAppend:{items:[{__docsDynamicExpression:'c.finalizer'}],spread:false}}}};
+    const bytes=YAML.stringify(value);fs.writeFileSync(path.join(root,'finalizers.yaml'),bytes);
+    const selected=apiProductSelection(value.apiVersion,value.kind,[{path:'finalizers.yaml',document:0,
+      requestMethod:'MethodPatch',sourceDigest:createHash('sha256').update(bytes).digest('hex')}],[],root);
+    assert.ok(selected.metadataPaths.includes('$.metadata.finalizers'));
+    assert.ok(selected.metadataPaths.includes('$.metadata.finalizers[]'));
   } finally {fs.rmSync(root,{recursive:true,force:true});}
 });

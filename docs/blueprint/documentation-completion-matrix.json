@@ -19243,6 +19243,18 @@
       "reportSha256": "b8976d4cd2878bb9b8be86fdd2e9d9f3a5146a219c3710994e95dd22d21ffae8",
       "rootReceipt": "/home/node/Documents/Codex/a98-evidence/producer-js-shell-complete-corrected-source-root-seal.json",
       "result": "162records29shell907sinks7capabilities20callers3commandfamilies individually accounted. J01 namespace/default, H01 named/captured shell, C01source-wide kubectl contract FAIL. Actual per-consumer semantics remain NOT_CHECKED."
+    },
+    {
+      "agent": "/root/native_submission_4d3_full_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "4d3f5fe9a029e9af0f1de7d8cbd549bbec8d0d13",
+      "inputBinding": "/home/node/Documents/Codex/a98-evidence/native-review-4d3f5fe9-input-binding.json",
+      "state": "running",
+      "scope": "Complete actual Go/Python output semantics and actual consumer selection on Source4d3 plus two explicit frozen integration overlays. Separate named-shell closure known incomplete. No global acceptance."
     }
   ],
   "continuation": {
@@ -21992,6 +22004,38 @@
       "actualGoCount": 30,
       "checks": "Final Go20/Python8/inherited14/sequence4 author checks observedterminal0. Source checkpoint only; full stable suite/newgeneration/fresh independent nativeSource pending.",
       "limitations": "Refreshed appendedunserved/spread mutations stop at pinnedHTTPSourceguard, not consumer-specific proof. Shell originalsource and namedfile closure still open."
+    },
+    "nativeMethodObjectMetaConsumerCorrection": {
+      "observedAt": "2026-10-11T13:18:31.123813+00:00",
+      "session": 16124,
+      "command": "node --test scripts/tests/api-product-json-patch.test.mjs",
+      "exitCode": 0,
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "filesAfterRun": {
+        "scripts/docs-api-product-scope.mjs": "761efd40d230353e9753cdfb3608b8682fcba589b17193999b21ba3ee44357e1",
+        "scripts/tests/api-product-json-patch.test.mjs": "47d0f72c2cef6357a9b2209c1470456e3c102505b4a81e16095713974958c05e"
+      },
+      "changes": [
+        "Native Go net/http method-name wire semantics for PATCH gates; original requestMethod source provenance preserved.",
+        "Actual CRD ObjectMeta finalizer sequence authority fallback.",
+        "forwardedProducer explicit context-custody preservation."
+      ],
+      "scope": "Bounded Root author checks. Shared discovery moving; no fullsuite or independent review pass. Immutable independent4d3 Source report stillFAIL, conditionalnativeeffects/Pythonpublicproducerclosure open.",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/native-method-objectmeta-root-correction.json",
+      "independentReviewer": "/root/native_submission_4d3_full_source_fresh",
+      "reviewedSource": "4d3f5fe9a029e9af0f1de7d8cbd549bbec8d0d13",
+      "next": "New independent full affected review after conditionalnativebody/Pythonpublicproducer fixes and coherentSourcefreeze."
+    },
+    "newNative4d3FreshFindings": {
+      "agent": "/root/native_submission_4d3_full_source_fresh",
+      "reviewState": "running with material FAIL findings; finalreportpending",
+      "findings": [
+        "Native MethodPatch grammar bypasses PATCH behavior; actual finalizer consumer fails ObjectMeta fallback. Rootcorrected10boundedPASS, notfreshacceptance.",
+        "Finalizer PATCH alwaysemittedafterreread, only append when missing; current30 source omittednoappend branch. Nativeauthorcorrectinggeneric conditionaleffects.",
+        "bootstrap.py broad roles=[] plus setupsecrets-only adapter omits new public discover() APIreturn afterfreshdiscovery; independentactualsourcemutation records8 outputs0Namespace. Correction pending."
+      ]
     }
   }
 }

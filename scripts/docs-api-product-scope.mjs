@@ -292,8 +292,8 @@ export function discoverProductApiContexts(root) {
 }
 
 export function assertProductApiContexts(resources, root) {
-  const normalize = rows => rows.map(({ apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions }) =>
-    JSON.stringify([apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions])).sort();
+  const normalize = rows => rows.map(({ apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions, forwardedProducer }) =>
+    JSON.stringify([apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions, forwardedProducer])).sort();
   const actual = resources.flatMap(resource => resource.sourceContexts.map(context =>
     ({ ...context, apiVersion: resource.apiVersion, kind: resource.kind })));
   assert.deepEqual(normalize(actual), normalize(discoverProductApiContexts(root)), 'API_PRODUCT_DISCOVERY_DRIFT: resource or source document omitted, added or changed');
@@ -399,9 +399,16 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       assert(document && !document.errors.length, `API_PRODUCT_DOCUMENT_MISSING: ${context.path}#${context.document}`);
       value = document.toJS();
     }
+    // Native Go discovery retains net/http constant names as source evidence.
+    // Compare their wire values when applying request-specific schema behavior.
+    const requestMethod = new Map([
+      ['MethodGet','GET'], ['MethodHead','HEAD'], ['MethodPost','POST'],
+      ['MethodPut','PUT'], ['MethodPatch','PATCH'], ['MethodDelete','DELETE'],
+      ['MethodConnect','CONNECT'], ['MethodOptions','OPTIONS'], ['MethodTrace','TRACE'],
+    ]).get(context.requestMethod) ?? context.requestMethod;
     const jsonPatch = context.requestPatchType === 'json';
     if (jsonPatch) {
-      assert(context.requestMethod === 'PATCH' && context.requestReceiver?.apiVersion === apiVersion && context.requestReceiver?.kind === kind
+      assert(requestMethod === 'PATCH' && context.requestReceiver?.apiVersion === apiVersion && context.requestReceiver?.kind === kind
         && typeof context.requestReceiver?.name === 'string' && context.requestReceiver.name.length > 0, 'API_PRODUCT_JSON_PATCH_RECEIVER_UNQUALIFIED');
       assert.deepEqual(value, context.patchOperations, 'API_PRODUCT_JSON_PATCH_BODY_DRIFT');
     }
@@ -439,7 +446,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       }
       if (boundary) {
         add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: sequenceEvidence ? canonical(actualPath) : actualPath, sourceDigest: context.sourceDigest, ...(sequenceEvidence ?? {}), ...(context.conditions?.length ? { conditions: context.conditions } : {}), ...(context.requestMethod ? { requestMethod: context.requestMethod, ...(context.requestAlternatives ? { requestAlternatives: context.requestAlternatives } : {}) } : {}), ...(patchEvidence ?? {}) });
-        if(context.requestMethod!=='PATCH'&&kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
+        if(requestMethod!=='PATCH'&&kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
           const receiverDefault=runtimeDefaultApplicability(kind,actualPath,{},value,records.get(boundary.fieldPath));
           const child=authority.find(row=>matches(tokens(row.fieldPath),[...actual,0]));
           assert(receiverDefault?.materializes?.[0]==='Persistent'&&child,`API_PRODUCT_EMPTY_ARRAY_DEFAULT_UNQUALIFIED: ${actualPath}`);
@@ -450,7 +457,10 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       if (node && typeof node === 'object' && Object.hasOwn(node,'__docsDynamicExpression')) {
         if (node.__docsSupportedSequenceAppend) {
           const append = node.__docsSupportedSequenceAppend;
-          assert(boundary?.contract.type === 'array' && append.spread === false
+          const sequenceType = actual[0] === 'metadata'
+            ? apiFieldSchemaAuthority(apiVersion, kind, actualPath, { includeCollectionContract:true }).type
+            : boundary?.contract.type;
+          assert(sequenceType === 'array' && append.spread === false
             && Array.isArray(append.items) && append.items.length > 0,
             `API_PRODUCT_SEQUENCE_APPEND_UNQUALIFIED: ${context.path} ${actualPath}`);
           const previousEvidence = sequenceEvidence;
@@ -513,7 +523,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       continue;
     }
     visit(value);
-    if (context.requestMethod === 'PATCH') continue;
+    if (requestMethod === 'PATCH') continue;
     // Presence is local to the actual object, before array indices become a
     // coverage identity. One item cannot suppress another item's default.
     for (let index = 0; index < instances.length; index += 1) {
