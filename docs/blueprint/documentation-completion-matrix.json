@@ -1,7 +1,7 @@
 {
   "schemaVersion": "kubeclaw-documentation-completion-working-matrix.v1",
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
-  "sourceRevision": "c8987b18b450bc27571d5037cb6ce3fb26e0cbd0",
+  "sourceRevision": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
   "authorIdentity": "/root",
   "catalogueAuthority": "docs/blueprint/generated/ap09-catalogue.json",
   "acceptanceAuthority": "docs/blueprint/AP09-acceptance-contract.md",
@@ -19921,6 +19921,15 @@
       "sourceCommit": "d573c31a1d62a6fc7034d04dca92c9b98134f5b0",
       "generatedCommit": "2a3fe02c93c9aa996d6e84feae7cd862d319ec22",
       "acceptanceLimit": "Actual repository generator/currentness/structural procedure gates, not independent content or package approval."
+    },
+    {
+      "command": "npm run verify:worker-core:trust",
+      "state": "observed-terminal-pass-root-bounded",
+      "exitCode": 0,
+      "sourcesUnchanged": true,
+      "sourceCommit": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/root-worker-trust-current-documentation-contract/result.json",
+      "acceptanceLimit": "Entire static/contract/typecheck aggregate; no live security result or independent package acceptance."
     }
   ],
   "reviewAssignments": [
@@ -22049,6 +22058,30 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-reader-fresh-root-seal.json",
       "verifiedArtifacts": 247,
       "scope": "Complete assigned linked installation/maintenance/trust route and task inventory; no global/package/live approval"
+    },
+    {
+      "agent": "/root/trust_denial_retirement_corrected_full_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active-complete-four-page-and-task-route-review",
+      "sourceCommit": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
+      "scope": "Entire installation/maintenance/operate/WorkerTrust reader route, current implementation and operator task/capability mappings; no global acceptance."
+    },
+    {
+      "agent": "/root/trust_denial_retirement_corrected_full_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active-complete-four-page-and-task-route-review",
+      "sourceCommit": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
+      "scope": "Entire installation/maintenance/operate/WorkerTrust reader route, current implementation and operator task/capability mappings; no global acceptance."
     }
   ],
   "continuation": {
@@ -23090,9 +23123,15 @@
     },
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
-      "/root/python_environment_literal_classification_correction_writer",
-      "/root/ops_bootstrap_credential_environment_contract_writer",
-      "/root/pv_named_admission_canonical_seed_correction_writer"
+      "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "/root/trust_denial_retirement_corrected_full_source_fresh",
+      "/root/trust_denial_retirement_corrected_full_reader_fresh"
+    ],
+    "currentNextSteps": [
+      "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
+      "Complete fresh full Source and Reader documentation reviews; distinct Quality next.",
+      "Requalify scanner only after complete semantic author integration, run full root selected suite, then fresh independent full Tool Source.",
+      "Finish AP09.8 required gates/mutations/manual exercises and Astra; parity and remaining packages remain open."
     ]
   },
   "productBoundaries": [
@@ -26279,7 +26318,7 @@
       "qualityReview": "Pending corrected candidate after Source issues addressed; no Quality/Astra waiver",
       "canonicalCommandAuthorSeal": "/home/node/Documents/Codex/a98-evidence/install-task-canonical-command-correction-writer-root-seal.json",
       "canonicalCommandAuthorArtifacts": 81,
-      "documentationSourceCommit": "d573c31a1d62a6fc7034d04dca92c9b98134f5b0",
+      "documentationSourceCommit": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
       "taskGeneratedCommit": "2a3fe02c93c9aa996d6e84feae7cd862d319ec22",
       "toolingSourceReview": {
         "agent": "/root/unknown_alias_class_output_complete_source_fresh",
@@ -26299,18 +26338,24 @@
       "toolingCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
       "protectedStaticSourceAndCapturedAuth": "F9/F10 open; root coordinates exclusive output owner after slot available",
       "freshDocumentationReviews": {
-        "source": "/root/installation_task_inventory_corrected_complete_source_fresh",
-        "reader": "/root/installation_task_inventory_corrected_complete_reader_fresh",
-        "quality": "pending distinct fresh identity after slot available"
+        "source": "/root/trust_denial_retirement_corrected_full_source_fresh",
+        "reader": "/root/trust_denial_retirement_corrected_full_reader_fresh",
+        "quality": "pending distinct fresh identity after available slot"
       },
       "rootStaticSourceAndCapturedAuthCorrection": "/home/node/Documents/Codex/a98-evidence/static-source-codex-custody-root-correction/report.json",
       "rootStaticAndCapturedChecks": "11 selected capture controls PASS,12 protected historical-baseline controls PASS,27 production tests PASS before extra public-checkout control added; not fresh independent approval",
       "scannerCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "scannerFreeze": "Provisional1f75/17d9 REOPENED for helper-argument/container-return capability family; qualification HOLD until superseding freeze",
+      "scannerFreeze": "6886 and f18 provisional qualifications WITHHELD. Actual callback/list/dict/alias helper capability gaps plus finite receiver-union exemption gaps require superseding full freeze/replay. No new scanner qualification applied.",
       "qualificationIntegrator": "/root/annotation_yaml_static_custody_authority_integrator",
       "docCorrectionWriter": "/root/trust_denial_retirement_complete_batch_writer",
       "lastCompleteDocReader": "PASS assigned candidate2a3fe02 with247root-verifiedartifacts; newmodifiedcandidate requiresnewreview",
-      "lastCompleteDocSource": "FAIL3findings with23root-verifiedartifacts; wholebatchcorrectionrunning"
+      "lastCompleteDocSource": "FAIL1 at a2abcd45: obsolete checker heading and missing explicit live/test-double statement; 25 root-verified artifacts. Both corrected in3f3b417b; new complete independent reviews active.",
+      "observedAt": "2026-10-11T21:35:42.906733+00:00",
+      "fourPageCorrectionCommit": "a2abcd45b78b3ce2d54883f56295532b3601002e",
+      "rootTrustAggregate": "Observed terminal0, Sources unchanged; static/contract/typecheck only.",
+      "qualificationState": "HOLD; provisional6886 qualification reverted;0d48 discovery/95e registry retained until superseding semantic qualification.",
+      "rootFullNewIntegration": "Prepared but not started: wait for superseding scanner freeze and qualification. Historical241-test PASS is not current-candidate proof.",
+      "independentAcceptance": "AP09.8 not accepted; full gates and final Astra still required."
     }
   }
 }
