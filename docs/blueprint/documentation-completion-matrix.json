@@ -19985,6 +19985,32 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/root-current-operator-task-registry-gate/result.json",
       "observedEnd": "2026-10-11T21:36:45.787790+00:00",
       "acceptanceLimit": "Generator currentness, task/procedure structural checks and isolated mutation controls, not independent semantic or AP09.8 acceptance."
+    },
+    {
+      "commands": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "verify:worker-core:trust"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "docs:operator-tasks:check"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "state": "observed-terminal-pass-root-bounded",
+      "sourceAndPagesUnchanged": true,
+      "candidateSourceCommit": "f71e69642699b0c3d35a012798ec68b1aeb7270d",
+      "baseRevision": "7647f941d5f6974d937112f309dcdc390d400636",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/root-install-evidence-retirement-lifetime-gates/result.json",
+      "acceptanceLimit": "Actual full trust static/contract/typecheck and task currentness/structural/mutation gates, no independent semantic/AP09.8/live acceptance."
     }
   ],
   "reviewAssignments": [
@@ -22168,6 +22194,39 @@
       "reportSha256": "0148c71e26cd76292b03acf54b95acd4da01ac88461e7cbb3d815c34d335a448",
       "verifiedArtifacts": 71,
       "scope": "Complete4page linked Reader route:55shellblocks syntaxPASS; exactprivatefixtures reproduceR1namesonlyteardown/R2lostfailedread. No live/package acceptance."
+    },
+    {
+      "agent": "/root/operator_wait_resume_cancellation_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active-complete-requirements-review",
+      "sourceRevision": "7647f941d5f6974d937112f309dcdc390d400636",
+      "catalogueIds": [
+        "OPR-004",
+        "OPR-005"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-05",
+        "A98-13"
+      ],
+      "scope": "Complete operate/recovery/wait-resume docs+examples/current implementation; mandatory deployment scenarios checked separately from static/unit/rehearsal. No package/global acceptance."
+    },
+    {
+      "agent": "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active-complete-four-page-and-task-route-review",
+      "sourceRevision": "f71e69642699b0c3d35a012798ec68b1aeb7270d",
+      "scope": "Complete four-page current Source review after immutable attempt/deletion-window corrections; no global/package acceptance."
     }
   ],
   "continuation": {
@@ -23210,8 +23269,8 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/trust_denial_retirement_corrected_full_reader_fresh",
-      "/root/install_evidence_retirement_lifetime_complete_batch_writer"
+      "/root/operator_wait_resume_cancellation_complete_source_fresh",
+      "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -26395,7 +26454,7 @@
         "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-unknown-alias-class-output-and-trust/result.json",
         "acceptanceLimit": "Selected suite completed before newest status/pin edits; no independent semantic, mutation, publication or package acceptance."
       },
-      "documentationAuthorSeal": "/home/node/Documents/Codex/a98-evidence/install-status-current-pins-correction-writer-root-seal.json",
+      "documentationAuthorSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-complete-batch-writer-root-seal.json",
       "documentationAuthorArtifacts": 87,
       "authoredTaskMappingEvidence": "/home/node/Documents/Codex/a98-evidence/worker-trust-task-mapping-root-correction/result.json",
       "privateTaskRegistryCheck": "/home/node/Documents/Codex/a98-evidence/worker-trust-task-registry-private-validation/result.json",
@@ -26404,7 +26463,7 @@
       "qualityReview": "Pending corrected candidate after Source issues addressed; no Quality/Astra waiver",
       "canonicalCommandAuthorSeal": "/home/node/Documents/Codex/a98-evidence/install-task-canonical-command-correction-writer-root-seal.json",
       "canonicalCommandAuthorArtifacts": 81,
-      "documentationSourceCommit": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
+      "documentationSourceCommit": "f71e69642699b0c3d35a012798ec68b1aeb7270d",
       "taskGeneratedCommit": "2a3fe02c93c9aa996d6e84feae7cd862d319ec22",
       "toolingSourceReview": {
         "agent": "/root/unknown_alias_class_output_complete_source_fresh",
@@ -26424,9 +26483,9 @@
       "toolingCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
       "protectedStaticSourceAndCapturedAuth": "F9/F10 open; root coordinates exclusive output owner after slot available",
       "freshDocumentationReviews": {
-        "source": "/root/trust_denial_retirement_corrected_full_source_fresh",
-        "reader": "/root/trust_denial_retirement_corrected_full_reader_fresh",
-        "quality": "pending distinct fresh identity after available slot"
+        "source": "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh",
+        "reader": "pending fresh identity when slotavailable",
+        "quality": "pending distinct fresh identity afterknownSourcefindingsresolved"
       },
       "rootStaticSourceAndCapturedAuthCorrection": "/home/node/Documents/Codex/a98-evidence/static-source-codex-custody-root-correction/report.json",
       "rootStaticAndCapturedChecks": "11 selected capture controls PASS,12 protected historical-baseline controls PASS,27 production tests PASS before extra public-checkout control added; not fresh independent approval",
@@ -26455,7 +26514,10 @@
         "acceptanceLimit": "Generator currentness, task/procedure structural checks and isolated mutation controls, not independent semantic or AP09.8 acceptance."
       },
       "documentationBatchWriter": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
-      "documentationBatchState": "Writer released after both complete terminal reviews; owns ONLY install+maintenance. Wholefamily correction underway."
+      "documentationBatchState": "Authorfrozencommitted;1179rootverifiedartifacts;newcompletefreshSourceactive. Reader/Qualitynextdistinctfreshidentities when slots available.",
+      "currentRootGates": "/home/node/Documents/Codex/a98-evidence/root-install-evidence-retirement-lifetime-gates/result.json",
+      "rootCurrentGateVerdict": "Actual wholetrust+operatorgate terminal0 Sources unchanged;notsemantic/live/package approval.",
+      "remainingOperatorControlReview": "/root/operator_wait_resume_cancellation_complete_source_fresh; potential F01 mandatoryrawstatepreservation absent recovery/diagnose auditentrypaths;fullreportpending."
     }
   }
 }
