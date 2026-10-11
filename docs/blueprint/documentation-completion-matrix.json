@@ -19330,6 +19330,18 @@
       "state": "running",
       "scope": "All53 AP09.7 requirements and all12 A97 Quality facets; full affected current content, no Source/Reader/Astra or live acceptance.",
       "tree": "/home/node/Documents/Codex/a98-evidence/ap097-quality-9a252023"
+    },
+    {
+      "agent": "/root/pv_schema_overlay_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "87136394e01aad50b390776415a96307c234ad98",
+      "state": "running",
+      "scope": "Bounded schema map-reference overlay invariants and23 tests; no package/global/Reader/Quality/Astra acceptance.",
+      "tree": "/home/node/Documents/Codex/a98-evidence/pv-schema-source-87136394"
     }
   ],
   "continuation": {
@@ -22349,6 +22361,18 @@
       "author": "/root/pv_schema_reference_correction_writer",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-schema-reference-correction-writer/root-seal.json",
       "scope": "Pinned Kubernetes field-level map relationship override on object reference only; referencedContract preserved and other contradictions fail closed. Existing mutation fixture now imports actual discovery dependency.",
+      "independentAcceptance": false
+    },
+    "ap097ReaderLanguageAndCitationCorrection": {
+      "state": "author-corrected; independent affected review pending",
+      "sourceLineBoundsReceipt": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-source-line-bounds.json",
+      "checkedSourceRanges": 312,
+      "corrections": [
+        "Describe database schema change history in plain product terms",
+        "Replace source-inspection bookkeeping with limits of implementation links",
+        "Correct engine-snapshots.ts final cited line145 to144"
+      ],
+      "readerBoundary": "terminal FAIL only3 historical generated Helm-reference phrases; changed pages have no reported boundary violations",
       "independentAcceptance": false
     }
   }

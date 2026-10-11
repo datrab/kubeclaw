@@ -577,10 +577,10 @@ This memory error does not write a Nova stage result or a Prism operation row.
 > **Contract or setting:** The chart selects `openai-compatible`, the remote key,
 > and `gemini-embedding-001`; upstream defaults select the timeout and retry budgets.
 > **Test evidence:** No upstream client test or deployed embedding result is
-> established here. The evidence is source inspection and local link checks.
+> established by these implementation links.
 > **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`.
 > **Limit:** No image/source attestation, live route result, provider quota proof,
-> or end-to-end owner deadline follows from this inspection.
+> or end-to-end owner deadline follows from these implementation links.
 
 **Operator stop and recovery rule:** Do not accept an operation that requires
 semantic memory results on the strength of `/health` or a text-only fallback.
@@ -589,7 +589,7 @@ mismatch, PostgreSQL, Vertex credentials, quota, and route/model errors before
 an operator retry. After repair, prove one real authenticated embedding with
 the selected model. A successful embedding proves this path only; it does not
 prove managed reasoning or a pipeline transition. No live request or outage
-exercise was run for the source inspection above.
+exercise is established by the implementation links above.
 
 **Decision status:** The implementation provides the embeddings-only route. **Historical
 reason:** Unknown. **Current rationale (inference):** A single named route limits

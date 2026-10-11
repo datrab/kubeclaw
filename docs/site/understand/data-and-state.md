@@ -359,7 +359,7 @@ this directory with optional Prometheus or Loki data.
 >
 > [Run entry points open separate decision, event, and signal journals and reject
 > a signal after the event journal records wait resolution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L58-L117).
-> [Resume validation checks wait and issuer fields, expiry, and issue time](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-snapshots.ts#L137-L145).
+> [Resume validation checks wait and issuer fields, expiry, and issue time](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-snapshots.ts#L137-L144).
 > [The signal contract contains no nonce or signature](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L543-L555), and
 > [the CLI reads the supplied JSON file](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/cli.ts#L60-L67).
 > [Administrative replay and authentication check decision identity and callback principal](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-admin.ts#L57-L67).
@@ -596,8 +596,8 @@ stored models](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2
 [virtual-key permissions and limits](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma#L417-L466),
 and [configuration and request accounting](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/schema.prisma#L618-L654).
 The [GitOps schema defines the corresponding model and credential records](https://github.com/BerriAI/litellm/blob/16f6d924530c1cf2dc94b3e83c86a4632aefb7c0/schema.prisma#L38-L61).
-A dump must preserve the whole database and its migration ledger, not only the
-current embedding model row.
+A dump must preserve the whole database and its record of applied database
+schema changes, not only the current embedding model row.
 
 On a stored-model write, LiteLLM passes each model parameter through the
 [encryption helper before inserting the model](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/management_endpoints/model_management_endpoints.py#L1054-L1081).
@@ -649,7 +649,7 @@ and [the database manager selects the update setting](https://github.com/BerriAI
 
 The v1 resolver makes up to four migration attempts per setup call. After applying pending
 migrations, it can generate and execute a schema difference; a nonempty database
-without a migration ledger can enter its baseline-and-resolution path. These
+without a record of applied schema changes can enter its baseline-and-resolution path. These
 are writes, not read-only compatibility checks.
 [Migration attempts and baseline recovery](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py#L1018-L1130)
 and [schema-difference execution](https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm-proxy-extras/litellm_proxy_extras/utils.py#L416-L552)
@@ -666,8 +666,8 @@ does not prove that migrations succeeded.
 
 Fence writers and retain an untouched verified dump before starting an image
 against a restored database. Keep the recorded application digest, key inputs,
-and migration ledger together. Stop cutover on a migration failure, unexplained
-schema change, or unreadable retained ciphertext. Do not downgrade an image
+and record of applied database schema changes together. Stop cutover on a
+migration failure, unexplained schema change, or unreadable retained ciphertext. Do not downgrade an image
 against a database that a newer image has changed; restore an isolated,
 compatible recovery group first.
 
@@ -683,7 +683,7 @@ compatible recovery group first.
 > test, image execution, encryption round trip, or application restore was run.
 > **Revision:** Direct `7d5b6456baaf8be6ac1a60db2b710566b5344adf`;
 > GitOps `16f6d924530c1cf2dc94b3e83c86a4632aefb7c0`.
-> **Limit:** This source inspection does not verify a publisher signature,
+> **Limit:** The linked implementation does not establish a verified publisher signature,
 > deployed Secret values, effective stored settings, or live recovery.
 
 ### Deployment profiles are not the same capacity contract
