@@ -217,17 +217,34 @@ function resolveReference(schema) {
 function resolveCollectionReference(schema) {
   if (!schema?.$ref) return schema;
   let current = schema;
-  const references = [], siblings = {};
+  const references = [], siblings = {}, edges = [];
   while (current?.$ref) {
     assert(current.$ref.startsWith('#/definitions/'), `unsupported OpenAPI reference ${current.$ref}`);
     assert(!references.includes(current.$ref), `cyclic OpenAPI reference ${current.$ref}`);
     references.push(current.$ref);
+    edges.push(current);
     for (const [key, value] of Object.entries(current)) if (key !== '$ref' && !Object.hasOwn(siblings, key)) siblings[key] = value;
     current = kubernetesOpenApi.definitions[current.$ref.slice('#/definitions/'.length)];
     assert(current, `missing OpenAPI definition ${references.at(-1)}`);
   }
-  for (const [key, value] of Object.entries(siblings)) if (!['description', 'title'].includes(key) && Object.hasOwn(current, key)) {
-    assert.deepEqual(value, current[key], `API_SCHEMA_REFERENCE_CONFLICT: ${references[0]} sibling ${key} conflicts with its definition`);
+  // Kubernetes v1.35.0 vendor/k8s.io/kube-openapi/pkg/schemaconv/
+  // openapi.go makeOpenAPIRef sets a TypeRef ElementRelationship override from
+  // the field's map annotation. smd.go getMapElementRelationship accepts only
+  // atomic/granular. structured-merge-diff/v6/schema/elements.go TypeRef
+  // explicitly overrides the referenced relationship. This is Kubernetes
+  // extension semantics, not a general permission to merge conflicting $refs.
+  // For example PV spec.claimRef is granular while ObjectReference is atomic.
+  for (const fragment of [...edges, current]) if (Object.hasOwn(fragment, 'x-kubernetes-map-type')) {
+    assert(current.type === 'object' && ['atomic', 'granular'].includes(fragment['x-kubernetes-map-type']),
+      `API_SCHEMA_REFERENCE_MAP_TYPE_UNQUALIFIED: ${references[0]} requires an object and atomic/granular map type`);
+  }
+  // Check every edge: collecting the nearest siblings must not hide a
+  // contradictory constraint on an intermediate reference.
+  for (const edge of edges) for (const [key, value] of Object.entries(edge)) {
+    if (['$ref', 'description', 'title', 'x-kubernetes-map-type'].includes(key)) continue;
+    for (const other of [...edges, current]) if (Object.hasOwn(other, key)) {
+      assert.deepEqual(value, other[key], `API_SCHEMA_REFERENCE_CONFLICT: ${references[0]} sibling ${key} conflicts with its definition or reference chain`);
+    }
   }
   return { ...current, ...siblings, schemaReferenceChain: references, referencedContract: apiSchemaNodeContract(current) };
 }

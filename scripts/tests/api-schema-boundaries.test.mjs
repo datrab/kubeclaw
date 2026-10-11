@@ -63,6 +63,9 @@ test('a new structural alternative fails coverage instead of silently losing its
     for (const name of ['docs-api-schema-authorities.mjs', 'yaml-field-path.mjs']) {
       fs.copyFileSync(path.join(repository, 'scripts', name), path.join(temporary, 'scripts', name));
     }
+    // Use the real discovery import graph; the mutated authority remains isolated.
+    fs.symlinkSync(path.join(repository, 'scripts/docs-api-output-discovery.mjs'),
+      path.join(temporary, 'scripts/docs-api-output-discovery.mjs'));
     fs.symlinkSync(path.join(repository, 'node_modules'), path.join(temporary, 'node_modules'), 'dir');
     const lock = JSON.parse(fs.readFileSync(path.join(repository, 'scripts/docs-api-authority-lock.json')));
     const swagger = JSON.parse(gunzipSync(fs.readFileSync(path.join(repository, lock.kubernetes.path))));

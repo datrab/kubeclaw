@@ -22343,6 +22343,13 @@
       "state": "author correction with15 bounded tests PASS; actual producer integration pending",
       "receipt": "/home/node/Documents/Codex/a98-evidence/root-secret-partial-merge-tests.json",
       "independentAcceptance": false
+    },
+    "pvMapReferenceOverlay": {
+      "state": "author-corrected; bounded23 tests PASS; independent review pending",
+      "author": "/root/pv_schema_reference_correction_writer",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-schema-reference-correction-writer/root-seal.json",
+      "scope": "Pinned Kubernetes field-level map relationship override on object reference only; referencedContract preserved and other contradictions fail closed. Existing mutation fixture now imports actual discovery dependency.",
+      "independentAcceptance": false
     }
   }
 }
