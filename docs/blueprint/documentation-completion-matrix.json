@@ -18380,6 +18380,206 @@
       "description": "Actual operator-task checker rejects duplicate locked-installation literal in maintenance; narrow writer correction running.",
       "owner": "/root/installation_eof_optional_prism_batch_writer",
       "acceptanceLimit": "No closure from author or root mechanical checks."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F1",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Function annotation aliases silently omit environment reads.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F2",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Class annotation aliases silently omit environment reads.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F3",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Method annotation Attribute target silently omits environment reads.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F4",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "YAML -m script arguments mispromoted as executable -c.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F5",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "YAML env wrapper executable read silently omitted.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F6",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Recognizable getattr environment reflection silently omitted.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F7",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Environment star-import reader silently omitted.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F8",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Helper-returned environment reader capability silently omitted.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F9",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Updating mutable static-source digest and operation recipe requalifies added public JSON output.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-COMPLETE-CUSTODY-F10",
+      "state": "open-complete-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Captured authentication mount guard incorrectly accepts unrelated container mount.",
+      "reviewer": "/root/unknown_alias_class_output_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "owner": "/root",
+      "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
     }
   ],
   "checks": [
@@ -19660,6 +19860,16 @@
       "baseRevision": "2a8558d795054d25aa4b72dbdc296c9321ba38f6",
       "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-unknown-alias-class-output-and-trust/result.json",
       "acceptanceLimit": "Selected suite completed before newest status/pin edits; no independent semantic, mutation, publication or package acceptance."
+    },
+    {
+      "command": "node scripts/generate-operator-task-registry.mjs; node scripts/generate-operator-task-registry.mjs --check; node scripts/check-operator-task-registry.mjs",
+      "state": "observed-terminal-pass-root-bounded",
+      "exitCode": 0,
+      "tasks": 13,
+      "lifecycleCapabilities": 14,
+      "sourceCommit": "d573c31a1d62a6fc7034d04dca92c9b98134f5b0",
+      "generatedCommit": "2a3fe02c93c9aa996d6e84feae7cd862d319ec22",
+      "acceptanceLimit": "Actual repository generator/currentness/structural procedure gates, not independent content or package approval."
     }
   ],
   "reviewAssignments": [
@@ -21743,13 +21953,28 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/worker-trust-lifecycle-complete-reader-fresh-root-seal.json",
       "verifiedArtifacts": 82,
       "scope": "Complete linked installation, maintenance, Worker Trust procedure and authored/generated task mapping."
+    },
+    {
+      "agent": "/root/unknown_alias_class_output_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal whole assigned FAIL; complete F1-F10 batch requires correction",
+      "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+      "reportSha256": "028975129156a1a131cebb4977f282f27d43b28efc0bb9bdb8249b4bb3947e72",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+      "verifiedArtifacts": 39,
+      "scope": "Complete frozen scanner/acquisition/receiver/protected qualification, actual OPS ownership/native/caller guards"
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open:241/241 selected root tests PASS; full linked Source/Reader FAIL corrected candidates, tooling Source still reviewing.",
+    "stage": "AP09.8 open: corrected doc source and task generated inventory committed/pushed; actual registry gate13tasks14capabilities PASS, new complete Source/Reader reviews running; tooling independent full Source FAIL10findings.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish narrow canonical-command correction; commit checked doc and authored task mapping separately from generated task inventory; obtain new distinct complete Source/Reader/Quality reviews. Finish whole tooling Source report, correct complete findings and requalify before full configuration generation. No parity/deletion before AP09.8 acceptance.",
+    "next": "Finish scanner F1-F8 correction; assign separate exclusive output-discovery/registry F9/F10 correction and semantic qualification after scanner freeze. Complete fresh doc Source/Reader and distinct Quality. Root integrated tests/new complete tooling Source, then configuration generation/full gates/mutations/Astra. No AP09.8 acceptance/parity/deletion yet.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -25970,7 +26195,33 @@
       "privateTaskRegistryCheck": "/home/node/Documents/Codex/a98-evidence/worker-trust-task-registry-private-validation/result.json",
       "privateTaskRegistryVerdict": "Generation/currentness PASS13 tasks, actual procedure check FAIL duplicate npm-ci literal; no published gate pass",
       "toolingCandidate": "b27 scanner / 2bb33tests; full fresh independent Source review running; annotation alias/method and YAML mode findings provisional until full report",
-      "qualityReview": "New corrected linked route not yet reviewed; required after complete candidate and generated task mapping"
+      "qualityReview": "New corrected linked route not yet reviewed; required after complete candidate and generated task mapping",
+      "canonicalCommandAuthorSeal": "/home/node/Documents/Codex/a98-evidence/install-task-canonical-command-correction-writer-root-seal.json",
+      "canonicalCommandAuthorArtifacts": 81,
+      "documentationSourceCommit": "d573c31a1d62a6fc7034d04dca92c9b98134f5b0",
+      "taskGeneratedCommit": "2a3fe02c93c9aa996d6e84feae7cd862d319ec22",
+      "toolingSourceReview": {
+        "agent": "/root/unknown_alias_class_output_complete_source_fresh",
+        "role": "source",
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "medium",
+        "forkTurns": "none",
+        "freshContext": true,
+        "initialMode": "read-only",
+        "state": "terminal whole assigned FAIL; complete F1-F10 batch requires correction",
+        "report": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh/report.md",
+        "reportSha256": "028975129156a1a131cebb4977f282f27d43b28efc0bb9bdb8249b4bb3947e72",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
+        "verifiedArtifacts": 39,
+        "scope": "Complete frozen scanner/acquisition/receiver/protected qualification, actual OPS ownership/native/caller guards"
+      },
+      "toolingCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "protectedStaticSourceAndCapturedAuth": "F9/F10 open; root coordinates exclusive output owner after slot available",
+      "freshDocumentationReviews": {
+        "source": "/root/installation_task_inventory_corrected_complete_source_fresh",
+        "reader": "/root/installation_task_inventory_corrected_complete_reader_fresh",
+        "quality": "pending distinct fresh identity after slot available"
+      }
     }
   }
 }
