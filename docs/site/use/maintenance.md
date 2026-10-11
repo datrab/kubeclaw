@@ -117,7 +117,9 @@ administration, not the target Ops Pod.
 
 The application namespace must be dedicated before broad teardown. If any
 resource in it is shared or unregistered, do not run `teardown` or
-`teardown-all`; use separately approved resource-specific removal instead.
+`teardown-all`; use separately approved resource-specific removal instead. Before broad removal, establish the complete
+[deletion window](#establish-the-complete-deletion-window) and compare the original
+and current object identities. Keep the exclusion through final verification.
 Retain the pre-removal inventory, final backup group, access revocation
 receipts, command confirmations and output, post-removal inventory, retained
 audit location and retention end date, and every failed cleanup. There is no
@@ -1149,6 +1151,51 @@ location, retention end date, and destruction owner before revoking access.
 Stop if a resource is unregistered, shared, ownerless, or selected evidence
 depends on the namespace that would be deleted.
 
+#### Establish the complete deletion window
+
+Before any removal, the platform and storage owners must establish and verify
+an externally enforced exclusion for the complete deletion window. It must
+prevent recreation of the original namespace, replacement of a PVC or PV under
+a reused name, new PVC creation, new provisioning, rebinding, and competing
+configuration or retention changes. Identify every administrator, controller,
+operator and desired-state reconciler that can make those changes. Their owners
+must restrict or suspend those actions and reconcile in-progress provisioning
+before approving removal. Keep storage deletion controllers available to
+complete approved disposal. Record the enforcement method, owners, affected
+identities, start time, checks that prove exclusion, and loss-of-exclusion stop
+condition. Stopping application writers alone does not establish this window.
+
+Preserve an independently approved original inventory outside the target
+namespace and storage. For each namespace, retain its name and UID. For every
+PVC, retain its name, namespace, UID, bound PV name and storage class. For each
+bound PV, retain its name, UID, complete claim reference (namespace/name/UID),
+reclaim policy, driver and provider asset identity. The storage owner supplies
+non-CSI and Pending-claim identities, reconciliation of in-progress allocation,
+and exact provider observation procedures; an absent PV does not prove that no
+asset exists. Retain provider snapshots, replicas and backup/export identities
+with each data owner's separate retain/delete approval and recovery scope.
+The names-only resource listing above is discovery, not this identity record.
+
+Immediately before removal, capture current identities in new evidence files
+through the owning authorities. Compare the full namespace/PVC/PV sets, UIDs,
+bindings, policies and provider assets with the approved original inventory.
+Review controller-driven version or disposition changes with both owners.
+Stop for a new or replacement object, changed binding, incomplete inventory,
+failed read, missing provider proof, or any unapproved data scope. Require a new
+reviewed plan rather than expanding the deletion set. These comparisons are
+non-atomic observations: they do not make a later name-based delete safe by
+themselves. The externally enforced exclusion must remain proven during all
+removal, uncertain-result reconciliation and final independent verification.
+
+If either owner cannot prove or maintain that exclusion, do not run `teardown`
+or `teardown-all`. Keep the data and evidence. The owners must supply a separate
+exact-resource procedure that protects each original identity at the destructive
+request, covers backing assets and dependent resources, states required rights,
+and provides independent read-back and recovery. There is no universal fence
+or provider cleanup command in this repository. Broad removal can resume only
+after both owners qualify the exclusion and unchanged approved identities;
+an alternative can proceed only after its own identity and recovery proof.
+
 ### 2. Restrict exposure and stop new work
 
 Disable public or Tailnet admission, new pipeline/project admission, scheduled
@@ -1204,7 +1251,13 @@ Do not run these commands as a sequence.
 | `./scripts/deploy.sh teardown-all` | The complete application namespace and every resource in it | Nothing in that namespace | Approve final namespace, Secret, and remaining-state deletion |
 
 `teardown` is destructive even though it keeps the namespace and Secrets.
-It enumerates and deletes all remaining PVCs, including PVCs retained by a Helm keep policy.
+After other removals, `cleanup_leftover_pvcs()` enumerates the PVCs again and
+deletes each by name without a UID precondition, including claims retained by
+a Helm keep policy. A new claim can enter that later set; a replacement with
+the same name can pass a names-only precheck. `teardown-all` deletes the
+namespace by name without a UID precondition. Freezing shell namespace strings
+and kubeconfig does not freeze object lifetimes. Both broad commands require
+the complete deletion-window exclusion and original/current comparisons above.
 Stop before confirmation if any PVC lacks a verified final backup and a named destruction approval.
 
 When PostgreSQL recovery was installed, `teardown` does not remove these
@@ -1243,8 +1296,10 @@ timeout, changed UID or unexpected object stops verification. Preserve the
 inventory and failed output for the owner; do not repeat `teardown` to remove
 objects that it does not select.
 
-Reassert the bound cluster and freeze the exact namespace immediately before
-the command. Do not change the kubeconfig's current context here:
+Before selecting the command, both owners must confirm the active exclusion,
+current identity comparison and independently approved data/backup scope.
+Reassert the bound cluster and exact namespace values immediately before the
+command. Do not change the kubeconfig's current context here:
 
 ```bash
 assert_cluster_binding
@@ -1255,10 +1310,11 @@ assert_cluster_binding
 kubectl -n "$NAMESPACE" get pvc
 ```
 
-Expected observation: the binding assertion succeeds and PVC names exactly
-match the signed inventory.
-Abort the prompt on any difference. A prompt protects only against accidental
-invocation; it does not prove ownership or backup.
+Expected observation: the binding assertion succeeds and PVC names agree with
+the signed inventory. This listing supplements the mandatory UID, binding and
+provider-asset comparison; it cannot authorize deletion by itself. Abort the
+prompt on any difference or loss of exclusion. A prompt protects only against
+accidental invocation; it does not prove identity, exclusion, ownership or backup.
 
 After `teardown`, verify that no PVC remains and review the retained Secrets
 and recovery objects:
@@ -1270,7 +1326,8 @@ kubectl -n "$NAMESPACE" get secrets
 kubectl -n "$NAMESPACE" get cronjob,job,pods,configmap,ciliumnetworkpolicy
 ```
 
-Run `teardown-all` only when final namespace deletion has separate explicit approval:
+Run `teardown-all` only with separate final namespace deletion approval, the
+unchanged original namespace UID and the still-proven complete exclusion:
 
 ```bash
 assert_cluster_binding
@@ -1283,7 +1340,7 @@ That command destroys the namespace and included state.
 >
 > **Claim:** `teardown-agents` and `teardown-prism` remove bounded workload releases. `teardown` keeps the namespace, Secrets and separately applied PostgreSQL recovery CronJob, ConfigMaps and CiliumNetworkPolicies, but deletes every remaining PVC, including the backup PVC. `teardown-all` deletes the namespace.
 >
-> **Implementation:** [The bounded agent teardown uninstalls only Nova and Buster](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2692-L2699). [The destructive teardown enumerates and deletes all remaining PVCs](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2780-L2825). [The namespace branch deletes the complete namespace](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2806-L2817).
+> **Implementation:** [The bounded agent teardown uninstalls only Nova and Buster](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2692-L2699). [The cleanup helper re-enumerates remaining PVC names and deletes without UID preconditions](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2780-L2791). [The namespace branch deletes the complete namespace](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2806-L2817).
 >
 > [Infrastructure removal selects specific releases and manifests](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/deploy.sh#L2749-L2778); [installation applies recovery resources separately](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/deploy.sh#L1151-L1162).
 >
@@ -1308,6 +1365,14 @@ kubectl --context "<context>" -n "$NAMESPACE" get \
 helm list -n "$NAMESPACE"
 ```
 
+Keep the exclusion active. Read back every original namespace/PVC/PV identity,
+binding and provider asset through successful independently retained owner
+observations. Distinguish original absence, an original terminating object and
+a replacement UID; any replacement or unexpected claim is a stop, not a new
+removal target. Kubernetes absence does not prove provider erasure. Obtain the
+storage owner's disposal or retention receipt for every original asset and
+reconcile in-progress provisioning before accepting completion.
+
 For `teardown-all`, expected namespace output is empty. For a narrower command,
 expected retained objects must match its `Keeps` column and the signed retained
 inventory, including all ConfigMaps and CiliumNetworkPolicies and the recovery
@@ -1317,7 +1382,9 @@ denied, monitoring and backup schedules have the selected retained/removed
 state, and retained backups still pass integrity and reader checks.
 
 Record the retention end date and destruction owner for remaining data.
-Remove temporary administration credentials only after final verification.
+Both owners may release the exclusion only after final independent verification
+and all uncertain outcomes are reconciled. Remove temporary administration
+credentials only after that verification.
 If local deletion fails partially, do not repeat the broad command blindly;
 compare actual state with the before inventory and remove only an owned exact
 resource. Deleted PVC or namespace state is recoverable only from verified

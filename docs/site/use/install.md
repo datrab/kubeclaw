@@ -641,6 +641,18 @@ A `Delete` reclaim policy requests provisioner deletion; it is not a deletion
 receipt. A `Retain` or unknown policy requires a separately approved exact
 provider cleanup procedure, so stop this default probe before claim creation.
 
+Every `probe_snapshot` and event/log read first writes a new private directory
+under `observations`. It retains the command, UTC time, reason, complete output,
+stderr and actual exit status, including failed reads. The root-level files are
+latest working copies for `probe_field`; they are not the historical record.
+Each guarded `probe_capture` also keeps its output, stderr, exit, completion
+status and all working files in a new `captures` directory, even when capture
+stops early. The indexes identify each attempt. Read-only file modes prevent
+accidental overwrite; retain these directories with the audit owner. On an
+interrupted shell or failed local copy, retain even an incomplete attempt and
+stop cleanup until the owner reconciles it. Do not rerun preparation in the
+same evidence directory or overwrite any previous attempt.
+
 ```bash
 export PREFLIGHT_STORAGE_CLASS="<storage-class>"
 export PREFLIGHT_STORAGE_REQUEST="<storage-request>"
@@ -663,19 +675,32 @@ PREFLIGHT_PV_UID=''
 PREFLIGHT_PROVIDER_ASSET_ID=''
 PROBE_CAPTURE_STATUS=not-run
 PROBE_RUN_STATUS=not-run
+mkdir -m 0700 "$PREFLIGHT_EVIDENCE_DIR/observations" "$PREFLIGHT_EVIDENCE_DIR/captures"
+# Each read owns new output, stderr and exit files before the working copy changes.
+probe_observe() {
+  local file="$1" status observation
+  shift
+  observation="$(mktemp -d "$PREFLIGHT_EVIDENCE_DIR/observations/read.XXXXXX")" || return 1
+  date -u +%Y-%m-%dT%H:%M:%SZ > "$observation/time.txt" || return 1
+  printf '%s\n' "${PROBE_CAPTURE_REASON:-initial preparation}" > "$observation/reason.txt" || return 1
+  printf '%q ' "$@" > "$observation/command.txt" || return 1
+  printf '\n' >> "$observation/command.txt" || return 1
+  if "$@" > "$observation/output" 2> "$observation/stderr"; then status=0; else status=$?; fi
+  printf '%s\n' "$status" > "$observation/exit" || return 1
+  cp -- "$observation/output" "$PREFLIGHT_EVIDENCE_DIR/$file" || return 1
+  cp -- "$observation/stderr" "$PREFLIGHT_EVIDENCE_DIR/$file.stderr" || return 1
+  cp -- "$observation/exit" "$PREFLIGHT_EVIDENCE_DIR/$file.exit" || return 1
+  printf '%s\t%s\t%s\n' "$observation" "$file" "$status" >> "$PREFLIGHT_EVIDENCE_DIR/observation-index.tsv" || return 1
+  chmod -R a-w -- "$observation" || return 1
+  return "$status"
+}
 probe_snapshot() {
   local resource="$1" name="$2" file="$3" namespace="${4:-}" status
   local arguments=(get "$resource" "$name" --ignore-not-found -o json)
   [[ -z $namespace ]] || arguments+=(-n "$namespace")
-  if bound_kubectl "${arguments[@]}" > "$PREFLIGHT_EVIDENCE_DIR/$file" \
-    2> "$PREFLIGHT_EVIDENCE_DIR/$file.stderr"; then
-    printf '%s\n' 0 > "$PREFLIGHT_EVIDENCE_DIR/$file.exit"
-  else
-    status=$?
-    printf '%s\n' "$status" > "$PREFLIGHT_EVIDENCE_DIR/$file.exit"
-    printf 'PROBE_READ_FAILED: %s/%s\n' "$resource" "$name" >&2
-    return "$status"
-  fi
+  if probe_observe "$file" bound_kubectl "${arguments[@]}"; then return 0; else status=$?; fi
+  printf 'PROBE_READ_FAILED: %s/%s\n' "$resource" "$name" >&2
+  return "$status"
 }
 probe_field() {
   node - "$PREFLIGHT_EVIDENCE_DIR/$1" "$2" <<'NODE'
@@ -686,7 +711,7 @@ for (const field of process.argv[3].split('.')) value = value?.[field];
 process.stdout.write(value === undefined || value === null ? '' : String(value));
 NODE
 }
-probe_capture() {
+probe_capture_state() {
   PROBE_CAPTURE_STATUS=failed
   probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace.json || return 1
   SNAPSHOT_NAMESPACE_UID="$(probe_field namespace.json metadata.uid)" || return 1
@@ -725,10 +750,8 @@ probe_capture() {
   else
     printf '%s\n' 'NO_PV_VISIBLE: provider allocation is not established' > "$PREFLIGHT_EVIDENCE_DIR/pv-state.txt"
   fi
-  if bound_kubectl -n "$PREFLIGHT_NAMESPACE" get events --sort-by=.metadata.creationTimestamp \
-    > "$PREFLIGHT_EVIDENCE_DIR/events.txt" 2> "$PREFLIGHT_EVIDENCE_DIR/events.stderr"; then
-    printf '%s\n' 0 > "$PREFLIGHT_EVIDENCE_DIR/events.exit"
-  else printf '%s\n' "$?" > "$PREFLIGHT_EVIDENCE_DIR/events.exit"; return 1; fi
+  probe_observe events.txt bound_kubectl -n "$PREFLIGHT_NAMESPACE" get events \
+    --sort-by=.metadata.creationTimestamp || return 1
   if node - "$PREFLIGHT_EVIDENCE_DIR/pod.json" <<'NODE'
 const fs = require('node:fs');
 const bytes = fs.readFileSync(process.argv[2], 'utf8');
@@ -737,11 +760,11 @@ const state = pod?.status?.containerStatuses?.find(item => item.name === 'probe'
 process.exit(state?.running || state?.terminated ? 0 : 1);
 NODE
   then
-    if bound_kubectl -n "$PREFLIGHT_NAMESPACE" logs pod/dependency-probe \
-      > "$PREFLIGHT_EVIDENCE_DIR/probe.log" 2> "$PREFLIGHT_EVIDENCE_DIR/probe-log.stderr"; then
-      printf '%s\n' 0 > "$PREFLIGHT_EVIDENCE_DIR/probe-log.exit"
-    else printf '%s\n' "$?" > "$PREFLIGHT_EVIDENCE_DIR/probe-log.exit"; return 1; fi
+    printf '%s\n' 'ATTEMPTING: log read outcome follows in probe.log.exit' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt"
+    probe_observe probe.log bound_kubectl -n "$PREFLIGHT_NAMESPACE" logs pod/dependency-probe || return 1
+    printf '%s\n' 'AVAILABLE: log read succeeded' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt"
   else
+    rm -f -- "$PREFLIGHT_EVIDENCE_DIR/probe.log" "$PREFLIGHT_EVIDENCE_DIR/probe.log.stderr" "$PREFLIGHT_EVIDENCE_DIR/probe.log.exit"
     printf '%s\n' 'NOT_AVAILABLE: Pod absent or probe container has not started' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt"
   fi
   printf '%s\n' "namespace_uid=$PREFLIGHT_NAMESPACE_UID" "observed_namespace_uid=$SNAPSHOT_NAMESPACE_UID" \
@@ -751,6 +774,27 @@ NODE
     > "$PREFLIGHT_EVIDENCE_DIR/identities.txt"
   PROBE_CAPTURE_STATUS=complete
 }
+probe_capture() {
+  local capture status capture_file
+  PROBE_CAPTURE_REASON="${1:?Supply the observation or recovery decision}"
+  capture="$(mktemp -d "$PREFLIGHT_EVIDENCE_DIR/captures/capture.XXXXXX")" || return 1
+  date -u +%Y-%m-%dT%H:%M:%SZ > "$capture/time.txt" || return 1
+  printf '%s\n' "$PROBE_CAPTURE_REASON" > "$capture/reason.txt" || return 1
+  if probe_capture_state > "$capture/output" 2> "$capture/stderr"; then status=0; else status=$?; fi
+  printf '%s\n' "$status" > "$capture/exit" || return 1
+  printf '%s\n' "$PROBE_CAPTURE_STATUS" > "$capture/status.txt" || return 1
+  mkdir -m 0700 "$capture/working-files" || return 1
+  for capture_file in "$PREFLIGHT_EVIDENCE_DIR"/*; do
+    [[ -f $capture_file ]] || continue
+    cp -- "$capture_file" "$capture/working-files/" || return 1
+  done
+  printf '%s\t%s\t%s\n' "$capture" "$PROBE_CAPTURE_STATUS" "$status" >> "$PREFLIGHT_EVIDENCE_DIR/capture-index.tsv" || return 1
+  chmod -R a-w -- "$capture" || return 1
+  cat -- "$capture/output"
+  cat -- "$capture/stderr" >&2
+  return "$status"
+}
+
 assert_cluster_binding
 probe_snapshot storageclass "$PREFLIGHT_STORAGE_CLASS" storageclass-before.json
 PREFLIGHT_PROVISIONER="$(probe_field storageclass-before.json provisioner)"
@@ -779,7 +823,7 @@ printf '%s\n' "$PROBE_RUN_STATUS" > "$PREFLIGHT_EVIDENCE_DIR/run-status.txt"
 Proceed to claim/Pod apply only when `PROBE_RUN_STATUS=namespace-created` and
 `PREFLIGHT_NAMESPACE_UID` is nonempty. Namespace creation success alone does
 not prove the subsequent UID read succeeded. If either condition fails, run
-`probe_capture` in a guarded `if` as shown below, retain the creation/read exit
+`probe_capture "uncertain namespace creation; observe only"` in a guarded `if` as shown below, retain the creation/read exit
 records, and ask the cluster owner to reconcile the uncertain creation. Do not
 adopt an existing namespace or delete one whose creating UID is unknown.
 After creation, the run block repeats the probe authorization checks in guarded calls.
@@ -888,7 +932,7 @@ fi
 fi
 fi
 printf '%s\n' "$PROBE_RUN_STATUS" > "$PREFLIGHT_EVIDENCE_DIR/run-status.txt"
-if probe_capture; then
+if probe_capture "capture after creation, apply or wait result"; then
   printf '%s\n' "$PROBE_CAPTURE_STATUS" > "$PREFLIGHT_EVIDENCE_DIR/capture-status.txt"
 else
   printf '%s\n' 'CAPTURE_FAILED: retain resources and recover read authority' > "$PREFLIGHT_EVIDENCE_DIR/capture-status.txt"
@@ -920,7 +964,7 @@ must not replace capture or delete failure evidence.
 | Apply failed; PVC or Pod absent | Successful empty named snapshots establish API absence of that object. Retain the other present object and its UID. Send the captured apply result and PVC/Pod state to the cluster/storage owners before any retry or cleanup. An absent Pod has no required log stream. |
 | PVC Pending, unbound or binding timed out | `pvc.json`, `storageclass.json` and `events.txt` show the exact claim UID, conditions and provisioner. No PV name or provider ID is assumed. Storage owner reconciles that claim with provisioner operations and identifies any allocated asset before authorizing cleanup. Do not call `get pv` with an empty name. |
 | Pod Pending, Failed, image pull or mount failure | Read captured Pod status and events. Capture logs only when the probe container has actually started. No started container is recorded as `NOT_AVAILABLE`, not as a successful DNS/storage result. Resolve the named scheduler, registry, mount or DNS owner; do not substitute a different image or class merely to pass. |
-| Capture denied, API failure, changed namespace/Pod/PVC/PV identity | The corresponding `.exit`/`.stderr` files identify the failed observation. Keep the namespace, claim and any volume. Restore the bound read authority through the platform owner, then repeat `probe_capture` in the guarded form. Never interpret a denied read as absence or run deletion from stale snapshots. |
+| Capture denied, API failure, changed namespace/Pod/PVC/PV identity | The corresponding `.exit`/`.stderr` files identify the failed observation. Keep the namespace, claim and any volume. Restore the bound read authority through the platform owner, then repeat `probe_capture "read authority repaired; owner permits observation"` in the guarded form. Keep all previous observation and capture directories. Never interpret a denied read as absence or run deletion from stale snapshots. |
 | PV visible but provider ID, reclaim policy or provider lookup is unknown | Retain all objects. Storage owner supplies the provisioner-specific asset identity and cleanup/disposition procedure. A missing CSI handle is not evidence of an empty volume. |
 
 Recovery never proceeds to installation on a failed probe. Repeating the
@@ -952,11 +996,7 @@ for a CSI PV it must agree with the observed handle.
 
 ```bash
 export PREFLIGHT_CLEANUP_CLEARANCE="<probe-cleanup-clearance-json>"
-probe_archive="$(mktemp -d "$PREFLIGHT_EVIDENCE_DIR/capture-before-cleanup.XXXXXX")"
-for probe_file in namespace.json pod.json pvc.json pv.json storageclass.json events.txt probe.log probe-log-status.txt identities.txt; do
-  if [[ -f $PREFLIGHT_EVIDENCE_DIR/$probe_file ]]; then cp -- "$PREFLIGHT_EVIDENCE_DIR/$probe_file" "$probe_archive/$probe_file"; fi
-done
-if probe_capture; then :; else printf '%s\n' 'RETAIN_PROBE: capture incomplete' >&2; exit 1; fi
+if probe_capture "owner-approved cleanup recapture"; then :; else printf '%s\n' 'RETAIN_PROBE: capture incomplete' >&2; exit 1; fi
 test "$PROBE_CAPTURE_STATUS" = complete
 test -n "$PREFLIGHT_NAMESPACE_UID"
 test "$SNAPSHOT_NAMESPACE_UID" = "$PREFLIGHT_NAMESPACE_UID"
