@@ -6,7 +6,7 @@ Owner: Nova maintainers
 Evidence: skills/nova/project; skills/nova/core; skills/common/plugin-runtime
 Evidence revision: `4f089958db97a551f406c157d774bda143a38946`
 Applies to: `nova-project.v2`, `pipeline-definition.v2`, and the current Nova Core runtime
-Last verified: source and contract inspection on 2026-09-19
+Last verified: source and contract inspection on 2026-09-19; wait/resume and audit boundaries rechecked on 2026-10-11 at `929aadbad08b41e7a8504950f05dc0f526b706d6`
 
 ## Purpose
 
@@ -323,7 +323,12 @@ The main run records are:
 The generic file journal serializes one JSON record per line.
 Each record has a sequence, previous hash, and current hash.
 Append uses a cross-process file mutex and `fsync`.
-Startup truncates only an incomplete final line.
+Opening `FileJournal` creates an append-lock file and can truncate an
+unterminated final line before parsing. This also applies to audit, recovery,
+and resume, including a command that later rejects the run. Preserve raw bytes
+with stopped writers before such inspection after interruption. Use
+[Inspect a Run](../use/operate.md#inspect-a-run) for the canonical preservation
+procedure and the pure parser that rejects incomplete bytes without repair.
 After a reader loads records, it detects file-identity, size, and timestamp
 changes and reloads the file. It accepts the reload when the previous records
 remain the exact prefix of the new history. It rejects a shorter history or a
@@ -646,10 +651,20 @@ Resume performs these checks in order:
 10. Record the signal once and append `wait.resolved`.
 11. Replay again and start a new attempt with signal payload as guidance.
 
-The signal journal enforces two forms of idempotency.
-The same idempotency key and same content is safe to repeat.
-The same key with different content is a conflict.
-A different signal for an already resolved wait is also rejected.
+The signal journal treats the same idempotency key and identical content as a
+no-op when resume reaches that storage check. The same key with changed content
+is a conflict. A different signal for the same recorded wait is also rejected.
+These storage rules do not make post-resolution CLI replay a successful resume.
+Core rejects a terminal run before active-wait matching and signal storage. A
+resolved wait can also fail active-wait matching while another stage keeps the
+run nonterminal. Preserve the original signal bytes, ID, key, and time after
+resolution. Stop; do not issue a successor identity to force acceptance.
+
+Expiry uses Core's current clock. `issuedAt` must be at or after durable wait
+creation; Core does not impose an upper bound on that timestamp. A null expiry
+has no automatic expiry check. Use accurate operator time and the active wait's
+actual expiry. A rejected signal does not prove that the run is still waiting.
+Inspect durable state under the [canonical run-control procedure](../use/operate.md#canonical-run-control-procedure).
 
 Normal recovery cannot bypass an active wait.
 It returns `RECOVERY_SIGNAL_REQUIRED` with the wait ID.
@@ -971,8 +986,12 @@ causation ID, redacted payload, and source-record hash. The version is the
 stability boundary. A consumer must reject an unknown version instead of
 inferring fields.
 
-The audit command does not require a terminal run. For an incomplete run, it
-returns the verified prefix that exists at read time. It does not add a
+The audit command does not require a terminal run. Its `FileJournal` constructor
+creates an append-lock file and removes an unterminated tail before parsing.
+For an incomplete run with a complete valid journal, it returns the verified
+prefix that exists at read time. Preserve raw bytes with stopped writers before
+the first audit after interruption, as required by
+[Inspect a Run](../use/operate.md#inspect-a-run). It does not add a
 synthetic completion marker. A missing journal or missing run fails. A corrupt,
 internally inconsistent hash chain fails inside the journal reader before the
 audit projection exists.
@@ -1032,7 +1051,11 @@ Treat those suffixes as diagnostic values, not as a separate error family.
 | `RESOURCE_LOCK_*` or `RESOURCE_LOCKED` | Resource ownership, lease time, fencing, or metadata is invalid, or another current owner holds the resource. | Effect does not gain trusted completion. | Retry contention after the current owner completes. Retry no stale or inconsistent fence. | Restore lock storage and reconcile the protected resource. |
 | `ARTIFACT_*` | Checkpoint or final artifact metadata does not match content or producer. | The attempt fails and the artifact gets no authority. | Retry after fixing producer or adapter. | Compare ID, digest, size, encoding, namespace, and attempt identity. |
 | `JOURNAL_*` or `FILE_MUTEX_*` | Durable history changed, is not JSON-safe, or cannot be locked or written. | State mutation and recovery stop. | Do not retry while storage is suspect. | Protect the run root, verify `flock`, preserve files, and restore from a trusted copy. |
-| `WAIT_*` | Signal identity, issuer, type, age, expiry, or single-use rule failed. | The run remains waiting. | Submit the correct signal; do not edit the journal. | Read the active wait and issue one new matching signal. |
+| `WAIT_SIGNAL_MISMATCH`, `WAIT_SIGNAL_TYPE_MISMATCH`, `WAIT_ISSUER_DENIED`, or `WAIT_SIGNAL_STALE` | The submitted signal differs from an active wait or predates its creation. | Rejection occurs before signal storage or resolution; it does not create a new waiting state. | Review a corrected input only after complete durable evidence proves the same wait is active and unexpired. | Preserve the rejected bytes. Compare the envelope with the exact durable wait; do not edit history. |
+| `WAIT_EXPIRED` | Core's current clock reached the active wait's expiry. | No signal or resolution is recorded by this submission. | Do not retry that expired wait or change its time. | Preserve raw state before audit. Reconcile prior effects before deciding whether new governed work is safe. |
+| `WAIT_RUN_TERMINAL` | The current durable run boundary is terminal. | The run remains in its recorded terminal state; no signal resolution or new attempt follows. | No normal resume or recovery. | Preserve the original signal bytes, ID, key, and time. Stop and retain the terminal audit under the canonical inspection procedure. |
+| `WAIT_UNKNOWN_OR_STALE`, `WAIT_ALREADY_RESOLVED`, `WAIT_CREATION_RECORD_MISSING`, or `WAIT_INVALIDATED_BY_TERMINAL_RUN` | The exact active wait is absent, a signal already exists for it, creation evidence is missing, or an earlier terminal boundary invalidated that wait. | This submission cannot establish new resume authority. | Do not issue a successor identity to bypass stale or missing authority. | Stop. Preserve raw state before audit; compare resolutions, signal records, and wait creation. Keep the same original signal bytes and identities after resolution. |
+| `WAIT_SIGNAL_CONFLICT` | A stored idempotency key has different signal content. | The conflicting signal is not stored or resolved. | Never change bytes under that key or change the key to force a second resolution. | Preserve both inputs and durable evidence. Stop and investigate the identity conflict. |
 | `RECOVERY_*` | The stored run is terminal, incompatible, waiting, cooling down, or has unresolved effects. | Recovery stops before new work. | Retry only after the stated condition changes. | Use signal, wait for cooldown, restore pinned runtime, or reconcile effects. |
 | `REPAIR_*` or `ADMIN_*` | Repair identity, evidence, issuer, history, or budget is invalid. | Repair does not start; the run remains waiting or blocked. | Do not resubmit changed content under the same identity. | Rebuild the decision from current durable state and remaining authority. |
 | `NOVA_SOURCE_*` | Source repository, process, archive, identity, or attestation failed. | Remote test dispatch does not start. | Retry after source correction. | Use the repository root, a committed revision, valid key, and allowed archive limit. |
@@ -1041,9 +1064,16 @@ Treat those suffixes as diagnostic values, not as a separate error family.
 | `TEST_PLAN_*` | Test declaration or resolved plan is invalid. | Plan resolution stops before dispatch. | Do not retry unchanged plan. | Correct the exact node, link, provider, limit, retry, or evidence field. |
 | `TEST_REPORT_*` | A returned test report cannot prove that a required case executed. | The quality gate does not pass. | Retry only after correcting the provider or report input. | Inspect executed, skipped, and missing cases and retain the rejected report as evidence. |
 | `OBSERVER_*` or `REQUIRED_OBSERVER_*` | Event delivery or checkpoint state failed. | Required policy can fail the event flush; optional policy records a gap. | Use the observer's bounded delivery policy. | Repair observer configuration or endpoint, then resume from its checkpoint. |
-| `AUDIT_*` | The requested journal or run has no audit source. | Audit command fails; run state does not change. | Retry only after choosing the correct run root and run ID. | Locate and verify the authoritative event journal. |
+| `AUDIT_*` | The requested journal or run has no audit source. | Audit projection fails; opening the journal can already have created a lock or repaired an incomplete tail. | Retry only after choosing the correct run root and run ID. | Locate and verify the authoritative event journal. |
 | `DURABLE_RECORD_*` | A durable record operation lost synchronous authorization or reused an idempotency identity with different content. | The record is rejected before it becomes authority. | Retry only the same record after authority returns. | Restore the authorized context or issue a new identity for different content. |
 | `LEGACY_IMPORT_*` or `LEGACY_SCAN_*` | A one-time legacy import lacks required structure, policy acknowledgement, canonical paths, or bounded scan input. | Import stops and no new run gains the old data. | Do not retry unchanged legacy input. | Correct the import bundle or start a new run when safe conversion cannot preserve meaning. |
+
+[The terminal guard](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L46-L50)
+and [resume order](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L82-L122)
+define the separate wait outcomes above.
+[Signal validation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L137-L144)
+checks current-clock expiry and creation-time freshness. These are source
+boundaries; they do not establish successful lifecycle execution.
 
 The family table gives the decision rule.
 The thrown site gives the exact trigger and identity.

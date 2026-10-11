@@ -5,7 +5,7 @@ Audience: product operator, pipeline operator, Prism operator
 Owner: Nova Core and platform operations
 Evidence: skills/nova/project/cli.ts; skills/nova/core/cli.ts; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execution/engine-run.ts
 Applies to: pipeline-platform.v2 and current Prism deployment
-Last verified: 2026-09-21; schema validation passed and no live cluster result is available
+Last verified: 2026-09-21 schema validation; journal preservation and audit boundaries rechecked on 2026-10-11 at `929aadbad08b41e7a8504950f05dc0f526b706d6`; no live cluster result
 
 ## Objective
 
@@ -280,25 +280,145 @@ Do not reuse a prior terminal run identity.
 
 ## Inspect a Run
 
-Use the Core audit command for either command form:
+Before the first audit, confirm that the run owner has exited and no new
+operation can write this run or its adapter stores. Stop if ownership is
+unknown. Use the original platform path and run ID from the retained start
+command. Do not discover the run by auditing it first.
+
+Audit is not a read-only storage operation.
+[The audit reader opens `FileJournal`](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/telemetry/audit.ts#L14-L18). It constructs `FileJournal`, creates
+an append-lock file, and acquires its lock. If `events.jsonl` ends without a
+newline, the constructor removes all bytes after the last newline and
+synchronizes the shorter file **before** it parses the retained records. It can
+therefore change evidence even when audit later fails. A complete hash chain
+needs no tail repair. Recovery and resume also open journals through this
+constructor; they can create locks and repair tails before rejecting a run or
+signal.
+[Constructor and tail recovery](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/state/journal.ts#L30-L77)
+and [append-lock creation](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/state/file-mutex.ts#L8-L21)
+define these storage effects.
+
+Preserve the raw run directory before audit, recovery, or resume after an
+interruption. Also preserve the owning adapters' stores through their declared
+backup procedure while their writers are stopped. The copy must retain partial
+bytes, original signals, effects, snapshots, and lock files. Do not parse,
+truncate, or repair the source to make the copy pass.
+
+In Bash at the repository root, set these two values from the original command
+record. Define `preserve_run_state` in the same terminal. It uses the platform
+loader and the actual run-root resolver without opening `FileJournal`. [The resolver](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/execution/run-root.ts#L62-L75)
+selects the hashed or verified legacy directory. Each call makes a new restricted copy outside the run root and verifies all file
+bytes. Symlinks and special files require the owning store's backup procedure;
+this command stops on them.
 
 ```bash
+export RUN_CONTROL_PLATFORM="<original-platform.json>"
+export RUN_CONTROL_RUN_ID="<original-run-id>"
+preserve_run_state() {
+  umask 077
+  export RUN_CONTROL_OBSERVATION_ROOT=$(mktemp -d "${TMPDIR:-/tmp}/nova-raw-state.XXXXXXXX")
+  node --input-type=module <<'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
+import { runRoot } from './skills/nova/core/execution/run-root.ts';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
+const platform = loadPlatformConfig(process.env.RUN_CONTROL_PLATFORM);
+const runId = process.env.RUN_CONTROL_RUN_ID;
+const source = runRoot(platform.storageRoot, runId);
+const target = process.env.RUN_CONTROL_OBSERVATION_ROOT;
+if (!fs.lstatSync(source).isDirectory()) throw new Error('Run directory is required');
+if (target === source || target.startsWith(source + path.sep)) throw new Error('Evidence must be outside the run root');
+function inventory(root, relative = '') {
+  return fs.readdirSync(path.join(root, relative)).sort().flatMap(name => {
+    const file = path.join(relative, name);
+    const stat = fs.lstatSync(path.join(root, file));
+    if (stat.isDirectory()) return inventory(root, file);
+    if (!stat.isFile()) throw new Error('Unsupported evidence entry: ' + file);
+    const bytes = fs.readFileSync(path.join(root, file));
+    return [{ path: file, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') }];
+  });
+}
+const original = inventory(source);
+if (!original.some(file => file.path === 'events.jsonl')) throw new Error('Event journal is required');
+fs.cpSync(source, path.join(target, 'run'), { recursive: true, force: false, errorOnExist: true });
+assert.deepEqual(inventory(source), original);
+assert.deepEqual(inventory(path.join(target, 'run')), original);
+fs.writeFileSync(path.join(target, 'raw-manifest.json'), JSON.stringify({ runId, source, capturedAt: new Date().toISOString(), files: original }, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+console.log(JSON.stringify({ rawState: target, runId, source, filesVerified: original.length }));
+for (const entry of original.filter(entry => entry.path.endsWith('.jsonl'))) {
+  const file = path.join(target, 'run', entry.path);
+  parseHashJournal(fs.readFileSync(file), file);
+}
+NODE
+}
+preserve_run_state || exit 1
+```
+
+The helper verifies the raw copy before it parses the copied journals. Even
+when a partial record causes parsing to fail, keep that directory and manifest.
+Require exit zero before ordinary audit. Comparison failure means the copy is
+not a verified consistency point. Stop and establish the stopped writer state before making a new copy. Hash equality
+checks the copied bytes; it does not prove that every external effect completed.
+
+For non-mutating journal inspection, use the existing strict parser on the
+preserved bytes. It rejects an incomplete final record, empty records, wrong
+sequence, wrong previous hash, or wrong record hash. It does not repair files or
+create locks.
+[The pure parser](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/common/plugin-runtime/foundation/observability/hash-journal.ts#L15-L29)
+defines these rejection rules. This command checks every journal below the
+preserved run root:
+
+```bash
+node --input-type=module <<'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
+const root = path.join(process.env.RUN_CONTROL_OBSERVATION_ROOT, 'run');
+function inspect(directory) {
+  for (const name of fs.readdirSync(directory).sort()) {
+    const file = path.join(directory, name);
+    const stat = fs.lstatSync(file);
+    if (stat.isDirectory()) inspect(file);
+    else if (!stat.isFile()) throw new Error('Unsupported evidence entry: ' + file);
+    else if (name.endsWith('.jsonl')) {
+      const records = parseHashJournal(fs.readFileSync(file), file);
+      console.log(JSON.stringify({ file, records: records.length, journalHead: records.at(-1)?.hash ?? null }));
+    }
+  }
+}
+inspect(root);
+NODE
+```
+
+Stop on a parse error. Keep the complete raw copy, including the rejected tail.
+Determine which writes and external effects were interrupted. Do not use audit's
+automatic truncation as proof of successful recovery. If the owning incident
+procedure permits canonical tail recovery, keep the verified raw copy first,
+reconcile external effects, then record the audit or recovery command and its
+actual changes. A checksum proves byte preservation, not permission to retry an
+accepted external request.
+
+For a complete verified journal, use the Core audit command for either command
+form. Capture its outputs and exit status in the retained observation directory:
+
+```bash
+audit_status=0
 npm run pipeline -- \
-  --platform "<platform.json>" \
-  --audit "<run-id>"
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --audit "$RUN_CONTROL_RUN_ID" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/audit.stdout" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/audit.stderr" || audit_status=$?
+printf '%s\n' "$audit_status" > "$RUN_CONTROL_OBSERVATION_ROOT/audit.exit"
+test "$audit_status" -eq 0 || exit 1
 ```
 
-The command rebuilds its audit view from durable run state.
-Retain the unmodified JSON output.
-
-Then inspect the storage root without editing it:
-
-```bash
-find "<storage-root>/runs" -maxdepth 2 -type f -print
-```
-
-Version 2 run directories use a hash of the run ID.
-Use the audit command to select the run safely.
+The command rebuilds its audit view from durable run state. Retain the whole
+output; npm can print a script banner before the CLI JSON. Compare it with the
+preserved journal and any previously trusted journal head. A new internally
+valid chain alone cannot prove that no old records were lost.
 
 Use [Request, State, and Recovery](../understand/request-state-recovery.md) to interpret states.
 Do not infer a terminal state from one plugin log.
@@ -424,9 +544,13 @@ Do not edit the journal or change the signal identity to force acceptance.
 Recovery reopens durable state after a process interruption.
 It does not approve a wait or resolve an uncertain external result.
 
-Before recovery, run the audit command from [Inspect a Run](#inspect-a-run) and
-retain its output. Confirm the original platform, graph or project, package
-snapshot, run ID, storage root, and configuration. Reconcile every accepted
+Before any audit or recovery after interruption, stop new admission and
+confirm that the prior owner has exited. Follow [Inspect a Run](#inspect-a-run)
+to preserve and verify raw run bytes and the owning adapter stores first. Stop
+on an incomplete or corrupt journal. Audit can truncate an incomplete tail;
+retain the original bytes before any permitted canonical repair. Confirm the
+original platform, graph or project, package snapshot, run ID, storage root,
+and configuration. Retain the audit output only after this preservation step. Reconcile every accepted
 external effect that lacks a terminal receipt. Stop while any outcome remains
 unknown.
 
@@ -561,11 +685,12 @@ Do not restart every role to hide one role-specific failure.
 
 | Condition | Next action |
 | --- | --- |
-| Command failed before durable request acceptance | Correct the input and submit once |
+| Command failed before durable request acceptance, with a verified complete journal and unchanged active authority | Correct the rejected input and review one submission |
 | Durable request exists with a terminal failure | Follow its declared retry or repair decision |
 | Request exists and provider outcome is absent | Inspect through a documented provider status operation; if the outcome remains uncertain, preserve evidence, stop, and escalate |
 | Provider completed but local response was lost | Use an exact provider-specific idempotent import operation only when its contract documents one; otherwise preserve evidence, stop, and escalate |
-| Wait remains active | Supply one matching authorized signal |
+| Wait remains active, unexpired, with complete history and no prior resolution | Review one matching authorized signal; preserve its exact bytes and identities for the same submission |
+| Wait expired or resolved, or signal identity conflicts | Stop; preserve raw state before audit. Do not issue a new signal identity to force acceptance |
 | Graph, package, or policy digest changed | Start a new governed run |
 | Terminal run | Do not recover or resume it |
 
@@ -582,7 +707,8 @@ resume, journal edit, or result import.
 - Platform, project, graph, and signal digests.
 - Complete command and nonsecret arguments.
 - Start output and run identity.
-- Audit output before and after recovery or signal handling.
+- Restricted raw-state copies and file manifests made before audit or interrupted recovery.
+- Audit output before and after recovery or signal handling, with any tail repair recorded.
 - Provider request, receipt, and reconciliation record.
 - Artifact identities and verified digests.
 - Prism decision and demo identity when applicable.

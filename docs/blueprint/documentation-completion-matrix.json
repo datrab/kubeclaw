@@ -19855,6 +19855,26 @@
       "log": "/home/node/Documents/Codex/a98-evidence/publication-guidance-rebase-tests.log",
       "state": "author-only-not-independent-acceptance",
       "next": "Generate against stable sourceSHA in isolatedworktree; new fullfreshSource review ofaffected toolandoutputs. Regenerate existing governance map instead ofmanualpatch."
+    },
+    "publicationGuidanceOriginCorrection": {
+      "state": "author-correction-pending-source-bound-generation-and-fresh-independent-review",
+      "baseRevision": "8cba013ac84537cefbaa356b19fb236c1cf05587",
+      "finding": "Actual full publication check after generation exits 1: plugin.guide is the implementation authored guide, not the generated catalogue reader page. Shared operationNote relative links originate at the generated catalogue page.",
+      "failedCheckLog": "/home/node/Documents/Codex/a98-evidence/publication-8c-check.log",
+      "correction": "Use path.join(catalogueRoot, plugin manifest ID + .md) as origin. Existing nine asset/link tests pass; full publication check still required."
+    },
+    "approvalJournalRecoveryCorrectionReleased": {
+      "agent": "/root/approval_journal_recovery_correction_writer",
+      "state": "writer-released-candidate-not-independent-acceptance",
+      "files": [
+        "docs/site/use/operate.md",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/understand/nova-core.md"
+      ],
+      "report": "/home/node/Documents/Codex/a98-evidence/approval-journal-recovery-correction-writer/WRITER-REPORT.md",
+      "boundedAuthorChecks": "42 syntax checks and 29 private probes reported PASS; no successful full lifecycle/deployment proof.",
+      "correction": "Preserve raw Core and adapter bytes before mutating audit, use strict pure journal parser, retain all three original inputs, distinguish expired/resolved/terminal signal outcomes.",
+      "pending": "New independent complete Source/Reader/Quality reviews and actual required execution gates."
     }
   },
   "productBoundaries": [

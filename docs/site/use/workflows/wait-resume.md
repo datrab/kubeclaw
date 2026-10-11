@@ -6,7 +6,7 @@ Owner: product integration maintainers; platform operations owns execution acces
 Evidence: skills/nova/plugins/human-approval; skills/nova/core/execution; skills/common/plugins/wait-store; skills/common/plugins/operator-messaging
 Applies to: `pipeline-definition.v2`, `pipeline-platform.v2`, `resume-signal.v2`
 Last verified: 2026-10-11; bounded source and contract evidence only; no successful full local lifecycle or deployment evidence
-Source revision: `ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a`
+Source revision: `ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a`; wait/journal corrections checked at `929aadbad08b41e7a8504950f05dc0f526b706d6`
 
 This guide supplies a complete disposable approval input set. Nova executes
 the installed human-approval stage, persists a wait, and sends its request to a
@@ -86,6 +86,9 @@ authority; issuer matching does not authenticate a person.
 Use an isolated Linux operator host with Node.js 24 and the paired npm version.
 Complete [the canonical checkout and dependency setup](../quickstart.md#locked-dependency-installation).
 Run all commands from that checkout, in Bash, as the same restricted operator.
+Define `preserve_run_state` from [Inspect a Run](../operate.md#inspect-a-run) in
+that terminal before starting. Its platform and run variables are bound below.
+Keep this function available until the final audit.
 The repository and installed packages must stay unchanged during the run.
 Record the full commit and require a clean checkout before the measured run.
 These instructions apply to the source revision above; a changed package or
@@ -133,20 +136,33 @@ node --input-type=module <<'NODE'
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import crypto from 'node:crypto';
 const root = process.env.WAIT_REHEARSAL_ROOT;
 const base = 'docs/site/use/workflows/wait-resume/';
-const p = JSON.parse(fs.readFileSync(base + 'platform.template.json', 'utf8'));
+const originals = ['approval.pipeline.json', 'platform.template.json', 'signal.template.json'];
+const inputManifest = originals.map(name => {
+  const file = path.join(root, name);
+  fs.copyFileSync(base + name, file, fs.constants.COPYFILE_EXCL);
+  const bytes = fs.readFileSync(file);
+  return { path: name, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') };
+});
+fs.writeFileSync(path.join(root, 'input-manifest.json'), JSON.stringify(inputManifest, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+const p = JSON.parse(fs.readFileSync(path.join(root, 'platform.template.json'), 'utf8'));
 p.installationRoots = ['skills/common/plugins', 'skills/nova/plugins'].map(x => path.resolve(x));
 p.trustedBuiltinRoots = [...p.installationRoots];
 p.storageRoot = path.join(root, 'core');
 p.adapters['kubeclaw.wait-store:waits'].root = path.join(root, 'waits');
 p.adapters['kubeclaw.operator-messaging:operator'].deliveryRoot = path.join(root, 'deliveries');
 fs.writeFileSync(path.join(root, 'platform.json'), JSON.stringify(p, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
-fs.copyFileSync(base + 'approval.pipeline.json', path.join(root, 'pipeline.json'), fs.constants.COPYFILE_EXCL);
+fs.copyFileSync(path.join(root, 'approval.pipeline.json'), path.join(root, 'pipeline.json'), fs.constants.COPYFILE_EXCL);
 fs.writeFileSync(path.join(root, 'run-id.txt'), process.env.WAIT_REHEARSAL_RUN_ID + '\n', { flag: 'wx' });
 fs.writeFileSync(path.join(root, 'source-commit.txt'), execFileSync('git', ['rev-parse', 'HEAD']), { flag: 'wx' });
 NODE
 ```
+
+The setup copies all three original inputs and records their exact byte counts
+and SHA-256 digests in `input-manifest.json`. Materialization and signal creation
+use those private copies. Keep the originals unchanged.
 
 The setup command generates the key for this disposable receiver; it is not a
 deployment credential. Do not print it, write it to evidence, or reuse it for deployment.
@@ -233,6 +249,50 @@ npm run pipeline -- \
   --run-id "$WAIT_REHEARSAL_RUN_ID" \
   > "$WAIT_REHEARSAL_ROOT/start.stdout" 2> "$WAIT_REHEARSAL_ROOT/start.stderr" || start_status=$?
 printf '%s\n' "$start_status" > "$WAIT_REHEARSAL_ROOT/start.exit"
+```
+
+Require start exit 1 and JSON `status: waiting` before continuing. Stop on a
+start error or any other state. Confirm the command exited and no writer owns
+this run. The receiver has finished its one request. Preserve the private
+Core run and the three known adapter/receiver files before the first audit.
+Define this helper in the same terminal. It uses the canonical run copy, then
+copies each store without parsing or removing partial bytes. It retains adapter
+bytes even if the Core copy has an incomplete journal; its nonzero result stops
+before audit:
+
+```bash
+export RUN_CONTROL_PLATFORM="$WAIT_REHEARSAL_ROOT/platform.json"
+export RUN_CONTROL_RUN_ID="$WAIT_REHEARSAL_RUN_ID"
+preserve_rehearsal_state() {
+  preservation_status=0
+  preserve_run_state || preservation_status=$?
+  node --input-type=module <<'NODE'
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+const source = process.env.WAIT_REHEARSAL_ROOT;
+const target = process.env.RUN_CONTROL_OBSERVATION_ROOT;
+const files = ['waits/records/store.json', 'deliveries/records/store.json', 'receiver.jsonl'];
+const manifest = files.map(file => {
+  const original = path.join(source, file);
+  if (!fs.lstatSync(original).isFile()) throw new Error('Regular store file required: ' + file);
+  const bytes = fs.readFileSync(original);
+  const copy = path.join(target, 'adapters', file);
+  fs.mkdirSync(path.dirname(copy), { recursive: true, mode: 0o700 });
+  fs.writeFileSync(copy, bytes, { flag: 'wx', mode: 0o600 });
+  assert.deepEqual(fs.readFileSync(original), bytes);
+  assert.deepEqual(fs.readFileSync(copy), bytes);
+  return { path: file, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') };
+});
+fs.writeFileSync(path.join(target, 'adapter-manifest.json'), JSON.stringify(manifest, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+NODE
+  adapter_copy_status=$?
+  test "$preservation_status" -eq 0 && test "$adapter_copy_status" -eq 0
+}
+preserve_rehearsal_state || exit 1
+printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$WAIT_REHEARSAL_ROOT/wait.raw-state.txt"
+cp -R -- "$RUN_CONTROL_OBSERVATION_ROOT" "$WAIT_REHEARSAL_ROOT/wait.raw-state" || exit 1
 npm run pipeline -- \
   --platform "$WAIT_REHEARSAL_ROOT/platform.json" \
   --audit "$WAIT_REHEARSAL_RUN_ID" \
@@ -244,7 +304,10 @@ Require start exit 1 with JSON `status: waiting`, stage `approval` waiting,
 `attemptsUsed: 1`, and audit exit 0. A start error, `failed`, or `blocked` is a
 stop. npm writes its script banner before the CLI JSON; retain the whole output.
 
-Read the durable wait from the hash-verified journal, not from a copied example
+Read the durable wait with the strict non-mutating parser. It rejects
+incomplete records and sequence or hash errors; it does not create locks or
+repair the journal. Stop on failure and preserve raw bytes before any audit or
+recovery. Read from the hash-verified journal, not from a copied example
 or the notification alone. This script also creates the valid signal and the
 two declared negative inputs. It records the creation time and budget summary.
 
@@ -253,17 +316,18 @@ node --input-type=module <<'NODE'
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { FileJournal } from './skills/nova/core/state/journal.ts';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
 import { runRoot } from './skills/nova/core/execution/run-root.ts';
 const root = process.env.WAIT_REHEARSAL_ROOT;
 const run = runRoot(path.join(root, 'core'), process.env.WAIT_REHEARSAL_RUN_ID);
-const records = new FileJournal(path.join(run, 'events.jsonl')).records();
+const eventsFile = path.join(run, 'events.jsonl');
+const records = parseHashJournal(fs.readFileSync(eventsFile), eventsFile);
 const completed = records.filter(r => r.entry.type === 'attempt.completed');
 if (completed.length !== 1 || completed[0].entry.payload.result.outcome !== 'wait') throw new Error('Expected one completed waiting attempt');
 const creation = completed[0].entry;
 const wait = creation.payload.result.wait;
 if (wait.signalType !== 'approval.resolved' || wait.authorizedIssuer.id !== 'operator:local' || Date.now() >= Date.parse(wait.expiresAt)) throw new Error('Unexpected or expired wait');
-const signal = JSON.parse(fs.readFileSync('docs/site/use/workflows/wait-resume/signal.template.json', 'utf8'));
+const signal = JSON.parse(fs.readFileSync(path.join(root, 'signal.template.json'), 'utf8'));
 const id = 'signal:' + crypto.randomUUID();
 Object.assign(signal, { signalId: id, idempotencyKey: id, waitId: wait.waitId, signalType: wait.signalType, issuer: wait.authorizedIssuer, issuedAt: new Date().toISOString() });
 signal.payload.issuer = wait.authorizedIssuer;
@@ -331,6 +395,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
 const root = process.env.WAIT_REHEARSAL_ROOT;
 const run = fs.readFileSync(path.join(root, 'run-root.txt'), 'utf8').trim();
 const files = {
@@ -345,7 +410,11 @@ const hashes = Object.fromEntries(Object.entries(files).map(([name, file]) => {
   const bytes = fs.readFileSync(file);
   return [name, { bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') }];
 }));
-const events = fs.readFileSync(files.events, 'utf8').trim().split('\n').map(line => JSON.parse(line).entry);
+const journals = ['events', 'effects', 'signals'];
+for (const name of journals) {
+  if (hashes[name] !== null) parseHashJournal(fs.readFileSync(files[name]), files[name]);
+}
+const events = parseHashJournal(fs.readFileSync(files.events), files.events).map(record => record.entry);
 const completed = events.filter(e => e.type === 'attempt.completed');
 const snapshot = { hashes, attemptsUsed: completed.length,
   outcomes: completed.map(e => e.payload.result.outcome),
@@ -400,6 +469,17 @@ Submit the reviewed valid bytes only after both negative checks pass:
 
 ```bash
 resume_case valid "$WAIT_REHEARSAL_ROOT/valid.signal.json"
+```
+
+Require valid exit 0 and `status: succeeded` before the final audit. If the
+response is lost, nonzero, or uncertain, stop and use the preservation and
+reconciliation steps in [Failure and Interruption](#failure-and-interruption).
+After the command exits and all writers are stopped, preserve raw state again:
+
+```bash
+preserve_rehearsal_state || exit 1
+printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$WAIT_REHEARSAL_ROOT/final.raw-state.txt"
+cp -R -- "$RUN_CONTROL_OBSERVATION_ROOT" "$WAIT_REHEARSAL_ROOT/final.raw-state" || exit 1
 npm run pipeline -- \
   --platform "$WAIT_REHEARSAL_ROOT/platform.json" \
   --audit "$WAIT_REHEARSAL_RUN_ID" \
@@ -445,10 +525,14 @@ node --input-type=module <<'NODE'
 import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
-import { FileJournal } from './skills/nova/core/state/journal.ts';
+import { parseHashJournal } from './skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
 const root = process.env.WAIT_REHEARSAL_ROOT;
 const run = fs.readFileSync(path.join(root, 'run-root.txt'), 'utf8').trim();
-const events = new FileJournal(path.join(run, 'events.jsonl')).records().map(r => r.entry);
+const readJournal = name => {
+  const file = path.join(run, name);
+  return parseHashJournal(fs.readFileSync(file), file).map(record => record.entry);
+};
+const events = readJournal('events.jsonl');
 const signal = JSON.parse(fs.readFileSync(path.join(root, 'valid.signal.json'), 'utf8'));
 const completed = events.filter(e => e.type === 'attempt.completed');
 const resolved = events.filter(e => e.type === 'wait.resolved');
@@ -460,8 +544,8 @@ assert.deepEqual(resolved[0].payload.signal, signal);
 assert.notEqual(completed[0].identity.attemptId, completed[1].identity.attemptId);
 assert(completed[0].sequence < resolved[0].sequence && resolved[0].sequence < completed[1].sequence);
 assert.equal(events.filter(e => e.type === 'run.succeeded').length, 1);
-assert.deepEqual(new FileJournal(path.join(run, 'signals.jsonl')).records().map(r => r.entry), [signal]);
-const effects = new FileJournal(path.join(run, 'effects.jsonl')).records().map(r => r.entry);
+assert.deepEqual(readJournal('signals.jsonl'), [signal]);
+const effects = readJournal('effects.jsonl');
 const publish = effects.filter(e => e.type === 'requested' && e.request.capability === 'operator.request');
 assert.equal(publish.length, 1);
 const receipt = effects.find(e => e.type === 'completed' && e.receipt.idempotencyKey === publish[0].request.idempotencyKey);
@@ -493,16 +577,23 @@ NODE
 | `FILE_MUTEX_ACQUIRE_FAILED` | Required fixed host lock interface unavailable | Stop before state claims. Use a supported host; preserve the failed attempt. |
 | Registry, provider, grant, or config validation error | Wrong package/configuration selection | Correct before a new run. Do not change a running graph or package snapshot. |
 | Receiver 403 or delivery error | Missing/wrong secret, HMAC, origin/header permission, or receiver response | Preserve request and receipt evidence. If delivery outcome is uncertain, stop and reconcile through the owning receiver. Do not replay publication by starting another run. |
-| `WAIT_UNKNOWN_OR_STALE` | Wrong identity or resolved wait | Read the same run's durable audit. Do not guess a replacement wait. |
+| `WAIT_UNKNOWN_OR_STALE` | Wrong identity or resolved wait | Preserve raw state before reading the same run's durable audit. Do not guess a replacement wait. |
 | `WAIT_ISSUER_DENIED` or `WAIT_SIGNAL_TYPE_MISMATCH` | Envelope differs from the active wait | Stop this submission; compare the reviewed signal with the durable request. |
 | `WAIT_SIGNAL_STALE` or `WAIT_EXPIRED` | Issue time predates creation or current clock reached expiry | Preserve the rejection. Do not change the clock or journal; expired approval needs a new governed run. |
-| Valid command response lost | Acceptance may already be durable | Audit first. Inspect the causal resolution, completed attempts, signal record, and effects. Do not invent a fresh signal identity. |
+| Valid command response lost | Acceptance may already be durable | Stop writers and preserve raw run and adapter state before audit. Inspect complete hash-verified journals, then audit under the canonical procedure. Keep the original signal bytes, ID, time, and key. Do not invent a successor signal or repeat an uncertain effect. |
 | `RECOVERY_SIGNAL_REQUIRED` | Recovery found an active wait | Follow the canonical signal procedure. Recovery cannot create approval. |
 | Terminal run error | Run already succeeded, failed, blocked, or cancelled | Preserve the terminal audit. Use a new governed run for new work. |
 
 For process interruption, use [Recover After Interruption](../operate.md#recover-after-interruption)
 with the original graph, platform, package identities, run ID, and storage.
-Reconcile unresolved external effects before recovery. This guide supplies no
+Preserve raw partial bytes and checksums before the first audit or recovery.
+Stop on incomplete or corrupt journal records; do not trim them for inspection.
+Reconcile unresolved external effects before any permitted canonical repair or
+recovery. Audit can create lock files and truncate an unterminated journal tail;
+its success alone does not prove that an external operation completed. For this
+local input set, use `preserve_rehearsal_state` after writers stop; it binds the
+known Core and adapter paths. A missing file is a stop, not permission to create
+replacement authority. This guide supplies no
 generic receipt import or cancellation command. Stopping the local receiver
 does not cancel a durable Nova run. A signal payload with `decision: rejected`
 is a separate decision that yields `blocked` with reason `approval.rejected`;
@@ -528,12 +619,19 @@ its ownership before termination; do not kill an unrelated listener.
 
 Retain a restricted evidence copy outside the disposable directory. Include
 the source commit, package and graph snapshots, materialized platform and
-pipeline, signal templates and actual signal bytes, run ID, commands, timestamps,
-exit statuses, before/final/replay audits, all journals, wait/delivery stores,
+pipeline, all three original inputs, `input-manifest.json`, and actual signal
+bytes, run ID, commands, timestamps,
+exit statuses, wait/final audits, replay output, all journals, wait/delivery stores,
 receiver body, checksum/byte-count comparisons, and final operator decision.
 Do not retain the HMAC key. Check the copy's file digests before removing any
 source copy. A stopped or uncertain run requires preservation, not successful
 cleanup status.
+
+Before copying, save the nonsecret command transcript, start/end timestamps,
+signal-review decision, final operator decision, and any blocked step in the
+private root. The command blocks do not generate these operator records. Do not
+record environment values or enable shell tracing around the key. Stop writers
+before the archive copy.
 
 Create and verify the restricted local evidence copy:
 
@@ -558,6 +656,11 @@ function inventory(root, relative = '') {
   });
 }
 const original = inventory(source);
+const inputs = JSON.parse(fs.readFileSync(path.join(source, 'input-manifest.json'), 'utf8'));
+assert.deepEqual(inputs.map(input => input.path), ['approval.pipeline.json', 'platform.template.json', 'signal.template.json']);
+for (const input of inputs) {
+  assert.deepEqual(original.find(file => file.path === input.path), input);
+}
 assert.deepEqual(inventory(target), original);
 fs.writeFileSync(path.join(target, 'archive-manifest.json'), JSON.stringify(original, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
 console.log(JSON.stringify({ retainedEvidence: target, filesVerified: original.length }));
