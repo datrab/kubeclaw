@@ -17,6 +17,11 @@ import { implicitKubernetesObjectMetaReferences as canonicalMetadataReferences }
 const text = value => String(value).replace(/[&<>"'\\`\[\]*_|~]/gu,
   character => `&#${character.codePointAt(0)};`).replaceAll('\n', '<br>');
 const code = value => `<code>${text(value)}</code>`;
+// Cross-directory reader links are finite canonical tasks. Keep the previous
+// same-directory grammar; publication/link checks resolve their destinations.
+const canonicalReaderTargets = new Set([
+  '../use/maintenance.md#retire-the-former-qdrant-installation',
+]);
 const identity = row => JSON.stringify([row.apiVersion, row.kind, row.fieldPath]);
 const anchor = row => `api-field-${createHash('sha256').update(identity(row)).digest('hex').slice(0, 20)}`;
 
@@ -56,7 +61,8 @@ function renderReceiverContract(receiver, key, fieldPath) {
   }).join('\n');
   const readerReferences = (receiver.readerReferences ?? []).map(item => {
     assert(typeof item.label === 'string' && item.label.trim()
-      && /^[a-z0-9-]+\.md#[a-z0-9-]+$/u.test(item.target),
+      && typeof item.target === 'string'
+      && (canonicalReaderTargets.has(item.target) || /^[a-z0-9-]+\.md#[a-z0-9-]+$/u.test(item.target)),
     `API_REFERENCE_READER_LINK_INVALID: ${key} ${fieldPath}`);
     return `- [${text(item.label)}](${item.target})`;
   }).join('\n');
