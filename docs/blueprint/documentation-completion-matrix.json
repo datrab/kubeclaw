@@ -19276,8 +19276,20 @@
       "forkTurns": "none",
       "initialMode": "read-only",
       "revision": "85925ff282d0483df57b69d20ea1bef230ccac00",
-      "state": "running",
-      "scope": "All 53 current AP09.7 catalogue requirements and all A97-01–A97-12 Source aspects in immutable commit tree. Current contract expands the initially stated gate range. No moving AP98 tooling overlays; no Reader/Quality/Astra or global acceptance."
+      "state": "completed FAIL",
+      "scope": "All 53 current AP09.7 catalogue requirements and all A97-01–A97-12 Source aspects in immutable commit tree. Current contract expands the initially stated gate range. No moving AP98 tooling overlays; no Reader/Quality/Astra or global acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/ap097-current-source-fresh-review/review.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-source-v2-root-seal.json",
+      "requirements": {
+        "PASS": 35,
+        "FAIL": 17,
+        "NOT_CHECKED": 1
+      },
+      "sourceGateTotals": {
+        "PASS": 4,
+        "FAIL": 8
+      },
+      "limit": "No author correction accepted retroactively; no full package/Reader/Quality/Astra/live acceptance."
     },
     {
       "agent": "/root/ap097_current_reader_fresh",
