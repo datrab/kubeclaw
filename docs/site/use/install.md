@@ -334,7 +334,7 @@ It must not return an unexpected environment with the same name.
 This section makes no cluster change. First complete the canonical
 [Locked Dependency Installation](quickstart.md#locked-dependency-installation)
 in this disposable checkout. Install Go and make `go` available on `PATH`;
-the generated-documentation checks use it to inspect Go producers. The repository
+the configuration inventory uses it to inspect Go producers. The repository
 does not declare an accepted Go version range. Record the observed version before
 running the source checks:
 

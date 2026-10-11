@@ -19809,6 +19809,22 @@
       "role": "Source-only",
       "state": "assigned-not-accepted",
       "scope": "Exact four hash-bound publication tool/helper/test/package inputs; no Reader/Quality/global/Astra acceptance"
+    },
+    "publicationAssetsFreshSourceCompleted": {
+      "agent": "/root/publication_assets_source_fresh",
+      "role": "Source-only",
+      "revision": "1da1ed41de149a78c267f4fb84baaf4d65cb5f3c",
+      "report": "/home/node/Documents/Codex/a98-evidence/publication-assets-source-fresh/review.md",
+      "reportSha256": "1390f2b17de22d871b8bba8f4aab35a4a25821238033165c0a0d20d2384d394f",
+      "verdict": "FAIL-SOURCE-ASSET-01",
+      "scope": "Complete four exact publication tool inputs; all15 actual assets copied byte-identically, but directoryprefix allowance silently acceptedunknown internal files",
+      "correction": "Root replaced recursive prefixes with15 explicit permitted regular-file paths; six author tests PASS including unknownnestedfile rejection ineach ofthree directories; actual15file copy PASS. New fresh Source review still required."
+    },
+    "currentGeneratedWorkflowTree": {
+      "sourceRevision": "1da1ed41de149a78c267f4fb84baaf4d65cb5f3c",
+      "generatedRevision": "3ae74b8e6f90802f5e2ce101e9fcb9242f3e7b7d",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/root-partial-generation-1da-receipt.json",
+      "observed": "Only issue view and tree generated/check terminals0; canonical167/internal190/legacy249/deletable2335,2941physical files. No full inventory/configuration mutation or package acceptance."
     }
   },
   "productBoundaries": [

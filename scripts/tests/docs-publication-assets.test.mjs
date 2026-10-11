@@ -40,6 +40,15 @@ test('an internal record under the reader root cannot silently enter or disappea
   assert.throws(() => publicationAssets(site), /no publication allowance: reference\/private-review.json/u);
 });
 
+for (const directory of ['extend/examples/minimal-stage', 'use/workflows/examples', 'use/workflows/wait-resume']) {
+  test(`unapproved artifacts inside ${directory} stop publication`, t => {
+    const { site, write } = fixture(t);
+    write('use/workflows/wait-resume/signal.template.json', '{}\n');
+    write(`${directory}/nested/private-review.json`, '{"internal":true}\n');
+    assert.throws(() => publicationAssets(site), /no publication allowance: .*\/nested\/private-review.json/u);
+  });
+}
+
 test('an allowed-looking symlink cannot publish data outside the reader tree', t => {
   const { root, site, write } = fixture(t);
   write('use/workflows/wait-resume/signal.template.json', '{}\n');

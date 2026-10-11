@@ -4,14 +4,22 @@ import path from 'node:path';
 // Only canonical reader inputs belong in the published artifact. Keep this
 // allowlist separate from the source tree's internal documentation inputs.
 const files = new Set([
+  'extend/examples/minimal-stage/package.json',
+  'extend/examples/minimal-stage/plugin.json',
+  'extend/examples/minimal-stage/schemas/config.schema.json',
+  'extend/examples/minimal-stage/schemas/input.schema.json',
+  'extend/examples/minimal-stage/schemas/result.schema.json',
+  'extend/examples/minimal-stage/src/stage.js',
+  'extend/examples/minimal-stage/tests/stage.test.mjs',
   'reference/generated-documentation-map.json',
   'reference/documentation-route-registry.json',
+  'use/workflows/examples/buster-fixture-matrix-report.pipeline.json',
+  'use/workflows/examples/request-trace-redis-unavailable.json',
+  'use/workflows/examples/request-trace-success.json',
+  'use/workflows/wait-resume/approval.pipeline.json',
+  'use/workflows/wait-resume/platform.template.json',
+  'use/workflows/wait-resume/signal.template.json',
 ]);
-const directories = [
-  'extend/examples/minimal-stage/',
-  'use/workflows/examples/',
-  'use/workflows/wait-resume/',
-];
 
 export function publicationAssets(siteRoot) {
   const assets = [];
@@ -23,7 +31,7 @@ export function publicationAssets(siteRoot) {
       if (!entry.isFile()) throw new Error(`Publication source must be a regular file: ${source}`);
       const relative = path.relative(siteRoot, source).split(path.sep).join('/');
       if (relative.endsWith('.md')) continue;
-      if (!files.has(relative) && !directories.some(prefix => relative.startsWith(prefix))) {
+      if (!files.has(relative)) {
         throw new Error(`Reader asset has no publication allowance: ${relative}`);
       }
       assets.push(relative);
