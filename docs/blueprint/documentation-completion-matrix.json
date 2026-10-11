@@ -21025,13 +21025,27 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active complete installation Reader review",
+      "state": "completed whole assigned Reader FAIL F1-F3",
       "report": "/home/node/Documents/Codex/a98-evidence/installation-complete-current-reader-fresh/report.md",
-      "scopeLimit": "Assigned scope only; no package/global/live acceptance"
+      "scopeLimit": "Assigned scope only; no package/global/live acceptance",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-complete-current-reader-fresh-root-seal.json"
+    },
+    {
+      "agent": "/root/python_scope_flow_qualified_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal whole assigned Source FAIL F1-F5, corrected authoritative evidence v2",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-scope-flow-qualified-complete-source-fresh/report-v2.md",
+      "scope": "Whole coupled native/scanner/receiver/qualification guard scope only",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-scope-flow-qualified-complete-source-fresh-v2-root-seal.json"
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open; current storage guides bounded three-role PASS, AP09.7 mapping-only PASS, Python discovery coupled Source FAIL under correction",
+    "stage": "AP09.8 remains open; whole221 test suite PASS but independently demonstrated5discoveryfailures undercorrection; installation3readerfailures being corrected inparallel",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
     "next": "Wait complete critical Source/mapping reports without author edits; finish retirement procedure writer; correct complete reported scopes then new independent reviews; generation and full mutations remain mandatory",
@@ -21499,7 +21513,7 @@
       "next": "Fresh independent full recursive operational-semantic review remains required; schema identity and family comparisons do not close this."
     },
     "currentSourceHead": "57c70224200c86cb9750e39db1eb0090aa982209",
-    "nextAction": "Correct lexical/finite-flow scanner; semantically qualify exact changed Source dependencies; fresh complete coupled Source review and stable full API tests before Source commit and new generation",
+    "nextAction": "Finish full Source audit, correct complete batched scope/loop/annotation/shell classification findings; complete parallel installation/release/partial-probe prose correction; fresh independent reviews before generation",
     "currentPushedRevision": "b6e4a0d774434b8c39b2575322436e3fba708914",
     "recursiveSchemaDiscovery": "Full13 current raw API kind schemas5698paths; unsupported structural branches now rejected deeply and unknown nested fragment keywords qualified. Updated helper requires new independent Source review.",
     "currentMutationObservation": "Original full config mutation at7e413cf6 terminalPASS exit0; no running original process. Current revised coverage needs new whole-gate evidence after missing receiver baseline is complete.",
@@ -22071,8 +22085,8 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/python_environment_literal_classification_correction_writer",
-      "/root/pv_named_admission_canonical_seed_correction_writer",
-      "/root/installation_complete_current_reader_fresh"
+      "/root/ops_bootstrap_credential_environment_contract_writer",
+      "/root/pv_named_admission_canonical_seed_correction_writer"
     ]
   },
   "productBoundaries": [
@@ -25107,6 +25121,51 @@
       "failed": 4,
       "sourcesUnchanged": true,
       "finding": "All4 failures: exact synthetic corpus test runtime-consumer-contracts dependency qualification changed; requires semantic review and legitimate Source binding, not guard weakening"
+    },
+    "integratedApiPythonScopeFlowQualified": {
+      "state": "observed terminal PASS bounded suite only",
+      "exitCode": 0,
+      "tests": 221,
+      "passed": 221,
+      "failed": 0,
+      "sourcesUnchanged": true,
+      "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-python-scope-flow-qualified/result.json",
+      "limit": "Current fresh complete Source reviewer independently reproduces unsupported reader loss; green tests do not establish semantic/documentation/package acceptance"
+    },
+    "installationFreshReader": {
+      "state": "completed whole assigned Reader FAIL",
+      "reviewer": "/root/installation_complete_current_reader_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-complete-current-reader-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-complete-current-reader-fresh-root-seal.json",
+      "findings": [
+        "No executable promotion and accepted clean-checkout path",
+        "Early partial/Pending probe state cannot follow identity-dependent capture/cleanup",
+        "Missing scoped probe and all-namespace deployment owner guard permissions before mutation"
+      ],
+      "correctionOwner": "/root/ops_bootstrap_credential_environment_contract_writer",
+      "exclusivePaths": [
+        "docs/site/use/install.md",
+        "docs/site/use/maintenance.md"
+      ],
+      "scope": "Prose only; product/runtime unchanged; independent new complete reviews required"
+    },
+    "pythonScopeFlowQualifiedCompleteSource": {
+      "state": "terminal whole assigned Source FAIL F1-F5, corrected authoritative evidence v2",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-scope-flow-qualified-complete-source-fresh/report-v2.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-scope-flow-qualified-complete-source-fresh-v2-root-seal.json",
+      "verifiedArtifacts": 67,
+      "reviewer": "/root/python_scope_flow_qualified_complete_source_fresh",
+      "findings": [
+        "Empty literal loops lose real alias/direct/finite-key readers",
+        "Potential evaluated annotation input missed; native3.14 explicitannotationaccess proved actual call; declaration didnot execute",
+        "Passive shell echo/nestedquotedheredoc misclassified",
+        "Lateglobalimports and basiclocalbinding reader boundaries",
+        "Actual YAML readiness command argv loses introduced Pythonliteralinput"
+      ],
+      "qualificationVerdict": "Independent actualSourcegraph/mutation guards PASS withinassignedscope",
+      "contractVerdict": "ExacttwoOPScredentialcontractsSourcePASS only",
+      "correctionOwner": "/root/python_environment_literal_classification_correction_writer",
+      "scope": "No currentSource, fullconfigurationgeneration, package, publication orliveacceptance"
     }
   }
 }
