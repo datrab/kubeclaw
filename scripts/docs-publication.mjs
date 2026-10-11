@@ -11,6 +11,7 @@ import { pluginSourceClosure, pluginInvocationFacts, pluginCapabilityRoutes } fr
 import { dependencySchemaFacts } from './plugin-schema-dependencies.mjs';
 import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.mjs';
 import { markdownInlineLinks, stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
+import { publicationAssets, copyPublicationAssets } from './lib/docs-publication-assets.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
@@ -845,6 +846,8 @@ function checkSite() {
   }
   for (const plugin of plugins) if (!localVerificationById.has(plugin.manifest.id)) errors.push(`Local verification is missing ${plugin.manifest.id}`);
   const pages = walk(siteRoot).filter((file) => file.endsWith('.md')).sort();
+  try { publicationAssets(siteRoot); }
+  catch (error) { errors.push(error.message); }
   for (const file of pages) {
     const text = fs.readFileSync(file, 'utf8');
     const readerMetadata = file.endsWith('reference/platform-surfaces-generated.md')
@@ -1005,17 +1008,13 @@ function build() {
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, text);
   }
-  const governanceMap = path.join(siteRoot, 'reference', 'generated-documentation-map.json');
-  const governanceTarget = path.join(outputRoot, 'reference', 'generated-documentation-map.json');
-  fs.mkdirSync(path.dirname(governanceTarget), { recursive: true });
-  fs.copyFileSync(governanceMap, governanceTarget);
-  const routeRegistry = path.join(siteRoot, 'reference', 'documentation-route-registry.json');
-  const routeRegistryTarget = path.join(outputRoot, 'reference', 'documentation-route-registry.json');
-  fs.copyFileSync(routeRegistry, routeRegistryTarget);
+  const assets = publicationAssets(siteRoot);
+  copyPublicationAssets(siteRoot, outputRoot, assets);
   const report = {
     schemaVersion: 'kubeclaw-docs-publication.v1',
     revision,
     pageCount: pages.length,
+    assetPaths: assets,
     pluginCount: plugins.length,
     pageDigest: crypto.createHash('sha256').update(pages.map((file) => fs.readFileSync(file)).join('')).digest('hex'),
     checks: ['metadata', 'controlled-language', 'links', 'reader-journeys', 'plugin-coverage', 'release-pinned-evidence', 'documentation-ownership-map', 'route-registry'],

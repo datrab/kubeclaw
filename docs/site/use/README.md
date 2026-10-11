@@ -35,6 +35,10 @@ identity, the source revision, and its execution time.
 | Demo delivery | [Deliver a Demo](demo-delivery.md#canonical-demo-delivery-procedure) | A local contract result or an exact blocked live-delivery prerequisite; human acceptance remains separate |
 | Worker trust | [Operate Worker Trust](worker-trust.md#canonical-worker-trust-procedure) | Positive and negative workload-identity observations |
 
+Use [Pipeline Workflow Guides](workflows/README.md) to select concrete approval,
+test, and fixture inputs. [Rehearse Human Approval and Resume](workflows/wait-resume.md)
+supplies the input set and observations for the run-control procedure above.
+
 The [Buster suite workflow](workflows/buster-suite.md) is the canonical Buster
 suite procedure. It is not the authority for a human demo decision or the full
 Prism journey. Use [Prepare and release a Kubernetes fixture](workflows/kubernetes-fixture.md)

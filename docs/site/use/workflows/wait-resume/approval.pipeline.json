@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "pipeline-definition.v2",
+  "id": "pipeline:wait-resume-approval",
+  "maxConcurrency": 1,
+  "stages": [
+    {
+      "id": "approval",
+      "type": "kubeclaw.decision.human-approval",
+      "dependsOn": [],
+      "config": {
+        "target": "operators",
+        "issuerId": "operator:local",
+        "timeoutMinutes": 60
+      },
+      "input": { "summary": "Approve this disposable wait/resume rehearsal only." },
+      "execution": { "maxAttempts": 2, "maxRemediationCycles": 0, "timeoutMs": 10000 }
+    }
+  ]
+}

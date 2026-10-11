@@ -27,10 +27,13 @@ measured results, identity verification, and application permission distinct.
 | Capability | A named type of permitted external action, such as artifact write or runtime dispatch. |
 | Capability grant | Permission for one capability, one provider, and stated resource limits. |
 | Canonical state | The authoritative state used to decide what can happen next. Nova owns canonical pipeline state. |
+| [cgroup](#cgroup) | Linux control group: a group of processes with shared resource controls. |
 | Claim | A time-limited assignment of a worker attempt to one worker identity. |
 | Cleanup state | Evidence that attempt-owned resources were removed, retained, or need reconciliation. |
+| [Compare-and-swap (CAS)](#compare-and-swap) | Commit a change only if the stored value still matches the expected value. |
 | Content digest | A value calculated from content. It detects changed bytes and binds stored evidence to an identity. |
 | Core | Nova Core when the text discusses pipeline lifecycle. “Worker Core” always names the neutral worker layer. |
+| [CSI](#csi) | Container Storage Interface: the interface Kubernetes uses for volume drivers. |
 | [CSRF](#csrf) | Cross-site request forgery: another site tries to make the browser submit an unwanted change. A separate token protects Prism session writes. |
 | Durable | Stored so that the applicable process can restart without losing the record. Durability still depends on the storage system. |
 | Echo | The review specialist identity. Echo proposes findings but does not own lifecycle verdicts. |
@@ -80,6 +83,26 @@ measured results, identity verification, and application permission distinct.
 | Uncertain effect | An external request that might have succeeded, although no trustworthy receipt is available. |
 | Wait | A durable pause that needs a matching signal, approval, orchestrator action, or cooldown. |
 | Worker Core | The neutral layer that controls worker attempts, claims, capacity, limits, cancellation, resources, recovery, and result binding. |
+
+## cgroup
+
+A Linux control group groups processes for resource accounting and control,
+such as CPU and memory limits. Version 2 uses one hierarchy for these controls.
+See the [native worker recovery boundary](../use/prism-studio.md#worker-not-ready)
+for the host policy and process ownership requirements.
+
+## CSI
+
+The Container Storage Interface lets Kubernetes use an external volume driver.
+The selected SPIFFE CSI driver delivers the Workload API socket used to obtain
+workload credentials. See [SVID](#svid) for that identity path.
+
+## Compare-and-swap
+
+A compare-and-swap commits a change only if the stored value matches the value
+the caller expected. For a Prism document edit, the expected value is the base
+revision. A mismatch stops the edit with a revision conflict.
+See [typed visual edits](../use/prism-studio.md#typed-visual-edits).
 
 ## Approval, publication, and resume
 

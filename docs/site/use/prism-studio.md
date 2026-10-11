@@ -22,7 +22,8 @@ This page is the sole authority for `prism-studio`. It has two phases.
 
 For [deployment and health](#deploy-prism), start with an existing cluster that
 passed install preflight, an exact selected Prism service/agent release,
-prepared Secrets, SPIRE/CSI and native-worker dependencies, sufficient
+prepared Secrets, the SPIRE identity service and its
+[Container Storage Interface (CSI) driver](../reference/glossary.md#csi), native-worker dependencies, sufficient
 database/artifact/backup capacity, and the required private-access configuration.
 A Nova approval wait is not a deployment prerequisite. Run deployment commands
 from `<repository-root>` on the administration machine.
@@ -1022,15 +1023,24 @@ operations. Each operation identifies the document elements to change:
 - apply an atomic operation batch.
 
 The visual editor has no control for changing responsive properties.
-Its available property controls are defined in the
+These source definitions list the available property controls:
 [layout and text fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-config.tsx#L37-L64)
 and [generic block fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-config.tsx#L71-L94).
 
-An editor copy uses the projected properties to
+Choose the node type when inserting a new block. Changing an existing node's
+type fails with `PRISM_NODE_TYPE_CHANGE_UNSUPPORTED`. Stop and reload the
+current revision before another edit.
+[Existing node type check](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-adapter.ts#L194-L201).
+
+An editor copy uses the properties that the editor displays to
 [construct new nodes](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-adapter.ts#L169-L191)
 and [insert them](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-adapter.ts#L235-L249).
 It does not copy node-specific state patches, responsive patches, or flow
 triggers. Copied buttons use the `primary` variant and `preview-action` action.
+Properties that the editor does not display can revert to defaults. For
+example, a copied grid has two columns, and a copied text input uses type
+`text`.
+[Copy property defaults](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-adapter.ts#L22-L42).
 Check the resulting content and behavior before using the copy.
 
 Every operation carries `baseRevision`.
@@ -1304,7 +1314,7 @@ The issuer is not authenticated by a signal signature. It is caller-supplied
 and compared with the active wait. Restrict signal-file creation and CLI access;
 do not describe issuer matching as proof of the human's identity.
 
-All identities must match:
+Check these identities and signal conditions:
 
 - signal type is `prism.approval.resolved`;
 - issuer type is `operator`;
@@ -1312,8 +1322,14 @@ All identities must match:
 - approval ID names the Studio approval;
 - architecture digest equals the active architecture used for the design;
 - bundle digest equals the Studio publication result;
-- signal time is inside the wait lifetime;
+- `issuedAt` is not earlier than the durable wait creation time;
+- when the wait has an expiry, Nova's clock is still before that expiry;
 - signal idempotency key has not been used for different content.
+
+Nova does not check an upper bound on `issuedAt` against the current time or
+the wait expiry. Record the actual creation time when issuing a signal; do not
+treat the runtime check as proof of that timestamp.
+[Signal time checks](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/nova/core/execution/engine-snapshots.ts#L137-L144).
 
 After resume, Nova dispatches the same Prism request with `approvalId`.
 Control returns only a baseline that belongs to the active request and approval.
@@ -1960,7 +1976,7 @@ The five-character SQL meanings below come from PostgreSQL's
 
 Native repair is not an executable operator surface on this page. The native-host
 owner and Prism maintainers must reconcile the selected node/pool policy,
-engine digest, cgroup v2 pool, ownership records, and attempt journal through an
+engine digest, [Linux control group (cgroup v2)](../reference/glossary.md#cgroup) pool, ownership records, and attempt journal through an
 owned recovery procedure. The blocked step is deciding the outcome of retained
 processes and attempts and changing their state safely. Do not edit the policy,
 ownership store, journal, or cgroup tree, start a second supervisor, move the
@@ -2360,7 +2376,7 @@ Do not use it as the only design document for a code change.
 
 | Intended change | Start with | Required boundary to preserve |
 | --- | --- | --- |
-| Control route or transaction | `skills/prism/server/control-server.ts` and `skills/prism/storage/index.ts` | Authentication, project lock, revision CAS, active architecture, idempotency, and durable result order |
+| Control route or transaction | `skills/prism/server/control-server.ts` and `skills/prism/storage/index.ts` | Authentication, project lock, revision [compare-and-swap (CAS)](../reference/glossary.md#compare-and-swap), active architecture, idempotency, and durable result order |
 | Prism agent behavior | `skills/prism/server/agent-job-runner.mjs` and `skills/prism/openclaw-plugin/` | One durable job, one fence, one project session, no uncertain automatic replay |
 | Worker operation | `skills/prism/server/native-worker-execution.ts` and the Worker Core guide | Accepted v3 identity, native ownership, bounded I/O, drain, final counters, and sealed result |
 | Studio interaction | `skills/prism/studio/app.tsx` and focused clients | Session and CSRF, current revision, retained idempotency identity, no local canonical state |

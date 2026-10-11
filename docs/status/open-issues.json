@@ -1627,14 +1627,14 @@
       ],
       "current_state": "The producer and declared receiver disagree. Namespace ResourceQuota and LimitRange values are fixed controller settings. No product correction, live admission, volume provision or mount is established. The script installs its RETURN cleanup trap only after lease readiness and namespace verification, so earlier failure requires state inspection.",
       "remaining_work": [
-        "Owner: Prism maintainers, with the namespace-controller maintainer. Decide whether this producer should remove the unsupported field or whether a defined storage capability must be implemented and authorized.",
+        "Owner: Prism maintainers, with the namespace-controller maintainer. Decide whether to remove the unsupported field or implement and authorize a defined storage capability.",
         "Align the producer, served schema, controller behavior and operator procedure. Preserve validation and namespace isolation; accepting an unknown field is not a capability implementation.",
         "Safe action: stop this lease-based exercise until the contract is repaired. If an attempt already ran, inspect the recorded lease and namespace before retry or cleanup."
       ],
       "reproduction": [
         "Inspect cmd_prism_e2e in scripts/deploy.sh and the complete declared spec in the lease CRD. Confirm that the authored capabilityProfile field has no declared storage-profile receiver.",
         "Record the actual PATH kubectl version and installed CRD/server before diagnosing an attempted request. Distinguish a rejected write, pruned stored spec and authored text in the last-applied annotation.",
-        "In a separately authorized isolated target, execute the repaired request and observe lease identity, namespace state and the claimed storage behavior. This target execution has not been performed."
+        "In a separately authorized isolated target, execute the repaired request and observe lease identity, namespace state and the claimed storage behavior. No target execution result exists."
       ],
       "acceptance_criteria": [
         "Producer, schema and controller agree on the complete supported lease input. Unknown-field validation and namespace authorization remain enforced.",

@@ -23433,6 +23433,46 @@
       "originalPath": "docs/site/use/workflows/kubernetes-fixture.md",
       "expectedPath": "docs/site/use/workflows/kubernetes-fixture.md",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/README.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/README.md",
+      "expectedPath": "docs/site/use/workflows/README.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/wait-resume.md",
+      "expectedPath": "docs/site/use/workflows/wait-resume.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "expectedPath": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "expectedPath": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "expectedPath": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "introducedAfterBaseline": true
     }
   ]
 }

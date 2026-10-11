@@ -19737,7 +19737,79 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/workload-current-candidate-full-source-fresh/final-full-950-source-20261010/report.md"
     },
     "currentGeneratedRevision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
-    "currentReaderCorrectionRevision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84"
+    "currentReaderCorrectionRevision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84",
+    "currentQualityHostStudioWaitCompleted": {
+      "agent": "/root/quality_host_studio_wait_fresh",
+      "revision": "ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a",
+      "report": "/home/node/Documents/Codex/a98-evidence/quality-host-studio-wait-fresh/QUALITY-review.md",
+      "reportSha256": "0b5e60ec3e425afc882b62b6d164e37d5a76579527a9dfcbe9c07c1bf40330d7",
+      "verdict": "FAIL-Q1-Q2-Q3-Q4",
+      "rootIntegrity": "/home/node/Documents/Codex/a98-evidence/quality-host-studio-wait-root-integrity.json",
+      "scope": "Complete assigned host/Studio/operate paths only; no Source/Reader/Astra/global acceptance",
+      "corrections": "Root authored exact issuedAt/current-clock boundary, existing node-type stop, hidden copy defaults and first-use terminology; fresh complete affected-scope review still required. Concrete workflow inputs authored separately, no complete lifecycle/deployment PASS."
+    },
+    "currentWorkflowInputAuthorCompleted": {
+      "agent": "/root/wait_workflow_complete_writer",
+      "sourceRevision": "ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a",
+      "report": "/home/node/Documents/Codex/a98-evidence/wait-workflow-complete-writer/WRITER-REPORT.md",
+      "state": "released-author-only",
+      "files": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+        "docs/site/use/workflows/wait-resume/platform.template.json",
+        "docs/site/use/workflows/wait-resume/signal.template.json"
+      ],
+      "observed": "Schemas/runtime registration/receiver probe/static checks passed in stated scopes; actual recovery and production HTTP lifecycle checks failed at fixed-path BusyBox flock before wait assertions",
+      "deployment": "Mandatory EXEC-WAIT-RESUME remains open; no local or author check substitutes for deployment",
+      "integration": "Root added task routes and five explicit canonical classifications; language/publication author correction in progress; independent acceptance still absent"
+    },
+    "currentPublicationAssetCorrection": {
+      "author": "/root",
+      "state": "author-only",
+      "scope": "Positive reader asset allowance plus exact-byte copy in existing publication pipeline; reject unexplained non-Markdown files and symlinks",
+      "observed": "Three focused unit cases passed; actual 15 canonical assets copied with byte equality, including all three wait input templates",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/publication-current-reader-asset-copy.json",
+      "fullPublication": "Not passed: generated output and authored metadata/language diagnostics remain; not a full build/render or independent acceptance"
+    },
+    "currentReaderWaitHostStudioCompleted": {
+      "agent": "/root/reader_wait_host_studio_fresh",
+      "revision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84",
+      "report": "/home/node/Documents/Codex/a98-evidence/reader-wait-host-studio-fresh/READER-REVIEW.md",
+      "reportSha256": "669ad0dfa93ececc07de2f50b7cf79dff6406f3d0926ca6093ad2a5bc7160297",
+      "verdict": "FAIL-F1-F2-F3-F4-F5",
+      "rootIntegrity": "/home/node/Documents/Codex/a98-evidence/reader-wait-host-studio-root-manifest-integrity.json",
+      "scope": "Complete assigned host/Studio/operate pages and wait fixture only; all35 sealed artifact entries verified, no global/Astra acceptance",
+      "corrections": "F1/F2/F4 source corrections committed in862/ffb; F3 literal-format checker corrected without typed-value/digest exemption, other current generation remains unresolved; F5 authored concrete inputs but actual lifecycle/deployment still unexecuted. Fresh complete affected Reader review required."
+    },
+    "workflowPublicationLanguageAuthor": {
+      "agent": "/root/wait_workflow_publication_correction_writer",
+      "report": "/home/node/Documents/Codex/a98-evidence/wait-workflow-publication-correction-writer/WRITER-REPORT.md",
+      "reportSha256": "4e2e56af051e757798882a44055dc533967e1c3e437f2ad35454e54834b30662",
+      "state": "released-author-only",
+      "scope": "Assigned pages corrected; zero assigned publication diagnostics; full publication remains failed due to stale generated output and old generated issue phrasing",
+      "acceptance": false
+    },
+    "referencePublicationLanguageAuthor": {
+      "agent": "/root/reference_publication_language_writer",
+      "report": "/home/node/Documents/Codex/a98-evidence/reference-publication-language-writer/author-report.md",
+      "reportSha256": "a8a74fee964b210365fe50a3104683299ed822a2dacf729e634c334c18c8c3b9",
+      "state": "released-author-only",
+      "scope": "Assigned pages corrected; zero assigned publication diagnostics; full publication remains failed due to stale generated output and old generated issue phrasing",
+      "acceptance": false
+    },
+    "currentWorkflowExecutionFixtureBinding": {
+      "authority": "docs/blueprint/AP09-acceptance-fixtures.json#EXEC-WAIT-RESUME",
+      "scope": "Names concrete canonical local input files and installed generic approval package; materialized deployment registration remains mandatory and open",
+      "structuralCheck": "PASS, evidenceValidated=false; no content/lifecycle/deployment acceptance",
+      "log": "/home/node/Documents/Codex/a98-evidence/acceptance-workflow-source-binding.log"
+    },
+    "publicationAssetsFreshSourceAssignment": {
+      "agent": "/root/publication_assets_source_fresh",
+      "role": "Source-only",
+      "state": "assigned-not-accepted",
+      "scope": "Exact four hash-bound publication tool/helper/test/package inputs; no Reader/Quality/global/Astra acceptance"
+    }
   },
   "productBoundaries": [
     {

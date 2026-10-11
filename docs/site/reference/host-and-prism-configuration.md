@@ -18,7 +18,7 @@ There is no one “KubeClaw config.” Select the family by consumer.
 | `swarm.config.json` | Current real-run verification support and shipped classic-pipeline configuration path | Compact selection of one test/runtime profile. It is not accepted by the `pipeline-platform.v2` loader and grants no plugin capability. |
 | Prism Helm values | Prism chart | Images, replicas, native host binding, storage, trust mode, product decisions, and deployment resources. |
 | Prism process environment | Individual Prism service loaders | Rendered service URLs, credentials, timeouts, ingress limits, native limits, and exact trust identities. |
-| Root-owned native pool policy | Prism native supervisor | Actual aggregate cgroup capacity and host identity. An environment variable only points to it. |
+| Root-owned native pool policy | Prism native supervisor | Aggregate resource capacity in a Linux [control group (cgroup)](glossary.md#cgroup) and host identity. An environment variable only points to it. |
 
 For Helm and Secret key details, use [Helm values](helm-values.md),
 [Environment variables](environment-variables.md), and [Secrets](secrets.md).
@@ -97,6 +97,10 @@ credentials, network access, or provider capacity exist.
 
 ## Prism Helm roots
 
+SPIFFE identifies workloads, and SPIRE issues their credentials. Mutual TLS
+(mTLS) authenticates both ends of a protected connection with certificates.
+See [workload credentials](glossary.md#svid) for the identity delivery path.
+
 The Prism values schema requires these roots: `images`, `imagePullSecrets`,
 `control`, `studio`, `worker`, `postgresql`, `secrets`, and `artifactStorage`.
 The checked values also define `ingestion`, `backup`, `tailscale`, and
@@ -163,7 +167,7 @@ and database URL. The chart supplies the database URL in both modes.
 
 The supervisor additionally requires normalized absolute pool-policy and
 launcher paths, a production engine content digest, and a host-created policy.
-Its CPU, memory, process-count, UID/GID, ownership, journal, output, result,
+Its CPU, memory, process-count, Linux user and group IDs (UID/GID), ownership, journal, output, result,
 poll, drain, and close settings bound a native attempt. Process environment
 cannot enlarge aggregate capacity admitted by the root-owned host policy.
 

@@ -21,6 +21,7 @@ Start with the task that you must complete. Each route has one primary reader an
 | Check a local checkout | [Operator quickstart](use/quickstart.md) | Verified source and documentation inputs without external effects |
 | Plan or install the platform | [Plan and Install](use/install.md) | Verified deployment or an exact blocked prerequisite |
 | Configure, start, or inspect a run | [Configure and Operate](use/operate.md) | Recorded command, run identity, and result boundary |
+| Run an approval or test workflow | [Pipeline workflows](use/workflows/README.md) | Concrete inputs, ordered procedures, and explicit execution limits |
 | Diagnose an active problem | [Observe and Diagnose](use/diagnose.md) | Cause class, retained evidence, and safe next action |
 | Recover durable state | [Back Up and Recover](use/recovery.md) | Verified recovery or a declared missing prerequisite |
 | Plan capacity or retention | [Capacity and Retention](use/capacity.md) | Measured limits, owned cleanup, and retained recovery evidence |

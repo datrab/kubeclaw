@@ -127,7 +127,7 @@ resulting application behavior. [environment source precedence](https://github.c
 >
 > **Contract or setting:** `configMapAndSecretChangeDetectionStrategy`, Pod ConfigMap volume references, `subPath`, `envFrom` and `env.valueFrom`.
 >
-> **Test evidence:** No Kubelet, mounted-file, container environment or live refresh exercise was executed for this section.
+> **Test evidence:** This section includes no Kubelet, mounted-file, container environment or live refresh exercise.
 >
 > **Check status:** Pinned original source bytes and the stated branches were inspected on 2026-10-10. This is source evidence, not a cluster result.
 >
@@ -600,8 +600,8 @@ staging lock, not an executed failure or a claim that every timeout leaves a mou
 ### Discover the selected SMB runtime inputs
 
 KubeClaw's optional bootstrap Application selects chart 1.20.0 in `kube-system`;
-its values set only `controller.replicas: 1`. This is configured intent, not
-proof of installation or of the driver selected for a claim.
+its values set only `controller.replicas: 1`. This Application records configured intent. It does not prove installation
+or prove which driver a claim selects.
 [Application selection](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/gitops/platform/bootstrap/csi-driver-smb.yaml#L13-L28),
 [bootstrap values](https://github.com/datrab/kubeclaw/blob/f0e3759e867eb9ac224a047b710f9397c16af22b/gitops/platform/values/csi-driver-smb.yaml#L1-L3).
 
@@ -650,8 +650,8 @@ Record credential **references**, never Secret contents:
   errors, not a winner. The name template supports `${pv.name}`, `${pvc.name}` and
   `${pvc.namespace}` from the PV name and claimRef. The namespace template
   supports `${pv.name}` and `${pvc.namespace}`, but not `${pvc.name}`. The deletion fallback
-  constructs no PVC annotations; an annotation token cannot be resolved there.
-  Stop if the reference cannot be resolved. Lookup failure can still leave
+  constructs no PVC annotations; the provisioner cannot resolve an annotation token there.
+  Stop if the provisioner cannot resolve the reference. Lookup failure can still leave
   deletion without secrets; a valid reference does not prove credentials were
   supplied. [pair validation](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1713-L1757),
   [default-pair selection](https://github.com/kubernetes-csi/external-provisioner/blob/986812da302189f395030a72c3099dc7302b4899/pkg/controller/controller.go#L1778-L1794),

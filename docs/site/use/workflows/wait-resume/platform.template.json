@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "pipeline-platform.v2",
+  "installationRoots": ["../../../../../skills/common/plugins", "../../../../../skills/nova/plugins"],
+  "trustedBuiltinRoots": ["../../../../../skills/common/plugins", "../../../../../skills/nova/plugins"],
+  "externalTrust": { "allowedSourceDigests": {}, "verifiedAttestations": {} },
+  "providers": {
+    "operator.request": "kubeclaw.operator-messaging:operator",
+    "signal.wait": "kubeclaw.wait-store:waits",
+    "network.http": "kubeclaw.network-http:http",
+    "secrets.read": "kubeclaw.secret-resolver:secrets"
+  },
+  "grants": {
+    "kubeclaw.human-approval:approval": {
+      "operator.request": { "allowedTargets": ["operators"] },
+      "signal.wait": { "allowedSignalTypes": ["approval.resolved"], "allowedIssuerIds": ["operator:local"] }
+    },
+    "kubeclaw.operator-messaging:operator": {
+      "network.http": { "allowedOrigins": ["http://127.0.0.1:18765"] },
+      "secrets.read": { "allowedNames": ["operator.webhook"] }
+    }
+  },
+  "adapters": {
+    "kubeclaw.operator-messaging:operator": {
+      "deliveryRoot": "REPLACE_WITH_ABSOLUTE_DELIVERY_ROOT",
+      "maximumDeliveryRecords": 100,
+      "maximumDeliveryBytes": 1048576,
+      "targets": { "operators": { "endpoint": "http://127.0.0.1:18765/messages", "tokenSecret": "operator.webhook", "maxPayloadBytes": 16384, "format": "json" } }
+    },
+    "kubeclaw.wait-store:waits": { "root": "REPLACE_WITH_ABSOLUTE_WAIT_ROOT" },
+    "kubeclaw.secret-resolver:secrets": { "environment": { "operator.webhook": "WAIT_REHEARSAL_WEBHOOK_KEY" } },
+    "kubeclaw.network-http:http": {
+      "allowedOrigins": ["http://127.0.0.1:18765"],
+      "allowedMethods": ["POST"],
+      "allowedHeaders": ["content-type", "idempotency-key", "x-kubeclaw-signature"],
+      "maxRequestBytes": 16384,
+      "maxResponseBytes": 16384,
+      "timeoutMs": 5000
+    }
+  },
+  "activeAdapters": ["kubeclaw.operator-messaging:operator", "kubeclaw.wait-store:waits", "kubeclaw.network-http:http", "kubeclaw.secret-resolver:secrets"],
+  "observers": {},
+  "storageRoot": "REPLACE_WITH_ABSOLUTE_CORE_ROOT",
+  "shutdownTimeoutMs": 5000,
+  "orchestratorIssuerId": "nova",
+  "administrativeDecisionIssuers": []
+}

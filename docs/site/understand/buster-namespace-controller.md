@@ -32,8 +32,8 @@ namespace-local Roles and RoleBindings for access to the named Secret. Readiness
 human product decisions use separately authenticated TLS endpoints. Enabling one
 client does not enable all these authorities.
 
-The decision to separate fixture work from namespace lifecycle is accepted in
-[D-014 through D-019](../decisions/test-gate.md#d-014-fixture-is-a-base-system-part).
+[D-014 through D-019](../decisions/test-gate.md#d-014-fixture-is-a-base-system-part)
+explain the decision to separate fixture work from namespace lifecycle.
 It lets the operator enforce access, secret and cleanup policy outside provider
 code. It costs another reconciler and requires operators to diagnose retained
 objects and finalizers. Reconsider this shape if another isolation mechanism
@@ -432,7 +432,7 @@ gone. [Failed-prepare cleanup](https://github.com/datrab/kubeclaw/blob/be7878763
 and [error suppression](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L733-L735)
 define this limit. Errors before that protected block, including a failed lease
 apply, do not invoke this cleanup handler. An apply error can leave an uncertain
-server result. Inspect the lease before concluding that no resource was created.
+server result. Inspect the lease before concluding that the request created no resource.
 [The apply-to-cleanup boundary](https://github.com/datrab/kubeclaw/blob/be78787633d774e9fd2a2ff401311499a555156d/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L703-L714)
 shows where cleanup protection starts.
 
@@ -462,7 +462,7 @@ acceptance.
 
 Local source-derived contract checks do not establish live CRD admission,
 ServiceAccount authorization, Tailscale routing, DNS, Discord delivery, Secret
-copying, namespace deletion or restart recovery. The supported optional mechanisms
-are implemented, but those environment observations must be collected separately.
+copying, namespace deletion or restart recovery. The code implements the supported
+optional mechanisms. Collect those environment observations separately.
 The diagram and this explanation are maintained with the controller and fixture
 sources listed in this page's evidence metadata.
