@@ -19313,16 +19313,18 @@
       "forkTurns": "none",
       "initialMode": "read-only",
       "revision": "2f404b02baae29d3b6c5422f7d61481127da1382",
-      "state": "running",
-      "scope": "All53 current AP09.7 catalogue requirements and all12 A97 quality facets; immutable source, full canonical platform content. No Source/Reader/Astra acceptance.",
-      "tree": "/home/node/Documents/Codex/a98-evidence/ap097-quality-2f404b02"
+      "state": "completed FAIL",
+      "scope": "All53 Quality requirement facets:43 PASS/10 FAIL; all12 gate Quality facets:6 PASS/6 FAIL. Four findings corrected subsequently; new full affected independent review required. No Source/Reader/Astra acceptance.",
+      "tree": "/home/node/Documents/Codex/a98-evidence/ap097-quality-2f404b02",
+      "report": "/home/node/Documents/Codex/a98-evidence/ap097-quality-2f404-fresh-report/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-quality-root-seal.json"
     }
   ],
   "continuation": {
     "stage": "AP09.8: producer eight-family corrections and independent exact70 selection provenance; package not accepted",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish Go actual32-output selection; qualify Python public discover/main output; bind finite actual dynamic kubectl operations; then freeze all inputs and run integrated checks before fresh independent reviews.",
+    "next": "Finish actual shell consumer closure and PV schema reference correction, freeze all producer inputs, run integrated checks, regenerate from full Source commit, then fresh full independent Source/Reader/Quality reviews.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -22281,6 +22283,48 @@
         "Remove for-this-correction wording from selected embedding test boundary"
       ],
       "check": "git diff --check PASS",
+      "independentAcceptance": false,
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-quality-root-seal.json"
+    },
+    "arithmeticRegistryCorrection": {
+      "state": "author-corrected; integrated stable full checks and independent review pending",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/root-arithmetic-registry-correction.json",
+      "contracts": 5,
+      "removedNoncommands": 15,
+      "actualCommandsPreserved": 184,
+      "maintainedRegressions": {
+        "receipt": "/home/node/Documents/Codex/a98-evidence/javascript-channel-consumer-correction-writer/root-arithmetic-maintained-regressions.json",
+        "receiptSha256": "54cfac916963aae27079885cef97f0f0291b6bb1554d5a08307eeb721496d61f",
+        "logSha256": "d7288a0b3f4048d22316e01fdc2e09cd7b0695cda8e550cc7a16b88995ed3d11",
+        "exitCode": 0,
+        "testsPassed": 2,
+        "capturedSourcesUnchanged": true,
+        "capturedToolsUnchanged": true,
+        "recordedSourceFiles": 5590,
+        "limit": "Bounded author regression only; moving discovery after captured run remains unaccepted, no full suite/source review/generation claim."
+      },
+      "originalFullScanStatus": "47816 terminalFAIL old registry; private correctedregistry scan terminalFAIL watchdog80jq, author addressing original query",
+      "independentAcceptance": false
+    },
+    "litellmPinnedStoreAuthority": {
+      "state": "author-corrected; fresh independent acceptance pending",
+      "report": "/home/node/Documents/Codex/a98-evidence/litellm-pinned-store-authority-author/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/litellm-pinned-store-authority-root-seal.json",
+      "artifactsHashVerified": 1487,
+      "selectedImageFileOccurrences": 1412,
+      "scope": "Pinned OCI metadata and selected source files across direct/GitOps amd64/arm64; no signature verification, image execution or live restore.",
+      "independentAcceptance": false
+    },
+    "ap097ConsistentSourcePins": {
+      "receipt": "/home/node/Documents/Codex/a98-evidence/ap097-consistent-source-pins-root.json",
+      "sourceRevision": "13bff0a18a64e74f2cbbaa1978e746fcdeff0c10",
+      "pages": 5,
+      "check": "platform specialist terminal FAIL: generated platform inventory stale; not content acceptance",
+      "independentAcceptance": false
+    },
+    "secretSerializedAndPartialMergeConsumer": {
+      "state": "author correction with15 bounded tests PASS; actual producer integration pending",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/root-secret-partial-merge-tests.json",
       "independentAcceptance": false
     }
   }

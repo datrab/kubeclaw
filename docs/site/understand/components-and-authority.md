@@ -4,7 +4,7 @@ Status: implemented with stated limits
 Audience: new reader, architecture reader, maintainer, security reviewer
 Owner: platform architecture
 Evidence: skills/nova/core; skills/worker/core; packaging/runtime/roles
-Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
+Evidence revision: `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`
 Applies to: current source and declared runtime roles
 Last verified: source and contract inspection on 2026-09-19
 
@@ -79,11 +79,11 @@ Core invokes plugins and interprets their typed results.
 
 > **Source evidence — role and engine boundary**
 >
-> [The Nova role lists Core, project code, shared contracts, and its selected plugins](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L1-L61).
+> [The Nova role lists Core, project code, shared contracts, and its selected plugins](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/nova.json#L1-L61).
 >
-> [The Nova entry point exports Core and starts the separate project CLI](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/pipeline.ts#L1-L14).
+> [The Nova entry point exports Core and starts the separate project CLI](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/pipeline.ts#L1-L14).
 >
-> [A new Core run freezes the graph, prepares plugins, writes snapshots, and starts the runner](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43).
+> [A new Core run freezes the graph, prepares plugins, writes snapshots, and starts the runner](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L36-L43).
 
 ### Nova Core: The Process Authority
 
@@ -107,9 +107,9 @@ No current decision approves that change.
 
 > **Source evidence — scheduling and closure**
 >
-> [`PipelineLoop.run()` selects ready stages, records decisions, pauses, and finalizes](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
+> [`PipelineLoop.run()` selects ready stages, records decisions, pauses, and finalizes](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
 >
-> [`PipelineLoop.#finalize()` derives one terminal result from stage states](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/pipeline-loop.ts#L137-L143).
+> [`PipelineLoop.#finalize()` derives one terminal result from stage states](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/pipeline-loop.ts#L137-L143).
 >
 > [ADR-001 records the decision and its consequences](../decisions/core-and-plugins.md#adr-001-core-owns-canonical-lifecycle-authority).
 
@@ -131,11 +131,11 @@ They also permit validation before execution.
 
 > **Source evidence — fixed registry**
 >
-> [`buildRegistry()` rejects duplicate packages, registrations, stage owners, and provider contracts](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317).
+> [`buildRegistry()` rejects duplicate packages, registrations, stage owners, and provider contracts](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317).
 >
-> [`activateRegistry()` loads only enabled registrations and checks package digests](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
+> [`activateRegistry()` loads only enabled registrations and checks package digests](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
 >
-> [The versioned schema defines capability grants and trust scope](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L894-L963).
+> [The versioned schema defines capability grants and trust scope](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L894-L963).
 
 ## Worker Core: The Neutral Attempt Controller
 
@@ -162,9 +162,9 @@ Specialist policy cannot leak into Worker Core.
 
 > **Source evidence — neutral controls**
 >
-> [`LocalWorkerRuntime.runAttempt()` checks readiness, capacity, claims, deadlines, protocols, profiles, and replay](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/worker/core/worker/local-runtime.ts#L155-L204).
+> [`LocalWorkerRuntime.runAttempt()` checks readiness, capacity, claims, deadlines, protocols, profiles, and replay](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/local-runtime.ts#L155-L204).
 >
-> [`executeNativeWorkerAttempt()` persists admission before launch and seals the result before delivery](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/worker/core/worker/native-attempt-executor.ts#L20-L60).
+> [`executeNativeWorkerAttempt()` persists admission before launch and seals the result before delivery](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-executor.ts#L20-L60).
 >
 > [ADR-002 explains the neutral-core decision](../decisions/core-and-plugins.md#adr-002-use-one-neutral-worker-core-below-specialist-engines).
 
@@ -188,9 +188,9 @@ Evidence also remains separate from quality policy.
 
 > **Source evidence — Buster boundary**
 >
-> [The Buster engine exports Worker Core, plan service, provider loader, and result stores](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/buster/engine/src/index.ts#L1-L23).
+> [The Buster engine exports Worker Core, plan service, provider loader, and result stores](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/buster/engine/src/index.ts#L1-L23).
 >
-> [The Buster role grants read-only source access and plan execution](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/buster.json#L49-L59).
+> [The Buster role grants read-only source access and plan execution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/buster.json#L49-L59).
 >
 > [ADR-003 explains why test semantics stay outside Nova and Worker Core](../decisions/core-and-plugins.md#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core).
 
@@ -215,14 +215,14 @@ Its current result path provides no durable artifact signature. Buster remote
 results also use digest and receipt bindings, not Ed25519 signatures. The
 separate signed source snapshot comes from Nova.
 
-> [The Buster result contract carries a digest and receipt](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/contracts/pipeline-test-gate/v1/src/types.ts#L416-L429),
-> while [the source snapshot carries the Ed25519 attestation](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/contracts/pipeline-test-gate/v1/src/types.ts#L385-L401).
+> [The Buster result contract carries a digest and receipt](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/contracts/pipeline-test-gate/v1/src/types.ts#L416-L429),
+> while [the source snapshot carries the Ed25519 attestation](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/contracts/pipeline-test-gate/v1/src/types.ts#L385-L401).
 
 > **Source evidence — baseline handoff**
 >
-> [`toBusterPlan()` and `toForgeAssignments()` derive bounded handoffs from one baseline](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/prism/pipeline-adapter/index.ts#L20-L57).
+> [`toBusterPlan()` and `toForgeAssignments()` derive bounded handoffs from one baseline](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/prism/pipeline-adapter/index.ts#L20-L57).
 >
-> [The Prism role includes Worker Core and the Prism engine](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/prism.json#L1-L28).
+> [The Prism role includes Worker Core and the Prism engine](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/packaging/runtime/roles/prism.json#L1-L28).
 >
 > [Prism decisions explain design ownership and current limits](../decisions/prism.md).
 
@@ -243,9 +243,9 @@ Its configured runtime target can also be unreachable.
 
 > **Source evidence — Forge permissions**
 >
-> [The implementation stage declares dispatch, workspace, commit, merge, and artifact capabilities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/plugins/implementation-agent/plugin.json#L1-L26).
+> [The implementation stage declares dispatch, workspace, commit, merge, and artifact capabilities](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/plugins/implementation-agent/plugin.json#L1-L26).
 >
-> [`createPluginInvocationContext()` denies missing grants and checks each requested resource](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/context.ts#L34-L79).
+> [`createPluginInvocationContext()` denies missing grants and checks each requested resource](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/context.ts#L34-L79).
 
 ## Echo: The Review Specialist
 
@@ -264,7 +264,7 @@ A deterministic boundary must still verify identity, evidence, and policy.
 
 > **Source evidence — Echo permissions**
 >
-> [The review plugin declares three review stages and read-only repository access](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/plugins/review/plugin.json#L1-L54).
+> [The review plugin declares three review stages and read-only repository access](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/plugins/review/plugin.json#L1-L54).
 >
 > [Echo decisions separate observations from lifecycle verdicts](../decisions/echo.md).
 
@@ -353,11 +353,11 @@ The plugin never receives a direct method that changes the canonical stage state
 
 > **Source evidence — bounded plugin invocation**
 >
-> [`activateRegistry()` activates only configured registrations after package-integrity and import checks](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
+> [`activateRegistry()` activates only configured registrations after package-integrity and import checks](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
 >
-> [`createPluginInvocationContext()` checks the lease, grant, and requested resource](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/context.ts#L34-L79).
+> [`createPluginInvocationContext()` checks the lease, grant, and requested resource](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/context.ts#L34-L79).
 >
-> [`DurableInvocation` records requests and receipts around the selected adapter](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L39-L117).
+> [`DurableInvocation` records requests and receipts around the selected adapter](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/durable-invocation.ts#L39-L117).
 
 ## Failure Domains And Stop Boundaries
 
@@ -423,15 +423,15 @@ the contract, authority, persistence, and failure behavior in the same row.
 
 > **Source evidence — component-boundary communication**
 >
-> [Nova dispatches a resolved attempt through one bounded stage context](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L31-L119).
+> [Nova dispatches a resolved attempt through one bounded stage context](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/stage-executor.ts#L31-L119).
 >
-> [The remote-plan transport binds HTTP jobs, results, and evidence to stable identities](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-dispatch.ts#L23-L197).
+> [The remote-plan transport binds HTTP jobs, results, and evidence to stable identities](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-dispatch.ts#L23-L197).
 >
-> [Observer delivery records attempts and advances provenance-bound checkpoints](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry/observers.ts#L14-L106).
+> [Observer delivery records attempts and advances provenance-bound checkpoints](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/telemetry/observers.ts#L14-L106).
 >
-> [The Redis adapter publishes with a stream bound and a deduplication key](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugins/redis-transport/src/adapter.ts#L14-L91).
+> [The Redis adapter publishes with a stream bound and a deduplication key](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/common/plugins/redis-transport/src/adapter.ts#L14-L91).
 >
-> [Worker Core binds specialist work to the generic execution hooks](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/attempt-executor.ts#L30-L106).
+> [Worker Core binds specialist work to the generic execution hooks](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/attempt-executor.ts#L30-L106).
 >
 > **Limit:** The table proves source-level contracts and ownership. Deployment-specific retention periods and live reachability still require the target environment's configuration and acceptance evidence.
 
@@ -446,13 +446,13 @@ universal authority merely because several components can read it.
 
 > **Source evidence — retained authority across boundaries**
 >
-> [Nova writes graph and registry snapshots before execution](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/execution/engine-run.ts#L36-L43).
+> [Nova writes graph and registry snapshots before execution](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/execution/engine-run.ts#L36-L43).
 >
-> [The effect path records a request before invocation and records the returned receipt](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/effects/durable-invocation.ts#L88-L117).
+> [The effect path records a request before invocation and records the returned receipt](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/effects/durable-invocation.ts#L88-L117).
 >
-> [Nova verifies a terminal Buster result and its evidence before import](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/test-gates/remote-result-import.ts#L213-L247).
+> [Nova verifies a terminal Buster result and its evidence before import](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/nova/core/test-gates/remote-result-import.ts#L213-L247).
 >
-> [Worker Core writes admission before launch and seals the result before delivery](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core/worker/native-attempt-executor.ts#L20-L60).
+> [Worker Core writes admission before launch and seals the result before delivery](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/skills/worker/core/worker/native-attempt-executor.ts#L20-L60).
 >
 > **Limit:** These source paths prove ordering and validation in the inspected implementation. They do not prove storage durability or service availability in a live environment.
 
