@@ -19825,6 +19825,36 @@
       "generatedRevision": "3ae74b8e6f90802f5e2ce101e9fcb9242f3e7b7d",
       "receipt": "/home/node/Documents/Codex/a98-evidence/root-partial-generation-1da-receipt.json",
       "observed": "Only issue view and tree generated/check terminals0; canonical167/internal190/legacy249/deletable2335,2941physical files. No full inventory/configuration mutation or package acceptance."
+    },
+    "publicationAssetsExplicitFreshSourceCompleted": {
+      "agent": "/root/publication_assets_explicit_source_fresh",
+      "role": "Source-only",
+      "revision": "929aadbad08b41e7a8504950f05dc0f526b706d6",
+      "report": "/home/node/Documents/Codex/a98-evidence/publication-assets-explicit-source-fresh/review.md",
+      "reportSha256": "2ad7377bb25ae82b5f384f3d5473ea08ef6b2b9a733f3d91e023905f78aa744e",
+      "verdict": "PASS-bounded-complete-non-Markdown-asset-correction",
+      "scope": "All15 linkedassets exactbytes;33boundary probes;copied7fileminimal-stage2tests;8actualsynthetic rejectionchecks. Immutable fullpublication check/build FAIL on two staleoutputs; synthetic build notcurrentrevisionPASS; no globalA912/Reader/Quality/Astra acceptance",
+      "remaining": "Regeneration reveals catalogue-relative operationNote copied intooperator matrix; governance map147for152pages; broader wholeMarkdown/currentness gates remain. Root linkrebase correction needs new complete Source review."
+    },
+    "approvalWorkflowCompleteFreshSourceCompleted": {
+      "agent": "/root/approval_workflow_complete_source_fresh",
+      "role": "Source-only",
+      "revision": "1da1ed41de149a78c267f4fb84baaf4d65cb5f3c",
+      "report": "/home/node/Documents/Codex/a98-evidence/approval-workflow-complete-source-fresh/SOURCE-REVIEW.md",
+      "reportSha256": "69b3622e0d4e1a9bdef1addef939d05124872cbad13782a939513f0a06b6eae7",
+      "verdict": "FAIL-F1-F2-F3",
+      "rootIntegrity": "/home/node/Documents/Codex/a98-evidence/approval-workflow-complete-root-input-integrity.json",
+      "rootVerifiedInputs": 5587,
+      "scope": "FLW008/OPR004/NVC009 contributionFAIL;CFG010/OPR010 boundedcontributionPASS only. Actualwait/production lifecyclefailedBusyBoxflockbeforeassertions. MandatoryEXEC-WAIT-RESUME open, no deploymentPASS",
+      "correctionsAssigned": "/root/approval_journal_recovery_correction_writer owns wait-resume.md,operate.md,nova-core.md: terminal/stale waitguidance, pureparseHashJournal/rawpreservationbeforecanonicalaudit, copiedoriginalsignaltemplate/verifiedarchive. No selfacceptance."
+    },
+    "publicationGuidanceLinkCorrectionAuthor": {
+      "author": "/root",
+      "scope": "Rebase shared catalogue-local inline Markdown destinations for operator matrix, preserve originaltarget/query/anchor/title/external citations/codeexamples; no productchange",
+      "tests": "Nine scopedpublication tests observedPASS including three new context-sensitive linkcases",
+      "log": "/home/node/Documents/Codex/a98-evidence/publication-guidance-rebase-tests.log",
+      "state": "author-only-not-independent-acceptance",
+      "next": "Generate against stable sourceSHA in isolatedworktree; new fullfreshSource review ofaffected toolandoutputs. Regenerate existing governance map instead ofmanualpatch."
     }
   },
   "productBoundaries": [

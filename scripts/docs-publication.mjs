@@ -12,6 +12,7 @@ import { dependencySchemaFacts } from './plugin-schema-dependencies.mjs';
 import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.mjs';
 import { markdownInlineLinks, stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
 import { publicationAssets, copyPublicationAssets } from './lib/docs-publication-assets.mjs';
+import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
@@ -595,7 +596,7 @@ function operatorPluginMatrix() {
         facts.required.length ? `requires: ${facts.required.join(', ')}` : 'requires: none declared',
         facts.provided.length ? `provides: ${facts.provided.join(', ')}` : 'provides: none declared',
       ].join('; ');
-      const failure = authored?.operationNote ?? `Blocked failure guidance: source owner \`${rel(plugin.file)}\` must describe the failure effect.`;
+      const failure = rebaseMarkdownLinks(authored?.operationNote ?? `Blocked failure guidance: source owner \`${rel(plugin.file)}\` must describe the failure effect.`, plugin.guide, operatorPluginPage);
       return `| [\`${plugin.manifest.id}:${registration.id}\`](../extend/plugin-catalogue/${plugin.manifest.id}.md#${registration.kind.replaceAll(' ', '-').toLowerCase()}-${String(registration.id).toLowerCase().replace(/[^a-z0-9-]/gu, '-')}) | ${markdownCell(facts.serviceText)} | ${markdownCell(facts.endpoint)} | ${markdownCell(capability)} | ${markdownCell(facts.secret)} | ${markdownCell(facts.dataOwner)} | ${markdownCell(facts.reachability)} | ${markdownCell(failure)} | <!-- dependency-source ${facts.digest} -->`;
     });
   });
