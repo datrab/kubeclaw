@@ -16302,6 +16302,31 @@
       "acceptanceIds": [],
       "description": "OriginalReader6ff findings: stale demoHEAD, missingGo prerequisite, offlineHelm classification, pendingactivation cleanup and unsupportedpublication repair. Root corrected canonicalpages/checker; original completeReader mapping pending. Additionalservice-routing binding andthree readerfileclassifications remain open.",
       "proof": "/home/node/Documents/Codex/a98-evidence/root-source-reader-corrections-author-report.json"
+    },
+    {
+      "id": "A98-WAIT-SIGNAL-AND-READER-TERMS-CURRENT-CORRECTION",
+      "state": "author-corrected-awaiting-independent-reader",
+      "catalogueIds": [
+        "CFG-010",
+        "OPR-010",
+        "OPR-004",
+        "FLW-008",
+        "NVC-009"
+      ],
+      "acceptanceIds": [
+        "A98-05",
+        "A98-10",
+        "A98-11",
+        "A98-12",
+        "A98-13",
+        "A99-04",
+        "A913-05",
+        "A913-06"
+      ],
+      "description": "ACP and visual editor terminology clarified from sources; wait execution setup now matches unsigned eight-field signal with protected CLI access and stale replay rejection. Fixed executable flock interface prerequisite added. Mandatory deployment fixture registration/run remain open.",
+      "proof": "/home/node/Documents/Codex/a98-evidence/reader-plain-language-fixture-writer/report.json",
+      "sourceRevision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84",
+      "mappingState": "author-derived; fresh reviewer independently verifies applicability"
     }
   ],
   "checks": [
@@ -17472,6 +17497,18 @@
       "state": "terminal-pass-integrity-only",
       "scope": "All11607 artifacts match manifest3fb173e9ef991324a4f28a59fb01e99df89584afedb47cd25fb489353cc168ad; immutable historical FAIL retained, not current acceptance.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-selection-c1c295-root-complete-seal-integrity.json"
+    },
+    {
+      "command": "node scripts/check-prism-guides.mjs",
+      "state": "terminal-fail-generated-helm-reference-stale",
+      "scope": "Mixed source pins aligned only after complete file byte-equivalence. Final current failure is generated $.images.control.repository type/value, not source pin mismatch. No guide gate PASS claimed.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/prism-guides-after-complete-pin-alignment.log"
+    },
+    {
+      "command": "node scripts/check-operator-task-registry.mjs",
+      "state": "terminal-pass-author-only",
+      "scope": "Complete current canonical operator registry after fixed flock prerequisite, before narrow citation span refinement. Same procedure semantics retained; fresh Reader remains pending.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/operator-after-flock-prerequisite.log"
     }
   ],
   "reviewAssignments": [
@@ -18879,13 +18916,24 @@
     {
       "agent": "/root/reader_plain_language_fixture_writer",
       "role": "author",
-      "state": "running",
+      "state": "author-complete-committed-pending-independent-reader",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
-      "revision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
+      "revision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84",
       "scope": "Define ACP and Puck from actual sources; repair unsigned wait fixture setup without weakening mandatory execution.",
-      "evidence": "/home/node/Documents/Codex/a98-evidence/reader-plain-language-fixture-writer"
+      "evidence": "/home/node/Documents/Codex/a98-evidence/reader-plain-language-fixture-writer/report.json"
+    },
+    {
+      "agent": "/root/reader_wait_host_studio_fresh",
+      "role": "Reader",
+      "state": "running-fresh-complete-affected-paths",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84",
+      "scope": "Complete affected host/Prism configuration, Studio and operations reader paths and unsigned wait/resume fixture. Not only prior findings; no global AP09.8 or Source/Quality acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/reader-wait-host-studio-fresh"
     }
   ],
   "continuation": {
@@ -18907,7 +18955,7 @@
     "agents": [
       "/root/producer_recovery_writer",
       "/root/stateful_425_recovery_source_fresh",
-      "/root/reader_plain_language_fixture_writer"
+      "/root/reader_wait_host_studio_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -19648,7 +19696,8 @@
       },
       "evidence": "/home/node/Documents/Codex/a98-evidence/workload-current-candidate-full-source-fresh/final-full-950-source-20261010/report.md"
     },
-    "currentGeneratedRevision": "192dbe9f70d5b73a5159dbc92f955e68b9928591"
+    "currentGeneratedRevision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
+    "currentReaderCorrectionRevision": "55455583b9b7637afb210f8c1ddbdc86d3c74c84"
   },
   "productBoundaries": [
     {
