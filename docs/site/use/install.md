@@ -37,12 +37,14 @@ Before any cluster mutation, complete [Planning Record](#planning-record),
 and [Prepare Independent Access](#prepare-independent-access), in that order.
 Before the first mutation, also complete the linked Worker Trust
 [receipt-authority preparation](worker-trust.md#prepare-the-production-receipt-authority)
-and [live-execution boundary check](worker-trust.md#3-check-the-live-execution-boundary).
+and [live-execution boundary check](worker-trust.md#3-check-the-live-execution-boundary),
+including qualified denial observations paired with reachable positive controls.
 The current verifier does not provide the durable-request and resource-identity
 evidence required for safe reconciliation and cleanup. If the intended result
 is a completed installation or operational approval, stop before the disposable
 probe even with Prism selected. Keep the read-only plan and wait for the owning
-operators to resolve that boundary; do not deploy first and discover it later.
+operators to resolve lifecycle capture and denial observation; do not deploy
+first and discover these limits later.
 Every source, release-selection, render, access, and read-only dependency gate
 must pass. An absent runtime selection stops this installation here, including
 the disposable probe. Only then run [Prove DNS and disposable storage](#prove-dns-and-disposable-storage).
@@ -396,7 +398,9 @@ Complete [production-receipt authority preparation](worker-trust.md#prepare-the-
 on this administration machine, and identify the current
 [live-execution boundary](worker-trust.md#3-check-the-live-execution-boundary).
 Missing or unqualified signing authority forbids the first probe or workload
-mutation. A qualified keypair does not remove the verifier's lifecycle limit.
+mutation. A qualified keypair does not remove the verifier's lifecycle or denial
+proof limits. Both owner procedures must be qualified before mutation for a
+complete installation; resolving lifecycle capture alone is insufficient.
 
 This section makes no cluster change. First complete the canonical
 [Locked Dependency Installation](quickstart.md#locked-dependency-installation)
@@ -1202,7 +1206,15 @@ limit blocks complete verification even for this full profile. Follow its
 do not run the live command until the owners supply the maintained evidence and
 reconciliation path described there. Final proof still requires both positive
 and negative live trust results, a separate signed Nova unit production receipt,
-and resolved request/resource cleanup. None can be replaced by source or smoke
+and resolved request/resource cleanup. The live verifier accepts fetch errors,
+non-2xx responses and direct TLS timeouts in its negative probes; success JSON
+alone does not prove denial. Unreachable endpoints, timeouts and HTTP 5xx results
+are inconclusive. Before the first probe or workload mutation for complete
+installation, the workload-identity owner must qualify the maintained
+[denial-observation procedure](worker-trust.md#required-results-and-cleanup-observations),
+including actual peer or authorization rejection paired with a reachable positive
+control for each negative route. Resolving lifecycle capture alone does not
+remove this stop. None of these results can be replaced by source or smoke
 checks. Do not claim live peer authorization or complete installation without
 all those results.
 

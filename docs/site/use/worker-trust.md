@@ -46,7 +46,7 @@ identities.
 Preparation starts earlier: complete the local receipt-authority check and the
 live-execution boundary check below before the installation's first disposable
 probe or workload mutation. Readiness of existing workloads does not resolve
-missing signing authority or the verifier's request and cleanup evidence gaps.
+missing signing authority or the verifier's request, denial and cleanup evidence gaps.
 
 ### Preconditions
 
@@ -64,6 +64,9 @@ missing signing authority or the verifier's request and cleanup evidence gaps.
 - A maintained owner procedure supplies the missing original request and
   creating-resource identities, reconciliation, and independent cleanup
   observations described in [the live-execution boundary](#3-check-the-live-execution-boundary).
+- The workload-identity owner qualifies a maintained denial-observation procedure
+  for each negative route, with a reachable positive control and the actual peer
+  or authorization rejection described below.
 - The selected Nova runtime receives `BUSTER_V2_TOKEN` and
   `BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY`, and its `buster` / `test.plan.execute`
   provider selects `buster-plan-v1`. The unit preflight rejects missing inputs
@@ -240,6 +243,13 @@ provider effects, retention and eventual retirement. The procedure must capture:
 - Each actual test resource name, namespace and creating UID, including partial
   creation or a lost response. Its resource cleanup must check those identities
   and independently observe completion with recorded API exit statuses.
+- For each negative route, the tested caller identity, destination, port, path,
+  time and actual rejection observation from the receiving proxy or application.
+  Pair it with a reachable authorized request to that destination through the
+  same relevant network and proxy path. A positive control is this comparison
+  request; it must establish reachability during the negative test. The owner
+  must name the observation source, access rights and evidence that distinguish
+  peer authentication rejection from application authorization rejection.
 - The original Nova unit run/job identities and immutable source/worker
   revisions, evidence digests, and separate operator-signed receipt.
 - A recovery route for denied reads, interruption, replaced objects, a lost
@@ -257,6 +267,12 @@ owner procedure can resolve the prerequisite; it must identify its actual
 capture sources, exact observations, rights and protected evidence location.
 Its qualification must cover successful, partial and interrupted execution
 without modifying production state or treating ambiguous effects as absent.
+The workload-identity owner must also qualify the denial observations against
+actual peer or allowlist rejection, unavailable endpoints, timeouts and server
+errors. If lifecycle capture is qualified but denial observation is not, the
+same stop remains in force before the live command and before the first probe
+or workload mutation for a complete installation. This repository supplies no
+complete independent denial-observation procedure.
 
 ### Required results and cleanup observations
 
@@ -266,7 +282,41 @@ and exit status separately from each result. Live JSON with
 Nova-to-Prism, Prism-Control-to-Worker and Prism-Worker-to-Control paths. Its
 negative paths cover plaintext, wrong SVID and forged forwarded identity.
 A positive result without its paired denial is incomplete. This JSON does not
-contain source-signing proof or a cleanup result.
+contain source-signing proof or a cleanup result. It also does not establish
+why a negative request failed.
+
+The wrong-SVID probes first check that the unintended SVID was loaded. They
+then accept any non-2xx response (a status outside 200–299), and also accept a
+fetch exception, as denial. TLS (Transport Layer Security) authenticates peers
+and encrypts the connection. The direct TLS probes accept any network error or timeout as rejection. Thus an
+unreachable proxy, connection refusal or HTTP 503 can still lead to success
+JSON. These outcomes do not prove that a peer or allowlist rejected the caller.
+Earlier positive requests use different callers or endpoints and occur at a
+different time; they do not establish the cause of a later failure.
+
+Classify unavailable endpoints, timeouts and HTTP 5xx server-error responses as
+inconclusive.
+Stop approval, preserve the failed observation and repair reachability or the
+server through its owner. Even a non-2xx response such as HTTP 403 needs the
+owner's correlated identity and rejection evidence. Retain the actual peer or
+authorization rejection and its reachable positive control for each negative
+route before accepting the paired result. The plaintext, wrong-SVID and forged
+forwarded-identity paths remain mandatory. Do not replace them with smoke checks
+or treat the live command's exit zero as independent denial proof.
+
+> **Source evidence — negative probe limits**
+>
+> **Claim:** The wrong-SVID probes accept fetch errors and any non-2xx status; direct TLS probes accept network errors and timeouts. The final JSON does not distinguish these causes.
+>
+> **Implementation:** [Direct TLS error and timeout handling](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L38-L52) and [Prism](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L145-L145) / [Buster wrong-SVID commands](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L175-L175).
+>
+> **Contract or setting:** [The final JSON names required positive and negative routes](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L190-L199).
+>
+> **Test evidence:** Local synthetic execution of the exact extracted probes confirmed acceptance of connection refusal, timeout and HTTP 503 in the applicable probes. No cluster authorization result was obtained.
+>
+> **Revision:** `430633accc4a374a740b5f12f384eeeb9dce228d`.
+>
+> **Limit:** The live verifier alone cannot distinguish authorization denial from failure to reach a working destination.
 
 The separate unit receipt has `schemaVersion=nova-unit-production-preflight.v2`.
 It contains the Nova run and Buster job identities, source and worker revisions,
@@ -320,7 +370,8 @@ closing Studio does not undo admitted design work.
 To remove this execution boundary, platform operations, the workload-identity
 owner, production-operator signing owner and Prism data/agent owner must retain
 a qualified procedure and actual exact-cluster results: all required trust
-paths and denials, the verified unit receipt, original durable-request/job
+paths and observed peer or authorization denials paired with reachable positive
+controls, the verified unit receipt, original durable-request/job
 identities, resolved external effects, and UID-safe cleanup with independent
 read-back. Live success is still unproved here.
 
@@ -354,8 +405,10 @@ Check in this order:
 9. separate operator receipt signing and verification;
 10. durable request reconciliation and test cleanup.
 
-A timeout before TLS is reachability. A TLS/SVID error is identity issuance or
-peer verification. An authenticated denial is the application allowlist. A
+A timeout, unreachable endpoint or HTTP 5xx response is inconclusive denial
+evidence. Diagnose reachability and server health first. An observed TLS/SVID
+rejection concerns identity issuance or peer verification. A correlated
+authenticated denial concerns the application allowlist. A
 successful wrong-identity request is a security incident: restrict the owning
 Service, retain evidence, and stop admission.
 
@@ -406,7 +459,8 @@ step is absent.
 
 Retain source and release identities, context, trust domain, ServiceAccounts and
 expected SPIFFE IDs, non-secret Secret metadata, source-check output, component
-readiness, positive and negative live JSON, failure-layer diagnosis, recovery,
+readiness, positive and negative live JSON, actual peer or authorization
+rejections and their reachable positive controls, failure-layer diagnosis, recovery,
 the separate signed unit receipt and its verification, original request/round/job
 identities, resource names/creating UIDs, independent cleanup observations,
 retained-state decisions, and any open boundary. After evidence is retained,

@@ -5,7 +5,7 @@ Audience: release maintainer, platform operator, security operator
 Owner: release engineering and platform operations
 Evidence: versions.json; releases/ops-images.json; scripts/deploy.sh
 Applies to: current release-selection and deployment contracts
-Last verified: 2026-10-09; local projection and snippet checks only; no live upgrade, rotation or retirement result is available
+Last verified: 2026-10-11; local projection, snippet and synthetic teardown checks only; no live upgrade, rotation or retirement result is available
 
 ## Objective
 
@@ -1135,7 +1135,7 @@ Capture the exact local scope before changing access:
 ```bash
 assert_cluster_binding
 kubectl --context "<context>" -n "$NAMESPACE" get \
-  deploy,statefulset,daemonset,job,cronjob,svc,ingress,pvc,configmap,secret,serviceaccount,role,rolebinding,networkpolicy \
+  deploy,statefulset,daemonset,job,cronjob,svc,ingress,pvc,configmap,secret,serviceaccount,role,rolebinding,networkpolicy,ciliumnetworkpolicy \
   -o name > "<evidence-dir>/namespaced-resources-before.txt"
 helm list -n "$NAMESPACE" > "<evidence-dir>/helm-before.txt"
 ```
@@ -1200,12 +1200,48 @@ Do not run these commands as a sequence.
 | --- | --- | --- | --- |
 | `./scripts/deploy.sh teardown-agents` | Nova and Buster Helm releases | Infrastructure, namespace, Secrets, and PVCs | Confirm that no run or external effect remains active or uncertain |
 | `./scripts/deploy.sh teardown-prism` | Prism and Prism-agent Helm releases | Namespace, Secrets, and kept Prism PVCs | Confirm that Prism admission and writes have stopped |
-| `./scripts/deploy.sh teardown` | Agents, selected infrastructure, Prism when enabled, and **every PVC left in the application namespace** | Namespace and Secrets only | Confirm final verified backups and approve application-data deletion |
+| `./scripts/deploy.sh teardown` | Agents, selected infrastructure, Prism when enabled, and **every PVC left in the application namespace** | Namespace, Secrets, and separately applied PostgreSQL recovery CronJob, ConfigMaps and CiliumNetworkPolicies; other objects outside the removal list can also remain | Confirm final verified backups, approve application-data deletion, and approve removal or explicit retention of remaining objects |
 | `./scripts/deploy.sh teardown-all` | The complete application namespace and every resource in it | Nothing in that namespace | Approve final namespace, Secret, and remaining-state deletion |
 
 `teardown` is destructive even though it keeps the namespace and Secrets.
 It enumerates and deletes all remaining PVCs, including PVCs retained by a Helm keep policy.
 Stop before confirmation if any PVC lacks a verified final backup and a named destruction approval.
+
+When PostgreSQL recovery was installed, `teardown` does not remove these
+separately applied objects:
+
+| Kind | Name | Consequence of retention |
+| --- | --- | --- |
+| CronJob | `litellm-postgresql-backup` | The backup schedule remains; suspension does not delete it |
+| ConfigMap | `litellm-postgresql-backup-settings` | Recovery configuration remains |
+| ConfigMap | `litellm-postgresql-backup-script` | Recovery script remains |
+| CiliumNetworkPolicy | `litellm-postgresql-backup` | Backup-workload network rules remain |
+| CiliumNetworkPolicy | `litellm-postgresql-backup-database` | Database ingress rules remain |
+
+A ConfigMap stores workload configuration. A CiliumNetworkPolicy selects
+Cilium network access rules. These objects are applied separately from the
+PostgreSQL Helm release. Uninstalling that release does not remove them. The
+backup PVC `litellm-postgresql-backup` is still included in the remaining-PVC
+deletion. A retained schedule cannot continue backup work after its volume and
+database are removed.
+
+Before approving that PVC deletion, the database and platform owners must
+record the recovery objects' actual names, namespaces, creating UIDs, ownership,
+suspension state and dependent Jobs/Pods in the signed inventory. Complete the
+final independent backup, export, integrity and restore proof in step 4 first.
+Choose explicit retention or owner-approved removal for each object. For
+retention, record the purpose, suspended schedule, reader, deadline and eventual
+removal owner. For removal, the owners must supply the exact identity-checked
+commands, required rights and independent named read-back procedure. Stop if
+that procedure or any ownership decision is missing; this page supplies no
+unconditional name-based deletion command. Reconcile existing backup Jobs and
+Pods before removal and verify their selected retained or absent state.
+
+After `teardown`, use that approved procedure to remove only the recorded
+remaining objects, or verify their explicit retained state. A denied read,
+timeout, changed UID or unexpected object stops verification. Preserve the
+inventory and failed output for the owner; do not repeat `teardown` to remove
+objects that it does not select.
 
 Reassert the bound cluster and freeze the exact namespace immediately before
 the command. Do not change the kubeconfig's current context here:
@@ -1224,12 +1260,14 @@ match the signed inventory.
 Abort the prompt on any difference. A prompt protects only against accidental
 invocation; it does not prove ownership or backup.
 
-After `teardown`, verify that no PVC remains and review the retained Secrets:
+After `teardown`, verify that no PVC remains and review the retained Secrets
+and recovery objects:
 
 ```bash
 assert_cluster_binding
 kubectl -n "$NAMESPACE" get pvc
 kubectl -n "$NAMESPACE" get secrets
+kubectl -n "$NAMESPACE" get cronjob,job,pods,configmap,ciliumnetworkpolicy
 ```
 
 Run `teardown-all` only when final namespace deletion has separate explicit approval:
@@ -1243,15 +1281,19 @@ That command destroys the namespace and included state.
 
 > **Source evidence — teardown scopes**
 >
-> **Claim:** `teardown-agents` and `teardown-prism` remove bounded workload releases. `teardown` keeps the namespace and Secrets but deletes every remaining PVC. `teardown-all` deletes the namespace.
+> **Claim:** `teardown-agents` and `teardown-prism` remove bounded workload releases. `teardown` keeps the namespace, Secrets and separately applied PostgreSQL recovery CronJob, ConfigMaps and CiliumNetworkPolicies, but deletes every remaining PVC, including the backup PVC. `teardown-all` deletes the namespace.
 >
 > **Implementation:** [The bounded agent teardown uninstalls only Nova and Buster](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2692-L2699). [The destructive teardown enumerates and deletes all remaining PVCs](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2780-L2825). [The namespace branch deletes the complete namespace](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2806-L2817).
 >
+> [Infrastructure removal selects specific releases and manifests](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/deploy.sh#L2749-L2778); [installation applies recovery resources separately](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/deploy.sh#L1151-L1162).
+>
 > **Contract or setting:** [`KUBECLAW_DEPLOY_PRISM` decides whether broad teardown first uninstalls Prism](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2828-L2838).
 >
-> **Test evidence:** No repository test executes destructive PVC deletion against a live namespace. The documented command paths are protected by a regression check.
+> [The recovery renderer defines the CronJob](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/render-postgresql-recovery.mjs#L61-L81), [both policies](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/render-postgresql-recovery.mjs#L84-L97), and [both ConfigMaps plus the backup PVC](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/scripts/render-postgresql-recovery.mjs#L116-L120).
 >
-> **Revision:** `2a8558d795054d25aa4b72dbdc296c9321ba38f6`.
+> **Test evidence:** Local synthetic execution of the exact teardown helpers issues backup-PVC deletion and no deletion of these five recovery objects. No repository test executes destructive PVC deletion against a live namespace. The documented command paths are protected by a regression check.
+>
+> **Revision:** Checked at `430633accc4a374a740b5f12f384eeeb9dce228d`; the older deploy links contain the same complete file.
 >
 > **Limit:** The available static evidence does not prove successful cleanup, backup integrity, external-resource removal, or data-destruction approval in a live environment.
 
@@ -1261,14 +1303,16 @@ That command destroys the namespace and included state.
 assert_cluster_binding
 kubectl --context "<context>" get namespace "<namespace>" --ignore-not-found
 kubectl --context "<context>" -n "$NAMESPACE" get \
-  deploy,statefulset,daemonset,job,cronjob,svc,ingress,pvc,serviceaccount,role,rolebinding,networkpolicy \
+  deploy,statefulset,daemonset,job,cronjob,svc,ingress,pvc,configmap,secret,serviceaccount,role,rolebinding,networkpolicy,ciliumnetworkpolicy \
   --ignore-not-found
 helm list -n "$NAMESPACE"
 ```
 
 For `teardown-all`, expected namespace output is empty. For a narrower command,
 expected retained objects must match its `Keeps` column and the signed retained
-inventory. Verify external DNS/exposure is absent, revoked identities are
+inventory, including all ConfigMaps and CiliumNetworkPolicies and the recovery
+CronJob and its Jobs/Pods. A resource-list error does not establish absence.
+Verify external DNS/exposure is absent, revoked identities are
 denied, monitoring and backup schedules have the selected retained/removed
 state, and retained backups still pass integrity and reader checks.
 

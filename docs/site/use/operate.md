@@ -163,11 +163,11 @@ The runnable forms in this page are the interface reference.
 >
 > **Implementation:** [The project dispatcher validates arguments and selects compile, start, recover, or signal](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/cli.ts#L19-L56). [The Core CLI supports start, recover, signal, and audit for explicit graphs](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/core/cli.ts#L16-L74).
 >
-> **Contract or setting:** [The npm `pipeline` script selects the dispatcher](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/package.json#L42-L42).
+> **Contract or setting:** [The npm `pipeline` script selects the dispatcher](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/package.json#L42-L42).
 >
 > **Test evidence:** [The project compiler test starts the real dispatcher and checks its compiled output](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-project-compiler.mts#L171-L185). The test passed on 2026-09-16.
 >
-> **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`.
+> **Revision:** Command sources were checked at `430633accc4a374a740b5f12f384eeeb9dce228d`; the older CLI and test links contain identical complete files. The test execution above remains a historical result at `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`.
 >
 > **Limit:** Neither CLI defines a `--help` option or a separate cancel command.
 
