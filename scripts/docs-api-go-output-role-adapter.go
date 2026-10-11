@@ -718,6 +718,123 @@ func qualifyTransportBodies(decls map[string][]declaration) bool {
 		}
 		return ""
 	}
+	// Effects on an alias, through an escaped address, or through a helper are
+	// not represented by the shape evaluator. Do not qualify origin alone.
+	// This follows lexical objects rather than names or probe-specific bodies.
+	var mutatesParameter func(*ast.FuncDecl, int, map[*ast.FuncDecl]bool) bool
+	mutatesParameter = func(fn *ast.FuncDecl, index int, seen map[*ast.FuncDecl]bool) bool {
+		if seen[fn] {
+			return true
+		}
+		seen[fn] = true
+		defer delete(seen, fn)
+		var parameter *ast.Object
+		cursor := 0
+		for _, field := range fn.Type.Params.List {
+			for _, id := range field.Names {
+				if cursor == index {
+					parameter = id.Obj
+				}
+				cursor++
+			}
+		}
+		if parameter == nil {
+			return true
+		}
+		aliases := map[*ast.Object]bool{parameter: true}
+		for changed := true; changed; {
+			changed = false
+			ast.Inspect(fn.Body, func(n ast.Node) bool {
+				if a, ok := n.(*ast.AssignStmt); ok {
+					for i, lhs := range a.Lhs {
+						if i < len(a.Rhs) {
+							l, lok := lhs.(*ast.Ident)
+							r, rok := a.Rhs[i].(*ast.Ident)
+							if lok && rok && aliases[r.Obj] && !aliases[l.Obj] {
+								aliases[l.Obj] = true
+								changed = true
+							}
+						}
+					}
+				}
+				return true
+			})
+		}
+		rootAlias := func(e ast.Expr) bool {
+			for {
+				switch v := e.(type) {
+				case *ast.IndexExpr:
+					e = v.X
+				case *ast.ParenExpr:
+					e = v.X
+				case *ast.UnaryExpr:
+					e = v.X
+				default:
+					id, ok := e.(*ast.Ident)
+					return ok && aliases[id.Obj]
+				}
+			}
+		}
+		mutation := false
+		ast.Inspect(fn.Body, func(n ast.Node) bool {
+			if a, ok := n.(*ast.AssignStmt); ok {
+				for _, lhs := range a.Lhs {
+					if _, indexed := lhs.(*ast.IndexExpr); indexed && rootAlias(lhs) {
+						mutation = true
+					}
+				}
+			}
+			if call, ok := n.(*ast.CallExpr); ok {
+				for i, arg := range call.Args {
+					if rootAlias(arg) {
+						name := nameOf(call.Fun)
+						if name == "kube" || name == "requestPayload" || name == "len" {
+							continue
+						}
+						choices := functions[name]
+						if len(choices) != 1 || mutatesParameter(choices[0], i, seen) {
+							mutation = true
+						}
+					}
+				}
+			}
+			return true
+		})
+		return mutation
+	}
+	bodyEffectsSafe := func(id *ast.Ident) bool {
+		for node, parent := range parents {
+			ref, ok := node.(*ast.Ident)
+			if !ok || ref.Obj != id.Obj {
+				continue
+			}
+			if a, ok := parent.(*ast.AssignStmt); ok {
+				for i, rhs := range a.Rhs {
+					if rhs == ref && i < len(a.Lhs) {
+						if _, alias := a.Lhs[i].(*ast.Ident); alias {
+							return false
+						}
+					}
+				}
+			}
+			if call, ok := parent.(*ast.CallExpr); ok {
+				for i, arg := range call.Args {
+					if arg != ref {
+						continue
+					}
+					name := nameOf(call.Fun)
+					if name == "kube" || name == "requestPayload" || name == "len" || name == "deepCopyMap" || name == "append" {
+						continue
+					}
+					choices := functions[name]
+					if len(choices) != 1 || mutatesParameter(choices[0], i, map[*ast.FuncDecl]bool{}) {
+						return false
+					}
+				}
+			}
+		}
+		return true
+	}
 	var safe func(ast.Expr, map[ast.Expr]bool) bool
 	safe = func(e ast.Expr, seen map[ast.Expr]bool) bool {
 		if e == nil || seen[e] {
@@ -751,6 +868,9 @@ func qualifyTransportBodies(decls map[string][]declaration) bool {
 				return false
 			}
 			if assignments := values[v.Obj]; len(assignments) > 0 {
+				if !bodyEffectsSafe(v) {
+					return false
+				}
 				for node := range parents {
 					address, ok := node.(*ast.UnaryExpr)
 					if !ok || address.Op != token.AND {

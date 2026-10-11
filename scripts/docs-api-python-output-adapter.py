@@ -10,6 +10,63 @@ from pathlib import Path
 
 source = Path(sys.argv[1]).read_text()
 tree = ast.parse(source)
+def patch_profiles():
+    """Run original patch construction and argv at the subprocess boundary."""
+    assignments = [node for node in tree.body if isinstance(node, ast.Assign)]
+    for node in assignments:
+        ast.literal_eval(node.value)  # no module-side process or file effects
+    program = ast.Module(body=assignments + [node for node in tree.body if isinstance(node, ast.FunctionDef)], type_ignores=[])
+    results, outcomes = [], []
+    for profile in ('reverse-apply', 'ordered', 'reverse-dry-run', 'unexpected', 'missing-context', 'transport-failure'):
+        env = {} if profile == 'missing-context' else {'KUBE_CONTEXT': 'synthetic-offline'}
+        inputs, submitted = [], []
+        class Parser:
+            def __init__(self, **kwargs): pass
+            def add_argument(self, *args, **kwargs):
+                assert args == ('--apply',) and kwargs.get('action') == 'store_true', 'API_PRODUCT_PYTHON_PATCH_OPTIONS_UNQUALIFIED'
+            def parse_args(self): return types.SimpleNamespace(apply=profile != 'reverse-dry-run')
+        def read(command, text=None):
+            assert command[:3] == ['kubectl', '--context', env['KUBE_CONTEXT']] and command[3:5] == ['get', 'validatingwebhookconfiguration'] and command[6:] == ['-o', 'json'] and text is True, 'API_PRODUCT_PYTHON_PATCH_RECEIVER_UNQUALIFIED'
+            receiver = {'apiVersion': 'admissionregistration.k8s.io/v1', 'kind': 'ValidatingWebhookConfiguration', 'resource': command[4], 'name': command[5], 'patchType': 'json'}
+            inputs.append({'command': command, 'receiver': receiver})
+            names = list(namespace['ORDER'])
+            if profile != 'ordered': names.reverse()
+            if profile == 'unexpected': names[0] = 'unexpected.synthetic'
+            return json.dumps({'metadata': {'resourceVersion': 'synthetic-version'}, 'webhooks': [{'name': name, 'clientConfig': {'caBundle': 'synthetic-ca'}} for name in names]})
+        def run(command, check=None):
+            assert check is True and len(command) == 9 and command[:3] == ['kubectl', '--context', env['KUBE_CONTEXT']] and command[3:5] == ['patch', 'validatingwebhookconfiguration'] and command[6:8] == ['--type=json', '-p'], 'API_PRODUCT_PYTHON_PATCH_TRANSPORT_UNQUALIFIED'
+            assert inputs and command[5] == inputs[-1]['receiver']['name'], 'API_PRODUCT_PYTHON_PATCH_RECEIVER_UNQUALIFIED'
+            operations = json.loads(command[8])
+            assert isinstance(operations, list) and operations, 'API_PRODUCT_PYTHON_PATCH_BODY_UNQUALIFIED'
+            for operation in operations:
+                assert isinstance(operation, dict) and operation.get('op') in ('test', 'move', 'copy', 'add', 'replace', 'remove'), 'API_PRODUCT_PYTHON_PATCH_OPERATION_UNQUALIFIED'
+                required = {'op', 'path'} | ({'from'} if operation['op'] in ('move','copy') else {'value'} if operation['op'] in ('test','add','replace') else set())
+                assert set(operation) == required, 'API_PRODUCT_PYTHON_PATCH_OPERATION_UNQUALIFIED'
+                for key in ('path', 'from'):
+                    if key not in operation: continue
+                    pointer = operation[key]
+                    assert isinstance(pointer, str) and pointer.startswith('/') and all('~' not in token.replace('~0','').replace('~1','') for token in pointer[1:].split('/')), 'API_PRODUCT_PYTHON_PATCH_POINTER_UNQUALIFIED'
+            record = {'value': operations, 'profile': profile, 'inputs': list(inputs), 'environment': env, 'receiver': inputs[-1]['receiver'], 'patchOperations': operations}
+            submitted.append(record)
+            if profile == 'transport-failure': raise RuntimeError('synthetic transport failure')
+            results.append(record)
+        namespace = {'__builtins__': {name: getattr(__import__('builtins'), name) for name in ('print','list','set','len','ValueError','SystemExit')}, '__doc__': 'offline selected patch', 'argparse': types.SimpleNamespace(ArgumentParser=Parser), 'json': json, 'os': types.SimpleNamespace(environ=env), 'subprocess': types.SimpleNamespace(check_output=read, run=run)}
+        exec(compile(program, sys.argv[1], 'exec'), namespace)
+        try:
+            with contextlib.redirect_stdout(io.StringIO()): namespace['main']()
+            outcome = 'success'
+        except (ValueError, SystemExit, RuntimeError) as error:
+            outcome = type(error).__name__ + ': ' + str(error)
+        outcomes.append({'profile': profile, 'outcome': outcome, 'submissions': [dict(item) for item in submitted], 'inputs': inputs})
+        expected = {'unexpected':'ValueError', 'missing-context':'SystemExit', 'transport-failure':'RuntimeError'}.get(profile, 'success')
+        assert outcome.startswith(expected), 'API_PRODUCT_PYTHON_PATCH_BRANCH_UNQUALIFIED'
+    assert len(results) == 1, 'API_PRODUCT_PYTHON_PATCH_PUBLICATION_UNQUALIFIED'
+    results[0]['profileOutcomes'] = outcomes
+    return results
+
+if len(sys.argv) > 2 and sys.argv[2] == '--patch':
+    print(json.dumps(patch_profiles()))
+    sys.exit(0)
 if len(sys.argv) > 2 and sys.argv[2] == '--classify':
     # Bind names to their lexical owner. A parameter or local assignment masks
     # every outer binding, including imports; unrelated functions never qualify it.
@@ -192,6 +249,19 @@ if len(sys.argv) > 2 and sys.argv[2] == '--classify':
                 allowed = len(bindings.get((owner(parent), parent.targets[0].id), [])) == 1
             if not allowed and not isinstance(parent, ast.Attribute):
                 outputs.append({'line': node.lineno, 'expression': ast.unparse(node), 'role': 'unknown', 'gap': 'capability-escape'})
+    # A JSON Patch is an API submission even though it is a list without
+    # apiVersion/kind. Bind the exact serialized argument to original argv.
+    patch_sinks = [node for node in ast.walk(tree) if isinstance(node, ast.Call) and ast.unparse(node.func) == 'subprocess.run' and node.args and any(isinstance(item, ast.Constant) and item.value == 'patch' for item in ast.walk(node.args[0]))]
+    if patch_sinks:
+        records = patch_profiles()
+        for publication in patch_sinks:
+            for serializer in ast.walk(publication.args[0]):
+                if isinstance(serializer, ast.Call) and capability(serializer.func) in serializers:
+                    found = next((item for item in outputs if item['line'] == serializer.lineno and item['expression'] == ast.unparse(serializer)), None)
+                    assert found is not None, 'API_PRODUCT_PYTHON_PATCH_SERIALIZER_UNQUALIFIED'
+                    found['role'] = 'api-patch'
+                    found['patchReceiver'] = records[0]['receiver']
+                    found['patchOperations'] = records[0]['patchOperations']
     for output in outputs:
         matching = next((node for node in ast.walk(tree) if isinstance(node, (ast.Call, ast.Return, ast.Name, ast.Attribute)) and getattr(node, 'lineno', None) == output['line'] and ast.unparse(node) == output['expression']), None)
         scope = owner(matching) if matching else None
@@ -214,11 +284,14 @@ for node in initializers:
             assert isinstance(child.func, ast.Attribute) and ast.unparse(child.func) == 'os.environ.get', 'API_PRODUCT_PYTHON_INITIALIZER_UNQUALIFIED'
 functions = ast.Module(body=initializers + [node for node in tree.body if isinstance(node, ast.FunctionDef)], type_ignores=[])
 outputs = []
-for profile in ['missing', 'optional', 'retained', 'copy-disabled']:
+outcomes = []
+for profile in ['missing', 'optional', 'retained', 'copy-disabled', 'custom-source', 'absent-source', 'empty-file', 'empty-tailscale', 'retained-optional', 'copy-noncanonical', 'transport-failure']:
     env = {'KUBE_CONTEXT': 'synthetic-offline', 'OPS_NAMESPACE': 'discovery-ops', 'OPS_COPY_PULL_SECRET': '0' if profile == 'copy-disabled' else '1'}
-    if profile == 'optional':
+    if profile in ('optional', 'empty-file', 'empty-tailscale', 'retained-optional'):
         env.update(OPS_GITHUB_TOKEN_FILE='synthetic/github', OPS_TAILSCALE_AUTHKEY_FILE='synthetic/tailscale')
-    inputs = []
+    if profile == 'custom-source': env['OPS_PULL_SECRET_SOURCE_NAMESPACE'] = 'custom-source'
+    if profile == 'copy-noncanonical': env['OPS_COPY_PULL_SECRET'] = 'true'
+    inputs, submitted = [], []
     def offline_run(command, input=None, text=None, stdout=None, stderr=None):
         # Keep the original kube function: collect bytes only after its actual
         # argument and serialization transformations, at the external boundary.
@@ -226,28 +299,42 @@ for profile in ['missing', 'optional', 'retained', 'copy-disabled']:
         assert isinstance(command, list) and command[:len(prefix)] == prefix, 'API_PRODUCT_PYTHON_TRANSPORT_UNQUALIFIED'
         assert text is True and stdout == -1 and stderr == -1, 'API_PRODUCT_PYTHON_TRANSPORT_OPTIONS_UNQUALIFIED'
         args = command[len(prefix):]
+        if profile == 'transport-failure': return types.SimpleNamespace(returncode=1, stdout='', stderr='synthetic-secret-sensitive-error')
         inputs.append({'args': args, 'command': command, 'response': 'synthetic'})
         if args == ['apply', '-f', '-']:
             value = json.loads(input)
             assert isinstance(value, dict) and value.get('apiVersion') and value.get('kind'), 'API_PRODUCT_PYTHON_RESOURCE_IDENTITY_UNQUALIFIED'
-            outputs.append({'value': value, 'profile': profile, 'inputs': list(inputs), 'environment': env})
+            record = {'value': value, 'profile': profile, 'inputs': list(inputs), 'environment': env}
+            submitted.append(record)
+            if profile in ('missing', 'optional', 'retained', 'copy-disabled'): outputs.append(record)
             return types.SimpleNamespace(returncode=0, stdout='')
         assert input is None and len(args) == 8 and args[:2] == ['get', 'secret'] and args[3:7] == ['--ignore-not-found', '-o', 'json', '-n'], 'API_PRODUCT_PYTHON_TRANSPORT_OPERATION_UNQUALIFIED'
-        if args[:3] == ['get', 'secret', 'ghcr-secret'] and args[-1] == 'kubeclaw':
+        if args[:3] == ['get', 'secret', 'ghcr-secret'] and args[-1] == env.get('OPS_PULL_SECRET_SOURCE_NAMESPACE', 'kubeclaw'):
+            if profile == 'absent-source': return types.SimpleNamespace(returncode=0, stdout='')
             return types.SimpleNamespace(returncode=0, stdout=json.dumps({'type': 'kubernetes.io/dockerconfigjson', 'data': {'.dockerconfigjson': 'c3ludGhldGlj'}}))
         assert args[2] in ['codex-ops-bearer', 'ghcr-secret'] and args[-1] == namespace['namespace'], 'API_PRODUCT_PYTHON_TRANSPORT_READ_UNQUALIFIED'
-        if profile == 'retained':
+        if profile in ('retained', 'retained-optional'):
             return types.SimpleNamespace(returncode=0, stdout=json.dumps({'metadata': {'name': args[2]}}))
         return types.SimpleNamespace(returncode=0, stdout='')
     class SyntheticPath:
         def __init__(self, name):
+            self.name = name
             assert name in ['synthetic/github', 'synthetic/tailscale'], 'API_PRODUCT_PYTHON_FILE_UNQUALIFIED'
         def read_text(self):
-            return 'synthetic-safe-payload'
+            return '   ' if profile == 'empty-file' or profile == 'empty-tailscale' and self.name == 'synthetic/tailscale' else ' synthetic-safe-payload\n'
     namespace = {'__builtins__': {name: getattr(__import__('builtins'), name) for name in ['print','list','dict','set','sorted','str','len','SystemExit','RuntimeError']}, 'json': json, 'os': types.SimpleNamespace(environ=env), 'namespace': 'discovery-ops',
                  'Path': SyntheticPath, 'secrets': types.SimpleNamespace(token_urlsafe=lambda size: 'synthetic-token'),
                  'subprocess': types.SimpleNamespace(run=offline_run, PIPE=-1), 'base': []}
     exec(compile(functions, sys.argv[1], 'exec'), namespace)
-    with contextlib.redirect_stdout(io.StringIO()):
-        namespace['setup_secrets']()
+    try:
+        with contextlib.redirect_stdout(io.StringIO()): namespace['setup_secrets']()
+        outcome = 'success'
+    except SystemExit as error:
+        outcome = 'SystemExit: ' + str(error)
+    expected = {'absent-source': 'SystemExit: Missing ghcr-secret.', 'empty-file': 'SystemExit: OPS_GITHUB_TOKEN_FILE contains an empty credential', 'empty-tailscale': 'SystemExit: OPS_TAILSCALE_AUTHKEY_FILE contains an empty credential', 'transport-failure': 'SystemExit: kubectl failed'}.get(profile, 'success')
+    assert outcome.startswith(expected), 'API_PRODUCT_PYTHON_BRANCH_UNQUALIFIED'
+    outcomes.append({'profile': profile, 'outcome': outcome, 'submissions': [dict(record) for record in submitted], 'inputs': inputs, 'environment': env})
+for output in outputs:
+    output['profileOutcomes'] = outcomes
+    output['coverageLimitations'] = ['bootstrap discover endpoint/service/IP/namespace/CRD branches are not executed by this credential adapter; profile outcomes prove setup_secrets only', 'synthetic files/tokens/read responses do not prove live permissions or credential acceptance']
 print(json.dumps(outputs))

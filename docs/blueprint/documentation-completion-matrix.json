@@ -21959,6 +21959,39 @@
       "scope": "Bounded author tests for symbolic append: known authored fields checked, inherited live length unknown, wildcard provenance, unknown authored field and unresolved spread rejected. No pre-run whole source seal, full suite or independent approval claimed.",
       "receipt": "/home/node/Documents/Codex/a98-evidence/root-symbolic-append-selection-correction.json",
       "next": "Actual original decision-receipt consumer proof from native author; stable suite and fresh independent full source review."
+    },
+    "infrastructureCorrectionArtifactAudit": {
+      "observedAt": "2026-10-11T13:01:47.842015+00:00",
+      "verifiedArtifacts": 16,
+      "errors": [],
+      "seal": "/home/node/Documents/Codex/a98-evidence/infrastructure-actual-correction-root-artifact-seal.json",
+      "sourceScope": "Archived discovery6bbdef5e with historical Go f79. Actual shell positive closes incompletely; activate81cat terminal1. Next namedfile correction ongoing. No global or independent acceptance."
+    },
+    "conditionalDecisionStateAudit": {
+      "observedAt": "2026-10-11T13:03:29.999851+00:00",
+      "source": "cmd/buster-namespace-controller/demo-product.go:293",
+      "finding": "state starts accepted and becomes extended only when d.Action == extend; earlier current-positive unconditional extended wrong.",
+      "authorCorrection": "Native author reports unresolved conditional assignment now retains source-bound state expression. Current shapes263f9f23; final repeated controls/receipt pending.",
+      "acceptance": "Open until exact bounded evidence and independent source review.",
+      "rootArtifactAudit": "/home/node/Documents/Codex/a98-evidence/conditional-receipt-state-root-audit.json",
+      "actualState": {
+        "__docsDynamicExpression": "state"
+      }
+    },
+    "nativeSubmissionFinalCorrectionCheckpoint": {
+      "observedAt": "2026-10-11T13:05:30.814983+00:00",
+      "sourceFiles": {
+        "scripts/docs-api-go-output-role-adapter.go": "3ba4a6dd59801ead8f2060e958739fda0bd52de91aef287468428671a0fe7a31",
+        "scripts/docs-api-go-output-shapes.go": "263f9f23e4bc5638b35064a358eac3d478e01b5ef6a04836bbd293c171721579",
+        "scripts/docs-api-python-output-adapter.py": "dd39dfb8e048472e54be03a8c320615e3a27e4c89a262acdb113d8953c4a6228"
+      },
+      "artifactsVerified": 86,
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/native-submission-final-root-seal.json",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/native-submission-effects-correction-writer/REPORT.md",
+      "authorReceipt": "/home/node/Documents/Codex/a98-evidence/native-submission-effects-correction-writer/receipt.json",
+      "actualGoCount": 30,
+      "checks": "Final Go20/Python8/inherited14/sequence4 author checks observedterminal0. Source checkpoint only; full stable suite/newgeneration/fresh independent nativeSource pending.",
+      "limitations": "Refreshed appendedunserved/spread mutations stop at pinnedHTTPSourceguard, not consumer-specific proof. Shell originalsource and namedfile closure still open."
     }
   }
 }
