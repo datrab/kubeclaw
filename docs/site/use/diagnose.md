@@ -5,7 +5,7 @@ Audience: operator, incident responder
 Owner: platform operations
 Evidence: scripts/deploy.sh; skills/nova/core/telemetry/audit.ts
 Applies to: current runtime roles and durable pipeline state
-Last verified: 2026-10-09; local snippet checks and synthetic guards only; no live dependency failure result is available
+Last verified: 2026-10-11; local snippet and bounded process checks only; no live dependency failure result is available
 
 ## Objective
 
@@ -89,7 +89,7 @@ Do not copy Secret values, bearer tokens, private keys, or confidential payloads
 Run from the administration machine:
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 kubectl config current-context
 kubectl get nodes -o wide
 ./scripts/deploy.sh status
@@ -109,7 +109,7 @@ Use the independent host or control-plane route from the installation record.
 Check one affected Pod before broad log collection:
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 kubectl -n "$NAMESPACE" describe pod "<pod>"
 kubectl -n "$NAMESPACE" logs "<pod>" -c "<container>" --since=30m --timestamps
 kubectl -n "$NAMESPACE" logs "<pod>" -c "<container>" --previous --timestamps
@@ -121,7 +121,7 @@ Its absence does not prove a clean previous run.
 Use role smoke checks after capturing failure evidence:
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 ./scripts/deploy.sh smoke-agent nova
 ./scripts/deploy.sh smoke-agent buster
 kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
@@ -153,7 +153,7 @@ Manual edits break the recovery and audit boundary.
 Check scheduling and filesystem signals separately:
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 kubectl -n "$NAMESPACE" get resourcequota,limitrange
 kubectl -n "$NAMESPACE" get pvc
 kubectl -n "$NAMESPACE" top pods --containers
@@ -212,6 +212,8 @@ Never submit a second request from absence of a UI update alone.
 | Observer message is missing | Canonical event, observer checkpoint, delivery attempts, receiver receipt | Replay only through the observer contract |
 | Disk grows after terminal jobs | Ownership and quiescence evidence | Retain data until safe cleanup authority exists |
 | Wrong configuration seems active | Rendered values, Pod spec, ConfigMap/Secret revision, persisted config | Correct the owned source and perform a targeted rollout |
+| OpenClaw memory indexing fails, recall is empty/stale, or an embedding times out | Select the actual agent Pod/container and `main` status workspace/index; distinguish consumer-key or gateway SecretRef resolution from LiteLLM readiness/database, Vertex/model/quota, and vector/freshness failures | Follow [the actual memory-consumer diagnosis](#prepare-the-openclaw-memory-reader); keep writers stopped when identity or process quiescence is unknown; restore route and prove the same consumer result before cleanup |
+| LiteLLM is ready but an embedding fails, or a managed reasoning model is unavailable | Check the selected consumer and model route, credential owners, provider error and budget; HTTP readiness does not test Vertex; an embedding result does not test managed reasoning | Follow [LiteLLM route and memory diagnosis](#litellm-upstream-timeout) for `gemini-embedding-001`; use [managed model boundaries](../understand/platform-and-operations.md#litellm-model-gateway) for other models; retain the failed operation rather than substitute a route probe |
 | Redis connection is refused or times out | Redis Pod, Service endpoint, network policy, DNS, and TCP error before authentication | Repair reachability; do not rotate credentials or delete data |
 | Redis reports `NOAUTH` or `WRONGPASS` | Endpoint remains reachable; compare Secret name/version and consumer mount without exposing the value | Correct credential distribution through its owner; do not change the data store |
 | Redis connects but expected stream or data is absent | Authenticated `PING`, exact key/stream identity, persistence mode, PVC identity, and application audit | Keep writers stopped if loss is possible; restore only from a verified owned backup |
@@ -301,7 +303,7 @@ file named below must be outside the repository and evidence directory, mode
 only for the Tailscale exercise; never copy it into evidence.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 set -euo pipefail
 test "$NAMESPACE" = "<namespace>"
 test "$PRISM_NAMESPACE" = "<prism-namespace>"
@@ -344,7 +346,7 @@ does not delete its PVC. Record the original replica count so restoration does
 not assume one.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 ./scripts/deploy.sh smoke-agent nova
 ./scripts/deploy.sh smoke-agent buster
 kubectl -n "$NAMESPACE" get statefulset/redis-master \
@@ -358,6 +360,7 @@ npm --silent run pipeline -- --platform "$PLATFORM_FILE" --audit "$SELECTED_RUN_
   > "$EVIDENCE_DIR/redis-nova-audit-before.json"
 redis_restore_pending=1
 restore_redis() {
+  assert_cluster_binding || return 126
   if [ "${redis_restore_pending:-0}" -eq 1 ]; then
     redis_replicas="$(cat "$EVIDENCE_DIR/redis-replicas.txt")"
     kubectl -n "$NAMESPACE" scale statefulset/redis-master --replicas="$redis_replicas"
@@ -392,7 +395,7 @@ role checks. The startup portion also exercises the bounded stream check; a Pod
 becoming Ready by itself is not functional recovery.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 restore_redis
 kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
   node --input-type=module -e '
@@ -453,7 +456,7 @@ or database backup is in progress. Record the selected project and operation
 IDs before the fault.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 ./scripts/deploy.sh prism-smoke
 kubectl -n "$NAMESPACE" rollout status statefulset/postgresql --timeout=120s
 kubectl -n "$PRISM_NAMESPACE" get statefulset/prism-postgresql \
@@ -465,6 +468,7 @@ kubectl -n "$PRISM_NAMESPACE" get pvc -l app=prism-postgresql \
 test -s "$EVIDENCE_DIR/prism-postgresql-pvc-before.txt"
 prism_postgresql_restore_pending=1
 restore_prism_postgresql() {
+  assert_cluster_binding || return 126
   if [ "${prism_postgresql_restore_pending:-0}" -eq 1 ]; then
     prism_db_replicas="$(cat "$EVIDENCE_DIR/prism-postgresql-replicas.txt")"
     kubectl -n "$PRISM_NAMESPACE" scale statefulset/prism-postgresql \
@@ -510,7 +514,7 @@ project, revision, and artifact digest, compare the PVC identities and only
 then disarm it:
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 kubectl -n "$PRISM_NAMESPACE" get pvc -l app=prism-postgresql \
   -o jsonpath='{range .items[*]}{.metadata.name}{" "}{.metadata.uid}{"\n"}{end}' \
   | sort > "$EVIDENCE_DIR/prism-postgresql-pvc-after.txt"
@@ -528,8 +532,9 @@ startup cannot hide behind an established pool. Prism must continue to pass its
 own smoke check.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 litellm_embedding_probe() {
+  assert_cluster_binding || return 126
   probe_text="$1"
   kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
     env KUBECLAW_PROBE_TEXT="$probe_text" node --input-type=module -e '
@@ -555,6 +560,7 @@ kubectl -n "$NAMESPACE" get pvc -l app.kubernetes.io/instance=postgresql \
 test -s "$EVIDENCE_DIR/litellm-postgresql-pvc-before.txt"
 litellm_postgresql_restore_pending=1
 restore_litellm_postgresql() {
+  assert_cluster_binding || return 126
   if [ "${litellm_postgresql_restore_pending:-0}" -eq 1 ]; then
     litellm_db_replicas="$(cat "$EVIDENCE_DIR/litellm-postgresql-replicas.txt")"
     kubectl -n "$NAMESPACE" scale statefulset/postgresql \
@@ -611,7 +617,7 @@ command; do not translate the lab Service mutation below to a credential or TLS
 bypass. Preflight must prove the full Nova-to-Buster build path first.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 ./scripts/deploy.sh nova-buildkit-preflight
 kubectl auth can-i patch services -n "$NAMESPACE" | grep -qx yes
 kubectl -n "$NAMESPACE" get service/registry-local -o json \
@@ -646,6 +652,7 @@ kubectl -n "$NAMESPACE" get deployment/registry-mirror service/registry-mirror -
   | tee "$EVIDENCE_DIR/registry-mirror-before.txt"
 registry_restore_pending=1
 restore_registry_selector() {
+  assert_cluster_binding || return 126
   if [ "${registry_restore_pending:-0}" -eq 1 ]; then
     kubectl -n "$NAMESPACE" get service/registry-local \
       -o jsonpath='{.spec.selector}' \
@@ -720,7 +727,7 @@ again. Its receipt must show `registryPushVerified`, `manifestVerified`,
 imported evidence, and one digest-qualified image.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 restore_registry_selector
 kubectl -n "$NAMESPACE" get service/registry-local \
   -o jsonpath='{.spec.selector}' \
@@ -778,7 +785,7 @@ continue on already-issued device state, so the failure check must allocate a
 new fixture route; inspecting an old route is not the intended fault.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 test "$(stat -c '%a' "$TAILSCALE_OAUTH_ENV_FILE")" = 600
 ./scripts/deploy.sh nova-tailscale-preflight "$TAILSCALE_PROBE_IMAGE"
 kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get deploy,pods -l \
@@ -804,6 +811,7 @@ console.log(JSON.stringify({ client_id: digest(values.client_id), client_secret:
 NODE
 }
 tailscale_secret_fingerprints() {
+  assert_cluster_binding || return 126
   kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get secret/operator-oauth -o json \
     | node --input-type=module -e '
 import crypto from "node:crypto";
@@ -826,6 +834,7 @@ tailscale_restore_pending=1
 tailscale_watch_pid=""
 tailscale_proxy_pid=""
 restore_tailscale_oauth() {
+  assert_cluster_binding || return 126
   if [ "${tailscale_restore_pending:-0}" -eq 1 ]; then
     if [ -n "${tailscale_watch_pid:-}" ]; then
       kill "$tailscale_watch_pid" 2>/dev/null || true
@@ -941,7 +950,7 @@ objects to be absent and writes the cleanup result before the rollback trap can
 be disarmed. A same-name replacement is never a cleanup target.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 restore_tailscale_oauth
 kubectl proxy --port=0 --api-prefix=/ \
   > "$EVIDENCE_DIR/tailscale-kubectl-proxy.txt" 2>&1 &
@@ -1114,7 +1123,7 @@ Access must permit Pod exec, Deployment and Pod reads, and creation and removal
 of the named Cilium policy. The agent container must have Node, the pinned
 OpenClaw entry point `/app/openclaw.mjs`, and a running gateway that supports
 `secrets.resolve`. Keep the gateway running: the CLI resolves the configured
-memory SecretRef through its authenticated gateway snapshot. A route probe
+memory SecretRef through its authenticated gateway snapshot. A SecretRef is a configured reference to a credential; the gateway resolves it without putting the value in the command. A route probe
 can succeed while this resolution fails.
 
 The chart enables `memory.search`, selects sources `memory` and `sessions`,
@@ -1141,24 +1150,109 @@ file below is synthetic input; it contains no project or session data.
 and [SQLite and cache selection](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/agents/memory-search.ts#L296-L318)
 support this path. See [agent state and its backup boundary](../understand/data-and-state.md#complete-store-matrix).
 
-Define a bounded CLI observer. The seconds argument is an operator deadline,
-not a provider timeout. `OPENCLAW_LOG_LEVEL=debug` enables memory attempt
-observations for this child only. Retain both output streams: diagnostics can
-accompany the JSON document. Review captured logs before sharing them.
-[The environment override](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/logging/env-log-level.ts#L7-L17)
-and [console level selection](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/logging/console.ts#L56-L60)
-define this setting. It starts a separate Linux process group inside the
-container. At its deadline it terminates only that CLI group, then sends
-`SIGKILL` after five seconds if the group has not closed. Exit 124 means that
-this outer observer stopped the operation. It does not prove the client's
-terminal error or remote cancellation. Keep stderr and the exit code.
+Select one actual agent Pod and container from the administration record. Read
+its owner references and verify the ReplicaSet and Deployment UIDs against the
+selected Nova deployment; do not guess a Pod from a label or use Deployment
+exec. Record those owner observations with the exercise. The workload owner
+must hold this disposable consumer stable for the whole exercise: no rollout,
+scale, deletion, eviction, restart, config change, or other memory writer.
+If the owner cannot establish this controlled condition, stop before baseline.
+Kubernetes exec selects a Pod by name; it has no atomic UID precondition here.
+The checks below detect changed identity before and after exec. They cannot
+prevent a replacement between the check and the API request. An identity change
+makes the operation uncertain and stops the exercise; it is never accepted as
+work on the original consumer. See the [kubectl exec contract](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec) for Pod and container selection.
+
+Define the identity guards first. Replace the two placeholders with the actual
+names you recorded. The snapshot binds Pod UID, owner UID, container image,
+running container ID, restart count, and selected volume mounts. The image ID
+is an observed runtime identity, not an attestation of the pinned source.
 
 ```bash
-assert_cluster_binding
-bounded_memory_cli() {
-  assert_cluster_binding
-  kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
-    node --input-type=module -e '
+assert_cluster_binding || exit 126
+export MEMORY_POD="<recorded-actual-agent-pod-name>"
+export MEMORY_CONTAINER="<recorded-actual-agent-container-name>"
+readonly MEMORY_POD MEMORY_CONTAINER
+kubectl -n "$NAMESPACE" get pod "$MEMORY_POD" \
+  -o jsonpath='{.metadata.name}{" "}{.metadata.uid}{" "}{.metadata.ownerReferences}{"\n"}' \
+  > "$EVIDENCE_DIR/memory-pod-owner.txt"
+kubectl -n "$NAMESPACE" get replicaset "<actual-owner-replicaset-name>" \
+  -o jsonpath='{.metadata.name}{" "}{.metadata.uid}{" "}{.metadata.ownerReferences}{"\n"}' \
+  > "$EVIDENCE_DIR/memory-replicaset-owner.txt"
+kubectl -n "$NAMESPACE" get deployment "<actual-selected-nova-deployment-name>" \
+  -o jsonpath='{.metadata.name}{" "}{.metadata.uid}{"\n"}' \
+  > "$EVIDENCE_DIR/memory-deployment-owner.txt"
+# Stop here unless both controller owner UIDs match these actual objects.
+memory_pod_identity() {
+  assert_cluster_binding || return 126
+  kubectl -n "$NAMESPACE" get pod "$MEMORY_POD" -o json | node --input-type=module -e '
+let input = ""; for await (const chunk of process.stdin) input += chunk;
+const p = JSON.parse(input); const name = process.argv[1];
+const c = p.spec?.containers?.find(c => c.name === name);
+const r = p.status?.containerStatuses?.find(c => c.name === name);
+if (p.metadata?.deletionTimestamp || !p.metadata?.uid || !c || !r?.ready
+  || !r.state?.running || !r.imageID || !r.containerID) process.exit(1);
+console.log(JSON.stringify({ name: p.metadata.name, uid: p.metadata.uid,
+  owners: p.metadata.ownerReferences, container: name, image: c.image,
+  imageID: r.imageID, containerID: r.containerID, restarts: r.restartCount,
+  mounts: c.volumeMounts, volumes: (p.spec.volumes ?? []).map(v => ({
+    name: v.name, claim: v.persistentVolumeClaim?.claimName,
+    emptyDir: v.emptyDir, configMap: v.configMap?.name, secret: v.secret?.secretName
+  })) }));
+' "$MEMORY_CONTAINER"
+}
+memory_pod_identity > "$EVIDENCE_DIR/memory-pod-frozen.json" || exit 126
+assert_memory_pod() {
+  assert_cluster_binding || return 126
+  local current
+  current=$(memory_pod_identity) || { test -e "$EVIDENCE_DIR/memory-stop" || : > "$EVIDENCE_DIR/memory-stop"; return 126; }
+  if [ "$current" != "$(cat "$EVIDENCE_DIR/memory-pod-frozen.json")" ]; then
+    printf '%s\n' "consumer identity changed; stop" >&2
+    test -e "$EVIDENCE_DIR/memory-stop" || : > "$EVIDENCE_DIR/memory-stop"
+    return 126
+  fi
+}
+owned_memory_exec() {
+  assert_cluster_binding || return 126
+  assert_memory_pod || return 126
+  local status=0 stdin_flag=""
+  if [ "${1:-}" = -i ]; then stdin_flag=-i; shift; fi
+  kubectl -n "$NAMESPACE" exec ${stdin_flag:+"$stdin_flag"} "$MEMORY_POD" \
+    -c "$MEMORY_CONTAINER" -- "$@" || status=$?
+  assert_memory_pod || return 126
+  return "$status"
+}
+```
+
+Define a bounded CLI observer. Its seconds argument is the operator deadline,
+not the provider timeout. It creates one Linux process group in that container.
+The group ID is its own spawned child's PID. Signal 0 tests this negative group
+ID without sending a signal. `ESRCH` means that no member remains. Permission
+errors or other errors mean unknown, which must stop further work. A direct
+child close does not prove that its descendants stopped. After close or the
+deadline, the observer checks the group every 100 milliseconds, sends SIGTERM
+to remaining members, sends SIGKILL after five seconds, and stops observation
+after ten seconds. It never signals a group it did not spawn. A descendant
+that leaves this group is outside this check; the selected CLI and this
+controlled exercise must not launch independently detached work. If that
+condition is unknown, stop and obtain ownership proof from the maintainers.
+
+Exit 124 means the deadline expired with verified group absence. Exit 125
+means quiescence (the absence of running group members) is unproved. The
+receipt records both direct-child close and group absence. Neither result
+proves remote cancellation. Retain stderr, the receipt, and the exit status. The [Node 24 detached-child contract](https://nodejs.org/docs/latest-v24.x/api/child_process.html#optionsdetached) defines the Linux group, and [signal 0](https://nodejs.org/docs/latest-v24.x/api/process.html#processkillpid-signal) supplies the existence observation.
+`OPENCLAW_LOG_LEVEL=debug` applies to this child only; review logs before sharing.
+
+```bash
+assert_cluster_binding || exit 126
+run_memory_observer() {
+  assert_cluster_binding || return 126
+  assert_memory_pod || return 126
+  test ! -e "$EVIDENCE_DIR/memory-stop" || return 125
+  local receipt status=0
+  receipt=$(mktemp "$EVIDENCE_DIR/memory-observer.XXXXXX") || return 125
+  : > "$EVIDENCE_DIR/memory-stop" || return 125
+  owned_memory_exec node --input-type=module -e '
 import { spawn } from "node:child_process";
 const [seconds, ...args] = process.argv.slice(1);
 if (!/^[1-9][0-9]*$/.test(seconds) || args.length === 0) process.exit(2);
@@ -1166,30 +1260,190 @@ const child = spawn(process.execPath, ["/app/openclaw.mjs", "memory", ...args], 
   detached: true, stdio: "inherit",
   env: { ...process.env, OPENCLAW_LOG_LEVEL: "debug" }
 });
-let overdue = false; let escalation;
-const killGroup = signal => {
-  try { process.kill(-child.pid, signal); }
-  catch (error) { if (error.code !== "ESRCH") throw error; }
+let overdue = false, closed = false, code = null, signal = null;
+let stoppingAt = null, killed = false, finished = false;
+const group = child.pid;
+const present = () => {
+  if (!Number.isSafeInteger(group) || group < 1) return null;
+  try { process.kill(-group, 0); return true; }
+  catch (error) { return error.code === "ESRCH" ? false : null; }
 };
-const deadline = setTimeout(() => {
-  overdue = true;
-  console.error("memory observer deadline exceeded; result incomplete");
-  killGroup("SIGTERM");
-  escalation = setTimeout(() => killGroup("SIGKILL"), 5000);
-}, Number(seconds) * 1000);
-child.on("error", error => { console.error(error.message); process.exitCode = 1; });
-child.on("close", (code, signal) => {
-  clearTimeout(deadline); clearTimeout(escalation);
-  console.error(JSON.stringify({ observer: "memory-cli", overdue, code, signal }));
-  process.exitCode = overdue ? 124 : (code ?? 1);
-});
-' "$@"
+const send = sig => {
+  try { process.kill(-group, sig); return true; }
+  catch (error) { return error.code === "ESRCH"; }
+};
+console.error(JSON.stringify({ observer: "memory-cli-start", group, pid: child.pid }));
+const finish = quiescent => {
+  if (finished) return; finished = true;
+  clearTimeout(deadline); clearInterval(poll);
+  console.error(JSON.stringify({ observer: "memory-cli", group, overdue,
+    closed, code, signal, quiescent }));
+  process.exit(quiescent ? (overdue ? 124 : (code ?? 1)) : 125);
+};
+const stop = () => {
+  if (stoppingAt === null) { stoppingAt = Date.now(); if (!send("SIGTERM")) finish(false); }
+};
+const deadline = setTimeout(() => { overdue = true; stop(); }, Number(seconds) * 1000);
+const poll = setInterval(() => {
+  if (!closed && !overdue) return;
+  const exists = present();
+  if (exists === null) return finish(false);
+  if (!exists && closed) return finish(true);
+  stop();
+  if (finished) return;
+  const elapsed = Date.now() - stoppingAt;
+  if (elapsed >= 5000 && !killed) { killed = true; if (!send("SIGKILL")) return finish(false); }
+  if (elapsed >= 10000) finish(false);
+}, 100);
+child.on("error", error => { console.error(error.message); finish(false); });
+child.on("close", (c, s) => { clearTimeout(deadline); closed = true; code = c; signal = s; });
+' "$@" 2> "$receipt" || status=$?
+  cat "$receipt" >&2
+  assert_memory_pod || return 126
+  node --input-type=module -e '
+import fs from "node:fs";
+const lines = fs.readFileSync(process.argv[1], "utf8").trim().split("\n");
+let last; try { last = JSON.parse(lines.at(-1)); } catch { process.exit(1); }
+if (last?.observer !== "memory-cli" || last.quiescent !== true || last.closed !== true
+  || !Number.isSafeInteger(last.group) || last.group < 1) process.exit(1);
+' "$receipt" || return 125
+  rm -- "$EVIDENCE_DIR/memory-stop" || return 125
+  return "$status"
 }
-bounded_memory_cli 210 status --agent main --deep --json \
-  > "$EVIDENCE_DIR/memory-before.json" 2> "$EVIDENCE_DIR/memory-before.stderr"
+# This bootstrap reads the manager-selected paths before source work.
+run_memory_observer 210 status --agent main --json \
+  > "$EVIDENCE_DIR/memory-paths.json" 2> "$EVIDENCE_DIR/memory-paths.stderr" || exit $?
 ```
 
-Inspect the one entry for `main`. Its status must select the builtin backend,
+Read the one `main` entry in `memory-paths.json`. Record its actual absolute
+`status.workspaceDir` and `status.dbPath` below. Verify the workspace matches
+the managed chart path and the database belongs to that agent. Stop for a
+missing path, another backend, or an unexpected mount. The source directory is
+`memory` below that workspace; the SQLite database and cache are derived state.
+Freeze their paths, the workspace and index-parent filesystem identities, and
+the managed configuration digest before note creation. The database inode is
+not frozen: indexing can replace derived files. Retain the snapshot outside
+these volumes. These read-only checks do not prove that storage is durable.
+
+```bash
+assert_cluster_binding || exit 126
+export MEMORY_WORKSPACE="<actual-main-status-workspaceDir>"
+export MEMORY_DATABASE="<actual-main-status-dbPath>"
+readonly MEMORY_WORKSPACE MEMORY_DATABASE
+memory_source_identity() {
+  assert_cluster_binding || return 126
+  owned_memory_exec node --input-type=module -e '
+import fs from "node:fs";
+import path from "node:path";
+import { createHash } from "node:crypto";
+const [workspace, database] = process.argv.slice(1);
+if (!path.isAbsolute(workspace) || !path.isAbsolute(database)) process.exit(1);
+const identity = p => { const real = fs.realpathSync(p); const s = fs.statSync(real);
+  return { path: real, device: s.dev, inode: s.ino }; };
+console.log(JSON.stringify({ workspace: identity(workspace), source: identity(path.join(workspace, "memory")),
+  database: fs.realpathSync(database), indexParent: identity(path.dirname(database)),
+  configDigest: createHash("sha256").update(fs.readFileSync("/home/node/.openclaw/openclaw.json")).digest("hex") }));
+' "$MEMORY_WORKSPACE" "$MEMORY_DATABASE"
+}
+memory_source_identity > "$EVIDENCE_DIR/memory-source-frozen.json" || exit 126
+memory_source_matches_frozen() {
+  assert_cluster_binding || return 126
+  local current
+  current=$(memory_source_identity) || {
+    test -e "$EVIDENCE_DIR/memory-stop" || : > "$EVIDENCE_DIR/memory-stop"
+    return 126
+  }
+  if [ "$current" != "$(cat "$EVIDENCE_DIR/memory-source-frozen.json")" ]; then
+    test -e "$EVIDENCE_DIR/memory-stop" || : > "$EVIDENCE_DIR/memory-stop"
+    printf '%s\n' "source or index identity changed; stop" >&2
+    return 126
+  fi
+}
+assert_memory_source() {
+  assert_cluster_binding || return 126
+  test ! -e "$EVIDENCE_DIR/memory-stop" || return 125
+  memory_source_matches_frozen
+}
+memory_state_exec() {
+  assert_cluster_binding || return 126
+  assert_memory_source || return $?
+  local action="${1:-}" operation_id receipt status=0 stdin_flag=""
+  case "$action" in create|delete) shift ;; *) return 2 ;; esac
+  if [ "${1:-}" = -i ]; then stdin_flag=-i; shift; fi
+  test "${1:-}" = node && test "${2:-}" = --input-type=module \
+    && test "${3:-}" = -e || return 2
+  operation_id=$(node -e 'process.stdout.write(require("node:crypto").randomUUID())') || return 125
+  receipt=$(mktemp "$EVIDENCE_DIR/memory-state.XXXXXX") || return 125
+  # Exclusive, flushed stop record exists before the remote note can change.
+  node --input-type=module -e '
+import fs from "node:fs";
+const [file, operationId, action, pod, container] = process.argv.slice(1);
+const fd = fs.openSync(file, "wx", 0o600);
+try {
+  fs.writeFileSync(fd, JSON.stringify({ operationId, action, pod, container,
+    state: "in-progress", startedAt: new Date().toISOString() }) + "\n");
+  fs.fsyncSync(fd);
+} finally { fs.closeSync(fd); }
+' "$EVIDENCE_DIR/memory-stop" "$operation_id" "$action" \
+    "$MEMORY_POD" "$MEMORY_CONTAINER" || return 125
+  owned_memory_exec ${stdin_flag:+"$stdin_flag"} "$@" "$operation_id" \
+    2> "$receipt" || status=$?
+  cat "$receipt" >&2
+  test "$status" -eq 0 || return "$status"
+  node --input-type=module -e '
+import fs from "node:fs";
+const [stopFile, receiptFile, operationId, action, pod, container, workspace] = process.argv.slice(1);
+const stop = JSON.parse(fs.readFileSync(stopFile, "utf8"));
+const lines = fs.readFileSync(receiptFile, "utf8").trim().split("\n");
+let result; try { result = JSON.parse(lines.at(-1)); } catch { process.exit(1); }
+if (stop.operationId !== operationId || stop.action !== action || stop.pod !== pod
+  || stop.container !== container || stop.state !== "in-progress"
+  || result?.observer !== "memory-state" || result.operationId !== operationId
+  || result.action !== action || result.completed !== true || result.verified !== true
+  || typeof result.path !== "string" || !result.path.startsWith(`${workspace}/memory/`)
+  || !/^litellm-reader-[0-9a-f-]{36}\.md$/.test(result.path.slice(`${workspace}/memory/`.length))) process.exit(1);
+' "$EVIDENCE_DIR/memory-stop" "$receipt" "$operation_id" "$action" \
+    "$MEMORY_POD" "$MEMORY_CONTAINER" "$MEMORY_WORKSPACE" || return 125
+  # This invocation owns the marker; only frozen-identity reads bypass it.
+  assert_memory_pod || return 126
+  memory_source_matches_frozen || return 126
+  rm -- "$EVIDENCE_DIR/memory-stop" || return 125
+}
+bounded_memory_cli() {
+  assert_cluster_binding || return 126
+  assert_memory_source || return $?
+  local status=0
+  run_memory_observer "$@" || status=$?
+  assert_memory_source || return $?
+  return "$status"
+}
+bounded_memory_cli 210 status --agent main --deep --json \
+  > "$EVIDENCE_DIR/memory-before.json" 2> "$EVIDENCE_DIR/memory-before.stderr" || exit $?
+```
+
+Use the note helper only for the two inline Node programs below. Each program
+changes one owned file, verifies its result, emits a completion receipt with
+this invocation's unique operation ID, and exits. It starts no child process.
+Before exec, `memory_state_exec` writes an exclusive `memory-stop` record with
+that ID, action, Pod, and container. It requests a storage flush with
+[`fs.fsyncSync`](https://nodejs.org/docs/latest-v24.x/api/fs.html#fsfsyncsyncfd). It retains the receipt in a
+new `memory-state.*` evidence file. It removes its stop only after exit zero,
+a matching verified receipt, and unchanged Pod and source identities. Its
+post-check reads the frozen source identity directly while its own marker
+exists; this bypass permits identity inspection, not another mutation.
+
+A nonzero exit, missing or invalid receipt, interruption, exec loss, or failed
+post-check leaves the stop record in place. Even a receipt received before a
+lost session does not authorize a new shell to remove it. There is no automatic
+reattachment or retry of an uncertain note write or deletion. These short
+filesystem operations have no separate process watchdog in this helper. If
+completion is uncertain, the OpenClaw and platform operations owners must
+inspect the recorded consumer, note result, and process/storage ownership
+through their approved independent procedure before any stateful follow-up.
+Retain the stop, synthetic-note receipt, and partial output. Do not delete the
+note, reindex, or remove the stop to finish this exercise.
+
+Inspect the one entry for `main`. Its status must select the builtin backend (the in-process SQLite memory manager),
 `openai-compatible`, `gemini-embedding-001`, and the expected workspace.
 The embedding probe must report `ok: true`. Disabled memory, another agent,
 a fallback provider, a gateway SecretRef error, or a failed vector probe stops
@@ -1201,16 +1455,20 @@ Create one new note, index it, and query its content. The generated file name
 is exclusive to this exercise. Retain its receipt for cleanup.
 
 ```bash
-assert_cluster_binding
-kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
+assert_cluster_binding || exit 126
+memory_state_exec create \
   node --input-type=module -e '
 import fs from "node:fs";
 import { randomUUID } from "node:crypto";
 const name = `litellm-reader-${randomUUID()}.md`;
 const text = "The amber observatory stores its calibration record in the northern cabinet.\n";
-fs.writeFileSync(`/home/node/.openclaw/workspace/memory/${name}`, text, { flag: "wx", mode: 0o600 });
-console.log(JSON.stringify({ name, text }));
-' > "$EVIDENCE_DIR/memory-note.json"
+const file = `${process.argv[1]}/memory/${name}`;
+fs.writeFileSync(file, text, { flag: "wx", mode: 0o600 });
+if (fs.readFileSync(file, "utf8") !== text) throw new Error("new note content differs");
+console.log(JSON.stringify({ name, text, path: file, operationId: process.argv[2] }));
+console.error(JSON.stringify({ observer: "memory-state", operationId: process.argv[2],
+  action: "create", path: file, completed: true, verified: true }));
+' "$MEMORY_WORKSPACE" > "$EVIDENCE_DIR/memory-note.json"
 bounded_memory_cli 900 index --agent main --verbose \
   > "$EVIDENCE_DIR/memory-index-before.txt" 2> "$EVIDENCE_DIR/memory-index-before.stderr"
 bounded_memory_cli 210 search --agent main \
@@ -1236,14 +1494,16 @@ for arbitrary indexing. Inline index requests have a 10-minute watchdog per
 call, three transient attempts or five rate-limit attempts, and can split
 failed batches recursively. Do not inject a second fault into indexing or
 start another index while a stopped writer remains uncertain. Keep the note
-and index evidence until the operator has proved that the CLI group stopped.
+and index evidence until the observer reports `quiescent: true` for its own
+process group and both consumer identity checks pass. A missing receipt leaves
+`memory-stop` in the evidence directory and blocks further memory work.
 
 #### Deny and Observe the Model Route
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 kubectl -n "$NAMESPACE" rollout status deployment/litellm --timeout=120s
-kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
+owned_memory_exec node --input-type=module -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
   method: "POST",
   headers: { authorization: `Bearer ${process.env.LITELLM_API_KEY}`, "content-type": "application/json" },
@@ -1257,6 +1517,7 @@ console.log(JSON.stringify({ model: b.model ?? "gemini-embedding-001", dimension
 test -z "$(kubectl -n "$NAMESPACE" get ciliumnetworkpolicy \
   acceptance-litellm-upstream-timeout --ignore-not-found -o name)"
 litellm_workload_ready() {
+  assert_cluster_binding || return 126
   kubectl -n "$NAMESPACE" get deployment/litellm -o json \
     | node --input-type=module -e '
 let input = ""; process.stdin.setEncoding("utf8");
@@ -1269,7 +1530,8 @@ console.log(JSON.stringify({ generation: value.metadata.generation, readyReplica
 '
 }
 litellm_readiness_probe() {
-  kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
+  assert_cluster_binding || return 126
+  owned_memory_exec node --input-type=module -e '
 const endpoint = new URL("/health/readiness", process.env.LITELLM_URL);
 const r = await fetch(endpoint, { signal: AbortSignal.timeout(5000) });
 if (!r.ok) process.exit(1);
@@ -1277,6 +1539,7 @@ console.log(JSON.stringify({ endpoint: endpoint.pathname, status: r.status, read
 '
 }
 litellm_pod_identity() {
+  assert_cluster_binding || return 126
   kubectl -n "$NAMESPACE" get pods -l app=litellm -o json \
     | node --input-type=module -e '
 let input = ""; process.stdin.setEncoding("utf8");
@@ -1292,12 +1555,15 @@ console.log(JSON.stringify(pods));
 }
 litellm_policy_restore_pending=1
 restore_litellm_policy() {
+  assert_cluster_binding || return 126
   if [ "${litellm_policy_restore_pending:-0}" -eq 1 ]; then
     kubectl -n "$NAMESPACE" delete ciliumnetworkpolicy \
-      acceptance-litellm-upstream-timeout --ignore-not-found --wait=true
-    test -z "$(kubectl -n "$NAMESPACE" get ciliumnetworkpolicy \
-      acceptance-litellm-upstream-timeout --ignore-not-found -o name)"
-    kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
+      acceptance-litellm-upstream-timeout --ignore-not-found --wait=true || return 1
+    local remaining_policy
+    remaining_policy=$(kubectl -n "$NAMESPACE" get ciliumnetworkpolicy \
+      acceptance-litellm-upstream-timeout --ignore-not-found -o name) || return 1
+    test -z "$remaining_policy" || return 1
+    owned_memory_exec node --input-type=module -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
   method: "POST",
   headers: { authorization: `Bearer ${process.env.LITELLM_API_KEY}`, "content-type": "application/json" },
@@ -1330,7 +1596,7 @@ litellm_workload_ready > "$EVIDENCE_DIR/litellm-workload-ready-during-fault.json
 litellm_readiness_probe > "$EVIDENCE_DIR/litellm-readiness-during-fault-before.json"
 litellm_pod_identity > "$EVIDENCE_DIR/litellm-pods-during-fault-before.json"
 set +e
-kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
+owned_memory_exec node --input-type=module -e '
 const expectedStatus = new Set([500, 502, 503, 504]);
 const rejectedCause = /auth|unauthori[sz]ed|forbidden|credential|api.?key|configuration|database|postgres|invalid[^\n]*model|model[^\n]*(?:not found|unknown|invalid)|quota|rate.?limit/iu;
 const upstreamCause = /timed?\s*out|timeout|connect|connection|network|unreachable|socket|\bdns\b|name resolution|egress/iu;
@@ -1391,7 +1657,7 @@ bounded CLI observer, with a distinct output file. Keep its exit code even if
 the command fails.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 set +e
 bounded_memory_cli 210 search --agent main \
   --query "Where does the amber observatory keep its calibration record?" --json \
@@ -1441,7 +1707,7 @@ that tool cancellation contract. Vertex may already have processed a request
 when the caller stops. Keep request and timing evidence; do not infer zero
 provider use. The query failure does not commit a Nova stage or Prism operation
 result. Source notes and existing index data remain available for recovery;
-provider availability, memory freshness, and semantic-vector state must be
+provider availability, memory freshness, and semantic-vector state (similarity that uses a remotely produced embedding) must be
 checked separately. The manager can attempt fallback or return lexical results
 under other settings, which this task does not accept.
 [Search signal and fallback handling](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-search-orchestration.ts#L343-L419)
@@ -1452,14 +1718,29 @@ resume. Do not create a replacement run to hide the failed recall.
 
 #### Restore the Route and Memory Reader
 
+A verified `quiescent: true` receipt means that Linux no longer reports any
+member of this observer's process group. Exit 124 with that receipt permits
+route restoration, but cannot pass the terminal-failure scenario. Exit 125,
+missing receipt, exec loss, interruption, unknown observation, Pod replacement,
+container restart, or changed source identity blocks every subsequent memory
+call, note deletion, and reindex. Keep `memory-stop` and all source/index files.
+The platform operations owner restores the narrow network policy through the
+bound independent administration path. The OpenClaw and platform operations
+owners must establish process and storage ownership through their approved
+inspection procedure before any new stateful work. This page provides no safe
+post-disconnect process-group reattachment command: a reused numeric process
+ID cannot identify the original group. Do not remove the stop file to bypass
+this limit, kill other processes, or restart production to finish the exercise.
+Local process absence cannot prove that Vertex aborted an accepted request.
+
 Delete only the named denial policy, confirm its absence, and repeat the direct
 HTTP embedding. This proves route recovery only. Then repeat the real memory
 reader. Gateway readiness or a direct vector alone is not consumer recovery.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 restore_litellm_policy
-kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node --input-type=module -e '
+owned_memory_exec node --input-type=module -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
   method: "POST",
   headers: { authorization: `Bearer ${process.env.LITELLM_API_KEY}`, "content-type": "application/json" },
@@ -1477,7 +1758,7 @@ trap - EXIT HUP INT TERM
 Repeat the supported memory calls after route restoration.
 
 ```bash
-assert_cluster_binding
+assert_cluster_binding || exit 126
 bounded_memory_cli 900 index --agent main --verbose \
   > "$EVIDENCE_DIR/memory-index-recovery.txt" 2> "$EVIDENCE_DIR/memory-index-recovery.stderr"
 bounded_memory_cli 210 status --agent main --deep --json \
@@ -1500,17 +1781,20 @@ query. Do not reset the agent database or delete source sessions to clean up a
 single probe. Recall bookkeeping and provider request records can remain.
 
 ```bash
-assert_cluster_binding
-kubectl -n "$NAMESPACE" exec -i deployment/agent-nova -c kubeclaw -- \
+assert_cluster_binding || exit 126
+memory_state_exec delete -i \
   node --input-type=module -e '
 import fs from "node:fs";
 let input = ""; for await (const chunk of process.stdin) input += chunk;
-const { name, text } = JSON.parse(input);
+const { name, text, path } = JSON.parse(input);
 if (!/^litellm-reader-[0-9a-f-]{36}\.md$/.test(name)) process.exit(1);
-const file = `/home/node/.openclaw/workspace/memory/${name}`;
-if (fs.readFileSync(file, "utf8") !== text) process.exit(1);
+const file = `${process.argv[1]}/memory/${name}`;
+if (path !== file || fs.readFileSync(file, "utf8") !== text) process.exit(1);
 fs.unlinkSync(file);
-' < "$EVIDENCE_DIR/memory-note.json"
+if (fs.existsSync(file)) throw new Error("owned note remains after deletion");
+console.error(JSON.stringify({ observer: "memory-state", operationId: process.argv[2],
+  action: "delete", path: file, completed: true, verified: true }));
+' "$MEMORY_WORKSPACE" < "$EVIDENCE_DIR/memory-note.json"
 bounded_memory_cli 900 index --agent main --verbose \
   > "$EVIDENCE_DIR/memory-index-cleanup.txt" 2> "$EVIDENCE_DIR/memory-index-cleanup.stderr"
 bounded_memory_cli 210 search --agent main \
@@ -1524,8 +1808,11 @@ bounded_memory_cli 210 search --agent main \
 > retry, timeout, and error rules come from that manager.
 > **Implementation:** The linked CLI runtime, retry policy, and query wrapper.
 > **Contract or setting:** The linked chart memory settings and SecretRef bootstrap.
-> **Test evidence:** Bash and Node syntax checks passed for these examples.
-> No target-image or live memory execution is established here.
+> **Test evidence:** Bash and Node syntax checks passed. Offline extracted
+> helpers stopped before exec on failed binding and changed consumer identity.
+> Owned local process probes checked normal exit, deadline escalation, and a
+> surviving descendant after direct-child close. These are operator-helper
+> checks, not OpenClaw consumer results. No target-image or live memory execution is established here.
 > **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`;
 > KubeClaw configuration `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`.
 > **Limit:** Syntax and source checks do not prove image compatibility, actual
