@@ -2116,7 +2116,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-06",
+        "A97-08",
+        "A97-09",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -2131,7 +2137,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2142,7 +2148,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L173"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L173",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SPC-005",
@@ -2165,7 +2173,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-07",
+        "A97-08",
+        "A97-09",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -2180,7 +2194,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2191,7 +2205,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L174"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L174",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SPC-006",
@@ -2215,7 +2231,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-07",
+        "A97-08",
+        "A97-09",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -2230,7 +2252,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2241,7 +2263,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L175"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L175",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SPC-007",
@@ -2265,7 +2289,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-05",
+        "A97-08",
+        "A97-09",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -2280,7 +2310,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2291,7 +2321,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L176"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L176",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SPC-008",
@@ -2353,7 +2385,14 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-05",
+        "A97-08",
+        "A97-09",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -2368,7 +2407,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2379,7 +2418,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L178"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L178",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SPC-010",
@@ -2403,7 +2444,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-05",
+        "A97-08",
+        "A97-09",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -2418,7 +2465,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2429,7 +2476,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L179"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L179",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "PLG-001",
@@ -3009,7 +3058,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3024,7 +3078,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3035,7 +3089,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L204"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L204",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-002",
@@ -3063,7 +3119,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3078,7 +3139,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3089,7 +3150,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L205"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L205",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-003",
@@ -3117,7 +3180,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3132,7 +3200,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3143,7 +3211,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L206"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L206",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-004",
@@ -3171,7 +3241,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-09",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3186,7 +3261,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3197,7 +3272,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L207"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L207",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-005",
@@ -3225,7 +3302,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-07",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3240,7 +3322,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3251,7 +3333,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L208"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L208",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-006",
@@ -3279,7 +3363,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3294,7 +3383,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3305,7 +3394,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L209"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L209",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-007",
@@ -3333,7 +3424,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-02",
+        "A97-05",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3348,7 +3445,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3359,7 +3456,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L210"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L210",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-008",
@@ -3387,7 +3486,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3402,7 +3505,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3413,7 +3516,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L211"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L211",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-009",
@@ -3441,7 +3546,14 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-02",
+        "A97-05",
+        "A97-08",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3456,7 +3568,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3467,7 +3579,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L212"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L212",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-010",
@@ -3495,7 +3609,14 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-02",
+        "A97-05",
+        "A97-08",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3510,7 +3631,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3521,7 +3642,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L213"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L213",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-011",
@@ -3549,7 +3672,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3564,7 +3692,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3575,7 +3703,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L214"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L214",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "COM-012",
@@ -3603,7 +3733,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3618,7 +3753,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3629,7 +3764,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L215"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L215",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-001",
@@ -3657,7 +3794,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-06",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3672,7 +3814,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3683,7 +3825,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L216"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L216",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-002",
@@ -3711,7 +3855,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-06",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3726,7 +3874,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3737,7 +3885,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L217"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L217",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-003",
@@ -3765,7 +3915,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-06",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3780,7 +3934,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3791,7 +3945,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L218"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L218",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-004",
@@ -3819,7 +3975,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-06",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3834,7 +3994,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3845,7 +4005,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L219"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L219",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-005",
@@ -3873,7 +4035,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-02",
+        "A97-06",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3888,7 +4056,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3899,7 +4067,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L220"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L220",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-006",
@@ -3927,7 +4097,14 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-02",
+        "A97-03",
+        "A97-06",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3942,7 +4119,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3953,7 +4130,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L221"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L221",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-007",
@@ -3981,7 +4160,14 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-02",
+        "A97-05",
+        "A97-06",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -3996,7 +4182,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4007,7 +4193,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L222"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L222",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-008",
@@ -4035,7 +4223,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-06",
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4050,7 +4243,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4061,7 +4254,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L223"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L223",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "DAT-009",
@@ -4089,7 +4284,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-02",
+        "A97-06",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4104,7 +4305,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4115,7 +4316,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L224"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L224",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "TEL-001",
@@ -4142,7 +4345,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-07",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4157,7 +4364,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4168,7 +4375,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L225"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L225",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "TEL-002",
@@ -4195,7 +4404,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-07",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4210,7 +4424,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4221,7 +4435,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L226"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L226",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "TEL-003",
@@ -4248,7 +4464,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-07",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4263,7 +4484,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4274,7 +4495,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L227"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L227",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "TEL-004",
@@ -4301,7 +4524,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-07",
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4316,7 +4544,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4327,7 +4555,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L228"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L228",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "TEL-005",
@@ -4353,7 +4583,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-07",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4368,7 +4603,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4379,7 +4614,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L229"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L229",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "TEL-006",
@@ -4402,7 +4639,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-06",
+        "A97-07",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4417,7 +4659,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4428,7 +4670,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L230"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L230",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "TEL-007",
@@ -4455,7 +4699,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-07",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4470,7 +4718,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4481,7 +4729,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L231"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L231",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-001",
@@ -4506,7 +4756,10 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4521,7 +4774,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4532,7 +4785,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L237"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L237",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-002",
@@ -4557,7 +4812,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-06",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4572,7 +4831,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4583,7 +4842,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L238"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L238",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-003",
@@ -4608,7 +4869,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-04",
+        "A97-08",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4623,7 +4889,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4634,7 +4900,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L239"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L239",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-004",
@@ -4659,7 +4927,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-04",
+        "A97-08",
+        "A97-11"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4674,7 +4947,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4685,7 +4958,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L240"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L240",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-005",
@@ -4710,7 +4985,14 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-02",
+        "A97-05",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4725,7 +5007,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4736,7 +5018,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L241"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L241",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-006",
@@ -4761,7 +5045,15 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-02",
+        "A97-05",
+        "A97-08",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4776,7 +5068,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4787,7 +5079,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L242"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L242",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-007",
@@ -4812,7 +5106,15 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-02",
+        "A97-05",
+        "A97-08",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4827,7 +5129,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4838,7 +5140,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L243"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L243",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-008",
@@ -4863,7 +5167,15 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-02",
+        "A97-05",
+        "A97-08",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4878,7 +5190,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4889,7 +5201,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L244"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L244",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-009",
@@ -4914,7 +5228,15 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-02",
+        "A97-05",
+        "A97-06",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4929,7 +5251,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4940,7 +5262,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L245"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L245",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-010",
@@ -4965,7 +5289,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-04",
+        "A97-07",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -4980,7 +5310,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4991,7 +5321,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L246"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L246",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-011",
@@ -5016,7 +5348,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-08",
+        "A97-09",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5031,7 +5369,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5042,7 +5380,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L247"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L247",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "INF-012",
@@ -5067,7 +5407,16 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-01",
+        "A97-03",
+        "A97-05",
+        "A97-06",
+        "A97-08",
+        "A97-10",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5082,7 +5431,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5093,7 +5442,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L248"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L248",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SEC-001",
@@ -5119,7 +5470,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5134,7 +5489,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5145,7 +5500,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L249"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L249",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SEC-002",
@@ -5171,7 +5528,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5186,7 +5547,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5197,7 +5558,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L250"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L250",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SEC-003",
@@ -5223,7 +5586,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-05",
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5238,7 +5606,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5249,7 +5617,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L251"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L251",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SEC-004",
@@ -5275,7 +5645,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5290,7 +5664,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5301,7 +5675,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L252"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L252",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SEC-005",
@@ -5327,7 +5703,13 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-04",
+        "A97-05",
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5342,7 +5724,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5353,7 +5735,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L253"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L253",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SEC-006",
@@ -5379,7 +5763,12 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-02",
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5394,7 +5783,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5405,7 +5794,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L254"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L254",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "SEC-007",
@@ -5431,7 +5822,11 @@
         "npm run docs:publication:check",
         "npm run docs:check:refs"
       ],
-      "acceptanceIds": [],
+      "acceptanceIds": [
+        "A97-08",
+        "A97-11",
+        "A97-12"
+      ],
       "packageGateCandidates": [
         "A97-01",
         "A97-02",
@@ -5446,7 +5841,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "pending-individual-mapping",
+      "acceptanceMappingState": "mapped-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5457,7 +5852,9 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L255"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L255",
+      "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptanceMappingRationale": "Named content scope mapped to applicable contract rows; A97-11 requires complete independent Source and Reader review of the corresponding dependency/matrix claims. Mapping assigns obligations only; it grants no PASS and does not close package-wide gates."
     },
     {
       "id": "OPR-001",
@@ -22810,26 +23207,54 @@
           "native harness requires externally provisioned servers"
         ],
         "correctionOwner": "/root/litellm_readonly_retention_backup_procedure_writer",
-        "correctionState": "active; full fresh Source, Reader and Quality still required"
+        "correctionState": "active; full fresh Source, Reader and Quality still required",
+        "nextFrozenCorrection": {
+          "dataPageSha256": "31ecaea3f860b629ca20fa51b86052d03ad936fa0af0147c703d477e3b4b08c1",
+          "recoveryPageSha256": "3fdc7eeb3adaecc1a36704f9f92449f7b261330300da85f2dc15aafb0ad2ab4b",
+          "state": "author installed frozen correction; final report pending; full independent Source then distinct Reader/Quality required",
+          "evidence": "/home/node/Documents/Codex/a98-evidence/litellm-readonly-source-correction-writer"
+        }
       },
       "memorySafety": {
         "author": "/root/litellm_memory_operator_safety_correction_writer",
         "frozenPageSha256": "45c1b0c2300d7b3306b4ccdb5e4c286b233a95c3809227b557b4ef3769768870",
         "authorRootSeal": "/home/node/Documents/Codex/a98-evidence/litellm-memory-operator-safety-correction-writer-root-seal.json",
         "independentSource": "/root/litellm_memory_safety_complete_source_fresh",
-        "state": "full fresh Source in progress; no acceptance"
+        "state": "complete Source FAIL; interruption correction author active; new complete Source/Reader/Quality required",
+        "sourceReport": "/home/node/Documents/Codex/a98-evidence/litellm-memory-safety-complete-source-fresh/report.md",
+        "sourceReportSha256": "0d75eaf887c7ff6aff1072f7960305c73060edb8f8af1fff2f061e0819f0a7b0",
+        "sourceRootSeal": "/home/node/Documents/Codex/a98-evidence/litellm-memory-safety-complete-source-fresh-root-seal.json",
+        "sourceFinding": "S1: memory_state_exec lacks pre-exec persistent operation stop; interrupted note mutation permits fresh-session follow-through",
+        "correctionOwner": "/root/litellm_memory_operator_safety_correction_writer",
+        "correctionEvidence": "/home/node/Documents/Codex/a98-evidence/litellm-memory-state-interruption-correction-writer"
       },
       "operatorGate": {
         "verdict": "FAIL",
         "evidence": "/home/node/Documents/Codex/a98-evidence/litellm-safety-readonly-current-operator-gate-root/result.json",
         "firstFinding": "check only accepts bare binding assertion; corrected explicit stop is not recognized",
         "followupFinding": "recovery backup blocks start shell settings before binding assertion",
-        "action": "root narrow checker correction and negative mutations; author fixes recovery binding placement; rerun after frozen correction"
+        "action": "root narrow checker correction and negative mutations; author fixes recovery binding placement; rerun after frozen correction",
+        "currentCorrectedRun": {
+          "verdict": "PASS",
+          "exitCode": 0,
+          "inputsUnchanged": true,
+          "evidence": "/home/node/Documents/Codex/a98-evidence/litellm-source-corrected-explicit-stop-operator-gate-root/result.json",
+          "tasks": 13,
+          "requiredLifecycleCapabilities": 14,
+          "scope": "registry and mandatory automated negative fixtures only; no content acceptance; explicit-stop checker source independently unreviewed"
+        }
       },
       "publicApiCustody": {
         "owner": "/root/pv_selector_publication_correction_writer",
         "state": "semantic input authority and capability escape correction active; prior Source FAIL remains open"
       }
+    },
+    "ap097IndividualAcceptanceMapping": {
+      "state": "mapped-pending-independent-validation",
+      "requirements": 53,
+      "authority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
+      "acceptance": "none; package-wide full inventory, failure traces, review matrices and drift mutations remain separately mandatory",
+      "next": "Independent complete review must validate mapping and add any uncovered cross-cutting obligations before package acceptance."
     }
   }
 }
