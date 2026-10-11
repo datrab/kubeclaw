@@ -16467,7 +16467,7 @@
     },
     {
       "id": "A98-CURRENT-GO-ACTUAL-COPIED-SECRET-TRANSFER",
-      "state": "open-author-confirmed-actual-current-omission",
+      "state": "author-corrected-pending-full-independent-review",
       "catalogueIds": [],
       "acceptanceIds": [
         "A98-10",
@@ -16477,7 +16477,8 @@
       "description": "Original copySecrets fetches live Secret, sanitizeSecret rewrites namespace/removes selected metadata and forwards whole remaining body via createOrPatch. No selected inherited-transfer row is emitted because shape helper lacks static body identity. Add source-bound inferred Secret receiver and exact preserved/removed served-field selection; no fabricated live values or blanket unknown schema claim.",
       "source": "cmd/buster-namespace-controller/main.go:1399",
       "owner": "/root/native_submission_effects_correction_writer",
-      "mappingState": "Actual selected producer contribution; full gate remains open."
+      "mappingState": "Current actual32Go submission replay and14 inherited-transfer controls observed terminal0; author evidence only. Earlier Source FAIL unchanged; full new independent review required.",
+      "correctionEvidence": "/home/node/Documents/Codex/a98-evidence/native-conditional-correction-root-seal.json"
     }
   ],
   "checks": [
@@ -22208,6 +22209,21 @@
         "remaining": "Three existing generated Helm reference bookkeeping phrases; regenerate after stable source integration."
       },
       "limits": "No AP09.7 acceptance. Source reviewer continues original immutable full review; Reader FAIL preserved. Fresh affected Source/Reader/Quality and Astra required after corrections."
+    },
+    "ap097ReaderTraceDisposition": {
+      "state": "not-accepted",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/ap097-reader-trace-disposition-ade38433.json",
+      "requiredTask": "READER-PLATFORM-01",
+      "limitation": "Conceptual20step reference only; no joined runtime evidence. No participant result or whole A97-11 PASS claimed."
+    },
+    "ap097ClientAndStateAuthorCorrections": {
+      "state": "author-corrected; full independent review required",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/ap097-client-and-state-author-root-seal.json",
+      "embeddingReport": "/home/node/Documents/Codex/a98-evidence/ap097-embedding-author/author-report.md",
+      "sourceRevision": "ade38433f2a35ba19d95faf83d29ccd20221799d",
+      "upstreamSourceFilesHashVerified": 24,
+      "rootDataLocalLinks": 11,
+      "independentAcceptance": false
     }
   }
 }

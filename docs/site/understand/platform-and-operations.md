@@ -506,16 +506,82 @@ the checked-in Prism values uses OpenClaw's managed OpenAI model route, not this
 LiteLLM model list. The role health check sends authenticated `GET /health` with
 the probe execution timeout. It does not exercise an embedding.
 
-The repository does not configure an OpenClaw embedding request byte limit,
-per-request timeout, status-to-error table, or retry count. Those client details
-belong to the pinned OpenClaw runtime and are not proved by these charts. The
-safe rule is therefore strict: on timeout, 401/403, 429, 5xx, invalid JSON, or an
-invalid vector, keep the owning operation incomplete. Do not start an unbounded
-retry. First distinguish gateway readiness, master-key mismatch, PostgreSQL,
-Vertex credentials, quota, and route/model errors. Retry only under the owning
-operation deadline and only when the caller keeps the same operation identity.
-After repair, prove one real authenticated embedding before resuming model-backed
-work. A health-only success is insufficient.
+### Embedding Client Limits and Failure Rules
+
+An embedding is a numeric vector that represents text for similarity search.
+OpenClaw sends text to `POST /v1/embeddings` with the model and an input array.
+The selected chart supplies no dimensions or input-type override. The client
+adds `Authorization: Bearer` from the resolved remote key.
+[The pinned adapter builds this request](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/plugins/openai-compatible-embedding-provider.ts#L128-L151)
+and [posts it through the guarded HTTP path](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/plugins/openai-compatible-embedding-provider.ts#L325-L370).
+
+These are source-level rules for OpenClaw `v2026.9.4`, commit
+`3a9d69db306cd7f081e06254cb89c4bcc14a7107`. KubeClaw pins that release's image
+by digest. This inspection does not attest that the image was built from these
+exact source bytes, or prove a deployed LiteLLM-to-Vertex request.
+[The Nova image selects the release and digest](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/docker/Dockerfile.nova#L5-L7).
+
+| Boundary | Selected client behavior and consequence |
+| --- | --- |
+| Input | The memory index splits text chunks and groups them using an 8,000 UTF-8-byte budget. This is an input estimate, not an HTTP request-body ceiling; JSON adds bytes. The adapter sets no request-body cap or query-text cap. It accepts text only. [The 8,000-byte budget](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-ops.ts#L70-L79), [chunk preparation](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-ops.ts#L951-L958), [byte-based splitting](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/packages/memory-host-sdk/src/host/embedding-chunk-limits.ts#L18-L54), [batch grouping](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L23-L53), [text-only adapter](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/plugins/openai-compatible-embedding-provider.ts#L281-L296). |
+| Successful response | The JSON reader allows at most 16 MiB and rejects a body stalled for 30 seconds between chunks. The `data` array must contain one nonempty vector per input, with finite numeric coordinates. Optional indexes must be complete, unique, and in range; the parser restores request order. It does not require one fixed vector dimension. [Reader limits](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/agents/provider-http-errors.ts#L24-L25) and [idle/overflow failures](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/agents/provider-http-errors.ts#L97-L116); [vector validation](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/packages/memory-host-sdk/src/host/embedding-vectors.ts#L5-L49). |
+| HTTP error | Every non-success status becomes an error containing `HTTP <status>`. The adapter reads at most 8 KiB of error text and retains at most 1,000 characters plus a truncation marker. This adapter does not produce the shared structured provider status or `Retry-After` metadata. [Error constants](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/plugins/openai-compatible-embedding-provider.ts#L30-L32) and [error construction](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/plugins/openai-compatible-embedding-provider.ts#L302-L323). |
+| Per-call timeout | A watchdog aborts one overdue call: 60 seconds for a search query; 10 minutes for an inline document embedding request. A watchdog is a timer that cancels overdue work. The latter value comes from the adapter runtime; the selected settings leave the batch-timeout override unset. The HTTP wrapper adds no separate request deadline or retry. [Timeout selection](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-ops.ts#L138-L170), [adapter timeout](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/plugins/openai-compatible-embedding-provider.ts#L487-L495), [unset override](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/agents/memory-search.ts#L357-L363), [HTTP wrapper](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/packages/memory-host-sdk/src/host/remote-http.ts#L18-L45). |
+
+OpenClaw's memory manager owns retries. Query calls allow at most three
+attempts for recognized transport, timeout, 5xx, or rate-limit failures.
+Their exponential waits start at 500 ms, cap at 8 seconds, and have a combined
+8-second wait budget. Index calls allow three attempts for recognized transient
+failures, or five for rate-limit failures with waits starting at 5 seconds and
+capped at 60 seconds. Waits include 20 percent jitter, which varies the delay.
+The index profile has no combined wait ceiling. These are per-call attempts,
+not an end-to-end operation deadline.
+[The retry profiles and classifier](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L55-L134)
+and [the retry loop](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L136-L173)
+define these limits. This adapter supplies plain error messages, so its retry
+classification uses message patterns. Do not infer reliable quota-code or
+`Retry-After` handling from other provider adapters.
+
+Caller cancellation stops query retries and interrupts their waits. The
+watchdog signal reaches the provider. Inline index calls use their own
+watchdog but this path does not pass a caller signal to its retry loop. Some
+recognized batch-size or connection failures cause recursive splitting into
+smaller requests after retries fail; splitting stops at one input. Therefore,
+three or five attempts is not a total request count for one indexing run.
+Remote provider batch jobs are disabled by default; an inline request that
+contains several inputs is a different mechanism.
+[Query cancellation](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-ops.ts#L610-L665),
+[index watchdog and retry invocation](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-ops.ts#L525-L574),
+[recursive splitting](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L175-L207),
+and [default batch-job selection](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/agents/memory-search.ts#L266-L273)
+support this boundary.
+
+401/403, an invalid model, malformed JSON, and invalid vectors have no dedicated
+retry path; matching error text can still affect the classifier. After retries
+fail, the manager wraps the cause as `MEMORY_EMBEDDING_OPERATION_FAILED`.
+This memory error does not write a Nova stage result or a Prism operation row.
+[The wrapper preserves the operation and provider](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-errors.ts#L16-L32).
+
+> **Source evidence — selected embedding client**
+>
+> **Claim:** The limits and retries above belong to the selected memory client.
+> **Implementation:** The linked adapter, JSON/vector readers, and memory manager.
+> **Contract or setting:** The chart selects `openai-compatible`, the remote key,
+> and `gemini-embedding-001`; upstream defaults select the timeout and retry budgets.
+> **Test evidence:** No upstream client test or deployed embedding test was run
+> for this correction. The evidence is source inspection and local link checks.
+> **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`.
+> **Limit:** No image/source attestation, live route result, provider quota proof,
+> or end-to-end owner deadline follows from this inspection.
+
+**Operator stop and recovery rule:** Do not accept an operation that requires
+semantic memory results on the strength of `/health` or a text-only fallback.
+Keep its owner identity and deadline. Distinguish gateway readiness, master-key
+mismatch, PostgreSQL, Vertex credentials, quota, and route/model errors before
+an operator retry. After repair, prove one real authenticated embedding with
+the selected model. A successful embedding proves this path only; it does not
+prove managed reasoning or a pipeline transition. No live request or outage
+exercise was run for the source inspection above.
 
 **Decision status:** The implementation provides the embeddings-only route. **Historical
 reason:** Unknown. **Current rationale (inference):** A single named route limits
