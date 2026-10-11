@@ -113,3 +113,28 @@ test('inherited source selection refuses unknown fields, receiver drift and remo
   const namespace=inheritedSecret();namespace.removedPaths.push('$.metadata.namespace');
   assert.throws(()=>inheritedSecretFieldSelection('v1','Secret',namespace),/INHERITED_SECRET_REWRITE/);
 });
+
+
+test('symbolic inherited sequence checks appended authored values without claiming live indices', () => {
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'api-inherited-append-'));
+  try {
+    const value={apiVersion:'apps/v1',kind:'Deployment',spec:{template:{spec:{containers:{__docsDynamicExpression:'append(inherited, container)',
+      __docsSupportedSequenceAppend:{items:[{name:'worker',image:'worker:current'}],spread:false}}}}}};
+    const selectValue=body=>{
+      const bytes=YAML.stringify(body);fs.writeFileSync(path.join(root,'append.yaml'),bytes);
+      return apiProductSelection('apps/v1','Deployment',[{path:'append.yaml',document:0,inferredIdentity:true,
+        requestMethod:'PATCH',sourceDigest:createHash('sha256').update(bytes).digest('hex')}],
+        versionedApiReceiverRegistries.get('apps/v1'),root);
+    };
+    const selected=selectValue(value);
+    const evidence=selected.applicability['$.spec.template.spec.containers[].image'][0];
+    assert.equal(evidence.fieldPath,'$.spec.template.spec.containers[].image');
+    assert.equal(evidence.appendedItemOrdinal,0);
+    assert.match(evidence.itemPosition,/length is unknown/);
+    value.spec.template.spec.containers.__docsSupportedSequenceAppend.items[0].inventedUnservedField=true;
+    assert.throws(()=>selectValue(value));
+    delete value.spec.template.spec.containers.__docsSupportedSequenceAppend.items[0].inventedUnservedField;
+    value.spec.template.spec.containers.__docsSupportedSequenceAppend.spread=true;
+    assert.throws(()=>selectValue(value),/SEQUENCE_APPEND_UNQUALIFIED/);
+  } finally {fs.rmSync(root,{recursive:true,force:true});}
+});

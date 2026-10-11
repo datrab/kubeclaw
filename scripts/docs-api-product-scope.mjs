@@ -408,6 +408,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
     assert(jsonPatch || value?.apiVersion === apiVersion && value?.kind === kind, `API_PRODUCT_RESOURCE_DRIFT: ${context.path}#${context.document}`);
     const instances = [];
     let patchEvidence = null;
+    let sequenceEvidence = null;
     function visit(node, actual = []) {
       if(context.inferredIdentity&&actual.length===1&&['apiVersion','kind'].includes(actual[0]))return;
       const actualPath = yamlFieldPath(actual);
@@ -437,7 +438,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         }
       }
       if (boundary) {
-        add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: actualPath, sourceDigest: context.sourceDigest, ...(context.conditions?.length ? { conditions: context.conditions } : {}), ...(context.requestMethod ? { requestMethod: context.requestMethod, ...(context.requestAlternatives ? { requestAlternatives: context.requestAlternatives } : {}) } : {}), ...(patchEvidence ?? {}) });
+        add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: sequenceEvidence ? canonical(actualPath) : actualPath, sourceDigest: context.sourceDigest, ...(sequenceEvidence ?? {}), ...(context.conditions?.length ? { conditions: context.conditions } : {}), ...(context.requestMethod ? { requestMethod: context.requestMethod, ...(context.requestAlternatives ? { requestAlternatives: context.requestAlternatives } : {}) } : {}), ...(patchEvidence ?? {}) });
         if(context.requestMethod!=='PATCH'&&kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
           const receiverDefault=runtimeDefaultApplicability(kind,actualPath,{},value,records.get(boundary.fieldPath));
           const child=authority.find(row=>matches(tokens(row.fieldPath),[...actual,0]));
@@ -447,6 +448,24 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       }
       if (node && typeof node === 'object' && !Array.isArray(node) && !Object.hasOwn(node,'__docsDynamicExpression')) instances.push({ node, actual });
       if (node && typeof node === 'object' && Object.hasOwn(node,'__docsDynamicExpression')) {
+        if (node.__docsSupportedSequenceAppend) {
+          const append = node.__docsSupportedSequenceAppend;
+          assert(boundary?.contract.type === 'array' && append.spread === false
+            && Array.isArray(append.items) && append.items.length > 0,
+            `API_PRODUCT_SEQUENCE_APPEND_UNQUALIFIED: ${context.path} ${actualPath}`);
+          const previousEvidence = sequenceEvidence;
+          try {
+            for (const [ordinal, item] of append.items.entries()) {
+              sequenceEvidence = { sequenceExpression:node.__docsDynamicExpression,
+                itemPosition:'After the inherited runtime prefix; its length is unknown.',
+                appendedItemOrdinal:ordinal };
+              // The schema position is symbolic. It does not assert a live index
+              // or reconstruct the unobserved inherited values.
+              visit(item, [...actual, ordinal]);
+            }
+          } finally { sequenceEvidence = previousEvidence; }
+          return;
+        }
         if(isProductOwnedApi(apiVersion,kind)&&boundary) {
           // The entire owned public schema is selected below. Existing-state
           // values may be copied symbolically, but explicitly authored updates

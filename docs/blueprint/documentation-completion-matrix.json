@@ -21936,6 +21936,29 @@
       "tests": 8,
       "passed": 8,
       "limit": "Root-owned file hashes stable. Shared imported discovery/adapters remain author candidates; full stable integrated suite and fresh independent source review pending. No acceptance point closed."
+    },
+    "symbolicAppendSelectedFieldCorrection": {
+      "observedAt": "2026-10-11T12:59:26.013360+00:00",
+      "session": 88691,
+      "command": "node --test scripts/tests/api-product-json-patch.test.mjs",
+      "exitCode": 0,
+      "tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "filesAfter": {
+        "scripts/docs-api-product-scope.mjs": "838e5d065432bed819184501397cf6e777c1e0dfdc11d06b946c82b2f084a4ae",
+        "scripts/tests/api-product-json-patch.test.mjs": "d910c4f8d4834305ddc4c8c8b8c36abe0a46e1eafcd81a436a217bc5e0f4eed4"
+      },
+      "previousFailure": {
+        "session": 89389,
+        "exitCode": 1,
+        "passed": 8,
+        "failed": 1,
+        "cause": "New test fixture lacked apiVersion/kind; resource custody correctly rejected it. Fixture corrected, production guard retained."
+      },
+      "scope": "Bounded author tests for symbolic append: known authored fields checked, inherited live length unknown, wildcard provenance, unknown authored field and unresolved spread rejected. No pre-run whole source seal, full suite or independent approval claimed.",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/root-symbolic-append-selection-correction.json",
+      "next": "Actual original decision-receipt consumer proof from native author; stable suite and fresh independent full source review."
     }
   }
 }
