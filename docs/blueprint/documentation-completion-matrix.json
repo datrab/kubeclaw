@@ -6893,7 +6893,8 @@
       "openFindingIds": [
         "A98-20261011-READER-R1",
         "A98-20261011-QUALITY-Q1",
-        "A98-20261011-QUALITY-Q2"
+        "A98-20261011-QUALITY-Q2",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-SOURCE-FRESH-1"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L262"
     },
@@ -6976,7 +6977,10 @@
         "A98-R2-PRISM-CURRENT-STATUS",
         "A98-20261011-READER-R1",
         "A98-20261011-QUALITY-Q1",
-        "A98-20261011-QUALITY-Q2"
+        "A98-20261011-QUALITY-Q2",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-1",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L263"
     },
@@ -8820,7 +8824,12 @@
         "A98-20261011-SOURCE-F3",
         "A98-20261011-SOURCE-F4",
         "A98-20261011-SOURCE-F5",
-        "A98-20261011-SOURCE-F6"
+        "A98-20261011-SOURCE-F6",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L286"
     },
@@ -8995,7 +9004,12 @@
         "A98-20261011-SOURCE-F3",
         "A98-20261011-SOURCE-F4",
         "A98-20261011-SOURCE-F5",
-        "A98-20261011-SOURCE-F6"
+        "A98-20261011-SOURCE-F6",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L288"
     },
@@ -9175,7 +9189,12 @@
         "A98-20261011-SOURCE-F3",
         "A98-20261011-SOURCE-F4",
         "A98-20261011-SOURCE-F5",
-        "A98-20261011-SOURCE-F6"
+        "A98-20261011-SOURCE-F6",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L290"
     },
@@ -14167,7 +14186,10 @@
       "openFindingIds": [
         "A98-20261011-READER-R1",
         "A98-20261011-QUALITY-Q1",
-        "A98-20261011-QUALITY-Q2"
+        "A98-20261011-QUALITY-Q2",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-1",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-2"
       ]
     },
     {
@@ -14185,7 +14207,8 @@
       "openFindingIds": [
         "A98-20261011-READER-R1",
         "A98-20261011-QUALITY-Q1",
-        "A98-20261011-QUALITY-Q2"
+        "A98-20261011-QUALITY-Q2",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-SOURCE-FRESH-1"
       ]
     },
     {
@@ -14330,7 +14353,12 @@
         "A98-20261011-SOURCE-F3",
         "A98-20261011-SOURCE-F4",
         "A98-20261011-SOURCE-F5",
-        "A98-20261011-SOURCE-F6"
+        "A98-20261011-SOURCE-F6",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5"
       ]
     },
     {
@@ -14368,7 +14396,12 @@
         "A98-20261011-SOURCE-F3",
         "A98-20261011-SOURCE-F4",
         "A98-20261011-SOURCE-F5",
-        "A98-20261011-SOURCE-F6"
+        "A98-20261011-SOURCE-F6",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5"
       ]
     },
     {
@@ -14439,7 +14472,10 @@
       "openFindingIds": [
         "A98-20261011-READER-R1",
         "A98-20261011-QUALITY-Q1",
-        "A98-20261011-QUALITY-Q2"
+        "A98-20261011-QUALITY-Q2",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-1",
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-2"
       ]
     },
     {
@@ -14469,7 +14505,12 @@
         "A98-20261011-SOURCE-F3",
         "A98-20261011-SOURCE-F4",
         "A98-20261011-SOURCE-F5",
-        "A98-20261011-SOURCE-F6"
+        "A98-20261011-SOURCE-F6",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5"
       ]
     },
     {
@@ -18110,6 +18151,235 @@
       "correctionReport": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer/report.md",
       "correctionReportSha256": "87375394e13ec0dca3dbd17cf0a8249aef4b455849f4d7671e37c453557570aa",
       "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer-root-seal.json"
+    },
+    {
+      "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+      "state": "open-under-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Unknown branch key alternatives are dropped and leave actual receiving gate GREEN.",
+      "reviewer": "/root/python_custody_f1_f6_qualified_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh/report.md",
+      "reportSha256": "5883e544ffac3545c53c218c2f2b4331e77ce0a6f5d4a3b7b5c571aaf4db5a17",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh-root-seal.json",
+      "owner": "/root/python_custody_f1_f6_batch_correction_writer",
+      "acceptanceLimit": "Current complete independent assigned FAIL; root235 integration PASS does not compensate or close finding."
+    },
+    {
+      "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+      "state": "open-under-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Selected function alias invocation before global os rebinding loses direct literal reader GREEN.",
+      "reviewer": "/root/python_custody_f1_f6_qualified_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh/report.md",
+      "reportSha256": "5883e544ffac3545c53c218c2f2b4331e77ce0a6f5d4a3b7b5c571aaf4db5a17",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh-root-seal.json",
+      "owner": "/root/python_custody_f1_f6_batch_correction_writer",
+      "acceptanceLimit": "Current complete independent assigned FAIL; root235 integration PASS does not compensate or close finding."
+    },
+    {
+      "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+      "state": "open-under-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Python3.14 lazy class annotation access after later import loses actual literal reader GREEN.",
+      "reviewer": "/root/python_custody_f1_f6_qualified_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh/report.md",
+      "reportSha256": "5883e544ffac3545c53c218c2f2b4331e77ce0a6f5d4a3b7b5c571aaf4db5a17",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh-root-seal.json",
+      "owner": "/root/python_custody_f1_f6_batch_correction_writer",
+      "acceptanceLimit": "Current complete independent assigned FAIL; root235 integration PASS does not compensate or close finding."
+    },
+    {
+      "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+      "state": "open-under-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Shell stdout/stderr redirect paths become Python argv and hide actual stdin heredoc readers GREEN.",
+      "reviewer": "/root/python_custody_f1_f6_qualified_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh/report.md",
+      "reportSha256": "5883e544ffac3545c53c218c2f2b4331e77ce0a6f5d4a3b7b5c571aaf4db5a17",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh-root-seal.json",
+      "owner": "/root/python_custody_f1_f6_batch_correction_writer",
+      "acceptanceLimit": "Current complete independent assigned FAIL; root235 integration PASS does not compensate or close finding."
+    },
+    {
+      "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5",
+      "state": "open-under-batch-correction",
+      "catalogueIds": [
+        "CFG-011",
+        "CFG-013",
+        "CFG-015"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "description": "Selected unquoted heredoc shell expansion lacks acquisition custody; not claimed as a native-proved actual receiving-gate GREEN.",
+      "reviewer": "/root/python_custody_f1_f6_qualified_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh/report.md",
+      "reportSha256": "5883e544ffac3545c53c218c2f2b4331e77ce0a6f5d4a3b7b5c571aaf4db5a17",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh-root-seal.json",
+      "owner": "/root/python_custody_f1_f6_batch_correction_writer",
+      "acceptanceLimit": "Current complete independent assigned FAIL; root235 integration PASS does not compensate or close finding."
+    },
+    {
+      "id": "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-SOURCE-FRESH-1",
+      "state": "open-under-batch-correction",
+      "catalogueIds": [
+        "OPR-002",
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-03",
+        "A98-13"
+      ],
+      "description": "Required Worker Trust wrapper executes remote Nova unit preflight then production-receipt signing; separate external private/public signing authority is missing from pre-mutation installation and linked trust prerequisites.",
+      "reviewer": "/root/installation_eof_prism_complete_source_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-source-fresh/report.md",
+      "reportSha256": "95dbdcdadfc2c23fa60aad8852496a0c8496a12f59664583cb910682973471f4",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-source-fresh-root-seal.json",
+      "owner": "/root/installation_eof_optional_prism_batch_writer",
+      "acceptanceLimit": "Current complete independent assigned FAIL; root235 integration PASS does not compensate or close finding."
+    },
+    {
+      "id": "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-1",
+      "state": "open-under-batch-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Linked trust procedure promises cleanup result that is not emitted; async suppressed failures and absent creating-identity/readback/recovery route unqualified.",
+      "reviewer": "/root/installation_eof_prism_complete_reader_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-reader-fresh/report.md",
+      "reportSha256": "aee6e77f193cc3b0e528ab65735b31173f8782b306c04cf38713995809dccafe",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-reader-fresh-root-seal.json",
+      "owner": "/root/installation_eof_optional_prism_batch_writer",
+      "acceptanceLimit": "Current complete independent assigned FAIL; root235 integration PASS does not compensate or close finding."
+    },
+    {
+      "id": "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-2",
+      "state": "open-under-batch-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Live trust dispatch admits durable Prism design/agent state and discards successful identity response; retained state/reconciliation and separate signed unit-production receipt are undocumented.",
+      "reviewer": "/root/installation_eof_prism_complete_reader_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-reader-fresh/report.md",
+      "reportSha256": "aee6e77f193cc3b0e528ab65735b31173f8782b306c04cf38713995809dccafe",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-reader-fresh-root-seal.json",
+      "owner": "/root/installation_eof_optional_prism_batch_writer",
+      "acceptanceLimit": "Current complete independent assigned FAIL; root235 integration PASS does not compensate or close finding."
+    },
+    {
+      "id": "A98-20261011-TRUST-COMPLETE-STATUS-ORDER",
+      "state": "correction-pending-independent-recheck",
+      "catalogueIds": [
+        "OPR-001",
+        "OPR-002",
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-01",
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Infrastructure full status ran before selected Prism installation; author corrected to actual infrastructure observations.",
+      "owner": "/root/installation_eof_optional_prism_batch_writer",
+      "acceptanceLimit": "No closure from author or root mechanical checks."
+    },
+    {
+      "id": "A98-20261011-TRUST-COMPLETE-SOURCE-PINS",
+      "state": "correction-pending-independent-recheck",
+      "catalogueIds": [
+        "OPR-001",
+        "OPR-002",
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-01",
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "15 deployment source pins violated complete-file currentness; author refreshed pins.",
+      "owner": "/root/installation_eof_optional_prism_batch_writer",
+      "acceptanceLimit": "No closure from author or root mechanical checks."
+    },
+    {
+      "id": "A98-20261011-TRUST-COMPLETE-TASK-MAPPING",
+      "state": "correction-pending-independent-recheck",
+      "catalogueIds": [
+        "OPR-001",
+        "OPR-002",
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-01",
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Worker Trust authored/generated task references retain removed anchor; authored correction checked, generated correction pending.",
+      "owner": "/root",
+      "acceptanceLimit": "No closure from author or root mechanical checks."
+    },
+    {
+      "id": "A98-20261011-TRUST-COMPLETE-CANONICAL-INSTALL",
+      "state": "correction-pending-independent-recheck",
+      "catalogueIds": [
+        "OPR-001",
+        "OPR-002",
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-01",
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Actual operator-task checker rejects duplicate locked-installation literal in maintenance; narrow writer correction running.",
+      "owner": "/root/installation_eof_optional_prism_batch_writer",
+      "acceptanceLimit": "No closure from author or root mechanical checks."
     }
   ],
   "checks": [
@@ -19377,6 +19647,19 @@
       "baseRevision": "8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32",
       "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-custody-f1-f6-and-installation/result.json",
       "acceptanceLimit": "Complete selected integration suite; new independent material discovery/linked-trust observations remain under complete review. No semantic/package/global acceptance."
+    },
+    {
+      "command": "node --test --test-concurrency=2 (9 API suites, Python discovery, OPS environment contracts)",
+      "state": "observed-terminal-pass-root-bounded",
+      "exitCode": 0,
+      "tests": 241,
+      "passed": 241,
+      "failed": 0,
+      "skipped": 0,
+      "sourceAndPagesUnchanged": true,
+      "baseRevision": "2a8558d795054d25aa4b72dbdc296c9321ba38f6",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-unknown-alias-class-output-and-trust/result.json",
+      "acceptanceLimit": "Selected suite completed before newest status/pin edits; no independent semantic, mutation, publication or package acceptance."
     }
   ],
   "reviewAssignments": [
@@ -21394,9 +21677,12 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "running complete independent assigned installation/release scope",
+      "state": "terminal complete assigned FAIL; whole reported batch under correction",
       "report": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-source-fresh/report.md",
-      "scope": "Complete frozen installation and linked release procedure; distinct role only, no prior verdict inherited"
+      "scope": "Complete frozen installation and linked release procedure; distinct role only, no prior verdict inherited",
+      "reportSha256": "95dbdcdadfc2c23fa60aad8852496a0c8496a12f59664583cb910682973471f4",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-source-fresh-root-seal.json",
+      "verifiedArtifacts": 753
     },
     {
       "agent": "/root/installation_eof_prism_complete_reader_fresh",
@@ -21406,9 +21692,12 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "running complete independent assigned installation/release scope",
+      "state": "terminal complete assigned FAIL; whole reported batch under correction",
       "report": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-reader-fresh/report.md",
-      "scope": "Complete frozen installation and linked release procedure; distinct role only, no prior verdict inherited"
+      "scope": "Complete frozen installation and linked release procedure; distinct role only, no prior verdict inherited",
+      "reportSha256": "aee6e77f193cc3b0e528ab65735b31173f8782b306c04cf38713995809dccafe",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-reader-fresh-root-seal.json",
+      "verifiedArtifacts": 549
     },
     {
       "agent": "/root/python_custody_f1_f6_qualified_complete_source_fresh",
@@ -21418,16 +21707,49 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "running complete coupled tooling Source review",
+      "state": "terminal complete assigned FAIL; whole reported batch under correction",
       "report": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh/report.md",
-      "scope": "Complete frozen scanner/acquisition/receiver/protected qualification Source scope, not inherited test approval"
+      "scope": "Complete frozen scanner/acquisition/receiver/protected qualification Source scope, not inherited test approval",
+      "reportSha256": "5883e544ffac3545c53c218c2f2b4331e77ce0a6f5d4a3b7b5c571aaf4db5a17",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh-root-seal.json",
+      "verifiedArtifacts": 14
+    },
+    {
+      "agent": "/root/worker_trust_lifecycle_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal assigned FAIL; new correction pending fresh complete review",
+      "report": "/home/node/Documents/Codex/a98-evidence/worker-trust-lifecycle-complete-source-fresh/report.md",
+      "reportSha256": "e43dd02342420951eb0b9230c64a22f79a91a59811dac7006f96a6d820398bd4",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/worker-trust-lifecycle-complete-source-fresh-root-seal.json",
+      "verifiedArtifacts": 122,
+      "scope": "Complete linked installation, maintenance, Worker Trust procedure and authored/generated task mapping."
+    },
+    {
+      "agent": "/root/worker_trust_lifecycle_complete_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal assigned FAIL; new correction pending fresh complete review",
+      "report": "/home/node/Documents/Codex/a98-evidence/worker-trust-lifecycle-complete-reader-fresh/report.md",
+      "reportSha256": "cfcee0842e8b9549ce04a3cb28e0f224ad2871eb6dcd54ee95e20bef73b1b263",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/worker-trust-lifecycle-complete-reader-fresh-root-seal.json",
+      "verifiedArtifacts": 82,
+      "scope": "Complete linked installation, maintenance, Worker Trust procedure and authored/generated task mapping."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open: new root235/235PASS stable sources/pages; distinct complete fresh Source/Reader reviews still active and have new material observations. No package acceptance.",
+    "stage": "AP09.8 open:241/241 selected root tests PASS; full linked Source/Reader FAIL corrected candidates, tooling Source still reviewing.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish whole review batches and root-seal final reports. Correct full new discovery and linked Worker Trust prerequisite/state/cleanup findings in exclusive parallel writers, then new complete affected-scope Source/Reader/Quality reviews. Do not review known failed candidate through final Quality/Astra prematurely. Full source-bound generation/configmutations/all gates remain required.",
+    "next": "Finish narrow canonical-command correction; commit checked doc and authored task mapping separately from generated task inventory; obtain new distinct complete Source/Reader/Quality reviews. Finish whole tooling Source report, correct complete findings and requalify before full configuration generation. No parity/deletion before AP09.8 acceptance.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -21440,9 +21762,8 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/installation_eof_prism_complete_source_fresh",
-      "/root/installation_eof_prism_complete_reader_fresh",
-      "/root/python_custody_f1_f6_qualified_complete_source_fresh"
+      "/root/python_custody_f1_f6_batch_correction_writer",
+      "/root/installation_eof_optional_prism_batch_writer"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -25613,7 +25934,43 @@
         "scripts/docs-api-producer-adapter-authorities.json": "a6f9f0b13bbc8c1e22340ba23e44324a6347e89b113a6488f8e131db27d210e7"
       },
       "newActualDependency": "ops/pod/test/app_server_smoke.py parsed read-only as finite repository-bound interpreter stdin; no target literal environment readers. New target readers explicitly fail closed with target source identity.",
-      "protectedAuthorityAuthorChecks": "25API/9authority/4caller and5protected guard negatives terminal expected outcomes; actual12recipes27operations/siximports15selectedmodules unchanged. Two exact Source hash/anchor replacements only; author evidence not independent approval."
+      "protectedAuthorityAuthorChecks": "25API/9authority/4caller and5protected guard negatives terminal expected outcomes; actual12recipes27operations/siximports15selectedmodules unchanged. Two exact Source hash/anchor replacements only; author evidence not independent approval.",
+      "independentReviewResults": {
+        "python-custody-f1-f6-qualified-complete-source-fresh": {
+          "verdict": "FAIL whole assigned scope",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh-root-seal.json"
+        },
+        "installation-eof-prism-complete-source-fresh": {
+          "verdict": "FAIL whole assigned scope",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-source-fresh-root-seal.json"
+        },
+        "installation-eof-prism-complete-reader-fresh": {
+          "verdict": "FAIL whole assigned scope",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-reader-fresh-root-seal.json"
+        }
+      }
+    },
+    "currentCorrectionBatch": {
+      "rootFullIntegration": {
+        "command": "node --test --test-concurrency=2 (9 API suites, Python discovery, OPS environment contracts)",
+        "state": "observed-terminal-pass-root-bounded",
+        "exitCode": 0,
+        "tests": 241,
+        "passed": 241,
+        "failed": 0,
+        "skipped": 0,
+        "sourceAndPagesUnchanged": true,
+        "baseRevision": "2a8558d795054d25aa4b72dbdc296c9321ba38f6",
+        "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-unknown-alias-class-output-and-trust/result.json",
+        "acceptanceLimit": "Selected suite completed before newest status/pin edits; no independent semantic, mutation, publication or package acceptance."
+      },
+      "documentationAuthorSeal": "/home/node/Documents/Codex/a98-evidence/install-status-current-pins-correction-writer-root-seal.json",
+      "documentationAuthorArtifacts": 87,
+      "authoredTaskMappingEvidence": "/home/node/Documents/Codex/a98-evidence/worker-trust-task-mapping-root-correction/result.json",
+      "privateTaskRegistryCheck": "/home/node/Documents/Codex/a98-evidence/worker-trust-task-registry-private-validation/result.json",
+      "privateTaskRegistryVerdict": "Generation/currentness PASS13 tasks, actual procedure check FAIL duplicate npm-ci literal; no published gate pass",
+      "toolingCandidate": "b27 scanner / 2bb33tests; full fresh independent Source review running; annotation alias/method and YAML mode findings provisional until full report",
+      "qualityReview": "New corrected linked route not yet reviewed; required after complete candidate and generated task mapping"
     }
   }
 }
