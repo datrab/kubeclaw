@@ -19261,7 +19261,7 @@
     "stage": "AP09.8: producer eight-family corrections and independent exact70 selection provenance; package not accepted",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Seal full554Reader, newcorrected completeaffected Reader/Quality then fullAP09.8roles after stablegeneration. Source63boundedPASS sealed13459artifactsRootintegrityzeroerrors. Producer6files allfamilies/nativecontracts stillopen; freshcompleteproducerSource and mandatoryfullmutations/gates required. No massparity/deletion.",
+    "next": "Finish Go actual32-output selection; qualify Python public discover/main output; bind finite actual dynamic kubectl operations; then freeze all inputs and run integrated checks before fresh independent reviews.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -22030,12 +22030,46 @@
     },
     "newNative4d3FreshFindings": {
       "agent": "/root/native_submission_4d3_full_source_fresh",
-      "reviewState": "running with material FAIL findings; finalreportpending",
+      "reviewState": "completed FAIL; four material findings; corrections require a new independent review",
       "findings": [
         "Native MethodPatch grammar bypasses PATCH behavior; actual finalizer consumer fails ObjectMeta fallback. Rootcorrected10boundedPASS, notfreshacceptance.",
         "Finalizer PATCH alwaysemittedafterreread, only append when missing; current30 source omittednoappend branch. Nativeauthorcorrectinggeneric conditionaleffects.",
         "bootstrap.py broad roles=[] plus setupsecrets-only adapter omits new public discover() APIreturn afterfreshdiscovery; independentactualsourcemutation records8 outputs0Namespace. Correction pending."
-      ]
+      ],
+      "report": "/home/node/Documents/Codex/a98-evidence/native-submission-4d3-full-source-fresh/REPORT.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/native-4d3-full-source-root-seal.json",
+      "artifactsVerified": 38,
+      "unchangedBoundSourceFilesVerified": 5590,
+      "findingIds": [
+        "NATIVE-01",
+        "NATIVE-02",
+        "NATIVE-03",
+        "NATIVE-04"
+      ],
+      "reviewLimit": "38 actual output records and 41 Go sinks; whole-package, full mutation, Reader, Quality and live acceptance not granted."
+    },
+    "nativeRangeTemplateCorrection": {
+      "state": "author candidate; independent acceptance pending",
+      "changes": [
+        "Preserve unknown runtime count for closed range-append templates.",
+        "Check each authored item against the served field authority without claiming a concrete runtime index or count.",
+        "Reject unknown transforms, mixed markers and unknown authored fields."
+      ],
+      "rootOwnedFiles": {
+        "scripts/docs-api-product-scope.mjs": "da8d6aacfef12523b65fca88574bc767440d690df1e1b884192718239a306620",
+        "scripts/tests/api-product-json-patch.test.mjs": "99bf363a66b5a8838197f8179e5f0ac6b4a15b63447430ad2f2b17ecba73995f"
+      },
+      "previousBoundedRun": {
+        "session": 50683,
+        "exitCode": 0,
+        "tests": 11,
+        "passed": 11
+      },
+      "verificationRepeatSession": 48967,
+      "verificationRepeatState": "terminal PASS",
+      "limit": "Bounded consumer tests only; no full integrated suite or independent PASS.",
+      "verificationRepeatExitCode": 0,
+      "receipt": "/home/node/Documents/Codex/a98-evidence/root-range-template-selection-correction.json"
     }
   }
 }

@@ -453,22 +453,30 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
           add(child,{reason:'receiver-materialized-default-child',path:context.path,document:context.document,fieldPath:yamlFieldPath([...actual,0]),parentPath:actualPath,sourceDigest:context.sourceDigest,omission:receiverDefault.omission,evidence:receiverDefault.evidence});
         }
       }
-      if (node && typeof node === 'object' && !Array.isArray(node) && !Object.hasOwn(node,'__docsDynamicExpression')) instances.push({ node, actual });
+      if (node && typeof node === 'object' && !Array.isArray(node) && !Object.hasOwn(node,'__docsDynamicExpression')) instances.push({ node, actual, sequenceEvidence });
       if (node && typeof node === 'object' && Object.hasOwn(node,'__docsDynamicExpression')) {
-        if (node.__docsSupportedSequenceAppend) {
-          const append = node.__docsSupportedSequenceAppend;
+        if (node.__docsSupportedSequenceAppend || node.__docsSupportedSequenceTransform) {
+          const transform = node.__docsSupportedSequenceTransform;
+          const append = node.__docsSupportedSequenceAppend ?? transform;
           const sequenceType = actual[0] === 'metadata'
             ? apiFieldSchemaAuthority(apiVersion, kind, actualPath, { includeCollectionContract:true }).type
             : boundary?.contract.type;
-          assert(sequenceType === 'array' && append.spread === false
-            && Array.isArray(append.items) && append.items.length > 0,
+          assert(sequenceType === 'array' && Array.isArray(append.items) && append.items.length > 0
+            && (transform
+              ? !node.__docsSupportedSequenceAppend && transform.operation === 'range-append'
+                && typeof transform.sourceExpression === 'string' && transform.sourceExpression.length > 0
+                && transform.cardinality === 'unknown-runtime-count'
+              : append.spread === false),
             `API_PRODUCT_SEQUENCE_APPEND_UNQUALIFIED: ${context.path} ${actualPath}`);
           const previousEvidence = sequenceEvidence;
           try {
             for (const [ordinal, item] of append.items.entries()) {
               sequenceEvidence = { sequenceExpression:node.__docsDynamicExpression,
-                itemPosition:'After the inherited runtime prefix; its length is unknown.',
-                appendedItemOrdinal:ordinal };
+                ...(transform ? { operation:transform.operation, sourceExpression:transform.sourceExpression,
+                  cardinality:transform.cardinality,
+                  itemPosition:'Source template for each runtime iteration; the count is unknown.',
+                  sourceTemplateOrdinal:ordinal }
+                : { itemPosition:'After the inherited runtime prefix; its length is unknown.', appendedItemOrdinal:ordinal }) };
               // The schema position is symbolic. It does not assert a live index
               // or reconstruct the unobserved inherited values.
               visit(item, [...actual, ordinal]);
@@ -527,7 +535,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
     // Presence is local to the actual object, before array indices become a
     // coverage identity. One item cannot suppress another item's default.
     for (let index = 0; index < instances.length; index += 1) {
-      const { node, actual, materializedBy } = instances[index];
+      const { node, actual, materializedBy, sequenceEvidence: instanceSequence } = instances[index];
       const parent = authority.find(row => matches(tokens(row.fieldPath), actual));
       if (!parent) continue;
       for (const boundary of authority) {
@@ -545,7 +553,8 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         const fieldPath = yamlFieldPath([...actual, key]);
         const evidence = {
           reason: present ? 'receiver-default-for-explicit-zero-value' : required ? 'required-under-present-parent' : defaulted ? 'schema-default-under-present-parent' : 'receiver-default-under-present-parent',
-          path: context.path, document: context.document, fieldPath,
+          path: context.path, document: context.document, fieldPath: instanceSequence ? canonical(fieldPath) : fieldPath,
+          ...(instanceSequence ?? {}), ...(context.conditions?.length ? { conditions:context.conditions } : {}),
           parentPath: yamlFieldPath(actual), sourceDigest: context.sourceDigest,
           ...(materializedBy ? { materializedBy } : {}),
           ...(receiverDefault ? { mechanism: receiverDefault.reason, omission: receiverDefault.omission, evidence: receiverDefault.evidence } : {}),
@@ -556,7 +565,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
           const recordChildren=(child,path)=>{
             if(Array.isArray(child)){child.forEach((item,index)=>recordChildren(item,[...path,index]));return;}
             if(path.length>actual.length+1){const materializedBoundary=authority.find(row=>matches(tokens(row.fieldPath),path));assert(materializedBoundary,`API_PRODUCT_DEFAULT_CHILD_OUTSIDE_AUTHORITY: ${kind} ${yamlFieldPath(path)}`);add(materializedBoundary,{...evidence,reason:'receiver-materialized-default-child',fieldPath:yamlFieldPath(path),parentPath:fieldPath});}
-            if(child&&typeof child==='object')instances.push({node:child,actual:path,materializedBy:fieldPath});
+            if(child&&typeof child==='object')instances.push({node:child,actual:path,materializedBy:fieldPath,sequenceEvidence:instanceSequence});
           };
           recordChildren(materialized,[...actual,key]);
         }

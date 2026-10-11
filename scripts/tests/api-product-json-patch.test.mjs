@@ -153,3 +153,31 @@ test('native partial lease PATCH resolves inherited finalizers through ObjectMet
     assert.ok(selected.metadataPaths.includes('$.metadata.finalizers[]'));
   } finally {fs.rmSync(root,{recursive:true,force:true});}
 });
+
+
+test('source-bound range templates select authored subject fields without inventing a singleton', () => {
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'api-range-subjects-'));
+  try {
+    const value={apiVersion:'rbac.authorization.k8s.io/v1',kind:'RoleBinding',metadata:{name:'binding'},
+      roleRef:{apiGroup:'rbac.authorization.k8s.io',kind:'Role',name:'role'},
+      subjects:{__docsDynamicExpression:'subjects',__docsSupportedSequenceTransform:{operation:'range-append',
+        items:[{kind:'ServiceAccount',name:{__docsDynamicExpression:'account.Name'},namespace:{__docsDynamicExpression:'account.Namespace'}}],
+        sourceExpression:'accounts',cardinality:'unknown-runtime-count'}}};
+    const selectValue=()=>{
+      const bytes=YAML.stringify(value);fs.writeFileSync(path.join(root,'subjects.yaml'),bytes);
+      return apiProductSelection(value.apiVersion,value.kind,[{path:'subjects.yaml',document:0,
+        requestMethod:'MethodPost',sourceDigest:createHash('sha256').update(bytes).digest('hex')}],
+        versionedApiReceiverRegistries.get(value.apiVersion),root);
+    };
+    const selected=selectValue(),evidence=selected.applicability['$.subjects[].name'][0];
+    assert.equal(evidence.fieldPath,'$.subjects[].name');
+    assert.equal(evidence.cardinality,'unknown-runtime-count');
+    assert.equal(evidence.sourceTemplateOrdinal,0);
+    assert.equal(Object.hasOwn(evidence,'appendedItemOrdinal'),false);
+    value.subjects.__docsSupportedSequenceTransform.items[0].inventedUnservedField=true;
+    assert.throws(selectValue);
+    delete value.subjects.__docsSupportedSequenceTransform.items[0].inventedUnservedField;
+    value.subjects.__docsSupportedSequenceTransform.operation='unknown-transform';
+    assert.throws(selectValue,/SEQUENCE_APPEND_UNQUALIFIED/);
+  } finally {fs.rmSync(root,{recursive:true,force:true});}
+});
