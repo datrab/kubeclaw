@@ -22276,10 +22276,18 @@
       "limits": "No AP09.7 acceptance. Source reviewer continues original immutable full review; Reader FAIL preserved. Fresh affected Source/Reader/Quality and Astra required after corrections."
     },
     "ap097ReaderTraceDisposition": {
-      "state": "not-accepted",
-      "receipt": "/home/node/Documents/Codex/a98-evidence/ap097-reader-trace-disposition-ade38433.json",
+      "state": "independent-reader-FAIL",
       "requiredTask": "READER-PLATFORM-01",
-      "limitation": "Conceptual20step reference only; no joined runtime evidence. No participant result or whole A97-11 PASS claimed."
+      "reviewer": "/root/platform_registered_trace_reader_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/platform-registered-trace-reader-root-seal.json",
+      "outcomes": {
+        "observedOrderAndIdentities": "FAIL",
+        "authorityBoundaries": "PASS",
+        "dependencyClassification": "PASS",
+        "redisRecoveryRules": "PASS"
+      },
+      "readerInputFilesVerified": 167,
+      "limitation": "Registered success trace is conceptual only, lacks same-run observed request execution evidence. No full A97-11 or package acceptance."
     },
     "ap097ClientAndStateAuthorCorrections": {
       "state": "author-corrected; full independent review required",
@@ -22507,21 +22515,17 @@
     },
     "currentConfigurationGeneration": {
       "state": "terminal-FAIL",
-      "session": 33991,
+      "session": 2741,
       "exitCode": 1,
-      "startedAtSourceRevision": "586f1f558a673c4df51c0afb9ea535c814b933b1",
-      "log": "/home/node/Documents/Codex/a98-evidence/generation-586f1f55/configuration.log",
-      "missingReceiverFields": [
-        "v1/PersistentVolume $",
-        "v1/PersistentVolume $.spec",
-        "v1/PersistentVolume $.spec.claimRef",
-        "v1/PersistentVolume $.spec.claimRef.name",
-        "v1/PersistentVolume $.spec.claimRef.namespace",
-        "v1/PersistentVolume $.spec.claimRef.uid",
-        "v1/PersistentVolume $.spec.persistentVolumeReclaimPolicy"
-      ],
-      "assignedCorrection": "/root/pv_selected_receiver_contract_writer",
-      "independentAcceptance": false
+      "startedAtSourceRevision": "4a381a370e4ca90bdae53f27bfee759704f1300c",
+      "result": "/home/node/Documents/Codex/a98-evidence/generation-4a381a37/configuration-result.json",
+      "log": "/home/node/Documents/Codex/a98-evidence/generation-4a381a37/configuration.log",
+      "finding": "API_PRODUCT_FIELD_OUTSIDE_AUTHORITY: v1/PersistentVolume $.fieldPath",
+      "sourceHashesUnchanged": true,
+      "toolchainHashesUnchanged": true,
+      "assignedCorrection": "/root/pv_selector_publication_correction_writer",
+      "independentAcceptance": false,
+      "independentCorrectionReviewer": "/root/pv_publication_discovery_source_fresh"
     },
     "configurationGenerationCostAudit": {
       "author": "/root/configuration_generation_cost_audit",
@@ -22543,7 +22547,7 @@
     "selectedPvReceiverContracts": {
       "author": "/root/pv_selected_receiver_contract_writer",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-selected-receiver-contract-root-seal.json",
-      "state": "Seven authored selected-field contracts integrated; full172API tests PASS; full generator/independent reviews pending",
+      "state": "Independent all7 Source and Quality PASS on corrected module; Reader, integrated generation and full A98 acceptance remain open",
       "fields": [
         "$",
         "$.spec",
@@ -22554,7 +22558,57 @@
         "$.spec.persistentVolumeReclaimPolicy"
       ],
       "scope": "Actual existing-PV guarded retirement JSON Patch only; no unused provisioning alternatives.",
-      "independentAcceptance": false
+      "independentAcceptance": false,
+      "independentReviewer": "/root/pv_selected_receiver_corrected_source_fresh",
+      "previousIndependentSource": {
+        "reviewer": "/root/pv_selected_receiver_source_fresh",
+        "verdict": "FAIL",
+        "behavioralSemantics": "PASS all7",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-selected-receiver-source-root-seal.json",
+        "findings": [
+          "PV-SOURCE-01",
+          "PV-SOURCE-02",
+          "PV-SOURCE-03"
+        ]
+      },
+      "correctedIndependentSource": {
+        "reviewer": "/root/pv_selected_receiver_corrected_source_fresh",
+        "verdict": "FAIL",
+        "behavioralSemantics": "PASS all7",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-selected-receiver-corrected-source-root-seal.json",
+        "finding": "PV-CORRECTED-SOURCE-01: split supported-policy membership check and Delete declaration sources"
+      },
+      "independentQuality": {
+        "reviewer": "/root/pv_selected_receiver_quality_fresh",
+        "verdict": "FAIL",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-selected-receiver-quality-root-seal.json",
+        "findings": [
+          "undefined reader vocabulary across7 records",
+          "ambiguous Helm release vs PV release root wording"
+        ]
+      },
+      "assignedCorrection": "/root/pv_selected_receiver_plain_english_writer",
+      "frozenPlainEnglishCorrection": {
+        "author": "/root/pv_selected_receiver_plain_english_writer",
+        "moduleSha256": "27c46abc1d156ffb4827a98bcbd672ab944e1e63297d7dba116325f8350c1d4a",
+        "evidenceDirectory": "/home/node/Documents/Codex/a98-evidence/pv-selected-receiver-plain-english-writer",
+        "sourceReviewer": "/root/pv_plain_english_complete_source_fresh",
+        "state": "author-frozen; fresh whole7 Source review in progress; new Quality review pending",
+        "independentAcceptance": false,
+        "authorSeal": "/home/node/Documents/Codex/a98-evidence/pv-selected-receiver-plain-english-author-root-seal.json",
+        "qualityReviewer": "/root/pv_plain_english_complete_quality_fresh"
+      },
+      "currentModuleSha256": "e91c3f85ee49f07e79aacabe185919120836979e6f4f5e61f8a62074b8c395c5",
+      "currentIndependentSource": {
+        "reviewer": "/root/pv_clear_features_source_fresh",
+        "verdict": "PASS",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-clear-features-source-root-seal.json"
+      },
+      "currentIndependentQuality": {
+        "reviewer": "/root/pv_clear_features_quality_fresh",
+        "verdict": "PASS",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-clear-features-quality-root-seal.json"
+      }
     },
     "integratedApiPvCache": {
       "session": 82749,
@@ -22569,6 +22623,50 @@
       "sourceHashesUnchanged": true,
       "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-pv-cache/result.json",
       "independentAcceptance": false
+    },
+    "previousConfigurationGeneration": {
+      "state": "terminal-FAIL",
+      "session": 33991,
+      "exitCode": 1,
+      "startedAtSourceRevision": "586f1f558a673c4df51c0afb9ea535c814b933b1",
+      "log": "/home/node/Documents/Codex/a98-evidence/generation-586f1f55/configuration.log",
+      "missingReceiverFields": [
+        "v1/PersistentVolume $",
+        "v1/PersistentVolume $.spec",
+        "v1/PersistentVolume $.spec.claimRef",
+        "v1/PersistentVolume $.spec.claimRef.name",
+        "v1/PersistentVolume $.spec.claimRef.namespace",
+        "v1/PersistentVolume $.spec.claimRef.uid",
+        "v1/PersistentVolume $.spec.persistentVolumeReclaimPolicy"
+      ],
+      "assignedCorrection": "/root/pv_selected_receiver_contract_writer",
+      "independentAcceptance": false
+    },
+    "publicationDiscoveryCorrection": {
+      "state": "Generic candidate superseded pending independent audit of omitted qualified documentation helper registration; failed candidates retained, no accepted generic rewrite",
+      "author": "/root/pv_selector_publication_correction_writer",
+      "authorSeal": "/home/node/Documents/Codex/a98-evidence/pv-selector-publication-author-root-seal.json",
+      "reviewer": "/root/pv_publication_discovery_source_fresh",
+      "sourceSeal": "/home/node/Documents/Codex/a98-evidence/pv-publication-discovery-source-root-seal.json",
+      "blockingFindings": [
+        "exported projected builder silently omitted",
+        "returned List child context omitted",
+        "separately bound native selector falsely included"
+      ],
+      "independentAcceptance": false,
+      "boundaryReviewer": "/root/pv_documentation_boundary_source_fresh"
+    },
+    "integratedApiPublication": {
+      "state": "terminal-PASS",
+      "session": 13046,
+      "exitCode": 0,
+      "tests": 178,
+      "pass": 178,
+      "fail": 0,
+      "skipped": 0,
+      "sourceHashesUnchanged": true,
+      "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-publication/result.json",
+      "scope": "Nine dynamically discovered API test files; independent Source nevertheless FAILs three additional cases. Not acceptance."
     }
   }
 }
