@@ -156,8 +156,10 @@ The current session format does not include an automatic multi-key overlap mecha
 >
 > [Product decisions require an explicit operator, origin and CSRF checks, and a dedicated Ed25519 signing key](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/control/product-decisions.ts#L20-L43).
 
-Kubernetes ServiceAccounts are also not bearer identities by default in the main KubeClaw workloads.
-The chart disables automatic token mounting unless a narrowly defined controller requires Kubernetes API access.
+The KubeClaw chart disables automatic ServiceAccount token mounting by default.
+The selected Nova values enable token mounting, the namespace lease client, and verification reads.
+Nova can request namespace leases and read the configured verification resources.
+These permissions do not grant the namespace controller's workload-management authority.
 SPIRE uses the namespace and ServiceAccount name to derive the workload identity.
 
 > **Source evidence — workload identity**
@@ -165,6 +167,14 @@ SPIRE uses the namespace and ServiceAccount name to derive the workload identity
 > [SPIRE selects labeled workloads and derives the SPIFFE ID from namespace and ServiceAccount](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/spire-values.yaml#L25-L40).
 >
 > [The KubeClaw ServiceAccount disables automatic token mounting by default](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/kubeclaw/templates/serviceaccount.yaml#L1-L10).
+>
+> [The selected Nova values enable token mounting and verification reads](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/my-values/nova-values.yaml#L76-L85).
+> [The lease-client Role permits lease operations and Deployment and Service reads](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/charts/kubeclaw/templates/rbac.yaml#L16-L29).
+> [Verification adds Pod reads and access to the named Tailscale IngressClass](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/charts/kubeclaw/templates/rbac.yaml#L57-L65).
+> [A separate Role permits GET for only the configured OAuth Secret in the configured operator namespace](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/charts/kubeclaw/templates/rbac.yaml#L80-L96).
+
+Treat code that can read the mounted token as holding these Kubernetes rights.
+A plugin capability grant limits its configured adapter; it does not remove rights from the ServiceAccount token.
 
 ## SPIFFE, SPIRE, Envoy, and Worker Core
 
@@ -242,15 +252,29 @@ Do not duplicate secret values in documentation, values files, logs, test fixtur
 | `prism-runtime` | Session, ingress, dispatch, worker, and ingestion shared secrets | Prism deploy helper creates if absent; only the corresponding Prism services consume | Rotate by relationship and restart both ends. SPIFFE-enabled Control/Worker transport omits the dispatch/worker fallback, but session, ingress, and ingestion secrets still have their own uses. |
 | Prism product signing Secret and controller CA/token projection | Configured Ed25519 private key, configured CA, and short-lived audience-bound ServiceAccount token | External product-authority owner supplies signing/CA Secrets; Kubernetes projects the token to Control | The chart requires a signing Secret distinct from `prism-runtime`. Rotate signer with verifier trust and retained decisions. Token rotation is automatic; CA rotation needs overlap or coordinated restart. |
 | `prometheus-grafana` | `admin-user`, `admin-password` | External monitoring operator supplies; Grafana reads | Rotate and restart/reload Grafana. It grants UI administration, not Prometheus or Kubernetes authority. The chart does not create it. |
-| `codex-ops-bearer` and optional Ops GitHub Secret | MCP bearer `token`; optional GitHub `token` | External operator supplies; Codex and loopback MCP share the bearer, Codex alone receives GitHub token | Bind MCP to loopback and rotate both clients together. Scope the GitHub token separately. Neither belongs in the Ops PVC. |
-| `codex-ops-tailscale` | `authkey` | External operator supplies; optional userspace Tailscale sidecar reads | Prefer reusable/ephemeral policy appropriate to recovery, revoke after use, and never treat the persisted device state as a second authkey. |
+| `codex-ops-bearer` and optional `codex-ops-github` | MCP bearer `token`; optional GitHub `token` | Ops bootstrap creates a missing bearer and retains an existing one. It applies the operator's GitHub token from `OPS_GITHUB_TOKEN_FILE` when set. Codex and loopback MCP share the bearer; Codex alone receives the GitHub token | Bind MCP to loopback and rotate both clients together. Scope the GitHub token separately. Neither belongs in the Ops PVC. |
+| `codex-ops-tailscale` | `authkey` | Ops bootstrap applies the operator's authkey from `OPS_TAILSCALE_AUTHKEY_FILE` when set; optional userspace Tailscale sidecar reads | Prefer reusable/ephemeral policy appropriate to recovery, revoke after use, and never treat the persisted device state as a second authkey. |
 | Registry client Secret and CA Secret | Configured username/password and CA certificate keys | External registry operator supplies; BuildKit/runtime/node configuration selects them | Credentials are allowed only with HTTPS in the generator. Rotate at registry and all clients. A CA bundle is trust material, not a bearer secret, but replacement still needs coordinated client rollout. |
 
 No repository path generates `github-bundle-reader`, `nova-archviewer-auth`,
-`prometheus-grafana`, the Ops Secrets, registry credentials, or a production
+`prometheus-grafana`, registry credentials, or a production
 Prism product-decision signer. Their absence must stop the dependent feature;
 the operator must not substitute a value from another Secret because its name
 looks similar.
+
+The Ops bootstrap helper creates Kubernetes Secrets but does not create upstream
+GitHub or Tailscale credentials. It reads these credentials from the selected
+files, rejects empty input, and applies the supplied value even if the target
+Secret already exists. When pull-secret copying is enabled, it retains an
+existing Ops `ghcr-secret`; otherwise, it copies the configured source Secret
+and stops if that source is absent.
+
+> **Source evidence — Ops credential preparation**
+>
+> [The bootstrap helper creates only a missing bearer and copies only a missing
+> pull Secret](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/ops/pod/bootstrap.py#L56-L64).
+> [Optional GitHub and Tailscale file inputs are checked and applied to their
+> named Secrets](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/ops/pod/bootstrap.py#L65-L71).
 
 > **Source evidence — Secret consumers outside the shared helper**
 >
@@ -267,13 +291,29 @@ looks similar.
 > and [gives the Tailscale authkey only to its sidecar](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L113-L135).
 > [Grafana reads an externally managed administrator Secret](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/gitops/platform/values/prometheus.yaml#L3-L23).
 
-Secret setup uses a controlled precedence:
+The shared-Secret setup path uses this precedence. Other Secrets have their own
+setup paths; do not assume that they use the same order.
 
-1. Keep a complete existing Secret unless overwrite was explicitly requested.
-2. Repair required missing keys when the setup path supports that repair.
-3. Copy from an operator-selected source namespace when configured.
-4. Read protected operator input or generate a value only in the supported interactive path.
-5. Stop or warn when a required value is unavailable; do not invent an external credential.
+1. If the target Secret exists and `KUBECLAW_SECRETS_OVERWRITE` is not true,
+   retain it. Interactive setup can repair missing required keys. Non-interactive
+   setup warns about missing keys and returns without trying SOPS or a source
+   namespace. A warning does not prove that the Secret is ready for use.
+2. Otherwise, if `SOPS_FILE` exists, create or update the shared Secret from that
+   encrypted file. This path takes precedence over a source-namespace copy.
+   SOPS and access to its decryption keys are required.
+3. If no SOPS file exists, try the configured source namespace.
+4. If no copy is available and interactive setup is enabled, read protected
+   operator input or generate values only for the fields that support generation.
+5. Otherwise, warn that the required Secret is missing. Supply the required
+   values before starting dependent workloads; the warning alone is not a
+   successful setup result.
+
+> **Source evidence — shared-Secret precedence**
+>
+> [An existing target is retained or repaired, then this setup path returns](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/my-values/setup-secrets.sh#L567-L581).
+> [A present SOPS file precedes namespace copying, interactive input, and the
+> missing-Secret warning](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/my-values/setup-secrets.sh#L583-L609).
+> [The SOPS path selects named fields and applies the shared Secret](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/my-values/setup-secrets.sh#L438-L469).
 
 The source-attestation Secret is a useful example.
 Setup reuses a complete key pair or copies it from the configured source.
@@ -320,8 +360,9 @@ KubeClaw treats a connection as an allowlist entry, not as an assumed property o
 Policies use default deny and add DNS, database, worker, ingestion, telemetry, registry, and external paths only where required.
 
 The portable security contract is the permitted caller, destination, protocol, and port.
-Cilium can add cluster-wide and identity-aware controls, but the pipeline must also operate on a different conforming CNI such as Flannel.
-A deployment that uses standard Kubernetes NetworkPolicy must preserve the documented paths and prove enforcement with its chosen CNI.
+The current secured deployment uses Cilium for its policy and flow-evidence paths.
+A different CNI needs equivalent policy enforcement and positive and negative test evidence before it can support that deployment.
+The [current deployment boundary](platform-and-operations.md#one-network-owner-flannel-or-cilium) explains why a Flannel fallback is planned but not supported now.
 
 ### Service, policy, identity, and authority matrix
 
@@ -333,13 +374,14 @@ transport identity, and operation authority.
 | --- | --- | --- | --- | --- |
 | Nova → Buster plan | Buster plan Service, protected port 18891; Nova egress and Buster ingress select exact component labels | Envoy mTLS requires Nova SPIFFE ID, then Worker trust accepts only the configured peer; bearer mode is a separate configured alternative | `test.plan.execute` grant plus fixed repository/source/plan constraints | Unrelated Pod, wrong SVID, forged forwarded identity, wrong token, or changed request digest fails |
 | Nova → Prism agent | Prism agent Service on protected port 18082; policy selects Nova and the Prism agent | Exact Nova SVID at Envoy and application allowlist | `runtime.dispatch` target and lease constraints | Same-namespace non-Nova Pod and valid but unlisted SVID fail |
-| Prism Control/test runner → Worker | Internal Worker Service uses 8443 with SPIFFE, otherwise 8080; Prism policy names callers | Exact Control or test-runner SVID; fallback uses body-bound worker secret when SPIFFE is disabled | Worker envelope, profile, claim, package, capability, and attempt digests | Studio, ingestion, unrelated Prism Pod, stale claim, or forged identity fails |
+| Prism Control → Worker | Internal Worker Service uses 8443 with SPIFFE, otherwise 8080; Worker ingress permits Control | Exact configured Control SVID; fallback uses body-bound worker secret when SPIFFE is disabled | Worker envelope, profile, claim, package, capability, and attempt digests | Direct test-runner, Studio, ingestion, unrelated Prism Pod, stale claim, or forged identity fails |
 | Prism Worker/agent → Control | Internal Control route; policy names Worker and agent sources | Exact Worker/agent SVID; fallback HMAC only on the configured route | Control operation and product rules still apply | Valid SVID for another ServiceAccount and direct untrusted header fail |
 | Tailscale proxy → Prism Studio | Studio Service 8080; ingress policy selects the proxy Pod by owning parent resource and namespace | Trusted Tailscale headers plus Prism ingress secret become a short-lived local session | Product mutation also requires role, origin, CSRF, and for acceptance a signed decision | Direct Pod connection, wrong parent proxy, absent login, wrong ingress secret, origin, or CSRF fails |
 | Agents/Clawdeck → Redis | Redis Service 6379; ingress allow selects KubeClaw or Clawdeck; client egress selects Redis labels | Redis password; `rediss:` also authenticates server certificate | Plugin needs the selected publish/telemetry capability and target | Other Pods, absent password, changed target, or missing capability fail |
 | Agents → LiteLLM → PostgreSQL/provider | LiteLLM 4000 and PostgreSQL 5432 have explicit ingress/egress; provider traffic is HTTPS world egress from LiteLLM | LiteLLM API/master key and provider credentials; database has its own credential | Caller route/model budget plus application configuration; Kubernetes RBAC grants none of this | Direct PostgreSQL access from an agent, absent LiteLLM key, or undeclared provider route fails |
 | Buster/agents → local registry or mirror | Explicit registry ports; local registry 5000/5001 and mirror 5000 | Production registry can use HTTPS credentials/CA; checked lab local registry is anonymous HTTP | Build/runtime capability constrains registry prefix and immutable result | Credential on HTTP is rejected by config generator; undeclared registry prefix or changed digest fails |
-| Namespace controller → Kubernetes API | Direct API egress only from controller identity | Projected ServiceAccount token | Controller ClusterRole/RoleBindings and admission policy limit lease-owned namespaces/resources | Agent application container, another ServiceAccount, existing unowned namespace, or reserved-label mutation fails |
+| Namespace controller → Kubernetes API | Controller policy permits API egress | Projected ServiceAccount token | Controller ClusterRole/RoleBindings and admission policy limit lease-owned namespaces/resources | An identity without the controller grants, existing unowned namespace, or reserved-label mutation fails |
+| Nova/Buster lease client → Kubernetes API | Selected lease-client policy permits API egress on 443/6443 | Mounted ServiceAccount token when enabled | Namespaced lease operations and Deployment/Service reads; optional verification grants Pod reads, the named IngressClass read, and one named OAuth Secret GET | Direct namespace creation, ungranted workload mutation, or an unrelated Secret read fails |
 | Ops MCP/Codex → Kubernetes API | Ops policy allows API; MCP listens only on loopback inside Pod | Short-lived projected token is mounted into MCP; Codex receives it only when exec namespaces are enabled | Read bindings cover named namespaces; cluster reads are limited; pod exec exists only in `rbac.execNamespaces` | MCP remote peer, Secret read, resource mutation, or exec outside the list fails |
 
 Network reachability does not override a missing lease capability. Kubernetes
@@ -354,6 +396,9 @@ boundary does not silently expand another.
 > [It separately selects Nova-to-Buster egress and Buster-from-Nova ingress](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/network-policies.yaml#L121-L157).
 > [Prism policy ties Control, Worker, test runner, Nova, agent, database, and
 > ingestion callers to exact ports](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L24-L59).
+> [Worker ingress selects Control alone](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/charts/prism/templates/networkpolicy.yaml#L73-L81), and
+> [Worker application authorization accepts only the configured Control SVID](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/skills/prism/server/worker-service.ts#L56-L58).
+> [The selected policy also permits Nova and Buster lease-client API egress](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/my-values/infra/network-policies.yaml#L366-L380).
 > [The Studio ingress allow selects only the Tailscale proxy that owns the Prism
 > parent resource](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/prism/templates/networkpolicy.yaml#L123-L133).
 >
@@ -512,8 +557,8 @@ rule. Do not infer that a present control was the only alternative considered.
 
 | Layer | Normal authority | Important exception or limit |
 | --- | --- | --- |
-| Kubernetes ServiceAccount | No automatically mounted token for ordinary KubeClaw workloads | The namespace controller mounts a token because it must manage bounded namespace resources. |
-| Kubernetes RBAC | Named read or management verbs for one controller purpose | The optional Ops Pod has broad read access and optional namespace-scoped exec. |
+| Kubernetes ServiceAccount | Automatic token mounting is disabled by chart default | The namespace controller requires a token. Selected Nova values also enable a token for lease and verification operations. |
+| Kubernetes RBAC | Explicit verbs and resource scopes for each workload | Lease clients can request leases; optional verification includes one named OAuth Secret read. The optional Ops Pod has broad read access and optional namespace-scoped exec. |
 | SPIFFE peer policy | Exact ServiceAccount identities for one protected route | A valid SVID still needs application authorization. |
 | Network policy | Named pod, namespace, port, and external paths | Enforcement depends on the live CNI. |
 | Plugin lease | Named capabilities with resource constraints | A grant must still have a configured adapter. |

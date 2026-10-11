@@ -125,7 +125,7 @@ release receipt before deployment.
 | Helm render fails | Wrong role, missing hostname/Secret, or duplicate legacy port. | Correct values; do not bypass the template guard. |
 | Health works, document returns 401 | Credentials absent or wrong. | Use an account present in the mounted htpasswd file. |
 | Document returns 403 | htpasswd file is unavailable or Nginx cannot read it. | Repair the Secret mount and file mode. |
-| Document returns 404 | File is not present under `/designs`. | Check the publishing producer and shared volume. |
+| Document returns 404 | File is not present under `/designs`; no supported publisher creates it. | Stop. Preserve the request and mounted-volume observations. Do not restart Nginx or write a file manually; publication needs an implemented producer contract. |
 | Tailnet hostname does not connect | Tailscale Ingress, DNS, Service, or proxy ownership failed. | Trace the Ingress and exact proxy labels before changing Nginx. |
 | Connection is denied only with Cilium | Policy does not recognize the owning proxy. | Compare namespace and parent-resource labels with the rendered policy. |
 

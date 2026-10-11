@@ -166,7 +166,10 @@ The durable journal remains authoritative after a transport interruption.
 **Failure effect:** Selected delivery, health, or status paths can stop.
 The failure does not mean that the canonical lifecycle record disappeared.
 
-**Recovery rule:** Restore Redis and reconcile derived delivery from durable records.
+**Recovery rule:** Restore Redis, then identify the producer before recovery.
+Nova observer delivery can resume from durable records through its owned checkpoint and retry rules.
+The OpenClaw host extension has no durable queue or replay consumer; lost queued events and failed payload writes cannot be recovered through that extension.
+Follow the [producer-specific recovery rules](telemetry.md#failure-and-recovery-matrix) before retrying delivery.
 Do not infer missing pipeline events from an empty Redis stream.
 
 > **Source evidence — bounded Redis use**
@@ -307,7 +310,7 @@ Do not create a second exposure for an uncertain attempt.
 | --- | --- | --- |
 | Git origin unavailable | Required source revision can be unavailable. | Restore the same revision or use a verified existing snapshot. |
 | Nova run storage unavailable | Canonical state cannot be proved. | Stop mutation and restore the authoritative store. |
-| Redis unavailable | Required transport and projection paths stop. | Restore Redis and replay derived delivery. |
+| Redis unavailable | Required transport and projection paths stop. | Restore Redis, then follow each producer's recovery rules. Nova observer recovery uses durable records; the OpenClaw host extension cannot replay lost events. |
 | LiteLLM PostgreSQL unavailable | Selected model gateway can fail. | Restore its matched database before model-backed work. |
 | Prism PostgreSQL unavailable | Prism state work stops. | Restore the matched Prism database and artifacts. |
 | BuildKit unavailable | Image-build stages stop. | Restore the same configured builder and resume by attempt identity. |

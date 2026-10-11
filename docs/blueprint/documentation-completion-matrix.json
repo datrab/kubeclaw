@@ -19253,8 +19253,36 @@
       "initialMode": "read-only",
       "revision": "4d3f5fe9a029e9af0f1de7d8cbd549bbec8d0d13",
       "inputBinding": "/home/node/Documents/Codex/a98-evidence/native-review-4d3f5fe9-input-binding.json",
+      "state": "completed FAIL",
+      "scope": "Complete actual Go/Python output semantics and actual consumer selection on Source4d3 plus two explicit frozen integration overlays. Separate named-shell closure known incomplete. No global acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/native-submission-4d3-full-source-fresh/REPORT.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/native-4d3-full-source-root-seal.json",
+      "limit": "Four material findings at immutable input; subsequent corrections do not retroactively change this verdict."
+    },
+    {
+      "agent": "/root/ap097_current_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "85925ff282d0483df57b69d20ea1bef230ccac00",
       "state": "running",
-      "scope": "Complete actual Go/Python output semantics and actual consumer selection on Source4d3 plus two explicit frozen integration overlays. Separate named-shell closure known incomplete. No global acceptance."
+      "scope": "All 53 current AP09.7 catalogue requirements and all A97-01–A97-12 Source aspects in immutable commit tree. Current contract expands the initially stated gate range. No moving AP98 tooling overlays; no Reader/Quality/Astra or global acceptance."
+    },
+    {
+      "agent": "/root/ap097_current_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "85925ff282d0483df57b69d20ea1bef230ccac00",
+      "state": "completed FAIL",
+      "scope": "Reader facets of all 53 AP09.7 requirements and all A97-01–A97-12; 44 bounded PASS, 8 FAIL, 1 NOT_CHECKED. No Source/Quality/live acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/ap097-current-reader-fresh-report/REPORT.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-reader-root-artifact-seal.json",
+      "limit": "Three actionable contradictions corrected subsequently; complete affected fresh review and blocking reader trace remain required. Nonexhaustive long diagnosis/generated content explicitly disclosed."
     }
   ],
   "continuation": {
@@ -22165,6 +22193,21 @@
       "authorMutationCount": 14,
       "historicalFailedCandidate": "historical-before-supported-credential-correction/receipt.json",
       "limit": "Author/bounded Source evidence only; no whole-package, full config mutation or independent PASS."
+    },
+    "ap097ReaderAndSourceAuthorCorrections": {
+      "state": "author-corrected; independent re-review required",
+      "sourceRevision": "85925ff282d0483df57b69d20ea1bef230ccac00",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/ap097-root-author-corrections-8592.json",
+      "sourceInterimSeal": "/home/node/Documents/Codex/a98-evidence/ap097-source-v1-root-seal.json",
+      "localInlineLinks": {
+        "checked": 73,
+        "failed": 0
+      },
+      "siteBoundary": {
+        "exitCode": 1,
+        "remaining": "Three existing generated Helm reference bookkeeping phrases; regenerate after stable source integration."
+      },
+      "limits": "No AP09.7 acceptance. Source reviewer continues original immutable full review; Reader FAIL preserved. Fresh affected Source/Reader/Quality and Astra required after corrections."
     }
   }
 }

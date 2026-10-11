@@ -639,16 +639,16 @@ The Ops Pod is an optional security, analysis, and administration workspace. Its
 MCP service exposes read-oriented investigation tools. That tool list is not the
 permission boundary for the complete Pod.
 
-Both containers use the same ServiceAccount. The MCP container receives a
-rotating token for read calls. By default, `rbac.execNamespaces` contains
-`kubeclaw`. The chart then mounts another token and generated kubeconfig into the
-Codex container and grants `get`, `list`, and `create` on `pods/exec` in that
-namespace. Code in the Codex container can therefore start a command in a
+Both containers use the same ServiceAccount. The MCP container mounts the
+rotating token from the `kube-api` projected volume. By default, `rbac.execNamespaces` contains
+`kubeclaw`. The chart then mounts that same token volume and a generated kubeconfig into the
+Codex container. The namespace Role grants `get` and `list` on `pods`, and `get` and `create` on `pods/exec`.
+Code in the Codex container can therefore start a command in a
 selected Pod and receive the target container's output.
 
 Set `rbac.execNamespaces` to an empty list when Codex must not receive this path.
-That removes the namespace Role, RoleBinding, token, and kubeconfig mount. It
-does not remove the MCP container's separately selected read access.
+That removes the exec Role and RoleBinding, and the Codex token and kubeconfig mounts.
+The MCP container retains its token mount and the separately configured read grants.
 
 **Decision:** Document effective Kubernetes RBAC, not the most restrictive user
 interface in the Pod.
@@ -665,7 +665,10 @@ Pod cannot repair the cluster that must schedule it.
 >
 > [RBAC declares the read surface](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L1-L50) and [separates namespace-scoped Pod execution](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/rbac.yaml#L51-L92).
 >
-> [The workload mounts the Codex credential boundary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L34-L77) and [a separate token into the MCP container](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts/ops-pod/templates/workload.yaml#L85-L103).
+> [Codex conditionally mounts the kube-api volume](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/charts/ops-pod/templates/workload.yaml#L74-L77),
+> [MCP mounts the same volume](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/charts/ops-pod/templates/workload.yaml#L99-L101), and
+> [that volume projects one rotating ServiceAccount token](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/charts/ops-pod/templates/workload.yaml#L147-L151).
+> [The exec Role separates Pod reads from the get/create exec verbs](https://github.com/datrab/kubeclaw/blob/85925ff282d0483df57b69d20ea1bef230ccac00/charts/ops-pod/templates/rbac.yaml#L74-L81).
 
 ## Dependency and Recovery Order
 
