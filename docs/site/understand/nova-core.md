@@ -1036,6 +1036,9 @@ This rule prevents an observation loop.
 Core error messages use stable prefixes for the failed boundary.
 Some messages append identities after a colon.
 Treat those suffixes as diagnostic values, not as a separate error family.
+The `WAIT_*` family has separate outcomes for rejected input, expiry, terminal
+runs, missing wait authority, and identity conflicts. Use the exact error below
+to choose the safe response; rejection alone does not prove an active wait.
 
 | Family | What it means | Lifecycle effect | Retry rule | Safe response |
 | --- | --- | --- | --- | --- |

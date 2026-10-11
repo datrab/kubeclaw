@@ -19875,6 +19875,31 @@
       "boundedAuthorChecks": "42 syntax checks and 29 private probes reported PASS; no successful full lifecycle/deployment proof.",
       "correction": "Preserve raw Core and adapter bytes before mutating audit, use strict pure journal parser, retain all three original inputs, distinguish expired/resolved/terminal signal outcomes.",
       "pending": "New independent complete Source/Reader/Quality reviews and actual required execution gates."
+    },
+    "publication20cGeneratedVerified": {
+      "state": "publication-check-and-build-pass-not-content-acceptance",
+      "sourceRevision": "20c7f050cf31cfd62288614fff08a5f5facffa51",
+      "generatedRevision": "e134b0b8bc35023e734d7fa2de6a6b2f2691f5c9",
+      "receipt": "/home/node/Documents/Codex/a98-evidence/publication-20c-generated-receipt.json",
+      "pagesBuilt": 152,
+      "tests": 9,
+      "checkExit": 0,
+      "buildExit": 0,
+      "limits": "Private source-bound worktree, shared existing dependency installation, ignored observer runtime contract synchronized. Two generated outputs only. Fresh independent review of complete publication tool pending; no global acceptance."
+    },
+    "coreGuidePinNormalization": {
+      "state": "bounded-check-pass-not-independent-acceptance",
+      "files": [
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/understand/nova-core.md"
+      ],
+      "proofs": [
+        "/home/node/Documents/Codex/a98-evidence/plugin-runtime-activation-pin-equivalence.json",
+        "/home/node/Documents/Codex/a98-evidence/plugin-runtime-all-pin-equivalence.json"
+      ],
+      "checkLog": "/home/node/Documents/Codex/a98-evidence/core-guides-final-pins-20c.log",
+      "exit": 0,
+      "correction": "Normalize equivalent historical activation/adapter-startup/activation-owner citations to declared4f page revision after actual complete-file equality. Explain WAIT_* exact outcomes without restoring incorrect universal retry guidance."
     }
   },
   "productBoundaries": [
