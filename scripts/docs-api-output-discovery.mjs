@@ -14,24 +14,73 @@ const syntheticDigest = 'a'.repeat(64);
 // Public product execution and extension roots. Tests/fixtures are synthetic;
 // dependency/vendor trees are external authorities; docs are publication inputs.
 // Experimental spikes are not supported deployment or extension entry points.
-const producerRoots=['scripts','skills','ops','tools','bin','cmd','docker','packaging','plugins','contracts'];
+const producerRoots=['scripts','skills','ops','tools','bin','cmd','docker','packaging','plugins','contracts','my-values'];
 function documentationToolSources(root) {
   const file=path.join(root,'package.json');if(!fs.existsSync(file))return new Set();
-  const scripts=JSON.parse(fs.readFileSync(file,'utf8')).scripts??{};const result=new Set();const queue=[];
+  const scripts=JSON.parse(fs.readFileSync(file,'utf8')).scripts??{};const result=new Set();const queue=[];const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const qualifiedBoundary=new Set(fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')).documentationToolBoundary?.sources??[]:[]);
   for(const [name,command]of Object.entries(scripts))if(name.startsWith('docs:')||name.startsWith('verify:docs:'))for(const match of command.matchAll(/\b(scripts\/docs-[A-Za-z0-9_-]+\.mjs)\b/gu))queue.push(match[1]);
-  while(queue.length){const source=queue.pop();if(result.has(source)||!fs.existsSync(path.join(root,source)))continue;result.add(source);const bytes=fs.readFileSync(path.join(root,source),'utf8');for(const helper of bytes.matchAll(/new URL\('\.\/(docs-[A-Za-z0-9_-]+\.(?:py|go))',import\.meta\.url\)/gu))result.add(path.posix.join(path.dirname(source),helper[1]));for(const match of bytes.matchAll(/(?:from\s*|import\s*\()(['"])(\.\.?\/[^'"]+)\1/gu)){const target=path.posix.normalize(path.posix.join(path.dirname(source),match[2]));if(/^scripts\/docs-[^/]+\.mjs$/u.test(target))queue.push(target);}}
+  while(queue.length){const source=queue.pop();if(result.has(source)||!qualifiedBoundary.has(source)||!fs.existsSync(path.join(root,source)))continue;result.add(source);const bytes=fs.readFileSync(path.join(root,source),'utf8');for(const helper of bytes.matchAll(/new URL\('\.\/(docs-[A-Za-z0-9_-]+\.(?:py|go))',import\.meta\.url\)/gu)){const target=path.posix.join(path.dirname(source),helper[1]);if(qualifiedBoundary.has(target))result.add(target);}for(const match of bytes.matchAll(/(?:from\s*|import\s*\()(['"])(\.\.?\/[^'"]+)\1/gu)){const target=path.posix.normalize(path.posix.join(path.dirname(source),match[2]));if(/^scripts\/docs-[^/]+\.mjs$/u.test(target))queue.push(target);}}
   return result;
 }
 function assertNativeSerializationRoles(root,source,bytes,language) {
   const authority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
   const contracts=fs.existsSync(authority)?JSON.parse(fs.readFileSync(authority,'utf8')).nativeLanguageSerializationContracts??[]:[];
-  const contract=contracts.find(record=>record.source===source&&record.language===language&&record.operation.syntax===bytes);
-  if(contract)return;
+  const nativeOutputs=contracts.filter(record=>record.source===source&&record.language===language).flatMap(record=>record.outputs??[]);
   if(language==='Python'){
     const parsed=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source),'--classify'],{encoding:'utf8',env:{PATH:process.env.PATH}});
     assert.equal(parsed.status,0,`API_PRODUCT_PYTHON_SERIALIZATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);
-    assert(JSON.parse(parsed.stdout).every(output=>output.role==='non-api'),`API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
-  }else assert(!(/encoding\/json/u.test(bytes)&&/(?:\b\w+\.)?(?:Marshal|NewEncoder)\s*\(/u.test(bytes)),`API_PRODUCT_GO_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
+    assert(JSON.parse(parsed.stdout).every(output=>output.role==='non-api'||nativeOutputConsumerMatches(output,nativeOutputs,root)),`API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
+  }
+}
+function nativeOutputConsumerMatches(output,contracts,root) {
+ // Digests only invalidate reviewed facts. A role also requires the actual
+ // operation to satisfy its consumer grammar; a generic diagnostic label does
+ // not authorize a new root, writer, HTTP client or output argument.
+ function nativeHttpResponseRecipe(){
+  // These are selected, inspected router/response constructor declarations,
+  // not a source-module exemption. The routers return the ready envelope,
+  // product-subjects envelope, or the persisted decision receipt. A refreshed
+  // registry digest cannot authorize a replacement constructor or new route.
+  const routers={productHandler:'e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905',readinessHandler:'fc9bb294ed751512a810cde45e4e329da27e0f4a5dc637a69dffe59d6b71d73e'};
+  const constructors={commitProduct:'9db306489982efa4fcb213ee4caa1bfef05175192f077394afa91ba94bc7785d',productReceipt:'093407fbd5fa71a9de7898572aea6a12558779a0782c8c8fcd9cea0502716a3e',productRecords:'53b4c7b8218adbf86e8812eccc803314c5376925c7ab51e6afcf26a2bb3ff1bd',productSubject:'d6ae13944edccd2862149794296a5f0424f9fc69d6863c4e34da06dfcf687da1'};
+  if(output.function==='readinessHandler')constructors.readyResponse='c337ca7727f6328352cf424c29e619f67b6d009806a7789de10a7048b4bd04c1';
+  return routers[output.function]===hash(output.operation)&&Object.entries(constructors).every(([symbol,sha256])=>output.dependencies?.some(fact=>fact.symbol===symbol&&fact.sha256===sha256));
+ }
+ function semanticConsumer(consumer){
+  const expression=output.expression,operation=output.operation??'';
+  const resultName=operation.match(new RegExp(`\\b([A-Za-z_][A-Za-z0-9_]*)\\s*,[^\\n]*:?=\\s*${expression.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')}`,'u'))?.[1];
+  const external=/\b(?:os\.Args|os\.Getenv|os\.Stdin|sys\.argv|input\(|eval\(|exec\()/u.test(expression);
+  if(external)return false;
+  switch(consumer.kind){
+   case 'go-error-stderr':return /^fmt\.Fprintln\(os\.Stderr, err(?:\.Error\(\))?\)$/u.test(expression)&&/if (?:[^\n]+;\s*)?err != nil\s*\{/u.test(operation)&&consumer.errorOrigins?.some(origin=>operation.includes(origin))&&/os\.Exit\(1\)/u.test(operation);
+   case 'go-digest':return /^json\.Marshal\(/u.test(expression)&&/sha256\.Sum256\(/u.test(operation)&&resultName&&new RegExp(`(?:Sum256|Transform)\\(${resultName}\\)`, 'u').test(operation);
+   case 'go-equality':return /^json\.Marshal\(/u.test(expression)&&resultName&&(new RegExp(`bytes\\.Equal\\([^)]*\\b${resultName}\\b`, 'u').test(operation)||new RegExp(`string\\(${resultName}\\)\\s*(?:==|!=)|(?:==|!=)\\s*string\\(${resultName}\\)`, 'u').test(operation));
+   case 'go-byte-limit':return /^json\.Marshal\(/u.test(expression)&&resultName&&new RegExp(`len\\(${resultName}\\)`, 'u').test(operation);
+   case 'go-roundtrip':return /^json\.Marshal\(/u.test(expression)&&resultName&&new RegExp(`json\\.Unmarshal\\(${resultName},`, 'u').test(operation);
+   case 'go-canonical-codec':return /^json\.Marshal\(/u.test(expression)&&resultName&&new RegExp(`jsoncanonicalizer\\.Transform\\(${resultName}\\)`, 'u').test(operation);
+   case 'go-retention-parser':return expression==='json.Marshal(value)'&&/state\["schemaVersion"\] != "demo-readiness.v2"/u.test(operation)&&/return parseDemoRetention\(raw\)/u.test(operation);
+   case 'go-rbac-projection':return expression==='json.Marshal(value)'&&/"kind": resource\["kind"\], "namespace": metadata\["namespace"\], "name": metadata\["name"\]/u.test(operation)&&/\[\]string\{"roleRef", "subjects", "rules", "aggregationRule"\}/u.test(operation)&&/return string\(encoded\)/u.test(operation);
+   case 'go-log-envelope':{
+    const closedLog=`func logJSON(level string, message string, detail interface{}) {
+      record := map[string]interface{}{ "ts": time.Now().UTC().Format(time.RFC3339Nano), "level": level, "component": "buster-namespace-controller", "message": message, }
+      if detail != nil { record["detail"] = detail }
+      data, err := json.Marshal(record)
+      if err != nil { fmt.Println(\`{"level":"error","component":"buster-namespace-controller","message":"failed to marshal log"}\`); return }
+      fmt.Println(string(data))
+    }`;
+    return operation.replace(/\s+/gu,'').replaceAll(';','')===closedLog.replace(/\s+/gu,'').replaceAll(';','')&&['json.Marshal(record)','fmt.Println(string(data))','fmt.Println(`{"level":"error","component":"buster-namespace-controller","message":"failed to marshal log"}`)'].includes(expression);
+   }
+   case 'go-kubernetes-payload':return expression==='json.Marshal(body)'&&/if body == nil/u.test(operation)&&/return bytes.NewReader\(data\), nil/u.test(operation);
+   case 'go-kubernetes-request':return expression==='c.httpClient.Do(req)'&&/payload, err := requestPayload\(body\)/u.test(operation)&&/http.NewRequestWithContext\(ctx, method, c.apiURL\+kubePath\(path\), payload\)/u.test(operation)&&/req.Header.Set\("Authorization", "Bearer "\+credential\)/u.test(operation)&&/json.Unmarshal\(responseBody, out\)/u.test(operation);
+   case 'go-native-http-response':return /^json\.NewEncoder\(w\)(?:\.Encode\(result\))?$/u.test(expression)&&nativeHttpResponseRecipe()&&/w.Header\(\).Set\("Content-Type", "application\/json"\)/u.test(operation)&&/authenticate(?:Transport|Ready)\(/u.test(operation)&&/\/v1\/demo-(?:ready|product)/u.test(operation);
+   case 'python-native-state':return (output.operation.match(/Name\(id='data', ctx=Store\(\)\)/gu)??[]).length===1&&!/attr='(?:update|setdefault|clear|pop|popitem)'/u.test(output.operation)&&!output.capabilityEscapes&&output.callerArguments?.length&&output.callerArguments.every(call=>call.positionalRoles.every(role=>role==='non-api')&&call.expandedKeys.every(keys=>keys!==null)&&!([...call.keywordNames.filter(Boolean),...call.expandedKeys.flat()].includes('apiVersion')&&[...call.keywordNames.filter(Boolean),...call.expandedKeys.flat()].includes('kind')))&&/^(?:temp.write_text\(json.dumps\(data\) \+ '\\n'\)|json.dumps\(data\))$/u.test(expression)&&operation.includes("Constant(value='phase')")&&operation.includes("Constant(value='observedAt')")&&operation.includes("Constant(value='pairingVerified')")&&operation.includes("Call(func=Attribute(value=Name(id='time', ctx=Load()), attr='time'");
+   case 'python-process-exit-diagnostic':return expression==="print(f'Codex app-server failed to become ready (exit {child.poll()}).', flush=True)"&&operation.includes("Call(func=Attribute(value=Name(id='child', ctx=Load()), attr='poll'")&&operation.includes("attr='Popen'");
+   case 'python-systemd-unit':return output.systemdUnitFlow?.sourcePath==='/etc/systemd/system/k3s.service'&&(expression==="(backup / 'original.service').write_text(original)"?output.systemdUnitFlow.transform==='original':expression==='staged.write_text(corrected)'&&output.systemdUnitFlow.transform==='repair'&&output.systemdUnitFlow.helperDigest==='5509c7dbc386819dacddc95719508e034aa53c583c1d8e80cb9da99d1d9faf43')&&operation.includes("Constant(value='systemd-analyze')")&&operation.includes("Constant(value='verify')")&&operation.includes("Constant(value='install')");
+   default:return false;
+  }
+ }
+ const dependencyFacts=output.dependencies?.map(fact=>({...fact,path:path.relative(root,fact.path)}));
+ return contracts.some(contract=>contract.expression===output.expression&&contract.function===output.function&&contract.operationDigest===hash(output.operation)&&(!dependencyFacts||contract.dependencyFactsDigest===hash(JSON.stringify(dependencyFacts)))&&contract.consumer?.source&&contract.consumer?.purpose&&contract.consumer?.evidence?.length&&contract.consumer.evidence.every(expression=>output.operation.includes(expression))&&semanticConsumer(contract.consumer));
 }
 const syntheticImage = `example.invalid/discovery@sha256:${syntheticDigest}`;
 export function producerAdapterOperationRecipe(source,bytes) {
@@ -66,12 +115,14 @@ export function assertProducerAdapterAuthority(root,sources) {
 export function walkProductSources(root, directories, accept) {
   const result = [];
   const excluded = new Set(['node_modules', 'vendor', '.git', 'dist', 'test', 'tests', 'fixtures']);
+  const visited=new Set();
   function visit(relative) {
     if (!fs.existsSync(path.join(root, relative))) return;
+    const real=fs.realpathSync(path.join(root,relative));assert(real===fs.realpathSync(root)||real.startsWith(fs.realpathSync(root)+path.sep),`API_PRODUCT_PUBLIC_SYMLINK_OUTSIDE_ROOT: ${relative}`);if(visited.has(real))return;visited.add(real);
     for (const entry of fs.readdirSync(path.join(root, relative), { withFileTypes: true }).sort((a,b) => a.name.localeCompare(b.name))) {
       if (excluded.has(entry.name)) continue;
       const next = `${relative}/${entry.name}`;
-      if (entry.isDirectory()) visit(next);
+      if(entry.isSymbolicLink()){const absolute=path.join(root,next);assert(fs.existsSync(absolute),`API_PRODUCT_PUBLIC_SYMLINK_DANGLING: ${next}`);const real=fs.realpathSync(absolute);assert(real.startsWith(fs.realpathSync(root)+path.sep),`API_PRODUCT_PUBLIC_SYMLINK_OUTSIDE_ROOT: ${next}`);if(fs.statSync(absolute).isDirectory())visit(next);else if(fs.statSync(absolute).isFile()&&accept(next))result.push(next);}else if (entry.isDirectory()) visit(next);
       else if (entry.isFile() && accept(next)) result.push(next);
     }
   }
@@ -334,17 +385,52 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
 // Source-shape analysis never executes scripts/controllers or contacts a
 // cluster. Constructors are discovered from AST identity properties, not a
 // filename list. Every source position and every changed byte remain bound.
+const scriptOutputCache=new Map();
 export function discoverScriptApiOutputs(root) {
+  const sourceInputs=walkProductSources(root,producerRoots,()=>true);
+  if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
+  const inputKey=hash(JSON.stringify(sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])));
+  const cached=scriptOutputCache.get(root);
+  if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
+  const classifiedDependencies=new Set();
   const result=[];
-  for(const source of walkProductSources(root,producerRoots,file=>!/\.(?:[cm]?js|ts|py|sh|go|ya?ml|json|md|txt|lua|toml|lock|pem|crt)$/u.test(file))) {
+  for(const source of walkProductSources(root,producerRoots,file=>!/\.(?:[cm]?js|ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
-    assert(!/apiVersion|kubectl[^\n]*(?:apply|create)|client\.(?:create|apply)|JSON\.(?:generate|dump)|json_encode\s*\(|serde_json::to_(?:string|writer)|writeValueAsString\s*\(|cJSON_Print\s*\(|json_dumps\s*\(/u.test(bytes),`API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED: ${source}`);
+    let unqualified=bytes;
+    if(/(?:^|\/)Dockerfile(?:\.|$)/u.test(source)){
+      // Docker RUN recipes also contain shell formatting. These closed build
+      // records feed APT, checksum verification, subordinate IDs and Git sparse
+      // checkout; accepting one does not accept a new dynamic resource stream.
+      unqualified=unqualified.replace(/printf '%s\\n'\s*\\\n([\s\S]*?)> \/etc\/apt\/sources\.list\.d\/debian\.sources/gu,(match,argumentsText)=>/^(?:[\s\\]*|'(?:Types: deb|Suites: bookworm(?: bookworm-updates|-security)?|Components: main|Signed-By: \/usr\/share\/keyrings\/debian-archive-keyring\.gpg|)'|"URIs: https?:\/\/snapshot\.debian\.org\/archive\/debian(?:-security)?\/\$\{DEBIAN_SNAPSHOT\}")*$/u.test(argumentsText)?'':match);
+      unqualified=unqualified.replace(/printf 'Acquire::Check-Valid-Until "false";\\n' > \/etc\/apt\/apt\.conf\.d\/99snapshot/gu,'');
+      unqualified=unqualified.replace(/printf 'builder:100000:65536\\n' >> \/etc\/sub(?:uid|gid)/gu,'');
+      unqualified=unqualified.replace(/printf '%s  %s\\n' "\$[a-z_]+_sha" (?:"[^"\n]*"|\/tmp\/kubectl) \| sha256sum -c -/gu,'');
+      unqualified=unqualified.replace(/printf '%s  (?:source|helm)\.tar\.gz\\n' "\$(?:GH_SOURCE_SHA256|helm_sha)" \| sha256sum -c -/gu,'');
+      unqualified=unqualified.replace(/printf '%s\\n' "v\$\{KUBECTL_VERSION\}-standalone-strict\/" > "\$schema_repo\/\.git\/info\/sparse-checkout"/gu,'');
+      unqualified=unqualified.replace(/echo "Unsupported architecture: \$arch" >&2/gu,'');
+      assert(!/\b(?:printf|echo)\s/u.test(unqualified.replace(/^\s*#[^\n]*/gmu,'')),`API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED: ${source}`);
+    }
+    if(source.endsWith('.c')){
+      // These native control writes have closed payloads: a positive kernel
+      // page size, this process ID, and the cgroup.kill switch. They cannot
+      // forward argv/stdin bytes. Any other C writer remains a grammar gap.
+      if(/long page_size = sysconf\(_SC_PAGESIZE\);/u.test(bytes)&&(bytes.match(/page_size\s*=/gu)??[]).length===1&&(bytes.match(/\bpage_size\b/gu)??[]).length===3)unqualified=unqualified.replace(/printf\("%ld\\n", page_size\)/gu,'');
+      if(/snprintf\(pid, sizeof\(pid\), "%ld\\n", \(long\)getpid\(\)\)/u.test(bytes)&&(bytes.match(/\bpid\s*\[/gu)??[]).length===1&&(bytes.match(/\bpid\b/gu)??[]).length===4)unqualified=unqualified.replace(/write\(descriptor, pid, \(size_t\)length\)/gu,'');
+      if(/child_cgroup_kill_fd = open\(kill_file, O_WRONLY \| O_CLOEXEC\)/u.test(bytes)&&/"%s\/cgroup.kill", child_cgroup/u.test(bytes))unqualified=unqualified.replace(/write\(child_cgroup_kill_fd, "1", 1\)/gu,'');
+      if(/int membership = openat\(scope, "cgroup.procs", O_WRONLY \| O_CLOEXEC \| O_NOFOLLOW\)/u.test(bytes)&&(bytes.match(/\bmembership\s*=/gu)??[]).length===1)unqualified=unqualified.replace(/write\(membership, "0", 1\)/gu,'');
+      const cCode=bytes.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/gu,'');
+      const failCalls=[...cCode.matchAll(/\bfail\(([^)]*)\)/gu)];
+      if(/static void fail\(const char \*code\)\s*\{\s*fprintf\(stderr, "%s\\n", code\);\s*_exit\(125\);\s*\}/u.test(cCode)&&failCalls.every(call=>call[1]==='const char *code'||/^"WORKER_NATIVE_[A-Z_]+"$/u.test(call[1]))&&(cCode.match(/\bfail\b/gu)??[]).length===failCalls.length)unqualified=unqualified.replace(/fprintf\(stderr, "%s\\n", code\)/gu,'');
+      unqualified=unqualified.replace(/fprintf\(stderr, "(?:[^"%\\]|\\.)*"\)/gu,'').replace(/perror\("[^"\\]*"\)/gu,'');
+      assert(!/\b(?:printf|fprintf|puts|fputs|fwrite|write|writev|send|sendto)\s*\(|apiVersion/u.test(unqualified),`API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED: ${source}`);
+    }
+    assert(!/^#!.*(?:ruby|perl|php|lua|java|deno)|(?:^|[;\n]|<\?php)\s*(?:puts|warn|print|io\.write|echo|printf)\b|std::cout|System\.out\.|apiVersion|kubectl[^\n]*(?:apply|create)|client\.(?:create|apply)|JSON\.(?:generate|dump)|json_encode\s*\(|serde_json::to_(?:string|writer)|writeValueAsString\s*\(|cJSON_Print\s*\(|json_dumps\s*\(/u.test(unqualified),`API_PRODUCT_PRODUCER_LANGUAGE_UNQUALIFIED: ${source}`);
   }
   const documentationLanguageTools=documentationToolSources(root);
   for(const source of walkProductSources(root,producerRoots,file=>/\.py$/u.test(file)&&!documentationLanguageTools.has(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     if(source!=='ops/pod/bootstrap.py')assertNativeSerializationRoles(root,source,bytes,'Python');
-    if(!/apiVersion|kubectl[^\n]*(?:apply|create)|(?:apply|create)_secret/u.test(bytes))continue;
+    if(source!=='ops/pod/bootstrap.py'&&!/kubectl[^\n]*(?:apply|create)|(?:apply|create)_secret/u.test(bytes))continue;
     if(source==='scripts/verify-cilium-policies.py'){assertProducerAdapterAuthority(root,[source]);continue;}
     assert(source==='ops/pod/bootstrap.py',`API_PRODUCT_PYTHON_PRODUCER_UNQUALIFIED: ${source}`);
     const rendered=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source)],{encoding:'utf8',env:{PATH:process.env.PATH},maxBuffer:8*1024*1024});
@@ -359,6 +445,7 @@ export function discoverScriptApiOutputs(root) {
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
     if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const outputRoles=classifyOutputRoles(source);
+    for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
     for(const role of outputRoles)assert(role.role!=='unknown',`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true);
@@ -391,7 +478,7 @@ export function discoverScriptApiOutputs(root) {
       }
       if(ts.isBinaryExpression(node)&&node.operatorToken.kind===ts.SyntaxKind.EqualsToken&&(ts.isPropertyAccessExpression(node.left)||ts.isElementAccessExpression(node.left)))assignments.push(node);
       if(ts.isObjectLiteralExpression(node)) {
-        const names=node.properties.filter(ts.isPropertyAssignment).map(item=>item.name.getText(tree).replace(/^['"]|['"]$/gu,''));
+        const names=node.properties.filter(ts.isPropertyAssignment).map(item=>(ts.isComputedPropertyName(item.name)&&ts.isStringLiteralLike(item.name.expression)?item.name.expression.text:item.name.getText(tree).replace(/^['"]|['"]$/gu,'')));
         if(names.includes('apiVersion')&&names.includes('kind'))constructors.push(node);
       }
       ts.forEachChild(node,collect);
@@ -442,8 +529,8 @@ export function discoverScriptApiOutputs(root) {
             if(item&&typeof item==='object'&&!Array.isArray(item))Object.assign(value,item);
             else opaque.set(property.getStart(tree),property.expression.getText(tree));
           } else if(ts.isPropertyAssignment(property)||ts.isShorthandPropertyAssignment(property)) {
-            assert(!ts.isComputedPropertyName(property.name),`API_PRODUCT_DYNAMIC_PRODUCER_KEY: ${source}:${tree.getLineAndCharacterOfPosition(property.pos).line+1}`);
-            const key=property.name.getText(tree).replace(/^['"]|['"]$/gu,'');
+            const key=ts.isComputedPropertyName(property.name)?evaluate(property.name.expression,seen):property.name.getText(tree).replace(/^['"]|['"]$/gu,'');
+            assert(typeof key==='string'||typeof key==='number',`API_PRODUCT_DYNAMIC_PRODUCER_KEY: ${source}:${tree.getLineAndCharacterOfPosition(property.pos).line+1}`);
             value[key]=evaluate(ts.isPropertyAssignment(property)?property.initializer:property.name,seen);
           }
         }
@@ -545,6 +632,9 @@ export function discoverScriptApiOutputs(root) {
         const name=binding.text;
         assert(!unsupportedMutations.filter(mutation=>!ts.isDeleteExpression(mutation)).some(mutation=>new RegExp(`\\b${name}\\b`,'u').test(mutation.getText(tree))),`API_PRODUCT_SCRIPT_MUTATION_UNQUALIFIED: ${source}:${name}`);
       }
+      // A proved ordered deletion can turn an initial API constructor into a
+      // published native object. Preserve the final emitted identity.
+      if(publications.length&&value&&typeof value==='object'&&(!Object.hasOwn(value,'apiVersion')||!Object.hasOwn(value,'kind'))&&outputRoles.some(role=>role.role==='non-api'&&role.line===tree.getLineAndCharacterOfPosition(publications[0].getStart(tree)).line+1))return;
       let identityWitness;
       if(value.kind==='BusterNamespaceLease'&&typeof value.apiVersion!=='string') {
         const file=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):{};
@@ -590,6 +680,8 @@ export function discoverScriptApiOutputs(root) {
     }
     assert(!outputRoles.some(role=>role.role==='api')||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
   }
+  for(const output of result)for(const source of output.context.inputs??[])classifiedDependencies.add(source);
+  scriptOutputCache.set(root,{inputKey,result,dependencies:[...classifiedDependencies].sort().map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])});
   return result;
 }
 
@@ -597,19 +689,24 @@ const goOutputCache=new Map();
 export function discoverGoApiOutputs(root) {
   const sources=walkProductSources(root,producerRoots,file=>/\.go$/u.test(file)&&!/_test\.go$/u.test(file));
   if(!sources.length)return [];
+  const helper=new URL('./docs-api-go-output-shapes.go',import.meta.url);
+  const authorityFile='scripts/docs-api-producer-adapter-authorities.json';
+  const cacheInputs=[...sources,authorityFile,'package.json'].filter(source=>fs.existsSync(path.join(root,source)));
+  const key=hash(JSON.stringify([root,hash(fs.readFileSync(helper)),hash(fs.readFileSync(new URL('./docs-api-go-output-role-adapter.go',import.meta.url))),cacheInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  if(goOutputCache.has(key))return goOutputCache.get(key);
   const documentationTools=documentationToolSources(root);
   for(const source of sources)if(!documentationTools.has(source))assertNativeSerializationRoles(root,source,fs.readFileSync(path.join(root,source),'utf8'),'Go');
   const nativeAuthority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const nativeContracts=fs.existsSync(nativeAuthority)?JSON.parse(fs.readFileSync(nativeAuthority,'utf8')).nativeLanguageSerializationContracts??[]:[];
-  const roles=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('./docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>({path:path.join(root,source),qualified:nativeContracts.some(record=>record.source===source&&record.language==='Go'&&record.operation.syntax===fs.readFileSync(path.join(root,source),'utf8'))}))),encoding:'utf8',maxBuffer:8*1024*1024});assert.equal(roles.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${roles.error?.message??roles.stderr}`);for(const role of JSON.parse(roles.stdout))assert(role.role==='non-api',`API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED: ${role.path}:${role.line}`);
-  const helper=new URL('./docs-api-go-output-shapes.go',import.meta.url);
-  const key=hash(JSON.stringify([root,hash(fs.readFileSync(helper)),sources.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
-  if(goOutputCache.has(key))return goOutputCache.get(key);
+  const roles=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('./docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>({path:path.join(root,source)}))),encoding:'utf8',maxBuffer:16*1024*1024});assert.equal(roles.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${roles.error?.message??roles.stderr}`);
+  const parsedRoles=JSON.parse(roles.stdout);
+  for(const role of parsedRoles)assert(role.role==='non-api'||role.role==='api'||nativeOutputConsumerMatches({...role,expression:role.expression,function:role.function},nativeContracts.filter(contract=>contract.source===path.relative(root,role.path)&&contract.language==='Go').flatMap(contract=>contract.outputs??[]),root),`API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED: ${role.path}:${role.line}: ${role.expression}`);
+  const literalOutputs=parsedRoles.filter(role=>role.role==='api').flatMap(role=>YAML.parseAllDocuments(role.value).map(document=>{assert(!document.errors.length,`API_PRODUCT_GO_LITERAL_YAML_INVALID: ${role.path}:${role.line}`);const value=document.toJS();assert(value?.apiVersion&&value?.kind,`API_PRODUCT_GO_LITERAL_IDENTITY_UNQUALIFIED: ${role.path}:${role.line}`);return {value,context:{apiVersion:value.apiVersion,kind:value.kind,path:path.relative(root,role.path),document:role.line,sourceDigest:hash(fs.readFileSync(role.path)),producer:'go-literal-forwarding',line:role.line,outputDigest:hash(JSON.stringify(value))}};}));
   const parsed=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY ?? 'go',['run',helper.pathname],{input:JSON.stringify(sources.map(source=>path.join(root,source))),encoding:'utf8',maxBuffer:32*1024*1024});
   assert.equal(parsed.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${parsed.error?.message ?? parsed.stderr}`);
-  const result=Object.entries(JSON.parse(parsed.stdout)).flatMap(([absolute,objects])=>objects.map((object,index)=>{
+  const result=[...literalOutputs,...Object.entries(JSON.parse(parsed.stdout)).flatMap(([absolute,objects])=>objects.map((object,index)=>{
     const source=path.relative(root,absolute);
     return {value:object.value,context:{apiVersion:object.value.apiVersion,kind:object.value.kind,path:source,document:index,sourceDigest:hash(fs.readFileSync(absolute)),producer:'go-shape',line:object.line,...(object.inferredIdentity?{inferredIdentity:true,requestMethod:object.requestMethod}:{}),outputDigest:hash(JSON.stringify(object.value))}};
-  }));
+  }))];
   goOutputCache.clear();goOutputCache.set(key,result);return result;
 }
 
@@ -624,19 +721,77 @@ export function discoverNonApiOutputClassifications(root) {discoverShellApiOutpu
 export function shellRawOutputSinks(source,bytes) {
  const heredoc=/<<-?\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?[^\n]*\n([\s\S]*?)\n[ \t]*\1(?:\n|$)/gu;
  const code=bytes.replace(heredoc,match=>match.slice(0,match.indexOf('\n'))+'\n'.repeat((match.match(/\n/gu)??[]).length));
- const parsed=spawnSync('python3',['-c',"import json,shlex,sys;code=sys.stdin.read();lex=shlex.shlex(code,posix=True,punctuation_chars='();<>|&\\n');lex.whitespace=' \\t\\r';lex.whitespace_split=True;out=[]\nwhile True:\n token=lex.get_token()\n if token is None:break\n pos=lex.instream.tell();out.append([token,code.count('\\n',0,pos-(1 if pos and code[pos-1]=='\\n' else 0))+1])\nprint(json.dumps(out))"],{input:code,encoding:'utf8',env:{PATH:process.env.PATH}});
- assert.equal(parsed.status,0,`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: ${parsed.stderr}`);
- const tokens=JSON.parse(parsed.stdout),sinks=[];let boundary=true;
- for(let index=0;index<tokens.length;index++){const [token,line]=tokens[index];if(/^[();<>|&\n]+$/u.test(token)||['then','do','else'].includes(token)){boundary=true;continue;}if(!boundary)continue;if(/^[A-Za-z_][A-Za-z0-9_]*=/u.test(token))continue;boundary=false;if(!['echo','printf','cat'].includes(token))continue;const args=[];for(let n=index+1;n<tokens.length&&!/^[();<>|&\n]+$/u.test(tokens[n][0]);n++)args.push(tokens[n][0]);const commandTail=[];for(let n=index+1;n<tokens.length&&!tokens[n][0].includes('\n');n++)commandTail.push(tokens[n][0]);if(commandTail.some(word=>word.includes('<<'))||commandTail.some((word,n)=>word==='>&'&&commandTail[n+1]==='2'))continue;const literalApi=args.some(arg=>/apiVersion/u.test(arg)&&/kind/u.test(arg));const opaque=literalApi||token==='cat'||token==='echo'&&/^\$/u.test(args.find(arg=>!arg.startsWith('-'))??'')||token==='printf'&&(/^\$/u.test(args[0]??'')||/^%[sb]/u.test(args[0]??'')&&args.slice(1).some(arg=>/^\$/u.test(arg)));if(opaque){const variable=(token==='echo'?args.find(arg=>!arg.startsWith('-')):args[1])?.match(/^\$(?:\{([A-Za-z_][A-Za-z0-9_]*)\}|([A-Za-z_][A-Za-z0-9_]*))$/u);const name=variable?.[1]??variable?.[2];const initial=name&&tokens[0]?.[0].startsWith(name+'=')?tokens[0][0].slice(name.length+1):null;const direct=initial!==null&&tokens.slice(1,index).every(([word])=>/^[;\n]+$/u.test(word))&&!/[$`]/u.test(initial);let constantNonApi=false;if(direct&&!commandTail.some(word=>word.includes('|'))){try{const values=YAML.parseAllDocuments(initial).map(document=>document.toJSON());constantNonApi=!values.some(value=>value&&typeof value==='object'&&'apiVersion'in value&&'kind'in value);}catch{}}if(!constantNonApi)sinks.push({line,command:token,args});}}
+ // Keep quoting and captured substitutions inside a word. Punctuation inside
+ // a regex, quoted program or $(...) is not an executable command boundary.
+ const tokens=[],substitutions=[];let index=0,line=1;
+ function quoted(quote){let value='';index++;while(index<code.length){const char=code[index++];if(char==='\n')line++;if(char===quote)return value;if(quote==='\"'&&char==='$'&&code[index]==='('){index--;value+=substitution();continue;}if(char==='\\'&&quote==='"'&&index<code.length)value+=code[index++];else value+=char;}assert.fail(`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: unterminated quote`);}
+ function substitution(){const start=index,at=line;let value='$(',depth=1;index+=2;while(index<code.length&&depth){const char=code[index];if(char==='"'||char==="'"){const quote=char;value+=quote+quoted(quote)+quote;continue;}index++;if(char==='\n')line++;if(char==='(')depth++;if(char===')')depth--;value+=char;}assert.equal(depth,0,`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: unterminated substitution`);substitutions.push({body:code.slice(start+2,index-1),line:at});return value;}
+ while(index<code.length){const char=code[index];if(char==='\\'&&code[index+1]==='\n'){index+=2;line++;continue;}if(/[ \t\r]/u.test(char)){index++;continue;}if(char==='#'){while(index<code.length&&code[index]!=='\n')index++;continue;}if(char==='\n'){tokens.push({value:'\n',line,operator:true});index++;line++;continue;}if(/[;()|&<>]/u.test(char)){const start=index++;while(index<code.length&&code[index]===char&&char!=='('&&char!==')')index++;if((char==='>'||char==='<')&&code[index]==='&')index++;tokens.push({value:code.slice(start,index),line,operator:true});continue;}const at=line;let value='';while(index<code.length&&!/[ \t\r\n;()|&<>]/u.test(code[index])){if(code[index]==='"'||code[index]==="'")value+=quoted(code[index]);else if(code[index]==='$'&&code[index+1]==='(')value+=substitution();else if(code[index]==='$'&&code[index+1]==='{'){const close=code.indexOf('}',index+2);assert(close>=0,`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: unterminated expansion`);value+=code.slice(index,close+1);index=close+1;}else if(code[index]==='\\'&&index+1<code.length){index++;if(code[index]==='\n'){index++;line++;}else value+=code[index++];}else value+=code[index++];}tokens.push({value,line:at,operator:false});}
+ const sinks=substitutions.flatMap(value=>shellRawOutputSinks(source,value.body).map(sink=>({...sink,line:sink.line+value.line-1,channel:'command-substitution'}))),streamTools=new Set(['sed','awk','gawk','tee','head','tail','cut','paste','sort','uniq','tr','dd','base64','jq','yq']);
+ const quietBuiltins=new Set(['return','exit',':','true','false','test','set','export','unset','local','readonly','shift','cd','mkdir','rmdir','rm','mv','cp','chmod','chown','touch','sleep','kill','wait','trap','read','umask','break','continue','mapfile','ulimit']);
+ const functionNames=new Set([...code.matchAll(/(?:^|\n)\s*(?:function\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*\(\s*\)\s*\{/gu)].map(match=>match[1]));
+ let boundary=true,skipControl=null,casePattern=false;const caseStack=[];
+ for(let at=0;at<tokens.length;at++){
+  const token=tokens[at],word=token.value;
+  if(/^\d+$/u.test(word)&&['>','>>','<','>&','<&'].includes(tokens[at+1]?.value)){at+=2;continue;}
+  if(skipControl){if(word===skipControl){skipControl=null;boundary=true;}continue;}
+  if(casePattern){if(word===')'){casePattern=false;boundary=true;}else if(word==='esac'){casePattern=false;caseStack.pop();boundary=true;}continue;}
+  if(token.operator){if(['>','>>','<','<<<','>&','<&'].includes(word)){at++;continue;}if(word==='('&&tokens[at+1]?.value==='('){let depth=2;at++;while(++at<tokens.length&&depth){if(tokens[at].value==='(')depth++;if(tokens[at].value===')')depth--;}boundary=true;continue;}if([';;',';&',';;&'].includes(word)&&caseStack.length)casePattern=true;if([';','\n','&&','||','|','&','(',')',';;',';&',';;&'].includes(word))boundary=true;continue;}
+  if(['then','do','else','elif'].includes(word)){boundary=true;continue;}
+  if(!boundary)continue;
+  if(word==='case'){caseStack.push(true);skipControl='in';casePattern=true;continue;}
+  if(word==='for'||word==='select'){skipControl='do';continue;}
+  if(word==='[['){skipControl=']]';continue;}
+  if(word==='['){skipControl=']';continue;}
+  if(['if','while','until','!','{','}','fi','done','esac','function'].includes(word)){if(word==='esac')caseStack.pop();continue;}
+  if(/^[A-Za-z_][A-Za-z0-9_]*\+?=/u.test(word)){if(tokens[at+1]?.value==='('){let depth=0;while(++at<tokens.length){if(tokens[at].value==='(')depth++;if(tokens[at].value===')'&&--depth===0)break;}}continue;}
+  if(tokens[at+1]?.value==='('&&tokens[at+2]?.value===')'){at+=2;continue;}
+  boundary=false;
+  const commandAt=at;let command=word,args=[];let end=at+1;while(end<tokens.length){if(tokens[end].value==='('&&args.at(-1)?.endsWith('=')){let depth=0;do{const value=tokens[end++].value;args.push(value);if(value==='(')depth++;if(value===')')depth--;}while(end<tokens.length&&depth);continue;}if(tokens[end].operator&&[';','\n','&&','||','|','&','(',')',';;',';&',';;&'].includes(tokens[end].value))break;args.push(tokens[end++].value);}
+  at=end-1;
+  // command/exec preserve the invoked command's output capability. The bounded
+  // command -v introspection returns a command name, never a resource document.
+  if(command==='command'&&args[0]==='-v')continue;
+  if(command==='exec'&&/^\d+$/u.test(args[0]??'')&&['>','>>','<','>&','<&'].includes(args[1]))continue;
+  if(command==='command'||command==='exec'){while(args[0]?.startsWith('-'))args.shift();command=args.shift()??'$unsupported-command';}
+  if(['cat','kubectl'].includes(command)&&(args.includes('<<')||args.includes('<<-')))continue;
+  const redirectsToNull=args.some((arg,n)=>['>','>>'].includes(arg)&&args[n+1]==='/dev/null');
+  const redirectsToError=args.some((arg,n)=>arg==='>&'&&args[n+1]==='2');
+  if(redirectsToNull&&['echo','printf','cat','head','tail','cut','paste','tr','base64','jq','yq','grep'].includes(command))continue;
+  const argumentsOnly=args.slice(0,args.findIndex(value=>['>','>>','<','<<<','>&','<&'].includes(value))<0?args.length:args.findIndex(value=>['>','>>','<','<<<','>&','<&'].includes(value)));
+  if(quietBuiltins.has(command)&&!argumentsOnly.some(arg=>/^-.*v/u.test(arg)))continue;
+  if(['kubectl','helm'].includes(command)||functionNames.has(command))continue;
+  const unknownEmitter=!['echo','printf','cat'].includes(command)&&!quietBuiltins.has(command);
+  const literalApi=argumentsOnly.some(arg=>/apiVersion/u.test(arg)&&/kind/u.test(arg));
+  const variable=command==='echo'?argumentsOnly.find(arg=>!arg.startsWith('-')):argumentsOnly[1];
+  const opaque=literalApi||streamTools.has(command)||unknownEmitter||command==='cat'||command==='echo'&&/\$|`/u.test(argumentsOnly.join(' '))||command==='printf'&&(/\$|`/u.test(argumentsOnly[0]??'')||/%[sb]/u.test(argumentsOnly[0]??'')&&argumentsOnly.slice(1).some(arg=>/\$|`/u.test(arg)))||quietBuiltins.has(command);
+  if(!opaque)continue;
+  const name=variable?.match(/^\$(?:\{([A-Za-z_][A-Za-z0-9_]*)\}|([A-Za-z_][A-Za-z0-9_]*))$/u),identifier=name?.[1]??name?.[2];
+  const first=tokens.find(item=>item.value!=='\n');const initial=identifier&&first?.value.startsWith(identifier+'=')?first.value.slice(identifier.length+1):null;
+  const prefix=tokens.slice(0,commandAt).filter(item=>item.value!=='\n'&&item.value!==';');let constantNonApi=false;
+  if(initial!==null&&prefix.length===1&&!/[$`]/u.test(initial)&&tokens[end]?.value!=='|'){try{const values=YAML.parseAllDocuments(initial).map(document=>document.toJSON());constantNonApi=!values.some(value=>value&&typeof value==='object'&&'apiVersion'in value&&'kind'in value);}catch{}}
+  if(!constantNonApi)sinks.push({line:token.line,command,args:argumentsOnly});
+ }
  return sinks;
 }
+export function shellRawOutputOperationRecipe(source,bytes) {
+ const heredocs=[];
+ const shell=bytes.replace(/<<-?\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?[^\n]*\n([\s\S]*?)\n[ \t]*\1(?:\n|$)/gu,(match,delimiter,body)=>{heredocs.push({delimiter,sha256:hash(body)});return match.slice(0,match.indexOf('\n'))+'\n'.repeat((match.match(/\n/gu)??[]).length);});
+ return {...producerAdapterOperationRecipe(source,shell),heredocs};
+}
+const shellOutputCache=new Map();
 export function discoverShellApiOutputs(root) {
+  const sources=walkProductSources(root,[...producerRoots,'my-values'],file=>/\.sh$/u.test(file));
+  const authority='scripts/docs-api-producer-adapter-authorities.json';
+  const cacheInputs=[...sources,authority].filter(source=>fs.existsSync(path.join(root,source)));
+  const key=hash(JSON.stringify(cacheInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])));
+  const cached=shellOutputCache.get(root);if(cached?.key===key)return cached.outputs;
   const outputs=[];const classifications=[];nonApiOutputClassifications.set(root,classifications);
-  for(const source of walkProductSources(root,[...producerRoots,'my-values'],file=>/\.sh$/u.test(file))) {
+  for(const source of sources) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     if(/(?:^|\n)\s*helm\s/u.test(bytes)||/\bnode\b[^\n]*render-[A-Za-z0-9-]+\.mjs/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const sourceDigest=hash(bytes);
-    const rawSinks=shellRawOutputSinks(source,bytes);if(rawSinks.length){const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):{};const contract=(registry.shellRawOutputContracts??[]).find(record=>record.source===source&&JSON.stringify(record.sinks)===JSON.stringify(rawSinks)&&JSON.stringify(record.operationRecipe)===JSON.stringify(producerAdapterOperationRecipe(source,bytes)));assert(contract,`API_PRODUCT_SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED: ${source}:${rawSinks[0].line}`);classifications.push({source,sourceDigest,role:contract.role,basis:contract.basis,sinks:rawSinks,consumer:contract.consumer});}
+    const rawSinks=shellRawOutputSinks(source,bytes);if(rawSinks.length){const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):{};const contract=(registry.shellRawOutputContracts??[]).find(record=>record.source===source&&JSON.stringify(record.sinks)===JSON.stringify(rawSinks)&&JSON.stringify(record.operationRecipe)===JSON.stringify(shellRawOutputOperationRecipe(source,bytes)));assert(contract,`API_PRODUCT_SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED: ${source}:${rawSinks[0].line}`);assert(contract.sinkConsumers?.length===rawSinks.length&&contract.sinkConsumers.every((consumer,index)=>consumer.source===source&&consumer.line===rawSinks[index].line&&consumer.command===rawSinks[index].command&&consumer.argumentsDigest===hash(JSON.stringify(rawSinks[index].args))&&consumer.kind&&consumer.purpose&&consumer.sourceEvidence),`API_PRODUCT_SHELL_CONSUMER_UNQUALIFIED: ${source}`);classifications.push({source,sourceDigest,role:contract.role,basis:contract.basis,sinks:rawSinks,consumer:contract.consumer});}
     const scalarize=value=>value.replace(/\$\{[^}\n]+\}|\$[A-Za-z_][A-Za-z0-9_]*/gu,'discovery');
     let document=0;
     const add=(value,line,profile,request={})=>outputs.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:document++,sourceDigest,producer:'shell-shape',line,profile,...request,outputDigest:hash(JSON.stringify(value))}});
@@ -698,6 +853,7 @@ export function discoverShellApiOutputs(root) {
       add(value,bytes.slice(0,offsets[match.index]).split('\n').length,'kubectl-create');
     }
   }
+  shellOutputCache.set(root,{key,outputs});
   return outputs;
 }
 

@@ -19968,6 +19968,51 @@
       "authorTests": "12 asset/link/page tests terminal0, including metadata-valid unknown page, missing page, noncanonical classification, duplicate, traversal and expectedPath mismatch. Actual registered page set152 retained.",
       "checkLog": "/home/node/Documents/Codex/a98-evidence/publication-classified-pages-check.log",
       "limits": "No independent content/package acceptance. Full publication check observed separately; generator manifests/links/unknown Markdown are not Reader/Quality/globalAstra proof."
+    },
+    "classifiedPublicationFreshSourceCompleted": {
+      "agent": "/root/classified_publication_source_fresh",
+      "revision": "a1569b61663e4bc85e11d38bd896bb99ed0bd396",
+      "role": "Source",
+      "freshContext": true,
+      "verdict": "FAIL completeA912-01;PASS explicitclassifiedinclusion/exclusioncorrection",
+      "report": "/home/node/Documents/Codex/a98-evidence/classified-publication-source-fresh/SOURCE-review.md",
+      "reportSha256": "8dd8a15bf2565e44af56c15f6eaf955afec76c3b8dc20d1b209efe151a2bbfe3",
+      "rootIntegrity": "/home/node/Documents/Codex/a98-evidence/classified-publication-root-review-integrity.json",
+      "observed": "152unchangedpages/15exactassets,12maintainedtests,8independenthelpernegatives,publishedexample2tests and actualfullbuildunknownmetadata-validMarkdownrejection beforecopy. CompletegateFAILfourinternalphrases;currentauthorcorrectsStudio,3generatedHelmstale remain.",
+      "noGlobalAcceptance": true
+    },
+    "novaAndPrismBoundaryAuthorsReleased": {
+      "state": "integrated-author-candidate-pending-complete-fresh-Source-Reader-Quality",
+      "authors": [
+        "/root/nova_boundary_integrated_writer",
+        "/root/prism_boundary_integrated_writer"
+      ],
+      "reports": [
+        "/home/node/Documents/Codex/a98-evidence/nova-boundary-integrated-writer/report.md",
+        "/home/node/Documents/Codex/a98-evidence/prism-boundary-integrated-writer/report.md"
+      ],
+      "rootChecks": "Full core-guide and Prism-guide existing gates terminal0; finalreaderboundary only3stalegeneratedHelmphrases. NewCoreconditionaladapterselection clarification added byRoot after release.",
+      "productIssue": "PRISM-NOVA-NOTIFICATION-001 remainsOpen; not a productfix or acceptedlivejourney.",
+      "sourceFilesEquivalent": {
+        "Nova": 64,
+        "Prism": 10
+      },
+      "limits": "No fullproductionwait/resume,recovery orinstalledadapterdelivery; no selfacceptance."
+    },
+    "producerV3RootCandidateIntegration": {
+      "state": "author-candidate-not-independently-accepted",
+      "sourceProofRevision": "267232a4d4ab602e4bdcf9e509381535b4ae8ee4",
+      "rootProof": "/home/node/Documents/Codex/a98-evidence/producer-v3-root-suite-integrity.json",
+      "observedSuite": "109PASS0FAIL0SKIP terminal0;all5589start/endinputs unchanged,6currentmainoverlayhashes equal testedfrozenversion.",
+      "open": "Fullv3actualoutputselectedfieldreceiverjoin has no observedendreceipt, independentcompleteP01–P08Source and requiredconfiggeneration/mutations remainopen. Do notreusev2joinasv3executionPASS.",
+      "files": [
+        "scripts/docs-api-go-output-role-adapter.go",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-output-role-classification.mjs",
+        "scripts/docs-api-producer-adapter-authorities.json",
+        "scripts/docs-api-python-output-adapter.py",
+        "scripts/tests/api-reference.test.mjs"
+      ]
     }
   },
   "productBoundaries": [

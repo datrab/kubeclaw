@@ -2,23 +2,44 @@
 package main
 
 import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/token"
 	"os"
+	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 )
 
 type input struct {
-	Path      string `json:"path"`
-	Qualified bool   `json:"qualified"`
+	Path string `json:"path"`
 }
 type output struct {
-	Path string `json:"path"`
-	Line int    `json:"line"`
-	Role string `json:"role"`
+	Path         string          `json:"path"`
+	Line         int             `json:"line"`
+	Role         string          `json:"role"`
+	Expression   string          `json:"expression"`
+	Function     string          `json:"function"`
+	Value        string          `json:"value,omitempty"`
+	Operation    string          `json:"operation,omitempty"`
+	Dependencies []operationFact `json:"dependencies"`
+}
+type operationFact struct {
+	Path   string `json:"path"`
+	Symbol string `json:"symbol"`
+	SHA256 string `json:"sha256"`
+}
+type declaration struct {
+	path   string
+	symbol string
+	node   ast.Node
+	fset   *token.FileSet
 }
 
 func main() {
@@ -26,11 +47,118 @@ func main() {
 	if json.NewDecoder(os.Stdin).Decode(&inputs) != nil {
 		os.Exit(2)
 	}
+	// A native role binds the selected operation and its package-local producer
+	// and consumer declarations. An unchanged encoder cannot conceal a changed
+	// helper returning a new document. Unrelated declarations are not a receipt.
+	declarations := map[string]map[string][]declaration{}
+	for _, in := range inputs {
+		fset := token.NewFileSet()
+		file, err := parser.ParseFile(fset, in.Path, nil, 0)
+		if err != nil {
+			os.Exit(3)
+		}
+		pkg := filepath.Dir(in.Path)
+		if declarations[pkg] == nil {
+			declarations[pkg] = map[string][]declaration{}
+		}
+		add := func(name string, node ast.Node) {
+			declarations[pkg][name] = append(declarations[pkg][name], declaration{in.Path, name, node, fset})
+		}
+		for _, node := range file.Decls {
+			switch value := node.(type) {
+			case *ast.FuncDecl:
+				add(value.Name.Name, value)
+			case *ast.GenDecl:
+				for _, spec := range value.Specs {
+					switch item := spec.(type) {
+					case *ast.TypeSpec:
+						add(item.Name.Name, value)
+					case *ast.ValueSpec:
+						for _, name := range item.Names {
+							add(name.Name, value)
+						}
+					}
+				}
+			}
+		}
+	}
+	factCache := map[string][]operationFact{}
+	factsFor := func(source, name string) []operationFact {
+		key := source + ":" + name
+		if facts, ok := factCache[key]; ok {
+			return facts
+		}
+		pkg := declarations[filepath.Dir(source)]
+		pending := []declaration{}
+		for _, decl := range pkg[name] {
+			if decl.path == source {
+				pending = append(pending, decl)
+			}
+		}
+		// The controller's transport/payload helpers are API capabilities. Bind
+		// every incoming reference too: aliases, callbacks and returned method
+		// values can submit a new body without a direct call to the helper.
+		if name == "kube" || name == "requestPayload" {
+			incoming := map[string]bool{name: true}
+			changed := true
+			for changed {
+				changed = false
+				for symbol, choices := range pkg {
+					if incoming[symbol] {
+						continue
+					}
+					referenced := false
+					for _, decl := range choices {
+						ast.Inspect(decl.node, func(node ast.Node) bool {
+							switch fn := node.(type) {
+							case *ast.Ident:
+								referenced = referenced || incoming[fn.Name]
+							case *ast.SelectorExpr:
+								referenced = referenced || incoming[fn.Sel.Name]
+							}
+							return true
+						})
+					}
+					if referenced {
+						incoming[symbol] = true
+						pending = append(pending, choices...)
+						changed = true
+					}
+				}
+			}
+		}
+		seen := map[string]bool{}
+		facts := []operationFact{}
+		for len(pending) > 0 {
+			decl := pending[len(pending)-1]
+			pending = pending[:len(pending)-1]
+			key := decl.path + ":" + decl.symbol
+			if seen[key] {
+				continue
+			}
+			seen[key] = true
+			var buf bytes.Buffer
+			format.Node(&buf, decl.fset, decl.node)
+			sum := sha256.Sum256(buf.Bytes())
+			facts = append(facts, operationFact{decl.path, decl.symbol, hex.EncodeToString(sum[:])})
+			ast.Inspect(decl.node, func(node ast.Node) bool {
+				if id, ok := node.(*ast.Ident); ok {
+					pending = append(pending, pkg[id.Name]...)
+				}
+				return true
+			})
+		}
+		sort.Slice(facts, func(i, j int) bool {
+			if facts[i].Path != facts[j].Path {
+				return facts[i].Path < facts[j].Path
+			}
+			return facts[i].Symbol < facts[j].Symbol
+		})
+		factCache[source+":"+name] = facts
+		return facts
+	}
 	out := []output{}
 	for _, in := range inputs {
-		if in.Qualified {
-			continue
-		}
 		fset := token.NewFileSet()
 		file, err := parser.ParseFile(fset, in.Path, nil, 0)
 		if err != nil {
@@ -49,6 +177,19 @@ func main() {
 			stack = append(stack, n)
 			return true
 		})
+		syntax := func(n ast.Node) string { var buf bytes.Buffer; format.Node(&buf, fset, n); return buf.String() }
+		result := func(n ast.Node, role, value string) output {
+			function := "<module>"
+			operation := ""
+			for p := n; p != nil; p = parents[p] {
+				if fn, ok := p.(*ast.FuncDecl); ok {
+					function = fn.Name.Name
+					operation = syntax(fn)
+					break
+				}
+			}
+			return output{in.Path, fset.Position(n.Pos()).Line, role, syntax(n), function, value, operation, factsFor(in.Path, function)}
+		}
 		// Parser objects identify lexical declarations, unlike a file-global name map.
 		bindings := map[*ast.Object]ast.Expr{}
 		writes := map[*ast.Object]int{}
@@ -113,6 +254,77 @@ func main() {
 			}
 			return e
 		}
+		originalResolve := resolve
+		resolvingParameters := map[*ast.Object]bool{}
+		resolve = func(e ast.Expr, seen map[string]bool) ast.Expr {
+			value := originalResolve(e, seen)
+			id, ok := value.(*ast.Ident)
+			if !ok || id.Obj == nil || resolvingParameters[id.Obj] {
+				return value
+			}
+			field, ok := id.Obj.Decl.(*ast.Field)
+			if !ok {
+				return value
+			}
+			var owner *ast.FuncDecl
+			for p := ast.Node(field); p != nil; p = parents[p] {
+				if fn, ok := p.(*ast.FuncDecl); ok {
+					owner = fn
+					break
+				}
+			}
+			if owner == nil || ast.IsExported(owner.Name.Name) {
+				return value
+			}
+			index := 0
+			found := false
+			for _, parameter := range owner.Type.Params.List {
+				for _, name := range parameter.Names {
+					if name.Obj == id.Obj {
+						found = true
+						break
+					}
+					index++
+				}
+				if found {
+					break
+				}
+			}
+			if !found {
+				return value
+			}
+			resolvingParameters[id.Obj] = true
+			defer delete(resolvingParameters, id.Obj)
+			var selected ast.Expr
+			ambiguous := false
+			ast.Inspect(file, func(n ast.Node) bool {
+				call, ok := n.(*ast.CallExpr)
+				if !ok {
+					return true
+				}
+				fn, ok := call.Fun.(*ast.Ident)
+				if !ok || fn.Obj != owner.Name.Obj {
+					return true
+				}
+				if index >= len(call.Args) {
+					ambiguous = true
+					return true
+				}
+				argument := resolve(call.Args[index], map[string]bool{})
+				if _, literal := argument.(*ast.BasicLit); !literal {
+					ambiguous = true
+				}
+				if selected != nil && syntax(selected) != syntax(argument) {
+					ambiguous = true
+				}
+				selected = argument
+				return true
+			})
+			if selected != nil && !ambiguous {
+				return selected
+			}
+			return value
+		}
 		fmtName, osName, jsonName, ioName, httpName := "fmt", "os", "json", "io", "http"
 		for _, imp := range file.Imports {
 			p, _ := strconv.Unquote(imp.Path.Value)
@@ -153,6 +365,9 @@ func main() {
 					return true
 				}
 				if v.Obj != nil {
+					if spec, ok := v.Obj.Decl.(*ast.TypeSpec); ok {
+						return httpClient(spec.Type)
+					}
 					if field, ok := v.Obj.Decl.(*ast.Field); ok {
 						return httpClient(field.Type)
 					}
@@ -167,6 +382,9 @@ func main() {
 		writer := func(e ast.Expr) bool {
 			fn := candidate(e, map[string]bool{})
 			if id, ok := fn.(*ast.Ident); ok {
+				if id.Obj == nil && (id.Name == "print" || id.Name == "println") {
+					return true
+				}
 				if id.Name == "Marshal" || id.Name == "MarshalIndent" || id.Name == "NewEncoder" || id.Name == "Encode" || osName == "." && id.Name == "WriteFile" || ioName == "." && (id.Name == "Copy" || id.Name == "CopyN" || id.Name == "CopyBuffer") || httpName == "." && id.Name == "Post" {
 					return true
 				}
@@ -185,11 +403,14 @@ func main() {
 				if owner, ok := sel.X.(*ast.Ident); ok && ((owner.Name == ioName && (sel.Sel.Name == "Copy" || sel.Sel.Name == "CopyN" || sel.Sel.Name == "CopyBuffer")) || (owner.Name == httpName && sel.Sel.Name == "Post")) {
 					return true
 				}
-				if sel.Sel.Name == "Do" && httpClient(sel.X) {
+				if sel.Sel.Name == "Do" {
 					return true
 				}
 
 				if owner, ok := sel.X.(*ast.Ident); ok && owner.Name == jsonName && (sel.Sel.Name == "Marshal" || sel.Sel.Name == "MarshalIndent" || sel.Sel.Name == "NewEncoder") {
+					return true
+				}
+				if sel.Sel.Name == "WriteTo" || sel.Sel.Name == "ReadFrom" {
 					return true
 				}
 				if sel.Sel.Name == "Write" || sel.Sel.Name == "WriteString" || sel.Sel.Name == "WriteFile" {
@@ -212,6 +433,8 @@ func main() {
 			}
 			allowed := false
 			switch parent := parents[n].(type) {
+			case *ast.SelectorExpr:
+				allowed = parent.Sel == expr
 			case *ast.ParenExpr:
 				allowed = true // outer expression is checked too
 			case *ast.CallExpr:
@@ -243,7 +466,7 @@ func main() {
 				}
 			}
 			if !allowed {
-				out = append(out, output{in.Path, fset.Position(n.Pos()).Line, "unknown"})
+				out = append(out, result(n, "unknown", ""))
 			}
 			return true
 		})
@@ -252,7 +475,7 @@ func main() {
 			if composite, ok := n.(*ast.CompositeLit); ok {
 				ast.Inspect(composite, func(child ast.Node) bool {
 					if expr, ok := child.(ast.Expr); ok && writer(expr) {
-						out = append(out, output{in.Path, fset.Position(child.Pos()).Line, "unknown"})
+						out = append(out, result(child, "unknown", ""))
 						return false
 					}
 					return true
@@ -262,7 +485,7 @@ func main() {
 				for i, rhs := range assignment.Rhs {
 					if writer(rhs) && i < len(assignment.Lhs) {
 						if _, direct := assignment.Lhs[i].(*ast.Ident); !direct {
-							out = append(out, output{in.Path, fset.Position(assignment.Pos()).Line, "unknown"})
+							out = append(out, result(assignment, "unknown", ""))
 						}
 					}
 				}
@@ -273,25 +496,29 @@ func main() {
 			}
 			for _, arg := range call.Args {
 				if writer(arg) {
-					out = append(out, output{in.Path, fset.Position(call.Pos()).Line, "unknown"})
+					out = append(out, result(call, "unknown", ""))
 				}
 			}
 			if writer(call.Fun) && resolve(call.Fun, map[string]bool{}) == call.Fun {
 				if _, alias := call.Fun.(*ast.Ident); alias && call.Fun.(*ast.Ident).Obj != nil {
-					out = append(out, output{in.Path, fset.Position(call.Pos()).Line, "unknown"})
+					out = append(out, result(call, "unknown", ""))
 					return true
 				}
 			}
 			fn := resolve(call.Fun, map[string]bool{})
 			if id, ok := fn.(*ast.Ident); ok && jsonName == "." && (id.Name == "Marshal" || id.Name == "MarshalIndent" || id.Name == "NewEncoder") {
-				out = append(out, output{in.Path, fset.Position(call.Pos()).Line, "unknown"})
+				out = append(out, result(call, "unknown", ""))
 				return true
 			}
 			if method, ok := fn.(*ast.SelectorExpr); ok {
 				if owner, ok := method.X.(*ast.Ident); ok && owner.Name == jsonName && (method.Sel.Name == "Marshal" || method.Sel.Name == "MarshalIndent" || method.Sel.Name == "NewEncoder") {
-					out = append(out, output{in.Path, fset.Position(call.Pos()).Line, "unknown"})
+					out = append(out, result(call, "unknown", ""))
 					return true
 				}
+			}
+			if id, ok := fn.(*ast.Ident); ok && id.Obj == nil && (id.Name == "print" || id.Name == "println") {
+				out = append(out, result(call, "unknown", ""))
+				return true
 			}
 			sel, ok := resolve(call.Fun, map[string]bool{}).(*ast.SelectorExpr)
 			if id, direct := fn.(*ast.Ident); direct {
@@ -319,12 +546,12 @@ func main() {
 			if !ok {
 				return true
 			}
-			if sel.Sel.Name == "Marshal" || sel.Sel.Name == "MarshalIndent" || sel.Sel.Name == "NewEncoder" || sel.Sel.Name == "Encode" || sel.Sel.Name == "Do" && httpClient(sel.X) {
-				out = append(out, output{in.Path, fset.Position(call.Pos()).Line, "unknown"})
+			if sel.Sel.Name == "Marshal" || sel.Sel.Name == "MarshalIndent" || sel.Sel.Name == "NewEncoder" || sel.Sel.Name == "Encode" || sel.Sel.Name == "Do" || sel.Sel.Name == "WriteTo" || sel.Sel.Name == "ReadFrom" {
+				out = append(out, result(call, "unknown", ""))
 				return true
 			}
 			if owner, ok := sel.X.(*ast.Ident); ok && ((owner.Name == ioName && (sel.Sel.Name == "Copy" || sel.Sel.Name == "CopyN" || sel.Sel.Name == "CopyBuffer")) || (owner.Name == httpName && sel.Sel.Name == "Post")) {
-				out = append(out, output{in.Path, fset.Position(call.Pos()).Line, "unknown"})
+				out = append(out, result(call, "unknown", ""))
 				return true
 			}
 			sink := sel.Sel.Name == "Write" || sel.Sel.Name == "WriteString" || sel.Sel.Name == "WriteFile"
@@ -365,12 +592,17 @@ func main() {
 						staticText += text
 					}
 				}
+				if !unknown && strings.Contains(staticText, "apiVersion:") && strings.Contains(staticText, "kind:") && !strings.Contains(staticText, "%") {
+					out = append(out, result(call, "api", staticText))
+					return true
+				}
 				if unknown || strings.Contains(staticText, "apiVersion") || strings.Contains(staticText, "%") {
-					out = append(out, output{in.Path, fset.Position(call.Pos()).Line, "unknown"})
+					out = append(out, result(call, "unknown", ""))
 					return true
 				}
 			}
 			role := "unknown"
+			literalText := ""
 			if len(call.Args) > arg {
 				value := resolve(call.Args[arg], map[string]bool{})
 				if conversion, ok := value.(*ast.CallExpr); ok && len(conversion.Args) == 1 {
@@ -378,13 +610,17 @@ func main() {
 				}
 				if lit, ok := value.(*ast.BasicLit); ok && lit.Kind == token.STRING {
 					text, _ := strconv.Unquote(lit.Value)
+					if strings.Contains(text, "apiVersion:") && strings.Contains(text, "kind:") {
+						role = "api"
+						literalText = text
+					}
 					trim := strings.TrimSpace(text)
 					if trim != "" && !strings.HasPrefix(trim, "%") && !strings.HasPrefix(trim, "{") && !strings.HasPrefix(trim, "[") && !strings.HasPrefix(trim, "---") && !strings.Contains(trim, "apiVersion:") {
 						role = "non-api"
 					}
 				}
 			}
-			out = append(out, output{in.Path, fset.Position(call.Pos()).Line, role})
+			out = append(out, result(call, role, literalText))
 			return true
 		})
 	}

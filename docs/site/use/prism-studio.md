@@ -1,6 +1,6 @@
 # Operate Prism: From Architecture to Approved Handoff
 
-Status: local deploy-script verification passed; fixed spike browser path blocks complete local checks; absent runtime release selection blocks deployment; no live journey result
+Status: local deploy-script verification passed; fixed spike browser path blocks complete local checks; absent runtime release selection blocks deployment; installed operator-messaging payload mismatch blocks the Nova approval wait; no live journey result
 Audience: Prism operator, designer, incident responder, platform maintainer
 Owner: Prism maintainers
 Evidence: skills/prism; skills/nova/plugins/prism-design; charts/prism; charts/kubeclaw; scripts/deploy.sh
@@ -11,9 +11,11 @@ Historical executed checks: 2026-10-09 against `082db288f7bc5e686e47306d60cf4db7
 
 ## Purpose
 
-This guide gives an operator one complete Prism journey.
-It starts when Nova submits an architecture.
-It ends when Nova imports the exact Baseline Bundle that a human approved.
+This guide describes the intended Prism journey from Nova architecture submission
+to import of the exact human-approved Baseline Bundle. The current path cannot
+complete when Nova selects the installed `kubeclaw.operator-messaging` adapter:
+the approval notification fails before the stage returns its wait. Follow the
+[notification boundary](#nova-approval-notification-boundary) and stop at that step.
 
 ## Canonical Prism and Studio Procedure
 <!-- operator-task: prism-studio -->
@@ -34,14 +36,16 @@ and the selected service health checks. Before submitting design work, verify
 including the exact trusted agent identity. SPIFFE identifies workloads; Control
 also checks which identity may claim jobs and commit designs. A healthy HMAC
 worker does not enable this journey. Verify the named human's private access.
-Then use the original Nova run to submit its admitted architecture. Nova creates
-its approval wait after dispatch. Before a human changes or approves the design,
+Then use the original Nova run only when its selected notification provider has
+verified compatibility with the Prism payload. Nova dispatches, stores a wait
+record, and publishes the notification before returning its stage wait. The
+installed messaging adapter blocks that return. Before a human changes or approves the design,
 verify that original request and wait; stop if dispatch or wait creation is
 missing or uncertain. Run Studio actions through that human's private browser
 session. Release receipts, Prism Control state, immutable artifact bytes,
 Studio approval, Nova wait state, and Nova audit are the authorities.
 
-> Nova [dispatches the original architecture before it creates the approval wait](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/plugins/prism-design/src/stage.ts#L21-L34).
+> Nova [dispatches the original architecture before it stores a wait record and attempts the notification](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/plugins/prism-design/src/stage.ts#L21-L34).
 
 Before any cluster command on this page, complete
 [Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
@@ -99,7 +103,7 @@ Use this page to:
 - compare and select a design direction;
 - make visual or natural-language changes;
 - inspect, restore, preview, evaluate, approve, and publish a revision;
-- resume the waiting Nova run with the correct identities;
+- resume a Nova run only after verifying its active Core approval wait;
 - diagnose a stopped or uncertain operation without creating duplicate work.
 
 Prism is a design system, not an application generator.
@@ -110,11 +114,11 @@ The implementation pipeline remains responsible for production code.
 > **The important authority boundary**
 >
 > Studio attempts approval first and immutable publication second. Approval alone does not publish a bundle or resume Nova.
-> A separate operator-created Nova signal resumes the run. Its issuer is
+> For a run with a verified active Core approval wait, a separate operator-created Nova signal resumes the run. Its issuer is
 > caller-supplied and unsigned; CLI access is the effective authority. Nova then asks Prism for
 > the approved bundle and verifies all content before it accepts the handoff.
 >
-> [The Prism stage creates the wait, publishes the operator request, and validates the later approval signal](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/plugins/prism-design/src/stage.ts#L8-L34).
+> [The Prism stage attempts wait creation and notification before returning its wait, and validates later approval guidance](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/plugins/prism-design/src/stage.ts#L8-L34).
 
 ## Know the Running Parts
 
@@ -726,11 +730,12 @@ not mean that this deployment exercised it. The absent runtime release selection
 stops this checkout before deployment and the live journey. Verification did
 not include any live Studio-to-Nova step. Agent work additionally remains
 unavailable until the selected release meets [SPIFFE agent admission](#spiffe-agent-admission);
-service health alone does not remove that boundary.
+service health alone does not remove that boundary. The notification mismatch
+below remains a separate product boundary after deployment and agent admission.
 
 | Step | Implemented operation and expected evidence | Verification boundary |
 | --- | --- | --- |
-| 1 | Nova dispatches architecture; Control records the active request and agent job; Nova stores its approval wait. | Source inspected; live dispatch unavailable until deployment gates pass. |
+| 1 | Nova dispatches architecture, stores a wait record, and attempts the operator notification before returning its stage wait. | With the installed operator-messaging adapter, `architectureDigest` is rejected; the stage is blocked and Core has no active approval wait. Control work and the wait-store record can already exist. |
 | 2 | Studio obtains a trusted session and lists Control projects. | Source inspected; private ingress and actual caller identity unverified. |
 | 3 | The agent commits exactly three current directions; Studio reconnects to the same round. | Source inspected; managed OpenAI/Codex reasoning through OpenClaw and the matching Control commit unverified. |
 | 4 | Authenticated direction selection and feedback use retained idempotency keys. | Source inspected; browser interaction unexecuted. |
@@ -740,7 +745,7 @@ service health alone does not remove that boundary.
 | 8 | Studio previews views, states, flows, assets, and viewport choices. | Source inspected; browser and asset delivery unexecuted. |
 | 9 | Worker evaluation produces findings for the exact document revision. | Source inspected; native worker execution unexecuted. |
 | 10 | A human approves the current revision; Control renders and publishes an immutable Baseline Bundle. | Source inspected; publication, browser capture, and separate human approval unexecuted. |
-| 11 | An authorized CLI caller submits the original wait's signal; Nova verifies and imports the approved bundle. | Source inspected; restricted signal submission and final Nova import unexecuted. |
+| 11 | For a verified active Core approval wait, an authorized CLI caller submits its signal; Nova verifies and imports the approved bundle. | Unavailable after the installed messaging-adapter failure in step 1. Restricted signal submission and final Nova import remain unexecuted. |
 
 ### Interruption and retry boundaries
 
@@ -831,20 +836,96 @@ Control stores the external project identity and the exact architecture artifact
 digest, revision, and content. A newer architecture supersedes an older active
 request. A conflicting transition stops before a new round starts.
 
-The first dispatch returns `waiting` and starts a durable agent job.
-Nova independently creates a durable wait for `prism.approval.resolved`.
+An admitted initial Control dispatch can return `waiting` and start a durable
+agent job. Nova next creates a wait-store record for `prism.approval.resolved`.
+It must publish the operator notification successfully before it returns
+`outcome: wait` to Core. A stored wait record alone does not make the run resumable.
+See [Nova approval notification boundary](#nova-approval-notification-boundary).
 
 Do not create a second Nova run because directions are still pending.
 The active request and job have durable identities.
 After a lost dispatch response, retain the original run and architecture reference.
-Use [run recovery](operate.md#canonical-run-control-procedure) to inspect that run's
-wait, dispatch effects, and receipts. Do not invoke a new run or change the
+Stop the run and adapter writers, preserve raw state, verify its copy, and
+strictly parse the copied journals through [Inspect a Run](operate.md#inspect-a-run)
+before audit or recovery. Stop on copy or parse failure and retain the rejected
+bytes. The Nova owner reconciles stage state and effect receipts; the wait-store
+owner reconciles its original record; Prism maintainers reconcile the Control
+request, round, and job/fence. Audit alone does not reconcile those external owners. Do not invoke a new run or change the
 architecture merely to obtain another response. An unresolved agent outcome
 requires Prism maintainers; repeated dispatch does not authorize another external launch.
 
 > Nova [derives the dispatch key from the run, architecture digest, and approval phase](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/plugins/prism-design/src/stage.ts#L20-L25).
 > Control [validates architecture transitions and starts the bound round](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/prism/server/control-server.ts#L214-L230).
 > The round store [replays an exact recorded start and rejects conflicting content](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/prism/control/design-generations.ts#L25-L44).
+
+### Nova approval notification boundary
+
+When Nova selects the installed `kubeclaw.operator-messaging` adapter for
+`operator.request`, the current Prism producer and receiver disagree. Prism's
+notification includes `architectureDigest`; the adapter's closed top-level
+payload contract does not admit it. After a successful dispatch and wait-store
+creation, parsing fails with `OPERATOR_PAYLOAD_UNKNOWN_FIELD:architectureDigest`.
+The adapter parses before delivery reservation, Secret lookup, or network work.
+This failure therefore does not send that notification. Earlier Control work
+and the separate wait-store record can still exist.
+
+AdapterRuntime wraps the failed external effect as
+`EFFECT_OUTCOME_UNRESOLVED:<effect-id>:OPERATOR_PAYLOAD_UNKNOWN_FIELD:architectureDigest`.
+The Prism stage catches it and returns `blocked` with
+`prism_design.dispatch_failed`, without `outcome: wait` or a returned wait.
+Core consequently does not record an active approval wait for this result.
+A wait-store record, pending directions, or Studio approval cannot authorize
+resume. A synthetic provider that accepts arbitrary payloads does not prove
+compatibility with the selected installed adapter.
+
+Stop new dispatch, design changes, approval, publication, and signals. Keep the
+original run, architecture, request/key, project/round, job/fence, wait-store
+record, and effect IDs. Stop writers and preserve raw state through
+[Inspect a Run](operate.md#inspect-a-run) before audit. Stop on copy or strict
+journal-parse failure. Nova maintainers reconcile Core state and effect receipts;
+the wait-store owner reconciles its record; Prism maintainers reconcile Control
+work. Do not create another run or identities, import a receipt, edit journals,
+or manufacture an active wait. This guide has no supported recovery that turns
+this blocked result into a resumable approval wait.
+
+Owner: Nova Prism-stage and operator-messaging maintainers, with the affected
+Control and wait-store owners for admitted work. The permanent issue is
+[PRISM-NOVA-NOTIFICATION-001](../status/open-issues.md#prism-approval-notification-is-rejected-by-the-installed-messaging-adapter).
+Those maintainers must align the exact producer and closed receiver contract,
+then verify the repaired path through the selected adapter and Core. Acceptance
+must prove notification delivery, an active Core wait, original-identity
+interruption recovery without duplicate Control work, and the final approved
+bundle import. Deployment and live acceptance remain separate.
+
+> **Source evidence — notification and Core wait boundary**
+>
+> **Claim:** With the selected installed messaging adapter, notification parsing
+> blocks the stage after dispatch and wait-store creation, before an active Core
+> approval wait is returned.
+>
+> **Implementation:** [Prism dispatch, wait creation, notification, and catch](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/plugins/prism-design/src/stage.ts#L21-L34) ·
+> [adapter parse before reservation and secrets](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/common/plugins/operator-messaging/src/adapter.ts#L35-L46) ·
+> [AdapterRuntime failure wrapper](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/core/execution/adapters.ts#L52-L65) ·
+> [external-continuation classification](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/core/execution/effect-recovery.ts#L6-L11).
+>
+> **Contract or setting:** [closed payload keys](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/common/plugins/operator-messaging/src/payload.ts#L3-L4) ·
+> [`parsePayload` exact-key check](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/common/plugins/operator-messaging/src/payload.ts#L93-L102) ·
+> [separate wait-store commit](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/common/plugins/wait-store/src/adapter.ts#L213-L232) ·
+> [Core wait and blocked result handlers](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/core/lifecycle/reducer.ts#L96-L109) ·
+> [Core `stage.waiting` recording](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/nova/core/execution/run-decisions.ts#L97-L108).
+>
+> **Test evidence:** On 2026-10-11, a direct Node.js `parsePayload` probe with
+> the producer-shaped notification rejected exactly
+> `OPERATOR_PAYLOAD_UNKNOWN_FIELD:architectureDigest`, exit `0` for the expected
+> rejection. The existing [unknown-field rejection fixture](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/common/plugins/operator-messaging/tests/live-function.test.ts#L294-L297)
+> was inspected, not rerun.
+>
+> **Revision:** `8cba013ac84537cefbaa356b19fb236c1cf05587`; the complete bytes of every newly linked
+> implementation and test file were compared with that revision before pinning.
+>
+> **Limit:** The probe executes payload parsing only. The linked functions define
+> the sequence and lifecycle consequences; this is not a full-stage or deployed
+> run. No product fix, delivery, active wait, resume, or bundle import is claimed.
 
 ### Step 2: Open Studio and choose the project
 
@@ -870,7 +951,9 @@ Wait for the submitted project or diagnose the Nova-to-Control dispatch.
 
 The source includes a standalone project API for tests and direct clients, but
 the current production Studio project chooser does not show a create-project form.
-The governed Nova path is the supported operator journey.
+The governed Nova path is the intended operator journey. It remains unavailable
+through the installed messaging adapter until the
+[notification boundary](#nova-approval-notification-boundary) is repaired.
 
 > **Source evidence — session and chooser**
 >
@@ -881,6 +964,11 @@ The governed Nova path is the supported operator journey.
 > [Studio starts the session, lists projects, and loads the selected document](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/prism/studio/app.tsx#L97-L149).
 
 ### Step 3: Wait for exactly three directions
+
+Before waiting or acting on directions, verify the original Nova stage returned
+its approval wait and Core recorded it. If the notification failed, stop at the
+[notification boundary](#nova-approval-notification-boundary), even when Control
+has an active agent job or directions. Those records do not prove Nova can resume.
 
 The agent must use the SPIFFE identity permitted by Control to claim and commit
 this job. If directions remain pending, check
@@ -1289,7 +1377,12 @@ Do not submit a Nova signal until the original approval and exact bundle are ver
 
 ### Step 11: Resume Nova with the approved identities
 
-Use the normal Nova signal command and the wait identity from the operator request.
+This step is available only if Core has a verified active, unexpired approval
+wait and the original operator request was delivered through a compatible
+provider. It is unavailable after the installed messaging-adapter failure: a
+wait-store record is not an active Core wait. Stop and follow the
+[notification boundary](#nova-approval-notification-boundary). For an eligible
+run, use the canonical Nova signal procedure and its original wait identity.
 Before an audit or resume after interruption, stop the run and adapter writers
 and complete [Inspect a Run](operate.md#inspect-a-run): preserve raw state,
 verify the copy, and strictly parse the copied journals. Stop on an incomplete
@@ -1682,6 +1775,9 @@ Never modify approval or baseline rows to renew their authority.
 
 ### Nova resume response lost
 
+If dispatch stopped at the notification mismatch, first follow the
+[notification boundary](#nova-approval-notification-boundary). Do not treat its
+wait-store record as an approval wait or attempt this signal recovery.
 Use this path also after any rejected resume. A rejection alone does not prove
 that the original submission failed to commit.
 Keep the original run, wait, signal file, signal ID/key, issuer, approval,
@@ -1690,7 +1786,7 @@ architecture digest, and bundle digest. Do not create another run or decision.
 1. Stop additional signal submissions and confirm that run and adapter writers have stopped.
 2. Complete [Inspect a Run](operate.md#inspect-a-run) to preserve raw state, verify the copy, and strictly parse its journals. Stop on a parse or copy error and retain the rejected bytes.
 3. Audit the original run only after those checks succeed. Retain the output and exit status with the preserved state.
-4. Check its durable wait, signal, resolution, dispatch, imported artifact, and final state.
+4. Have the Nova owner check Core stage/wait state, signal, resolution, effect receipts, imported artifact, and final state. Have the wait-store owner reconcile its separate record and Prism maintainers reconcile the original Control request/job. A stored wait or notification receipt does not establish an active Core wait.
 5. Verify the imported artifact matches the original approved bundle before claiming completion.
 6. Keep execution stopped if the audit cannot establish the signal's outcome.
 
@@ -1726,7 +1822,7 @@ outcome or authorize a retry.
 >
 > **Contract or setting:** [The pure parser rejects incomplete records and invalid sequences or hashes without writing](https://github.com/datrab/kubeclaw/blob/8cba013ac84537cefbaa356b19fb236c1cf05587/skills/common/plugin-runtime/foundation/observability/hash-journal.ts#L15-L29).
 >
-> **Test evidence:** Source inspection only for this correction; no audit, resume, or live recovery execution is established here.
+> **Test evidence:** The linked journal and execution guards define this boundary. No audit, resume, or live recovery execution is established here.
 >
 > **Revision:** `8cba013ac84537cefbaa356b19fb236c1cf05587`.
 >
@@ -2384,7 +2480,8 @@ and retained output for each live acceptance.
 | Corpus public-web acquisition | Acquisition code exists, but Control rejects `public-web` until a source policy is approved | Do not present public-web ingestion as an enabled operator feature. |
 | Ingestion service | Implemented but disabled by default | Enable only with explicit resource sizing and source policy. |
 | Browser archive download in Studio | Not implemented as a user action | Use the Nova governed handoff or an authorized artifact client. |
-| Automatic Nova resume after Studio approval | Not implemented by design | Submit the separate unsigned signal through the restricted Nova CLI path. |
+| Nova approval notification with the installed operator-messaging adapter | Blocked: Prism sends `architectureDigest`, which the closed payload contract rejects | Stop after the original failure; no active Core approval wait is established. Preserve and reconcile existing Control, wait-store, and effect state. |
+| Automatic Nova resume after Studio approval | Not implemented by design | For a verified active Core approval wait only, submit the separate unsigned signal through the restricted Nova CLI path. |
 | `toBusterPlan` and `toForgeAssignments` handoff helpers | Implemented and tested as declarative conversion helpers; no maintained production caller is present | Do not claim that they apply Buster manifests, filesystem access, or module assignments. |
 | Dedicated Prism metrics and distributed tracing endpoint | Not implemented | Use probes, logs, durable state, journals, and artifacts. |
 | Horizontal Prism worker scaling | Not the current native deployment model | The current native worker is one Recreate replica bound to one host policy. |
@@ -2434,6 +2531,8 @@ A Prism operator journey is complete only when all statements below are true:
 - the evaluation has no blocking findings;
 - each remaining review finding was explicitly accepted;
 - Studio returned an approval ID and Baseline Bundle digest;
+- the selected operator-request provider accepted the exact Prism notification,
+  and Core recorded the original active approval wait;
 - the Nova resume signal used the original wait, authorized issuer, active
   architecture digest, approval ID, and bundle digest;
 - Nova verified and stored the immutable Baseline Bundle;

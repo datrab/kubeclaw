@@ -6,7 +6,7 @@ Owner: Nova maintainers
 Evidence: skills/nova/project; skills/nova/core; skills/common/plugin-runtime
 Evidence revision: `4f089958db97a551f406c157d774bda143a38946`
 Applies to: `nova-project.v2`, `pipeline-definition.v2`, and the current Nova Core runtime
-Last verified: source and contract inspection on 2026-09-19; wait/resume and audit boundaries rechecked on 2026-10-11 at `929aadbad08b41e7a8504950f05dc0f526b706d6`
+Last verified: source and contract inspection on 2026-10-11 at `a1569b61663e4bc85e11d38bd896bb99ed0bd396`; linked implementation files are byte-identical to the evidence revision. This inspection does not establish successful production execution.
 
 ## Purpose
 
@@ -631,11 +631,93 @@ or the repair-authorization path must interpret its own `request` and `payload`
 fields. Core validates the complete repair payload because that signal spends
 additional repair authority.
 
-A plugin-provided `wait` keeps the plugin's declared kind, signal type, issuer, expiry, and request.
+A plugin result with outcome `wait` keeps the plugin's declared kind, signal type, issuer, expiry, and request.
+An `orchestrator_required` result follows a different path: Core constructs the
+orchestrator wait and retains only the original wait's optional `request`.
 Core-generated orchestrator waits use kind `orchestrator` and signal type `core.orchestrator.resume`.
 Their wait ID is a digest of run, stage, and attempt.
 They authorize only the configured orchestrator issuer and do not expire automatically.
 A repair-authorization wait also embeds the complete pending repair identity.
+
+### Production signal types and their consumers
+
+The signal envelope identifies an active Core wait. Its payload becomes
+`context.contract.guidance` for the next attempt. Matching the envelope does
+not prove that this guidance will pass the stage's own checks.
+
+| Signal type and producer | Effective Core wait | Payload consumer and accepted content |
+| --- | --- | --- |
+| `approval.resolved`: human approval | Kind `signal`; operator ID from `issuerId`; expiry is creation time plus `timeoutMinutes` (default 60, allowed 1–525,600 minutes); request contains `summary`. | `parseApprovalGuidance` accepts exactly `decision: approved` or `rejected`, `issuer: {type: operator, id: <configured issuerId>}`, and optional nonempty `reason` of at most 4,096 characters. The nested issuer must also match. `decision: pending` accepts only that field and runs request creation again; it does not approve work. Text is trimmed; issuer ID is limited to 1,024 characters. Reason and ID must contain neither NUL nor a line break. Unknown fields fail. |
+| `approval.resolved`: architecture approval | Uses human approval only when a verified passing architecture report has findings. A report with no findings passes without an approval wait. | The same guidance parser applies. Approval of findings also requires a nonempty `reason`. The wrapper checks the report artifact's digest, producer, verdict, and review subject; the payload alone cannot approve changed evidence. |
+| `core.orchestrator.resume`: Core pause or attempt threshold | Kind `orchestrator`; platform `orchestratorIssuerId`; no expiry. A threshold request contains `afterAttempt`; a plugin-requested pause retains only its optional `request`. | Core accepts JSON-object guidance after envelope checks; the resumed stage interprets it. There is no universal approval payload for this type. |
+| `core.orchestrator.resume`: repair authorization | Same platform issuer and null expiry; request contains `repairAuthorization` with the pending repair identity and history. | Core requires exactly `repairAuthorization: {pendingDigest, reason}`. The digest must equal the pending digest; the reason must be nonempty after trimming and at most 8,192 characters. Current repair history and remaining authorization budget must match before signal storage. |
+| `kubeclaw.review.resolve`: review plugin's returned wait | The plugin returns `orchestrator_required`, so this name is **not** the active Core signal type. `decisionWait` replaces its wait ID, signal type, issuer, and expiry with the Core orchestrator values above. The original review wait has no `request`, so Core carries no review request context forward. | Submit guidance only for the actual durable `core.orchestrator.resume` wait. Review uses optional `helperPrompt` when it builds its next dispatch request and evaluates the returned evidence again. The original review signal name grants no separate resume authority. |
+| `prism.approval.resolved`: Prism design plugin | Intended kind `signal`; configured operator `issuerId`; creation time plus configured positive `timeoutMinutes`; request contains `projectId`. The current publication failure below prevents this path from returning an active Core wait. | The stage's `approval` parser requires `decision: approved`, matching nested operator issuer, nonempty `approvalId`, `architectureDigest` equal to the input architecture digest, and `bundleDigest` in `sha256:<64 lowercase hexadecimal characters>` form. It does not reject extra fields. A rejected decision is invalid. Approval then requires verified baseline archive content, not just these fields. |
+
+The issuer in the envelope and an issuer inside guidance are separate checks.
+The shared schema closes the envelope; each consumer above determines whether
+its nested guidance has a closed field set. Freshness, expiry, single use, and
+the `WAIT_*` failures apply before these stage-specific checks.
+
+> **Source evidence — production signal consumers**
+>
+> [Human approval validates guidance, its nested issuer, expiry, and the created wait](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/human-approval/src/approval.ts#L85-L132).
+>
+> [Architecture approval verifies the report and requires a reason for approval of findings](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/human-approval/src/architecture-approval.ts#L100-L141).
+>
+> [Core replaces orchestrator waits and retains only their optional request](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/wait-request.ts#L5-L19).
+>
+> [Repair guidance has exact keys and binds the pending digest, history, budget, and issuer](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/repair-authorization.ts#L6-L30).
+>
+> [Review supplies its original wait without request context and forwards helper guidance to dispatch](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/review/src/stage.ts#L52-L87).
+> [Its reducer returns orchestrator_required](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/review/src/review-reducer.ts#L100-L124).
+>
+> Revision: the page's evidence revision. Test evidence: successful production wait/resume execution remains unverified.
+
+### Current Prism approval publication failure
+
+This failure applies when `operator.request` selects the installed
+`kubeclaw.operator-messaging:operator` adapter. Compatibility with a different
+adapter requires its own proof.
+
+When `requiresDesign` is false, the Prism stage passes without dispatch or a
+wait. With design required and no approval guidance, it verifies architecture,
+dispatches the design request, and creates a signal-adapter wait. It then
+publishes an operator request whose top-level payload includes
+`architectureDigest`. The operator messaging adapter's closed payload key set
+does not allow that field. `parsePayload` therefore raises
+`OPERATOR_PAYLOAD_UNKNOWN_FIELD:architectureDigest` before delivery reservation
+or network publication.
+
+The outer AdapterRuntime converts the non-completed `operator.request` receipt
+into `EFFECT_OUTCOME_UNRESOLVED:<effectId>:<message>`. The Prism stage catches that
+error and returns `blocked` with reason `prism_design.dispatch_failed`. It does
+not reach its `wait` result. The earlier design dispatch and signal-adapter wait
+record can exist, but neither establishes an active Core wait: Core needs the
+stage's typed wait result to create lifecycle wait authority. A manually issued
+`prism.approval.resolved` signal cannot repair this failed handoff.
+
+Stop automatic continuation. Preserve raw run files before audit, then compare
+the design dispatch identity, adapter wait record, failed publication receipt,
+and blocked attempt. Reconcile any external design work under its existing
+identity. Nova, Prism design, and operator messaging maintainers must align the
+publication contract. Reconsider this limit only after the real adapters accept
+the corrected request, Core records the typed wait, one matching approval
+resumes it, duplicate delivery does not publish twice, and rejection, expiry,
+and restart preserve the same identities. Until those observations exist, this
+production approval path has no demonstrated successful execution.
+
+> **Source evidence — failed Prism handoff**
+>
+> [The stage declares approval guidance, conditional dispatch, wait creation, publication, and the blocked catch result](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/plugins/prism-design/src/stage.ts#L8-L35).
+>
+> [The payload parser's closed key set excludes architectureDigest](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugins/operator-messaging/src/payload.ts#L3-L4).
+> [It rejects unknown keys before other payload checks](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugins/operator-messaging/src/payload.ts#L93-L101).
+>
+> [Delivery parses before reservation and transport](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugins/operator-messaging/src/adapter.ts#L37-L44).
+> [AdapterRuntime wraps a non-completed external-effect receipt](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapters.ts#L53-L66).
+>
+> Limit: this source trace identifies a contract failure; it is not an observed production run or a completed fix.
 
 Resume performs these checks in order:
 
@@ -736,13 +818,42 @@ It stops in two important cases.
 - `RECOVERY_EXTERNAL_CONTINUATION_REQUIRED` means a prior external continuation cannot restart as an ordinary local attempt.
 
 Read and checkpoint-style operations can continue when their contract makes repetition safe.
-Other operations need an explicit reconciliation result.
-The operator must verify the external system and repair the receipt or use the supported administrative path.
-Deleting the journal is not recovery because it removes the evidence needed to prevent duplication.
+Other operations need a supported continuation that proves the external result.
+The current Core exposes no generic receipt-import or manual receipt-repair
+interface. Administrative retry and remediation call `executePrepared`, which
+runs the same effect gate before adapters start. They do not bypass either
+recovery error. Administrative cancellation records a stop; it does not prove
+an external outcome or undo an accepted effect.
+
+The exact blocked step is admission to another attempt after the effect check.
+Stop recovery, resume, and administrative retry while either condition remains.
+Preserve raw journals and result blobs before audit. The operator and the
+adapter or external-service owner must compare the original effect ID,
+idempotency key, resource, acceptance, receipt, and remote state. Record what
+can and cannot be proved outside the run history; do not edit, fabricate, or
+delete receipt records. External reconciliation alone does not create Core
+continuation authority. If no supported adapter-specific path can establish
+it, retain the stopped run and involve Nova maintainers before separately
+governed new work that could repeat the effect.
+
+**Owner and acceptance condition:** Nova effect-runtime maintainers own the
+missing general continuation interface; adapter maintainers own external
+receipt verification. A future continuation must authenticate its issuer,
+bind the exact request and verified external outcome, preserve append-only
+history and fencing, reject changed or duplicate identities, and pass an
+interruption/restart exercise without repeating an accepted effect. A terminal
+receipt alone is insufficient for the second error: Core also requires safe
+continuation of the interrupted external attempt. No such general procedure
+is implemented or execution-verified by this page.
 
 > **Source evidence — effect recovery gate**
 >
 > [Recovery classifies safe checkpoint operations and rejects unresolved or interrupted external work](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/effect-recovery.ts#L8-L29).
+>
+> [The shared execution path checks effects before adapter startup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L21-L34).
+> [Administrative retry and remediation use that same path; cancellation uses a separate stop path](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-admin.ts#L89-L120).
+>
+> Limit: these guards do not establish a successful effect-recovery exercise.
 
 ## 11. Artifact Checkpoints and Visibility
 
@@ -884,6 +995,8 @@ For remediation, Core loads the last durable attempt result.
 It validates the result and reconstructs the original defect evidence.
 It refuses a missing result, wrong continuation, or exhausted repair authority.
 It never creates a synthetic passing result to move the run forward.
+Retry and remediation still pass the [effect recovery gate](#effect-recovery-stops).
+Administrative authority cannot import a missing receipt or certify an interrupted external attempt.
 
 **Trade-off:** Administrative reopen can restore progress after an exceptional stop.
 It also increases authority.
@@ -1092,65 +1205,110 @@ The following source groups are the canonical detailed index for the current rev
 
 ## 18. Design Decisions and Their Costs
 
+The choices below describe current Core mechanisms. The implementation links
+establish behavior, not the original discussion of each local choice. The
+original local constraints, alternatives, reasons, and acceptance status are
+**unknown** where no decision record establishes them. Nova maintainers own
+that historical evidence gap. Each explanation and comparison below is a
+**current technical inference**, not a claim about the author's original intent.
+Implementation status and remaining limits are separate from decision status.
+For the broader architectural decisions and their recorded approval evidence,
+see [Core and plugin decisions](../decisions/core-and-plugins.md) and
+[Runtime and operations decisions](../decisions/runtime-and-operations.md).
+
 ### One lifecycle writer
 
+**Problem and approach:** Plugins can disagree about whether work is complete.
 **Decision:** Nova Core owns canonical stage and run transitions.
+**Reason:** Current technical inference: one reducer gives the same state from
+the same ordered facts and keeps wait and budget rules at one boundary.
+**Alternative:** A current comparison is to let plugins write stage state.
+**Why it was not selected:** Historical disposition is unknown. Today, that
+alternative would need a shared transition protocol to prevent incompatible
+writes or bypassed budgets.
+**Cost:** Core is a central authority and depends on durable storage. The
+benefit is one replayable transition rule. Implemented; this does not isolate
+plugin processes or prove storage survival after power loss.
+**Reconsider when:** Multiple writers are required and a versioned protocol can
+prove equivalent admission, ordering, replay, and budget checks.
 
-**Reason:** Replay must produce the same state from the same ordered facts.
-
-**Alternative:** Let each plugin write stage state directly.
-
-**Why it was not selected:** Two plugins could apply incompatible transitions or bypass budget and wait rules.
-
-**Cost:** Core becomes a central authority and must stay available with durable storage.
+[The reducer defines state and result transitions](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/reducer.ts#L9-L135).
 
 ### Frozen graph and runtime
 
-**Decision:** Store graph and registry identity before execution and verify them on recovery.
+**Problem and approach:** A restart can encounter changed packages or policy.
+**Decision:** Store graph and registry identity before execution and verify them
+on recovery.
+**Reason:** Current technical inference: the recovered run retains its admitted
+meaning, including stage ownership and grants.
+**Alternative:** A current comparison is to rebuild with the newest packages.
+**Why it was not selected:** Historical disposition is unknown. Today, that
+alternative would need an explicit compatibility rule for changes to ownership,
+capabilities, graph edges, and policy.
+**Cost:** Existing runs require pinned packages or an exact approved upgrade.
+The benefit is rejection of silent drift. Implemented for stored graph and
+registry identity; the snapshot does not include all platform settings.
+**Reconsider when:** A migration protocol preserves old run meaning and proves
+compatibility for the exact changed identities and settings.
 
-**Reason:** A recovered run must retain the meaning that it had when admitted.
-
-**Alternative:** Load the newest installed packages and rebuild the graph after restart.
-
-**Why it was not selected:** A restart could change stage ownership, capability access, repair paths, or policy without a decision record.
-
-**Cost:** Package and graph changes need a new run or a narrowly authorized compatibility action.
+[Snapshot verification enforces package and graph identity](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L20-L72).
 
 ### Journal and projection
 
-**Decision:** Keep append-only events as authority and derive current state and audit views.
+**Problem and approach:** Process memory cannot explain state after interruption.
+**Decision:** Keep durable events as authority and derive state and audit views.
+**Reason:** Current technical inference: ordered history retains prior decisions
+and permits replay after process loss.
+**Alternative:** A current comparison is one mutable state document.
+**Why it was not selected:** Historical disposition is unknown. Today, that
+alternative would need separate history and atomic update guarantees to retain
+the cause of a transition.
+**Cost:** Replay and hash verification consume work; journals grow. The benefit
+is a trace from facts to state. Implemented with incomplete-tail repair; a new
+reader cannot detect a valid-prefix rollback without an external trusted head.
+**Reconsider when:** History size requires compaction and a checked snapshot
+format preserves evidence, rollback detection, and replay equivalence.
 
-**Reason:** An event history preserves why a state exists and lets Core rebuild after process loss.
-
-**Alternative:** Overwrite one mutable state document.
-
-**Why it was not selected:** A partial write or logic error could erase the prior decision and its cause.
-
-**Cost:** Replay, hash verification, compaction limits, and storage growth need active management.
+[The journal verifies and appends hash-chained records](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L59-L155).
 
 ### Fail closed on uncertain effects
 
-**Decision:** Stop automatic recovery when Core cannot prove an accepted effect's outcome.
+**Problem and approach:** Remote work can succeed before its response is lost.
+**Decision:** Stop automatic continuation when Core cannot prove an accepted
+effect's outcome or safely continue an interrupted external attempt.
+**Reason:** Current technical inference: delay avoids repeating a potentially
+completed publication, deployment, or remote job.
+**Alternative:** A current comparison is unconditional retry after interruption.
+**Why it was not selected:** Historical disposition is unknown. Today, that
+alternative would require proven external deduplication and safe continuation.
+**Cost:** A run can remain stopped after external reconciliation. The benefit
+is that uncertainty does not grant another mutation. The guard is implemented;
+a general receipt-import or external-continuation procedure is not implemented.
+**Reconsider when:** An authenticated continuation binds verified remote state
+to the exact effect and passes the interruption, duplicate, and fencing checks
+listed in [Effect recovery stops](#effect-recovery-stops).
 
-**Reason:** Repeating an external effect can be worse than delayed progress.
-
-**Alternative:** Retry every operation after a timeout or process crash.
-
-**Why it was not selected:** The first request can succeed remotely while its response is lost.
-
-**Cost:** Some incidents require human or adapter-specific reconciliation.
+[The effect gate distinguishes missing outcome from interrupted external continuation](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/effect-recovery.ts#L8-L29).
 
 ### Bounded repair
 
-**Decision:** Separate technical retries, automatic repair orders, and authorized extra repairs.
+**Problem and approach:** Execution failures and product defects spend different
+authority.
+**Decision:** Separate technical retries, automatic repair orders, and authorized
+extra repairs, while keeping an aggregate attempt ceiling.
+**Reason:** Current technical inference: infrastructure retries do not silently
+spend product repair authority, and extra changes need a bound authorization.
+**Alternative:** A current comparison is one large attempt counter.
+**Why it was not selected:** Historical disposition is unknown. Today, that
+alternative would need another way to limit each kind of work.
+**Cost:** Authors configure several related limits; operators must identify which
+one ended. The benefit is explicit authority per action. Implemented; an extra
+repair authorization cannot restore an exhausted hard attempt ceiling.
+**Reconsider when:** Budget policies change and graph validation, replay, and
+operator explanations can preserve each action's authority and aggregate bound.
 
-**Reason:** Each action spends a different kind of authority and has a different failure meaning.
-
-**Alternative:** Use one large attempt counter.
-
-**Why it was not selected:** Infrastructure noise could consume product-repair capacity, and repeated edits could continue without explicit approval.
-
-**Cost:** Graph authors must configure more than one budget and operators must understand which one ended.
+[Graph validation checks the aggregate budget](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph-repair-budget.ts#L3-L30).
+[Repair policy selects automatic, authorized, or blocked orders](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/repair-budget.ts#L27-L100).
 
 ## 19. Safe Change Checklist
 
