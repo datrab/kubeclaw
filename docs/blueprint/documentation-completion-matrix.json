@@ -17908,7 +17908,7 @@
     },
     {
       "id": "A98-20261011-SOURCE-F1",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "CFG-011",
         "CFG-013",
@@ -17924,11 +17924,14 @@
       "report": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh-root-seal.json",
       "owner": "/root/python_custody_f1_f6_batch_correction_writer",
-      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it."
+      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer/report.md",
+      "correctionReportSha256": "08f77360c87cb01167e153848235a7a5ae028d0df0e5f8c057a25e87a318ab10",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer-root-seal.json"
     },
     {
       "id": "A98-20261011-SOURCE-F2",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "CFG-011",
         "CFG-013",
@@ -17944,11 +17947,14 @@
       "report": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh-root-seal.json",
       "owner": "/root/python_custody_f1_f6_batch_correction_writer",
-      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it."
+      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer/report.md",
+      "correctionReportSha256": "08f77360c87cb01167e153848235a7a5ae028d0df0e5f8c057a25e87a318ab10",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer-root-seal.json"
     },
     {
       "id": "A98-20261011-SOURCE-F3",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "CFG-011",
         "CFG-013",
@@ -17964,11 +17970,14 @@
       "report": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh-root-seal.json",
       "owner": "/root/python_custody_f1_f6_batch_correction_writer",
-      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it."
+      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer/report.md",
+      "correctionReportSha256": "08f77360c87cb01167e153848235a7a5ae028d0df0e5f8c057a25e87a318ab10",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer-root-seal.json"
     },
     {
       "id": "A98-20261011-SOURCE-F4",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "CFG-011",
         "CFG-013",
@@ -17984,11 +17993,14 @@
       "report": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh-root-seal.json",
       "owner": "/root/python_custody_f1_f6_batch_correction_writer",
-      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it."
+      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer/report.md",
+      "correctionReportSha256": "08f77360c87cb01167e153848235a7a5ae028d0df0e5f8c057a25e87a318ab10",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer-root-seal.json"
     },
     {
       "id": "A98-20261011-SOURCE-F5",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "CFG-011",
         "CFG-013",
@@ -18004,11 +18016,14 @@
       "report": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh-root-seal.json",
       "owner": "/root/python_custody_f1_f6_batch_correction_writer",
-      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it."
+      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer/report.md",
+      "correctionReportSha256": "08f77360c87cb01167e153848235a7a5ae028d0df0e5f8c057a25e87a318ab10",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer-root-seal.json"
     },
     {
       "id": "A98-20261011-SOURCE-F6",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "CFG-011",
         "CFG-013",
@@ -18024,11 +18039,14 @@
       "report": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/executable-python-custody-complete-source-fresh-root-seal.json",
       "owner": "/root/python_custody_f1_f6_batch_correction_writer",
-      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it."
+      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer/report.md",
+      "correctionReportSha256": "08f77360c87cb01167e153848235a7a5ae028d0df0e5f8c057a25e87a318ab10",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer-root-seal.json"
     },
     {
       "id": "A98-20261011-READER-R1",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "OPR-002",
         "OPR-003"
@@ -18043,11 +18061,14 @@
       "report": "/home/node/Documents/Codex/a98-evidence/installation-release-probe-complete-reader-fresh/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-release-probe-complete-reader-fresh-root-seal.json",
       "owner": "/root/installation_eof_optional_prism_batch_writer",
-      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it."
+      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer/report.md",
+      "correctionReportSha256": "87375394e13ec0dca3dbd17cf0a8249aef4b455849f4d7671e37c453557570aa",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer-root-seal.json"
     },
     {
       "id": "A98-20261011-QUALITY-Q1",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "OPR-002",
         "OPR-003"
@@ -18063,11 +18084,14 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-release-probe-complete-quality-fresh-root-seal.json",
       "owner": "/root/installation_eof_optional_prism_batch_writer",
       "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
-      "rootSourceClarification": "scripts/deploy.sh:1684-1685 guards cmd_prism via component_enabled before rendering; explicit render dispatch at 2877 invokes this guarded function. Do not claim unconditional effective Prism rendering. Complete reduced-profile trust path remains unavailable."
+      "rootSourceClarification": "scripts/deploy.sh:1684-1685 guards cmd_prism via component_enabled before rendering; explicit render dispatch at 2877 invokes this guarded function. Do not claim unconditional effective Prism rendering. Complete reduced-profile trust path remains unavailable.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer/report.md",
+      "correctionReportSha256": "87375394e13ec0dca3dbd17cf0a8249aef4b455849f4d7671e37c453557570aa",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer-root-seal.json"
     },
     {
       "id": "A98-20261011-QUALITY-Q2",
-      "state": "open-under-batch-correction",
+      "state": "author-corrected-pending-new-complete-independent-review",
       "catalogueIds": [
         "OPR-002",
         "OPR-003"
@@ -18082,7 +18106,10 @@
       "report": "/home/node/Documents/Codex/a98-evidence/installation-release-probe-complete-quality-fresh/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-release-probe-complete-quality-fresh-root-seal.json",
       "owner": "/root/installation_eof_optional_prism_batch_writer",
-      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it."
+      "acceptanceLimit": "Current independent material finding; author correction and green tests do not close it.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer/report.md",
+      "correctionReportSha256": "87375394e13ec0dca3dbd17cf0a8249aef4b455849f4d7671e37c453557570aa",
+      "correctionRootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer-root-seal.json"
     }
   ],
   "checks": [
@@ -19337,6 +19364,19 @@
       "baseRevision": "d68da902c174574d1186ffd4a3ff29e95b63474e",
       "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-python-executable-custody-and-installation/result.json",
       "acceptanceLimit": "Complete selected 230-test integration suite; not semantic review, all acceptance mutations or package acceptance. Current independent FAIL findings remain open."
+    },
+    {
+      "command": "node --test --test-concurrency=2 (9 API suites, Python discovery, OPS environment contracts)",
+      "state": "observed-terminal-pass-root-bounded",
+      "exitCode": 0,
+      "tests": 235,
+      "passed": 235,
+      "failed": 0,
+      "skipped": 0,
+      "sourceAndPagesUnchanged": true,
+      "baseRevision": "8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32",
+      "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-custody-f1-f6-and-installation/result.json",
+      "acceptanceLimit": "Complete selected integration suite; new independent material discovery/linked-trust observations remain under complete review. No semantic/package/global acceptance."
     }
   ],
   "reviewAssignments": [
@@ -21345,13 +21385,49 @@
       "verifiedArtifacts": 107,
       "scope": "Complete assigned installation and release documentation quality scope",
       "acceptanceLimit": "Assigned facets only, no package/global/publication/live acceptance"
+    },
+    {
+      "agent": "/root/installation_eof_prism_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "running complete independent assigned installation/release scope",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-source-fresh/report.md",
+      "scope": "Complete frozen installation and linked release procedure; distinct role only, no prior verdict inherited"
+    },
+    {
+      "agent": "/root/installation_eof_prism_complete_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "running complete independent assigned installation/release scope",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-eof-prism-complete-reader-fresh/report.md",
+      "scope": "Complete frozen installation and linked release procedure; distinct role only, no prior verdict inherited"
+    },
+    {
+      "agent": "/root/python_custody_f1_f6_qualified_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "running complete coupled tooling Source review",
+      "report": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-qualified-complete-source-fresh/report.md",
+      "scope": "Complete frozen scanner/acquisition/receiver/protected qualification Source scope, not inherited test approval"
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open: root 230/230 integration tests PASS on frozen sources/pages; new independent Source F1-F6, Reader R1 and Quality Q1-Q2 FAIL under parallel correction.",
+    "stage": "AP09.8 open: new root235/235PASS stable sources/pages; distinct complete fresh Source/Reader reviews still active and have new material observations. No package acceptance.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish both exclusive correction batches, integrate exact protected source qualification without weakening guards, run full selected integration suite and new distinct fresh complete reviews. Then source-bound generation, full configuration mutations and all remaining AP09.8 requirements/gates/Astra.",
+    "next": "Finish whole review batches and root-seal final reports. Correct full new discovery and linked Worker Trust prerequisite/state/cleanup findings in exclusive parallel writers, then new complete affected-scope Source/Reader/Quality reviews. Do not review known failed candidate through final Quality/Astra prematurely. Full source-bound generation/configmutations/all gates remain required.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -21364,8 +21440,9 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/python_custody_f1_f6_batch_correction_writer",
-      "/root/installation_eof_optional_prism_batch_writer"
+      "/root/installation_eof_prism_complete_source_fresh",
+      "/root/installation_eof_prism_complete_reader_fresh",
+      "/root/python_custody_f1_f6_qualified_complete_source_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -25501,6 +25578,42 @@
       },
       "state": "No package closure; next whole-batch corrections followed by distinct fresh full-scope reviews",
       "rootSourceClarification": "Actual cmd_prism at deploy.sh:1684-1685 honors disabled Prism for render too; original Quality report dispatch-only inference does not prove effective rendering. Mandatory full-profile trust mismatch remains material."
+    },
+    "custodyF1F6AndInstallationCorrection": {
+      "state": "author-frozen-not-independent-acceptance",
+      "baseRevision": "8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32",
+      "authorEvidence": {
+        "pythonRootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-batch-correction-writer-root-seal.json",
+        "pythonArtifacts": 8,
+        "installationRootSeal": "/home/node/Documents/Codex/a98-evidence/installation-eof-optional-prism-batch-writer-root-seal.json",
+        "installationArtifacts": 157,
+        "protectedAuthorityRootSeal": "/home/node/Documents/Codex/a98-evidence/python-custody-f1-f6-protected-authority-integrator-root-seal.json",
+        "protectedAuthorityArtifacts": 162
+      },
+      "authorChecks": "Python27/27 and actual436environment names terminal0; installation45Bash syntax/12authorization/11profile/66local structural links terminal outcomes. Author checks only.",
+      "rootFullIntegration": {
+        "command": "node --test --test-concurrency=2 (9 API suites, Python discovery, OPS environment contracts)",
+        "state": "observed-terminal-pass-root-bounded",
+        "exitCode": 0,
+        "tests": 235,
+        "passed": 235,
+        "failed": 0,
+        "skipped": 0,
+        "sourceAndPagesUnchanged": true,
+        "baseRevision": "8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32",
+        "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-custody-f1-f6-and-installation/result.json",
+        "acceptanceLimit": "Complete selected integration suite; new independent material discovery/linked-trust observations remain under complete review. No semantic/package/global acceptance."
+      },
+      "frozenSources": {
+        "scripts/docs-configuration-inventory.mjs": "b8cb884c85e364ccf99c46d1ca8044a94b6e0532b657cccab7bffdffe30855f4",
+        "scripts/tests/python-environment-discovery.test.mjs": "6d33b6d3746b0b38512b65e373f44cb3e20fdf6181b95763d743b62bef2e0d14",
+        "docs/site/use/install.md": "319cf8f7890060422c28246e7467269f97ddb3bed3685609bd8ed855dc28da67",
+        "docs/site/use/maintenance.md": "70647b0073ea349545f3633a51f9c5a5553ea6c6850fd2858ca713dd0040e8ce",
+        "scripts/docs-api-output-discovery.mjs": "94d4b14992087d5dcebe766d5b194b779dbea80f63c43742227f3685036abcdc",
+        "scripts/docs-api-producer-adapter-authorities.json": "a6f9f0b13bbc8c1e22340ba23e44324a6347e89b113a6488f8e131db27d210e7"
+      },
+      "newActualDependency": "ops/pod/test/app_server_smoke.py parsed read-only as finite repository-bound interpreter stdin; no target literal environment readers. New target readers explicitly fail closed with target source identity.",
+      "protectedAuthorityAuthorChecks": "25API/9authority/4caller and5protected guard negatives terminal expected outcomes; actual12recipes27operations/siximports15selectedmodules unchanged. Two exact Source hash/anchor replacements only; author evidence not independent approval."
     }
   }
 }
