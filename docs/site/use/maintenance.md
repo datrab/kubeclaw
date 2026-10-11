@@ -192,7 +192,7 @@ before running it. No live retirement result is established by this guide.
 >
 > [The command requires explicit context and deletion intent, then selects claims](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L6-L31).
 > [It verifies bound-volume ownership before release and resource removal](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L33-L55).
-> [The conditional volume patch tests ownership before claim deletion and bounded waits](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L57-L78).
+> [The conditional volume patch tests ownership before claim deletion and bounded waits](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L57-L77).
 
 ## Supported Versions
 

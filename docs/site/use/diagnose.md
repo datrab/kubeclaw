@@ -1088,15 +1088,155 @@ The [deployed model route names `gemini-embedding-001` and its Vertex
 provider](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/litellm-config.yaml#L1-L11).
 The [deployment distinguishes liveliness and readiness probes](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/litellm-deployment.yaml#L47-L63).
 The [secured policy separates database egress from world egress](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/network-policies.yaml#L248-L270).
-The temporary denial and observer below test those boundaries. Their 70-second
-outer deadline and cause classification are exercise rules, not a claim about
-LiteLLM's inner retry settings. No live upstream-denial result is available.
+The direct HTTP probes below test the LiteLLM-to-Vertex route. They bypass the
+OpenClaw memory manager, even when they run inside `agent-nova`. Their
+70-second outer deadline and cause classification belong to the route observer.
+They do not prove OpenClaw retries, memory state, or end-consumer recovery.
+Run the memory-client task below as well. No live upstream-denial or
+memory-client result is established here.
 
 This exercise requires the secured Cilium profile. The temporary
 `CiliumNetworkPolicy` denies only world egress from the LiteLLM Pod; cluster
 egress to its PostgreSQL remains available. A different CNI must use its
 maintained equivalent deny-and-restore command and demonstrate the same narrow
-boundary. First prove gateway readiness and a real embedding.
+boundary. Use a disposable secured cluster with no active memory writers or
+agent jobs. The denial affects every consumer of this LiteLLM deployment.
+First prove gateway readiness, a route embedding, and the memory-client
+baseline below. Stop before injecting the fault if any baseline check fails.
+
+#### Prepare the OpenClaw Memory Reader
+
+This task targets OpenClaw `v2026.9.4`, source commit
+`3a9d69db306cd7f081e06254cb89c4bcc14a7107`, selected by the pinned
+KubeClaw image. Run these commands from the operator shell used for this exercise. Use the
+existing `NAMESPACE`, `EVIDENCE_DIR`, and `assert_cluster_binding` procedure.
+Access must permit Pod exec, Deployment and Pod reads, and creation and removal
+of the named Cilium policy. The agent container must have Node, the pinned
+OpenClaw entry point `/app/openclaw.mjs`, and a running gateway that supports
+`secrets.resolve`. Keep the gateway running: the CLI resolves the configured
+memory SecretRef through its authenticated gateway snapshot. A route probe
+can succeed while this resolution fails.
+
+The chart enables `memory.search`, selects sources `memory` and `sessions`,
+provider `openai-compatible`, model `gemini-embedding-001`, and the chart's
+LiteLLM `/v1` base URL. Its remote key is the `LITELLM_API_KEY` SecretRef.
+Init seeds `/home/node/.openclaw/openclaw.json` and synchronizes its managed
+memory settings on restart. It creates
+`/home/node/.openclaw/workspace/memory` on the workspace volume.
+[The rendered settings](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75),
+[workspace and config initialization](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L419-L438),
+and [managed memory synchronization](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L516-L524)
+define this bootstrap. Do not substitute an inline key or a different provider.
+
+The supported caller is the OpenClaw memory CLI for agent `main`, not a Nova
+pipeline stage. `memory index` calls the configured manager's `sync` method;
+`memory search` calls its `search` method. The manager sends embeddings through
+the selected adapter to LiteLLM, which calls Vertex. OpenClaw keeps the derived
+SQLite index and embedding cache separately from the source workspace files.
+The status output identifies the actual workspace and database path. The source
+file below is synthetic input; it contains no project or session data.
+[CLI registration](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli.ts#L200-L246),
+[SecretRef resolution](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-runtime-common.ts#L57-L90),
+[manager acquisition and close](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-runtime-common.ts#L162-L224),
+and [SQLite and cache selection](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/agents/memory-search.ts#L296-L318)
+support this path. See [agent state and its backup boundary](../understand/data-and-state.md#complete-store-matrix).
+
+Define a bounded CLI observer. The seconds argument is an operator deadline,
+not a provider timeout. `OPENCLAW_LOG_LEVEL=debug` enables memory attempt
+observations for this child only. Retain both output streams: diagnostics can
+accompany the JSON document. Review captured logs before sharing them.
+[The environment override](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/logging/env-log-level.ts#L7-L17)
+and [console level selection](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/logging/console.ts#L56-L60)
+define this setting. It starts a separate Linux process group inside the
+container. At its deadline it terminates only that CLI group, then sends
+`SIGKILL` after five seconds if the group has not closed. Exit 124 means that
+this outer observer stopped the operation. It does not prove the client's
+terminal error or remote cancellation. Keep stderr and the exit code.
+
+```bash
+bounded_memory_cli() {
+  kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
+    node --input-type=module -e '
+import { spawn } from "node:child_process";
+const [seconds, ...args] = process.argv.slice(1);
+if (!/^[1-9][0-9]*$/.test(seconds) || args.length === 0) process.exit(2);
+const child = spawn(process.execPath, ["/app/openclaw.mjs", "memory", ...args], {
+  detached: true, stdio: "inherit",
+  env: { ...process.env, OPENCLAW_LOG_LEVEL: "debug" }
+});
+let overdue = false; let escalation;
+const killGroup = signal => {
+  try { process.kill(-child.pid, signal); }
+  catch (error) { if (error.code !== "ESRCH") throw error; }
+};
+const deadline = setTimeout(() => {
+  overdue = true;
+  console.error("memory observer deadline exceeded; result incomplete");
+  killGroup("SIGTERM");
+  escalation = setTimeout(() => killGroup("SIGKILL"), 5000);
+}, Number(seconds) * 1000);
+child.on("error", error => { console.error(error.message); process.exitCode = 1; });
+child.on("close", (code, signal) => {
+  clearTimeout(deadline); clearTimeout(escalation);
+  console.error(JSON.stringify({ observer: "memory-cli", overdue, code, signal }));
+  process.exitCode = overdue ? 124 : (code ?? 1);
+});
+' "$@"
+}
+assert_cluster_binding
+bounded_memory_cli 210 status --agent main --deep --json \
+  > "$EVIDENCE_DIR/memory-before.json" 2> "$EVIDENCE_DIR/memory-before.stderr"
+```
+
+Inspect the one entry for `main`. Its status must select the builtin backend,
+`openai-compatible`, `gemini-embedding-001`, and the expected workspace.
+The embedding probe must report `ok: true`. Disabled memory, another agent,
+a fallback provider, a gateway SecretRef error, or a failed vector probe stops
+this task. Exit zero alone is insufficient: status can report degraded state.
+[Deep status invokes the manager's embedding and vector probes and emits their
+results](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-status.runtime.ts#L161-L268).
+
+Create one new note, index it, and query its content. The generated file name
+is exclusive to this exercise. Retain its receipt for cleanup.
+
+```bash
+kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
+  node --input-type=module -e '
+import fs from "node:fs";
+import { randomUUID } from "node:crypto";
+const name = `litellm-reader-${randomUUID()}.md`;
+const text = "The amber observatory stores its calibration record in the northern cabinet.\n";
+fs.writeFileSync(`/home/node/.openclaw/workspace/memory/${name}`, text, { flag: "wx", mode: 0o600 });
+console.log(JSON.stringify({ name, text }));
+' > "$EVIDENCE_DIR/memory-note.json"
+bounded_memory_cli 900 index --agent main --verbose \
+  > "$EVIDENCE_DIR/memory-index-before.txt" 2> "$EVIDENCE_DIR/memory-index-before.stderr"
+bounded_memory_cli 210 search --agent main \
+  --query "Where does the amber observatory keep its calibration record?" --json \
+  > "$EVIDENCE_DIR/memory-query-before.json" 2> "$EVIDENCE_DIR/memory-query-before.stderr"
+```
+
+Require successful indexing without a vector-degraded warning. Require a query
+result whose path names the receipt's note and whose snippet contains the
+northern cabinet. A stale-index warning, empty result, or lexical-only result
+is incomplete evidence. Confirm the selected provider and successful query
+embedding in the consumer diagnostics; the result's text alone can also come
+from full-text search. Indexing can reuse cached embeddings for existing files;
+the new note tests new input. Retain the index output and provider request
+observations before the denial. The CLI may also write recall bookkeeping when
+dreaming is enabled; a search is not a promise of zero local writes.
+[Index outcomes and degraded-vector warnings](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L143-L190)
+and [query results and recall bookkeeping](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L193-L262)
+explain these checks.
+
+The 900-second index observer is a stop rule for this small test, not a bound
+for arbitrary indexing. Inline index requests have a 10-minute watchdog per
+call, three transient attempts or five rate-limit attempts, and can split
+failed batches recursively. Do not inject a second fault into indexing or
+start another index while a stopped writer remains uncertain. Keep the note
+and index evidence until the operator has proved that the CLI group stopped.
+
+#### Deny and Observe the Model Route
 
 ```bash
 assert_cluster_binding
@@ -1236,14 +1376,82 @@ after classifying an HTTP 500, 502, 503, or 504 response with an upstream
 network cause, or after reaching the 70-second outer timeout. Authentication,
 credential, configuration, database, model, quota, rate-limit, Pod, exec, and
 unclassified failures make the exercise fail. Record the model, route owner,
-Cilium policy, consumer operation, and bounded classification. The repository
-does not define OpenClaw's inner retry count, so do not claim a particular retry
-mapping from Pod logs. The safe decision is to keep the model-backed operation
-incomplete and stop at its owner deadline; never expose credentials or loop on
-the failure.
+Cilium policy, route-probe operation, and bounded classification. The repository
+does not configure an OpenClaw retry override. The selected upstream memory
+manager defines the client limits below. Route-probe logs do not measure those
+attempts. Keep the model-backed operation incomplete; never expose credentials
+or loop on the failure.
 
-Delete only the named denial policy, confirm its absence, and repeat one real
-embedding from the end consumer. Gateway readiness alone is not recovery.
+#### Observe the Actual Memory Consumer During the Fault
+
+Leave the named denial policy in place. Run the same memory query through the
+bounded CLI observer, with a distinct output file. Keep its exit code even if
+the command fails.
+
+```bash
+set +e
+bounded_memory_cli 210 search --agent main \
+  --query "Where does the amber observatory keep its calibration record?" --json \
+  > "$EVIDENCE_DIR/memory-query-fault.json" 2> "$EVIDENCE_DIR/memory-query-fault.stderr"
+memory_fault_status=$?
+set -e
+printf '%s\n' "$memory_fault_status" > "$EVIDENCE_DIR/memory-query-fault.exit"
+```
+
+For this query path, each embedding call has a 60-second watchdog. Recognized
+transport, timeout, 5xx, or rate-limit failures permit at most three attempts.
+The combined retry-wait budget is eight seconds. The query embedding budget
+can therefore consume 188 seconds; initialization and memory maintenance are
+outside that calculation. The 210-second observer limits this exercise as a
+whole. See [client limits and failure rules](../understand/platform-and-operations.md#embedding-client-limits-and-failure-rules)
+for the exact index limits, message classifier, and recursive splitting.
+
+Require the configured model and provider in the consumer evidence. If query
+retries exhaust, the manager wraps the cause as
+`MEMORY_EMBEDDING_OPERATION_FAILED` with operation `query`; the CLI reports
+`Memory search failed: ...` and exits 1. The wrapper retains the cause's
+message; the CLI does not serialize its internal `code` or `operation` fields.
+The fault check requires this CLI message, exit 1, query-attempt diagnostics,
+and an upstream timeout/network cause. To prove the upstream-timeout scenario,
+also require a timed-out call with its elapsed time and retry observations.
+A denial that returns an immediate network rejection proves that rejection
+only. It cannot pass the timeout scenario. Keep that result and have the
+platform operator supply an isolated, controlled upstream delay beyond the
+60-second query watchdog before repeating the registered timeout check.
+Do not change production model routing to obtain the delay. The structured error code is a
+source-level mapping, not a promised CLI output. Authentication, quota,
+malformed vectors, gateway SecretRef resolution, or local index errors are
+different failures. Exit 124 proves only that the outer observer stopped
+waiting. It cannot pass the terminal-mapping check. A zero exit, cached result,
+or full-text fallback also cannot prove this fault. Record that outcome and
+stop; do not reinterpret it as successful semantic memory.
+[The error fields and preserved message](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-errors.ts#L15-L32),
+[the query retry invocation and wrapper](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-ops.ts#L610-L665),
+[the retry profiles and loop](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L70-L173),
+and [search failure handling](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L218-L238)
+support this mapping.
+
+A tool caller can supply an AbortSignal: it stops query retries, interrupts
+retry waits, and reaches the provider watchdog. This CLI search call supplies
+no caller signal. Killing its process group is an operator stop, not proof of
+that tool cancellation contract. Vertex may already have processed a request
+when the caller stops. Keep request and timing evidence; do not infer zero
+provider use. The query failure does not commit a Nova stage or Prism operation
+result. Source notes and existing index data remain available for recovery;
+provider availability, memory freshness, and semantic-vector state must be
+checked separately. The manager can attempt fallback or return lexical results
+under other settings, which this task does not accept.
+[Search signal and fallback handling](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-search-orchestration.ts#L343-L419)
+explains this boundary. Keep the owning agent operation incomplete if it
+requires semantic recall. The platform operator repairs the route; the agent
+operation owner decides whether its original identity and deadline permit
+resume. Do not create a replacement run to hide the failed recall.
+
+#### Restore the Route and Memory Reader
+
+Delete only the named denial policy, confirm its absence, and repeat the direct
+HTTP embedding. This proves route recovery only. Then repeat the real memory
+reader. Gateway readiness or a direct vector alone is not consumer recovery.
 
 ```bash
 assert_cluster_binding
@@ -1262,6 +1470,74 @@ console.log(JSON.stringify({ model: b.model ?? "gemini-embedding-001", dimension
 litellm_policy_restore_pending=0
 trap - EXIT HUP INT TERM
 ```
+
+Repeat the supported memory calls after route restoration.
+
+```bash
+bounded_memory_cli 900 index --agent main --verbose \
+  > "$EVIDENCE_DIR/memory-index-recovery.txt" 2> "$EVIDENCE_DIR/memory-index-recovery.stderr"
+bounded_memory_cli 210 status --agent main --deep --json \
+  > "$EVIDENCE_DIR/memory-recovery.json" 2> "$EVIDENCE_DIR/memory-recovery.stderr"
+bounded_memory_cli 210 search --agent main \
+  --query "Where does the amber observatory keep its calibration record?" --json \
+  > "$EVIDENCE_DIR/memory-query-recovery.json" 2> "$EVIDENCE_DIR/memory-query-recovery.stderr"
+```
+
+Apply the same provider, embedding-probe, vector, freshness, and note-result
+checks as before the fault. Retain both baselines, fault exit and stderr,
+request timestamps and observed attempt count, route identity, Secret names
+without values, Pod identities, and policy cleanup evidence. The pinned manager defines the attempt limits. Count this CLI's
+`memory embeddings: query start` events and retry-wait messages to record
+observed attempts. Missing diagnostics leave the attempt observation unproved. Do not derive a count from readiness or the 70-second route observer.
+
+Remove only the synthetic note whose receipt you retained. Reindex to remove
+its derived search entry, then confirm its path is absent from a repeated
+query. Do not reset the agent database or delete source sessions to clean up a
+single probe. Recall bookkeeping and provider request records can remain.
+
+```bash
+kubectl -n "$NAMESPACE" exec -i deployment/agent-nova -c kubeclaw -- \
+  node --input-type=module -e '
+import fs from "node:fs";
+let input = ""; for await (const chunk of process.stdin) input += chunk;
+const { name, text } = JSON.parse(input);
+if (!/^litellm-reader-[0-9a-f-]{36}\.md$/.test(name)) process.exit(1);
+const file = `/home/node/.openclaw/workspace/memory/${name}`;
+if (fs.readFileSync(file, "utf8") !== text) process.exit(1);
+fs.unlinkSync(file);
+' < "$EVIDENCE_DIR/memory-note.json"
+bounded_memory_cli 900 index --agent main --verbose \
+  > "$EVIDENCE_DIR/memory-index-cleanup.txt" 2> "$EVIDENCE_DIR/memory-index-cleanup.stderr"
+bounded_memory_cli 210 search --agent main \
+  --query "Where does the amber observatory keep its calibration record?" --json \
+  > "$EVIDENCE_DIR/memory-query-cleanup.json" 2> "$EVIDENCE_DIR/memory-query-cleanup.stderr"
+```
+
+> **Source evidence — memory-consumer procedure**
+>
+> **Claim:** The selected CLI reaches the configured memory manager; the query
+> retry, timeout, and error rules come from that manager.
+> **Implementation:** The linked CLI runtime, retry policy, and query wrapper.
+> **Contract or setting:** The linked chart memory settings and SecretRef bootstrap.
+> **Test evidence:** Bash and Node syntax checks passed for these examples.
+> No target-image or live memory execution is established here.
+> **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`;
+> KubeClaw configuration `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`.
+> **Limit:** Syntax and source checks do not prove image compatibility, actual
+> request counts, timeout injection, or live end-consumer recovery.
+
+**Current verification boundary:** The pinned sources expose and configure this
+CLI path. These commands have not been run against the selected target image
+or a live cluster here. If the deployed image lacks this CLI, cannot resolve
+the managed SecretRef, or cannot produce the required semantic observations,
+stop at that exact failed step. Preserve its output and image identity for the
+platform and OpenClaw maintainers. A direct HTTP probe remains useful route
+evidence but cannot replace the missing memory-consumer result. Completion
+requires a clean reader to run the baseline, observe the bounded consumer
+failure and retries while LiteLLM remains ready, restore the route, and pass
+the same memory-reader checks. This procedure does not establish managed
+reasoning, tool-caller cancellation, image/source attestation, or a successful
+pipeline resume.
 
 ### Git Revision Unavailable
 

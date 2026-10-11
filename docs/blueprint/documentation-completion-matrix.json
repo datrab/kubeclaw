@@ -19327,9 +19327,11 @@
       "forkTurns": "none",
       "initialMode": "read-only",
       "revision": "9a2520230b51e12ced66ecdfd5df06bf50210713",
-      "state": "running",
-      "scope": "All53 AP09.7 requirements and all12 A97 Quality facets; full affected current content, no Source/Reader/Astra or live acceptance.",
-      "tree": "/home/node/Documents/Codex/a98-evidence/ap097-quality-9a252023"
+      "state": "completed FAIL",
+      "scope": "All53 Quality requirement facets51PASS/2FAIL; all12gate facets9PASS/3FAIL. Q01 citationcorrected subsequently; Q02 actual memory-client recovery writer active. No Source/Reader/Astra/live/global acceptance.",
+      "tree": "/home/node/Documents/Codex/a98-evidence/ap097-quality-9a252023",
+      "report": "/home/node/Documents/Codex/a98-evidence/ap097-quality-9a252-fresh-report/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-quality-9a252-root-seal.json"
     },
     {
       "agent": "/root/pv_schema_overlay_source_fresh",
@@ -20386,9 +20388,7 @@
     },
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
-      "/root/infrastructure_actual_invocation_correction_writer",
-      "/root/ap097_full_quality_9a252_fresh",
-      "/root/litellm_actual_memory_reader_writer"
+      "/root/infrastructure_actual_invocation_correction_writer"
     ]
   },
   "productBoundaries": [
@@ -22354,7 +22354,7 @@
       "independentAcceptance": false
     },
     "secretSerializedAndPartialMergeConsumer": {
-      "state": "author correction with15 bounded tests PASS; actual producer integration pending",
+      "state": "author-corrected;15 bounded tests and original111 shell API selection PASS; independent review pending",
       "receipt": "/home/node/Documents/Codex/a98-evidence/root-secret-partial-merge-tests.json",
       "independentAcceptance": false
     },
@@ -22378,7 +22378,7 @@
       "independentAcceptance": false
     },
     "secretJsonFieldTransformConsumer": {
-      "state": "author-corrected;17 bounded tests PASS; actual whole producer integration pending",
+      "state": "author-corrected;17 bounded tests and original111 shell API selection PASS; independent review pending",
       "receipt": "/home/node/Documents/Codex/a98-evidence/javascript-channel-consumer-correction-writer/root-json-secret-transfer-tests.json",
       "scope": "ActualGET JSON retains metadata; source-derived URL rewrite symbolic, no fabricated live values.",
       "independentAcceptance": false
@@ -22390,6 +22390,106 @@
       "result": "15 pages,1546 pinned source links,383 source files,8 Ops tools; checker includes required platform mutations",
       "initialSetupFailure": "Dependency symlink appeared as untracked path in Git source enumeration; private Git excludes now omit only dependency symlink. No checker/source changes.",
       "mainGeneratedOutputsChanged": false,
+      "independentAcceptance": false
+    },
+    "ap097Quality9a252": {
+      "reviewer": "/root/ap097_full_quality_9a252_fresh",
+      "reviewedRevision": "9a2520230b51e12ced66ecdfd5df06bf50210713",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-quality-9a252-root-seal.json",
+      "verdict": "FAIL",
+      "requirements": {
+        "pass": 51,
+        "fail": 2
+      },
+      "gateQualityFacets": {
+        "pass": 9,
+        "fail": 3
+      },
+      "findings": [
+        "Invalid pinned source citation endline145 exceeds144; corrected in b0307c23, not retroaccepted",
+        "Direct gateway probes bypass actual memory consumer; current diagnosis writer owns correction"
+      ],
+      "independentPackageAcceptance": false
+    },
+    "shellConsumerBoundaryTraversal": {
+      "reportedSession": 93073,
+      "reportedExitCode": 0,
+      "reportedRemainingBoundaries": 0,
+      "author": "/root/infrastructure_actual_invocation_correction_writer",
+      "state": "author original full traversal and API selection PASS; integrity verified; current classifier correction requires rerun",
+      "scope": "Finite selected-shell consumer boundary only; not a full generated configuration verdict",
+      "independentAcceptance": false,
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/infrastructure-operation-follow-root-seal.json",
+      "artifactHashesVerified": 25,
+      "sourceFilesVerified": 34,
+      "changedSource": "scripts/docs-api-output-role-classification.mjs now owned by correction writer",
+      "selectedApiContexts": 111,
+      "gvks": 18
+    },
+    "strategicPatchSelection": {
+      "state": "author-corrected;22 focused tests and original111 shell API selection PASS; full integrated suite and independent review pending",
+      "author": "/root/strategic_patch_selection_writer",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/strategic-patch-selection-root-seal.json",
+      "independentAcceptance": false
+    },
+    "litellmActualMemoryReader": {
+      "state": "author-corrected; syntax/source checks PASS; independent review pending",
+      "author": "/root/litellm_actual_memory_reader_writer",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/litellm-actual-memory-reader-root-seal.json",
+      "scope": "Actual supported memory status/index/search, gatewaySecretRef, source-backed retry/cancellation and narrow cleanup; route probe separate.",
+      "liveExecution": false,
+      "targetImageExecution": false,
+      "independentAcceptance": false
+    },
+    "maintenanceSourceRangeCorrection": {
+      "state": "author-corrected",
+      "file": "docs/site/use/maintenance.md",
+      "sourceRevision": "2f404b02baae29d3b6c5422f7d61481127da1382",
+      "sourcePath": "scripts/remove-qdrant.sh",
+      "lineRange": [
+        57,
+        77
+      ],
+      "scope": "Source endline checked from pinned gitshow bytes; no live retirement or independent acceptance."
+    },
+    "integratedApiSuite": {
+      "session": 58021,
+      "state": "terminal-FAIL",
+      "evidenceDirectory": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-c978",
+      "scope": "All8 current api-*.test.mjs files; frozen producer/consumer hashes before and after, no globalacceptance.",
+      "exitCode": 1,
+      "tests": 172,
+      "pass": 142,
+      "fail": 30,
+      "sourceHashesUnchanged": true,
+      "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-c978/result.json",
+      "diagnosis": "Most failures report missing Go executable; two actual defects in finite JavaScript query qualification and Ops renderer fixture dependencies reproduced by correction author.",
+      "next": "Author two-file correction, then full integrated suite with KUBECLAW_DOCS_GO_BINARY=/home/node/Documents/Codex/a98-evidence/argo-receiver-writer/go/bin/go",
+      "independentAcceptance": false
+    },
+    "nativeQueryAndOpsFixtureCorrection": {
+      "author": "/root/js_native_and_ops_fixture_correction_writer",
+      "state": "author complete;130 API-reference tests and Root172 integrated tests PASS; independent review pending",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/js-native-and-ops-fixture-correction-root-seal.json",
+      "corrections": [
+        "Finite actual GET-only caller set with refreshed receipt mutation negatives",
+        "Complete actual Ops fixture source dependencies; retain changed ConfigMap field detection"
+      ],
+      "independentAcceptance": false
+    },
+    "integratedApiSuiteCorrected": {
+      "session": 47523,
+      "state": "terminal-PASS",
+      "evidenceDirectory": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-corrected",
+      "goBinary": "/home/node/Documents/Codex/a98-evidence/argo-receiver-writer/go/bin/go",
+      "scope": "All8 current API files; exact frozen source hashes before/after; no independent semantic acceptance.",
+      "exitCode": 0,
+      "tests": 172,
+      "pass": 172,
+      "fail": 0,
+      "skipped": 0,
+      "sourceHashesUnchanged": true,
+      "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-corrected/result.json",
       "independentAcceptance": false
     }
   }

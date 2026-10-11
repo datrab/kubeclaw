@@ -337,6 +337,67 @@ export function jsonPatchSelectedEntries(apiVersion, kind, operations) {
   });
 }
 
+// Transport operations are selected against pinned schema merge annotations.
+// Numeric traversal positions below are patch ordinals, never live list indices.
+export function strategicPatchSelectedEntries(apiVersion, kind, body) {
+  const authority = apiResourceFieldBoundaries(apiVersion, kind);
+  const entries = [];
+  function walk(node, actual = [], selectors = [], itemContext = null) {
+    const fieldPath = canonical(yamlFieldPath(actual));
+    const boundary = authority.find(row => matches(tokens(row.fieldPath), actual));
+    const object = node && typeof node === 'object' && !Array.isArray(node);
+    const directive = object && Object.hasOwn(node, '$patch');
+    if (object) assert(Object.keys(node).every(key => !key.startsWith('$') || key === '$patch'),
+      `API_PRODUCT_STRATEGIC_PATCH_DIRECTIVE_UNSUPPORTED: ${fieldPath}`);
+    if (directive) {
+      assert(node.$patch === 'delete' && itemContext?.mergeKey,
+        `API_PRODUCT_STRATEGIC_PATCH_DIRECTIVE_UNSUPPORTED: ${fieldPath}`);
+      assert(Object.keys(node).length === 2 && Object.hasOwn(node, itemContext.mergeKey),
+        `API_PRODUCT_STRATEGIC_PATCH_DELETE_SELECTOR_INVALID: ${fieldPath}`);
+    }
+    const evidence = { requestPatchType:'strategic', role:directive ? 'delete-target' : 'submitted-field',
+      ...(directive ? { operation:'delete', directive:'$patch', targetPath:fieldPath } : {}),
+      selectors, valueStatus:'Authored partial patch; existing values and live list positions are not observed.' };
+    entries.push({ actual, node:undefined, ...evidence });
+    if (Array.isArray(node)) {
+      const contract = boundary?.contract;
+      assert(contract?.type === 'array', `API_PRODUCT_STRATEGIC_PATCH_ARRAY_UNQUALIFIED: ${fieldPath}`);
+      const strategies = (contract['x-kubernetes-patch-strategy'] ?? '').split(',').filter(Boolean);
+      assert(strategies.every(strategy => ['merge','retainKeys'].includes(strategy)),
+        `API_PRODUCT_STRATEGIC_PATCH_STRATEGY_UNSUPPORTED: ${fieldPath}`);
+      const merge = strategies.includes('merge');
+      const mergeKey = contract['x-kubernetes-patch-merge-key'];
+      const item = authority.find(row => matches(tokens(row.fieldPath), [...actual,0]));
+      for (const [patchItemOrdinal, child] of node.entries()) {
+        let nextSelectors = selectors;
+        if (merge && item?.contract.type === 'object') {
+          assert(typeof mergeKey === 'string' && mergeKey.length && child && typeof child === 'object'
+            && !Array.isArray(child) && Object.hasOwn(child,mergeKey)
+            && ['string','number'].includes(typeof child[mergeKey]),
+            `API_PRODUCT_STRATEGIC_PATCH_MERGE_KEY_REQUIRED: ${fieldPath}`);
+          const keyBoundary = authority.find(row => matches(tokens(row.fieldPath), [...actual,0,mergeKey]));
+          assert(keyBoundary && (keyBoundary.contract.type === typeof child[mergeKey]
+            || keyBoundary.contract.type === 'integer' && Number.isInteger(child[mergeKey])),
+            `API_PRODUCT_STRATEGIC_PATCH_MERGE_KEY_UNQUALIFIED: ${fieldPath}`);
+          nextSelectors = [...selectors, { listPath:fieldPath, mergeKey, value:child[mergeKey], patchItemOrdinal,
+            patchStrategy:contract['x-kubernetes-patch-strategy'],
+            schemaAuthority:boundary.authority, schemaAuthoritySha256:boundary.authoritySha256 }];
+        }
+        walk(child,[...actual,patchItemOrdinal],nextSelectors,merge ? {mergeKey} : null);
+      }
+    } else if (object) {
+      for (const [key, child] of Object.entries(node)) {
+        if (key === '$patch') continue;
+        const before = entries.length;
+        walk(child,[...actual,key],selectors);
+        if (directive) Object.assign(entries[before], { role:'delete-selector', operation:'delete', directive:'$patch', targetPath:fieldPath });
+      }
+    }
+  }
+  walk(body);
+  return entries;
+}
+
 export function inheritedSecretFieldSelection(apiVersion, kind, transfer) {
   const authority = apiResourceFieldBoundaries(apiVersion, kind);
   assert(apiVersion === 'v1' && kind === 'Secret'
@@ -465,27 +526,31 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
     ]).get(context.requestMethod) ?? context.requestMethod;
     const jsonPatch = context.requestPatchType === 'json';
     const mergePatch = context.requestPatchType === 'merge';
-    if (mergePatch) {
+    const strategicPatch = context.requestPatchType === 'strategic';
+    if (mergePatch || strategicPatch) {
+      const transport = strategicPatch ? 'STRATEGIC' : 'MERGE';
       assert(requestMethod === 'PATCH' && context.requestReceiver?.apiVersion === apiVersion
         && context.requestReceiver?.kind === kind
         && typeof context.requestReceiver?.name === 'string' && context.requestReceiver.name.trim().length > 0,
-        'API_PRODUCT_MERGE_PATCH_RECEIVER_UNQUALIFIED');
-      assert(value && typeof value === 'object' && !Array.isArray(value), 'API_PRODUCT_MERGE_PATCH_BODY_UNQUALIFIED');
+        `API_PRODUCT_${transport}_PATCH_RECEIVER_UNQUALIFIED`);
+      assert(value && typeof value === 'object' && !Array.isArray(value), `API_PRODUCT_${transport}_PATCH_BODY_UNQUALIFIED`);
       assert((!Object.hasOwn(value, 'apiVersion') || value.apiVersion === apiVersion)
-        && (!Object.hasOwn(value, 'kind') || value.kind === kind), 'API_PRODUCT_MERGE_PATCH_IDENTITY_CONFLICT');
+        && (!Object.hasOwn(value, 'kind') || value.kind === kind), `API_PRODUCT_${transport}_PATCH_IDENTITY_CONFLICT`);
     }
     if (jsonPatch) {
       assert(requestMethod === 'PATCH' && context.requestReceiver?.apiVersion === apiVersion && context.requestReceiver?.kind === kind
         && typeof context.requestReceiver?.name === 'string' && context.requestReceiver.name.length > 0, 'API_PRODUCT_JSON_PATCH_RECEIVER_UNQUALIFIED');
       assert.deepEqual(value, context.patchOperations, 'API_PRODUCT_JSON_PATCH_BODY_DRIFT');
     }
-    assert(jsonPatch || mergePatch || value?.apiVersion === apiVersion && value?.kind === kind, `API_PRODUCT_RESOURCE_DRIFT: ${context.path}#${context.document}`);
+    assert(jsonPatch || mergePatch || strategicPatch || value?.apiVersion === apiVersion && value?.kind === kind, `API_PRODUCT_RESOURCE_DRIFT: ${context.path}#${context.document}`);
     const instances = [];
     let patchEvidence = null;
     let sequenceEvidence = null;
     function visit(node, actual = []) {
       if(context.inferredIdentity&&actual.length===1&&['apiVersion','kind'].includes(actual[0]))return;
       const actualPath = yamlFieldPath(actual);
+      assert(strategicPatch || actual.at(-1) !== '$patch',
+        `API_PRODUCT_PATCH_DIRECTIVE_TRANSPORT_UNQUALIFIED: ${actualPath}`);
       if (actual[0] === 'metadata') metadataPaths.add(canonical(actualPath));
       const boundary = authority.find(row => matches(tokens(row.fieldPath), actual));
       if (!boundary && actual.length) {
@@ -512,7 +577,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         }
       }
       if (boundary) {
-        add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: sequenceEvidence ? canonical(actualPath) : actualPath, sourceDigest: context.sourceDigest, ...(sequenceEvidence ?? {}), ...(mergePatch ? { requestPatchType:'merge', requestReceiver:context.requestReceiver } : {}), ...(context.conditions?.length ? { conditions: context.conditions } : {}), ...(context.requestMethod ? { requestMethod: context.requestMethod, ...(context.requestAlternatives ? { requestAlternatives: context.requestAlternatives } : {}) } : {}), ...(patchEvidence ?? {}) });
+        add(boundary, { reason: patchEvidence ? `${strategicPatch ? 'strategic' : 'json'}-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: sequenceEvidence || strategicPatch ? canonical(actualPath) : actualPath, sourceDigest: context.sourceDigest, ...(sequenceEvidence ?? {}), ...(mergePatch || strategicPatch ? { requestPatchType:context.requestPatchType, requestReceiver:context.requestReceiver } : {}), ...(strategicPatch ? { requestOperation:context.requestOperation, requestInvocation:context.requestInvocation, requestConstructor:context.requestConstructor, forwardedProducer:context.forwardedProducer } : {}), ...(context.conditions?.length ? { conditions: context.conditions } : {}), ...(context.requestMethod ? { requestMethod: context.requestMethod, ...(context.requestAlternatives ? { requestAlternatives: context.requestAlternatives } : {}) } : {}), ...(patchEvidence ?? {}) });
         if(requestMethod!=='PATCH'&&kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
           const receiverDefault=runtimeDefaultApplicability(kind,actualPath,{},value,records.get(boundary.fieldPath));
           const child=authority.find(row=>matches(tokens(row.fieldPath),[...actual,0]));
@@ -626,6 +691,14 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       }
       if (Array.isArray(node)) node.forEach((item, index) => visit(item, [...actual, index]));
       else if (node && typeof node === 'object') Object.entries(node).forEach(([key, item]) => visit(item, [...actual, key]));
+    }
+    if (strategicPatch) {
+      for (const entry of strategicPatchSelectedEntries(apiVersion, kind, value)) {
+        const { actual, node, ...evidence } = entry;
+        patchEvidence = evidence;
+        visit(node, actual);
+      }
+      continue;
     }
     if (jsonPatch) {
       for (const entry of jsonPatchSelectedEntries(apiVersion, kind, value)) {

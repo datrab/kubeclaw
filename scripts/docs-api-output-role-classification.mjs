@@ -101,8 +101,8 @@ export function deriveNativeOperationFacts(root,source,selectors) {
   const tree=ts.createSourceFile(file,bytes,ts.ScriptTarget.Latest,true),definitions=new Map(),imports=new Map(),reexports=[];
   for(const statement of tree.statements){
    if(statement.name)definitions.set(statement.name.getText(tree),statement);
-   if(statement.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.DefaultKeyword))definitions.set('default',statement);
-   if(ts.isVariableStatement(statement))for(const declaration of statement.declarationList.declarations)if(ts.isIdentifier(declaration.name))definitions.set(declaration.name.text,statement);
+   if(statement.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.DefaultKeyword)||ts.isExportAssignment(statement)&&!statement.isExportEquals)definitions.set('default',statement);
+   if(ts.isVariableStatement(statement))for(const declaration of statement.declarationList.declarations){if(ts.isIdentifier(declaration.name))definitions.set(declaration.name.text,statement);if(ts.isObjectBindingPattern(declaration.name))for(const element of declaration.name.elements)if(ts.isIdentifier(element.name))definitions.set(element.name.text,statement);}
    if((ts.isImportDeclaration(statement)||ts.isExportDeclaration(statement))&&statement.moduleSpecifier&&ts.isStringLiteralLike(statement.moduleSpecifier)&&(statement.moduleSpecifier.text.startsWith('.')||statement.moduleSpecifier.text.startsWith('@kubeclaw/'))){
     const specifier=statement.moduleSpecifier.text;
     if(specifier.startsWith('@kubeclaw/')&&statement.importClause?.isTypeOnly)continue;
@@ -127,13 +127,19 @@ export function deriveNativeOperationFacts(root,source,selectors) {
  }
  function symbol(state,name,seen=new Set()){
   if(!state)return;if(!state.tree){inputFact(state.file);return;}const key=state.file+':'+name;if(seen.has(key))return;seen.add(key);
-  if(state.definitions.has(name)){enqueue(state,state.definitions.get(name));return;}
+  if(state.definitions.has(name)){const definition=state.definitions.get(name);enqueue(state,definition);if(ts.isVariableStatement(definition))for(const declaration of definition.declarationList.declarations)if(ts.isObjectBindingPattern(declaration.name)&&declaration.initializer){const element=declaration.name.elements.find(element=>ts.isIdentifier(element.name)&&element.name.text===name),binding=element&&namespaceBinding(state,declaration.initializer);if(binding){enqueue(state,binding.statement);symbol(importedState(state,binding),element.propertyName?.getText(state.tree).replace(/^['"]|['"]$/gu,'')??element.name.text,seen);}}return;}
   const imported=state.imports.get(name);if(imported){enqueue(state,imported.statement);if(imported.local&&imported.local!==name)symbol(state,imported.local,seen);else if(imported.specifier)symbol(importedState(state,imported),imported.name,seen);return;}
   for(const reexport of state.reexports){const target=importedState(state,reexport);if(hasSymbol(target,name)){enqueue(state,reexport.statement);symbol(target,name,seen);}}
  }
+ function namespaceBinding(state,node,seen=new Set()) {
+  if(!node||!ts.isIdentifier(node)||seen.has(node.text))return null;seen.add(node.text);
+  const imported=state.imports.get(node.text);if(imported?.name==='*')return imported;
+  const definition=state.definitions.get(node.text);const declaration=definition&&ts.isVariableStatement(definition)?definition.declarationList.declarations.find(value=>ts.isIdentifier(value.name)&&value.name.text===node.text):null;
+  return declaration?.initializer?namespaceBinding(state,declaration.initializer,seen):null;
+ }
  const initial=read(source);if(!initial?.tree)return initial?[{source,kind:'source-input',sha256:createHash('sha256').update(initial.bytes).digest('hex')}]:null;
  for(const selector of selectors){let matches=[];function visit(node){if(selector.symbol&&node.name?.getText(initial.tree)===selector.symbol&&(ts.isFunctionDeclaration(node)||ts.isClassDeclaration(node)||ts.isVariableDeclaration(node)||ts.isTypeAliasDeclaration(node)))matches.push(node);if(selector.expression&&node.getText(initial.tree)===selector.expression&&(selector.line===undefined||initial.tree.getLineAndCharacterOfPosition(node.getStart(initial.tree)).line+1===selector.line))matches.push(node);ts.forEachChild(node,visit);}visit(initial.tree);if(!matches.length)return null;for(const node of matches)enqueue(initial,enclosing(node));}
- while(pending.length){const {state,node}=pending.pop();const names=new Set();function visit(child){if(ts.isIdentifier(child))names.add(child.text);if(ts.isNewExpression(child)&&child.expression.getText(state.tree)==='URL'&&ts.isStringLiteralLike(child.arguments?.[0])&&child.arguments?.[1]?.getText(state.tree)==='import.meta.url'&&child.arguments[0].text.endsWith('.json')){const file=path.posix.normalize(path.posix.join(path.posix.dirname(state.file),child.arguments[0].text));if(!fs.existsSync(path.join(root,file)))throw new Error(`OUTPUT_ROLE_SCHEMA_DEPENDENCY_UNQUALIFIED: ${file}`);inputFact(file);}ts.forEachChild(child,visit);}visit(node);for(const name of names){const imported=state.imports.get(name);if(imported?.name==='*'){enqueue(state,imported.statement);const target=importedState(state,imported);const members=new Set();function membersOf(child){if(ts.isPropertyAccessExpression(child)&&ts.isIdentifier(child.expression)&&child.expression.text===name)members.add(child.name.text);ts.forEachChild(child,membersOf);}membersOf(node);for(const member of members)symbol(target,member);}else symbol(state,name);}}
+ while(pending.length){const {state,node}=pending.pop();const names=new Set();function visit(child){if(ts.isIdentifier(child))names.add(child.text);if(ts.isPropertyAccessExpression(child)||ts.isElementAccessExpression(child)){const binding=namespaceBinding(state,child.expression),member=ts.isPropertyAccessExpression(child)?child.name.text:ts.isStringLiteralLike(child.argumentExpression)?child.argumentExpression.text:null;if(binding&&member){enqueue(state,binding.statement);symbol(importedState(state,binding),member);}}if(ts.isNewExpression(child)&&child.expression.getText(state.tree)==='URL'&&ts.isStringLiteralLike(child.arguments?.[0])&&child.arguments?.[1]?.getText(state.tree)==='import.meta.url'&&child.arguments[0].text.endsWith('.json')){const file=path.posix.normalize(path.posix.join(path.posix.dirname(state.file),child.arguments[0].text));if(!fs.existsSync(path.join(root,file)))throw new Error(`OUTPUT_ROLE_SCHEMA_DEPENDENCY_UNQUALIFIED: ${file}`);inputFact(file);}ts.forEachChild(child,visit);}visit(node);for(const name of names){const imported=state.imports.get(name);if(imported?.name==='*'){enqueue(state,imported.statement);const target=importedState(state,imported);const members=new Set();function membersOf(child){if(ts.isPropertyAccessExpression(child)&&ts.isIdentifier(child.expression)&&child.expression.text===name)members.add(child.name.text);ts.forEachChild(child,membersOf);}membersOf(node);for(const member of members)symbol(target,member);}else symbol(state,name);}}
  return [...facts.values()].sort((left,right)=>left.source.localeCompare(right.source)||left.kind.localeCompare(right.kind)||left.symbol.localeCompare(right.symbol)||left.sha256.localeCompare(right.sha256));
 }
 export function nativeOperationFactDigest(facts){return facts&&createHash('sha256').update(JSON.stringify(facts)).digest('hex');}
@@ -155,11 +161,11 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
   if(cache.has(file))return cache.get(file);
   const bytes=fs.readFileSync(path.join(root,file),'utf8');dependencies.add(file);
   const tree=ts.createSourceFile(file,bytes,ts.ScriptTarget.Latest,true);
-  const state={tree,file,processFunctions:new Set(['execFileSync','spawnSync','execFile','spawn']),declarations:new Map(),functions:new Map(),types:new Map(),typeDefinitions:new Map(),cliStrings:new Set(),classes:new Map(),mutations:[],allCalls:[],outputImports:new Map(),destructiveMutations:[],calls:[],imports:new Map(),reexports:[],sinks:[]};cache.set(file,state);
+  const state={tree,file,processFunctions:new Set(['execFileSync','spawnSync','execFile','spawn']),qualifiedProcessFunctions:new Set(),declarations:new Map(),functions:new Map(),types:new Map(),typeDefinitions:new Map(),cliStrings:new Set(),classes:new Map(),mutations:[],allCalls:[],outputImports:new Map(),destructiveMutations:[],calls:[],imports:new Map(),reexports:[],sinks:[]};cache.set(file,state);
   function publicFunction(owner){if(owner?.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.ExportKeyword))return true;for(let parent=owner?.parent;parent&&!ts.isSourceFile(parent)&&!ts.isFunctionLike(parent);parent=parent.parent)if((ts.isVariableStatement(parent)||ts.isClassDeclaration(parent))&&parent.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.ExportKeyword))return true;return false;}
   function visit(node) {
    if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier&&ts.isStringLiteralLike(node.moduleSpecifier)&&['node:fs','fs','node:fs/promises','fs/promises','node:process','process'].includes(node.moduleSpecifier.text)){const base=/process$/u.test(node.moduleSpecifier.text)?'process':'fs';if(node.importClause?.name)state.outputImports.set(node.importClause.name.text,base);if(node.importClause?.namedBindings&&ts.isNamespaceImport(node.importClause.namedBindings))state.outputImports.set(node.importClause.namedBindings.name.text,base);for(const element of node.importClause?.namedBindings?.elements??node.exportClause?.elements??[])state.outputImports.set(element.name.text,base+'.'+(element.propertyName?.text??element.name.text));}
-   if(ts.isImportDeclaration(node)&&ts.isStringLiteralLike(node.moduleSpecifier)&&['node:child_process','child_process'].includes(node.moduleSpecifier.text)){for(const element of node.importClause?.namedBindings?.elements??[])if(['execFileSync','spawnSync','execFile','spawn'].includes(element.propertyName?.text??element.name.text))state.processFunctions.add(element.name.text);if(node.importClause?.namedBindings&&ts.isNamespaceImport(node.importClause.namedBindings))for(const name of ['execFileSync','spawnSync','execFile','spawn'])state.processFunctions.add(node.importClause.namedBindings.name.text+'.'+name);}
+   if(ts.isImportDeclaration(node)&&ts.isStringLiteralLike(node.moduleSpecifier)&&['node:child_process','child_process'].includes(node.moduleSpecifier.text)){for(const element of node.importClause?.namedBindings?.elements??[])if(['execFileSync','spawnSync','execFile','spawn'].includes(element.propertyName?.text??element.name.text)){state.processFunctions.add(element.name.text);state.qualifiedProcessFunctions.add(element.name.text);}if(node.importClause?.namedBindings&&ts.isNamespaceImport(node.importClause.namedBindings))for(const name of ['execFileSync','spawnSync','execFile','spawn']){state.processFunctions.add(node.importClause.namedBindings.name.text+'.'+name);state.qualifiedProcessFunctions.add(node.importClause.namedBindings.name.text+'.'+name);}}
    if(ts.isClassDeclaration(node)&&node.name)state.classes.set(node.name.text,node);
    if((ts.isTypeAliasDeclaration(node)||ts.isInterfaceDeclaration(node))&&node.name)state.typeDefinitions.set(node.name.text,node);
    if(ts.isCallExpression(node))state.allCalls.push(node);
@@ -171,16 +177,18 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
    if(ts.isVariableDeclaration(node)&&ts.isArrayBindingPattern(node.name)&&node.initializer&&/process\.argv\.slice/u.test(node.initializer.getText(tree)))for(const element of node.name.elements)if(ts.isBindingElement(element)&&ts.isIdentifier(element.name)){state.types.set(element.name.text,'string');state.cliStrings.add(element.name.text);}
    if(ts.isVariableDeclaration(node)&&ts.isIdentifier(node.name)&&node.initializer){const choices=state.declarations.get(node.name.text)??[];let scope=node.parent;while(scope&&!ts.isBlock(scope)&&!ts.isSourceFile(scope))scope=scope.parent;choices.push({value:node.initializer,scope});state.declarations.set(node.name.text,choices);}
    if((ts.isVariableDeclaration(node)||ts.isParameter(node))&&ts.isIdentifier(node.name)&&node.type)state.types.set(node.name.text,node.type.getText(tree));
-   if(ts.isFunctionDeclaration(node)&&node.name)state.functions.set(node.name.text,node);
+   if(ts.isFunctionDeclaration(node)){if(node.name)state.functions.set(node.name.text,node);if(node.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.DefaultKeyword))state.functions.set('default',node);}
+   if(ts.isExportAssignment(node)&&!node.isExportEquals)state.declarations.set('default',[{value:node.expression,scope:tree}]);
    if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier)&&(node.moduleSpecifier.text.startsWith('.')||node.moduleSpecifier.text.startsWith('@kubeclaw/'))) {
     const target=resolveNativeModule(root,file,node.moduleSpecifier.text,dependency=>dependencies.add(dependency));
     if(fs.existsSync(path.join(root,target))&&ts.isExportDeclaration(node)&&!node.exportClause)state.reexports.push(target);
     if(fs.existsSync(path.join(root,target))&&node.importClause?.namedBindings&&ts.isNamespaceImport(node.importClause.namedBindings))state.imports.set(node.importClause.namedBindings.name.text,{file:target,name:'*'});
+    if(fs.existsSync(path.join(root,target))&&node.importClause?.name)state.imports.set(node.importClause.name.text,{file:target,name:'default'});
     if(fs.existsSync(path.join(root,target)))for(const element of node.importClause?.namedBindings?.elements??node.exportClause?.elements??[])state.imports.set(element.name.text,{file:target,name:element.propertyName?.text??element.name.text});
    }
    if(ts.isReturnStatement(node)&&node.expression&&(/JSON\.stringify|(?:yaml|YAML)\.(?:dump|stringify)/u.test(node.expression.getText(tree))||ts.isCallExpression(node.expression)&&node.expression.expression.getText(tree)==='JSON.parse'||ts.isTemplateExpression(node.expression)&&!node.expression.head.text.trim())){let owner=node.parent;while(owner&&!ts.isFunctionLike(owner))owner=owner.parent;if(publicFunction(owner))state.sinks.push({expression:{getText:()=> 'return'},arguments:[node.expression],getStart:()=>node.getStart(tree)});}
    if(ts.isArrowFunction(node)&&!ts.isBlock(node.body)&&publicFunction(node)&&/JSON\.(?:stringify|parse)|(?:yaml|YAML)\.(?:dump|stringify)/u.test(node.body.getText(tree)))state.sinks.push({expression:{getText:()=> 'return'},arguments:[node.body],getStart:()=>node.getStart(tree)});
-   if(ts.isCallExpression(node)&&state.processFunctions.has(node.expression.getText(tree))&&ts.isStringLiteralLike(node.arguments[0])&&node.arguments[0].text==='kubectl'&&(!ts.isArrayLiteralExpression(node.arguments[1])||node.arguments[1].elements.some(value=>ts.isSpreadElement(value)||ts.isStringLiteralLike(value)&&['apply','create','replace','patch'].includes(value.text)))){const options=node.arguments[2];const input=options&&ts.isObjectLiteralExpression(options)?options.properties.find(value=>ts.isPropertyAssignment(value)&&value.name.getText(tree)==='input')?.initializer:null;state.sinks.push({expression:{getText:()=> 'kubectl-request'},arguments:[input??node],getStart:()=>node.getStart(tree)});}
+   if(ts.isCallExpression(node)&&state.processFunctions.has(node.expression.getText(tree))&&ts.isStringLiteralLike(node.arguments[0])&&node.arguments[0].text==='kubectl'){const options=node.arguments[2];const input=options&&ts.isObjectLiteralExpression(options)?options.properties.find(value=>ts.isPropertyAssignment(value)&&value.name.getText(tree)==='input')?.initializer:null;state.sinks.push({expression:{getText:()=> 'kubectl-request'},arguments:[input??node],originalCall:node,getStart:()=>node.getStart(tree)});}
    if(ts.isCallExpression(node)&&['fetch','http.request','https.request'].includes(node.expression.getText(tree))&&/\/apis?\/(?:v[0-9]|[a-z0-9.-]+\/v[0-9])/u.test(node.arguments[0]?.getText(tree)??'')&&node.arguments.slice(1).some(value=>/\b(?:body|method)\s*:/u.test(value.getText(tree))))state.sinks.push({expression:{getText:()=> 'kubernetes-http-request'},arguments:[node],getStart:()=>node.getStart(tree)});
 
    ts.forEachChild(node,visit);
@@ -234,6 +242,22 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
   return null;
  }
  function symbol(state,name,seen=new Set()) {const key=state.file+':'+name;if(seen.has(key))return null;seen.add(key);const local=state.functions.get(name)??state.classes.get(name)??state.typeDefinitions.get(name)??state.declarations.get(name)?.find(choice=>ts.isSourceFile(choice.scope))?.value;if(local)return ts.isIdentifier(local)?symbol(state,local.text,seen):{node:local,state};const imported=state.imports.get(name);if(imported)return symbol(module(imported.file),imported.name,seen);for(const file of state.reexports){const found=symbol(module(file),name,seen);if(found)return found;}return null;}
+ // Resolve imported callable values before a receipt can assign their role.
+ // Namespace aliases and finite string members follow the same runtime module
+ // selection as named imports; opaque member access remains an explicit gap.
+ function callable(node,state,seen=new Set()) {
+  if(!node||seen.has(node))return null;seen=new Set([...seen,node]);
+  if(node.bindingExpression){if(!/^[A-Za-z_$][A-Za-z0-9_$]*$/u.test(node.bindingKey))return null;return callable(ts.factory.createPropertyAccessExpression(node.bindingExpression,node.bindingKey),state,seen);}
+  if(ts.isParenthesizedExpression(node)||ts.isAsExpression(node))return callable(node.expression,state,seen);
+  if(ts.isIdentifier(node)){const value=declarationFor(node,state);if(value&&state.mutations.some(write=>ts.isIdentifier(write.left)&&write.left.text===node.text&&write.end<node.pos&&declarationFor(write.left,state)===value))return null;if(value)return ts.isFunctionLike(value)?{node:value,state}:callable(value,state,seen);const resolved=symbol(state,node.text);return resolved&&ts.isFunctionLike(resolved.node)?resolved:resolved?callable(resolved.node,resolved.state,seen):null;}
+  if(ts.isPropertyAccessExpression(node)||ts.isElementAccessExpression(node)){
+   const key=ts.isPropertyAccessExpression(node)?node.name.text:ts.isStringLiteralLike(node.argumentExpression)?node.argumentExpression.text:null;
+   let base=node.expression;while(ts.isIdentifier(base)){const value=declarationFor(base,state);if(!value)break;if(state.mutations.some(write=>ts.isIdentifier(write.left)&&write.left.text===base.text&&write.end<base.pos&&declarationFor(write.left,state)===value))return null;if(seen.has(value))return null;seen.add(value);base=value;}
+   const imported=ts.isIdentifier(base)&&state.imports.get(base.text);
+   if(key&&imported?.name==='*'){const resolved=symbol(module(imported.file),key);return resolved&&ts.isFunctionLike(resolved.node)?resolved:resolved?callable(resolved.node,resolved.state,seen):null;}
+  }
+  return ts.isFunctionLike(node)?{node,state}:null;
+ }
  function klassOf(node,state) {
   if(ts.isIdentifier(node)){const value=declarationFor(node,state);return value?klassOf(value,state):null;}
   if(ts.isAwaitExpression(node))return klassOf(node.expression,state);
@@ -388,7 +412,8 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
    if(['JSON.stringify','yaml.dump','YAML.stringify','yaml.stringify','dump'].includes(name)&&node.arguments[0])return shape(node.arguments[0],state,seen);
    if(['path.join','path.resolve','path.basename','path.dirname','path.extname','fs.mkdtempSync','String'].includes(name)||ts.isPropertyAccessExpression(node.expression)&&['toString','trim','slice'].includes(node.expression.name.text)&&name.startsWith('process.argv['))return {role:'non-api',basis:'source-scalar-operation'};
    if(['Object.freeze','structuredClone','Buffer.from'].includes(name))return shape(node.arguments[0],state,seen);
-   if(ts.isIdentifier(node.expression)){const bound=(()=>{for(let parent=node.expression.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){const parameter=parent.parameters?.find(parameter=>parameter.name.getText(state.tree)===node.expression.text);if(parameter)return parameterBindings.get(parameter.name);break;}return null;})();if(bound&&(ts.isArrowFunction(bound.node)||ts.isFunctionExpression(bound.node)))return returns(bound.node,bound.state,seen,node.arguments,state);const resolved=symbol(state,node.expression.text);const fn=resolved?.node??declarationFor(node.expression,state);if(fn&&ts.isFunctionLike(fn))return returns(fn,resolved?.state??state,seen,node.arguments,state);return shape(node.expression,state,seen);}
+   if(ts.isIdentifier(node.expression)){const bound=(()=>{for(let parent=node.expression.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){const parameter=parent.parameters?.find(parameter=>parameter.name.getText(state.tree)===node.expression.text);if(parameter)return parameterBindings.get(parameter.name);break;}return null;})();if(bound&&(ts.isArrowFunction(bound.node)||ts.isFunctionExpression(bound.node)))return returns(bound.node,bound.state,seen,node.arguments,state);const resolved=callable(node.expression,state);const fn=resolved?.node??declarationFor(node.expression,state);if(fn&&ts.isFunctionLike(fn))return returns(fn,resolved?.state??state,seen,node.arguments,state);return shape(node.expression,state,seen);}
+   const importedCallable=callable(node.expression,state);if(importedCallable)return returns(importedCallable.node,importedCallable.state,seen,node.arguments,state);
    if(ts.isPropertyAccessExpression(node.expression)&&node.expression.name.text==='filter')return shape(node.expression.expression,state,seen);
    if(ts.isPropertyAccessExpression(node.expression)&&['map','flatMap'].includes(node.expression.name.text)) {
     const callback=node.arguments[0];if(ts.isArrowFunction(callback)||ts.isFunctionExpression(callback)){const collection=shape(node.expression.expression,state,seen);const role=collection.role!=='unknown'?{resolvedRole:collection.elements?.length===1?collection.elements[0]:{role:collection.role,...(collection.keys?{keys:collection.keys}:{}),...(collection.properties?{properties:collection.properties}:{}),basis:'resolved-map-input-elements'}}:null;const item=returns(callback,state,seen,role?[role]:[],state);return {role:item.role,elements:node.expression.name.text==='flatMap'&&item.elements?item.elements:[item],basis:'resolved-source-map-callback'};}
@@ -398,6 +423,61 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
    if(name==='JSON.parse'&&ts.isStringLiteralLike(node.arguments[0])){try{const value=JSON.parse(node.arguments[0].text);return {role:value&&typeof value==='object'&&('apiVersion'in value||'kind'in value)?'api':'non-api',basis:'parsed-literal'};}catch{return unknown(node,state);}}
   }
   return unknown(node,state);
+ }
+ // A source-level receipt cannot qualify another subprocess call. Resolve
+ // every effective argv alternative of the selected call before granting a
+ // reader role. null scalar slots are allowed only as read-command operands.
+ function importedConstructorGap(node,state,seen=new Set()) {
+  if(!node||seen.has(node))return false;seen.add(node);
+  // A supported instance method is evaluated by shape() at its call; the
+  // constructor of its receiver is not itself the published return value.
+  if(ts.isPropertyAccessExpression(node)&&klassOf(node.expression,state))return false;
+  if(ts.isIdentifier(node)){const value=declarationFor(node,state);if(value&&importedConstructorGap(value,state,seen))return true;}
+  if(ts.isCallExpression(node)||ts.isNewExpression(node)){
+   const bases=new Set();let base=node.expression;while(ts.isPropertyAccessExpression(base)||ts.isElementAccessExpression(base))base=base.expression;
+   while(ts.isIdentifier(base)){const value=declarationFor(base,state);if(!value||bases.has(value))break;bases.add(value);base=value.bindingExpression??value;}
+   const imported=ts.isIdentifier(base)&&state.imports.get(base.text);
+   if(imported&&!callable(node.expression,state))return true;
+  }
+  let gap=false;ts.forEachChild(node,child=>{if(importedConstructorGap(child,state,seen))gap=true;});return gap;
+ }
+ function commandArgv(node,state,seen=new Set()) {
+  if(!node||seen.has(node))return null;seen=new Set([...seen,node]);
+  if(ts.isParenthesizedExpression(node)||ts.isAsExpression(node))return commandArgv(node.expression,state,seen);
+  if(ts.isStringLiteralLike(node))return [[node.text]];
+  if(ts.isBinaryExpression(node)&&node.operatorToken.kind===ts.SyntaxKind.PlusToken){const left=commandArgv(node.left,state,seen),right=commandArgv(node.right,state,seen);return left&&right&&left.every(v=>v.length===1&&v[0]!==null)&&right.every(v=>v.length===1&&v[0]!==null)?left.flatMap(a=>right.map(b=>[a[0]+b[0]])):null;}
+  if(ts.isArrayLiteralExpression(node)){let vectors=[[]];for(const element of node.elements){const values=ts.isSpreadElement(element)?commandArgv(element.expression,state,seen):commandArgv(element,state,seen)??[[null]];if(!values)return null;vectors=vectors.flatMap(prefix=>values.map(value=>[...prefix,...value]));if(vectors.length>128)return null;}return vectors;}
+  if(ts.isIdentifier(node)){
+   const value=declarationFor(node,state);if(value)return commandArgv(value,state,seen);
+   let owner=node.parent;while(owner&&!ts.isFunctionLike(owner))owner=owner.parent;
+   const index=owner?.parameters?.findIndex(parameter=>ts.isIdentifier(parameter.name)&&parameter.name.text===node.text)??-1;
+   if(index>=0){const name=owner.name?.getText(state.tree)??(ts.isParameter(owner.parent)||ts.isVariableDeclaration(owner.parent)?owner.parent.name.getText(state.tree):null);if(!name)return null;
+    // The finite caller set must be closed: a function alias, callback escape,
+    // reassignment or exported wrapper introduces callers this grammar cannot
+    // resolve. Likewise the argv parameter cannot be mutated or forwarded.
+    if(owner.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.ExportKeyword))return null;
+    let closed=true;function references(child){if(ts.isIdentifier(child)&&child.text===name&&child!==owner.name&&child!==owner.parent?.name){if(!(ts.isCallExpression(child.parent)&&child.parent.expression===child))closed=false;}ts.forEachChild(child,references);}references(state.tree);
+    function parameterUses(child){if(ts.isIdentifier(child)&&child.text===node.text&&child!==owner.parameters[index].name&&child!==node)closed=false;ts.forEachChild(child,parameterUses);}parameterUses(owner.body);
+    if(!closed)return null;
+    const calls=state.calls.filter(call=>call.expression.text===name);if(!calls.length)return null;const alternatives=calls.map(call=>commandArgv(call.arguments[index],state,seen));return alternatives.every(Boolean)?alternatives.flat():null;}
+  }
+  return null;
+ }
+ function readOnlyCommand(call,state) {
+  if(!state.qualifiedProcessFunctions.has(call.expression.getText(state.tree)))return false;
+  const callee=ts.isPropertyAccessExpression(call.expression)?call.expression.expression:call.expression;if(ts.isIdentifier(callee)){if(declarationFor(callee,state))return false;for(let owner=callee.parent;owner;owner=owner.parent)if(ts.isFunctionLike(owner)&&owner.parameters?.some(parameter=>ts.isIdentifier(parameter.name)&&parameter.name.text===callee.text))return false;}
+  const vectors=commandArgv(call.arguments[1],state);if(!vectors?.length)return false;
+  return vectors.every(argv=>{let index=0;while(['-n','--namespace','--context','--kubeconfig'].includes(argv[index]))index+=2;const verb=argv[index++];if(['get','version'].includes(verb))return true;if(verb!=='exec')return false;const separator=argv.indexOf('--',index);if(separator<0)return false;const command=argv.slice(separator+1);if(command.length===2&&['postgres','redis-server'].includes(command[0])&&command[1]==='--version')return true;
+   // This supported shell consumer only sets redis authentication and performs
+   // CONFIG GET; it cannot admit another shell command by refreshing metadata.
+   return command.length===3&&command[0]==='/bin/sh'&&command[1]==='-c'&&typeof command[2]==='string'&&/^if \[ -n "\$\{REDIS_PASSWORD_FILE:-\}" \]; then REDISCLI_AUTH="\$\(cat "\$REDIS_PASSWORD_FILE"\)"; else REDISCLI_AUTH="\$\{REDIS_PASSWORD:-\}"; fi; export REDISCLI_AUTH; exec redis-cli --json CONFIG GET [a-z-]+(?: [a-z-]+)*$/u.test(command[2]);});
+ }
+ function selectedCommand(contract,sink,state) {
+  const call=sink.originalCall;if(!call)return false;
+  let owner=call.parent;while(owner&&!ts.isFunctionLike(owner))owner=owner.parent;
+  return contract.operations.some(operation=>operation.source===state.file&&operation.selectors?.some(selector=>
+   selector.expression===call.getText(state.tree)&&(selector.line===undefined||selector.line===state.tree.getLineAndCharacterOfPosition(call.getStart(state.tree)).line+1)
+   ||selector.symbol&&selector.symbol===owner?.name?.getText(state.tree)))&&readOnlyCommand(call,state);
  }
  function serialized(node,state,seen=new Set()){if(!node)return false;const key=state.file+':'+node.pos+':'+node.kind;if(seen.has(key))return false;seen=new Set([...seen,key]);if(ts.isIdentifier(node)){const value=declarationFor(node,state);if(value?.bindingExpression)return serialized(value.bindingExpression,state,seen);if(value)return serialized(value,state,seen);}if(ts.isCallExpression(node)&&['JSON.stringify','yaml.dump','YAML.stringify','yaml.stringify','dump'].includes(node.expression.getText(state.tree)))return true;if(ts.isFunctionLike(node)){if(ts.isArrowFunction(node)&&!ts.isBlock(node.body))return serialized(node.body,state,seen);let found=false;function returned(child){if(child!==node&&ts.isFunctionLike(child))return;if(ts.isReturnStatement(child)&&child.expression&&serialized(child.expression,state,seen))found=true;ts.forEachChild(child,returned);}returned(node);return found;}if(ts.isCallExpression(node)){if(ts.isIdentifier(node.expression)){const fn=symbol(state,node.expression.text);if(fn&&ts.isFunctionLike(fn.node))return serialized(fn.node,fn.state,seen);}return node.arguments.some(argument=>serialized(argument,state,seen));}let found=false;ts.forEachChild(node,child=>{if(serialized(child,state,seen))found=true;});return found;}
  function rawPublication(node,state,seen=new Set()) {
@@ -442,6 +522,9 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
   if(sink.expression.getText(state.tree)==='process.stdout.write'&&ts.isCallExpression(argument)&&argument.expression.getText(state.tree)==='execFileSync'&&argument.arguments[0]?.getText(state.tree)==="'kubectl'"&&argument.arguments[1]?.getText(state.tree).replace(/\s+/gu,'')==="['apply','-f','-']")return {role:'non-api',basis:'kubectl-apply-cli-text-response',sinkContract:{destination:'stdout',expression}};
   function authority(file,requirements){if(!fs.existsSync(path.join(root,file)))return false;const bytes=fs.readFileSync(path.join(root,file),'utf8');if(!requirements.every(requirement=>requirement.test(bytes)))return false;dependencies.add(file);return true;}
   const role=basis=>({role:'non-api',basis,sinkContract:{destination,expression}});
+  // Resolve a selected finite query before tracing its subprocess return.
+  // An explicit input body still crosses the normal root qualification below.
+  if(sink.expression.getText(state.tree)==='kubectl-request'&&argument===sink.originalCall){const contract=(roleRegistry.kubernetesCommandContracts??[]).find(contract=>contract.source===state.file&&selectedCommand(contract,sink,state)&&contract.operations.every(operationMatches));if(contract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'non-api',basis:contract.basis,operationSources:contract.operations.map(operation=>operation.source)};}}
   if(untrustedPublicationRoot(argument,state)&&!runtimeScalarGuard(argument,state))return unknown(argument,state);
   // An exact operation receipt invalidates stale review; it cannot replace
   // positively resolved API identity with a diagnostic or native-file label.
@@ -449,10 +532,10 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
   // Trace the published value through imports, constructors and callback
   // returns before consulting a native receipt. A refreshed dependency digest
   // records syntax; it cannot relabel an actual API root as a diagnostic.
-  if(!adaptedIdentity){const actualRoot=shape(argument,state);if(actualRoot.role==='api')return actualRoot;}
+  if(!adaptedIdentity){const actualRoot=shape(argument,state);if(actualRoot.role==='api')return actualRoot;if(importedConstructorGap(argument,state))return {...unknown(argument,state),basis:'unsupported-runtime-imported-constructor'};}
   if(sink.expression.getText(state.tree)==='native-file-writer-call'){const call=sink.originalCall.getText(state.tree);const contract=(roleRegistry.nativeFileWriterCallContracts??[]).find(c=>c.source===state.file&&c.call===call&&(c.line===undefined||c.line===state.tree.getLineAndCharacterOfPosition(sink.originalCall.getStart(state.tree)).line+1)&&c.operations.every(operationMatches));if(contract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'non-api',basis:contract.basis,operationSources:contract.operations.map(o=>o.source)};}if(!sink.capability.operations.every(operationMatches))return unknown(argument,state);return shape(argument,state);}
   if(sink.expression.getText(state.tree)==='kubernetes-http-request')return unknown(argument,state);
-  if(sink.expression.getText(state.tree)==='kubectl-request'){const readContract=(roleRegistry.kubernetesCommandContracts??[]).find(contract=>contract.source===state.file&&contract.operations.every(operationMatches));if(readContract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'non-api',basis:readContract.basis,operationSources:readContract.operations.map(operation=>operation.source)};}const contract=nativeRoleContracts.find(contract=>contract.source===state.file&&contract.role==='api-adapted'&&contract.operations.every(operationMatches));if(contract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'api-adapted',basis:'actual-adapted-kubectl-submission',operationSources:contract.operations.map(operation=>operation.source)};}return unknown(argument,state);}
+  if(sink.expression.getText(state.tree)==='kubectl-request'){if(ts.isArrayLiteralExpression(sink.originalCall?.arguments[1])&&readOnlyCommand(sink.originalCall,state))return {role:'non-api',basis:'actual-call-read-only-kubernetes-argv'};const readContract=(roleRegistry.kubernetesCommandContracts??[]).find(contract=>contract.source===state.file&&selectedCommand(contract,sink,state)&&contract.operations.every(operationMatches));if(readContract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'non-api',basis:readContract.basis,operationSources:readContract.operations.map(operation=>operation.source)};}const contract=nativeRoleContracts.find(contract=>contract.source===state.file&&contract.role==='api-adapted'&&contract.operations.every(operationMatches));if(contract){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {role:'api-adapted',basis:'actual-adapted-kubectl-submission',operationSources:contract.operations.map(operation=>operation.source)};}return unknown(argument,state);}
   {for(const contract of nativeRoleContracts)if(contract.source===state.file&&contract.sink===sink.expression.getText(state.tree)&&contract.expression===argument.getText(state.tree)&&(contract.line===undefined||contract.line===state.tree.getLineAndCharacterOfPosition(sink.getStart(state.tree)).line+1)&&contract.operations.every(operationMatches)){dependencies.add('scripts/docs-api-producer-adapter-authorities.json');return {...role(contract.basis),role:contract.role??'non-api',operationSources:contract.operations.map(operation=>operation.source)};}}
   // Evidence descriptors establish the consumer role of the exact local file.
   // The bytes must originate in the guarded browser capability response.

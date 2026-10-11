@@ -578,6 +578,16 @@ test('original Python producer changes and module environment initialization alt
  fs.rmSync(path.join(fixture,'ops/pod/renamed.py'));assert.deepEqual(discoverScriptApiOutputs(fixture),[]);
  });
 });
+test('new public bootstrap discovery resource cannot disappear behind credential-only capture',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),source='ops/pod/bootstrap.py';
+ const producer=fs.readFileSync(path.join(repository,source),'utf8');
+ const changed=producer.replace(/^def discover\(\):[\s\S]*?(?=^def setup_secrets\(\):)/mu,
+  "def discover():\n    return {'apiVersion': 'v1', 'kind': 'Namespace', 'metadata': {'name': 'new-public-output'}}\n\n");
+ assert.notEqual(changed,producer);
+ sourceFixture({[source]:changed,'scripts/deploy-ops-pod.sh':'python3 ops/pod/bootstrap.py discover\n'},root=>{
+  assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_PYTHON_PUBLIC_OUTPUT_FLOW_UNQUALIFIED/);
+ });
+});
 test('original Python transport transformations are discovered and unsupported transports fail closed',()=>{
  const repository=path.resolve(import.meta.dirname,'../..'),source='ops/pod/bootstrap.py',producer=fs.readFileSync(path.join(repository,source),'utf8');
  const transform='if data:\n        payload = json.loads(data)\n        payload["immutable"] = True\n        data = json.dumps(payload)\n    result = subprocess.run(base + args, input=data,';
@@ -691,7 +701,21 @@ test('changed native Kubernetes callers cannot reuse original read-only operatio
  const source='bin/native.mjs',original="import{execFileSync}from'node:child_process';function query(args){return execFileSync('kubectl',args);}query(['get','pods']);";
  const registry={kubernetesCommandContracts:[{source,basis:'actual-get-only-caller',operations:[{source,selectors:[{symbol:'query'},{expression:"query(['get','pods'])"}]}]}]};
  sourceFixture({[source]:original,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{
-  assert.doesNotThrow(()=>discoverScriptApiOutputs(root));fs.writeFileSync(path.join(root,source),original.replace("['get','pods']","['apply','-f','-']"));assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/);
+  assert.doesNotThrow(()=>discoverScriptApiOutputs(root));
+  const mutations=[
+   original.replace("['get','pods']","['apply','-f','-']"),
+   original+"query(['apply','-f','-']);",
+   original+"const alias=query;alias(['apply','-f','-']);",
+   original.replace("return execFileSync", "args[0]='apply';return execFileSync"),
+   original.replace("'kubectl',args", "'kubectl',args,{input:process.argv[2]}"),
+   original.replace("query(['get','pods'])", "query(JSON.parse(process.argv[2]))"),
+  ];
+  for(const changed of mutations){
+   fs.writeFileSync(path.join(root,source),changed);
+   const refreshed=structuredClone(registry);for(const operation of refreshed.kubernetesCommandContracts[0].operations){operation.selectors=[{symbol:'query'}];const facts=deriveNativeOperationFacts(root,source,operation.selectors);assert(facts,'changed source must have a valid refreshed receipt');operation.factsDigest=nativeOperationFactDigest(facts);}
+   fs.writeFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),JSON.stringify(refreshed));
+   assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/,'changed actual caller or body must fail even after receipt refresh');
+  }
  });
 });
 test('markerless direct Kubernetes HTTP submission cannot vanish',()=>{
@@ -717,11 +741,29 @@ test('markerless raw shell stdout, files, branches and literal API streams fail 
  for(const bytes of ["printf '%s' \"$BODY\"\n","echo \"$BODY\" > public.yaml\n","if true;then printf '%s\\n' \"$BODY\";fi\n","cat public.yaml\n","printf '%s' '{\"apiVersion\":\"v1\",\"kind\":\"Secret\",\"metadata\":{\"name\":\"x\"}}'\n"])sourceFixture({'bin/new.sh':bytes},root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/));
  sourceFixture({'bin/new.sh':"BODY='{\"status\":\"ok\"}';printf '%s' \"$BODY\"\n"},root=>assert.doesNotThrow(()=>discoverShellApiOutputs(root)));
 });
+test('shell arithmetic is not an output command, while nested command substitutions remain visible',()=>{
+ const source='bin/arithmetic.sh';
+ const counters='counter=$((counter + 1))\nblocks=$(( maximum_bytes / 1024 ))\nversion=$(( 10#${BASH_REMATCH[1]} * 10000 + 10#${BASH_REMATCH[2]} ))\n';
+ assert.deepEqual(shellRawOutputSinks(source,counters),[]);
+ const nested=shellRawOutputSinks(source,'age=$(( $(date +%s) - $(metadata "$selected" started_epoch) ))\n');
+ assert(nested.some(s=>s.command==='date'&&s.args[0]==='+%s'));
+ assert(nested.some(s=>s.command==='metadata'&&s.args.includes('started_epoch')));
+ assert(!nested.some(s=>s.command.startsWith('$(date')));
+});
+test('fresh shell receipts cannot hide unknown or Kubernetes emitters inside arithmetic',()=>{
+ const source='bin/arithmetic.sh';
+ for(const bytes of ['value=$(( $("$reader" "$1") + 1 ))\n',`value=$(( $(printf '%s' '{"apiVersion":"v1","kind":"Secret"}') + 1 ))\n`]){
+  const sinks=shellRawOutputSinks(source,bytes);
+  assert(sinks.some(s=>s.command==='$reader'||s.args.some(a=>a.includes('apiVersion'))));
+  const contract={source,role:'non-api',basis:'refreshed arithmetic fixture',sinks,operationRecipe:shellRawOutputOperationRecipe(source,bytes),sinkConsumers:sinks.map(s=>({source,line:s.line,command:s.command,channel:s.channel??'command-output',argumentsDigest:createHash('sha256').update(JSON.stringify(s.args)).digest('hex'),kind:'native-tool-or-selected-stream',purpose:'refreshed arithmetic consumer',sourceEvidence:bytes}))};
+  sourceFixture({[source]:bytes,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify({shellRawOutputContracts:[contract]})},root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED/));
+ }
+});
 test('changing an original shell sink cannot reuse its source operation recipe',()=>{
- const source='bin/native.sh',bytes="BODY=initial;printf '%s' \"$BODY\" | sed 's/x/y/'\n";
- const sinks=shellRawOutputSinks(source,bytes),registry={shellRawOutputContracts:[{source,role:'non-api',basis:'fixture native consumer',sinks,operationRecipe:shellRawOutputOperationRecipe(source,bytes),sinkConsumers:sinks.map(sink=>({source,line:sink.line,command:sink.command,argumentsDigest:createHash('sha256').update(JSON.stringify(sink.args)).digest('hex'),kind:'fixed-native-text-transform',purpose:'Synthetic sed text transformation fixture',sourceEvidence:bytes}))}]};
+ const source='bin/native.sh',bytes="git status --short | awk '{ print; count += 1; if (count >= 30) exit }'\n";
+ const sinks=shellRawOutputSinks(source,bytes),registry={shellRawOutputContracts:[{source,role:'non-api',basis:'fixture native consumer',sinks,operationRecipe:shellRawOutputOperationRecipe(source,bytes),sinkConsumers:sinks.map(sink=>({source,line:sink.line,command:sink.command,argumentsDigest:createHash('sha256').update(JSON.stringify(sink.args)).digest('hex'),kind:'fixed-native-text-transform',purpose:'Finite native git-status row query',sourceEvidence:bytes}))}]};
  sourceFixture({[source]:bytes,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{
-  assert.doesNotThrow(()=>discoverShellApiOutputs(root));fs.writeFileSync(path.join(root,source),bytes.replace('s/x/y/','s/x/z/'));assert.throws(()=>discoverShellApiOutputs(root),/SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/);
+  assert.doesNotThrow(()=>discoverShellApiOutputs(root));fs.writeFileSync(path.join(root,source),bytes.replace('count >= 30','count >= 20'));assert.throws(()=>discoverShellApiOutputs(root),/SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/);
  });
 });
 test('refreshed shell sink metadata cannot replace the selected consumer or forward unbound stdin',()=>{
@@ -734,6 +776,80 @@ test('refreshed shell sink metadata cannot replace the selected consumer or forw
   sourceFixture({[source]:bytes,[authority]:JSON.stringify({shellRawOutputContracts:[contract]})},root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED/));
  }
 });
+test('actual refreshed shell consumers reject caller files and captured stdin publication chains',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json';
+ const selected=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')).shellRawOutputContracts[0];
+ const input='apiVersion: v1\nkind: ConfigMap\nmetadata: {name: hidden}\n';
+ for(const body of ['cat "$1"','value=$(cat); printf "%s\\n" "$value"','first=$(cat); second=$first; printf "%s\\n" "$second"','cat | tee /dev/null']){
+  const bytes='#!/bin/sh\n'+body+'\n',contract=structuredClone(selected),source=contract.source;
+  contract.sinks=shellRawOutputSinks(source,bytes);contract.operationRecipe=shellRawOutputOperationRecipe(source,bytes);
+  contract.sinkConsumers=contract.sinks.map(sink=>({source,line:sink.line,command:sink.command,channel:sink.channel??'command-output',argumentsDigest:createHash('sha256').update(JSON.stringify(sink.args)).digest('hex'),kind:sink.channel==='command-substitution'?'captured-operation':['echo','printf'].includes(sink.command)?'framed-or-native-scalar-output':'native-tool-or-selected-stream',purpose:'actual refreshed source consumer',sourceEvidence:bytes}));
+  sourceFixture({[source]:bytes,'input.yaml':input,[authority]:JSON.stringify({shellRawOutputContracts:[contract]})},root=>{
+   assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED/,body);
+   const actual=spawnSync('sh',[path.join(root,source),path.join(root,'input.yaml')],{input,encoding:'utf8',timeout:5000});assert.equal(actual.status,0,actual.stderr);assert.equal(actual.stdout,input,body);
+  });
+ }
+});
+
+test('refreshed named shell files require selected producer ancestry for every consumer',()=>{
+ const source='bin/named-output.sh',authority='scripts/docs-api-producer-adapter-authorities.json';
+ for(const body of ['cat /tmp/native-config.json','declared=/tmp/native-config.json; cat "$declared"','sed -n p /tmp/native-config.json','jq -r . "$1"']){
+  const bytes='#!/bin/sh\n'+body+'\n',sinks=shellRawOutputSinks(source,bytes),contract={source,role:'non-api',basis:'refreshed named file role',sinks,operationRecipe:shellRawOutputOperationRecipe(source,bytes),sinkConsumers:sinks.map(sink=>({source,line:sink.line,command:sink.command,channel:sink.channel??'command-output',argumentsDigest:createHash('sha256').update(JSON.stringify(sink.args)).digest('hex'),kind:'native-tool-or-selected-stream',purpose:'refreshed named file consumer',sourceEvidence:bytes}))};
+  sourceFixture({[source]:bytes,[authority]:JSON.stringify({shellRawOutputContracts:[contract]})},root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED|SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/,body));
+ }
+});
+
+test('actual selected Trivy report format and auth token consumers cannot inherit refreshed file receipts',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json',registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8'));
+ const qualified=(source,bytes)=>{const contract=structuredClone(registry.shellRawOutputContracts.find(contract=>contract.source===source));assert(contract);contract.sinks=shellRawOutputSinks(source,bytes);contract.operationRecipe=shellRawOutputOperationRecipe(source,bytes);contract.sinkConsumers=contract.sinks.map(sink=>({source,line:sink.line,command:sink.command,channel:sink.channel??'command-output',argumentsDigest:createHash('sha256').update(JSON.stringify(sink.args)).digest('hex'),kind:sink.channel==='command-substitution'?'captured-operation':['echo','printf'].includes(sink.command)?'framed-or-native-scalar-output':'native-tool-or-selected-stream',purpose:'actual selected refreshed named file consumer',sourceEvidence:bytes}));return {[source]:bytes,[authority]:JSON.stringify({shellRawOutputContracts:[contract]})};};
+ const reportSource='scripts/scan-runtime-images.sh',reportBytes=fs.readFileSync(path.join(repository,reportSource),'utf8');
+ sourceFixture(qualified(reportSource,reportBytes),root=>assert.deepEqual(discoverShellApiOutputs(root),[]));
+ for(const changed of [reportBytes.replace('--format table','--format json'),reportBytes.replace('  cat "$report"','  printf "%s\\n" "$replacement" >"$report"\n  cat "$report"')]){assert.notEqual(changed,reportBytes);sourceFixture(qualified(reportSource,changed),root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED|SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/));}
+ const tokenSource='ops/pod/shell.sh',tokenBytes=fs.readFileSync(path.join(repository,tokenSource),'utf8'),tokenDependencies=Object.fromEntries(['ops/pod/bootstrap.py','charts/ops-pod/templates/workload.yaml'].map(source=>[source,fs.readFileSync(path.join(repository,source),'utf8')]));
+ sourceFixture({...qualified(tokenSource,tokenBytes),...tokenDependencies},root=>assert.deepEqual(discoverShellApiOutputs(root),[]));
+ const published=tokenBytes.replace('export KUBECLAW_MCP_TOKEN','printf "%s\\n" "$KUBECLAW_MCP_TOKEN"\nexport KUBECLAW_MCP_TOKEN');assert.notEqual(published,tokenBytes);sourceFixture({...qualified(tokenSource,published),...tokenDependencies},root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED|SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+
+test('actual selected native config producer changes revoke named file consumer custody',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),source='scripts/activate-native-worker-ax41.sh',producer='scripts/render-native-worker-node.mjs',authority='scripts/docs-api-producer-adapter-authorities.json',registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8'));
+ const bytes=fs.readFileSync(path.join(repository,source),'utf8'),contract=structuredClone(registry.shellRawOutputContracts.find(contract=>contract.source===source));assert(contract);contract.sinks=shellRawOutputSinks(source,bytes);contract.operationRecipe=shellRawOutputOperationRecipe(source,bytes);contract.sinkConsumers=contract.sinks.map(sink=>({source,line:sink.line,command:sink.command,channel:sink.channel??'command-output',argumentsDigest:createHash('sha256').update(JSON.stringify(sink.args)).digest('hex'),kind:sink.channel==='command-substitution'?'captured-operation':['echo','printf'].includes(sink.command)?'framed-or-native-scalar-output':'native-tool-or-selected-stream',purpose:'actual selected native config consumer',sourceEvidence:bytes}));
+ const dependencies=Object.fromEntries([producer,'scripts/native-worker-node-policy.mjs','versions.json','my-values/infra/native-worker-pools-ax41.yaml'].map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
+ const selectedRegistry={version:1,sources:Object.fromEntries([source,producer].map(file=>[file,structuredClone(registry.sources[file])])),shellRawOutputContracts:[contract]};
+ sourceFixture({...dependencies,[source]:bytes,[authority]:JSON.stringify(selectedRegistry)},root=>{
+  assert.deepEqual(discoverShellApiOutputs(root),[]);
+  const changed=dependencies[producer].replace("'containerd-nri.toml': '[plugins.\"io.containerd.nri.v1.nri\"]\\n  disable = false\\n'","'containerd-nri.toml': 'apiVersion: v1\\nkind: Secret\\nmetadata: {name: hidden}\\n'");assert.notEqual(changed,dependencies[producer]);fs.writeFileSync(path.join(root,producer),changed);
+  const refreshed=structuredClone(selectedRegistry),record=refreshed.sources[producer];record.sha256=record.operationDigest=createHash('sha256').update(changed).digest('hex');record.operationRecipe=producerAdapterOperationRecipe(producer,changed);record.invocations=changed.replace(/\\\n/gu,' ').split('\n').map(line=>line.trim()).filter(line=>['helm ',"'helm'",'render-','continuousDocuments','bootstrapDocuments','infrastructure','charts/'].some(token=>line.includes(token))&&!line.startsWith('//')&&!line.startsWith('#'));fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));
+  assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED|SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/,'actual selected producer bytes must revoke cached native file custody');
+ });
+});
+
+test('actual authenticated ops render file forwards API fields and changed producer output',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),source='scripts/deploy-ops-pod.sh',producer='scripts/updates/deployment-release.mjs',authority='scripts/docs-api-producer-adapter-authorities.json',registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8'));
+ const files={},copy=directory=>{for(const entry of fs.readdirSync(path.join(repository,directory),{withFileTypes:true})){const file=directory+'/'+entry.name;if(entry.isDirectory())copy(file);else if(entry.isFile())files[file]=fs.readFileSync(path.join(repository,file),'utf8');}};copy('scripts/updates');copy('charts/ops-pod');copy('ops/pod');copy('tools/ops-mcp/src');for(const file of [source,'releases/ops-images.json','releases/values/ops.yaml'])files[file]=fs.readFileSync(path.join(repository,file),'utf8');
+ const selected={version:1,sources:structuredClone(registry.sources),shellRawOutputContracts:registry.shellRawOutputContracts.filter(contract=>contract.source===source||contract.source.startsWith('ops/pod/')),nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith('ops/pod/'))};
+ sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
+  fs.symlinkSync(path.join(repository,'node_modules'),path.join(root,'node_modules'),'dir');execFileSync('git',['init','--quiet',root]);const common=execFileSync('git',['rev-parse','--git-common-dir'],{cwd:repository,encoding:'utf8'}).trim();fs.writeFileSync(path.join(root,'.git/objects/info/alternates'),path.resolve(repository,common,'objects')+'\n');
+  const before=discoverShellApiOutputs(root),forwarded=before.filter(output=>output.context.forwardedProducer?.path===producer);assert(forwarded.length,'actual ops rendered.yaml API file was treated as native instead of forwarding selected producer');assert(forwarded.some(output=>output.value.kind==='StatefulSet'&&output.value.spec.template.spec.containers.some(container=>container.name==='codex')));
+  const original=files[producer],changed=original.replace('process.stdout.write(rendered);',"process.stdout.write(rendered+'\\n---\\napiVersion: v1\\nkind: ConfigMap\\nmetadata: {name: selected-extra}\\ndata: {reviewerAdded: selected}\\n');");assert.notEqual(changed,original);fs.writeFileSync(path.join(root,producer),changed);
+  const refreshed=structuredClone(selected),record=refreshed.sources[producer];if(record){record.sha256=record.operationDigest=createHash('sha256').update(changed).digest('hex');record.operationRecipe=producerAdapterOperationRecipe(producer,changed);record.invocations=changed.replace(/\\\n/gu,' ').split('\n').map(line=>line.trim()).filter(line=>['helm ',"'helm'",'render-','continuousDocuments','bootstrapDocuments','infrastructure','charts/'].some(token=>line.includes(token))&&!line.startsWith('//')&&!line.startsWith('#'));}fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));
+  try{const after=discoverShellApiOutputs(root);assert(after.some(output=>output.context.forwardedProducer?.path===producer&&output.value.kind==='ConfigMap'&&output.value.data?.reviewerAdded==='selected'),'changed selected producer field disappeared after executable receipt refresh');}
+  catch(error){assert.match(error.message,/API_PRODUCT_(?:SHELL_(?:CONSUMER|RAW_OUTPUT_ROLE)_UNQUALIFIED|ADAPTED_RECIPE_INVOCATION_DRIFT|ADAPTER_|RELEASE_)/);}
+ });
+});
+
+test('selected native tee producers and imported factories revoke shell cache after semantic changes',()=>{
+ const source='bin/native-check.sh',producer='tests/verification/e2e/native-check.mts',factory='tests/verification/e2e/receipt.mjs',authority='scripts/docs-api-producer-adapter-authorities.json';
+ const bytes='kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- node "$runtime_repo_root/'+producer+'" | tee "$receipt_tmp"\n';
+ const sinks=shellRawOutputSinks(source,bytes),contract={source,role:'non-api',basis:'selected native producer pipeline',sinks,operationRecipe:shellRawOutputOperationRecipe(source,bytes),sinkConsumers:sinks.map(sink=>({source,line:sink.line,command:sink.command,argumentsDigest:createHash('sha256').update(JSON.stringify(sink.args)).digest('hex'),kind:'native-tool-or-selected-stream',purpose:'selected native receipt producer',sourceEvidence:bytes,channel:sink.channel??'command-output'}))};
+ for(const imported of [false,true])sourceFixture({[source]:bytes,[producer]:imported?"import {createRecord} from './receipt.mjs';process.stdout.write(JSON.stringify(createRecord()));":"process.stdout.write(JSON.stringify({schemaVersion:'native-check.v1',ok:true}));",[factory]:"export function createRecord(){return {schemaVersion:'native-check.v1',ok:true};}",[authority]:JSON.stringify({shellRawOutputContracts:[contract]})},root=>{
+  assert.deepEqual(discoverShellApiOutputs(root),[]);
+  if(imported)fs.writeFileSync(path.join(root,factory),"export function createRecord(){return {apiVersion:'v1',kind:'Secret',metadata:{name:'hidden'}};}");
+  else fs.writeFileSync(path.join(root,producer),"process.stdout.write(JSON.stringify({apiVersion:'v1',kind:'Secret',metadata:{name:'hidden'}}));");
+  assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED|SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/,'changed selected producer must invalidate cached native stream');
+ });
+ sourceFixture({[source]:bytes,[producer]:"const emit=process.stdout.write;const writers=[emit];writers[0](JSON.stringify({schemaVersion:'native-check.v1',ok:true}));",[authority]:JSON.stringify({shellRawOutputContracts:[contract]})},root=>assert.throws(()=>discoverShellApiOutputs(root),/SHELL_CONSUMER_UNQUALIFIED|SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+
 test('markerless serialized roots in an unsupported public language fail qualification',()=>{
  sourceFixture({'bin/new.rb':'require "json"\nputs JSON.generate(JSON.parse(ARGV[0]))\n'},root=>assert.throws(()=>discoverScriptApiOutputs(root),/PRODUCER_LANGUAGE_UNQUALIFIED/));
 });
@@ -964,6 +1080,66 @@ test('refreshed native receipts cannot conceal returned API identity through run
  }
 });
 
+test('namespace and default runtime constructors retain API identity after native receipt refresh',()=>{
+ const source='bin/native.mjs',pkg='node_modules/@kubeclaw/fixture/',authority='scripts/docs-api-producer-adapter-authorities.json';
+ for(const form of ['namespace','namespace-alias','namespace-element','namespace-destructure','default','default-anonymous','default-arrow']){
+  const imported=form.startsWith('namespace')?"import * as kit from '@kubeclaw/fixture';":"import make from '@kubeclaw/fixture';";
+  const invocation=form==='namespace-destructure'?'const {make:constructor}=kit;const value=constructor();':form==='namespace-alias'?'const alias=kit;const value=alias.make();':form==='namespace-element'?"const value=kit['make']();":form==='namespace'?'const value=kit.make();':'const value=make();';
+  const declaration=form==='default-anonymous'?'export default function()':form==='default-arrow'?'export default () =>':form.startsWith('default')?'export default function make()':'export function make()';
+  const constructor=value=>form==='default-arrow'?declaration+`(${value});`:declaration+`{return ${value};}`;
+  sourceFixture({[source]:imported+invocation+'console.log(JSON.stringify(value));',[pkg+'package.json']:JSON.stringify({name:'@kubeclaw/fixture',type:'module',exports:{types:'./types.ts',import:'./index.mjs'}}),[pkg+'index.mjs']:constructor("{status:'ok'}")},root=>{
+   const operation={source,selectors:[{expression:'JSON.stringify(value)'}]},registry={nonApiOutputContracts:[{source,sink:'console.log',expression:'JSON.stringify(value)',basis:'fixture native diagnostic',operations:[operation]}]};
+   const refresh=()=>{operation.factsDigest=nativeOperationFactDigest(deriveNativeOperationFacts(root,source,operation.selectors));fs.mkdirSync(path.join(root,'scripts'),{recursive:true});fs.writeFileSync(path.join(root,authority),JSON.stringify(registry));};
+   refresh();assert.deepEqual(discoverScriptApiOutputs(root),[]);
+   fs.writeFileSync(path.join(root,pkg+'index.mjs'),constructor("{apiVersion:'v1',kind:'Secret',metadata:{name:'hidden'}}"));
+   refresh();const roles=classifySerializedOutputRoles(root,source,[source]);assert(roles.some(output=>output.role==='api'),form);assert(!roles.some(output=>output.role==='non-api'),form);
+   assert.throws(()=>discoverScriptApiOutputs(root),/API_PRODUCT_SCRIPT_(?:OUTPUT_IDENTITY|OUTPUT_ROLE)_UNQUALIFIED/);
+   const actual=spawnSync(process.execPath,[path.join(root,source)],{encoding:'utf8',timeout:5000});assert.equal(actual.status,0,actual.stderr);assert.equal(JSON.parse(actual.stdout).kind,'Secret');
+  });
+ }
+});
+
+test('opaque runtime namespace members remain an explicit gap after receipt refresh',()=>{
+ const source='bin/native.mjs',pkg='node_modules/@kubeclaw/fixture/',expression='JSON.stringify(value)';
+ sourceFixture({[source]:"import * as kit from '@kubeclaw/fixture';const value=kit[process.argv[2]]();console.log(JSON.stringify(value));",[pkg+'package.json']:JSON.stringify({name:'@kubeclaw/fixture',type:'module',exports:'./index.mjs'}),[pkg+'index.mjs']:"export function make(){return {apiVersion:'v1',kind:'Secret'};}"},root=>{
+  const operation={source,selectors:[{expression}]};operation.factsDigest=nativeOperationFactDigest(deriveNativeOperationFacts(root,source,operation.selectors));fs.mkdirSync(path.join(root,'scripts'),{recursive:true});fs.writeFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),JSON.stringify({nonApiOutputContracts:[{source,sink:'console.log',expression,basis:'refreshed native receipt',operations:[operation]}]}));
+  const output=classifySerializedOutputRoles(root,source,[source]).find(output=>output.sink==='console.log');assert.equal(output.role,'unknown');assert.equal(output.basis,'unsupported-runtime-imported-constructor');assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED/);
+ });
+});
+
+test('changed imported constructor aliases cannot inherit refreshed native receipts',()=>{
+ const source='bin/native.mjs',pkg='node_modules/@kubeclaw/fixture/',expression='JSON.stringify(value)';
+ for(const code of ["import {make} from '@kubeclaw/fixture';let alias=make;alias=()=>({apiVersion:'v1',kind:'Secret'});const value=alias();","import * as kit from '@kubeclaw/fixture';let alias=kit;alias={make:()=>({apiVersion:'v1',kind:'Secret'})};const value=alias.make();"]){
+  sourceFixture({[source]:code+'console.log(JSON.stringify(value));',[pkg+'package.json']:JSON.stringify({name:'@kubeclaw/fixture',type:'module',exports:'./index.mjs'}),[pkg+'index.mjs']:"export function make(){return {status:'ok'};}"},root=>{
+   const operation={source,selectors:[{expression}]};operation.factsDigest=nativeOperationFactDigest(deriveNativeOperationFacts(root,source,operation.selectors));fs.mkdirSync(path.join(root,'scripts'),{recursive:true});fs.writeFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),JSON.stringify({nonApiOutputContracts:[{source,sink:'console.log',expression,basis:'refreshed native receipt',operations:[operation]}]}));
+   assert(classifySerializedOutputRoles(root,source,[source]).filter(output=>output.sink==='console.log').every(output=>output.role!=='non-api'));assert.throws(()=>discoverScriptApiOutputs(root),/OUTPUT_ROLE_UNQUALIFIED|OUTPUT_IDENTITY_UNQUALIFIED/);
+  });
+ }
+});
+
+test('each actual Kubernetes reader contract binds its selected call and effective argv',()=>{
+ const repository=path.resolve(path.dirname(new URL(import.meta.url).pathname),'../..'),authority='scripts/docs-api-producer-adapter-authorities.json';
+ const registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8'));
+ for(const originalContract of registry.kubernetesCommandContracts){
+  const source=originalContract.source,original=fs.readFileSync(path.join(repository,source),'utf8');
+  sourceFixture({[source]:original,[authority]:JSON.stringify({kubernetesCommandContracts:[originalContract]})},root=>{
+   const contract=structuredClone(originalContract),local={kubernetesCommandContracts:[contract]};
+   const refresh=()=>{for(const operation of contract.operations)operation.factsDigest=nativeOperationFactDigest(deriveNativeOperationFacts(root,operation.source,operation.selectors));fs.writeFileSync(path.join(root,authority),JSON.stringify(local));};
+   refresh();assert(classifySerializedOutputRoles(root,source,[source]).some(output=>output.sink==='kubectl-request'&&output.role==='non-api'),source);
+   for(const argv of [["create","namespace","hidden"],["delete","namespace","hidden"],["rollout","restart","deployment/hidden"],["exec","pod/hidden","--","sh","-c","touch /tmp/hidden"]]){
+    fs.writeFileSync(path.join(root,source),original+`\nexport function additionalSubmission(){return execFileSync('kubectl',${JSON.stringify(argv)},{encoding:'utf8'}); }\n`);
+    const added=classifySerializedOutputRoles(root,source,[source]).filter(output=>output.line>original.split('\n').length);assert(added.some(output=>output.sink==='kubectl-request'&&output.role==='unknown'),source+':'+argv[0]);assert(!added.some(output=>output.role==='non-api'),source+':'+argv[0]);
+   }
+   fs.writeFileSync(path.join(root,source),original+"\nexport function shadowed(execFileSync){return execFileSync('kubectl',['get','secrets'],{encoding:'utf8'});}\n");
+   assert(classifySerializedOutputRoles(root,source,[source]).some(output=>output.line>original.split('\n').length&&output.sink==='kubectl-request'&&output.role==='unknown'),source+':shadowed subprocess binding');
+   // A new caller of the reviewed wrapper changes its actual argv without
+   // changing the selected subprocess expression; even refreshed facts reject.
+   const wrapper=source.includes('stateful')?"kube('default',['create','namespace','hidden'])":source.includes('gitops-owner')?null:"kubectl(['create','namespace','hidden'])";
+   if(wrapper){fs.writeFileSync(path.join(root,source),original+`\nexport function newCaller(){return ${wrapper};}\n`);refresh();assert(classifySerializedOutputRoles(root,source,[source]).filter(output=>output.sink==='kubectl-request').every(output=>output.role==='unknown'),source);}
+  });
+ }
+});
+
 test('native operation facts bind runtime package validators through reexports',()=>{
  const source='bin/native.mjs',pkg='node_modules/@kubeclaw/fixture/',bytes="import{validate}from'@kubeclaw/fixture';const value=validate(JSON.parse(process.argv[2]));console.log(JSON.stringify(value));";
  const registry={nonApiOutputContracts:[{source,sink:'console.log',expression:'JSON.stringify(value)',basis:'fixture validated local diagnostic',operations:[{source,selectors:[{expression:'JSON.stringify(value)'}]}]}]};
@@ -1055,11 +1231,15 @@ test('native Go transport receipts reject refreshed unknown incoming bodies and 
   global:'var send func(context.Context,string,string,interface{},string,interface{})error\nfunc unchecked(c *controller){send=c.kube;send(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
   payload:'func unchecked(c *controller){requestPayload(os.Args[1]);_=context.Background()}',
   map_address:'func unchecked(c *controller){body:=map[string]interface{}{"apiVersion":"v1","kind":"Namespace"};json.Unmarshal([]byte(os.Args[1]),&body);c.kube(context.Background(),"POST","/api/v1/namespaces",body,"application/json",nil)}',
+  alias_mutated_body:'func unchecked(c *controller){body:=map[string]interface{}{"apiVersion":"v1","kind":"Namespace"};alias:=body;alias["kind"]="Secret";alias["immutable"]=true;c.kube(context.Background(),"POST","/api/v1/namespaces",body,"application/json",nil)}',
+  helper_mutated_body:'func mutateBody(body map[string]interface{}){body["kind"]="Secret";body["immutable"]=true};func unchecked(c *controller){body:=map[string]interface{}{"apiVersion":"v1","kind":"Namespace"};mutateBody(body);c.kube(context.Background(),"POST","/api/v1/namespaces",body,"application/json",nil)}',
+  after_submission:'func unchecked(c *controller){body:=map[string]interface{}{"apiVersion":"v1","kind":"Namespace","metadata":map[string]interface{}{"name":"before"}};c.kube(context.Background(),"POST","/api/v1/namespaces",body,"application/json",nil);body["kind"]="Secret";body["immutable"]=true}',
+  supported_patch:'func unchecked(c *controller){c.kube(context.Background(),http.MethodPatch,"/api/v1/namespaces/a/secrets/b",map[string]interface{}{"immutable":true},"application/merge-patch+json",nil)}',
   supported_constructor:'func unchecked(c *controller){body:=map[string]interface{}{"apiVersion":"v1","kind":"Namespace","metadata":map[string]interface{}{"name":"qualification"}};c.kube(context.Background(),"POST","/api/v1/namespaces",body,"application/json",nil)}',
   replaced_request:null,replaced_payload:null,
  };
  for(const [name,body]of Object.entries(variants))sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
-  if(body)fs.writeFileSync(path.join(root,added),'package main\nimport("context";"os";"encoding/json")\n'+body+'\n');
+  if(body)fs.writeFileSync(path.join(root,added),'package main\nimport("context";"os";"encoding/json";"net/http")\n'+body+'\n');
   if(name==='replaced_request')fs.writeFileSync(path.join(root,main),files[main].replace('resp, err := c.httpClient.Do(req)','req.Body = io.NopCloser(strings.NewReader(os.Args[1]))\n\tresp, err := c.httpClient.Do(req)'));
   if(name==='replaced_payload')fs.writeFileSync(path.join(root,main),files[main].replace('data, err := json.Marshal(body)','body = os.Args[1]\n\tdata, err := json.Marshal(body)'));
   const inputs=body?[...paths,added]:paths;
@@ -1071,7 +1251,70 @@ test('native Go transport receipts reject refreshed unknown incoming bodies and 
   }
   fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));
   if(name==='supported_constructor')assert(discoverGoApiOutputs(root).some(output=>output.value.kind==='Namespace'&&output.value.metadata.name==='qualification'));
+  else if(name==='after_submission'){const outputs=discoverGoApiOutputs(root),submitted=outputs.find(output=>output.value.metadata?.name==='before');assert.equal(submitted?.value.kind,'Namespace');assert(!('immutable' in submitted.value));}
+  else if(name==='supported_patch'){const output=discoverGoApiOutputs(root).find(output=>output.context.path===added&&output.value.immutable===true);assert.equal(output?.value.kind,'Secret');assert.equal(output?.context.requestMethod,'MethodPatch');}
   else assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/,name);
+ });
+});
+
+test('actual Python webhook JSON Patch submits selected operations and newly added metadata',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),source='scripts/align-spire-webhook-order.py',bytes=fs.readFileSync(path.join(repository,source),'utf8');
+ for(const changed of [bytes,bytes.replace('{"op": "move", "from": "/webhooks/1", "path": "/webhooks/0"},','{"op": "move", "from": "/webhooks/1", "path": "/webhooks/0"},\n        {"op": "add", "path": "/metadata/labels/reviewerAdded", "value": "selected"},')])sourceFixture({[source]:changed},root=>{
+  const outputs=discoverScriptApiOutputs(root),output=outputs.find(output=>output.context.requestPatchType==='json');assert(output,'actual submitted JSON Patch missing');
+  assert.equal(output.context.requestMethod,'PATCH');assert.equal(output.context.requestReceiver.kind,'ValidatingWebhookConfiguration');assert.deepEqual(output.context.patchOperations,output.value);
+  const selected=apiProductSelection(output.context.apiVersion,output.context.kind,[output.context],versionedApiReceiverRegistries.get(output.context.apiVersion),root);
+  assert(selected.metadataPaths.includes('$.metadata.resourceVersion'));assert(selected.fieldPaths.includes('$.webhooks[].name'));assert(!selected.fieldPaths.includes('$.webhooks[].clientConfig'));assert(!selected.fieldPaths.includes('$.webhooks[].failurePolicy'));
+  const moved=selected.applicability['$.webhooks[]'].filter(row=>row.operation==='move');assert.deepEqual(moved.map(row=>[row.role,row.fieldPath]),[['destination','$.webhooks[0]'],['source','$.webhooks[1]']]);
+  assert.equal(selected.metadataPaths.includes('$.metadata.labels.reviewerAdded'),changed!==bytes);
+ });
+ for(const replacement of ['{"op": "move", "from": "/webhooks/1", "path": "/webhooks/00"},','{"op": "unsupported", "path": "/webhooks/0"},'])sourceFixture({[source]:bytes.replace('{"op": "move", "from": "/webhooks/1", "path": "/webhooks/0"},',replacement)},root=>{
+  assert.throws(()=>{const output=discoverScriptApiOutputs(root).find(output=>output.context.requestPatchType==='json');assert(output);apiProductSelection(output.context.apiVersion,output.context.kind,[output.context],versionedApiReceiverRegistries.get(output.context.apiVersion),root);},/API_PRODUCT_(?:JSON_PATCH|PYTHON)/);
+ });
+});
+
+test('actual cross-file Ingress factory retains its submitted PATCH resource version and projected additions',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),directory='cmd/buster-namespace-controller',authority='scripts/docs-api-producer-adapter-authorities.json';
+ const registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')),selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith(directory+'/'))};
+ const paths=fs.readdirSync(path.join(repository,directory)).filter(file=>file.endsWith('.go')&&!file.endsWith('_test.go')).map(file=>directory+'/'+file),files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
+ sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
+  const before=discoverGoApiOutputs(root),submitted=before.find(output=>output.context.path===directory+'/exposure-generation.go'&&output.context.requestMethod==='MethodPatch'&&output.value.kind==='Ingress');
+  assert(submitted,'actual current cross-file Ingress PATCH missing');assert.deepEqual(submitted.value.metadata.resourceVersion,{__docsDynamicExpression:'stringValue(metadata["resourceVersion"])'});assert.deepEqual(submitted.context.requestPath,{__docsDynamicExpression:'base + "/" + exposure.IngressName'});
+  const selection=apiProductSelection(submitted.context.apiVersion,submitted.context.kind,[submitted.context],versionedApiReceiverRegistries.get(submitted.context.apiVersion),root);assert(selection.metadataPaths.includes('$.metadata.resourceVersion'),'actual submitted PATCH resourceVersion must enter selected metadata');
+  assert(before.some(output=>output.context.path===directory+'/main.go'&&output.value.kind==='Ingress'&&!Object.hasOwn(output.value.metadata,'resourceVersion')),'original create constructor must retain its own fields');
+  const source=directory+'/exposure-generation.go',changed=files[source].replace('objectValue(desired["metadata"])["resourceVersion"] = version','objectValue(desired["metadata"])["resourceVersion"] = version\n\tobjectValue(desired["metadata"])["generation"] = 7');assert.notEqual(changed,files[source]);fs.writeFileSync(path.join(root,source),changed);
+  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(paths.map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);const actual=JSON.parse(run.stdout),refreshed=structuredClone(selected);
+  for(const contract of refreshed.nativeLanguageSerializationContracts)for(const receipt of contract.outputs){const output=actual.find(output=>path.relative(root,output.path)===contract.source&&output.function===receipt.function&&output.expression===receipt.expression);assert(output);receipt.operationDigest=createHash('sha256').update(output.operation).digest('hex');receipt.dependencyFacts=output.dependencies.map(fact=>({...fact,path:path.relative(root,fact.path)}));receipt.dependencyFactsDigest=createHash('sha256').update(JSON.stringify(receipt.dependencyFacts)).digest('hex');}
+  fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));
+  try{const after=discoverGoApiOutputs(root);assert(after.some(output=>output.context.path===source&&output.context.requestMethod==='MethodPatch'&&output.value.metadata?.generation===7),'new projected submitted field disappeared after receipt refresh');}
+  catch(error){assert.match(error.message,/API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED/);}
+ });
+});
+
+test('actual namespace Role alternatives retain base resources and changed conditional appends',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),directory='cmd/buster-namespace-controller',authority='scripts/docs-api-producer-adapter-authorities.json',main=directory+'/main.go';
+ const registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')),selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith(directory+'/'))};
+ const paths=fs.readdirSync(path.join(repository,directory)).filter(file=>file.endsWith('.go')&&!file.endsWith('_test.go')).map(file=>directory+'/'+file),files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
+ sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
+  const roles=()=>discoverGoApiOutputs(root).filter(output=>output.value.kind==='Role'&&output.value.rules?.[0]?.resources?.includes('pods'));
+  const check=(outputs,changed=false)=>{assert.equal(outputs.length,2);const tester=outputs.find(output=>output.context.conditions?.some(condition=>condition.expression==='mode == "deployer"'&&condition.result===false)),deployer=outputs.find(output=>output.context.conditions?.some(condition=>condition.expression==='mode == "deployer"'&&condition.result===true));assert(tester&&deployer,'actual tester and deployer alternatives missing');
+   assert.deepEqual(tester.value.rules[0].resources,['pods','pods/log','services','endpoints','configmaps',...(changed?['events']:[])]);assert.deepEqual(tester.value.rules[1].resources,['deployments','replicasets']);assert.deepEqual(deployer.value.rules[0].resources,[...tester.value.rules[0].resources,'persistentvolumeclaims']);assert.deepEqual(deployer.value.rules[1].resources,['deployments','replicasets','statefulsets',...(changed?['daemonsets']:[])]);};
+  check(roles());
+  const finalizerBranches=discoverGoApiOutputs(root).filter(output=>output.context.path===main&&output.context.line===754);
+  assert.equal(finalizerBranches.length,2,'actual reread must retain both no-append and append PATCH paths');
+  const branch=(outputs,taken)=>outputs.find(output=>output.context.conditions?.some(condition=>condition.expression==='!contains(finalizers, c.finalizer)'&&condition.result===taken));
+  const inheritedFinalizer=branch(finalizerBranches,false),finalizer=branch(finalizerBranches,true);assert(inheritedFinalizer&&finalizer);
+  assert.equal(inheritedFinalizer.value.metadata.finalizers.__docsDynamicExpression,'append([]string{}, current.Metadata.Finalizers...)');
+  assert.equal(inheritedFinalizer.value.metadata.finalizers.__docsSupportedSequenceAppend,undefined);
+  assert.equal(finalizer.value.metadata.finalizers.__docsDynamicExpression,'append(finalizers, c.finalizer)');
+  for(const output of finalizerBranches)assert.equal(output.context.requestMethod,'MethodPatch');
+  const finalizerSelection=apiProductSelection(finalizer.context.apiVersion,finalizer.context.kind,[finalizer.context],productApiReceiverRecords(finalizer.context.apiVersion,finalizer.context.kind),root);assert(finalizerSelection.metadataPaths.includes('$.metadata.finalizers'));assert(finalizerSelection.metadataPaths.includes('$.metadata.finalizers[]'),'actual symbolic finalizer array must select its public item boundary');
+  const changed=files[main].replace('coreResources := []string{"pods", "pods/log", "services", "endpoints", "configmaps"}','coreResources := []string{"pods", "pods/log", "services", "endpoints", "configmaps", "events"}').replace('appResources = append(appResources, "statefulsets")','appResources = append(appResources, "statefulsets", "daemonsets")').replace('finalizers := append([]string{}, current.Metadata.Finalizers...)','finalizers := append([]string{"existing"}, []string{"retained"}...)');assert.notEqual(changed,files[main]);fs.writeFileSync(path.join(root,main),changed);
+  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(paths.map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);const actual=JSON.parse(run.stdout),refreshed=structuredClone(selected);
+  for(const contract of refreshed.nativeLanguageSerializationContracts)for(const receipt of contract.outputs){const output=actual.find(output=>path.relative(root,output.path)===contract.source&&output.function===receipt.function&&output.expression===receipt.expression);assert(output);receipt.operationDigest=createHash('sha256').update(output.operation).digest('hex');receipt.dependencyFacts=output.dependencies.map(fact=>({...fact,path:path.relative(root,fact.path)}));receipt.dependencyFactsDigest=createHash('sha256').update(JSON.stringify(receipt.dependencyFacts)).digest('hex');}
+  fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));check(roles(),true);
+  const finiteBranches=discoverGoApiOutputs(root).filter(output=>output.context.path===main&&output.context.line===754),finiteFinalizer=branch(finiteBranches,true),finiteInherited=branch(finiteBranches,false);assert(finiteFinalizer&&finiteInherited);
+  assert.deepEqual(finiteInherited.value.metadata.finalizers,['existing','retained']);
+  assert.deepEqual(finiteFinalizer.value.metadata.finalizers,['existing','retained',{__docsDynamicExpression:'c.finalizer'}]);
  });
 });
 

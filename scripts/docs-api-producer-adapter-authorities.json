@@ -45375,15 +45375,6 @@
           "channel": "command-substitution"
         },
         {
-          "line": 74,
-          "command": "supplemental_attempted",
-          "args": [
-            "+",
-            "1"
-          ],
-          "channel": "command-substitution"
-        },
-        {
           "line": 75,
           "command": "openclaw",
           "args": [
@@ -45401,46 +45392,10 @@
           "channel": "command-substitution"
         },
         {
-          "line": 77,
-          "command": "supplemental_sent",
-          "args": [
-            "+",
-            "1"
-          ],
-          "channel": "command-substitution"
-        },
-        {
-          "line": 85,
-          "command": "required_attempted",
-          "args": [
-            "+",
-            "1"
-          ],
-          "channel": "command-substitution"
-        },
-        {
           "line": 101,
           "command": "${argv[@]}",
           "args": [
             "2"
-          ],
-          "channel": "command-substitution"
-        },
-        {
-          "line": 103,
-          "command": "required_sent",
-          "args": [
-            "+",
-            "1"
-          ],
-          "channel": "command-substitution"
-        },
-        {
-          "line": 111,
-          "command": "required_attempted",
-          "args": [
-            "+",
-            "1"
           ],
           "channel": "command-substitution"
         },
@@ -45457,15 +45412,6 @@
           "command": "${agent_argv[@]}",
           "args": [
             "2"
-          ],
-          "channel": "command-substitution"
-        },
-        {
-          "line": 149,
-          "command": "required_sent",
-          "args": [
-            "+",
-            "1"
           ],
           "channel": "command-substitution"
         },
@@ -45581,16 +45527,6 @@
           "sourceEvidence": "  elif [[ -n $output ]]; then\n    printf '%s %s\\n' \"$label\" \"$(printf '%s' \"$output\" | tr '\\n' ' ' | sed 's/[[:space:]]\\+/ /g; s/[[:space:]]*$//')\"\n  else"
         },
         {
-          "line": 74,
-          "command": "supplemental_attempted",
-          "channel": "command-substitution",
-          "argumentsDigest": "24ce2afe78a54c5496c48a368de3d645f2964466df6b9fc87fe9a3bbfcd4ca2d",
-          "source": "scripts/pipeline-light-openclaw-notify.sh",
-          "kind": "captured-operation",
-          "purpose": "Notification commands return native OpenClaw status; CSV helper is used for equality. Summary output is label-prefixed and line-flattened; the untrusted notification payload enters an external communication command, not an API resource.",
-          "sourceEvidence": "if [[ -n $session_key ]]; then\n  supplemental_attempted=$((supplemental_attempted + 1))\n  session_output=\"$(openclaw system event --session-key \"$session_key\" --mode \"$session_mode\" --text \"$payload\" --json 2>&1 || true)\""
-        },
-        {
           "line": 75,
           "command": "openclaw",
           "channel": "command-substitution",
@@ -45601,26 +45537,6 @@
           "sourceEvidence": "  supplemental_attempted=$((supplemental_attempted + 1))\n  session_output=\"$(openclaw system event --session-key \"$session_key\" --mode \"$session_mode\" --text \"$payload\" --json 2>&1 || true)\"\n  if jq -e '.ok == true' >/dev/null 2>&1 <<<\"$session_output\"; then"
         },
         {
-          "line": 77,
-          "command": "supplemental_sent",
-          "channel": "command-substitution",
-          "argumentsDigest": "24ce2afe78a54c5496c48a368de3d645f2964466df6b9fc87fe9a3bbfcd4ca2d",
-          "source": "scripts/pipeline-light-openclaw-notify.sh",
-          "kind": "captured-operation",
-          "purpose": "Notification commands return native OpenClaw status; CSV helper is used for equality. Summary output is label-prefixed and line-flattened; the untrusted notification payload enters an external communication command, not an API resource.",
-          "sourceEvidence": "  if jq -e '.ok == true' >/dev/null 2>&1 <<<\"$session_output\"; then\n    supplemental_sent=$((supplemental_sent + 1))\n    print_json_summary \"session_event ok\" \"$session_output\" '\".ok=\\(.ok)\"'"
-        },
-        {
-          "line": 85,
-          "command": "required_attempted",
-          "channel": "command-substitution",
-          "argumentsDigest": "24ce2afe78a54c5496c48a368de3d645f2964466df6b9fc87fe9a3bbfcd4ca2d",
-          "source": "scripts/pipeline-light-openclaw-notify.sh",
-          "kind": "captured-operation",
-          "purpose": "Notification commands return native OpenClaw status; CSV helper is used for equality. Summary output is label-prefixed and line-flattened; the untrusted notification payload enters an external communication command, not an API resource.",
-          "sourceEvidence": "if [[ -n $target ]]; then\n  required_attempted=$((required_attempted + 1))\n  argv=("
-        },
-        {
           "line": 101,
           "command": "${argv[@]}",
           "channel": "command-substitution",
@@ -45629,26 +45545,6 @@
           "kind": "captured-operation",
           "purpose": "Notification commands return native OpenClaw status; CSV helper is used for equality. Summary output is label-prefixed and line-flattened; the untrusted notification payload enters an external communication command, not an API resource.",
           "sourceEvidence": "\n  message_output=\"$(\"${argv[@]}\" 2>&1 || true)\"\n  if jq -e '.payload.ok == true and ((.payload.result.messageId // \"\") | length > 0)' >/dev/null 2>&1 <<<\"$message_output\"; then"
-        },
-        {
-          "line": 103,
-          "command": "required_sent",
-          "channel": "command-substitution",
-          "argumentsDigest": "24ce2afe78a54c5496c48a368de3d645f2964466df6b9fc87fe9a3bbfcd4ca2d",
-          "source": "scripts/pipeline-light-openclaw-notify.sh",
-          "kind": "captured-operation",
-          "purpose": "Notification commands return native OpenClaw status; CSV helper is used for equality. Summary output is label-prefixed and line-flattened; the untrusted notification payload enters an external communication command, not an API resource.",
-          "sourceEvidence": "  if jq -e '.payload.ok == true and ((.payload.result.messageId // \"\") | length > 0)' >/dev/null 2>&1 <<<\"$message_output\"; then\n    required_sent=$((required_sent + 1))\n    print_json_summary \"channel_message ok\" \"$message_output\" '\".message_id=\\(.payload.result.messageId) channel_id=\\(.payload.result.channelId)\"'"
-        },
-        {
-          "line": 111,
-          "command": "required_attempted",
-          "channel": "command-substitution",
-          "argumentsDigest": "24ce2afe78a54c5496c48a368de3d645f2964466df6b9fc87fe9a3bbfcd4ca2d",
-          "source": "scripts/pipeline-light-openclaw-notify.sh",
-          "kind": "captured-operation",
-          "purpose": "Notification commands return native OpenClaw status; CSV helper is used for equality. Summary output is label-prefixed and line-flattened; the untrusted notification payload enters an external communication command, not an API resource.",
-          "sourceEvidence": "if [[ -n $agent_session_key ]] && level_matches_agent_policy; then\n  required_attempted=$((required_attempted + 1))\n  agent_message=$'Pipeline-light terminal alert received.\\n'"
         },
         {
           "line": 123,
@@ -45669,16 +45565,6 @@
           "kind": "captured-operation",
           "purpose": "Notification commands return native OpenClaw status; CSV helper is used for equality. Summary output is label-prefixed and line-flattened; the untrusted notification payload enters an external communication command, not an API resource.",
           "sourceEvidence": "\n  agent_output=\"$(\"${agent_argv[@]}\" 2>&1 || true)\"\n  if jq -e 'type == \"object\"' >/dev/null 2>&1 <<<\"$agent_output\"; then"
-        },
-        {
-          "line": 149,
-          "command": "required_sent",
-          "channel": "command-substitution",
-          "argumentsDigest": "24ce2afe78a54c5496c48a368de3d645f2964466df6b9fc87fe9a3bbfcd4ca2d",
-          "source": "scripts/pipeline-light-openclaw-notify.sh",
-          "kind": "captured-operation",
-          "purpose": "Notification commands return native OpenClaw status; CSV helper is used for equality. Summary output is label-prefixed and line-flattened; the untrusted notification payload enters an external communication command, not an API resource.",
-          "sourceEvidence": "  if jq -e 'type == \"object\"' >/dev/null 2>&1 <<<\"$agent_output\"; then\n    required_sent=$((required_sent + 1))\n    print_json_summary \"agent_wake ok\" \"$agent_output\" '\".json=true\"'"
         },
         {
           "line": 44,
@@ -47233,17 +47119,6 @@
           "channel": "command-substitution"
         },
         {
-          "line": 53,
-          "command": "10#${BASH_REMATCH[1]}",
-          "args": [
-            "*",
-            "10000",
-            "+",
-            "10#${BASH_REMATCH[2]}"
-          ],
-          "channel": "command-substitution"
-        },
-        {
           "line": 58,
           "command": "server_identity",
           "args": [],
@@ -47280,26 +47155,6 @@
           "command": "cut",
           "args": [
             "-f1"
-          ],
-          "channel": "command-substitution"
-        },
-        {
-          "line": 61,
-          "command": "BACKUP_MAXIMUM_RETAINED_BYTES",
-          "args": [
-            "-",
-            "used",
-            "-",
-            "67108864"
-          ],
-          "channel": "command-substitution"
-        },
-        {
-          "line": 64,
-          "command": "allowance",
-          "args": [
-            "/",
-            "1024"
           ],
           "channel": "command-substitution"
         },
@@ -47486,15 +47341,6 @@
           "channel": "command-substitution"
         },
         {
-          "line": 125,
-          "command": "$(date +%s)",
-          "args": [
-            "-",
-            "started"
-          ],
-          "channel": "command-substitution"
-        },
-        {
           "line": 126,
           "command": "date",
           "args": [
@@ -47562,15 +47408,6 @@
           "args": [
             "$selected",
             "started_epoch"
-          ],
-          "channel": "command-substitution"
-        },
-        {
-          "line": 171,
-          "command": "$(date +%s)",
-          "args": [
-            "-",
-            "$(metadata \"$selected\" started_epoch)"
           ],
           "channel": "command-substitution"
         },
@@ -47901,16 +47738,6 @@
           "sourceEvidence": "  local value\n  value=$(\"$1\" --version)\n  [[ $value =~ PostgreSQL\\)\\ ([0-9]+)\\.([0-9]+) ]] || fail CLIENT_VERSION_INVALID"
         },
         {
-          "line": 53,
-          "command": "10#${BASH_REMATCH[1]}",
-          "channel": "command-substitution",
-          "argumentsDigest": "e0fead79faca60cc1c6fada72b2546b725e8fd90a5de9df9912c4fdf0ebc4b54",
-          "source": "scripts/postgresql-recovery.sh",
-          "kind": "captured-operation",
-          "purpose": "Native SQL/custom archive backup and restore; private metadata.env/checksum files, validated server/client identifiers and backup directory return. Restore has explicit empty-database and distinct-server checks. SQL/archive payloads have database consumers.",
-          "sourceEvidence": "  [[ $value =~ PostgreSQL\\)\\ ([0-9]+)\\.([0-9]+) ]] || fail CLIENT_VERSION_INVALID\n  printf '%s\\n' \"$(( 10#${BASH_REMATCH[1]} * 10000 + 10#${BASH_REMATCH[2]} ))\"\n}"
-        },
-        {
           "line": 58,
           "command": "server_identity",
           "channel": "command-substitution",
@@ -47959,26 +47786,6 @@
           "kind": "captured-operation",
           "purpose": "Native SQL/custom archive backup and restore; private metadata.env/checksum files, validated server/client identifiers and backup directory return. Restore has explicit empty-database and distinct-server checks. SQL/archive payloads have database consumers.",
           "sourceEvidence": "  identity=$(server_identity); client=$(client_version pg_dump); started=$(date +%s)\n  used=$(du --summarize --bytes \"$BACKUP_ROOT\" | cut -f1)\n  [[ $used =~ ^[0-9]+$ ]] || fail RETAINED_SIZE_INVALID"
-        },
-        {
-          "line": 61,
-          "command": "BACKUP_MAXIMUM_RETAINED_BYTES",
-          "channel": "command-substitution",
-          "argumentsDigest": "758bdd435cd743078e6b219c5cc9fb4972f357819965cc1f099faa3150b5faa2",
-          "source": "scripts/postgresql-recovery.sh",
-          "kind": "captured-operation",
-          "purpose": "Native SQL/custom archive backup and restore; private metadata.env/checksum files, validated server/client identifiers and backup directory return. Restore has explicit empty-database and distinct-server checks. SQL/archive payloads have database consumers.",
-          "sourceEvidence": "  [[ $used =~ ^[0-9]+$ ]] || fail RETAINED_SIZE_INVALID\n  allowance=$(( BACKUP_MAXIMUM_RETAINED_BYTES - used - 67108864 ))\n  (( allowance > 0 )) || fail RETAINED_CAPACITY_EXCEEDED"
-        },
-        {
-          "line": 64,
-          "command": "allowance",
-          "channel": "command-substitution",
-          "argumentsDigest": "7400f10ff3201cf4c467ea9e17838b23b04694c11b9d13715a6e0686548f06f5",
-          "source": "scripts/postgresql-recovery.sh",
-          "kind": "captured-operation",
-          "purpose": "Native SQL/custom archive backup and restore; private metadata.env/checksum files, validated server/client identifiers and backup directory return. Restore has explicit empty-database and distinct-server checks. SQL/archive payloads have database consumers.",
-          "sourceEvidence": "  (( allowance <= BACKUP_MAXIMUM_BYTES )) || allowance=$BACKUP_MAXIMUM_BYTES\n  blocks=$(( allowance / 1024 )); (( blocks > 0 )) || fail RETAINED_CAPACITY_EXCEEDED\n  stage=$(mktemp -d \"$BACKUP_ROOT/.incomplete-$(date -u +%Y%m%dT%H%M%SZ)-XXXXXXXX\")"
         },
         {
           "line": 65,
@@ -48191,16 +47998,6 @@
           "sourceEvidence": "  positive STARTED_EPOCH \"$started\"; positive COMPLETED_EPOCH \"$completed\"\n  age=$(( $(date +%s) - started ))\n  (( age >= 0 && completed >= started && completed <= $(date +%s) )) || fail BACKUP_TIMESTAMP_INVALID"
         },
         {
-          "line": 125,
-          "command": "$(date +%s)",
-          "channel": "command-substitution",
-          "argumentsDigest": "ad64fe89d282c3346ac2b984e8007378e9f30d1a6df1a9e8cab5adc7fc26603d",
-          "source": "scripts/postgresql-recovery.sh",
-          "kind": "captured-operation",
-          "purpose": "Native SQL/custom archive backup and restore; private metadata.env/checksum files, validated server/client identifiers and backup directory return. Restore has explicit empty-database and distinct-server checks. SQL/archive payloads have database consumers.",
-          "sourceEvidence": "  positive STARTED_EPOCH \"$started\"; positive COMPLETED_EPOCH \"$completed\"\n  age=$(( $(date +%s) - started ))\n  (( age >= 0 && completed >= started && completed <= $(date +%s) )) || fail BACKUP_TIMESTAMP_INVALID"
-        },
-        {
           "line": 126,
           "command": "date",
           "channel": "command-substitution",
@@ -48285,16 +48082,6 @@
           "command": "metadata",
           "channel": "command-substitution",
           "argumentsDigest": "00dc16bbfee8b2e4ff9af745ff1b08da4f30b7bb3cbeba1c4a0a18a5099d62b3",
-          "source": "scripts/postgresql-recovery.sh",
-          "kind": "captured-operation",
-          "purpose": "Native SQL/custom archive backup and restore; private metadata.env/checksum files, validated server/client identifiers and backup directory return. Restore has explicit empty-database and distinct-server checks. SQL/archive payloads have database consumers.",
-          "sourceEvidence": "  if selected=$(latest) && (verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"); then\n    age=$(( $(date +%s) - $(metadata \"$selected\" started_epoch) ))\n    if (( age < BACKUP_INTERVAL_SECONDS )); then printf '%s\\n' \"$selected\"; return; fi"
-        },
-        {
-          "line": 171,
-          "command": "$(date +%s)",
-          "channel": "command-substitution",
-          "argumentsDigest": "594495d91bcd58016d9b4b8c118cd35febca0cd8aa038794884f8a6631d9bc2c",
           "source": "scripts/postgresql-recovery.sh",
           "kind": "captured-operation",
           "purpose": "Native SQL/custom archive backup and restore; private metadata.env/checksum files, validated server/client identifiers and backup directory return. Restore has explicit empty-database and distinct-server checks. SQL/archive payloads have database consumers.",
@@ -50616,29 +50403,11 @@
           "channel": "command-substitution"
         },
         {
-          "line": 62,
-          "command": "SECONDS",
-          "args": [
-            "+",
-            "maximum_seconds"
-          ],
-          "channel": "command-substitution"
-        },
-        {
           "line": 65,
           "command": "cli",
           "args": [
             "PING",
             "2"
-          ],
-          "channel": "command-substitution"
-        },
-        {
-          "line": 74,
-          "command": "maximum_bytes",
-          "args": [
-            "/",
-            "1024"
           ],
           "channel": "command-substitution"
         },
@@ -51047,16 +50816,6 @@
           "sourceEvidence": "cp --no-clobber -- \"$snapshot\" \"$destination/dump.rdb\"\n[[ $(sha256sum -- \"$destination/dump.rdb\" | cut -d' ' -f1) == \"$expected\" ]] || fail COPIED_SNAPSHOT_DIGEST_MISMATCH\nnode --input-type=module - \"$script_root/my-values/infra/redis-values.yaml\" >\"$stage/policy.conf\" <<'NODE'"
         },
         {
-          "line": 62,
-          "command": "SECONDS",
-          "channel": "command-substitution",
-          "argumentsDigest": "342b8c81388a8ebc2258d12a756541d33bd3decb602c1bade3977997f12129b5",
-          "source": "scripts/redis-prepare-migration.sh",
-          "kind": "captured-operation",
-          "purpose": "Private Redis policy/config files, isolated RDB-to-AOF conversion, native INFO/CONFIG scalar checks, checksums and immutable migration receipt. Destination path is enforced canonical and safe.",
-          "sourceEvidence": "} >\"$stage/redis.conf\"\ndeadline=$(( SECONDS + maximum_seconds ))\ncli() { timeout --signal=TERM --kill-after=2 10 \"$REDIS_CLI\" -h 127.0.0.1 -p \"$port\" --raw \"$@\"; }"
-        },
-        {
           "line": 65,
           "command": "cli",
           "channel": "command-substitution",
@@ -51065,16 +50824,6 @@
           "kind": "captured-operation",
           "purpose": "Private Redis policy/config files, isolated RDB-to-AOF conversion, native INFO/CONFIG scalar checks, checksums and immutable migration receipt. Destination path is enforced canonical and safe.",
           "sourceEvidence": "ready() {\n  until [[ $(cli PING 2>/dev/null || true) == PONG ]]; do\n    kill -0 \"$child\" 2>/dev/null || fail DESTINATION_START_FAILED"
-        },
-        {
-          "line": 74,
-          "command": "maximum_bytes",
-          "channel": "command-substitution",
-          "argumentsDigest": "7400f10ff3201cf4c467ea9e17838b23b04694c11b9d13715a6e0686548f06f5",
-          "source": "scripts/redis-prepare-migration.sh",
-          "kind": "captured-operation",
-          "purpose": "Private Redis policy/config files, isolated RDB-to-AOF conversion, native INFO/CONFIG scalar checks, checksums and immutable migration receipt. Destination path is enforced canonical and safe.",
-          "sourceEvidence": "  # The outer limit bounds disk growth; no source credential enters this host.\n  (ulimit -c 0; ulimit -f \"$(( maximum_bytes / 1024 ))\"; exec setsid timeout --signal=TERM --kill-after=5 \"$maximum_seconds\" \"$REDIS_SERVER\" \"$stage/redis.conf\") &\n  child=$!"
         },
         {
           "line": 79,
@@ -53698,15 +53447,6 @@
           "channel": "command-substitution"
         },
         {
-          "line": 75,
-          "command": "attempt",
-          "args": [
-            "*",
-            "5"
-          ],
-          "channel": "command-substitution"
-        },
-        {
           "line": 89,
           "command": "uname",
           "args": [
@@ -53964,16 +53704,6 @@
           "kind": "captured-operation",
           "purpose": "Pinned Trivy archive/digest/version checks; source invokes vulnerability table report and prints report. External scanner output is a declared human table, not an object renderer.",
           "sourceEvidence": "    if curl -fsSL --connect-timeout 15 --max-time 60 \\\n      \"https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${archive}?download=1&kubeclaw_retry=$(date +%s)-$attempt\" \\\n      -o \"$temporary/$archive\"; then"
-        },
-        {
-          "line": 75,
-          "command": "attempt",
-          "channel": "command-substitution",
-          "argumentsDigest": "1833cb0926b39f0ab0223f78276c68460a30dd618142eab1a40059f6112d356b",
-          "source": "scripts/scan-runtime-images.sh",
-          "kind": "captured-operation",
-          "purpose": "Pinned Trivy archive/digest/version checks; source invokes vulnerability table report and prints report. External scanner output is a declared human table, not an object renderer.",
-          "sourceEvidence": "    if [[ $attempt == 3 ]]; then return 1; fi\n    sleep \"$((attempt * 5))\"\n  done"
         },
         {
           "line": 89,
@@ -56283,15 +56013,6 @@
           "channel": "command-substitution"
         },
         {
-          "line": 55,
-          "command": "attempt",
-          "args": [
-            "+",
-            "1"
-          ],
-          "channel": "command-substitution"
-        },
-        {
           "line": 68,
           "command": "realpath",
           "args": [
@@ -56526,16 +56247,6 @@
           "kind": "captured-operation",
           "purpose": "Native BuildKit/worker process setup, registry runtime JSON/TOML inputs, fixed platform/runtime JSON envelopes and private kubeconfig consumed by KUBECONFIG. Service/log/cgroup reads have native lifecycle consumers; kubeconfig is not submitted to an API endpoint.",
           "sourceEvidence": "config=\"${HOME}/.config/buildkit/buildkitd.toml\"\nmkdir -p \"$(dirname \"$address\")\" \"$(dirname \"$otel_socket\")\" \"$state\" \"$(dirname \"$config\")\"\ncp \"$registry_client_dir/buildkit.toml\" \"$config\""
-        },
-        {
-          "line": 55,
-          "command": "attempt",
-          "channel": "command-substitution",
-          "argumentsDigest": "24ce2afe78a54c5496c48a368de3d645f2964466df6b9fc87fe9a3bbfcd4ca2d",
-          "source": "docker/buster-runtime-entrypoint.sh",
-          "kind": "captured-operation",
-          "purpose": "Native BuildKit/worker process setup, registry runtime JSON/TOML inputs, fixed platform/runtime JSON envelopes and private kubeconfig consumed by KUBECONFIG. Service/log/cgroup reads have native lifecycle consumers; kubeconfig is not submitted to an API endpoint.",
-          "sourceEvidence": "until buildctl --addr \"$socket\" debug workers >/dev/null 2>&1; do\n  attempt=$((attempt + 1))\n  if [ \"$attempt\" -ge 60 ]; then"
         },
         {
           "line": 68,

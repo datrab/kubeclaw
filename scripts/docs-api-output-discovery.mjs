@@ -29,7 +29,21 @@ function assertNativeSerializationRoles(root,source,bytes,language) {
   if(language==='Python'){
     const parsed=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source),'--classify'],{encoding:'utf8',env:{PATH:process.env.PATH}});
     assert.equal(parsed.status,0,`API_PRODUCT_PYTHON_SERIALIZATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);
-    assert(JSON.parse(parsed.stdout).every(output=>output.role==='non-api'||nativeOutputConsumerMatches(output,nativeOutputs,root)),`API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
+    const outputs=JSON.parse(parsed.stdout);
+    let bootstrapAudit;
+    if(source==='ops/pod/bootstrap.py'){
+      const audited=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source),'--audit'],{encoding:'utf8',env:{PATH:process.env.PATH}});
+      assert.equal(audited.status,0,`API_PRODUCT_PYTHON_PUBLIC_OUTPUT_AUDIT_FAILED: ${source}: ${audited.stderr}`);
+      bootstrapAudit=JSON.parse(audited.stdout);
+      assert(bootstrapAudit.kind==='bootstrap-public-output-audit'&&bootstrapAudit.qualified===true&&bootstrapAudit.entryPoints?.discover===true&&bootstrapAudit.entryPoints?.secrets===true&&Array.isArray(bootstrapAudit.dependencies)&&bootstrapAudit.dependencies.length&&bootstrapAudit.dependencies.every(fact=>fact.qualified===true&&fact.symbol&&fact.operation&&/^[a-f0-9]{64}$/u.test(fact.sha256))&&JSON.stringify(bootstrapAudit.outputs)===JSON.stringify(outputs),`API_PRODUCT_PYTHON_PUBLIC_OUTPUT_FLOW_UNQUALIFIED: ${source}`);
+    }
+    const auditedBootstrap=output=>{
+      if(!bootstrapAudit)return false;
+      const flow=output.bootstrapFlow;
+      return flow?.qualified===true&&flow.producerLine>0&&flow.consumerLine>0&&typeof flow.expression==='string'&&flow.expression&&((flow.kind==='config-info'&&flow.selectedEntryPoint==='discover'&&output.role==='non-api')||(flow.kind==='credential-submission'&&flow.selectedEntryPoint==='secrets'&&output.role==='api')||(flow.kind==='credential-diagnostic'&&flow.selectedEntryPoint==='secrets'&&output.role==='non-api'))&&Array.isArray(flow.dependencies)&&flow.dependencies.length&&flow.dependencies.every(fact=>fact.qualified===true&&bootstrapAudit.dependencies.some(selected=>JSON.stringify(selected)===JSON.stringify(fact)));
+    };
+    assert(outputs.every(output=>bootstrapAudit?auditedBootstrap(output):(output.role==='non-api'||output.role==='api-patch'&&output.patchReceiver?.apiVersion&&output.patchReceiver?.kind&&output.patchReceiver?.resource&&output.patchReceiver?.name&&output.patchReceiver.patchType==='json'&&Array.isArray(output.patchOperations)||nativeOutputConsumerMatches(output,nativeOutputs,root))),`API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
+    return outputs;
   }
 }
 function nativeOutputConsumerMatches(output,contracts,root) {
@@ -465,13 +479,22 @@ export function discoverScriptApiOutputs(root) {
   const documentationLanguageTools=documentationToolSources(root);
   for(const source of walkProductSources(root,producerRoots,file=>/\.py$/u.test(file)&&!documentationLanguageTools.has(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
-    if(source!=='ops/pod/bootstrap.py')assertNativeSerializationRoles(root,source,bytes,'Python');
-    if(source!=='ops/pod/bootstrap.py'&&!/kubectl[^\n]*(?:apply|create)|(?:apply|create)_secret/u.test(bytes))continue;
+    const roles=assertNativeSerializationRoles(root,source,bytes,'Python');
+    const patchRoles=roles.filter(role=>role.role==='api-patch');
+    if(!patchRoles.length&&source!=='ops/pod/bootstrap.py'&&!/kubectl[^\n]*(?:apply|create|patch)|(?:apply|create)_secret/u.test(bytes))continue;
     if(source==='scripts/verify-cilium-policies.py'){assertProducerAdapterAuthority(root,[source]);continue;}
-    assert(source==='ops/pod/bootstrap.py',`API_PRODUCT_PYTHON_PRODUCER_UNQUALIFIED: ${source}`);
-    const rendered=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source)],{encoding:'utf8',env:{PATH:process.env.PATH},maxBuffer:8*1024*1024});
+    assert(source==='ops/pod/bootstrap.py'||patchRoles.length,`API_PRODUCT_PYTHON_PRODUCER_UNQUALIFIED: ${source}`);
+    const rendered=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source),...(patchRoles.length?['--patch']:[])],{encoding:'utf8',env:{PATH:process.env.PATH},maxBuffer:8*1024*1024});
     assert.equal(rendered.status,0,`API_PRODUCT_PYTHON_ADAPTER_FAILED: ${source}: ${rendered.stderr}`);
-    JSON.parse(rendered.stdout).forEach((output,index)=>result.push({value:output.value,context:{apiVersion:output.value.apiVersion,kind:output.value.kind,path:source,document:index,sourceDigest:hash(bytes),producer:'python-offline-original',profile:output.profile,inputs:['scripts/deploy-ops-pod.sh'],inputDigest:hash(JSON.stringify({environment:output.environment,responses:output.inputs,caller:hash(fs.readFileSync(path.join(root,'scripts/deploy-ops-pod.sh'))),adapter:hash(fs.readFileSync(new URL('./docs-api-python-output-adapter.py',import.meta.url)))})),outputDigest:hash(JSON.stringify(output.value)),offlineInputs:output.inputs}}));
+    JSON.parse(rendered.stdout).forEach((output,index)=>{
+      const receiver=output.receiver;
+      if(patchRoles.length){
+        assert(Array.isArray(output.value)&&output.value.length&&JSON.stringify(output.value)===JSON.stringify(output.patchOperations),`API_PRODUCT_PYTHON_PATCH_BODY_UNQUALIFIED: ${source}`);
+        assert(patchRoles.some(role=>JSON.stringify(role.patchReceiver)===JSON.stringify(receiver)&&JSON.stringify(role.patchOperations)===JSON.stringify(output.patchOperations)),`API_PRODUCT_PYTHON_PATCH_RECEIVER_UNQUALIFIED: ${source}`);
+      }
+      const caller=patchRoles.length?[]:['scripts/deploy-ops-pod.sh'];
+      result.push({value:output.value,context:{apiVersion:receiver?.apiVersion??output.value.apiVersion,kind:receiver?.kind??output.value.kind,path:source,document:index,sourceDigest:hash(bytes),producer:'python-offline-original',profile:output.profile,inputs:caller,inputDigest:hash(JSON.stringify({environment:output.environment,responses:output.inputs,caller:caller.map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]),adapter:hash(fs.readFileSync(new URL('./docs-api-python-output-adapter.py',import.meta.url)))})),outputDigest:hash(JSON.stringify(output.value)),offlineInputs:output.inputs,...(output.profileOutcomes?{profileOutcomes:output.profileOutcomes}:{}),...(output.coverageLimitations?{coverageLimitations:output.coverageLimitations}:{}),...(receiver?{requestMethod:'PATCH',requestOperation:'kubectl-patch',requestPatchType:receiver.patchType,requestReceiver:receiver,patchOperations:output.patchOperations}:{})}});
+    });
   }
   const documentationTools=documentationToolSources(root);
   const sources=walkProductSources(root,producerRoots,file=>/\.(?:[cm]?js|ts)$/u.test(file)&&!documentationTools.has(file));
@@ -737,11 +760,11 @@ export function discoverGoApiOutputs(root) {
   const parsedRoles=JSON.parse(roles.stdout);
   for(const role of parsedRoles)assert(role.role==='non-api'||role.role==='api'||nativeOutputConsumerMatches({...role,expression:role.expression,function:role.function},nativeContracts.filter(contract=>contract.source===path.relative(root,role.path)&&contract.language==='Go').flatMap(contract=>contract.outputs??[]),root),`API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED: ${role.path}:${role.line}: ${role.expression}`);
   const literalOutputs=parsedRoles.filter(role=>role.role==='api').flatMap(role=>YAML.parseAllDocuments(role.value).map(document=>{assert(!document.errors.length,`API_PRODUCT_GO_LITERAL_YAML_INVALID: ${role.path}:${role.line}`);const value=document.toJS();assert(value?.apiVersion&&value?.kind,`API_PRODUCT_GO_LITERAL_IDENTITY_UNQUALIFIED: ${role.path}:${role.line}`);return {value,context:{apiVersion:value.apiVersion,kind:value.kind,path:path.relative(root,role.path),document:role.line,sourceDigest:hash(fs.readFileSync(role.path)),producer:'go-literal-forwarding',line:role.line,outputDigest:hash(JSON.stringify(value))}};}));
-  const parsed=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY ?? 'go',['run',helper.pathname],{input:JSON.stringify(sources.map(source=>path.join(root,source))),encoding:'utf8',maxBuffer:32*1024*1024});
+  const parsed=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY ?? 'go',['run',helper.pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>path.join(root,source))),encoding:'utf8',maxBuffer:32*1024*1024});
   assert.equal(parsed.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${parsed.error?.message ?? parsed.stderr}`);
   const result=[...literalOutputs,...Object.entries(JSON.parse(parsed.stdout)).flatMap(([absolute,objects])=>objects.map((object,index)=>{
     const source=path.relative(root,absolute);
-    return {value:object.value,context:{apiVersion:object.value.apiVersion,kind:object.value.kind,path:source,document:index,sourceDigest:hash(fs.readFileSync(absolute)),producer:'go-shape',line:object.line,...(object.inferredIdentity?{inferredIdentity:true,requestMethod:object.requestMethod}:{}),outputDigest:hash(JSON.stringify(object.value))}};
+    return {value:object.value,context:{apiVersion:object.value.apiVersion,kind:object.value.kind,path:source,document:index,sourceDigest:hash(fs.readFileSync(absolute)),producer:'go-shape',line:object.line,...(object.inferredIdentity?{inferredIdentity:true}:{}),...(object.requestMethod?{requestMethod:object.requestMethod}:{}),...(object.requestPath!==undefined?{requestPath:object.requestPath}:{}),...(object.requestAlternatives?{requestAlternatives:object.requestAlternatives}:{}),...(object.conditions?{conditions:object.conditions}:{}),...(object.factoryExpression?{factoryExpression:object.factoryExpression,factoryLine:object.factoryLine,factoryDependencies:object.factoryDependencies?.map(dependency=>({...dependency,path:path.relative(root,dependency.path)}))}:{}),outputDigest:hash(JSON.stringify(object.value))}};
   }))];
   goOutputCache.clear();goOutputCache.set(key,result);return result;
 }
@@ -761,7 +784,7 @@ export function shellRawOutputSinks(source,bytes) {
  // a regex, quoted program or $(...) is not an executable command boundary.
  const tokens=[],substitutions=[];let index=0,line=1;
  function quoted(quote){let value='';index++;while(index<code.length){const char=code[index++];if(char==='\n')line++;if(char===quote)return value;if(quote==='\"'&&char==='$'&&code[index]==='('){index--;value+=substitution();continue;}if(char==='\\'&&quote==='"'&&index<code.length)value+=code[index++];else value+=char;}assert.fail(`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: unterminated quote`);}
- function substitution(){const start=index,at=line;let value='$(',depth=1;index+=2;while(index<code.length&&depth){const char=code[index];if(char==='"'||char==="'"){const quote=char;value+=quote+quoted(quote)+quote;continue;}index++;if(char==='\n')line++;if(char==='(')depth++;if(char===')')depth--;value+=char;}assert.equal(depth,0,`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: unterminated substitution`);substitutions.push({body:code.slice(start+2,index-1),line:at});return value;}
+ function substitution(){const start=index,at=line,arithmetic=code[index+2]==='(';let value='$(',depth=1;index+=2;while(index<code.length&&depth){const char=code[index];if(arithmetic&&char==='$'&&code[index+1]==='('){value+=substitution();continue;}if(char==='"'||char==="'"){const quote=char;value+=quote+quoted(quote)+quote;continue;}index++;if(char==='\n')line++;if(char==='(')depth++;if(char===')')depth--;value+=char;}assert.equal(depth,0,`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: unterminated substitution`);if(!arithmetic)substitutions.push({body:code.slice(start+2,index-1),line:at});return value;}
  while(index<code.length){const char=code[index];if(char==='\\'&&code[index+1]==='\n'){index+=2;line++;continue;}if(/[ \t\r]/u.test(char)){index++;continue;}if(char==='#'){while(index<code.length&&code[index]!=='\n')index++;continue;}if(char==='\n'){tokens.push({value:'\n',line,operator:true});index++;line++;continue;}if(/[;()|&<>]/u.test(char)){const start=index++;while(index<code.length&&code[index]===char&&char!=='('&&char!==')')index++;if((char==='>'||char==='<')&&code[index]==='&')index++;tokens.push({value:code.slice(start,index),line,operator:true});continue;}const at=line;let value='';while(index<code.length&&!/[ \t\r\n;()|&<>]/u.test(code[index])){if(code[index]==='"'||code[index]==="'")value+=quoted(code[index]);else if(code[index]==='$'&&code[index+1]==='(')value+=substitution();else if(code[index]==='$'&&code[index+1]==='{'){const close=code.indexOf('}',index+2);assert(close>=0,`API_PRODUCT_SHELL_OUTPUT_ROLE_PARSE_FAILED: ${source}: unterminated expansion`);value+=code.slice(index,close+1);index=close+1;}else if(code[index]==='\\'&&index+1<code.length){index++;if(code[index]==='\n'){index++;line++;}else value+=code[index++];}else value+=code[index++];}tokens.push({value,line:at,operator:false});}
  const sinks=substitutions.flatMap(value=>shellRawOutputSinks(source,value.body).map(sink=>({...sink,line:sink.line+value.line-1,channel:'command-substitution'}))),streamTools=new Set(['sed','awk','gawk','tee','head','tail','cut','paste','sort','uniq','tr','dd','base64','jq','yq']);
  const quietBuiltins=new Set(['return','exit',':','true','false','test','set','export','unset','local','readonly','shift','cd','mkdir','rmdir','rm','mv','cp','chmod','chown','touch','sleep','kill','wait','trap','read','umask','break','continue','mapfile','ulimit']);
@@ -816,7 +839,627 @@ export function shellRawOutputOperationRecipe(source,bytes) {
  return {...producerAdapterOperationRecipe(source,shell),heredocs};
 }
 const shellOutputCache=new Map();
-function shellOutputConsumerMatches(source,bytes,sink,consumer) {
+// Close unbound raw input channels;
+// it is not a complete proof of each positive selected native file producer.
+function shellRawChannelUnbound(bytes,sink) {
+ const streamTools=new Set(['cat','tee','sed','awk','gawk','head','tail','cut','paste','sort','uniq','tr','dd','base64','jq','yq']);
+ const tainted=new Set();let changed=true;
+ // Shell locals belong to their function invocation. Do not transfer a local
+ // named value/output from an unrelated function into this selected channel.
+ const lines=bytes.split('\n'),blocks=[];let start=null;
+ for(let index=0;index<lines.length;index++){
+  if(start===null&&/^\s*(?:function\s+)?[A-Za-z_][A-Za-z0-9_]*\s*\(\s*\)\s*\{\s*$/u.test(lines[index]))start=index;
+  else if(start!==null&&/^\}\s*$/u.test(lines[index])){blocks.push({start,end:index});start=null;}
+ }
+ const selected=blocks.find(block=>block.start<sink.line&&sink.line<=block.end+1);
+ bytes=lines.map((line,index)=>blocks.some(block=>block!==selected&&block.start<=index&&index<=block.end)?'':line).join('\n');
+ const assignments=[...bytes.matchAll(/\b([A-Za-z_][A-Za-z0-9_]*)=(?:"([^"\n]*(?:\$\([^\n]*\)[^"\n]*)?)"|'([^'\n]*)'|([^;\n ]+(?:\([^\n]*?\))?))/gu)];
+ const references=value=>[...value.matchAll(/\$(?:\{([A-Za-z_][A-Za-z0-9_]*)[^}]*\}|([A-Za-z_][A-Za-z0-9_]*))/gu)].map(match=>match[1]??match[2]);
+ const caller=value=>/\$(?:[0-9@*]|\{[0-9@*][^}]*\})/u.test(value)||references(value).some(name=>tainted.has(name));
+ while(changed){changed=false;for(const match of assignments){const value=match[2]??match[3]??match[4]??'';if(caller(value)||/\$\(\s*(?:cat|tee|yaml_trim_scalar|yaml_get_section_key|yaml_get_nested_section_key|bundle_values_field)(?:\s|\))/u.test(value)){if(!tainted.has(match[1])){tainted.add(match[1]);changed=true;}}}}
+ const rawScalar=sink.command==='printf'&&/^%[sb](?:\\n)?$/u.test(sink.args[0]??'')&&sink.args.length===2&&/^\$(?:\{[^}]+\}|[A-Za-z_][A-Za-z0-9_]*|[0-9@*])$/u.test(sink.args[1]??'')||sink.command==='echo'&&sink.args.filter(value=>!value.startsWith('-')).length===1&&/^\$(?:\{[A-Za-z_][A-Za-z0-9_]*\}|[A-Za-z_][A-Za-z0-9_]*|[0-9@*])$/u.test(sink.args.at(-1)??'');
+ const dataArgs=['awk','gawk','sed','jq','yq'].includes(sink.command)?sink.args.slice(1):sink.args;
+ if((['cat','tee'].includes(sink.command)||rawScalar)&&dataArgs.some(caller))return true;
+ if(sink.command==='cat'&&sink.args.some(value=>references(value).some(name=>!assignments.some(match=>match[1]===name)&&!new RegExp(`\\bfor\\s+${name}\\s+in\\s+[A-Za-z0-9_. -]+;?\\s*do`,'u').test(bytes))))return true;
+ if(streamTools.has(sink.command)){
+  if(sink.command==='tee')return true; // no argument selects tee's input.
+  if(sink.command==='cat'&&(!sink.args.length||sink.args.every(value=>value==='-'||value.startsWith('-'))))return true;
+ }
+ return false;
+}
+// Supported native CLI -> finite summary selector -> framed human output.
+// This preserves Source role semantics, not live external CLI schema acceptance.
+function shellNativeSummaryQualified(bytes,sink) {
+ const lines=bytes.split('\n'),before=lines.slice(0,sink.line).join('\n');
+ // Identify the operation grammar, not a source pathname. The actual helper
+ // binds label/output/selector to caller argv and frames every public result.
+ const helper=/([A-Za-z_][A-Za-z0-9_]*)\(\)\s*\{\s*local label output jq_expr\s*label="\$1"\s*output="\$2"\s*jq_expr="\$3"([\s\S]*?)\n\}/gu;
+ const definitions=[...bytes.matchAll(helper)];
+ const dynamic=/^\$\{[A-Za-z_][A-Za-z0-9_]*\[@\]\}$/u.test(sink.command);
+ const definition=definitions.find(match=>{const first=bytes.slice(0,match.index).split('\n').length;return first<=sink.line&&sink.line<=first+match[0].split('\n').length-1;})??(dynamic&&definitions.length===1?definitions[0]:null);
+ if(!definition)return false;
+ const body=definition[2];
+ if(body.replace(/\s+/gu,'')!=="  if jq -er \"$jq_expr\" >/dev/null 2>&1 <<<\"$output\"; then\n    printf '%s %s\\n' \"$label\" \"$(jq -r \"$jq_expr\" <<<\"$output\")\"\n  elif [[ -n $output ]]; then\n    printf '%s %s\\n' \"$label\" \"$(printf '%s' \"$output\" | tr '\\n' ' ' | sed 's/[[:space:]]\\+/ /g; s/[[:space:]]*$//')\"\n  else\n    printf '%s no-output\\n' \"$label\"\n  fi".replace(/\s+/gu,''))return false;
+ const name=definition[1],occurrences=[...bytes.matchAll(new RegExp(`(^|\\n)[ \\t]*${name}[ \\t]+([^\\n]+)`,'gu'))].filter(match=>!match[0].includes(name+'()'));
+ if(!occurrences.length)return false;
+ if((bytes.match(new RegExp(`\\b${name}\\b`,'gu'))??[]).length!==occurrences.length+1)return false;
+ const supported=new Set(['.','".ok=\\(.ok)"','".message_id=\\(.payload.result.messageId) channel_id=\\(.payload.result.channelId)"','".json=true"']);
+ const selectedCaptures=new Set();
+ for(const occurrence of occurrences){const call=occurrence[2]?.match(/^"([a-z_]+ (?:ok|failed))"\s+"\$([A-Za-z_][A-Za-z0-9_]*)"\s+'([^']+)'\s*$/u);if(!call||!supported.has(call[3]))return false;
+  const output=call[2],prefix=bytes.slice(0,occurrence.index),assignments=[...prefix.matchAll(new RegExp(`\\b${output}="\\$\\(([^\\n]+)\\)"`,'gu'))];const assignment=assignments.at(-1);if(!assignment)return false;const command=assignment[1];
+  if((bytes.match(new RegExp(`\\b${output}\\b`,'gu'))??[]).length!==4)return false;
+  if(/^openclaw system event --session-key "\$[A-Za-z_][A-Za-z0-9_]*" --mode "\$[A-Za-z_][A-Za-z0-9_]*" --text "\$[A-Za-z_][A-Za-z0-9_]*" --json 2>&1 \|\| true$/u.test(command))continue;
+  const array=command.match(/^"\$\{([A-Za-z_][A-Za-z0-9_]*)\[@\]\}" 2>&1 \|\| true$/u)?.[1];if(!array)return false;
+  const arrays=[...prefix.matchAll(new RegExp(`\\b${array}=\\(([\\s\\S]*?)\\n[ \\t]*\\)`,'gu'))],actual=arrays.at(-1);if(!actual)return false;
+  const argv=actual[1].replace(/\s+/gu,' ').trim();
+  const message=/^openclaw message send --account "\$[A-Za-z_][A-Za-z0-9_]*" --channel "\$[A-Za-z_][A-Za-z0-9_]*" --target "\$[A-Za-z_][A-Za-z0-9_]*" --message "\$[A-Za-z_][A-Za-z0-9_]*" --json$/u.test(argv);
+  const agent=/^openclaw agent --agent "\$[A-Za-z_][A-Za-z0-9_]*" --session-key "\$[A-Za-z_][A-Za-z0-9_]*" --message "\$[A-Za-z_][A-Za-z0-9_]*" --timeout "\$[A-Za-z_][A-Za-z0-9_]*" --json$/u.test(argv);if(!message&&!agent)return false;
+  const between=prefix.slice(actual.index+actual[0].length,assignment.index);const mutations=[...between.matchAll(new RegExp(`\\b${array}\\+?=\\(([\\s\\S]*?)\\)`,'gu'))];
+  if((between.match(new RegExp(`\\b${array}\\b`,'gu'))??[]).length!==mutations.length)return false;
+  if(mutations.some(match=>{const flags=match[1].replace(/\s+/gu,' ').trim();return message?flags!=='--silent':!/^--deliver --reply-account "\$[A-Za-z_][A-Za-z0-9_]*" --reply-channel "\$[A-Za-z_][A-Za-z0-9_]*" --reply-to "\$[A-Za-z_][A-Za-z0-9_]*"$/u.test(flags);}))return false;
+  selectedCaptures.add(bytes.slice(0,assignment.index).split('\n').length);
+ }
+ return ['jq','printf','tr','sed'].includes(sink.command)||dynamic&&selectedCaptures.has(sink.line)&&sink.channel==='command-substitution'&&sink.args.join('|')==='2';
+}
+// Capture-to-framed-log grammar. This qualifies the actual consumer graph,
+// without assigning arbitrary notify-command stdout a native producer role.
+function shellFramedNotifyLogQualified(bytes,sink) {
+ const functions=[...bytes.matchAll(/([A-Za-z_][A-Za-z0-9_]*)\(\)\s*\{([\s\S]*?)\n\}/gu)];
+ const current=functions.find(match=>{const first=bytes.slice(0,match.index).split('\n').length;return first<=sink.line&&sink.line<=first+match[0].split('\n').length-1;});
+ if(!current)return false;
+ const body=current[2];
+ const log=functions.find(match=>/\n\s*printf '%s pid=%s %s\\n' "\$\(now_iso\)" "\$run_pid" "\$1" >>"\$log_file"\s*$/u.test(match[2]));
+ if(!log||log[2].trim()!==`printf '%s pid=%s %s\\n' "$(${ 'now_iso' })" "$run_pid" "$1" >>"$log_file"`)return false;
+ const logger=log[1];
+ const exact=[
+  `printf '\\n__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=%s\\n' "$?"`,
+  `exit_code="$(printf '%s\\n' "$output" | sed -n 's/^__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=//p' | tail -n 1)"`,
+  `output="$(printf '%s\\n' "$output" | sed '/^__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=/d')"`,
+  `while IFS= read -r line; do\n      ${logger} "notify output=$line"\n    done <<<"$output"`,
+  `if [[ \${exit_code:-1} == "0" ]]; then`,
+  `${logger} "notify status=$status result=failed exit=$exit_code command=$notify_command"`
+ ];
+ if(exact.some(text=>!body.includes(text)))return false;
+ // Quote-aware assignment/reference enumeration by the owner must additionally
+ // prove these are all uses in this local scope. Reject new raw publication or
+ // alias flows rather than treating exact existing legs as blanket evidence.
+ const counts={output:4,exit_code:2,line:1};
+ for(const [name,count] of Object.entries(counts)){
+  const refs=[...body.matchAll(new RegExp(`\\$(?:${name}\\b|\\{${name}(?::[^}]*)?\\})`,'gu'))];
+  if(refs.length!==count)return false;
+ }
+ const selected=bytes.split('\n')[sink.line-1]?.trim();
+ if(sink.command==='$notify_command'&&sink.channel==='command-substitution'&&sink.args.join('|')==='2'&&selected==='"$notify_command" 2>&1'&&(body.match(/"\$notify_command" 2>&1/gu)??[]).length===1)return true;
+ if(!exact.slice(0,3).some(text=>text===selected))return false;
+ return ['printf','sed','tail'].includes(sink.command);
+}
+
+const nativeTeeOutputCache=new Map();
+function nativeTeeOutputDependencies(root,source,bytes,sink) {
+ if(sink.command!=='tee')return null;
+ const before=bytes.split('\n').slice(0,sink.line).join('\n').replace(/\\\n[ \t]*/gu,' ');
+ const invocation=before.slice(before.lastIndexOf('\n')+1);
+ const node=/\bnode "\$runtime_repo_root\/([^"\n]+)"\s*\|\s*tee "\$receipt_tmp"(?:;|\s|$)/u.exec(invocation);
+ if(!node||!invocation.includes('kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw --'))return null;
+ let selected=[node[1]];
+ if(node[1]==='$preflight_file'){
+  selected=[...bytes.replace(/\\\n[ \t]*/gu,' ').matchAll(/^\s*run_nova_production_receipt_preflight\s+([^\s]+)\s+/gmu)].map(match=>match[1]);
+  if(!selected.length)return null;
+ }
+ if(selected.some(file=>!/^tests\/verification\/e2e\/[A-Za-z0-9_-]+\.mts$/u.test(file)||!fs.existsSync(path.join(root,file))))return null;
+ const cacheId=`${root}:${source}:${sink.line}`,cached=nativeTeeOutputCache.get(cacheId);
+ if(cached?.sourceDigest===hash(bytes)&&cached.selected.join('\n')===selected.join('\n')&&Object.entries(cached.dependencies).every(([file,digest])=>fs.existsSync(path.join(root,file))&&hash(fs.readFileSync(path.join(root,file)))===digest))return cached.dependencies;
+ const classify=createSerializedOutputRoleClassifier(root,selected),dependencies={};
+ for(const file of selected){
+  const content=fs.readFileSync(path.join(root,file),'utf8'),tree=ts.createSourceFile(file,content,ts.ScriptTarget.Latest,true);
+  if(tree.parseDiagnostics.length)return null;
+  const roles=classify(file);
+  if(roles.some(role=>role.sink==='unknown-output-function'))return null;
+  const stdout=roles.filter(role=>['process.stdout.write','console.log','console.info'].includes(role.sink));
+  if(!stdout.length||stdout.some(role=>role.role!=='non-api'))return null;
+  dependencies[file]=hash(content);
+  for(const role of stdout)for(const dependency of role.dependencies??[]){
+   if(path.isAbsolute(dependency)||dependency.startsWith('../')||!fs.existsSync(path.join(root,dependency)))return null;
+   dependencies[dependency]=hash(fs.readFileSync(path.join(root,dependency)));
+  }
+ }
+ // The actual selected stdout constructors are classified individually using
+ // their resolved imported values. tee only duplicates that authenticated
+ // receipt stream; a changed root/constructor invalidates this proof and cache.
+ nativeTeeOutputCache.set(cacheId,{sourceDigest:hash(bytes),selected,dependencies});return dependencies;
+}
+// Closed selected-key producers and typed receiver recipes. The programs are
+// actual one-line-exit extractors; scalar shape alone does not authorize a
+// caller. Every helper reference and selected capture/receiver is checked.
+const nativeYamlScalarRecipes={
+ "yaml_trim_scalar": "awk '\n    {\n      sub(/^[[:space:]]+/, \"\", $0)\n      sub(/[[:space:]]+$/, \"\", $0)\n      gsub(/^\"|\"$/, \"\", $0)\n      gsub(/^'\"'\"'|'\"'\"'$/, \"\", $0)\n      print\n    }\n  '",
+ "yaml_get_section_key": "local file=\"$1\"\n  local section=\"$2\"\n  local key=\"$3\"\n\n  awk -v section=\"$section\" -v key=\"$key\" '\n    $0 ~ (\"^\" section \":[[:space:]]*$\") {\n      in_section = 1\n      next\n    }\n\n    in_section && $0 ~ /^[^[:space:]]/ {\n      in_section = 0\n    }\n\n    in_section && $0 ~ (\"^[[:space:]]{2}\" key \":[[:space:]]*\") {\n      value = $0\n      sub(\"^[[:space:]]{2}\" key \":[[:space:]]*\", \"\", value)\n      print value\n      exit\n    }\n  ' \"$file\" | yaml_trim_scalar",
+ "yaml_get_nested_section_key": "local file=\"$1\"\n  local section=\"$2\"\n  local subsection=\"$3\"\n  local key=\"$4\"\n\n  awk -v section=\"$section\" -v subsection=\"$subsection\" -v key=\"$key\" '\n    $0 ~ (\"^\" section \":[[:space:]]*$\") {\n      in_section = 1\n      in_subsection = 0\n      next\n    }\n\n    in_section && $0 ~ /^[^[:space:]]/ {\n      in_section = 0\n      in_subsection = 0\n    }\n\n    in_section && $0 ~ (\"^[[:space:]]{2}\" subsection \":[[:space:]]*$\") {\n      in_subsection = 1\n      next\n    }\n\n    in_section && in_subsection && $0 ~ /^[[:space:]]{2}[A-Za-z0-9_-]+:[[:space:]]*$/ && $0 !~ (\"^[[:space:]]{2}\" subsection \":[[:space:]]*$\") {\n      in_subsection = 0\n    }\n\n    in_section && in_subsection && $0 ~ (\"^[[:space:]]{4}\" key \":[[:space:]]*\") {\n      value = $0\n      sub(\"^[[:space:]]{4}\" key \":[[:space:]]*\", \"\", value)\n      print value\n      exit\n    }\n  ' \"$file\" | yaml_trim_scalar",
+ "bundle_values_field": "local values=\"$1\" overlay=\"$2\" field=\"$3\" key=\"${4:-}\" result=\"\"\n  if [[ -n $overlay ]]; then\n    if [[ -n $key ]]; then result=\"$(yaml_get_nested_section_key \"$overlay\" codeBundle \"$field\" \"$key\")\";\n    else result=\"$(yaml_get_section_key \"$overlay\" codeBundle \"$field\")\"; fi\n  fi\n  if [[ -z $result ]]; then\n    if [[ -n $key ]]; then result=\"$(yaml_get_nested_section_key \"$values\" codeBundle \"$field\" \"$key\")\";\n    else result=\"$(yaml_get_section_key \"$values\" codeBundle \"$field\")\"; fi\n  fi\n  printf '%s\\n' \"$result\"",
+ "prism_image_overrides": "local pairs=(control CONTROL studio STUDIO worker WORKER ingestion INGESTION)\n  local index kind upper repository digest selected_digest\n  for ((index=0; index<${#pairs[@]}; index+=2)); do\n    kind=\"${pairs[index]}\"; upper=\"${pairs[index+1]}\"\n    repository=\"PRISM_${upper}_IMAGE_REPOSITORY\"; digest=\"PRISM_${upper}_IMAGE_DIGEST\"\n    [[ -z ${!repository:-} ]] || printf '%s\\n' --set-string \"images.${kind}.repository=${!repository}\"\n    selected_digest=\"${!digest:-}\"\n    if [[ -z $selected_digest ]]; then\n      selected_digest=\"$(yaml_get_nested_section_key \"$PRISM_VALUES_FILE\" images \"$kind\" digest)\"\n    fi\n    [[ $selected_digest =~ ^sha256:[0-9a-f]{64}$ ]] || {\n      err \"Prism ${kind} image digest is missing or invalid; set PRISM_${upper}_IMAGE_DIGEST or images.${kind}.digest in ${PRISM_VALUES_FILE}\"\n      return 1\n    }\n    printf '%s\\n' --set-string \"images.${kind}.digest=${selected_digest}\"\n    printf '%s\\n' --set-string \"images.${kind}.pullPolicy=IfNotPresent\"\n  done",
+ "append_image_override_file": "local output_path=\"$1\"\n  local image_repo=\"$2\"\n  local image_tag=\"$3\"\n  local disable_pull_secrets=\"$4\"\n  local controller_image_repo=\"${5:-}\"\n  local controller_image_tag=\"${6:-}\"\n\n  if [[ -n $image_repo || -n $image_tag ]]; then\n    echo \"image:\" >>\"$output_path\"\n    if [[ -n $image_repo ]]; then\n      echo \"  repository: \\\"$image_repo\\\"\" >>\"$output_path\"\n    fi\n    if [[ -n $image_tag ]]; then\n      echo \"  tag: \\\"$image_tag\\\"\" >>\"$output_path\"\n    fi\n  fi\n\n  if [[ $disable_pull_secrets == \"1\" ]]; then\n    echo \"imagePullSecrets: []\" >>\"$output_path\"\n  fi\n\n  if [[ -n $controller_image_repo || -n $controller_image_tag ]]; then\n    echo \"busterNamespaceBroker:\" >>\"$output_path\"\n    echo \"  controller:\" >>\"$output_path\"\n    echo \"    image:\" >>\"$output_path\"\n    if [[ -n $controller_image_repo ]]; then\n      echo \"      repository: \\\"$controller_image_repo\\\"\" >>\"$output_path\"\n    fi\n    if [[ -n $controller_image_tag ]]; then\n      echo \"      tag: \\\"$controller_image_tag\\\"\" >>\"$output_path\"\n    fi\n  fi",
+ "append_code_bundle_override_file": "local output_path=\"$1\"\n  local archive_url=\"$2\"\n  local expected_commit=\"$3\"\n  local contract_version=\"$4\"\n  local auth_secret=\"${5:-}\"\n  local auth_key=\"${6:-token}\"\n\n  cat >>\"$output_path\" <<EOF\ncodeBundle:\n  enabled: true\n  archiveUrl: \"$archive_url\"\n  expectedCommit: \"$expected_commit\"\n  contractVersion: \"$contract_version\"\nEOF\n\n  if [[ -n $auth_secret ]]; then\n    cat >>\"$output_path\" <<EOF\n  auth:\n    existingSecret: \"$auth_secret\"\n    existingSecretKey: \"$auth_key\"\nEOF\n  fi"
+};
+function shellYamlScalarGraphQualified(bytes,sink) {
+ bytes=bytes.replace(/^[ \t]*#[^\n]*$/gmu,'');
+ const functions=[...bytes.matchAll(/([A-Za-z_][A-Za-z0-9_]*)\(\)\s*\{([\s\S]*?)\n\}/gu)];
+ const current=functions.find(match=>{const first=bytes.slice(0,match.index).split('\n').length;return first<=sink.line&&sink.line<=first+match[0].split('\n').length-1;});
+ if(!current||!['yaml_trim_scalar','yaml_get_section_key','yaml_get_nested_section_key','bundle_values_field','prism_image_overrides'].includes(current[1]))return false;
+ const referenceCounts={yaml_trim_scalar:3,yaml_get_section_key:5,yaml_get_nested_section_key:4,bundle_values_field:7,prism_image_overrides:2,append_image_override_file:2,append_code_bundle_override_file:3};
+ for(const [name,recipe]of Object.entries(nativeYamlScalarRecipes)){
+  const definitions=functions.filter(match=>match[1]===name);
+  if(definitions.length!==1||definitions[0][2].trim()!==recipe||(bytes.match(new RegExp(`\\b${name}\\b`,'gu'))??[]).length!==referenceCounts[name])return false;
+ }
+ const captures=[
+  'image_repo="$(yaml_get_section_key "$values_file" image repository)"',
+  'prism_agent_image_repo="$(yaml_get_section_key "$PRISM_AGENT_VALUES_FILE" image repository)"',
+  'bundle_auth_secret="$(bundle_values_field "$values_file" "$private_values" auth existingSecret)"',
+  'values_auth_key="$(bundle_values_field "$values_file" "$private_values" auth existingSecretKey)"',
+  'bundle_archive_url="$(bundle_values_field "$values_file" "$private_values" archiveUrl)"',
+  'prism_bundle_auth_secret="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecret)"',
+  'prism_values_auth_key="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecretKey)"',
+  'prism_bundle_archive_url="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" archiveUrl)"',
+ ];
+ if(captures.some(text=>bytes.split(text).length!==2))return false;
+ // Close the selected captured values over their existing typed receivers;
+ // an additional raw relay or alias must revoke the finite graph proof.
+ const valueReferences={image_repo:13,prism_agent_image_repo:3,bundle_auth_secret:6,values_auth_key:4,bundle_archive_url:10,prism_bundle_auth_secret:6,prism_values_auth_key:4,prism_bundle_archive_url:9,override_output:3};
+ if(Object.entries(valueReferences).some(([name,count])=>(bytes.match(new RegExp(`\\b${name}\\b`,'gu'))??[]).length!==count))return false;
+ const flat=bytes.replace(/\\\n[ \t]*/gu,' ').replace(/\s+/gu,' ');
+ const receivers=[
+  'append_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag"',
+  'append_code_bundle_override_file "$override_file" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_contract_version" "$bundle_auth_secret" "$bundle_auth_key"',
+  'append_code_bundle_override_file "$prism_bundle_override" "$prism_bundle_archive_url" "$prism_bundle_expected_commit" "$prism_bundle_contract_version" "$prism_bundle_auth_secret" "$prism_bundle_auth_key"',
+  'verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"',
+  'verify_bundle_archive_url prism "$prism_bundle_archive_url" "$prism_bundle_expected_commit" "$prism_bundle_auth_secret"',
+  'helm_args+=(--values "$override_file")',
+  'agent_values+=(-f "$prism_bundle_override" --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1")',
+  'override_output="$(prism_image_overrides)" || return 1',
+  'while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done <<<"$override_output"',
+ ];
+ if(receivers.some(text=>!flat.includes(text)))return false;
+ return current[1]==='bundle_values_field'||current[1]==='prism_image_overrides'?sink.command==='printf':sink.command==='awk';
+}
+
+const namedShellChannelFacts=new Map();
+function shellReleaseFileProof(root,source,bytes,sink) {
+ if(sink.command!=='cat'||sink.args.join('|')!=='$temporary/rendered.yaml')return null;
+ const sourceDigest=hash(bytes);
+ bytes=bytes.replace(/^[ \t]*#[^\n]*$/gmu,'');
+ const flat=bytes.replace(/\\\n[ \t]*/gu,' ').replace(/\s+/gu,' '),selected=bytes.split('\n')[sink.line-1]??'';
+ if(selected.trim()!=='if [[ ${1:-} == render ]]; then cat "$temporary/rendered.yaml"; exit 0; fi')return null;
+ const argv='node "$repo/scripts/updates/deployment-release.mjs" render "$repo" ops ops "$release" "$namespace" "--discovery=$temporary/discovered.json" -- "${values[@]}" > "$temporary/rendered.yaml"';
+ const values='values=(-f "$temporary/discovered.json" -f "$repo/releases/values/ops.yaml")\n    if [[ -n ${OPS_POD_VALUES:-} ]]; then values+=(-f "$OPS_POD_VALUES"); fi\n    [[ -z ${OPS_CODEX_IMAGE:-} ]] || values+=(--set-string "codexImage=$OPS_CODEX_IMAGE")\n    [[ -z ${OPS_MCP_IMAGE:-} ]] || values+=(--set-string "mcpImage=$OPS_MCP_IMAGE")\n    if [[ -n ${OPS_GITHUB_TOKEN_FILE:-} ]]; then values+=(--set-string githubSecret=codex-ops-github); fi\n    if [[ -n ${OPS_TAILSCALE_AUTHKEY_FILE:-} ]]; then values+=(--set tailscale.enabled=true); fi';
+ if(!flat.includes(argv)||!bytes.includes(values)||(bytes.match(/\bvalues\+?=/gu)??[]).length!==6||(bytes.match(/\$temporary\/rendered\.yaml/gu)??[]).length!==2||(bytes.match(/\btemporary=/gu)??[]).length!==1||(bytes.match(/\brelease=/gu)??[]).length!==1||(bytes.match(/\bnamespace=/gu)??[]).length!==1||!bytes.includes('temporary=$(mktemp -d)')||!bytes.includes('namespace=${OPS_NAMESPACE:-kubeclaw-ops}')||!bytes.includes('release=${OPS_RELEASE:-codex-ops}'))return null;
+ const renderer='scripts/updates/deployment-release.mjs';if(!fs.existsSync(path.join(root,renderer)))return null;
+ assertProducerAdapterAuthority(root,[source,renderer]);
+ const text=fs.readFileSync(path.join(root,renderer),'utf8');
+ if(!text.includes("const common = ['template', release, chart, '--namespace', namespace];")||!text.includes("const render = values => execFileSync('helm', [...common, ...values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });")||!text.includes('const rendered = render(args);\n      validateRenderedRelease(baseline, rendered, receipt, control.includes(\'--bundle\'));\n      process.stdout.write(rendered);'))return null;
+ const dependencies={};
+ for(const file of walkProductSources(root,['scripts/updates','charts/ops-pod','releases'],file=>/\.(?:mjs|json|ya?ml|tpl)$/u.test(file)))dependencies[file]=hash(fs.readFileSync(path.join(root,file)));
+ const factId=`${root}:${source}:${sink.line}`,old=namedShellChannelFacts.get(factId);
+ if(old?.role==='api'&&old.sourceDigest===sourceDigest&&JSON.stringify(old.dependencies)===JSON.stringify(dependencies))return old;
+ const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'docs-ops-public-render-')),outputs=[];
+ try {
+  const discovery=path.join(temporary,'discovery.json');fs.writeFileSync(discovery,JSON.stringify({networkPolicy:{apiServerCIDRs:['192.0.2.1/32']}}));
+  for(const profile of profiles(root,'charts/ops-pod')){
+   const selectedValues=structuredClone(profile.values);delete selectedValues.codexImage;delete selectedValues.mcpImage;
+   const overlay=path.join(temporary,'overlay.yaml');fs.writeFileSync(overlay,YAML.stringify(selectedValues));
+   const args=[renderer,'render',root,'ops','ops','codex-ops','kubeclaw-ops',`--discovery=${discovery}`,'--','-f',discovery,'-f',path.join(root,'releases/values/ops.yaml'),'-f',overlay];
+   const rendered=spawnSync(process.execPath,args,{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024});
+   assert.equal(rendered.status,0,`API_PRODUCT_SHELL_RELEASE_RENDER_FAILED: ${source}: ${rendered.stderr}`);
+   const documents=YAML.parseAllDocuments(rendered.stdout);assert(documents.every(document=>!document.errors.length),`API_PRODUCT_SHELL_RELEASE_YAML_INVALID: ${source}`);
+   for(const [index,document]of documents.entries()){const value=document.toJS();if(value===null)continue;assert(value?.apiVersion&&value?.kind,`API_PRODUCT_SHELL_RELEASE_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
+    outputs.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:outputs.length,sourceDigest:sourceDigest,producer:'shell-shape',line:sink.line,profile:`selected-ops-public-render:${profile.id}`,inputs:Object.keys(dependencies),inputDigest:hash(JSON.stringify([dependencies,profile.values])),forwardedProducer:{path:renderer,argv,release:'codex-ops',namespace:'kubeclaw-ops',helmProfile:profile.id,document:index,controlledDiscovery:{networkPolicy:{apiServerCIDRs:['192.0.2.1/32']}},runtimeInputs:['OPS_DISCOVERY_VALUES','OPS_POD_VALUES','OPS_CODEX_IMAGE','OPS_MCP_IMAGE','OPS_GITHUB_TOKEN_FILE','OPS_TAILSCALE_AUTHKEY_FILE']},outputDigest:hash(JSON.stringify(value))}});
+   }
+  }
+ } finally {fs.rmSync(temporary,{recursive:true,force:true});}
+ const result={role:'api',sourceDigest:sourceDigest,contract:'selected-release-render-stdout-forwarding',dependencies,outputs};namedShellChannelFacts.set(factId,result);return result;
+}
+function shellNamedFileProof(root,source,bytes,sink) {
+ if(sink.command!=='cat'||sink.args.length!==1)return null;
+ bytes=bytes.replace(/^[ \t]*#[^\n]*$/gmu,'');
+ const line=bytes.split('\n')[sink.line-1]??'',before=bytes.split('\n').slice(0,sink.line-1).join('\n'),flat=bytes.replace(/\\\n[ \t]*/gu,' ').replace(/\s+/gu,' ');
+ const count=text=>bytes.split(text).length-1;
+ const native=(contract,dependencies=[])=>{
+  const facts={};for(const file of dependencies){if(!fs.existsSync(path.join(root,file)))return null;facts[file]=hash(fs.readFileSync(path.join(root,file)));}
+  const result={role:'non-api',contract,dependencies:facts};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,result);return result;
+ };
+ // Kernel-owned cgroup v2 scalar controls, with finite source-defined loops.
+ const controls='for control in cpu.max memory.max memory.swap.max pids.max; do\n    printf \'%s: \' "$control"\n    cat ';
+ if(['$root/$control','$root/$role/$control'].includes(sink.args[0])&&line.trim()===`cat "${sink.args[0]}"`&&before.includes('for role in buster prism; do')){
+  if(!bytes.includes(controls+`"${sink.args[0]}"\n  done\ndone`))return null;
+  const rootAssignment=sink.args[0]==='$root/$control'?'root="/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/$role"':'root=/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service';
+  if(!before.includes(rootAssignment)||(bytes.match(/\broot=/gu)??[]).length!==1||(bytes.match(/\brole=/gu)??[]).length||(bytes.match(/\bcontrol=/gu)??[]).length)return null;
+  return native('kernel-cgroup-v2-finite-control-scalars');
+ }
+ // A captured authentication input is qualified by its complete selected
+ // environment receiver, not by a claim about arbitrary mounted token bytes.
+ if(sink.args[0]==='/var/run/kubeclaw-ops/bearer/token'){
+  const body=bytes.replace(/^\s*#[^\n]*\n/gmu,'').trim();
+  const expected='set -euo pipefail\nKUBECLAW_MCP_TOKEN=$(cat /var/run/kubeclaw-ops/bearer/token)\nif (( ${#KUBECLAW_MCP_TOKEN} < 32 )); then\n  echo \'MCP bearer is missing or too short; check the mounted Secret\' >&2\n  exit 1\nfi\nexport KUBECLAW_MCP_TOKEN\nexec bash "$@"';
+  if(body!==expected)return null;
+  const workload='charts/ops-pod/templates/workload.yaml',bootstrap='ops/pod/bootstrap.py';
+  if(![workload,bootstrap].every(file=>fs.existsSync(path.join(root,file))))return null;
+  if(!fs.readFileSync(path.join(root,workload),'utf8').includes('- {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}')||!fs.readFileSync(path.join(root,bootstrap),'utf8').includes("apply_secret('codex-ops-bearer', {'token': secrets.token_urlsafe(48)})"))return null;
+  return native('mounted-authentication-input-to-exported-environment; interactive-bash-outside-source',[workload,bootstrap]);
+ }
+ // The selected external diagnostic process owns this exact file and stderr
+ // receiver. This is an external log contract, not a tracked log-shape proof.
+ if(sink.args[0]==='/tmp/buildkitd.log'&&line.trim()==='cat /tmp/buildkitd.log >&2'){
+  const launch='setpriv --reuid=1000 --regid=1000 --init-groups rootlesskit --net=host buildkitd --config "$config" --addr "$socket" --otel-socket-path "$otel_socket" --root "$state" --oci-worker-no-process-sandbox >/tmp/buildkitd.log 2>&1 &';
+  if(!flat.includes(launch)||count('/tmp/buildkitd.log')!==2||!bytes.split('\n').slice(sink.line,sink.line+1).join('\n').includes('exit 1'))return null;
+  return native('external-buildkit-startup-diagnostic-to-stderr');
+ }
+ if(sink.args[0]==='$report'&&line.trim()==='cat "$report"'){
+  const writer='if "$trivy_executable" image --cache-dir "$database_cache" --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format table --output "$report" "$image"; then';
+  if(!flat.includes(writer)||count('"$report"')!==2||(bytes.match(/\$(?:report\b|\{report\})/gu)??[]).length!==3||(bytes.match(/\breport=/gu)??[]).length!==1||!before.includes('report="$report_dir/${digest}.txt"')||!before.includes('trivy_executable="$(install_trivy "$(uname -m)")"'))return null;
+  return native('selected-trivy-table-file-to-diagnostic-stdout; external-table-contract');
+ }
+ if(sink.args[0]==='$stage/policy.conf'&&line.trim()==='cat "$stage/policy.conf"'){
+  const projection="import fs from 'node:fs';\nimport { createRequire } from 'node:module';\nconst { load } = createRequire(process.argv[2])('js-yaml');\nconst values = load(fs.readFileSync(process.argv[2], 'utf8'));\nif (typeof values.commonConfiguration !== 'string') throw new Error('REDIS_POLICY_REQUIRED');\nprocess.stdout.write(values.commonConfiguration + '\\n');";
+  if(!bytes.includes(`node --input-type=module - "$script_root/my-values/infra/redis-values.yaml" >"$stage/policy.conf" <<'NODE'\n${projection}\nNODE\n{\n  cat "$stage/policy.conf"`)||count('$stage/policy.conf')!==2||!bytes.includes('} >"$stage/redis.conf"')||!bytes.includes('"$REDIS_SERVER" "$stage/redis.conf") &'))return null;
+  const valuesFile='my-values/infra/redis-values.yaml';if(!fs.existsSync(path.join(root,valuesFile)))return null;
+  const values=YAML.parse(fs.readFileSync(path.join(root,valuesFile),'utf8'));
+  if(typeof values.commonConfiguration!=='string'||values.commonConfiguration.split('\n').some(text=>text&&!/^[a-z][a-z0-9-]*(?:[ \t]+(?:[a-zA-Z0-9_.-]+|""))*$/u.test(text)))return null;
+  return native('selected-redis-directives-to-internal-server-config',[valuesFile]);
+ }
+ if(sink.args[0]==='$backup/generated/containerd-nri.toml'&&line.trim()==='cat "$backup/generated/containerd-nri.toml" >> "$backup/config-v3.toml.tmpl"'){
+  if(count('containerd-nri.toml')!==1||(bytes.match(/\$backup\/generated/gu)??[]).length!==3||!before.includes('backup="$(mktemp -d /root/kubeclaw-native-activation.XXXXXX)"')||!before.includes('node scripts/render-native-worker-node.mjs my-values/infra/native-worker-pools-ax41.yaml "$backup/generated"')||!bytes.includes('install -m 0600 "$backup/config-v3.toml.tmpl" "$template"'))return null;
+  const renderer='scripts/render-native-worker-node.mjs';if(!fs.existsSync(path.join(root,renderer)))return null;
+  const text=fs.readFileSync(path.join(root,renderer),'utf8'),tree=ts.createSourceFile(renderer,text,ts.ScriptTarget.Latest,true);
+  if(tree.parseDiagnostics.length)return null;
+  const fn=tree.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='renderNativeWorkerNode');
+  const returned=fn?.body?.statements.filter(ts.isReturnStatement).at(-1)?.expression;
+  const members=returned&&ts.isObjectLiteralExpression(returned)?returned.properties.filter(node=>ts.isPropertyAssignment(node)&&node.name.getText(tree)==="'containerd-nri.toml'"):[];
+  if(members.length!==1||!ts.isStringLiteral(members[0].initializer)||members[0].initializer.text!=='[plugins."io.containerd.nri.v1.nri"]\n  disable = false\n')return null;
+  const writer="const bundle = renderNativeWorkerNode(loadNativeNodePolicy(process.argv[2]));\n  const directory = path.resolve(process.argv[3]);\n  fs.mkdirSync(directory, { mode: 0o700 }); // Exclusive: never overwrite an operator's previous bundle.\n  for (const [name, content] of Object.entries(bundle)) fs.writeFileSync(path.join(directory, name), content, { flag: 'wx', mode: 0o600 });";
+  let bundleReferences=0;const visit=node=>{if(ts.isIdentifier(node)&&node.text==='bundle')bundleReferences++;ts.forEachChild(node,visit);};visit(tree);
+  if(!text.includes(writer)||bundleReferences!==2||(text.match(/\.writeFileSync\s*\(/gu)??[]).length!==1||(text.match(/containerd-nri\.toml/gu)??[]).length!==1)return null;
+  return native('exclusive-selected-literal-toml-to-containerd-template',[renderer]);
+ }
+ if(sink.args[0]==='$migration_log'&&line.trim()==='cat "$migration_log"'){
+  const functions=[...bytes.matchAll(/([A-Za-z_][A-Za-z0-9_]*)\(\)\s*\{([\s\S]*?)\n\}/gu)],producer=functions.find(match=>match[1]==='capture_prism_migration_logs');
+  if(!producer||!producer[2].includes('local output_file="$1" pod="" container=""')||!producer[2].includes('for container in bootstrap-database-roles migrate; do')||!producer[2].includes('kubectl logs "$pod" -n "$PRISM_NAMESPACE" -c "$container" --follow --timestamps 2>&1 || true')||!producer[2].includes('} >>"$output_file"')||(producer[2].match(/\$output_file\b/gu)??[]).length!==1)return null;
+  if(!before.includes('migration_log="$(mktemp)"\n  capture_prism_migration_logs "$migration_log" &')||(bytes.match(/\bmigration_log=/gu)??[]).length!==1||(bytes.match(/\$(?:migration_log\b|\{migration_log\})/gu)??[]).length!==5)return null;
+  return native('selected-timestamped-kubectl-migration-log-capture; external-log-contract');
+ }
+ return null;
+}
+const unusedYamlListReaderRecipe="local file=\"$1\"\n  local section=\"$2\"\n\n  awk -v section=\"$section\" '\n    function trim(value) {\n      sub(/^[[:space:]]+/, \"\", value)\n      sub(/[[:space:]]+$/, \"\", value)\n      gsub(/^\"/, \"\", value)\n      gsub(/\"$/, \"\", value)\n      gsub(/^'\"'\"'/, \"\", value)\n      gsub(/'\"'\"'$/, \"\", value)\n      return value\n    }\n\n    $0 ~ (\"^\" section \":[[:space:]]*$\") {\n      in_section = 1\n      next\n    }\n\n    in_section && $0 ~ /^[^[:space:]]/ {\n      in_section = 0\n    }\n\n    in_section && $0 ~ /^[[:space:]]*-[[:space:]]+name:[[:space:]]*/ {\n      value = $0\n      sub(/^[[:space:]]*-[[:space:]]+name:[[:space:]]*/, \"\", value)\n      print trim(value)\n      exit\n    }\n  ' \"$file\"";
+function privateShellReachabilityInputs(root) {
+ const inputs=walkProductSources(root,[...producerRoots,'.github','docs'],file=>/\.(?:sh|[cm]?js|[cm]?ts|py|go|ya?ml|md|mdx)$/u.test(file)&&!file.includes('/node_modules/'));
+ for(const file of ['package.json','docs/generated/inventory/deploy-script.json'])if(fs.existsSync(path.join(root,file)))inputs.push(file);
+ return inputs;
+}
+function shellUnusedPrivateFunctionProof(root,source,bytes,sink) {
+ const code=bytes.replace(/^[ \t]*#[^\n]*$/gmu,'');
+ const functions=[...code.matchAll(/([A-Za-z_][A-Za-z0-9_]*)\(\)\s*\{([\s\S]*?)\n\}/gu)];
+ const selected=functions.find(match=>{const first=code.slice(0,match.index).split('\n').length;return first<=sink.line&&sink.line<=first+match[0].split('\n').length-1;});
+ if(!selected||selected[2].trim()!==unusedYamlListReaderRecipe||sink.command!=='awk')return null;
+ const name=selected[1];if((code.match(new RegExp(`\\b${name}\\b`,'gu'))??[]).length!==1)return null;
+ if(!code.includes('case "${1:-}" in')||/(?:^|[;\n])[ \t]*(?:eval\s|source\s|\.\s)|\bBASH_ENV\b|export\s+-f|declare\s+-f|(?:bash|sh)\s+-c/u.test(code))return null;
+ // Inspect actual product/import/caller and public usage sources. A generated
+ // declaration index is not a supported entry point; its commands must still
+ // exclude this function. Unknown callable references revoke this exclusion.
+ const inputs=privateShellReachabilityInputs(root);
+ for(const file of inputs){if(file===source||file==='scripts/docs-api-output-discovery.mjs'||file==='docs/generated/inventory/deploy-script.json')continue;const text=fs.readFileSync(path.join(root,file),'utf8');if(new RegExp(`\\b${name}\\b`,'u').test(text))return null;
+  // A shell source/eval loader can expose local functions without a direct
+  // name reference. This finite exclusion does not authorize such imports.
+  if(file.endsWith('.sh')&&/(?:^|[;\n])[ \t]*(?:source\s|\.\s|eval\s)|export\s+-f|declare\s+-f/u.test(text.replace(/^[ \t]*#[^\n]*$/gmu,'')))return null;
+  if(new RegExp(`(?:import|require)\\s*\\(\\s*['"](?:[^'"]*/)?${path.basename(source).replace(/[.*+?^${}()|[\]\\]/gu,'\\$&')}['"]`,'u').test(text))return null;
+ }
+ const index='docs/generated/inventory/deploy-script.json';
+ if(fs.existsSync(path.join(root,index))){const record=JSON.parse(fs.readFileSync(path.join(root,index),'utf8'));if(JSON.stringify({commands:record.commands,commandCases:record.commandCases}).includes(name))return null;}
+ const fact={role:'non-api',contract:'unreachable-private-yaml-list-reader; finite-dispatch-and-no-supported-caller',dependencies:Object.fromEntries([...new Set([source,...inputs])].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))};
+ namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+}
+
+const privatePostgresDumpRecipe="\n  password_file=${POSTGRES_POSTGRES_PASSWORD_FILE:-${POSTGRESQL_POSTGRES_PASSWORD_FILE:-/opt/bitnami/postgresql/secrets/postgres-password}}\n  export PGPASSWORD=\"$(cat \"$password_file\")\"\n  exec pg_dumpall -h 127.0.0.1 -U postgres\n";
+const postgresMetadataQueryRecipe="password_file=${POSTGRES_POSTGRES_PASSWORD_FILE:-${POSTGRESQL_POSTGRES_PASSWORD_FILE:-/opt/bitnami/postgresql/secrets/postgres-password}}\nexport PGPASSWORD=\"$(cat \"$password_file\")\"\npsql -X -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 \\\n  -c 'SELECT version();' \\\n  -c 'SELECT slot_name, plugin, slot_type FROM pg_replication_slots;'\ndatabases=$(mktemp)\ntrap 'rm -f \"$databases\"' EXIT\npsql -X -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -At \\\n  -c 'SELECT datname FROM pg_database WHERE datallowconn AND NOT datistemplate;' > \"$databases\"\nwhile IFS= read -r database; do\n  printf '\\nDatabase: %s\\n' \"$database\"\n  psql -X -h 127.0.0.1 -U postgres -d \"$database\" -v ON_ERROR_STOP=1 \\\n    -c 'SELECT extname, extversion FROM pg_extension ORDER BY extname;' \\\n    -c \"SELECT n.nspname, c.relname AS index_name, am.amname\n        FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace\n        JOIN pg_am am ON am.oid=c.relam\n        WHERE c.relkind='i' AND am.amname IN ('gin','gist')\n        AND n.nspname NOT IN ('pg_catalog','information_schema');\"\ndone < \"$databases\"";
+// A finite external executable contract for the selected source build. This
+// proves the source-defined validation branch, not arbitrary supplied binary bytes.
+const nativePolicyValidationRecipes={"main": "func main() {\n\tif len(os.Args) == 3 && os.Args[1] == \"--check-policy\" {\n\t\tif _, err := readConfiguration(os.Args[2]); err != nil {\n\t\t\tfmt.Fprintln(os.Stderr, err)\n\t\t\tos.Exit(1)\n\t\t}\n\t\tfmt.Println(\"NATIVE_NRI_POLICY_VALID\")\n\t\treturn\n\t}\n\tif len(os.Args) != 1 {\n\t\tfmt.Fprintln(os.Stderr, \"Usage: kubeclaw-native [--check-policy POLICY_JSON]\")\n\t\tos.Exit(1)\n\t}\n\tif err := run(); err != nil {\n\t\tfmt.Fprintln(os.Stderr, err)\n\t\tos.Exit(1)\n\t}\n}", "readConfiguration": "func readConfiguration(file string) (configuration, error) {\n\tvar config configuration\n\tfd, err := syscall.Open(file, syscall.O_RDONLY|syscall.O_NOFOLLOW|syscall.O_NONBLOCK|syscall.O_CLOEXEC, 0)\n\tif err != nil {\n\t\treturn config, err\n\t}\n\tf := os.NewFile(uintptr(fd), file)\n\tdefer f.Close()\n\tstat, err := f.Stat()\n\tif err != nil {\n\t\treturn config, err\n\t}\n\tnative, ok := stat.Sys().(*syscall.Stat_t)\n\tif !ok || !stat.Mode().IsRegular() || native.Uid != 0 || stat.Mode().Perm()&0022 != 0 || stat.Size() > 65536 {\n\t\treturn config, errors.New(\"NATIVE_NRI_POLICY_NOT_TRUSTED\")\n\t}\n\tdecoder := json.NewDecoder(io.LimitReader(f, 65537))\n\tdecoder.DisallowUnknownFields()\n\tif err := decoder.Decode(&config); err != nil {\n\t\treturn config, err\n\t}\n\tvar trailing any\n\tif err := decoder.Decode(&trailing); err != io.EOF {\n\t\treturn config, errors.New(\"NATIVE_NRI_POLICY_TRAILING_DATA\")\n\t}\n\treturn config, validateConfiguration(config)\n}", "validateConfiguration": "func validateConfiguration(config configuration) error {\n\tversion := regexp.MustCompile(`^v?2\\.(?:[2-9]|[1-9][0-9]+)\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$`)\n\tif config.SchemaVersion != 1 || !version.MatchString(config.ContainerdVersion) || len(config.Roles) != 2 {\n\t\treturn errors.New(\"NATIVE_NRI_CONFIGURATION_INVALID\")\n\t}\n\tname := regexp.MustCompile(`^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$`)\n\tdigest := regexp.MustCompile(`^[a-f0-9]{64}$`)\n\tfor _, role := range []string{\"buster\", \"prism\"} {\n\t\tselected, ok := config.Roles[role]\n\t\tif !ok || !name.MatchString(selected.Namespace) || !name.MatchString(selected.Container) || !digest.MatchString(selected.PolicyDigest) {\n\t\t\treturn errors.New(\"NATIVE_NRI_SELECTION_INVALID\")\n\t\t}\n\t}\n\tif config.Roles[\"buster\"].Namespace == config.Roles[\"prism\"].Namespace && config.Roles[\"buster\"].Container == config.Roles[\"prism\"].Container {\n\t\treturn errors.New(\"NATIVE_NRI_SELECTION_AMBIGUOUS\")\n\t}\n\treturn nil\n}"};
+const nativePolicyBuilderRecipe="import fs from 'node:fs';\nimport path from 'node:path';\nimport { fileURLToPath } from 'node:url';\nimport { execFileSync } from 'node:child_process';\n\nconst repository = fileURLToPath(new URL('../', import.meta.url));\nif (process.argv.length !== 3) throw new Error('Usage: build-native-worker-nri.mjs NEW_OUTPUT_BINARY');\nconst output = path.resolve(process.argv[2]);\nif (fs.existsSync(output)) throw new Error('NATIVE_NRI_BUILD_OUTPUT_EXISTS');\nconst version = JSON.parse(fs.readFileSync(path.join(repository, 'versions.json'), 'utf8')).buildArgs.GO_VERSION;\nconst env = { ...process.env, GOTOOLCHAIN: 'local', CGO_ENABLED: '0' };\nconst cwd = path.join(repository, 'tools/native-worker-nri');\nif (execFileSync('go', ['env', 'GOVERSION'], { cwd, env, encoding: 'utf8' }).trim() !== `go${version}`) {\n  throw new Error('NATIVE_NRI_SELECTED_GO_VERSION_REQUIRED');\n}\nexecFileSync('go', ['mod', 'verify'], { cwd, env, stdio: 'inherit' });\nexecFileSync('go', ['build', '-mod=readonly', '-trimpath', '-buildvcs=false', '-o', output, '.'], { cwd, env, stdio: 'inherit' });\nprocess.stdout.write(`${output}\\n`);\n";
+function shellNativePolicyValidationProof(root,source,bytes,sink){
+ const repair=sink.command==='$backup/10-kubeclaw-native'&&sink.args.join('|')==='--check-policy|/etc/kubeclaw/native-nri.json';
+ const stage=sink.command==='$bundle/10-kubeclaw-native'&&sink.args.join('|')==='--check-policy|$generated/native-nri.json';
+ if(!repair&&!stage)return null;
+ const dependencies=['tools/native-worker-nri/main.go','tools/native-worker-nri/go.mod','tools/native-worker-nri/go.sum','scripts/build-native-worker-nri.mjs','versions.json'];
+ if(dependencies.some(file=>!fs.existsSync(path.join(root,file))))return null;
+ const normal=text=>text.replace(/^[ \t]*\/\/[^\n]*$/gmu,'').replace(/\s+/gu,' ').trim();
+ const go=fs.readFileSync(path.join(root,dependencies[0]),'utf8');
+ const imports=go.match(/^import \(([\s\S]*?)^\)/mu)?.[1];
+ if(!imports||JSON.stringify([...imports.matchAll(/"([^"]+)"/gu)].map(match=>match[1]))!==JSON.stringify(['context','encoding/json','errors','fmt','io','os','regexp','strings','syscall','github.com/containerd/nri/pkg/api','github.com/containerd/nri/pkg/stub'])||/^func init\(|^var\s|^func \([^\n]*\) (?:UnmarshalJSON|UnmarshalText)\(/mu.test(go))return null;
+ for(const [name,recipe]of Object.entries(nativePolicyValidationRecipes)){
+  const matches=[...go.matchAll(new RegExp(`^func ${name}\\([^\\n]*[\\s\\S]*?^\\}`,'gmu'))];
+  if(matches.length!==1||normal(matches[0][0])!==normal(recipe))return null;
+ }
+ // Parse the complete selected builder, including all actions. The canonical
+ // AST comparison accepts formatting/comments and rejects new commands/writers.
+ const printed=text=>{const tree=ts.createSourceFile('build.mjs',text,ts.ScriptTarget.Latest,true,ts.ScriptKind.JS);if(tree.parseDiagnostics.length)return null;return ts.createPrinter({removeComments:true}).printFile(tree);};
+ if(printed(fs.readFileSync(path.join(root,dependencies[3]),'utf8'))!==printed(nativePolicyBuilderRecipe))return null;
+ if(repair){
+  if(!bytes.includes('node scripts/build-native-worker-nri.mjs "$backup/10-kubeclaw-native"\n"$backup/10-kubeclaw-native" --check-policy /etc/kubeclaw/native-nri.json')||!bytes.includes('cd "$(dirname "$0")/.."')||!bytes.includes('backup="$(mktemp -d /root/kubeclaw-nri-launch-repair.XXXXXX)"')||(bytes.match(/\bbackup\+?=/gu)??[]).length!==1)return null;
+ }else{
+  const doc='docs/_legacy-source/operations/ax41-rollout.md';if(!fs.existsSync(path.join(root,doc)))return null;const selected=fs.readFileSync(path.join(root,doc),'utf8');
+  if(!selected.includes('node scripts/build-native-worker-nri.mjs "$bundle/10-kubeclaw-native"\n"$bundle/10-kubeclaw-native" --check-policy "$bundle/generated/native-nri.json"')||!selected.includes('bash scripts/install-native-worker-pools-stage.sh "$bundle"')||!bytes.includes('bundle="$(realpath -e "$1")"\ngenerated="$bundle/generated"')||(bytes.match(/\bbundle\+?=/gu)??[]).length!==1||(bytes.match(/\bgenerated\+?=/gu)??[]).length!==1)return null;
+  dependencies.push(doc);
+ }
+ const fact={role:'non-api',contract:'selected-source-built-NRI-policy-read-validation-to-fixed-status; external-artifact-identity-unexecuted',dependencies:Object.fromEntries([source,...dependencies].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),selectedOperation:{command:sink.command,argv:sink.args,source:'tools/native-worker-nri/main.go',entryPoint:'main --check-policy',reachableFunctions:['readConfiguration','validateConfiguration'],builder:'scripts/build-native-worker-nri.mjs',buildCwd:'tools/native-worker-nri',selectedGo:JSON.parse(fs.readFileSync(path.join(root,'versions.json'),'utf8')).buildArgs.GO_VERSION,artifactBinding:repair?'actual same-caller build output':'supported documented build-to-bundle preparation; supplied runtime binary bytes unverified',publicOutput:'fixed NATIVE_NRI_POLICY_VALID or validation error',runtimeOutcome:'unexecuted'}};
+ namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+}
+
+const nativeExecutableConsumerRecipes={"unitTransform": "const fs = require('fs');\nconst source = fs.readFileSync(process.argv[2], 'utf8');\nconst expected = 'ExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs';\nif (source.split(expected).length !== 2) throw Error('Unexpected generated service');\nfs.writeFileSync(process.argv[3], source.replace(expected, 'ExecStart=/usr/local/bin/node /opt/kubeclaw/native/prepare-native-worker-pools.mjs'), {flag:'wx', mode:0o600});", "unitProducer": "function unit() {\n  return `[Unit]\nDescription=KubeClaw native worker role pools\nBefore=k3s.service k3s-agent.service\nAfter=local-fs.target\n\n[Service]\nType=notify\nNotifyAccess=all\nSlice=kubeclaw.slice\nDelegate=cpu memory pids\nDelegateSubgroup=setup\nExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs /etc/kubeclaw/native-node-policy.json --serve\nNoNewPrivileges=yes\nUMask=0077\nTasksMax=infinity\nKillMode=control-group\nTimeoutStartSec=60\n\n[Install]\nWantedBy=multi-user.target\n`;\n}", "postgresVersion": "client_version() {\n  local value\n  value=$(\"$1\" --version)\n  [[ $value =~ PostgreSQL\\)\\ ([0-9]+)\\.([0-9]+) ]] || fail CLIENT_VERSION_INVALID\n  printf '%s\\n' \"$(( 10#${BASH_REMATCH[1]} * 10000 + 10#${BASH_REMATCH[2]} ))\"\n}", "trivyInstaller": "install_trivy() {\n  local machine=\"$1\"\n  local archive_arch archive_sha\n  case \"$machine\" in\n    x86_64|amd64)\n      archive_arch=\"64bit\"\n      archive_sha=\"$TRIVY_AMD64_SHA256\"\n      ;;\n    aarch64|arm64)\n      archive_arch=\"ARM64\"\n      archive_sha=\"$TRIVY_ARM64_SHA256\"\n      ;;\n    *)\n      echo \"Unsupported architecture: $machine\" >&2\n      exit 1\n      ;;\n  esac\n\n  local default_cache=\"${XDG_CACHE_HOME:-${TMPDIR:-/tmp}/kubeclaw-cache}\"\n  local cache_parent=\"${KUBECLAW_TOOL_CACHE:-$default_cache}\"\n  local install_root=\"$cache_parent/trivy/v$TRIVY_VERSION\"\n  local executable=\"$install_root/trivy\"\n  if [[ -x $executable ]] && [[ \"$($executable --version | awk '/^Version:/ { print $2; exit }')\" == \"$TRIVY_VERSION\" ]]; then\n    printf '%s\\n' \"$executable\"\n    return\n  fi\n\n  require_command curl\n  require_command sha256sum\n  require_command tar\n  mkdir -p \"$install_root\"\n  local temporary\n  temporary=\"$(mktemp -d \"${TMPDIR:-/tmp}/kubeclaw-trivy.XXXXXX\")\"\n  trap 'rm -rf -- \"$temporary\"' RETURN\n  local archive=\"trivy_${TRIVY_VERSION}_Linux-${archive_arch}.tar.gz\"\n  local attempt\n  for attempt in 1 2 3; do\n    if curl -fsSL --connect-timeout 15 --max-time 60 \\\n      \"https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${archive}?download=1&kubeclaw_retry=$(date +%s)-$attempt\" \\\n      -o \"$temporary/$archive\"; then\n      break\n    fi\n    if [[ $attempt == 3 ]]; then return 1; fi\n    sleep \"$((attempt * 5))\"\n  done\n  printf '%s  %s\\n' \"$archive_sha\" \"$temporary/$archive\" | sha256sum -c - >/dev/null || return 1\n  tar --no-same-owner -xzf \"$temporary/$archive\" -C \"$temporary\" trivy || return 1\n  install -m 0755 \"$temporary/trivy\" \"$executable\" || return 1\n  printf '%s\\n' \"$executable\"\n}", "redisArtifactPreparation": "#!/usr/bin/env bash\nset -euo pipefail\n\n# Extract existing, digest-pinned upstream binaries; no runtime image rebuild.\ndestination=\"${RUNNER_TEMP:?}/reliability-services\"\nmkdir -p \"$destination/bin\"\nredis_image=\"$(node -p 'require(\"./versions.json\").infrastructure.redis')\"\ncontainers=()\ncleanup() {\n  for container in \"${containers[@]}\"; do docker rm -f \"$container\" >/dev/null; done\n}\ntrap cleanup EXIT\nfor image in \"$redis_image\"; do\n  [[ \"$image\" =~ @sha256:[a-f0-9]{64}$ ]] || { echo 'Digest-pinned service image required' >&2; exit 1; }\n  docker pull \"$image\"\ndone\ncontainer=\"$(docker create \"$redis_image\")\"; containers+=(\"$container\")\ndocker cp \"$container:/opt/bitnami\" \"$destination/bitnami\"\n# The selected Redis may target a newer glibc than ubuntu-latest. Use its own\n# loader and libraries, without replacing any libraries on the CI host.\ndocker cp -L \"$container:/lib64/ld-linux-x86-64.so.2\" \"$destination/redis-loader\"\ndocker cp -L \"$container:/usr/lib\" \"$destination/redis-system-libs\"\nfor program in redis-server redis-cli redis-check-rdb redis-check-aof; do\n  test -x \"$destination/bitnami/redis/bin/$program\"\n  {\n    printf '#!/usr/bin/env bash\\n'\n    printf 'exec %q --library-path %q %q \"$@\"\\n' \"$destination/redis-loader\" \\\n      \"$destination/redis-system-libs:$destination/bitnami/common/lib:$destination/bitnami/redis/lib\" \\\n      \"$destination/bitnami/redis/bin/$program\"\n  } > \"$destination/bin/$program\"\n  chmod 0755 \"$destination/bin/$program\"\ndone\n\"$destination/bin/redis-server\" --version\n\"$destination/bin/redis-cli\" --version\n{\n  echo \"ARCHVIEWER_TEST_NGINX=$(command -v nginx)\"\n  echo \"REDIS_SOURCE_SERVER=$(command -v redis-server)\"\n  echo \"REDIS_SERVER=$destination/bin/redis-server\"\n} >> \"${GITHUB_ENV:?}\"\n"};
+function shellFiniteNativeExecutableProof(root,source,bytes,sink){
+ const compact=text=>text.replace(/^[ \t]*#[^\n]*$/gmu,'').replace(/\s+/gu,' ').trim();
+ const lines=bytes.split('\n'),line=lines[sink.line-1]?.trim()??'';
+ const native=(contract,selectedOperation,dependencies=[])=>{
+  if(dependencies.some(file=>!fs.existsSync(path.join(root,file))))return null;
+  const fact={role:'non-api',contract,selectedOperation,dependencies:Object.fromEntries([source,...dependencies].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+ };
+ if(sink.command==='$node'&&sink.args.join('|')==='-|$generated/kubeclaw-native-pools.service|$staged_unit|<<|JS'){
+  if(!bytes.includes(`<<'JS'\n${nativeExecutableConsumerRecipes.unitTransform}\nJS`)||!bytes.includes('node=/usr/local/bin/node')||(bytes.match(/\bnode\+?=/gu)??[]).length!==1||!bytes.includes('staged_unit="$bundle/kubeclaw-native-pools.service"')||(bytes.match(/\bstaged_unit\+?=/gu)??[]).length!==1||!bytes.includes('generated="$bundle/generated"'))return null;
+  const producer='scripts/render-native-worker-node.mjs';if(!fs.existsSync(path.join(root,producer)))return null;const text=fs.readFileSync(path.join(root,producer),'utf8');
+  const fn=text.match(/^function unit\(\) \{([\s\S]*?)^\}/mu)?.[0];
+  if(fn!==nativeExecutableConsumerRecipes.unitProducer||!text.includes("'kubeclaw-native-pools.service': unit(),"))return null;
+  return native('selected-native-systemd-unit-ExecStart-path-transform-to-exclusive-host-file; no-stdout-resource',{command:'/usr/local/bin/node',argv:sink.args,producer,field:'ExecStart',receiver:'exclusive staged systemd .service file',inputBoundary:'source-generated supported bundle; supplied runtime bytes unexecuted'},[producer]);
+ }
+ if(sink.command==='$1'&&sink.args.join('|')==='--version'){
+  const fn=bytes.match(/^client_version\(\) \{([\s\S]*?)^\}/mu);if(!fn||compact(fn[0])!==compact(nativeExecutableConsumerRecipes.postgresVersion)||(bytes.match(/\bclient_version\b/gu)??[]).length!==3||!bytes.includes('client=$(client_version pg_dump)')||!bytes.includes('$(client_version pg_restore)'))return null;
+  const start=bytes.slice(0,fn.index).split('\n').length;if(sink.line<start||sink.line>=start+fn[0].split('\n').length)return null;
+  return native('selected-pg_dump-or-pg_restore-version-to-validated-numeric-version-comparison; external-CLI-status',{command:['pg_dump','pg_restore'],argv:['--version'],consumer:'PostgreSQL version regexp and numeric reconstruction',runtimeBinaryIdentity:'operator PATH tool authority; unexecuted'});
+ }
+ if(['$destination/bin/redis-server','$destination/bin/redis-cli'].includes(sink.command)&&sink.args.join('|')==='--version'){
+  if(compact(bytes)!==compact(nativeExecutableConsumerRecipes.redisArtifactPreparation))return null;
+  const versions='versions.json';if(!fs.existsSync(path.join(root,versions)))return null;const image=JSON.parse(fs.readFileSync(path.join(root,versions),'utf8')).infrastructure.redis;if(!/@sha256:[a-f0-9]{64}$/u.test(image))return null;
+  return native('selected-digest-image-Redis-loader-wrapper-to-native-version-status; no-Kubernetes-body',{command:sink.command,argv:sink.args,artifactSource:image,producer:'docker cp selected /opt/bitnami/redis/bin plus selected loader/libraries; fixed exec argv wrapper',runtimeArtifactIdentity:'external selected image contract; unexecuted'},[versions]);
+ }
+ if(sink.command==='$REDIS_SERVER'&&sink.args.join('|')==='--version'){
+  if(line!=='[[ $("$REDIS_SERVER" --version) == *"v=$selected "* ]] || fail DESTINATION_VERSION_NOT_SELECTED'||!bytes.includes(': "${REDIS_SERVER:?Path to the selected native redis-server}"')||!bytes.includes("selected=$(node -e 'const fs=require(\"node:fs\");console.log(JSON.parse(fs.readFileSync(process.argv[1])).infrastructureCharts.redis.appVersion)' \"$script_root/versions.json\")")||(bytes.match(/\bREDIS_SERVER\+?=/gu)??[]).length)return null;
+  return native('selected-external-Redis-version-capture-consumed-only-by-pinned-appVersion-admission',{command:'REDIS_SERVER operator executable input',argv:sink.args,consumer:'inline fixed version predicate; no raw result publication',runtimeIdentity:'operator authority, unexecuted'},['versions.json']);
+ }
+ if(sink.command==='$REDIS_CHECK_RDB'&&sink.args.join('|')==='$snapshot'){
+  if(line!=='"$REDIS_CHECK_RDB" "$snapshot" >/dev/null'||!bytes.includes(': "${REDIS_CHECK_RDB:?Path to the selected native redis-check-rdb}"')||!bytes.includes("[[ $(sha256sum -- \"$snapshot\" | cut -d' ' -f1) == \"$expected\" ]] || fail SNAPSHOT_DIGEST_MISMATCH")||(bytes.match(/\bREDIS_CHECK_RDB\+?=/gu)??[]).length)return null;
+  return native('selected-external-RDB-validator-exit-status-with-stdout-discarded; no-resource-body',{command:'REDIS_CHECK_RDB operator executable input',argv:sink.args,consumer:'exit status under set -e; stdout /dev/null',runtimeIdentity:'operator authority, unexecuted'});
+ }
+ if(sink.command==='awk'&&sink.args.join('|')==='/^Version:/ { print $2; exit }'){const upstream=shellRawOutputSinks(source,bytes).find(item=>item.line===sink.line&&['$executable','$trivy_executable'].includes(item.command)&&item.args.join('|')==='--version');if(!upstream||!shellFiniteNativeExecutableProof(root,source,bytes,upstream))return null;return native('selected-pinned-Trivy-Version-header-first-scalar-to-version-admission; no-resource-body',{command:upstream.command,argv:upstream.args,consumerProgram:sink.args[0],receiver:'version comparison or native version header',runtimeOutcome:'unexecuted selected release binary'});}
+ if(!['$executable','$trivy_executable'].includes(sink.command))return null;
+ const fn=bytes.match(/^install_trivy\(\) \{([\s\S]*?)^\}/mu);if(!fn||compact(fn[0])!==compact(nativeExecutableConsumerRecipes.trivyInstaller)||(bytes.match(/\binstall_trivy\b/gu)??[]).length!==4)return null;
+ for(const [name,value]of [['TRIVY_VERSION','0.74.0'],['TRIVY_AMD64_SHA256','2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a'],['TRIVY_ARM64_SHA256','b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5']])if(!bytes.includes(`readonly ${name}="${value}"`)||(bytes.match(new RegExp(`\\b${name}\\+?=`,'gu'))??[]).length!==1)return null;
+ const assignments=[...bytes.matchAll(/^[ \t]*trivy_executable="([^\n]*)"$/gmu)];if(assignments.length!==2||assignments.some(match=>match[1]!=='$(install_trivy "$(uname -m)")'))return null;
+ if(sink.args.join('|')==='--version'){
+  const start=bytes.slice(0,fn.index).split('\n').length;
+  if(sink.command==='$executable'&&!(start<=sink.line&&sink.line<start+fn[0].split('\n').length))return null;
+  if(sink.command==='$trivy_executable'&&!['"$trivy_executable" --version',"installed_version=\"$($trivy_executable --version | awk '/^Version:/ { print $2; exit }')\""].includes(line))return null;
+  return native('selected-pinned-Trivy-installed-artifact-version-query; native-release-status',{command:sink.command,argv:sink.args,artifactSource:'sha256-verified selected Trivy release archive',consumer:'Version header predicate or explicit --version dispatch',runtimeArtifactIdentity:'external release binary contract; unexecuted'});
+ }
+ const expected=['image','--cache-dir','$database_cache','--scanners','vuln','--severity','HIGH,CRITICAL','--exit-code','1','--format','table','--output','$report','$image'];
+ if(sink.command!=='$trivy_executable'||JSON.stringify(sink.args)!==JSON.stringify(expected))return null;
+ const cat=shellRawOutputSinks(source,bytes).find(item=>item.command==='cat'&&item.args.join('|')==='$report');
+ if(!cat||!shellNamedFileProof(root,source,bytes,cat))return null;
+ return native('selected-pinned-Trivy-table-scanner-to-selected-native-report-file-and-status',{command:sink.command,argv:sink.args,artifactSource:'sha256-verified selected release archive',consumer:'actual table-only file producer joined selected cat receiver; vulnerability exit status',runtimeArtifactIdentity:'external release binary contract; unexecuted'});
+}
+
+const nativeWatchdogStatusRecipes={"functions": {"append_log": "append_log() {\n  printf '%s pid=%s %s\\n' \"$(now_iso)\" \"$run_pid\" \"$1\" >>\"$log_file\"\n}", "read_status_field": "read_status_field() {\n  jq -r \"$1\" \"$status_file\"\n}", "status_snapshot_line": "status_snapshot_line() {\n  local status idx total succ fail current\n  status=\"$(read_status_field '.status // \"unknown\"')\"\n  idx=\"$(read_status_field '.currentIndex // 0')\"\n  total=\"$(read_status_field '.total // 0')\"\n  succ=\"$(read_status_field '(.successes // []) | length')\"\n  fail=\"$(read_status_field '(.failures // []) | length')\"\n  current=\"$(read_status_field 'if .currentFinding then ((.currentFinding.id // \"?\") + \" \" + (.currentFinding.title // \"\")) else \"none\" end')\"\n  printf '%s %s/%s successes=%s failures=%s current=%s' \\\n    \"$status\" \"$idx\" \"$total\" \"$succ\" \"$fail\" \"$current\"\n}", "notify_terminal_status": "notify_terminal_status() {\n  local status progress current branch worktree error message message output exit_code\n  [[ -n $notify_command ]] || return 0\n\n  status=\"$(read_status_field '.status // \"unknown\"')\"\n  progress=\"$(read_status_field '((.currentIndex // 0) | tostring) + \"/\" + ((.total // 0) | tostring)')\"\n  current=\"$(read_status_field 'if .currentFinding then ((.currentFinding.id // \"?\") + \" - \" + (.currentFinding.title // \"\")) else \"none\" end')\"\n  branch=\"$(read_status_field '.branch // \"n/a\"')\"\n  worktree=\"$(read_status_field '.worktree // \"n/a\"')\"\n  error=\"$(read_status_field 'if ((.failures // []) | length) > 0 then .failures[-1].error // \"\" else \"\" end')\"\n\n  message=$'status: '\"$status\"$'\\n'\"progress: $progress\"$'\\n'\"current: $current\"$'\\n'\"branch: $branch\"$'\\n'\"worktree: $worktree\"\n  if [[ -n $error ]]; then\n    message+=$'\\n'\"error: $error\"\n  fi\n\n  append_log \"notify status=$status\"\n  output=\"$(\n    set +e\n    PIPELINE_LIGHT_MESSAGE=\"$message\" \\\n      PIPELINE_LIGHT_LEVEL=\"$status\" \\\n      PIPELINE_LIGHT_STATUS_FILE=\"$status_file\" \\\n      PIPELINE_LIGHT_WATCHDOG_LOG_FILE=\"$log_file\" \\\n      PIPELINE_LIGHT_RUN_PID=\"$run_pid\" \\\n      \"$notify_command\" 2>&1\n    printf '\\n__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=%s\\n' \"$?\"\n  )\"\n  exit_code=\"$(printf '%s\\n' \"$output\" | sed -n 's/^__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=//p' | tail -n 1)\"\n  output=\"$(printf '%s\\n' \"$output\" | sed '/^__PIPELINE_LIGHT_NOTIFY_EXIT_CODE__=/d')\"\n  if [[ -n $output ]]; then\n    while IFS= read -r line; do\n      append_log \"notify output=$line\"\n    done <<<\"$output\"\n  fi\n  if [[ ${exit_code:-1} == \"0\" ]]; then\n    append_log \"notify status=$status result=sent\"\n  else\n    append_log \"notify status=$status result=failed exit=$exit_code command=$notify_command\"\n    return 0\n  fi\n}", "emit_snapshot": "emit_snapshot() {\n  if [[ -f $status_file ]]; then\n    append_log \"$(status_snapshot_line)\"\n  else\n    append_log \"status=pending\"\n  fi\n  last_heartbeat_epoch=\"$(date +%s)\"\n}"}, "calls": ["status=\"$(read_status_field '.status // \"unknown\"')\"", "idx=\"$(read_status_field '.currentIndex // 0')\"", "total=\"$(read_status_field '.total // 0')\"", "succ=\"$(read_status_field '(.successes // []) | length')\"", "fail=\"$(read_status_field '(.failures // []) | length')\"", "current=\"$(read_status_field 'if .currentFinding then ((.currentFinding.id // \"?\") + \" \" + (.currentFinding.title // \"\")) else \"none\" end')\"", "status=\"$(read_status_field '.status // \"unknown\"')\"", "progress=\"$(read_status_field '((.currentIndex // 0) | tostring) + \"/\" + ((.total // 0) | tostring)')\"", "current=\"$(read_status_field 'if .currentFinding then ((.currentFinding.id // \"?\") + \" - \" + (.currentFinding.title // \"\")) else \"none\" end')\"", "branch=\"$(read_status_field '.branch // \"n/a\"')\"", "worktree=\"$(read_status_field '.worktree // \"n/a\"')\"", "error=\"$(read_status_field 'if ((.failures // []) | length) > 0 then .failures[-1].error // \"\" else \"\" end')\"", "last_status=\"$(read_status_field '.status // \"unknown\"')\"", "status=\"$(read_status_field '.status // \"unknown\"')\"", "status=\"$(read_status_field '.status // \"unknown\"')\""]};
+function shellNativeWatchdogStatusProof(root,source,bytes,sink){
+ if(sink.command!=='jq'||sink.args.join('|')!=='-r|$1|$status_file')return null;
+ const fn=bytes.match(/^read_status_field\(\) \{([\s\S]*?)^\}/mu);if(!fn)return null;const first=bytes.slice(0,fn.index).split('\n').length;if(sink.line<first||sink.line>=first+fn[0].split('\n').length)return null;
+ for(const [name,recipe]of Object.entries(nativeWatchdogStatusRecipes.functions)){
+  const selected=bytes.match(new RegExp(`^${name}\\(\\) \\{([\\s\\S]*?)^\\}`,'mu'))?.[0];if(selected!==recipe)return null;
+ }
+ if((bytes.match(/\bread_status_field\b/gu)??[]).length!==16||(bytes.match(/\$status_file\b/gu)??[]).length!==7||(bytes.match(/\bstatus_snapshot_line\b/gu)??[]).length!==2)return null;
+ const calls=bytes.split('\n').filter(line=>line.includes('$(read_status_field ')).map(line=>line.trim());if(JSON.stringify(calls)!==JSON.stringify(nativeWatchdogStatusRecipes.calls))return null;
+ const fact={role:'non-api',contract:'selected-external-pipeline-status-JSON-to-finite-field-projection-and-watchdog-log-notification; no-authored-Kubernetes-body',dependencies:{[source]:hash(bytes)},selectedOperation:{command:'jq',argv:sink.args,receiver:'finite pipeline status/progress/count/finding/branch/worktree/error selectors; fixed log envelope and notification metadata',inputBoundary:'operator pipeline status file schema, runtime values unexecuted',publicRole:'native watchdog status and log administration'}};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+}
+
+const nativePostgresMetadataRecipes={"functions": {"configuration": "configuration() {\n  : \"${BACKUP_ROOT:?}\" \"${BACKUP_MAXIMUM_BYTES:?}\" \"${BACKUP_MAXIMUM_RETAINED_BYTES:?}\"\n  : \"${BACKUP_MAXIMUM_AGE_SECONDS:?}\" \"${BACKUP_MAXIMUM_DURATION_SECONDS:?}\"\n  : \"${BACKUP_EXPECTED_SERVER_VERSION:?}\" \"${BACKUP_APPLICATION_IMAGE:?}\"\n  : \"${BACKUP_CREDENTIAL_AUTHORITY_REF:?}\" \"${LITELLM_MASTER_KEY:?}\"\n  : \"${PGHOST:?}\" \"${PGDATABASE:?}\" \"${PGUSER:?}\"\n  for key in BACKUP_MAXIMUM_BYTES BACKUP_MAXIMUM_RETAINED_BYTES BACKUP_MAXIMUM_AGE_SECONDS BACKUP_MAXIMUM_DURATION_SECONDS BACKUP_EXPECTED_SERVER_VERSION; do\n    positive \"$key\" \"${!key}\"\n  done\n  [[ $BACKUP_ROOT == /* && $BACKUP_ROOT != / && ! -L $BACKUP_ROOT ]] || fail ROOT_INVALID\n  [[ $PGDATABASE =~ ^[a-z][a-z0-9_]{0,62}$ ]] || fail DATABASE_NAME_INVALID\n  [[ $BACKUP_APPLICATION_IMAGE =~ ^[a-zA-Z0-9._/-]+@sha256:[a-f0-9]{64}$ ]] || fail APPLICATION_IMAGE_INVALID\n  [[ $BACKUP_CREDENTIAL_AUTHORITY_REF =~ ^[a-zA-Z0-9._:/-]{1,256}$ ]] || fail CREDENTIAL_AUTHORITY_INVALID\n  for tool in psql pg_dump pg_restore flock sha256sum stat du timeout sync; do command -v \"$tool\" >/dev/null || fail \"TOOL_MISSING_$tool\"; done\n  if [[ $1 == verify ]]; then [[ -d $BACKUP_ROOT ]] || fail BACKUP_MISSING;\n  else mkdir -p -- \"$BACKUP_ROOT\"; fi\n  [[ $(stat -c %u \"$BACKUP_ROOT\") == \"$(id -u)\" ]] || fail ROOT_OWNER_INVALID\n  local mode; mode=$(stat -c %a \"$BACKUP_ROOT\")\n  (( (8#$mode & 077) == 0 )) || fail ROOT_NOT_PRIVATE\n  export PGCONNECT_TIMEOUT=15\n}", "backup": "backup() {\n  local identity started used allowance blocks stage final client\n  identity=$(server_identity); client=$(client_version pg_dump); started=$(date +%s)\n  used=$(du --summarize --bytes \"$BACKUP_ROOT\" | cut -f1)\n  [[ $used =~ ^[0-9]+$ ]] || fail RETAINED_SIZE_INVALID\n  allowance=$(( BACKUP_MAXIMUM_RETAINED_BYTES - used - 67108864 ))\n  (( allowance > 0 )) || fail RETAINED_CAPACITY_EXCEEDED\n  (( allowance <= BACKUP_MAXIMUM_BYTES )) || allowance=$BACKUP_MAXIMUM_BYTES\n  blocks=$(( allowance / 1024 )); (( blocks > 0 )) || fail RETAINED_CAPACITY_EXCEEDED\n  stage=$(mktemp -d \"$BACKUP_ROOT/.incomplete-$(date -u +%Y%m%dT%H%M%SZ)-XXXXXXXX\")\n  # An interrupted dump remains visibly incomplete and counts against capacity.\n  # The previous completed backup is never removed to make the next one pass.\n  (\n    ulimit -c 0\n    ulimit -f \"$blocks\"\n    timeout --signal=TERM --kill-after=15 \"$BACKUP_MAXIMUM_DURATION_SECONDS\" \\\n      pg_dump --format=custom --file=\"$stage/database.dump\"\n  ) || fail DUMP_FAILED_INCOMPLETE_RETAINED\n  (ulimit -f 64512; pg_restore --list \"$stage/database.dump\" >\"$stage/archive-toc.txt\")\n  [[ $(server_identity) == \"$identity\" ]] || fail SOURCE_IDENTITY_CHANGED\n  {\n    printf 'format=postgresql-recovery-v1\\n'\n    printf 'database=%s\\n' \"$PGDATABASE\"\n    printf 'source_system_identifier=%s\\n' \"$identity\"\n    printf 'server_version_num=%s\\n' \"$BACKUP_EXPECTED_SERVER_VERSION\"\n    printf 'dump_client_version_num=%s\\n' \"$client\"\n    printf 'application_image=%s\\n' \"$BACKUP_APPLICATION_IMAGE\"\n    printf 'credential_authority_ref=%s\\ncredential_binding=%s\\n' \"$BACKUP_CREDENTIAL_AUTHORITY_REF\" \"$(credential_binding)\"\n    printf 'started_epoch=%s\\ncompleted_epoch=%s\\n' \"$started\" \"$(date +%s)\"\n    printf 'schema=full-custom-archive\\ncredentials=external-authority-required\\n'\n  } >\"$stage/metadata.env\"\n  (cd \"$stage\"; sha256sum database.dump archive-toc.txt metadata.env >SHA256SUMS)\n  sync -f \"$stage/database.dump\"\n  final=\"$BACKUP_ROOT/backup-${stage##*/.incomplete-}\"\n  [[ ! -e $final ]] || fail BACKUP_ID_ALREADY_EXISTS\n  mv --no-clobber --no-target-directory \"$stage\" \"$final\"\n  [[ ! -e $stage ]] || fail BACKUP_PUBLICATION_FAILED\n  sync -f \"$BACKUP_ROOT\"\n  printf '%s\\n' \"$final\"\n}", "metadata": "metadata() {\n  awk -F= -v key=\"$2\" '$1==key {count++; value=substr($0,length(key)+2)} END {if(count!=1) exit 1; print value}' \"$1/metadata.env\"\n}", "verify": "verify() {\n  local directory=$1 source_version=$2 name escaped age started completed\n  [[ $directory == \"$BACKUP_ROOT\"/backup-* && -d $directory && ! -L $directory ]] || fail BACKUP_PATH_INVALID\n  [[ ${directory#\"$BACKUP_ROOT\"/} != */* ]] || fail BACKUP_PATH_INVALID\n  for name in database.dump archive-toc.txt metadata.env SHA256SUMS; do\n    [[ -f $directory/$name && ! -L $directory/$name && $(stat -c %h \"$directory/$name\") == 1 ]] || fail BACKUP_FILE_INVALID\n  done\n  (( $(stat -c %s \"$directory/metadata.env\") < 65536 )) || fail METADATA_TOO_LARGE\n  (( $(stat -c %s \"$directory/SHA256SUMS\") < 1024 )) || fail CHECKSUM_INDEX_INVALID\n  (( $(stat -c %s \"$directory/database.dump\") <= BACKUP_MAXIMUM_BYTES )) || fail BACKUP_SIZE_EXCEEDED\n  # Never let a modified checksum index select arbitrary files or parent paths.\n  [[ $(wc -l <\"$directory/SHA256SUMS\") == 3 ]] || fail CHECKSUM_INDEX_INVALID\n  for name in database.dump archive-toc.txt metadata.env; do\n    escaped=${name//./\\\\.}\n    [[ $(grep -Ec \"^[a-f0-9]{64}  $escaped$\" \"$directory/SHA256SUMS\") == 1 ]] || fail CHECKSUM_INDEX_INVALID\n  done\n  (cd \"$directory\"; sha256sum --check --status SHA256SUMS) || fail BACKUP_CHECKSUM_MISMATCH\n  [[ $(metadata \"$directory\" format) == postgresql-recovery-v1 ]] || fail BACKUP_FORMAT_INVALID\n  [[ $(metadata \"$directory\" database) == \"$PGDATABASE\" ]] || fail BACKUP_DATABASE_MISMATCH\n  [[ $(metadata \"$directory\" application_image) == \"$BACKUP_APPLICATION_IMAGE\" ]] || fail BACKUP_APPLICATION_MISMATCH\n  [[ $(metadata \"$directory\" credential_binding) == \"$(credential_binding)\" ]] || fail BACKUP_CREDENTIAL_SET_MISMATCH\n  [[ $(metadata \"$directory\" server_version_num) == \"$source_version\" ]] || fail BACKUP_VERSION_MISMATCH\n  started=$(metadata \"$directory\" started_epoch); completed=$(metadata \"$directory\" completed_epoch)\n  positive STARTED_EPOCH \"$started\"; positive COMPLETED_EPOCH \"$completed\"\n  age=$(( $(date +%s) - started ))\n  (( age >= 0 && completed >= started && completed <= $(date +%s) )) || fail BACKUP_TIMESTAMP_INVALID\n  (( age <= BACKUP_MAXIMUM_AGE_SECONDS )) || fail BACKUP_RPO_EXCEEDED\n  pg_restore --list \"$directory/database.dump\" >/dev/null\n}", "restore": "restore() {\n  local directory=$1 source_version=$2 target count\n  verify \"$directory\" \"$source_version\"\n  if [[ $source_version != \"$BACKUP_EXPECTED_SERVER_VERSION\" ]]; then\n    [[ $(metadata \"$directory\" dump_client_version_num) == \"$BACKUP_EXPECTED_SERVER_VERSION\" \\\n      && $(client_version pg_restore) == \"$BACKUP_EXPECTED_SERVER_VERSION\" ]] || fail MIGRATION_SELECTED_CLIENT_REQUIRED\n  fi\n  target=$(server_identity)\n  [[ $target != \"$(metadata \"$directory\" source_system_identifier)\" ]] || fail SAME_SERVER_RESTORE_FORBIDDEN\n  count=$(sql \"SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname NOT IN ('pg_catalog','information_schema') AND n.nspname NOT LIKE 'pg_toast%' AND c.relkind IN ('r','p','v','m','S','f')\")\n  [[ $count == 0 ]] || fail RESTORE_REQUIRES_EMPTY_DATABASE\n  # Restore object owners and ACLs; all required login roles must already exist\n  # from the retained secret authority. Any SQL failure rolls the restore back.\n  timeout --signal=TERM --kill-after=15 \"$BACKUP_MAXIMUM_DURATION_SECONDS\" \\\n    pg_restore --exit-on-error --single-transaction --dbname=\"$PGDATABASE\" \"$directory/database.dump\"\n  printf '%s\\n' 'POSTGRES_RECOVERY_RESTORED_APPLICATION_ACCEPTANCE_REQUIRED'\n}", "scheduled": "scheduled() {\n  : \"${BACKUP_INTERVAL_SECONDS:?}\"\n  positive BACKUP_INTERVAL_SECONDS \"$BACKUP_INTERVAL_SECONDS\"\n  local selected age\n  if selected=$(latest) && (verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"); then\n    age=$(( $(date +%s) - $(metadata \"$selected\" started_epoch) ))\n    if (( age < BACKUP_INTERVAL_SECONDS )); then printf '%s\\n' \"$selected\"; return; fi\n  fi\n  selected=$(backup)\n  verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"\n  printf '%s\\n' \"$selected\"\n}"}, "calls": ["[[ $(metadata \"$directory\" format) == postgresql-recovery-v1 ]] || fail BACKUP_FORMAT_INVALID", "[[ $(metadata \"$directory\" database) == \"$PGDATABASE\" ]] || fail BACKUP_DATABASE_MISMATCH", "[[ $(metadata \"$directory\" application_image) == \"$BACKUP_APPLICATION_IMAGE\" ]] || fail BACKUP_APPLICATION_MISMATCH", "[[ $(metadata \"$directory\" credential_binding) == \"$(credential_binding)\" ]] || fail BACKUP_CREDENTIAL_SET_MISMATCH", "[[ $(metadata \"$directory\" server_version_num) == \"$source_version\" ]] || fail BACKUP_VERSION_MISMATCH", "started=$(metadata \"$directory\" started_epoch); completed=$(metadata \"$directory\" completed_epoch)", "[[ $(metadata \"$directory\" dump_client_version_num) == \"$BACKUP_EXPECTED_SERVER_VERSION\" \\", "[[ $target != \"$(metadata \"$directory\" source_system_identifier)\" ]] || fail SAME_SERVER_RESTORE_FORBIDDEN", "age=$(( $(date +%s) - $(metadata \"$selected\" started_epoch) ))"]};
+function shellNativePostgresMetadataProof(root,source,bytes,sink){
+ if(sink.command!=='awk'||sink.args.join('|')!==['-F=','-v','key=$2','$1==key {count++; value=substr($0,length(key)+2)} END {if(count!=1) exit 1; print value}','$1/metadata.env'].join('|'))return null;
+ const fn=bytes.match(/^metadata\(\) \{([\s\S]*?)^\}/mu);if(!fn)return null;const first=bytes.slice(0,fn.index).split('\n').length;if(sink.line<first||sink.line>=first+fn[0].split('\n').length)return null;
+ const compact=text=>text.replace(/^[ \t]*#[^\n]*$/gmu,'').replace(/\s+/gu,' ').trim();
+ for(const [name,recipe]of Object.entries(nativePostgresMetadataRecipes.functions)){
+  const selected=bytes.match(new RegExp(`^${name}\\(\\) \\{([\\s\\S]*?)^\\}`,'mu'))?.[0];if(!selected||compact(selected)!==compact(recipe))return null;
+ }
+ if((bytes.match(/\bmetadata\b/gu)??[]).length!==17)return null;
+ const calls=bytes.split('\n').filter(line=>line.includes('$(metadata ')).map(line=>line.trim());if(JSON.stringify(calls)!==JSON.stringify(nativePostgresMetadataRecipes.calls))return null;
+ const fact={role:'non-api',contract:'selected-private-PostgreSQL-recovery-metadata-env-writer-to-finite-identity-version-epoch-validation; no-authored-Kubernetes-body',dependencies:{[source]:hash(bytes)},selectedOperation:{command:'awk',argv:sink.args,producer:'source backup metadata.env framed fixed key/value writer',receiver:'finite verification/restore admission and age arithmetic; no raw metadata publication',runtimeOutcome:'unexecuted database recovery and private backup contract'}};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+}
+
+const inheritedSerializedSecretRecipe={"function": "copy_secret_from_source() {\n  local name=\"$1\"\n  local target_namespace=\"${2:-$NAMESPACE}\"\n  local source_name=\"${3:-$name}\"\n  local output\n\n  if output=$(kubectl get secret \"$source_name\" -n \"$SRC_NS\" 2>&1); then\n    kubectl get secret \"$source_name\" -n \"$SRC_NS\" -o yaml |\n      sed \"s/namespace: ${SRC_NS}/namespace: ${target_namespace}/\" |\n      kubectl apply -n \"$target_namespace\" -f - >/dev/null\n    log \"Copied: ${target_namespace}/${name}\"\n    return 0\n  fi\n\n  if is_not_found_error \"$output\"; then\n    warn \"Optional source secret not found in ${SRC_NS}: $source_name\"\n    return 2\n  fi\n\n  err \"Failed to check source secret '$source_name' in namespace '$SRC_NS'\"\n  echo \"$output\" >&2\n  exit 1\n}", "calls": ["if copy_secret_from_source \"$SECRET_NAME\"; then", "if copy_secret_from_source \"$name\"; then", "if copy_secret_from_source redis-secrets; then", "if copy_secret_from_source postgresql-secrets; then", "if copy_secret_from_source litellm-secrets; then", "if copy_secret_from_source google-sa-key; then", "if copy_secret_from_source ghcr-secret; then", "if copy_secret_from_source \"$name\"; then", "if copy_secret_from_source \"$TAILSCALE_OAUTH_SECRET_NAME\" \"$TAILSCALE_OPERATOR_NAMESPACE\"; then"]};
+function shellInheritedSerializedSecretProof(root,source,bytes,sink){
+ if(sink.command!=='sed'||sink.args.join('|')!=='s/namespace: ${SRC_NS}/namespace: ${target_namespace}/')return null;
+ const fn=bytes.match(/^copy_secret_from_source\(\) \{([\s\S]*?)^\}/mu);if(!fn||fn[0]!==inheritedSerializedSecretRecipe.function)return null;
+ const first=bytes.slice(0,fn.index).split('\n').length;if(sink.line<first||sink.line>=first+fn[0].split('\n').length)return null;
+ const calls=bytes.split('\n').filter(line=>/\bif copy_secret_from_source\b/u.test(line)).map(line=>line.trim());if(JSON.stringify(calls)!==JSON.stringify(inheritedSerializedSecretRecipe.calls)||(bytes.match(/\bcopy_secret_from_source\b/gu)??[]).length!==10)return null;
+ for(const [name,defaultValue]of [['NAMESPACE','kubeclaw'],['SRC_NS','default']])if(!bytes.includes(`${name}="\${${name}:-${defaultValue}}"`)||(bytes.match(new RegExp(`\\b${name}\\+?=`,'gu'))??[]).length!==1)return null;
+ const serializedTransforms=[{tool:'sed',argv:sink.args,inputFormat:'yaml',scope:'first matching text sequence per line',patternTemplate:'namespace: ${SRC_NS}',replacementTemplate:'namespace: ${target_namespace}',sourceNamespaceExpression:'$SRC_NS',targetNamespaceExpression:'${2:-$NAMESPACE}',effects:'serialized text including scalar and annotation strings; no structural field rewrite guarantee'}];
+ const transfer={operation:'source-bound-kubernetes-get-serialized-text-transform-apply',sourceReceiver:{apiVersion:'v1',kind:'Secret',resource:'secret',requestMethod:'GET',format:'yaml',nameExpression:'${3:-$name}',namespaceExpression:'$SRC_NS'},retainedRootFields:['apiVersion','kind','metadata','data','immutable','type'],excludedRootFields:['stringData'],removedPaths:[],rewrittenPaths:[],serializedTransforms,unknownLiveValues:true,responseAuthority:'core/v1 Secret GET server response; write-only stringData is not returned'};
+ const value={apiVersion:'v1',kind:'Secret',__docsDynamicExpression:fn[0].split('\n').filter(line=>line.includes('-o yaml |')||line.includes('-o json |')||line.trim().startsWith('sed \"')||line.trim().startsWith('jq --arg val ')||line.trim().startsWith('kubectl apply ')).join('\n'),__docsSupportedSchemaPassthrough:transfer};
+ const producerLine=sink.line-1,dependencies=[{path:source,sourceDigest:hash(bytes)}];
+ const context={apiVersion:'v1',kind:'Secret',path:source,line:sink.line,document:sink.line,producer:'shell-shape',profile:'inherited-live-secret-serialized-yaml-transform',sourceDigest:hash(bytes),outputDigest:hash(JSON.stringify(value)),requestMethod:'APPLY',requestOperation:'kubectl-apply',requestInvocation:'kubectl apply -n "$target_namespace" -f -',requestConstructor:'copy_secret_from_source',forwardedProducer:{qualified:true,path:source,line:producerLine,command:'kubectl',argv:['get','secret','$source_name','-n','$SRC_NS','-o','yaml'],constructorFunction:'copy_secret_from_source',dependencies,serializedTransforms,actualCallerCount:calls.length,liveResponse:'unexecuted; schema passthrough only'}};
+ const fact={role:'api',contract:'selected-core-v1-Secret-GET-to-exact-serialized-YAML-sed-to-apply; no-invented-live-fields',dependencies:{[source]:hash(bytes)},outputs:[{value,context}],selectedOperation:context.forwardedProducer};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+}
+
+const kubectlModuleGraphValidatorRecipe="#!/bin/sh\nset -eu\nversion=${1:?Expected the selected kubectl version}\nprintf '%s\\n' \"$version\" | grep -Eq '^v1\\.[0-9]+\\.[0-9]+$' || {\n    echo \"Invalid kubectl version: $version\" >&2\n    exit 1\n}\n# Inspect the resolved graph, not just direct requirements: MVS can raise a\n# module through a transitive dependency. Replacements cannot attest this source.\nmodules=$(go list -mod=readonly -m -f '{{.Path}} {{.Version}}{{if .Replace}} replaced{{end}}' all)\nprintf '%s\\n' \"$modules\" | awk -v expected=\"v0.${version#v1.}\" '\n$1 ~ /^k8s[.]io\\/(api|apimachinery|cli-runtime|client-go|component-base|component-helpers|kubectl|metrics)$/ {\n    count++\n    if ($2 != expected || NF != 2) {\n        print \"kubectl source/version mismatch: \" $0 \"; expected \" expected > \"/dev/stderr\"\n        failed = 1\n    }\n}\nEND {\n    if (count != 8) {\n        print \"kubectl release module graph is incomplete\" > \"/dev/stderr\"\n        failed = 1\n    }\n    exit failed\n}'\n";
+function shellNativeMaintenanceFileProof(root,source,bytes,sink){
+ const flat=bytes.replace(/\\\n[ \t]*/gu,' ').replace(/\s+/gu,' '),compact=text=>text.replace(/^[ \t]*#[^\n]*$/gmu,'').replace(/\s+/gu,' ').trim();
+ const native=(contract,selectedOperation,dependencies=[])=>{if(dependencies.some(file=>!fs.existsSync(path.join(root,file))))return null;const fact={role:'non-api',contract,selectedOperation,dependencies:Object.fromEntries([source,...dependencies].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;};
+ if(sink.command==='awk'&&compact(bytes)===compact(kubectlModuleGraphValidatorRecipe)){
+  const dockerfile='ops/pod/Dockerfile';if(!fs.existsSync(path.join(root,dockerfile))||!fs.readFileSync(path.join(root,dockerfile),'utf8').includes('RUN GOPROXY=off sh verify-version.sh "${KUBECTL_VERSION}"'))return null;
+  return native('selected-read-only-Go-module-list-to-eight-Kubernetes-module-version-exit-status-and-framed-stderr',{command:'awk',argv:sink.args,producer:'go list -mod=readonly -m fixed Path/Version/Replace template',receiver:'module version comparison; no stdout payload, only fixed stderr diagnostic or exit status'},[dockerfile,'ops/pod/kubectl-build/go.mod','ops/pod/kubectl-build/go.sum']);
+ }
+ if(sink.command==='tr'&&sink.args.join('|')==='-d|\\r\\n'){
+  const line=bytes.split('\n')[sink.line-1]?.trim();
+  if(line!==`kube_namespace="$(tr -d '\\r\\n' < "$kube_service_account_root/namespace")"`||!bytes.includes("case \"$kube_namespace\" in\n  ''|*[!a-z0-9-]*) echo \"projected Kubernetes namespace is invalid\" >&2; exit 1 ;;\nesac")||(bytes.match(/\bkube_namespace\b/gu)??[]).length!==4||!bytes.includes('namespace: $kube_namespace')||!bytes.includes('CONTROLLER_NAMESPACE="$kube_namespace"'))return null;
+  return native('selected-mounted-namespace-text-to-DNS-character-validation-and-local-kubeconfig-context; not-API-resource',{command:'tr',argv:sink.args,input:'operator/projected namespace text',receiver:['local kubeconfig context.namespace','controller namespace environment'],runtimeInput:'unexecuted, validation rejects API/JSON syntax'});
+ }
+ if(sink.command==='sed'&&sink.args.join('|')==='s|ExecStart=/usr/bin/env node |ExecStart=/usr/local/bin/node ||$backup/generated/kubeclaw-native-pools.service'){
+  if(!flat.includes('/usr/local/bin/node "$repository/scripts/render-native-worker-node.mjs" "$repository/my-values/infra/native-worker-pools-ax41.yaml" "$backup/generated"')||!flat.includes("sed 's|ExecStart=/usr/bin/env node |ExecStart=/usr/local/bin/node |' \"$backup/generated/kubeclaw-native-pools.service\" > \"$backup/kubeclaw-native-pools.service\"")||!bytes.includes('backup="$(mktemp -d /root/kubeclaw-pool-lifetime-repair.XXXXXX)"')||!bytes.includes('repository="$(cd "$(dirname "$0")/.." && pwd)"')||(bytes.match(/\bbackup\+?=/gu)??[]).length!==1)return null;
+  const producer='scripts/render-native-worker-node.mjs';if(!fs.existsSync(path.join(root,producer)))return null;const text=fs.readFileSync(path.join(root,producer),'utf8');if(text.match(/^function unit\(\) \{([\s\S]*?)^\}/mu)?.[0]!==nativeExecutableConsumerRecipes.unitProducer||!text.includes("'kubeclaw-native-pools.service': unit(),"))return null;
+  return native('selected-generated-native-systemd-unit-text-ExecStart-path-rewrite-to-host-service-file; no-API-body',{command:'sed',argv:sink.args,producer,receiver:'staged native systemd unit, validated and installed at /etc/systemd/system'},[producer,'my-values/infra/native-worker-pools-ax41.yaml']);
+ }
+ return null;
+}
+
+const inheritedSecretJsonFieldRecipe="rewrite_litellm_database_url_namespace() {\n  local litellm_check old_url new_url\n\n  if litellm_check=$(kubectl get secret litellm-secrets -n \"$NAMESPACE\" 2>&1); then\n    old_url=$(kubectl get secret litellm-secrets -n \"$NAMESPACE\" -o jsonpath='{.data.DATABASE_URL}' | base64 -d)\n    if echo \"$old_url\" | grep -q \"${SRC_NS}\"; then\n      require_command jq\n      new_url=$(echo \"$old_url\" | sed \"s/${SRC_NS}/${NAMESPACE}/g\")\n      kubectl get secret litellm-secrets -n \"$NAMESPACE\" -o json |\n        jq --arg val \"$(echo -n \"$new_url\" | base64 -w0)\" '.data.DATABASE_URL = $val' |\n        kubectl apply -n \"$NAMESPACE\" -f - >/dev/null\n      log \"Fixed DATABASE_URL: ${SRC_NS} \u2192 ${NAMESPACE}\"\n    else\n      log \"DATABASE_URL already correct (no ${SRC_NS} reference)\"\n    fi\n  elif is_not_found_error \"$litellm_check\"; then\n    warn \"litellm-secrets not present in $NAMESPACE; skipping DATABASE_URL namespace rewrite.\"\n  else\n    err \"Failed to check litellm-secrets in namespace '$NAMESPACE'\"\n    echo \"$litellm_check\" >&2\n    exit 1\n  fi\n}";
+function shellInheritedSecretJsonFieldProof(root,source,bytes,sink){
+ const fn=bytes.match(/^rewrite_litellm_database_url_namespace\(\) \{([\s\S]*?)^\}/mu);if(!fn||fn[0]!==inheritedSecretJsonFieldRecipe||(bytes.match(/\brewrite_litellm_database_url_namespace\b/gu)??[]).length!==2)return null;
+ const first=bytes.slice(0,fn.index).split('\n').length;if(sink.line<first||sink.line>=first+fn[0].split('\n').length||!['base64','sed','jq'].includes(sink.command))return null;
+ const textTransform={tool:'sed',argv:['s/${SRC_NS}/${NAMESPACE}/g'],patternExpression:'${SRC_NS}',replacementExpression:'${NAMESPACE}',scope:'global BRE per line (not literal/structural namespace guarantee)'};
+ const structuredTransforms=[{tool:'jq',argv:['--arg','val','$(echo -n "$new_url" | base64 -w0)','.data.DATABASE_URL = $val'],fieldPath:'$.data.DATABASE_URL',valueSource:{GETjsonpath:'.data.DATABASE_URL',decode:'base64 -d',textTransform,encode:'base64 -w0'}}];
+ const transfer={operation:'source-bound-kubernetes-get-json-field-transform-apply',sourceReceiver:{apiVersion:'v1',kind:'Secret',resource:'secret',requestMethod:'GET',format:'json',name:'litellm-secrets',nameExpression:'litellm-secrets',namespaceExpression:'$NAMESPACE'},retainedRootFields:['apiVersion','kind','metadata','data','immutable','type'],excludedRootFields:['stringData'],removedPaths:[],rewrittenPaths:[{fieldPath:'$.data.DATABASE_URL',valueStatus:'source-derived-base64-of-selected-decoded-url-text'}],structuredTransforms,unknownLiveValues:true};
+ const value={apiVersion:'v1',kind:'Secret',__docsDynamicExpression:fn[0].split('\n').filter(line=>line.includes('-o yaml |')||line.includes('-o json |')||line.trim().startsWith('sed \"')||line.trim().startsWith('jq --arg val ')||line.trim().startsWith('kubectl apply ')).join('\n'),__docsSupportedSchemaPassthrough:transfer};
+ const getterLine=first+fn[0].split('\n').findIndex(line=>line.includes('kubectl get secret litellm-secrets')&&line.includes('-o json |'));
+ const line=getterLine+1,context={apiVersion:'v1',kind:'Secret',path:source,line,document:line,producer:'shell-shape',profile:'inherited-live-secret-json-DATABASE_URL-transform',sourceDigest:hash(bytes),outputDigest:hash(JSON.stringify(value)),requestMethod:'APPLY',requestOperation:'kubectl-apply',requestInvocation:'kubectl apply -n "$NAMESPACE" -f -',requestConstructor:'rewrite_litellm_database_url_namespace',forwardedProducer:{qualified:true,path:source,line:getterLine,command:'kubectl',argv:['get','secret','litellm-secrets','-n','$NAMESPACE','-o','json'],constructorFunction:'rewrite_litellm_database_url_namespace',dependencies:[{path:source,sourceDigest:hash(bytes)}],structuredTransforms,liveResponse:'unexecuted; unknown source values and exact selected transform'}};
+ const fact={role:'api',contract:'selected-live-core-Secret-GET-json-data-field-decode-text-rewrite-base64-jq-to-apply',dependencies:{[source]:hash(bytes)},outputs:sink.command==='jq'?[{value,context}]:[],selectedOperation:context.forwardedProducer};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+}
+
+const finiteSecretChannelRecipes={"load_secret_key":{"body":"load_secret_key() {\n  local namespace=\"$1\"\n  local name=\"$2\"\n  local key=\"$3\"\n  local out_var=\"$4\"\n  local encoded\n\n  if encoded=$(kubectl get secret \"$name\" -n \"$namespace\" -o \"go-template={{ with index .data \\\"$key\\\" }}{{ . }}{{ end }}\" 2>&1); then\n    if [[ -z $encoded ]]; then\n      return 1\n    fi\n    printf -v \"$out_var\" '%s' \"$(printf '%s' \"$encoded\" | base64 -d)\"\n    return 0\n  fi\n\n  if is_not_found_error \"$encoded\"; then\n    return 1\n  fi\n\n  err \"Failed to read key '$key' from Secret '${namespace}/${name}'\"\n  echo \"$encoded\" >&2\n  return 2\n}","references":["load_secret_key() {","if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\" && ! load_secret_key \"$NAMESPACE\" \"$SECRET_NAME\" litellmApiKey SHARED_LITELLM_API_KEY; then","if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\" && ! load_secret_key \"$NAMESPACE\" \"$SECRET_NAME\" litellmApiKey SHARED_LITELLM_API_KEY; then","if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\" && ! load_secret_key \"$NAMESPACE\" \"$SECRET_NAME\" litellmApiKey SHARED_LITELLM_API_KEY; then","if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\" && ! load_secret_key \"$NAMESPACE\" \"$SECRET_NAME\" litellmApiKey SHARED_LITELLM_API_KEY; then","if ! load_secret_key \"$NAMESPACE\" postgresql-secrets litellm-password POSTGRES_LITELLM_PASSWORD; then","if ! load_secret_key \"$NAMESPACE\" postgresql-secrets litellm-password POSTGRES_LITELLM_PASSWORD; then"]},"patch_secret_literal":{"body":"patch_secret_literal() {\n  local namespace=\"$1\"\n  local name=\"$2\"\n  local key=\"$3\"\n  local value=\"$4\"\n  local encoded\n\n  encoded=\"$(printf '%s' \"$value\" | base64 -w0)\"\n  kubectl patch secret \"$name\" -n \"$namespace\" --type merge -p \"{\\\"data\\\":{\\\"$key\\\":\\\"$encoded\\\"}}\" >/dev/null\n}","references":["patch_secret_literal() {","patch_secret_literal \"$NAMESPACE\" \"$SECRET_NAME\" \"$key\" \"$value\"","patch_secret_literal \"$NAMESPACE\" redis-secrets redis-password \"$redis_password\"","patch_secret_literal \"$NAMESPACE\" postgresql-secrets postgres-password \"$postgres_password\"","patch_secret_literal \"$NAMESPACE\" postgresql-secrets litellm-password \"$litellm_password\"","patch_secret_literal \"$NAMESPACE\" litellm-secrets LITELLM_MASTER_KEY \"$litellm_master_key\"","patch_secret_literal \"$NAMESPACE\" litellm-secrets DATABASE_URL \"$database_url\"","patch_secret_literal \"$TAILSCALE_OPERATOR_NAMESPACE\" \"$TAILSCALE_OAUTH_SECRET_NAME\" client_id \"$client_id\"","patch_secret_literal \"$TAILSCALE_OPERATOR_NAMESPACE\" \"$TAILSCALE_OAUTH_SECRET_NAME\" client_secret \"$client_secret\""]},"patch_secret_file":{"body":"patch_secret_file() {\n  local namespace=\"$1\"\n  local name=\"$2\"\n  local key=\"$3\"\n  local path=\"$4\"\n  local encoded\n\n  encoded=\"$(base64 -w0 \"$path\")\"\n  kubectl patch secret \"$name\" -n \"$namespace\" --type merge -p \"{\\\"data\\\":{\\\"$key\\\":\\\"$encoded\\\"}}\" >/dev/null\n}","references":["patch_secret_file() {","patch_secret_file \"$NAMESPACE\" google-sa-key credentials.json \"$credentials_file\"","patch_secret_file \"$NAMESPACE\" \"$name\" id_rsa \"$key_file\""]},"sops_get":{"body":"sops_get() {\n  local key=\"$1\"\n  local err_file\n\n  err_file=\"$(mktemp)\"\n  TMP_FILES+=(\"$err_file\")\n  if sops --decrypt --extract \"[\\\"$key\\\"]\" \"$SOPS_FILE\" 2>\"$err_file\"; then\n    rm -f \"$err_file\"\n    return 0\n  fi\n\n  err \"Failed to read '$key' from SOPS file: $SOPS_FILE\"\n  if [[ -s $err_file ]]; then\n    sed 's/^/  /' \"$err_file\" >&2\n  fi\n  rm -f \"$err_file\"\n  return 1\n}","references":["sops_get() {","--from-literal=\"gatewayToken-forge=$(sops_get openclaw_gateway_token_forge)\"","--from-literal=\"gatewayToken-echo=$(sops_get openclaw_gateway_token_echo)\"","--from-literal=\"gatewayToken-buster=$(sops_get openclaw_gateway_token_buster)\"","--from-literal=\"busterV2Token=$(sops_get buster_v2_token)\"","--from-literal=\"gatewayToken-nova=$(sops_get openclaw_gateway_token_nova)\"","--from-literal=\"gatewayToken-prism=$(sops_get openclaw_gateway_token_prism 2>/dev/null || generate_secret_value)\"","--from-literal=\"discordToken-forge=$(sops_get forge_discord_secret)\"","--from-literal=\"discordToken-echo=$(sops_get echo_discord_secret)\"","--from-literal=\"discordToken-buster=$(sops_get buster_discord_secret)\"","--from-literal=\"discordToken-nova=$(sops_get nova_discord_secret)\"","--from-literal=\"discordWebhook=$(sops_get swarm_log_webhook)\"","kubectl_args+=(--from-literal=\"litellmApiKey=$(sops_get litellm_master_key)\")"]},"sops_get_first":{"body":"sops_get_first() {\n  local key\n  local err_file\n\n  for key in \"$@\"; do\n    err_file=\"$(mktemp)\"\n    TMP_FILES+=(\"$err_file\")\n    if sops --decrypt --extract \"[\\\"$key\\\"]\" \"$SOPS_FILE\" 2>\"$err_file\"; then\n      rm -f \"$err_file\"\n      return 0\n    fi\n    rm -f \"$err_file\"\n  done\n\n  err \"None of these keys were readable from SOPS file '$SOPS_FILE': $*\"\n  return 1\n}","references":["sops_get_first() {","--from-literal=\"stitchApiKey=$(sops_get_first stitch_api_key stitchApiKey)\""]},"generate_secret_value":{"body":"generate_secret_value() {\n  if command -v openssl >/dev/null 2>&1; then\n    openssl rand -hex 32\n    return 0\n  fi\n  head -c 32 /dev/urandom | base64 | tr -d '\\n'\n  echo \"\"\n}","references":["generate_secret_value() {","captured_value=\"$(generate_secret_value)\"","--from-literal=\"gatewayToken-prism=$(sops_get openclaw_gateway_token_prism 2>/dev/null || generate_secret_value)\"","litellm_api_key=\"$(generate_secret_value)\""]},"prompt_secret_or_generate":{"body":"prompt_secret_or_generate() {\n  local prompt=\"$1\"\n  local out_var=\"$2\"\n  local captured_value=\"\"\n\n  prompt_hidden \"$prompt (blank = generate)\" captured_value\n  if [[ -z $captured_value ]]; then\n    captured_value=\"$(generate_secret_value)\"\n    log \"Generated secret value for: $prompt\"\n  fi\n  printf -v \"$out_var\" '%s' \"$captured_value\"\n}","references":["prompt_secret_or_generate() {","prompt_secret_or_generate \"OpenClaw gateway token for Forge\" gateway_forge","prompt_secret_or_generate \"OpenClaw gateway token for Echo\" gateway_echo","prompt_secret_or_generate \"OpenClaw gateway token for Buster\" gateway_buster","prompt_secret_or_generate \"Buster v2 worker token\" buster_v2_token","prompt_secret_or_generate \"OpenClaw gateway token for Nova\" gateway_nova","prompt_secret_or_generate \"OpenClaw gateway token for Prism\" gateway_prism","prompt_secret_or_generate \"LiteLLM master key\" litellm_api_key","gatewayToken-forge) prompt_secret_or_generate \"OpenClaw gateway token for Forge\" value ;;","gatewayToken-echo) prompt_secret_or_generate \"OpenClaw gateway token for Echo\" value ;;","gatewayToken-buster) prompt_secret_or_generate \"OpenClaw gateway token for Buster\" value ;;","busterV2Token) prompt_secret_or_generate \"Buster v2 worker token\" value ;;","gatewayToken-nova) prompt_secret_or_generate \"OpenClaw gateway token for Nova\" value ;;","gatewayToken-prism) prompt_secret_or_generate \"OpenClaw gateway token for Prism\" value ;;","litellmApiKey) prompt_secret_or_generate \"LiteLLM master key\" value ;;","prompt_secret_or_generate \"Redis password\" redis_password","prompt_secret_or_generate \"Redis password\" redis_password","prompt_secret_or_generate \"PostgreSQL admin password\" postgres_password","prompt_secret_or_generate \"PostgreSQL litellm user password\" litellm_password","prompt_secret_or_generate \"PostgreSQL admin password\" postgres_password","prompt_secret_or_generate \"PostgreSQL litellm user password\" litellm_password","prompt_secret_or_generate \"LiteLLM master key\" litellm_master_key","prompt_secret_or_generate \"PostgreSQL litellm user password for LiteLLM DATABASE_URL\" litellm_password","prompt_secret_or_generate \"LiteLLM master key\" litellm_master_key","prompt_secret_or_generate \"PostgreSQL litellm user password for LiteLLM DATABASE_URL\" litellm_password"]},"create_shared_secret_from_sops":{"body":"create_shared_secret_from_sops() {\n  local kubectl_args\n  require_command sops\n  info \"Creating $SECRET_NAME from SOPS...\"\n\n  kubectl_args=(\n    create secret generic \"$SECRET_NAME\"\n    --namespace \"$NAMESPACE\"\n    --from-literal=\"gatewayToken-forge=$(sops_get openclaw_gateway_token_forge)\"\n    --from-literal=\"gatewayToken-echo=$(sops_get openclaw_gateway_token_echo)\"\n    --from-literal=\"gatewayToken-buster=$(sops_get openclaw_gateway_token_buster)\"\n    --from-literal=\"busterV2Token=$(sops_get buster_v2_token)\"\n    --from-literal=\"gatewayToken-nova=$(sops_get openclaw_gateway_token_nova)\"\n    --from-literal=\"gatewayToken-prism=$(sops_get openclaw_gateway_token_prism 2>/dev/null || generate_secret_value)\"\n    --from-literal=\"stitchApiKey=$(sops_get_first stitch_api_key stitchApiKey)\"\n    --from-literal=\"discordToken-forge=$(sops_get forge_discord_secret)\"\n    --from-literal=\"discordToken-echo=$(sops_get echo_discord_secret)\"\n    --from-literal=\"discordToken-buster=$(sops_get buster_discord_secret)\"\n    --from-literal=\"discordToken-nova=$(sops_get nova_discord_secret)\"\n    --from-literal=\"discordWebhook=$(sops_get swarm_log_webhook)\"\n  )\n\n  if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\"; then\n    kubectl_args+=(--from-literal=\"litellmApiKey=$(sops_get litellm_master_key)\")\n  fi\n  kubectl_args+=(--dry-run=client -o yaml)\n\n  kubectl \"${kubectl_args[@]}\" | kubectl apply -n \"$NAMESPACE\" -f - >/dev/null\n  log \"Created: $SECRET_NAME\"\n}","references":["create_shared_secret_from_sops() {","create_shared_secret_from_sops"]},"create_shared_secret_interactive":{"body":"create_shared_secret_interactive() {\n  local gateway_forge gateway_echo gateway_buster gateway_nova gateway_prism buster_v2_token\n  local stitch_api_key litellm_api_key\n  local discord_forge discord_echo discord_buster discord_nova discord_webhook\n\n  header \"Secret: ${NAMESPACE}/${SECRET_NAME}\"\n  info \"Paste required OpenClaw, model, Discord, and gateway values. Blank gateway/LiteLLM values are generated.\"\n\n  prompt_secret_or_generate \"OpenClaw gateway token for Forge\" gateway_forge\n  prompt_secret_or_generate \"OpenClaw gateway token for Echo\" gateway_echo\n  prompt_secret_or_generate \"OpenClaw gateway token for Buster\" gateway_buster\n  prompt_secret_or_generate \"Buster v2 worker token\" buster_v2_token\n  prompt_secret_or_generate \"OpenClaw gateway token for Nova\" gateway_nova\n  prompt_secret_or_generate \"OpenClaw gateway token for Prism\" gateway_prism\n  prompt_secret_required \"Stitch API key\" stitch_api_key\n  if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\"; then\n    prompt_secret_or_generate \"LiteLLM master key\" litellm_api_key\n  else\n    litellm_api_key=\"$(generate_secret_value)\"\n  fi\n  prompt_secret_required \"Discord bot token for Forge\" discord_forge\n  prompt_secret_required \"Discord bot token for Echo\" discord_echo\n  prompt_secret_required \"Discord bot token for Buster\" discord_buster\n  prompt_secret_required \"Discord bot token for Nova\" discord_nova\n  prompt_secret_required \"Discord webhook URL\" discord_webhook\n\n  kubectl create secret generic \"$SECRET_NAME\" \\\n    --namespace \"$NAMESPACE\" \\\n    --from-literal=\"gatewayToken-forge=$gateway_forge\" \\\n    --from-literal=\"gatewayToken-echo=$gateway_echo\" \\\n    --from-literal=\"gatewayToken-buster=$gateway_buster\" \\\n    --from-literal=\"busterV2Token=$buster_v2_token\" \\\n    --from-literal=\"gatewayToken-nova=$gateway_nova\" \\\n    --from-literal=\"gatewayToken-prism=$gateway_prism\" \\\n    --from-literal=\"stitchApiKey=$stitch_api_key\" \\\n    --from-literal=\"litellmApiKey=$litellm_api_key\" \\\n    --from-literal=\"discordToken-forge=$discord_forge\" \\\n    --from-literal=\"discordToken-echo=$discord_echo\" \\\n    --from-literal=\"discordToken-buster=$discord_buster\" \\\n    --from-literal=\"discordToken-nova=$discord_nova\" \\\n    --from-literal=\"discordWebhook=$discord_webhook\" \\\n    --dry-run=client -o yaml | kubectl apply -n \"$NAMESPACE\" -f - >/dev/null\n  log \"Created: ${NAMESPACE}/${SECRET_NAME}\"\n}","references":["create_shared_secret_interactive() {","create_shared_secret_interactive"]},"patch_shared_secret_interactive":{"body":"patch_shared_secret_interactive() {\n  local key value\n\n  header \"Secret keys: ${NAMESPACE}/${SECRET_NAME}\"\n  info \"Only missing keys will be added.\"\n\n  for key in \"$@\"; do\n    case \"$key\" in\n      gatewayToken-forge) prompt_secret_or_generate \"OpenClaw gateway token for Forge\" value ;;\n      gatewayToken-echo) prompt_secret_or_generate \"OpenClaw gateway token for Echo\" value ;;\n      gatewayToken-buster) prompt_secret_or_generate \"OpenClaw gateway token for Buster\" value ;;\n      busterV2Token) prompt_secret_or_generate \"Buster v2 worker token\" value ;;\n      gatewayToken-nova) prompt_secret_or_generate \"OpenClaw gateway token for Nova\" value ;;\n      gatewayToken-prism) prompt_secret_or_generate \"OpenClaw gateway token for Prism\" value ;;\n      stitchApiKey) prompt_secret_required \"Stitch API key\" value ;;\n      litellmApiKey) prompt_secret_or_generate \"LiteLLM master key\" value ;;\n      discordToken-forge) prompt_secret_required \"Discord bot token for Forge\" value ;;\n      discordToken-echo) prompt_secret_required \"Discord bot token for Echo\" value ;;\n      discordToken-buster) prompt_secret_required \"Discord bot token for Buster\" value ;;\n      discordToken-nova) prompt_secret_required \"Discord bot token for Nova\" value ;;\n      discordWebhook) prompt_secret_required \"Discord webhook URL\" value ;;\n      *)\n        err \"Unknown openclaw-shared-secrets key: $key\"\n        return 1\n        ;;\n    esac\n    patch_secret_literal \"$NAMESPACE\" \"$SECRET_NAME\" \"$key\" \"$value\"\n    log \"Added key: ${SECRET_NAME}/${key}\"\n  done\n}","references":["patch_shared_secret_interactive() {","patch_shared_secret_interactive \"${missing[@]}\""]},"setup_shared_secret":{"body":"setup_shared_secret() {\n  local required_keys\n  required_keys=(\n    gatewayToken-forge\n    gatewayToken-echo\n    gatewayToken-buster\n    busterV2Token\n    gatewayToken-nova\n    gatewayToken-prism\n    stitchApiKey\n    discordToken-forge\n    discordToken-echo\n    discordToken-buster\n    discordToken-nova\n    discordWebhook\n  )\n  local missing\n\n  if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\"; then\n    required_keys+=(litellmApiKey)\n  fi\n\n  if secret_exists \"$NAMESPACE\" \"$SECRET_NAME\" && [[ \"$(normalize_boolish \"$SECRETS_OVERWRITE\")\" != \"true\" ]]; then\n    mapfile -t missing < <(secret_missing_keys \"$NAMESPACE\" \"$SECRET_NAME\" \"${required_keys[@]}\")\n    if [[ ${#missing[@]} == \"0\" ]]; then\n      log \"Using existing Secret: ${NAMESPACE}/${SECRET_NAME}\"\n    elif interactive_enabled; then\n      warn \"Secret ${NAMESPACE}/${SECRET_NAME} exists but is missing keys: $(join_by_comma \"${missing[@]}\")\"\n      patch_shared_secret_interactive \"${missing[@]}\"\n    else\n      warn \"Secret ${NAMESPACE}/${SECRET_NAME} is missing keys: $(join_by_comma \"${missing[@]}\")\"\n    fi\n    if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\" && ! load_secret_key \"$NAMESPACE\" \"$SECRET_NAME\" litellmApiKey SHARED_LITELLM_API_KEY; then\n      warn \"Secret ${NAMESPACE}/${SECRET_NAME} is missing litellmApiKey; LiteLLM setup may prompt or generate a separate value.\"\n    fi\n    return 0\n  fi\n\n  if [[ -f $SOPS_FILE ]]; then\n    create_shared_secret_from_sops\n    if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\" && ! load_secret_key \"$NAMESPACE\" \"$SECRET_NAME\" litellmApiKey SHARED_LITELLM_API_KEY; then\n      warn \"Secret ${NAMESPACE}/${SECRET_NAME} is missing litellmApiKey; LiteLLM setup may prompt or generate a separate value.\"\n    fi\n    return 0\n  fi\n\n  if copy_secret_from_source \"$SECRET_NAME\"; then\n    if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\" && ! load_secret_key \"$NAMESPACE\" \"$SECRET_NAME\" litellmApiKey SHARED_LITELLM_API_KEY; then\n      warn \"Secret ${NAMESPACE}/${SECRET_NAME} is missing litellmApiKey; LiteLLM setup may prompt or generate a separate value.\"\n    fi\n    return 0\n  fi\n\n  if interactive_enabled; then\n    create_shared_secret_interactive\n    if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\" && ! load_secret_key \"$NAMESPACE\" \"$SECRET_NAME\" litellmApiKey SHARED_LITELLM_API_KEY; then\n      warn \"Secret ${NAMESPACE}/${SECRET_NAME} is missing litellmApiKey; LiteLLM setup may prompt or generate a separate value.\"\n    fi\n    return 0\n  fi\n\n  warn \"Missing required Secret: ${NAMESPACE}/${SECRET_NAME}\"\n  warn \"Run with KUBECLAW_SECRET_SETUP_MODE=interactive to paste values, or create/copy the Secret before deployment.\"\n}","references":["setup_shared_secret() {","setup_shared_secret"]},"setup_redis_secret":{"body":"setup_redis_secret() {\n  local redis_password\n  local missing\n\n  if secret_exists \"$NAMESPACE\" redis-secrets && [[ \"$(normalize_boolish \"$SECRETS_OVERWRITE\")\" != \"true\" ]]; then\n    mapfile -t missing < <(secret_missing_keys \"$NAMESPACE\" redis-secrets redis-password)\n    if [[ ${#missing[@]} == \"0\" ]]; then\n      log \"Using existing Secret: ${NAMESPACE}/redis-secrets\"\n    elif interactive_enabled; then\n      warn \"Secret ${NAMESPACE}/redis-secrets exists but is missing keys: $(join_by_comma \"${missing[@]}\")\"\n      prompt_secret_or_generate \"Redis password\" redis_password\n      patch_secret_literal \"$NAMESPACE\" redis-secrets redis-password \"$redis_password\"\n      log \"Added key: redis-secrets/redis-password\"\n    else\n      warn \"Secret ${NAMESPACE}/redis-secrets is missing keys: $(join_by_comma \"${missing[@]}\")\"\n    fi\n    return 0\n  fi\n  if copy_secret_from_source redis-secrets; then\n    return 0\n  fi\n  if ! interactive_enabled; then\n    warn \"Missing required Secret: ${NAMESPACE}/redis-secrets\"\n    return 0\n  fi\n\n  header \"Secret: ${NAMESPACE}/redis-secrets\"\n  prompt_secret_or_generate \"Redis password\" redis_password\n  kubectl create secret generic redis-secrets \\\n    --namespace \"$NAMESPACE\" \\\n    --from-literal=\"redis-password=$redis_password\" \\\n    --dry-run=client -o yaml | kubectl apply -n \"$NAMESPACE\" -f - >/dev/null\n  log \"Created: ${NAMESPACE}/redis-secrets\"\n}","references":["setup_redis_secret() {","setup_redis_secret"]},"setup_postgresql_secret":{"body":"setup_postgresql_secret() {\n  local postgres_password litellm_password\n  local missing key\n\n  if secret_exists \"$NAMESPACE\" postgresql-secrets && [[ \"$(normalize_boolish \"$SECRETS_OVERWRITE\")\" != \"true\" ]]; then\n    mapfile -t missing < <(secret_missing_keys \"$NAMESPACE\" postgresql-secrets postgres-password litellm-password)\n    if [[ ${#missing[@]} == \"0\" ]]; then\n      log \"Using existing Secret: ${NAMESPACE}/postgresql-secrets\"\n    elif interactive_enabled; then\n      warn \"Secret ${NAMESPACE}/postgresql-secrets exists but is missing keys: $(join_by_comma \"${missing[@]}\")\"\n      for key in \"${missing[@]}\"; do\n        case \"$key\" in\n          postgres-password)\n            prompt_secret_or_generate \"PostgreSQL admin password\" postgres_password\n            patch_secret_literal \"$NAMESPACE\" postgresql-secrets postgres-password \"$postgres_password\"\n            ;;\n          litellm-password)\n            prompt_secret_or_generate \"PostgreSQL litellm user password\" litellm_password\n            POSTGRES_LITELLM_PASSWORD=\"$litellm_password\"\n            patch_secret_literal \"$NAMESPACE\" postgresql-secrets litellm-password \"$litellm_password\"\n            ;;\n        esac\n        log \"Added key: postgresql-secrets/${key}\"\n      done\n    else\n      warn \"Secret ${NAMESPACE}/postgresql-secrets is missing keys: $(join_by_comma \"${missing[@]}\")\"\n    fi\n    if ! load_secret_key \"$NAMESPACE\" postgresql-secrets litellm-password POSTGRES_LITELLM_PASSWORD; then\n      warn \"Secret ${NAMESPACE}/postgresql-secrets is missing litellm-password; LiteLLM setup may prompt or generate a separate value.\"\n    fi\n    return 0\n  fi\n  if copy_secret_from_source postgresql-secrets; then\n    if ! load_secret_key \"$NAMESPACE\" postgresql-secrets litellm-password POSTGRES_LITELLM_PASSWORD; then\n      warn \"Secret ${NAMESPACE}/postgresql-secrets is missing litellm-password; LiteLLM setup may prompt or generate a separate value.\"\n    fi\n    return 0\n  fi\n  if ! interactive_enabled; then\n    warn \"Missing required Secret: ${NAMESPACE}/postgresql-secrets\"\n    return 0\n  fi\n\n  header \"Secret: ${NAMESPACE}/postgresql-secrets\"\n  prompt_secret_or_generate \"PostgreSQL admin password\" postgres_password\n  prompt_secret_or_generate \"PostgreSQL litellm user password\" litellm_password\n  POSTGRES_LITELLM_PASSWORD=\"$litellm_password\"\n  kubectl create secret generic postgresql-secrets \\\n    --namespace \"$NAMESPACE\" \\\n    --from-literal=\"postgres-password=$postgres_password\" \\\n    --from-literal=\"litellm-password=$litellm_password\" \\\n    --dry-run=client -o yaml | kubectl apply -n \"$NAMESPACE\" -f - >/dev/null\n  log \"Created: ${NAMESPACE}/postgresql-secrets\"\n}","references":["setup_postgresql_secret() {","setup_postgresql_secret"]},"setup_litellm_secret":{"body":"setup_litellm_secret() {\n  local litellm_master_key litellm_password database_url\n  local missing key\n\n  if secret_exists \"$NAMESPACE\" litellm-secrets && [[ \"$(normalize_boolish \"$SECRETS_OVERWRITE\")\" != \"true\" ]]; then\n    mapfile -t missing < <(secret_missing_keys \"$NAMESPACE\" litellm-secrets LITELLM_MASTER_KEY DATABASE_URL)\n    if [[ ${#missing[@]} == \"0\" ]]; then\n      log \"Using existing Secret: ${NAMESPACE}/litellm-secrets\"\n    elif interactive_enabled; then\n      warn \"Secret ${NAMESPACE}/litellm-secrets exists but is missing keys: $(join_by_comma \"${missing[@]}\")\"\n      for key in \"${missing[@]}\"; do\n        case \"$key\" in\n          LITELLM_MASTER_KEY)\n            if [[ -n $SHARED_LITELLM_API_KEY ]]; then\n              litellm_master_key=\"$SHARED_LITELLM_API_KEY\"\n              log \"Using LiteLLM master key from ${NAMESPACE}/${SECRET_NAME}: litellmApiKey\"\n            else\n              prompt_secret_or_generate \"LiteLLM master key\" litellm_master_key\n            fi\n            patch_secret_literal \"$NAMESPACE\" litellm-secrets LITELLM_MASTER_KEY \"$litellm_master_key\"\n            ;;\n          DATABASE_URL)\n            if ! component_enabled \"$KUBECLAW_DEPLOY_POSTGRESQL\"; then\n              prompt_secret_required \"LiteLLM DATABASE_URL\" database_url\n            elif [[ -n $POSTGRES_LITELLM_PASSWORD ]]; then\n              litellm_password=\"$POSTGRES_LITELLM_PASSWORD\"\n              log \"Using PostgreSQL litellm password from ${NAMESPACE}/postgresql-secrets\"\n              database_url=\"postgresql://litellm:${litellm_password}@postgresql.${NAMESPACE}.svc.cluster.local:5432/litellm\"\n            else\n              prompt_secret_or_generate \"PostgreSQL litellm user password for LiteLLM DATABASE_URL\" litellm_password\n              database_url=\"postgresql://litellm:${litellm_password}@postgresql.${NAMESPACE}.svc.cluster.local:5432/litellm\"\n            fi\n            patch_secret_literal \"$NAMESPACE\" litellm-secrets DATABASE_URL \"$database_url\"\n            ;;\n        esac\n        log \"Added key: litellm-secrets/${key}\"\n      done\n    else\n      warn \"Secret ${NAMESPACE}/litellm-secrets is missing keys: $(join_by_comma \"${missing[@]}\")\"\n    fi\n    return 0\n  fi\n  if copy_secret_from_source litellm-secrets; then\n    return 0\n  fi\n  if ! interactive_enabled; then\n    warn \"Missing required Secret: ${NAMESPACE}/litellm-secrets\"\n    return 0\n  fi\n\n  header \"Secret: ${NAMESPACE}/litellm-secrets\"\n  if [[ -n $SHARED_LITELLM_API_KEY ]]; then\n    litellm_master_key=\"$SHARED_LITELLM_API_KEY\"\n    log \"Using LiteLLM master key from ${NAMESPACE}/${SECRET_NAME}: litellmApiKey\"\n  else\n    prompt_secret_or_generate \"LiteLLM master key\" litellm_master_key\n  fi\n  if ! component_enabled \"$KUBECLAW_DEPLOY_POSTGRESQL\"; then\n    prompt_secret_required \"LiteLLM DATABASE_URL\" database_url\n  elif [[ -n $POSTGRES_LITELLM_PASSWORD ]]; then\n    litellm_password=\"$POSTGRES_LITELLM_PASSWORD\"\n    log \"Using PostgreSQL litellm password from ${NAMESPACE}/postgresql-secrets\"\n    database_url=\"postgresql://litellm:${litellm_password}@postgresql.${NAMESPACE}.svc.cluster.local:5432/litellm\"\n  else\n    prompt_secret_or_generate \"PostgreSQL litellm user password for LiteLLM DATABASE_URL\" litellm_password\n    database_url=\"postgresql://litellm:${litellm_password}@postgresql.${NAMESPACE}.svc.cluster.local:5432/litellm\"\n  fi\n  kubectl create secret generic litellm-secrets \\\n    --namespace \"$NAMESPACE\" \\\n    --from-literal=\"LITELLM_MASTER_KEY=$litellm_master_key\" \\\n    --from-literal=\"DATABASE_URL=$database_url\" \\\n    --dry-run=client -o yaml | kubectl apply -n \"$NAMESPACE\" -f - >/dev/null\n  log \"Created: ${NAMESPACE}/litellm-secrets\"\n}","references":["setup_litellm_secret() {","setup_litellm_secret"]},"setup_google_sa_key":{"body":"setup_google_sa_key() {\n  local credentials_file\n  local missing\n\n  if secret_exists \"$NAMESPACE\" google-sa-key && [[ \"$(normalize_boolish \"$SECRETS_OVERWRITE\")\" != \"true\" ]]; then\n    mapfile -t missing < <(secret_missing_keys \"$NAMESPACE\" google-sa-key credentials.json)\n    if [[ ${#missing[@]} == \"0\" ]]; then\n      log \"Using existing Secret: ${NAMESPACE}/google-sa-key\"\n    elif interactive_enabled; then\n      warn \"Secret ${NAMESPACE}/google-sa-key exists but is missing keys: $(join_by_comma \"${missing[@]}\")\"\n      prompt_file_or_paste \"Google service account JSON\" credentials_file\n      patch_secret_file \"$NAMESPACE\" google-sa-key credentials.json \"$credentials_file\"\n      log \"Added key: google-sa-key/credentials.json\"\n    else\n      warn \"Secret ${NAMESPACE}/google-sa-key is missing keys: $(join_by_comma \"${missing[@]}\")\"\n    fi\n    return 0\n  fi\n  if copy_secret_from_source google-sa-key; then\n    return 0\n  fi\n  if ! interactive_enabled; then\n    warn \"Missing required Secret: ${NAMESPACE}/google-sa-key\"\n    return 0\n  fi\n\n  header \"Secret: ${NAMESPACE}/google-sa-key\"\n  prompt_file_or_paste \"Google service account JSON\" credentials_file\n  kubectl create secret generic google-sa-key \\\n    --namespace \"$NAMESPACE\" \\\n    --from-file=\"credentials.json=$credentials_file\" \\\n    --dry-run=client -o yaml | kubectl apply -n \"$NAMESPACE\" -f - >/dev/null\n  log \"Created: ${NAMESPACE}/google-sa-key\"\n}","references":["setup_google_sa_key() {","setup_google_sa_key"]},"setup_git_deploy_key":{"body":"setup_git_deploy_key() {\n  local name=\"$1\"\n  local label=\"$2\"\n  local key_file\n  local missing\n\n  if secret_exists \"$NAMESPACE\" \"$name\" && [[ \"$(normalize_boolish \"$SECRETS_OVERWRITE\")\" != \"true\" ]]; then\n    mapfile -t missing < <(secret_missing_keys \"$NAMESPACE\" \"$name\" id_rsa)\n    if [[ ${#missing[@]} == \"0\" ]]; then\n      log \"Using existing Secret: ${NAMESPACE}/${name}\"\n    elif interactive_enabled; then\n      warn \"Secret ${NAMESPACE}/${name} exists but is missing keys: $(join_by_comma \"${missing[@]}\")\"\n      prompt_file_or_paste \"$label Git deploy private key\" key_file\n      patch_secret_file \"$NAMESPACE\" \"$name\" id_rsa \"$key_file\"\n      log \"Added key: ${name}/id_rsa\"\n    else\n      warn \"Secret ${NAMESPACE}/${name} is missing keys: $(join_by_comma \"${missing[@]}\")\"\n    fi\n    return 0\n  fi\n\n  if copy_secret_from_source \"$name\"; then\n    return 0\n  fi\n  if ! interactive_enabled; then\n    warn \"Missing required Secret: ${NAMESPACE}/${name}\"\n    return 0\n  fi\n\n  header \"Secret: ${NAMESPACE}/${name}\"\n  prompt_file_or_paste \"$label Git deploy private key\" key_file\n  kubectl create secret generic \"$name\" \\\n    --namespace \"$NAMESPACE\" \\\n    --from-file=\"id_rsa=$key_file\" \\\n    --dry-run=client -o yaml | kubectl apply -n \"$NAMESPACE\" -f - >/dev/null\n  log \"Created: ${NAMESPACE}/${name}\"\n}","references":["setup_git_deploy_key() {","setup_git_deploy_key git-deploy-key-nova Nova","setup_git_deploy_key git-deploy-key-buster Buster"]},"setup_tailscale_oauth_secret":{"body":"setup_tailscale_oauth_secret() {\n  local client_id=\"${TAILSCALE_OAUTH_CLIENT_ID:-}\"\n  local client_secret=\"${TAILSCALE_OAUTH_CLIENT_SECRET:-}\"\n  local missing key\n\n  if [[ \"$(normalize_boolish \"$TAILSCALE_OPERATOR_ENABLED\")\" == \"false\" ]]; then\n    warn \"Skipping Tailscale OAuth secret by TAILSCALE_OPERATOR_ENABLED=$TAILSCALE_OPERATOR_ENABLED\"\n    return 0\n  fi\n\n  if secret_exists \"$TAILSCALE_OPERATOR_NAMESPACE\" \"$TAILSCALE_OAUTH_SECRET_NAME\" && [[ \"$(normalize_boolish \"$SECRETS_OVERWRITE\")\" != \"true\" ]]; then\n    mapfile -t missing < <(secret_missing_keys \"$TAILSCALE_OPERATOR_NAMESPACE\" \"$TAILSCALE_OAUTH_SECRET_NAME\" client_id client_secret)\n    if [[ ${#missing[@]} == \"0\" ]]; then\n      log \"Using existing Secret: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}\"\n    elif interactive_enabled; then\n      warn \"Secret ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME} exists but is missing keys: $(join_by_comma \"${missing[@]}\")\"\n      for key in \"${missing[@]}\"; do\n        case \"$key\" in\n          client_id)\n            prompt_secret_required \"Tailscale OAuth client ID\" client_id\n            patch_secret_literal \"$TAILSCALE_OPERATOR_NAMESPACE\" \"$TAILSCALE_OAUTH_SECRET_NAME\" client_id \"$client_id\"\n            ;;\n          client_secret)\n            prompt_secret_required \"Tailscale OAuth client secret\" client_secret\n            patch_secret_literal \"$TAILSCALE_OPERATOR_NAMESPACE\" \"$TAILSCALE_OAUTH_SECRET_NAME\" client_secret \"$client_secret\"\n            ;;\n        esac\n        log \"Added key: ${TAILSCALE_OAUTH_SECRET_NAME}/${key}\"\n      done\n    else\n      warn \"Secret ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME} is missing keys: $(join_by_comma \"${missing[@]}\")\"\n    fi\n    return 0\n  fi\n\n  create_namespace_if_needed \"$TAILSCALE_OPERATOR_NAMESPACE\"\n\n  if [[ -n $client_id && -n $client_secret ]]; then\n    kubectl create secret generic \"$TAILSCALE_OAUTH_SECRET_NAME\" \\\n      --namespace \"$TAILSCALE_OPERATOR_NAMESPACE\" \\\n      --from-literal=client_id=\"$client_id\" \\\n      --from-literal=client_secret=\"$client_secret\" \\\n      --dry-run=client -o yaml | kubectl apply -f - >/dev/null\n    log \"Created: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}\"\n    return 0\n  fi\n\n  if copy_secret_from_source \"$TAILSCALE_OAUTH_SECRET_NAME\" \"$TAILSCALE_OPERATOR_NAMESPACE\"; then\n    log \"Copied: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}\"\n    return 0\n  fi\n\n  if ! interactive_enabled; then\n    warn \"Missing required Secret for final-preview Tailscale: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}\"\n    warn \"Run with KUBECLAW_SECRET_SETUP_MODE=interactive, set TAILSCALE_OAUTH_CLIENT_ID/SECRET, or pre-create it.\"\n    return 0\n  fi\n\n  header \"Secret: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}\"\n  prompt_secret_required \"Tailscale OAuth client ID\" client_id\n  prompt_secret_required \"Tailscale OAuth client secret\" client_secret\n  kubectl create secret generic \"$TAILSCALE_OAUTH_SECRET_NAME\" \\\n    --namespace \"$TAILSCALE_OPERATOR_NAMESPACE\" \\\n    --from-literal=client_id=\"$client_id\" \\\n    --from-literal=client_secret=\"$client_secret\" \\\n    --dry-run=client -o yaml | kubectl apply -f - >/dev/null\n  log \"Created: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}\"\n}","references":["setup_tailscale_oauth_secret() {","setup_tailscale_oauth_secret"]},"main":{"body":"main() {\n  local tailscale_secret_list\n\n  echo \"Setting up secrets for namespace: $NAMESPACE\"\n  echo \"\"\n\n  require_command kubectl\n  create_namespace_if_needed \"$NAMESPACE\"\n\n  if interactive_enabled; then\n    info \"Interactive secret setup enabled. Existing Secrets are reused unless KUBECLAW_SECRETS_OVERWRITE=true.\"\n  else\n    info \"Interactive secret setup disabled. Using SOPS/source copies/env bootstrap only.\"\n  fi\n\n  setup_shared_secret\n  setup_pipeline_source_attestation_secret\n  setup_redis_secret\n\n\n  if component_enabled \"$KUBECLAW_DEPLOY_POSTGRESQL\"; then\n    setup_postgresql_secret\n  else\n    warn \"Skipping optional postgresql-secrets by KUBECLAW_DEPLOY_POSTGRESQL=$KUBECLAW_DEPLOY_POSTGRESQL\"\n  fi\n\n  if component_enabled \"$KUBECLAW_DEPLOY_LITELLM\"; then\n    setup_litellm_secret\n    rewrite_litellm_database_url_namespace\n    setup_google_sa_key\n  else\n    warn \"Skipping optional LiteLLM/Google secrets by KUBECLAW_DEPLOY_LITELLM=$KUBECLAW_DEPLOY_LITELLM\"\n  fi\n\n  setup_ghcr_secret\n  setup_git_deploy_key git-deploy-key-nova Nova\n  setup_git_deploy_key git-deploy-key-buster Buster\n  setup_fixture_preflight_secret\n  setup_tailscale_oauth_secret\n\n  echo \"\"\n  log \"Done. Secrets in $NAMESPACE:\"\n  kubectl get secrets -n \"$NAMESPACE\" --no-headers | awk '{print \"  \" $1}'\n  echo \"\"\n  info \"Tailscale operator secrets in $TAILSCALE_OPERATOR_NAMESPACE:\"\n  if tailscale_secret_list=$(kubectl get secrets -n \"$TAILSCALE_OPERATOR_NAMESPACE\" --no-headers 2>&1); then\n    echo \"$tailscale_secret_list\" | awk '{print \"  \" $1}'\n  elif is_not_found_error \"$tailscale_secret_list\"; then\n    warn \"No Tailscale operator namespace found; operator install will be skipped unless the OAuth secret is created later.\"\n  else\n    err \"Failed to list Tailscale operator secrets in namespace '$TAILSCALE_OPERATOR_NAMESPACE'\"\n    echo \"$tailscale_secret_list\" >&2\n    return 1\n  fi\n}","references":["main() {","main \"$@\""]}};
+function shellFiniteSecretChannelProof(root,source,bytes,sink){
+ const selected=Object.entries(finiteSecretChannelRecipes).map(([name,recipe])=>{const fn=bytes.match(new RegExp(`^${name}\\(\\) \\{[\\s\\S]*?^\\}`,'mu'));const refs=bytes.split('\n').filter(line=>new RegExp(`\\b${name}\\b`,'u').test(line)).map(line=>line.trim());return fn&&fn[0]===recipe.body&&JSON.stringify(refs)===JSON.stringify(recipe.references)?{name,fn,first:bytes.slice(0,fn.index).split('\n').length}:null;});
+ // The selected functions include every actual caller of the credential read,
+ // generation and encoding capabilities. Exact receiver programs qualify the
+ // channel; a new caller, constructor, relay or diagnostic format revokes it.
+ if(selected.some(fn=>!fn))return null;
+ const enclosing=selected.find(fn=>sink.line>=fn.first&&sink.line<fn.first+fn.fn[0].split('\n').length);if(!enclosing)return null;
+ const native=(contract,selectedOperation)=>{const fact={role:'non-api',contract,dependencies:{[source]:hash(bytes)},selectedOperation};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;};
+ if(enclosing.name==='sops_get'&&sink.command==='sed'&&sink.args.join('|')==='s/^/  /|$err_file')return native('selected-SOPS-stderr-indentation-to-stderr-only; external-diagnostic-contract',{command:'sops',argv:['--decrypt','--extract','["$key"]','$SOPS_FILE'],receiver:'indented stderr; actual error temporary file removed; no authored resource body',runtimeOutcome:'unexecuted external decryption'});
+ if(enclosing.name==='main'&&((sink.command==='awk'&&sink.args.join('|')==='{print "  " $1}')||(sink.command==='echo'&&sink.args.join('|')==='$tailscale_secret_list')))return native('selected-core-Secret-list-human-table-first-column-to-framed-name-summary',{command:'kubectl',argv:['get','secrets','-n',sink.line===enclosing.first+enclosing.fn[0].split('\n').findIndex(line=>line.includes('kubectl get secrets -n "$NAMESPACE"'))?'$NAMESPACE':'$TAILSCALE_OPERATOR_NAMESPACE','--no-headers'],receiver:'prefixed resource names only; no submitted Kubernetes body',liveValues:'unexecuted'});
+ if(['load_secret_key','generate_secret_value'].includes(enclosing.name)&&['base64','head','tr','printf'].includes(sink.command)){
+  const fact={role:'api',contract:'selected-credential-source-to-finite-Secret-data-constructor-input; no standalone raw publication',dependencies:{[source]:hash(bytes)},outputs:[],selectedOperation:{constructorFunction:enclosing.name,receivers:['selected typed Secret create or merge PATCH data','selected credential admission'],runtimeValues:'controlled or unknown; no live credentials executed'}};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+ }
+ if(!['patch_secret_literal','patch_secret_file'].includes(enclosing.name)||!['base64','printf'].includes(sink.command))return null;
+ const isFile=enclosing.name==='patch_secret_file',keys=isFile?['credentials.json','id_rsa']:['gatewayToken-forge','gatewayToken-echo','gatewayToken-buster','busterV2Token','gatewayToken-nova','gatewayToken-prism','stitchApiKey','litellmApiKey','discordToken-forge','discordToken-echo','discordToken-buster','discordToken-nova','discordWebhook','redis-password','postgres-password','litellm-password','LITELLM_MASTER_KEY','DATABASE_URL','client_id','client_secret'];
+ const patchLine=enclosing.first+enclosing.fn[0].split('\n').findIndex(line=>line.includes('kubectl patch secret'));
+ const outputs=keys.map((key,index)=>{const value={data:{[key]:Buffer.from('__docs_controlled_secret_payload__').toString('base64')}};return {value,context:{apiVersion:'v1',kind:'Secret',path:source,line:patchLine,document:index,producer:'shell-shape',profile:`selected-${enclosing.name}-${key}`,sourceDigest:hash(bytes),outputDigest:hash(JSON.stringify(value)),requestMethod:'PATCH',requestOperation:'kubectl-patch',requestPatchType:'merge',requestReceiver:{apiVersion:'v1',kind:'Secret',resource:'secret',name:'$name',nameExpression:'$2',namespaceExpression:'$namespace'},requestInvocation:'kubectl patch secret "$name" -n "$namespace" --type merge -p "{\\"data\\":{\\"$key\\":\\"$encoded\\"}}"',inputs:[{kind:'controlled-offline-credential-payload',sourceExpression:isFile?'base64 -w0 "$path"':'printf \'%s\' "$value" | base64 -w0',actualKey:key,liveValue:'unexecuted'}],forwardedProducer:{qualified:true,path:source,line:enclosing.first,command:'kubectl',argv:['patch','secret','$name','-n','$namespace','--type','merge','-p','{"data":{"$key":"$encoded"}}'],constructorFunction:enclosing.name,dependencies:[{path:source,sourceDigest:hash(bytes)}],callers:finiteSecretChannelRecipes[enclosing.name].references.slice(1),selectedKey:key,controlledValue:true}}};});
+ const fact={role:'api',contract:'selected-finite-Secret-data-base64-to-actual-partial-merge-PATCH-receiver',dependencies:{[source]:hash(bytes)},outputs,selectedOperation:{constructorFunction:enclosing.name,requestMethod:'PATCH',patchType:'merge',keys,unknownLiveValues:true}};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+}
+
+function discoverShellSelectedSecretArrays(root,source,bytes){
+ const calls=[...bytes.matchAll(/\bkubectl\s+"\$\{([A-Za-z_][A-Za-z0-9_]*)\[@\]\}"/gu)];if(!calls.length)return [];
+ assert(calls.length===1&&calls[0][1]==='kubectl_args',`API_PRODUCT_SHELL_KUBECTL_ARRAY_UNQUALIFIED: ${source}`);
+ const fn=bytes.match(/^create_shared_secret_from_sops\(\) \{[\s\S]*?^\}/mu),recipe=finiteSecretChannelRecipes.create_shared_secret_from_sops;
+ assert(fn&&fn[0]===recipe.body&&bytes.split('\n').filter(line=>/\bcreate_shared_secret_from_sops\b/u.test(line)).map(line=>line.trim()).join('\n')===recipe.references.join('\n'),`API_PRODUCT_SHELL_SECRET_ARRAY_FLOW_UNQUALIFIED: ${source}`);
+ // The original selected array emits a credential body. Never execute SOPS,
+ // randomness, an operator prompt, or kubectl apply during discovery.
+ for(const name of ['sops_get','sops_get_first','generate_secret_value']){const found=bytes.match(new RegExp(`^${name}\\(\\) \\{[\\s\\S]*?^\\}`,'mu'));assert(found?.[0]===finiteSecretChannelRecipes[name].body,`API_PRODUCT_SHELL_SECRET_ARRAY_INPUT_UNQUALIFIED: ${source}:${name}`);}
+ const name=bytes.match(/^SECRET_NAME="([a-z0-9-]+)"$/mu)?.[1],namespace=bytes.match(/^NAMESPACE="\$\{NAMESPACE:-([a-z0-9-]+)\}"$/mu)?.[1];
+ assert(name&&namespace&&(bytes.match(/\bSECRET_NAME\+?=/gu)??[]).length===1&&(bytes.match(/\bNAMESPACE\+?=/gu)??[]).length===1,`API_PRODUCT_SHELL_SECRET_ARRAY_IDENTITY_UNQUALIFIED: ${source}`);
+ const keys=[...fn[0].matchAll(/--from-literal="([A-Za-z0-9._-]+)=/gu)].map(match=>match[1]),conditional=keys.pop(),line=bytes.slice(0,calls[0].index).split('\n').length;
+ const version=spawnSync('kubectl',['version','--client=true','-o','json'],{encoding:'utf8'});assert.equal(version.status,0,`API_PRODUCT_SHELL_SECRET_ARRAY_TOOLCHAIN_FAILED: ${source}`);
+ return [false,true].map(enabled=>{const selectedKeys=enabled?[...keys,conditional]:keys,argv=['create','secret','generic',name,'--namespace',namespace,...selectedKeys.map(key=>`--from-literal=${key}=__docs_controlled_secret_payload__`),'--dry-run=client','-o','json'];const rendered=spawnSync('kubectl',argv,{encoding:'utf8'});assert.equal(rendered.status,0,`API_PRODUCT_SHELL_SECRET_ARRAY_RENDER_FAILED: ${source}:${rendered.stderr}`);const value=JSON.parse(rendered.stdout);assert(value.apiVersion==='v1'&&value.kind==='Secret'&&Object.keys(value.data).sort().join('|')===selectedKeys.sort().join('|'),`API_PRODUCT_SHELL_SECRET_ARRAY_RENDER_INVALID: ${source}`);return {value,context:{apiVersion:'v1',kind:'Secret',path:source,line,document:enabled?1:0,producer:'shell-shape',profile:`selected-sops-shared-secret-litellm-${enabled}`,sourceDigest:hash(bytes),outputDigest:hash(JSON.stringify(value)),requestMethod:'APPLY',requestOperation:'kubectl-apply',requestInvocation:'kubectl "${kubectl_args[@]}" | kubectl apply -n "$NAMESPACE" -f -',conditions:[{expression:'component_enabled "$KUBECLAW_DEPLOY_LITELLM"',result:enabled}],inputs:[{kind:'controlled-offline-credential-payload',source:'actual finite SOPS keys or selected fallback randomness',liveValues:'unexecuted'}],forwardedProducer:{qualified:true,path:source,line,command:'kubectl',argv,sourceArgv:fn[0].match(/kubectl_args=\([\s\S]*?\n  \)/u)?.[0],wrapper:'${kubectl_args[@]}',constructorFunction:'create_shared_secret_from_sops',dependencies:[{path:source,sourceDigest:hash(bytes)}],toolchainDigest:hash(version.stdout),controlledValues:true,namespaceInput:{environment:'NAMESPACE',default:namespace}}}};});
+}
+
+function shellDynamicOperationProof(root,source,bytes,sink) {
+ const secretChannel=shellFiniteSecretChannelProof(root,source,bytes,sink);if(secretChannel)return secretChannel;
+ const inheritedJsonSecret=shellInheritedSecretJsonFieldProof(root,source,bytes,sink);if(inheritedJsonSecret)return inheritedJsonSecret;
+ const maintenanceFile=shellNativeMaintenanceFileProof(root,source,bytes,sink);if(maintenanceFile)return maintenanceFile;
+ const inheritedSecret=shellInheritedSerializedSecretProof(root,source,bytes,sink);if(inheritedSecret)return inheritedSecret;
+ const postgresMetadata=shellNativePostgresMetadataProof(root,source,bytes,sink);if(postgresMetadata)return postgresMetadata;
+ const watchdogStatus=shellNativeWatchdogStatusProof(root,source,bytes,sink);if(watchdogStatus)return watchdogStatus;
+ const nativeExecutable=shellFiniteNativeExecutableProof(root,source,bytes,sink);if(nativeExecutable)return nativeExecutable;
+ const nativePolicy=shellNativePolicyValidationProof(root,source,bytes,sink);if(nativePolicy)return nativePolicy;
+ if(sink.command==='$node'&&sink.args.join('|')===`-e|const fs=require("fs"); const p=JSON.parse(fs.readFileSync(process.argv[1])); if(p.nodeVersion!==process.versions.node) throw Error("Selected host Node version mismatch")|$generated/native-node-policy.json`&&/^node=\/usr\/local\/bin\/node$/mu.test(bytes)&&(bytes.match(/\bnode\+?=/gu)??[]).length===1){
+  const fact={role:'non-api',contract:'selected-native-policy-nodeVersion-read-to-fixed-runtime-mismatch-diagnostic; no-public-JSON-output',dependencies:{[source]:hash(bytes)},selectedOperation:{command:'/usr/local/bin/node',argv:sink.args,receiver:'nodeVersion equality with selected host runtime',inputRole:'native-node-policy.json',publicOutput:'fixed error only'}};
+  namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+ }
+ if(sink.command==='$helper'&&sink.args.length===0){
+  const selected=/run_secret_setup\(\)\s*\{\s*local helper="\$VALUES_DIR\/setup-secrets\.sh"([\s\S]*?)\n\}/u.exec(bytes);
+  const recipe=`if [[ ! -x $helper ]]; then\n    err "Secret setup helper is not executable: $helper"\n    info "Run: chmod +x $helper"\n    return 1\n  fi\n\n  "$helper"`;
+  if(!selected||selected[1].trim()!==recipe||source.split('/').length!==2||!bytes.includes('SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"')||!bytes.includes('REPO_DIR="$(dirname "$SCRIPT_DIR")"')||!bytes.includes('VALUES_DIR="$REPO_DIR/my-values"')||['SCRIPT_DIR','REPO_DIR','VALUES_DIR'].some(name=>(bytes.match(new RegExp(`\\b${name}\\+?=`,'gu'))??[]).length!==1))return null;
+  const first=bytes.slice(0,selected.index).split('\n').length;if(sink.line<first||sink.line>first+selected[0].split('\n').length-1)return null;
+  const child='my-values/setup-secrets.sh';
+  if(!walkProductSources(root,producerRoots,file=>file.endsWith('.sh')).includes(child))return null;
+  // This delegates to a tracked member of the same mandatory discovery walk.
+  // It neither blesses child stdout as native nor substitutes a guessed body:
+  // the complete walk must still qualify every child sink and API constructor.
+  const fact={role:'api',contract:'selected-tracked-secret-setup-delegation; child-output-qualification-required',dependencies:{[source]:hash(bytes),[child]:hash(fs.readFileSync(path.join(root,child)))},outputs:[],selectedOperation:{command:child,argv:[],receiver:'tracked-child-public-outputs-and-submissions',requiredDiscovery:child}};
+  namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+ }
+ const alias=sink.command.match(/^\$\{([A-Za-z_][A-Za-z0-9_]*)\[@\]\}$/u)?.[1];
+ if(!alias)return null;
+ const assignments=[...bytes.matchAll(new RegExp(`^\\s*${alias}=\\(([^\\n]*)\\)\\s*$`,'gmu'))];
+ if(assignments.length!==1||!['kubectl --context "$KUBE_CONTEXT"','kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw'].includes(assignments[0][1])||(bytes.match(new RegExp(`\\b${alias}\\+?=`,'gu'))??[]).length!==1)return null;
+ const lines=bytes.split('\n'),line=lines[sink.line-1]?.trim()??'';
+ if(assignments[0][1]==='kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw'){
+  const signature=sink.args.join('|'),prefix=`"\${${alias}[@]}"`;
+  const native=(contract,receiver)=>{const fact={role:'non-api',contract,dependencies:{[source]:hash(bytes)},selectedOperation:{wrapper:assignments[0][0].trim(),command:'kubectl',argv:sink.args,namespace:'kubeclaw',receiver}};namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;};
+  const exports={'get|pvc|data-postgresql-0|-o|json':'pvc.json','get|statefulset|postgresql|-o|json':'statefulset.json'};
+  if(exports[signature]){
+   const receiver=`$backup/${exports[signature]}`;
+   if(bytes.includes('umask 077')&&bytes.includes('backup=$(mktemp -d "${HOME}/postgresql-before-upgrade.XXXXXX")')&&line===`${prefix} ${sink.args.join(' ')} > "${receiver}"`&&bytes.split(receiver).length===2)return native('selected-read-only-kubernetes-JSON-response-to-private-backup; no-authored-resource-body',{path:receiver,role:'private-recovery-export',format:'json'});
+  }
+  if(signature==='get|pvc|-o|json'){
+   const receiver='$inventory/claims.json';
+   const projector=`import json, sys\nwith open(sys.argv[1]) as stream:\n    claims = json.load(stream)['items']\nfor claim in claims:\n    m = claim['metadata']\n    labels = m.get('labels', {})\n    known = m['name'] in ('qdrant-storage-qdrant-0', 'qdrant-snapshots-qdrant-0')\n    owned = (labels.get('app.kubernetes.io/instance') == 'qdrant'\n             and labels.get('app.kubernetes.io/name', labels.get('app')) == 'qdrant')\n    if known or owned:\n        print(m['name'], m['uid'], claim['spec'].get('volumeName', '-'), sep='\\t')`;
+   if(bytes.includes('umask 077')&&bytes.includes('inventory=$(mktemp -d)')&&line===`${prefix} get pvc -o json > "${receiver}"`&&bytes.split(receiver).length===4&&bytes.includes(`trap 'rm -f "$inventory/claims.json" "$inventory/claims.tsv"; rmdir "$inventory"' EXIT`)&&bytes.includes(`python3 - "${receiver}" > "$inventory/claims.tsv" <<'PY'\n${projector}\nPY`))return native('selected-read-only-PVC-inventory-to-owned-claim-TSV; no-authored-resource-body',{path:receiver,consumer:'owned-claim-and-volume-identity-projection',fields:['metadata.name','metadata.uid','metadata.labels','spec.volumeName']});
+  }
+  if(signature===['exec','postgresql-0','-c','postgresql','--','sh','-ec',privatePostgresDumpRecipe].join('|')&&bytes.includes('umask 077')&&bytes.includes('backup=$(mktemp -d "${HOME}/postgresql-before-upgrade.XXXXXX")')&&bytes.includes(`' > "$backup/cluster.sql.partial"`)&&bytes.split('$backup/cluster.sql.partial').length===5&&bytes.includes('test -s "$backup/cluster.sql.partial"')&&bytes.includes("grep -q '^-- PostgreSQL database cluster dump complete' \"$backup/cluster.sql.partial\""))return native('selected-read-only-pg_dumpall-to-private-SQL-backup; no-Kubernetes-resource-constructor',{path:'$backup/cluster.sql.partial',role:'private-database-recovery-export',format:'SQL',credentialInput:'selected password file to PGPASSWORD only'});
+  if(signature==='exec|-i|postgresql-0|-c|postgresql|--|sh|-es|<<|REMOTE'&&bytes.includes(`<<'REMOTE'\n${postgresMetadataQueryRecipe}\nREMOTE`))return native('selected-read-only-PostgreSQL-version-slot-extension-index-metadata-to-framed-CLI-output',{role:'read-only-database-metadata',queries:'source-defined finite SQL programs',credentialInput:'selected password file to PGPASSWORD only',liveOutcome:'unexecuted'});
+  const deletions=new Set(['delete|statefulset|qdrant|--ignore-not-found|--wait=true','delete|service|qdrant|qdrant-headless|--ignore-not-found','delete|secret|qdrant-auth|qdrant-tls|--ignore-not-found','delete|networkpolicy|kubeclaw-qdrant-ingress|--ignore-not-found','delete|ciliumnetworkpolicy|kubeclaw-qdrant-ingress|--ignore-not-found']);
+  if(deletions.has(signature)&&line===`${prefix} ${sink.args.join(' ')}`&&bytes.includes('[[ ${1:-} == --delete-data && $# == 1 ]]'))return native('selected-explicit-retirement-command-to-kubectl-deletion-status; no-authored-resource-body',{role:'native-deletion-status',liveOutcome:'unexecuted'});
+  if(signature==='delete|pvc|$claim|--ignore-not-found|--wait=true|--timeout=180s'&&line===`${prefix} delete pvc "$claim" --ignore-not-found --wait=true --timeout=180s`&&bytes.includes('[[ ${1:-} == --delete-data && $# == 1 ]]')&&bytes.includes("while IFS=$'\\t' read -r claim uid volume; do")&&bytes.split('$inventory/claims.tsv').length===5){
+   const getter=shellRawOutputSinks(source,bytes).find(item=>item.command===sink.command&&item.args.join('|')==='get|pvc|-o|json');
+   if(getter&&shellDynamicOperationProof(root,source,bytes,getter))return native('selected-owned-claim-inventory-to-explicit-PVC-retirement-status; no-authored-resource-body',{role:'native-deletion-status',identityExpression:'claim from selected PVC metadata.name projection',liveOutcome:'unexecuted'});
+  }
+  return null;
+ }
+ const namespace=sink.args[0]==='create'?sink.args[2]?.match(/^\$([A-Za-z_][A-Za-z0-9_]*)$/u)?.[1]:sink.args[0]==='-n'?sink.args[1]?.match(/^\$([A-Za-z_][A-Za-z0-9_]*)$/u)?.[1]:line.match(/create namespace "\$([A-Za-z_][A-Za-z0-9_]*)"/u)?.[1];
+ if(!namespace)return null;
+ const defaults=[...bytes.matchAll(new RegExp(`^${namespace}=\\$\\{([A-Z_][A-Z0-9_]*):-([a-z0-9][a-z0-9-]*)\\}$`,'gmu'))];
+ if(defaults.length!==1||(bytes.match(new RegExp(`\\b${namespace}\\+?=`,'gu'))??[]).length!==1)return null;
+ const native=(contract,dependencies=[])=>{
+  if(dependencies.some(file=>!fs.existsSync(path.join(root,file))))return null;
+  const fact={role:'non-api',contract,dependencies:Object.fromEntries([source,...dependencies].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),selectedOperation:{wrapper:assignments[0][0].trim(),command:'kubectl',argv:sink.args,namespaceInput:{environment:defaults[0][1],default:defaults[0][2]}}};
+  namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+ };
+ if(sink.args[0]==='-n'){
+  const pod=sink.args[sink.args[2]==='get'||sink.args[2]==='exec'&&sink.args[3]?.startsWith('-')?4:3]?.match(/^\$([A-Za-z_][A-Za-z0-9_]*)$/u)?.[1];
+  if(!pod)return null;
+  const podDefinition=bytes.match(new RegExp(`^${pod}="\\$([A-Za-z_][A-Za-z0-9_]*)-0"$`,'mu'));
+  const release=podDefinition?.[1];
+  if(!release||!(new RegExp(`^${release}=\\$\\{[A-Z_][A-Z0-9_]*:-[a-z0-9][a-z0-9-]*\\}$`,'mu')).test(bytes)||(bytes.match(new RegExp(`\\b${pod}\\+?=`,'gu'))??[]).length!==1||(bytes.match(new RegExp(`\\b${release}\\+?=`,'gu'))??[]).length!==1)return null;
+  const signature=sink.args.slice(2).join('|');
+  if(signature===`get|pod|$${pod}|-o|wide`)return native('selected-kubectl-pod-wide-human-readable-status; external-table-contract');
+  const dockerfile='ops/pod/Dockerfile',packageFile='ops/pod/package-lock.json';
+  if(!fs.existsSync(path.join(root,dockerfile)))return null;
+  const imageSource=fs.readFileSync(path.join(root,dockerfile),'utf8');
+  const sessions=[`exec|-it|$${pod}|-c|codex|--|codex|login|--device-auth`,`exec|-it|$${pod}|-c|codex|--|gh|auth|login|--hostname|github.com|--git-protocol|https|--web`,`exec|-it|$${pod}|-c|codex|--|codex|remote-control|pair`];
+  if(sessions.includes(signature)&&imageSource.includes('ln -s /opt/codex/node_modules/.bin/codex /usr/local/bin/codex')&&imageSource.includes('COPY --from=gh-build /out/gh /usr/local/bin/gh'))return native('selected-native-authentication-or-pairing-session; external-CLI-contract; no-live-success-proof',[dockerfile,packageFile]);
+  if(signature===`exec|-it|$${pod}|-c|codex|--|bash|/opt/codex/shell.sh`&&imageSource.includes('COPY supervisor.py config.toml shell.sh /opt/codex/')){
+   const script='ops/pod/shell.sh';if(!fs.existsSync(path.join(root,script)))return null;
+   const text=fs.readFileSync(path.join(root,script),'utf8'),input=shellRawOutputSinks(script,text).find(item=>item.command==='cat'&&item.args[0]==='/var/run/kubeclaw-ops/bearer/token');
+   if(input&&shellNamedFileProof(root,script,text,input))return native('selected-mounted-auth-shell; subsequent-interactive-input-outside-authored-source',[dockerfile,script,'ops/pod/bootstrap.py','charts/ops-pod/templates/workload.yaml']);
+  }
+  if(signature===`exec|$${pod}|-c|codex|--|cat|/tmp/codex-ops-status.json`&&imageSource.includes('COPY supervisor.py config.toml shell.sh /opt/codex/')){
+   const script='ops/pod/supervisor.py';if(!fs.existsSync(path.join(root,script)))return null;
+   const text=fs.readFileSync(path.join(root,script),'utf8');
+   if(text.includes("state_file = Path('/tmp/codex-ops-status.json')")&&text.includes('temp.replace(state_file)')){assertNativeSerializationRoles(root,script,text,'Python');return native('selected-supervisor-native-status-file; source-bound-serializer-and-callers',[dockerfile,script]);}
+  }
+  if(signature===`exec|-i|$${pod}|-c|codex|--|python3|-`&&line.endsWith('< "$repo/ops/pod/verify.py"')){
+   const script='ops/pod/verify.py';if(!fs.existsSync(path.join(root,script)))return null;
+   assertNativeSerializationRoles(root,script,fs.readFileSync(path.join(root,script),'utf8'),'Python');return native('selected-read-only-MCP-verifier; source-bound-serializer-and-callers',[script]);
+  }
+  const diagnostic='import {createKubeRequest} from "/app/src/kubernetes.mjs"; try {await createKubeRequest()("/api/v1/namespaces/" + encodeURIComponent(process.env.OPS_DEFAULT_NAMESPACE) + "/secrets");process.exit(1)} catch(e) {if(!e.message.includes("Kubernetes API 403:"))throw e; console.log("PASS: observer Secret access denied by API");}';
+  if(signature===`exec|$${pod}|-c|ops-mcp|--|node|--input-type=module|-e|${diagnostic}`)return native('selected-403-negative-control-to-fixed-diagnostic; unexpected-response-is-failure',['tools/ops-mcp/src/kubernetes.mjs']);
+  return null;
+ }
+ const invocation=`"\${${alias}[@]}" create namespace "$${namespace}" --dry-run=client -o yaml | "\${${alias}[@]}" apply -f -`;
+ if(line!==invocation||!((sink.args.join('|')===`create|namespace|$${namespace}|--dry-run=client|-o|yaml`)||(sink.args.join('|')==='apply|-f|-')))return null;
+ const selectedNamespace=defaults[0][2];
+ const render=spawnSync('kubectl',['create','namespace',selectedNamespace,'--dry-run=client','-o','json'],{encoding:'utf8'});
+ assert.equal(render.status,0,`API_PRODUCT_DYNAMIC_NAMESPACE_RENDER_FAILED: ${source}:${sink.line}: ${render.stderr}`);
+ let value;try{value=JSON.parse(render.stdout);}catch{assert.fail(`API_PRODUCT_DYNAMIC_NAMESPACE_RENDER_INVALID: ${source}:${sink.line}`);}
+ assert(value?.apiVersion==='v1'&&value?.kind==='Namespace'&&value.metadata?.name===selectedNamespace,`API_PRODUCT_DYNAMIC_NAMESPACE_RENDER_IDENTITY: ${source}:${sink.line}`);
+ const version=spawnSync('kubectl',['version','--client=true','-o','json'],{encoding:'utf8'});
+ assert.equal(version.status,0,`API_PRODUCT_DYNAMIC_NAMESPACE_TOOLCHAIN_FAILED: ${source}`);
+ const context={apiVersion:value.apiVersion,kind:value.kind,path:source,line:sink.line,document:0,sourceDigest:hash(bytes),producer:'shell-shape',profile:'dynamic-kubectl-namespace-default',requestOperation:'kubectl-apply',requestInvocation:invocation,forwardedProducer:{path:source,command:'kubectl',argv:['create','namespace',selectedNamespace,'--dry-run=client','-o','yaml'],wrapper:assignments[0][0].trim(),namespaceInput:{environment:defaults[0][1],default:selectedNamespace},toolchainDigest:hash(version.stdout)},outputDigest:hash(JSON.stringify(value))};
+ const fact={role:'api',contract:'selected-kubectl-client-namespace-constructor-to-apply',dependencies:{[source]:hash(bytes)},outputs:[{value,context}]};
+ namedShellChannelFacts.set(`${root}:${source}:${sink.line}`,fact);return fact;
+}
+
+function shellOutputConsumerMatches(root,source,bytes,sink,consumer) {
  if(consumer.source!==source||consumer.line!==sink.line||consumer.command!==sink.command||consumer.argumentsDigest!==hash(JSON.stringify(sink.args))||!consumer.purpose||typeof consumer.sourceEvidence!=='string'||!consumer.sourceEvidence)return false;
  // Consumer evidence is executable source context, not a free-standing role
  // label. It must still cover the actual selected command at its source line.
@@ -826,49 +1469,175 @@ function shellOutputConsumerMatches(source,bytes,sink,consumer) {
   if(first<=sink.line&&sink.line<=last){found=true;break;}
  }
  if(!found)return false;
+ if(shellDynamicOperationProof(root,source,bytes,sink)||shellUnusedPrivateFunctionProof(root,source,bytes,sink))return true;
+ // A computed executable is a selected operation, not a native-output role.
+ // Until its argv and constructor/query semantics are resolved, refreshing a
+ // receipt cannot authorize an aliased API reader or kubectl constructor.
+ if(['echo','printf'].includes(sink.command)&&sink.args.some(argument=>/apiVersion/u.test(argument)&&/kind/u.test(argument)))return false;
+ if(shellReleaseFileProof(root,source,bytes,sink))return true;
+ if(shellNamedFileProof(root,source,bytes,sink))return true;
+ if(shellNativeSummaryQualified(bytes,sink)||shellFramedNotifyLogQualified(bytes,sink)||shellYamlScalarGraphQualified(bytes,sink))return true;
+ if(/[$`]/u.test(sink.command))return false;
+ const nativeTee=nativeTeeOutputDependencies(root,source,bytes,sink);
+ if(nativeTee)return true;
  const channel=sink.channel??'command-output';
  if(consumer.channel&&consumer.channel!==channel)return false;
- if(consumer.kind==='captured-operation')return channel==='command-substitution';
- if(!['framed-or-native-scalar-output','declared-child-operation','native-tool-or-selected-stream','fixed-native-text-transform'].includes(consumer.kind))return false;
+ if(consumer.kind==='captured-operation'&&channel!=='command-substitution')return false;
+ if(!['captured-operation','framed-or-native-scalar-output','declared-child-operation','native-tool-or-selected-stream','fixed-native-text-transform'].includes(consumer.kind))return false;
  if(consumer.kind==='framed-or-native-scalar-output'&&!['echo','printf'].includes(sink.command))return false;
  const streamTools=new Set(['cat','tee','sed','awk','gawk','head','tail','cut','paste','sort','uniq','tr','dd','base64','jq','yq']);
- if(!streamTools.has(sink.command))return true;
+
+ if(sink.command==='printf'&&sink.args.length===2&&sink.args[0]==='%s\\n'){
+  const variable=sink.args[1].match(/^\$([A-Za-z_][A-Za-z0-9_]*)$/u)?.[1],prefix=bytes.split('\n').slice(0,sink.line-1).join('\n');
+  if(variable&&prefix.includes(`[[ $${variable} =~ ^/[a-zA-Z0-9_./-]+$`)&&(prefix.match(new RegExp(`\\b${variable}=`, 'gu'))??[]).length===1)return true;
+ }
+ if(!streamTools.has(sink.command)){
+  const line=bytes.split('\n')[sink.line-1]??'';
+  // A finite case alternative fixes the complete emitted variable value.
+  const finiteCase=/^\s*(?:[A-Za-z0-9_-]+\s*\|\s*)*[A-Za-z0-9_-]+\)\s*echo\s+"\$([A-Za-z_][A-Za-z0-9_]*)"\s*;;\s*$/u.exec(line);
+  const previousCase=[...bytes.split('\n').slice(0,sink.line-1).join('\n').matchAll(/\bcase\s+"\$([A-Za-z_][A-Za-z0-9_]*)"\s+in/gu)].at(-1)?.[1];
+  if(sink.command==='echo'&&finiteCase&&previousCase===finiteCase[1])return true;
+  if(['echo','printf'].includes(sink.command)&&/\|\s*tr\s+'\[:upper:\]'\s+'\[:lower:\]'/u.test(line))return true;
+  return !shellRawChannelUnbound(bytes,sink);
+ }
  // Stream filters cannot inherit a native role while reading caller stdin.
  // Require a selected pipe, a named input, or the exact scalar-trim recipe.
  const context=bytes.split('\n').slice(Math.max(0,sink.line-3),sink.line).join('\n').replace(/\\\n[ \t]*/gu,' ');
  const command=sink.command.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&');
- if(new RegExp(`\\|\\s*${command}(?:\\s|$)`,'u').test(context))return true;
- const args=sink.args;
- if(sink.command==='tee')return false; // tee arguments are destinations.
- if(sink.command==='cat')return args.some(value=>value!=='-'&&!value.startsWith('-'));
- if(['sed','awk','gawk','jq','yq'].includes(sink.command)){
-  const positional=[];
-  for(let index=0;index<args.length;index++){
-   if(['-v','-F','-f','-e'].includes(args[index])){index++;continue;}
-   if(args[index]==='--arg'||args[index]==='--argjson'){index+=2;continue;}
-   if(!args[index].startsWith('-'))positional.push(args[index]);
+ if(sink.command==='cut'&&['-d |-f1','-d| |-f1'].includes(sink.args.join('|'))&&/(?:\| sha256sum|\$\(sha256sum -- "\$[A-Za-z_][A-Za-z0-9_]*(?:\/[A-Za-z0-9_.-]+)*") \| cut -d' ' -f1/u.test(bytes.split('\n')[sink.line-1]??''))return true;
+ if(['tr','tail'].includes(sink.command)&&(bytes.match(/\bcli\s*\(\s*\)\s*\{/gu)??[]).length===1&&bytes.includes('cli() { timeout --signal=TERM --kill-after=2 10 "$REDIS_CLI" -h 127.0.0.1 -p "$port" --raw "$@"; }')){
+  if(sink.command==='tr'&&sink.args.join('|')==='-d|\\r'&&/cli INFO persistence \| tr -d '\\r'/u.test(bytes.split('\n')[sink.line-1]??''))return true;
+  if(sink.command==='tail'&&sink.args.join('|')==='-1'&&/cli CONFIG GET (?:appendfsync|maxmemory-policy) \| tail -1/u.test(bytes.split('\n')[sink.line-1]??''))return true;
+ }
+ if(sink.command==='sort'&&sink.args.join('|')==='-z'&&/find appendonlydir -type f -print0 \| sort -z \| xargs -0 sha256sum >SHA256SUMS/u.test(bytes.split('\n')[sink.line-1]??''))return true;
+ if(sink.command==='tail'&&sink.args.join('|')==='-n|35'&&/grep -iE 'nri\|kubeclaw-native' \/var\/lib\/rancher\/k3s\/agent\/containerd\/containerd.log \| tail -n 35/u.test(bytes.split('\n')[sink.line-1]??''))return true;
+ // Fixed byte-count queries expose numeric filesystem facts, not file bodies.
+ if(sink.command==='cut'&&sink.args.join('|')==='-f1'&&/du (?:--summarize --bytes|-sb --) "\$[A-Za-z_][A-Za-z0-9_]*" \| cut -f1/u.test(bytes.split('\n')[sink.line-1]??''))return true;
+ if(['tail','tr'].includes(sink.command)&&/df --output=avail -B1 \/var\/lib\/docker \| tail -n 1 \| tr -d ' '/u.test(bytes.split('\n')[sink.line-1]??'')&&((sink.command==='tail'&&sink.args.join('|')==='-n|1')||(sink.command==='tr'&&sink.args.join('|')==='-d| ')))return true;
+
+ // A pipeline alone does not qualify a stream's input. Validate its named
+ // source or closed transform below, including command substitutions.
+ if(sink.command==='awk'&&sink.args.length===1&&sink.args[0]==='{ print; count += 1; if (count >= 30) exit }'&&(bytes.split('\n')[sink.line-1]??'').trim()===`git status --short | awk '{ print; count += 1; if (count >= 30) exit }'`)return true;
+ if(sink.command==='awk'&&sink.args.length===1&&sink.args[0]==='/^Version:/ { print $2; exit }'){
+  const line=bytes.split('\n')[sink.line-1]??'',variable=line.match(/\$([A-Za-z_][A-Za-z0-9_]*) --version \| awk/u)?.[1],prefix=bytes.split('\n').slice(0,sink.line-1).join('\n');
+  const value=variable&&[...prefix.matchAll(new RegExp(`\b${variable}="([^"\n]+)"`,'gu'))].at(-1)?.[1];
+  if(value?.endsWith('/trivy'))return true;
+  if(variable&&[...prefix.matchAll(new RegExp(`^\\s*${variable}=([^\\n]+)$`,'gmu'))].at(-1)?.[1]==='"$(install_trivy "$(uname -m)")"'&&(bytes.match(/\binstall_trivy\s*\(\s*\)\s*\{/gu)??[]).length===1&&bytes.includes('local executable="$install_root/trivy"')&&bytes.includes(`printf '%s\\n' "$executable"`))return true;
+ }
+ if(sink.command==='awk'&&sink.args.length===1&&sink.args[0]==='{print "  " $1 " → " $3}'&&/kubectl get pods -n "\$[A-Za-z_][A-Za-z0-9_]*"(?: -l [A-Za-z0-9_.\/=-]+)? --no-headers\s*\|\s*awk/u.test(context))return true;
+ if(sink.command==='awk'&&sink.args.length===1&&sink.args[0]==='{print "  " $1}'){
+  const row=/echo "\$([A-Za-z_][A-Za-z0-9_]*)" \| grep -v '\^sh\.helm' \| awk/u.exec(context);
+  if(row){const captures=[...bytes.split('\n').slice(0,sink.line-1).join('\n').matchAll(new RegExp(`\\b${row[1]}=\\$\\(([^\\n]*)\\)`,'gu'))];
+   if(/^kubectl get secrets -n "\$[A-Za-z_][A-Za-z0-9_]*" --no-headers 2>&1$/u.test(captures.at(-1)?.[1]??''))return true;
   }
-  if(positional.length>1&&positional.at(-1)!=='-')return true;
-  const scalarTrim=`{ sub(/^[[:space:]]+/, "", $0) sub(/[[:space:]]+$/, "", $0) gsub(/^"|"$/, "", $0) gsub(/^'|'$/, "", $0) print }`;
-  return ['awk','gawk'].includes(sink.command)&&positional.length===1&&positional[0].replace(/\s+/gu,'')===scalarTrim.replace(/\s+/gu,'');
  }
- if(['head','tail','cut'].includes(sink.command)){
-  for(let index=0;index<args.length;index++){if(['-n','-c','-d','-f'].includes(args[index])){index++;continue;}if(args[index]!=='-'&&!args[index].startsWith('-'))return true;}
+ const versionPipe=new RegExp(`(?:^|[\\n;])\\s*(?:openclaw|node|python3|go|helm|kubectl|docker|redis-server|postgres|git)\\s+(?:--version|version)(?:\\s+--short)?\\s*\\|\\s*${command}(?:\\s|$)`,'u');
+ if(versionPipe.test(context)&&['awk','gawk'].includes(sink.command)){
+  const program=sink.args.at(-1)??'';
+  // The selected version filter only prints its incoming version line and
+  // returns a comparison exit status; it cannot construct a replacement root.
+  if(program.replace(/\s+/gu,'')==='{for(i=1;i<=NF;i++)if($i==expected)found=1;print}END{exit!found}'&&sink.args.length===3&&sink.args[0]==='-v'&&/^expected=\$[A-Za-z_][A-Za-z0-9_]*$/u.test(sink.args[1]))return true;
  }
+ if(sink.command==='awk'&&sink.args[0]==='-F'&&sink.args[1]===':[[:space:]]*'&&sink.args[2]==='$1 == "STATUS" { print $2; exit }'&&sink.args.length===3) {
+  const selectedLine=bytes.split('\n')[sink.line-1]??'',variable=selectedLine.match(/<<<\s*"?\$([A-Za-z_][A-Za-z0-9_]*)/u)?.[1],preceding=bytes.split('\n').slice(0,sink.line-1).join('\n');
+  if(!variable)return false;
+  const assignments=[...preceding.matchAll(new RegExp(`\\b${variable}=("[^\\n]*"|[^\\s;]+)`,'gu'))];
+  // This selected field query reads Helm's status text, never resource YAML.
+  // Match its latest assignment so a later replacement cannot inherit custody.
+  if(/^"\$\(helm status "\$[A-Za-z_][A-Za-z0-9_]*" -n "\$[A-Za-z_][A-Za-z0-9_]*" 2>&1\)"$/u.test(assignments.at(-1)?.[1]??''))return true;
+ }
+ // Whole-stream ASCII case folding cannot retain the case-sensitive
+ // apiVersion identity key. This is a closed transform, not a pipe exemption.
+ if(sink.command==='sed'&&sink.args.length===1&&sink.args[0]==='s/^[[:space:]]*//; s/[[:space:]]*$//'&&/tr '\[:upper:\]' '\[:lower:\]' \| sed/u.test(context))return true;
+ if(sink.command==='tr'&&sink.args.length===2&&['[:lower:]|[:upper:]','[:upper:]|[:lower:]'].includes(sink.args.join('|')))return true;
+ if(sink.command==='tr'&&sink.args.join('|')==='-d|[:space:]'){
+  const line=bytes.split('\n')[sink.line-1]??'',next=bytes.split('\n')[sink.line]??'';
+  const variable=line.match(/([A-Za-z_][A-Za-z0-9_]*)="\$\(tr -d '\[:space:\]' <"\$[A-Za-z_][A-Za-z0-9_]*"\)"/u)?.[1];
+  const validator='is_valid_namespace() {\n  local value="$1"\n  [[ $value =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ && ${#value} -le 63 ]]\n}';
+  if(variable&&next.trim()===`if is_valid_namespace "$${variable}"; then`&&bytes.includes(validator))return true;
+ }
+ if(sink.command==='base64'&&sink.args.length===1&&sink.args[0]==='-d') {
+  const selectedLine=bytes.split('\n')[sink.line-1]??'';
+  const input=/^\s*([A-Za-z_][A-Za-z0-9_]*)="\$\(kubectl get secret [a-z0-9-]+ -n "\$[A-Za-z_][A-Za-z0-9_]*" -o jsonpath='\{\.data\.\\\.dockerconfigjson\}' 2>\/dev\/null \| base64 -d\)"\s*$/u.exec(selectedLine);
+  const following=bytes.split('\n').slice(sink.line,sink.line+5).join('\n').replace(/\\\n[ \t]*/gu,' ');
+  if(input&&new RegExp(`printf '%s' "\\$${input[1]}" \\| kubectl create secret generic [a-z0-9-]+ -n "\\$[A-Za-z_][A-Za-z0-9_]*"\\s+--type=kubernetes.io/dockerconfigjson --from-file=\\.dockerconfigjson=/dev/stdin --dry-run=client -o yaml \\| kubectl apply -f -`,'u').test(following))return true;
+ }
+ if(shellRawChannelUnbound(bytes,sink))return false;
+ // A named filename or filter program alone proves neither the incoming
+ // producer nor the selected consumer. Unsupported ancestry stays a gap.
+
  return false;
 }
+const shellJsonPatchAstAudit="import ast,json,sys\nprogram=sys.stdin.read(); tree=ast.parse(program)\nassert len(tree.body)==2 and isinstance(tree.body[0],ast.Import) and [(x.name,x.asname) for x in tree.body[0].names]==[('json',None),('sys',None)]\nexpr=tree.body[1]; assert isinstance(expr,ast.Expr) and isinstance(expr.value,ast.Call) and isinstance(expr.value.func,ast.Name) and expr.value.func.id=='print' and len(expr.value.args)==1 and not expr.value.keywords\nserializer=expr.value.args[0]; assert isinstance(serializer,ast.Call) and isinstance(serializer.func,ast.Attribute) and isinstance(serializer.func.value,ast.Name) and serializer.func.value.id=='json' and serializer.func.attr=='dumps' and len(serializer.args)==1 and not serializer.keywords\npayload=serializer.args[0]; assert isinstance(payload,ast.List) and payload.elts\nfor item in ast.walk(payload):\n assert isinstance(item,(ast.List,ast.Dict,ast.Constant,ast.Subscript,ast.Attribute,ast.Name,ast.Load))\n if isinstance(item,ast.Name): assert item.id=='sys'\n if isinstance(item,ast.Attribute): assert isinstance(item.value,ast.Name) and item.value.id=='sys' and item.attr=='argv'\n if isinstance(item,ast.Subscript): assert isinstance(item.value,ast.Attribute) and isinstance(item.slice,ast.Constant) and type(item.slice.value)==int and item.slice.value in (1,2)\nsys.argv=['selected-patch','__docs_controlled_claim_name__','__docs_controlled_claim_uid__']\nexec(compile(tree,'selected-json-patch','exec'),{'json':json,'sys':sys,'__builtins__':{'print':print,'__import__':__import__}})\n";
+function discoverShellDirectApiPatches(root,source,bytes){
+ const offsets=[];let logical='';for(let cursor=0;cursor<bytes.length;){offsets.push(cursor);const continuation=/^\\\n[ \t]*/u.exec(bytes.slice(cursor));if(continuation){logical+=' ';cursor+=continuation[0].length;}else{logical+=bytes[cursor];cursor++;}}const outputs=[],qualifiedStarts=new Set();
+ for(const match of logical.matchAll(/\bkubectl patch (service|deployment|secret) ("[^"\n]+"|[a-z0-9-]+) -n "\$([A-Za-z_][A-Za-z0-9_]*)" --type(?:=| )(merge|json|strategic)\s+(?:-p|--patch)\s+("(?:\\.|[^"\\])*"|'[^']*')/gu)){
+  const [invocation,resource,receiver,namespace,type,payload]=match;qualifiedStarts.add(match.index);
+  const originalStart=offsets[match.index],line=bytes.slice(0,originalStart).split('\n').length;
+  const preceding=bytes.slice(0,originalStart),constructor=[...preceding.matchAll(/^([A-Za-z_][A-Za-z0-9_]*)\(\) \{/gmu)].at(-1)?.[1],fn=constructor?bytes.match(new RegExp(`^${constructor}\\(\\) \\{[\\s\\S]*?^\\}`,'mu')):null;
+  if(resource==='secret'){assert(fn&&['patch_secret_literal','patch_secret_file'].includes(constructor)&&fn[0]===finiteSecretChannelRecipes[constructor].body,`API_PRODUCT_SHELL_SECRET_PATCH_FLOW_UNQUALIFIED: ${source}:${line}`);continue;}
+  let body=payload[0]==="'"?payload.slice(1,-1):payload.slice(1,-1).replace(/\\(["\\])/gu,'$1');const inputs=[];
+  if(body.includes('$LITELLM_NODE_PORT')){
+   const value=bytes.match(/^LITELLM_NODE_PORT="\$\{LITELLM_NODE_PORT:-(\d+)\}"$/mu)?.[1];
+   assert(value&&Number(value)>=30000&&Number(value)<=32767&&bytes.includes('LITELLM_NODE_PORT < 30000 || LITELLM_NODE_PORT > 32767')&&bytes.includes('[[ ! $LITELLM_NODE_PORT =~ ^[0-9]+$ ]]'),`API_PRODUCT_SHELL_PATCH_PARAMETER_UNQUALIFIED: ${source}:${line}`);
+   body=body.replaceAll('$LITELLM_NODE_PORT',value);inputs.push({expression:'$LITELLM_NODE_PORT',environment:'LITELLM_NODE_PORT',default:Number(value),range:[30000,32767],runtimeValue:'unexecuted; source-selected default profile'});
+  }
+  if(body.includes('${runtime_index}')){
+   assert(fn&&fn[0].includes('if [[ ! $runtime_index =~ ^[0-9]+$ ]]; then')&&fn[0].includes('go-template={{range $index, $container := .spec.template.spec.containers}}{{if eq $container.name "buster-v2-runtime"}}{{$index}}{{end}}{{end}}')&&(fn[0].match(/\bruntime_index=/gu)??[]).length===2,`API_PRODUCT_SHELL_PATCH_INDEX_UNQUALIFIED: ${source}:${line}`);
+   body=body.replaceAll('${runtime_index}','0');inputs.push({expression:'${runtime_index}',sourceReceiver:'apps/v1 Deployment agent-buster',sourceField:'index of spec.template.spec.containers with name buster-v2-runtime',controlledOfflineValue:0,liveValue:'unexecuted; array paths selected parametrically'});
+  }
+  // Strategic merge $patch is a wire directive, not shell interpolation.
+  assert(!/\$\{|\$[A-Za-z_][A-Za-z0-9_]*/u.test(body.replaceAll('"$patch"','"patchDirective"')),`API_PRODUCT_SHELL_PATCH_DYNAMIC_BODY_UNQUALIFIED: ${source}:${line}`);
+  let value;try{value=JSON.parse(body);}catch{assert.fail(`API_PRODUCT_SHELL_PATCH_JSON_INVALID: ${source}:${line}`);}
+  const name=receiver.replace(/^"|"$/gu,'');let receiverBinding;
+  if(name.startsWith('$')){const variable=name.slice(1),bindings=[...(fn?.[0]??'').matchAll(new RegExp(String.raw`\b${variable}="([^"\n]+)"`,'gu'))];assert(bindings.length===1&&/^[a-z0-9-]+$/u.test(bindings[0][1]),`API_PRODUCT_SHELL_PATCH_RECEIVER_UNQUALIFIED: ${source}:${line}`);receiverBinding={expression:name,selectedLiteral:bindings[0][1]};}
+  const kind=resource==='service'?'Service':'Deployment',apiVersion=resource==='service'?'v1':'apps/v1';
+  outputs.push({value,context:{apiVersion,kind,path:source,line,document:outputs.length,producer:'shell-shape',profile:`selected-${resource}-${type}-patch`,sourceDigest:hash(bytes),outputDigest:hash(JSON.stringify(value)),requestMethod:'PATCH',requestOperation:'kubectl-patch',requestPatchType:type,requestReceiver:{apiVersion,kind,resource,name,nameExpression:name,namespaceExpression:'$'+namespace},requestInvocation:invocation,...(type==='json'?{patchOperations:value}:{}),inputs,forwardedProducer:{qualified:true,path:source,line,command:'kubectl',argv:['patch',resource,name,'-n','$'+namespace,'--type='+type,'--patch',payload],constructorFunction:constructor??'top-level',dependencies:[{path:source,sourceDigest:hash(bytes)}],actualBody:payload,receiverBinding,controlledParameters:inputs}}});
+ }
+ for(const invocation of logical.matchAll(/^[ \t]*kubectl patch [^\n]+/gmu)){const start=invocation.index+invocation[0].indexOf('kubectl');if(qualifiedStarts.has(start))continue;if(/^kubectl patch pv /u.test(invocation[0].trim())&&discoverShellSelectedJsonPatches(root,source,bytes).length)continue;assert.fail(`API_PRODUCT_SHELL_PATCH_TRANSPORT_UNQUALIFIED: ${source}:${bytes.slice(0,offsets[start]).split('\n').length}`);}
+ return outputs;
+}
+
+function discoverShellSelectedJsonPatches(root,source,bytes){
+ const result=[];
+ for(const match of bytes.matchAll(/patch=\$\(python3 - "\$claim" "\$uid" <<'([A-Za-z_][A-Za-z0-9_]*)'\n([\s\S]*?)\n\1\n\)/gu)){
+  const line=bytes.slice(0,match.index).split('\n').length;
+  assert(bytes.includes('kubectl --context "$KUBE_CONTEXT" patch pv "$volume" --type=json -p "$patch"')&&(bytes.match(/\bpatch=/gu)??[]).length===1&&(bytes.match(/\$patch\b/gu)??[]).length===1&&bytes.includes("while IFS=$'\\t' read -r claim uid volume; do"),`API_PRODUCT_SHELL_JSON_PATCH_RECEIVER_UNQUALIFIED: ${source}:${line}`);
+  const getter=shellRawOutputSinks(source,bytes).find(sink=>sink.command==='${kube[@]}'&&sink.args.join('|')==='get|pvc|-o|json');
+  assert(getter&&shellDynamicOperationProof(root,source,bytes,getter),`API_PRODUCT_SHELL_JSON_PATCH_INPUT_UNQUALIFIED: ${source}:${line}`);
+  const parsed=spawnSync('python3',['-c',shellJsonPatchAstAudit],{input:match[2],encoding:'utf8',maxBuffer:1024*1024,env:{PATH:process.env.PATH}});
+  assert.equal(parsed.status,0,`API_PRODUCT_SHELL_JSON_PATCH_PRODUCER_UNQUALIFIED: ${source}:${line}: ${parsed.stderr}`);
+  const value=JSON.parse(parsed.stdout);assert(Array.isArray(value)&&value.length&&value.every(operation=>operation&&typeof operation==='object'&&['add','replace','test','remove','move','copy'].includes(operation.op)&&typeof operation.path==='string'),`API_PRODUCT_SHELL_JSON_PATCH_BODY_UNQUALIFIED: ${source}:${line}`);
+  const receiver={apiVersion:'v1',kind:'PersistentVolume',resource:'pv',name:'$volume',nameExpression:'PVC spec.volumeName from selected owned-claim inventory',patchType:'json'};
+  const context={apiVersion:receiver.apiVersion,kind:receiver.kind,path:source,document:line,line,producer:'shell-shape',profile:'selected-owned-PV-json-patch',sourceDigest:hash(bytes),outputDigest:hash(JSON.stringify(value)),requestMethod:'PATCH',requestOperation:'kubectl-patch',requestPatchType:'json',requestReceiver:receiver,patchOperations:value,requestInvocation:'kubectl --context "$KUBE_CONTEXT" patch pv "$volume" --type=json -p "$patch"',inputs:[{role:'controlled-offline-source-parameter',expression:'$claim',sourceField:'PVC metadata.name',value:'__docs_controlled_claim_name__'},{role:'controlled-offline-source-parameter',expression:'$uid',sourceField:'PVC metadata.uid',value:'__docs_controlled_claim_uid__'}],forwardedProducer:{qualified:true,path:source,line,command:'python3',argv:['-','$claim','$uid'],constructorExpression:'print(json.dumps(selected operation list))',dependencies:[{path:source,sourceDigest:hash(bytes)}],receiverInput:'selected owned PVC spec.volumeName',liveValues:'not fetched; controlled parameters document operation paths and source custody only'}};
+  result.push({value,context});
+ }
+ assert(!/print\s*\(\s*json\.dumps\s*\(\s*\[/u.test(bytes)||!/\bpatch\b/u.test(bytes)||result.length,`API_PRODUCT_SHELL_JSON_PATCH_SELECTION_UNQUALIFIED: ${source}`);
+ return result;
+}
+
 export function discoverShellApiOutputs(root) {
   const sources=walkProductSources(root,[...producerRoots,'my-values'],file=>/\.sh$/u.test(file));
   const authority='scripts/docs-api-producer-adapter-authorities.json';
-  const cacheInputs=[...sources,authority].filter(source=>fs.existsSync(path.join(root,source)));
-  const key=hash(JSON.stringify(cacheInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])));
+  const cacheInputs=[...sources,authority,'scripts/docs-api-output-discovery.mjs','scripts/docs-api-output-role-classification.mjs','package.json','package-lock.json'].filter(source=>fs.existsSync(path.join(root,source)));
+  // Include resolved native stdout constructors and package dependencies when
+  // reusing the shell result. A shell-only key cannot authenticate a tee input.
+  for(const entry of nativeTeeOutputCache.values())for(const file of Object.keys(entry.dependencies))if(fs.existsSync(path.join(root,file)))cacheInputs.push(file);
+  for(const [id,entry]of namedShellChannelFacts)if(id.startsWith(root+':'))for(const file of Object.keys(entry.dependencies))if(fs.existsSync(path.join(root,file)))cacheInputs.push(file);
+  if([...namedShellChannelFacts].some(([id,entry])=>id.startsWith(root+':')&&entry.contract.startsWith('unreachable-private-')))cacheInputs.push(...privateShellReachabilityInputs(root));
+  const key=hash(JSON.stringify([...new Set(cacheInputs)].sort().map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])));
   const cached=shellOutputCache.get(root);if(cached?.key===key)return cached.outputs;
   const outputs=[];const classifications=[];nonApiOutputClassifications.set(root,classifications);
   for(const source of sources) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     if(/(?:^|\n)\s*helm\s/u.test(bytes)||/\bnode\b[^\n]*render-[A-Za-z0-9-]+\.mjs/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
     const sourceDigest=hash(bytes);
-    const rawSinks=shellRawOutputSinks(source,bytes);if(rawSinks.length){const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):{};const contract=(registry.shellRawOutputContracts??[]).find(record=>record.source===source&&JSON.stringify(record.sinks)===JSON.stringify(rawSinks)&&JSON.stringify(record.operationRecipe)===JSON.stringify(shellRawOutputOperationRecipe(source,bytes)));assert(contract,`API_PRODUCT_SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED: ${source}:${rawSinks[0].line}`);assert(contract.sinkConsumers?.length===rawSinks.length,`API_PRODUCT_SHELL_CONSUMER_UNQUALIFIED: ${source}`);for(const [index,consumer]of contract.sinkConsumers.entries())assert(shellOutputConsumerMatches(source,bytes,rawSinks[index],consumer),`API_PRODUCT_SHELL_CONSUMER_UNQUALIFIED: ${source}:${rawSinks[index].line}:${rawSinks[index].command}`);classifications.push({source,sourceDigest,role:contract.role,basis:contract.basis,sinks:rawSinks,consumer:contract.consumer});}
+    outputs.push(...discoverShellSelectedJsonPatches(root,source,bytes));
+    outputs.push(...discoverShellSelectedSecretArrays(root,source,bytes));
+    outputs.push(...discoverShellDirectApiPatches(root,source,bytes));
+    const rawSinks=shellRawOutputSinks(source,bytes);if(rawSinks.length){const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const registry=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):{};const contract=(registry.shellRawOutputContracts??[]).find(record=>record.source===source&&JSON.stringify(record.sinks)===JSON.stringify(rawSinks)&&JSON.stringify(record.operationRecipe)===JSON.stringify(shellRawOutputOperationRecipe(source,bytes)));assert(contract,`API_PRODUCT_SHELL_RAW_OUTPUT_ROLE_UNQUALIFIED: ${source}:${rawSinks[0].line}`);assert(contract.sinkConsumers?.length===rawSinks.length,`API_PRODUCT_SHELL_CONSUMER_UNQUALIFIED: ${source}`);for(const [index,consumer]of contract.sinkConsumers.entries())assert(shellOutputConsumerMatches(root,source,bytes,rawSinks[index],consumer),`API_PRODUCT_SHELL_CONSUMER_UNQUALIFIED: ${source}:${rawSinks[index].line}:${rawSinks[index].command}`);const fileChannels=rawSinks.flatMap(sink=>{const fact=namedShellChannelFacts.get(`${root}:${source}:${sink.line}`);return fact?[{line:sink.line,role:fact.role,contract:fact.contract,sourceDigests:fact.dependencies,...(fact.selectedOperation?{selectedOperation:fact.selectedOperation}:{})}]:[];});
+    for(const line of new Set(rawSinks.map(sink=>sink.line))){const fact=namedShellChannelFacts.get(`${root}:${source}:${line}`);if(fact?.role==='api')outputs.push(...fact.outputs);}
+    classifications.push({source,sourceDigest,role:fileChannels.some(fact=>fact.role==='api')?'mixed-api-and-native-channels':contract.role,basis:contract.basis,sinks:rawSinks,consumer:contract.consumer,fileChannels,nativeOutputDependencies:rawSinks.flatMap(sink=>{const entry=nativeTeeOutputCache.get(`${root}:${source}:${sink.line}`);return entry?[{line:sink.line,selectedSources:entry.selected,sourceDigests:entry.dependencies}]:[];})});}
     const scalarize=value=>value.replace(/\$\{[^}\n]+\}|\$[A-Za-z_][A-Za-z0-9_]*/gu,'discovery');
     let document=0;
     const add=(value,line,profile,request={})=>outputs.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:document++,sourceDigest,producer:'shell-shape',line,profile,...request,outputDigest:hash(JSON.stringify(value))}});
@@ -930,7 +1699,10 @@ export function discoverShellApiOutputs(root) {
       add(value,bytes.slice(0,offsets[match.index]).split('\n').length,'kubectl-create');
     }
   }
-  shellOutputCache.set(root,{key,outputs});
+  for(const entry of nativeTeeOutputCache.values())for(const file of Object.keys(entry.dependencies))if(fs.existsSync(path.join(root,file)))cacheInputs.push(file);
+  for(const [id,entry]of namedShellChannelFacts)if(id.startsWith(root+':'))for(const file of Object.keys(entry.dependencies))if(fs.existsSync(path.join(root,file)))cacheInputs.push(file);
+  const finalKey=hash(JSON.stringify([...new Set(cacheInputs)].sort().map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])));
+  shellOutputCache.set(root,{key:finalKey,outputs});
   return outputs;
 }
 
@@ -1015,33 +1787,115 @@ export function discoverTransformedApiOutputs(root) {
   transformOutputCache.clear();transformOutputCache.set(cacheKey,result);return result;
 }
 
+// Resolve only the shell grammar we can reproduce without executing deployment
+// code. Defaults are selected inputs; runtime/cluster-dependent substitutions
+// remain explicit failures. Tokenization precedes expansion so JSON and escaped
+// Helm paths retain their original single argv boundaries.
+function installerShell(root, sourcePath) {
+  const source=fs.readFileSync(path.join(root,sourcePath),'utf8').replace(/\\\n[ \t]*/gu,' ');
+  const variables={REPO_DIR:root,SCRIPT_DIR:path.join(root,'scripts')};
+  const expand=text=>{
+    const value=text.replace(/\$\{([A-Za-z_][A-Za-z0-9_]*)\}|\$([A-Za-z_][A-Za-z0-9_]*)/gu,(match,braced,plain)=>{
+      assert(Object.hasOwn(variables,braced??plain),`API_PRODUCT_INSTALLER_VARIABLE_UNQUALIFIED: ${sourcePath}:${match}`);return variables[braced??plain];
+    });
+    assert(!/[`$]/u.test(value),`API_PRODUCT_INSTALLER_EXPANSION_UNQUALIFIED: ${sourcePath}:${text}`);return value;
+  };
+  // Global assignments only. Never mistake a local conditional/caller value
+  // for the selected default. Unresolved definitions are retained as failures
+  // when the selected argv actually uses them.
+  for(const line of source.split('\n')) {
+    const assignment=/^([A-Z_][A-Z0-9_]*)="([^"\n]*)"$/u.exec(line);if(!assignment||['REPO_DIR','SCRIPT_DIR'].includes(assignment[1]))continue;
+    let value=assignment[2].replace(/\$\{[A-Z_][A-Z0-9_]*:-([^}]*)\}/gu,'$1');
+    try {value=expand(value);}catch {continue;}
+    if(!/[`$]/u.test(value))variables[assignment[1]]=value;
+  }
+  const tokens=text=>{
+    const parsed=spawnSync('python3',['-c','import json,shlex,sys; print(json.dumps(shlex.split(sys.stdin.read())))'],{input:text,encoding:'utf8'});
+    assert.equal(parsed.status,0,`API_PRODUCT_INSTALLER_PARSE_FAILED: ${sourcePath}`);
+    return JSON.parse(parsed.stdout);
+  };
+  const invocations=source.split('\n').filter(line=>/^\s*helm upgrade --install\s/u.test(line)).map(tokens);
+  return {source,variables,expand,tokens,invocations};
+}
+function installerHelmRecipe(root, sourcePath, argv) {
+  assert.deepEqual(argv.slice(0,3),['helm','upgrade','--install'],`API_PRODUCT_INSTALLER_OPERATION_UNQUALIFIED: ${sourcePath}`);
+  const recipe={path:sourcePath,release:argv[3],chart:argv[4],namespace:'default',inputs:[],values:[],args:[],effectiveArgv:argv};
+  const inputPath=input=>{
+    const absolute=path.resolve(root,input);const relative=path.relative(root,absolute);
+    assert(relative&&!relative.startsWith('../')&&!path.isAbsolute(relative)&&fs.existsSync(absolute)&&fs.statSync(absolute).isFile(),`API_PRODUCT_INSTALLER_INPUT_UNQUALIFIED: ${sourcePath}:${input}`);
+    recipe.inputs.push(relative);return absolute;
+  };
+  for(let index=5;index<argv.length;index++) {
+    const flag=argv[index];
+    if(['--wait','--create-namespace','--atomic','--cleanup-on-fail'].includes(flag))continue;
+    const argument=()=>{assert(index+1<argv.length,`API_PRODUCT_INSTALLER_FLAG_VALUE_MISSING: ${sourcePath}:${flag}`);return argv[++index];};
+    if(['--timeout','--history-max'].includes(flag)){argument();continue;}
+    if(flag==='--version'){recipe.version=argument();continue;}
+    if(['--namespace','-n'].includes(flag)){recipe.namespace=argument();continue;}
+    if(['--values','-f'].includes(flag)){recipe.values.push(inputPath(argument()));continue;}
+    if(['--set','--set-string','--set-json','--set-literal'].includes(flag)){recipe.args.push(flag,argument());continue;}
+    if(flag==='--set-file'){
+      const value=argument(),equals=value.indexOf('=');assert(equals>0&&!value.includes(','),`API_PRODUCT_INSTALLER_FILE_PARAMETER_UNQUALIFIED: ${sourcePath}`);
+      recipe.args.push(flag,`${value.slice(0,equals)}=${inputPath(value.slice(equals+1))}`);continue;
+    }
+    if(['--post-renderer','--post-renderer-args','--kube-version','--api-versions'].includes(flag)){recipe.args.push(flag,argument());continue;}
+    if(flag==='--skip-crds'){recipe.skipCrds=true;continue;}
+    if(['--skip-schema-validation','--disable-openapi-validation','--no-hooks'].includes(flag)){recipe.args.push(flag);continue;}
+    throw new Error(`API_PRODUCT_INSTALLER_FLAG_UNQUALIFIED: ${sourcePath}:${flag}`);
+  }
+  return recipe;
+}
 const infrastructureOutputCache=new Map();
 export function discoverInfrastructureApiOutputs(root) {
-  const source='scripts/infrastructure-release.mjs';
+  const source='scripts/infrastructure-release.mjs',caller='scripts/deploy.sh';
   if(!fs.existsSync(path.join(root,source)))return [];
-  assertProducerAdapterAuthority(root,['scripts/deploy.sh',source,'scripts/infrastructure-chart.mjs','scripts/infrastructure-image-renderer.mjs'].filter(file=>fs.existsSync(path.join(root,file))));
-  const versionFile=path.join(root,'versions.json');
-  const lock=JSON.parse(fs.readFileSync(versionFile,'utf8')).infrastructureCharts??{};
-  const dependencyFiles=walkProductSources(root,['scripts','my-values/infra'],file=>/\.(?:mjs|ya?ml|json)$/u.test(file));
-  const cacheKey=hash(JSON.stringify([root,lock,dependencyFiles.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])]));
-  if(infrastructureOutputCache.has(cacheKey))return infrastructureOutputCache.get(cacheKey);
-  const results=[];
+  assertProducerAdapterAuthority(root,[caller,source,'scripts/infrastructure-chart.mjs','scripts/infrastructure-image-renderer.mjs'].filter(file=>fs.existsSync(path.join(root,file))));
+  const lock=JSON.parse(fs.readFileSync(path.join(root,'versions.json'),'utf8')).infrastructureCharts??{};
+  const shell=installerShell(root,caller),recipes=[];
   for(const name of Object.keys(lock).sort()) {
-    const directory='my-values/infra';
-    const expected=`${directory}/${name==='tailscale'?'tailscale-operator':name}-values.yaml`;
-    assert(fs.existsSync(path.join(root,expected)),`API_PRODUCT_INFRASTRUCTURE_VALUES_BINDING_MISSING: ${name}`);
-    const chartModule=pathToFileURL(path.join(root,'scripts/infrastructure-chart.mjs')).href;
-    const releaseModule=pathToFileURL(path.join(root,source)).href;
-    const program=`import {stageInfrastructureChart} from ${JSON.stringify(chartModule)}; import {renderInfrastructureChart} from ${JSON.stringify(releaseModule)}; const name=${JSON.stringify(name)};const archive=stageInfrastructureChart(name); const values=${JSON.stringify(path.join(root,expected))};process.stdout.write(JSON.stringify([false,true].map(upgrade=>({upgrade,yaml:renderInfrastructureChart(name,name,'default',archive,values,'helm',upgrade)}))));`;
-    const rendered=spawnSync(process.execPath,['--input-type=module','-e',program],{cwd:root,encoding:'utf8',maxBuffer:64*1024*1024});
-    assert.equal(rendered.status,0,`API_PRODUCT_INFRASTRUCTURE_RENDER_FAILED: ${name}: ${rendered.stderr}`);
-    for(const profile of JSON.parse(rendered.stdout)) {
-      const documents=YAML.parseAllDocuments(profile.yaml);
-      assert(documents.every(document=>!document.errors.length),`API_PRODUCT_INFRASTRUCTURE_YAML_INVALID: ${name}`);
-      documents.forEach((document,index)=>{const value=document.toJS();if(!value?.apiVersion||!value?.kind)return;
-        results.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,producer:'infrastructure-helm',profile:`${name}:${profile.upgrade?'upgrade':'install'}`,sourceDigest:hash(fs.readFileSync(path.join(root,source))),inputs:[expected,'versions.json'],inputDigest:hash(JSON.stringify([lock[name],hash(fs.readFileSync(path.join(root,expected)))])),dependencyDigest:hash(JSON.stringify(walkProductSources(root,['scripts'],file=>/^scripts\/(?:infrastructure|stateful-database)-.*\.mjs$/u.test(file)).map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))),outputDigest:hash(JSON.stringify(value))}});
-      });
-    }
+    // Authenticate the actual command-substitution ancestry. The staged archive
+    // is the original module's pinned archive, never an inferred chart alias.
+    const bindings=[...shell.source.matchAll(/^\s*([a-z_]+)="\$\((node [^\n]+)\)"$/gmu)].flatMap(match=>{
+      const argv=shell.tokens(match[2]);return argv[1]==='$REPO_DIR/scripts/infrastructure-release.mjs'&&argv[2]===name?[{variable:match[1],argv}]:[];
+    });
+    assert.equal(bindings.length,1,`API_PRODUCT_INFRASTRUCTURE_CHART_BINDING_UNQUALIFIED: ${name}`);
+    const binding=bindings[0];assert.equal(binding.argv.length,6,`API_PRODUCT_INFRASTRUCTURE_STAGE_ARGS_UNQUALIFIED: ${name}`);
+    const stageArgs=binding.argv.slice(2).map(shell.expand);
+    const invocations=shell.invocations.filter(argv=>argv[4]===`$${binding.variable}`||argv[4]===`\${${binding.variable}}`);
+    assert.equal(invocations.length,1,`API_PRODUCT_INFRASTRUCTURE_INVOCATION_UNQUALIFIED: ${name}`);
+    const stage=spawnSync(process.execPath,['--input-type=module','-e',`import {stageInfrastructureChart} from ${JSON.stringify(pathToFileURL(path.join(root,'scripts/infrastructure-chart.mjs')).href)};process.stdout.write(stageInfrastructureChart(${JSON.stringify(name)}));`],{cwd:root,encoding:'utf8'});
+    assert.equal(stage.status,0,`API_PRODUCT_INFRASTRUCTURE_STAGE_FAILED: ${name}: ${stage.stderr}`);
+    shell.variables[binding.variable]=stage.stdout.trim();
+    const recipe=installerHelmRecipe(root,caller,invocations[0].map(shell.expand));
+    assert.equal(recipe.release,stageArgs[1],`API_PRODUCT_INFRASTRUCTURE_STAGE_RELEASE_DRIFT: ${name}`);
+    assert.equal(recipe.namespace,stageArgs[2],`API_PRODUCT_INFRASTRUCTURE_STAGE_NAMESPACE_DRIFT: ${name}`);
+    assert.equal(recipe.values[0],stageArgs[3],`API_PRODUCT_INFRASTRUCTURE_STAGE_VALUES_DRIFT: ${name}`);
+    assert.equal(recipe.chart,stage.stdout.trim(),`API_PRODUCT_INFRASTRUCTURE_ARCHIVE_BINDING_DRIFT: ${name}`);
+    assert.equal(hash(fs.readFileSync(recipe.chart)),lock[name].sha256,`API_PRODUCT_INFRASTRUCTURE_ARCHIVE_DRIFT: ${name}`);
+    const post=recipe.args.indexOf('--post-renderer');
+    assert(post>=0&&recipe.args[post+1]===path.join(root,'scripts/infrastructure-image-renderer.mjs')&&recipe.args.filter(flag=>flag==='--post-renderer').length===1,`API_PRODUCT_INFRASTRUCTURE_POST_RENDERER_UNQUALIFIED: ${name}`);
+    const postArgs=recipe.args.indexOf('--post-renderer-args');
+    assert(postArgs>=0&&recipe.args[postArgs+1]===name&&recipe.args.filter(flag=>flag==='--post-renderer-args').length===1,`API_PRODUCT_INFRASTRUCTURE_POST_RENDERER_ARGS_UNQUALIFIED: ${name}`);
+    recipes.push({...recipe,name});
+  }
+  const dependencyFiles=walkProductSources(root,['scripts','my-values/infra'],file=>/\.(?:mjs|ya?ml|json|sh)$/u.test(file));
+  const dependencyDigest=hash(JSON.stringify(dependencyFiles.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])));
+  const cacheKey=hash(JSON.stringify([root,lock,dependencyDigest,recipes]));
+  if(infrastructureOutputCache.has(cacheKey))return infrastructureOutputCache.get(cacheKey);
+  const results=[],renderMarker='kubeclaw-offline-render-only-not-a-credential';
+  for(const recipe of recipes)for(const upgrade of [false,true]) {
+    const args=['template',recipe.release,recipe.chart,'--namespace',recipe.namespace,...recipe.values.flatMap(input=>['-f',input]),...recipe.args,...(upgrade?['--is-upgrade']:[]),...(recipe.name==='postgresql'?['--set-string',`auth.password=${renderMarker}`]:[])];
+    const rendered=spawnSync('helm',args,{cwd:root,encoding:'utf8',maxBuffer:64*1024*1024});
+    assert.equal(rendered.status,0,`API_PRODUCT_INFRASTRUCTURE_RENDER_FAILED: ${recipe.name}: ${rendered.stderr}`);
+    const documents=YAML.parseAllDocuments(rendered.stdout);
+    assert(documents.every(document=>!document.errors.length),`API_PRODUCT_INFRASTRUCTURE_YAML_INVALID: ${recipe.name}`);
+    const values=documents.map(document=>document.toJS()).filter(value=>value?.apiVersion&&value?.kind);
+    if(recipe.name==='postgresql')assert(!values.some(value=>value.kind==='Secret')&&!rendered.stdout.includes(renderMarker)&&!rendered.stdout.includes(Buffer.from(renderMarker).toString('base64')),'API_PRODUCT_INFRASTRUCTURE_POSTGRESQL_EXTERNAL_SECRET_REQUIRED');
+    // The original binder also checks hook resources that Helm never sends to
+    // its post-renderer. Keep that complete-output check in the native adapter.
+    const check=spawnSync(process.execPath,['--input-type=module','-e',`import {bindInfrastructureImages} from ${JSON.stringify(pathToFileURL(path.join(root,'scripts/infrastructure-image-renderer.mjs')).href)};let bytes='';for await(const chunk of process.stdin)bytes+=chunk;bindInfrastructureImages(${JSON.stringify(recipe.name)},JSON.parse(bytes));`],{cwd:root,input:JSON.stringify(values),encoding:'utf8',maxBuffer:64*1024*1024});
+    assert.equal(check.status,0,`API_PRODUCT_INFRASTRUCTURE_IMAGE_BINDING_FAILED: ${recipe.name}: ${check.stderr}`);
+    values.forEach((value,index)=>results.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,producer:'infrastructure-helm',profile:`${recipe.name}:${upgrade?'upgrade':'install'}`,sourceDigest:hash(fs.readFileSync(path.join(root,source))),inputs:[caller,...recipe.inputs,'versions.json'],inputDigest:hash(JSON.stringify([lock[recipe.name],recipe.effectiveArgv,[caller,...recipe.inputs].map(input=>[input,hash(fs.readFileSync(path.join(root,input)))])])),dependencyDigest,outputDigest:hash(JSON.stringify(value))}}));
   }
   infrastructureOutputCache.clear();infrastructureOutputCache.set(cacheKey,results);return results;
 }
@@ -1137,36 +1991,26 @@ export function discoverExternalChartApiOutputs(root) {
   ];
   assertProducerAdapterAuthority(root,[...new Set(installerRecipes.map(recipe=>recipe.path).filter(source=>fs.existsSync(path.join(root,source))))]);
   for(const recipe of installerRecipes)if(fs.existsSync(path.join(root,recipe.path))) {
-    const source=fs.readFileSync(path.join(root,recipe.path),'utf8').replace(/\\\n[ \t]*/gu,' ');
-    const invocations=source.split('\n').filter(line=>/\bhelm upgrade --install\b/u.test(line));
-    const invocation=invocations.find(line=>line.includes(recipe.chart==='argo-cd'?'argo/argo-cd':recipe.chart==='cilium'?'cilium/cilium':`spiffe/${recipe.chart}`));
-    assert(invocation,`API_PRODUCT_INSTALLER_RECIPE_OPERATION_MISSING: ${recipe.path}:${recipe.chart}`);
-    const variables={REPO_DIR:root,INFRA_DIR:path.join(root,'my-values/infra')};
-    for(const line of source.split('\n')) {
-      const assignment=/^([A-Z_][A-Z0-9_]*)="([^"\n]*)"$/u.exec(line.trim());if(!assignment)continue;
-      let value=assignment[2].replace(/\$\{[A-Z_][A-Z0-9_]*:-([^}]*)\}/gu,'$1');
-      value=value.replace(/\$([A-Z_][A-Z0-9_]*)/gu,(match,key)=>variables[key]??match);
-      if(!/[`$]/u.test(value))variables[assignment[1]]=value;
-    }
-    const expanded=invocation.replace(/\$\{([A-Z_][A-Z0-9_]*)\}|\$([A-Z_][A-Z0-9_]*)/gu,(match,braced,plain)=>{const value=variables[braced??plain];assert(value!==undefined,`API_PRODUCT_INSTALLER_VARIABLE_UNQUALIFIED: ${recipe.path}:${match}`);return value;});
-    assert(!/[`$;|]/u.test(expanded),`API_PRODUCT_INSTALLER_INVOCATION_UNQUALIFIED: ${recipe.path}`);
-    const parsed=spawnSync('python3',['-c','import json,shlex,sys; print(json.dumps(shlex.split(sys.stdin.read())))'],{input:expanded,encoding:'utf8'});
-    assert.equal(parsed.status,0,`API_PRODUCT_INSTALLER_PARSE_FAILED: ${recipe.path}`);
-    const argv=JSON.parse(parsed.stdout);const install=argv.indexOf('--install');
-    assert(install>=0,`API_PRODUCT_INSTALLER_OPERATION_UNQUALIFIED: ${recipe.path}`);
-    recipe.release=argv[install+1];recipe.chart=argv[install+2].split('/').at(-1);recipe.args=[];recipe.inputs=[];
-    for(let index=install+3;index<argv.length;index++) {
-      const flag=argv[index];
-      if(['--wait','--create-namespace'].includes(flag))continue;
-      if(flag==='--timeout'){index++;continue;}
-      if(flag==='--version'){recipe.version=argv[++index];continue;}
-      if(['--namespace','-n'].includes(flag)){recipe.namespace=argv[++index];continue;}
-      if(['--values','-f'].includes(flag)){const input=argv[++index];assert(input.startsWith(root+'/'),`API_PRODUCT_INSTALLER_INPUT_UNQUALIFIED: ${input}`);recipe.inputs.push(path.relative(root,input));continue;}
-      if(['--set','--set-string','--set-file','--set-json','--set-literal'].includes(flag)) {const value=argv[++index];recipe.args.push(flag,value);if(flag==='--set-file'){const input=value.slice(value.indexOf('=')+1);assert(input.startsWith(root+'/'),`API_PRODUCT_INSTALLER_FILE_UNQUALIFIED: ${input}`);recipe.inputs.push(path.relative(root,input));}continue;}
-      throw new Error(`API_PRODUCT_INSTALLER_FLAG_UNQUALIFIED: ${recipe.path}:${flag}`);
-    }
-    recipe.repository=recipe.chart==='argo-cd'?variables.ARGOCD_HELM_REPO:recipe.chart.startsWith('spire')?variables.SPIFFE_HELM_REPO:recipe.repository;
-    recipes.push({...recipe,profile:`installer:${recipe.release}`});
+    const shell=installerShell(root,recipe.path);
+    const chart=recipe.chart==='argo-cd'?'argo/argo-cd':recipe.chart==='cilium'?'cilium/cilium':`spiffe/${recipe.chart}`;
+    const invocations=shell.invocations.filter(argv=>argv[4]===chart);
+    assert.equal(invocations.length,1,`API_PRODUCT_INSTALLER_RECIPE_OPERATION_UNQUALIFIED: ${recipe.path}:${recipe.chart}`);
+    const parsed=installerHelmRecipe(root,recipe.path,invocations[0].map(shell.expand));
+    assert(!parsed.args.includes('--post-renderer')&&!parsed.args.includes('--post-renderer-args'),`API_PRODUCT_EXTERNAL_POST_RENDERER_UNQUALIFIED: ${recipe.path}`);
+    parsed.chart=chart.split('/').at(-1);
+    const alias=chart.split('/')[0];
+    const repositories=shell.source.split('\n').filter(line=>new RegExp(`^\\s*(?:helm repo add|add_helm_repo_once) ${alias}\\s`,'u').test(line)).map(line=>{
+      const argv=shell.tokens(line);const offset=argv[0]==='helm'?3:1;
+      assert(argv[offset]===alias&&argv[offset+1]&&argv.slice(offset+2).every(flag=>flag==='--force-update'||flag==='>/dev/null'),`API_PRODUCT_INSTALLER_REPOSITORY_UNQUALIFIED: ${recipe.path}:${alias}`);
+      return shell.expand(argv[offset+1]);
+    });
+    assert(repositories.length&&new Set(repositories).size===1,`API_PRODUCT_INSTALLER_REPOSITORY_BINDING_MISSING: ${recipe.path}:${alias}`);
+    parsed.repository=repositories[0];
+    recipes.push({...parsed,profile:`installer:${parsed.release}`});
+  }
+  for(const sourcePath of new Set(installerRecipes.map(recipe=>recipe.path)))if(fs.existsSync(path.join(root,sourcePath))) {
+    const shell=installerShell(root,sourcePath);
+    for(const argv of shell.invocations)if(/^[A-Za-z0-9_-]+\/[A-Za-z0-9_-]+$/u.test(argv[4]))assert(recipes.some(recipe=>recipe.path===sourcePath&&recipe.effectiveArgv?.[4]===argv[4]),`API_PRODUCT_INSTALLER_SELECTED_CHART_UNQUALIFIED: ${sourcePath}:${argv[4]}`);
   }
   const cacheKey=hash(JSON.stringify([root,hash(manifestBytes),archives.map(archive=>[archive.path,hash(fs.readFileSync(path.join(root,archive.path)))]),recipes.map(recipe=>({...recipe,sourceDigest:hash(fs.readFileSync(path.join(root,recipe.path))),inputDigests:recipe.inputs.map(input=>[input,hash(fs.readFileSync(path.join(root,input)))])}))]));
   if(externalOutputCache.has(cacheKey))return externalOutputCache.get(cacheKey);
@@ -1180,7 +2024,7 @@ export function discoverExternalChartApiOutputs(root) {
       const inlineDirectory=recipe.inline!==undefined?fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-docs-external-inline-')):null;
       const inlinePath=inlineDirectory?path.join(inlineDirectory,'values.yaml'):null;
       if(inlinePath)fs.writeFileSync(inlinePath,recipe.inline);
-      const args=['template',recipe.release,archivePath,'--namespace',recipe.namespace,'--kube-version',recipe.kubeVersion??'1.35.0',...(recipe.apiVersions??[]).flatMap(value=>['--api-versions',value]),...(recipe.skipCrds?[]:['--include-crds']),'--skip-tests',...(recipe.skipSchemaValidation?['--skip-schema-validation']:[]),...recipe.inputs.filter(input=>/\.ya?ml$/u.test(input)).flatMap(input=>['-f',path.join(root,input)]),...(inlinePath?['-f',inlinePath]:[]),...recipe.args,...(upgrade?['--is-upgrade']:[])];
+      const args=['template',recipe.release,archivePath,'--namespace',recipe.namespace,'--kube-version',recipe.kubeVersion??'1.35.0',...(recipe.apiVersions??[]).flatMap(value=>['--api-versions',value]),...(recipe.skipCrds?[]:['--include-crds']),'--skip-tests',...(recipe.skipSchemaValidation?['--skip-schema-validation']:[]),...(recipe.values??recipe.inputs.filter(input=>/\.ya?ml$/u.test(input)).map(input=>path.join(root,input))).flatMap(input=>['-f',input]),...(inlinePath?['-f',inlinePath]:[]),...recipe.args,...(upgrade?['--is-upgrade']:[])];
       const rendered=spawnSync('helm',args,{cwd:root,encoding:'utf8',maxBuffer:64*1024*1024});
       if(inlineDirectory)fs.rmSync(inlineDirectory,{recursive:true,force:true});
       assert.equal(rendered.status,0,`API_PRODUCT_EXTERNAL_RENDER_FAILED: ${recipe.profile}: ${rendered.stderr}`);
@@ -1189,7 +2033,7 @@ export function discoverExternalChartApiOutputs(root) {
       documents.forEach((document,index)=>{const value=document.toJS();if(!value?.apiVersion||!value?.kind)return;
         const observedOutputDigest=hash(JSON.stringify(value));
         const generatedFields=externalGeneratedSecretFields(root,recipe,archive,document,value);
-        results.push({value,...(generatedFields.length?{privateObservation:{observedOutputDigest}}:{}),context:{apiVersion:value.apiVersion,kind:value.kind,path:recipe.path,document:index,producer:'external-helm',archivePath:archive.path,archiveSha256:archive.sha256,...(generatedFields.length?{generatedFields}:{}),profile:`${recipe.profile}:${upgrade?'upgrade':'install'}`,sourceDigest:hash(fs.readFileSync(path.join(root,recipe.path))),inputs:recipe.inputs,inputDigest:hash(JSON.stringify([recipe.inputs.map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]),recipe.inline??null])),dependencyDigest:hash(JSON.stringify([recipe.chart,recipe.version,recipe.repository,archive.sha256,recipe.args,recipe.kubeVersion??'1.35.0',recipe.apiVersions??[],recipe.skipCrds??false,recipe.skipSchemaValidation??false])),outputDigest:hash(JSON.stringify(value))}});
+        results.push({value,...(generatedFields.length?{privateObservation:{observedOutputDigest}}:{}),context:{apiVersion:value.apiVersion,kind:value.kind,path:recipe.path,document:index,producer:'external-helm',archivePath:archive.path,archiveSha256:archive.sha256,...(generatedFields.length?{generatedFields}:{}),profile:`${recipe.profile}:${upgrade?'upgrade':'install'}`,sourceDigest:hash(fs.readFileSync(path.join(root,recipe.path))),inputs:recipe.inputs,inputDigest:hash(JSON.stringify([recipe.inputs.map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]),recipe.inline??null])),dependencyDigest:hash(JSON.stringify([recipe.chart,recipe.version,recipe.repository,archive.sha256,recipe.release,recipe.namespace,recipe.effectiveArgv??null,recipe.args,recipe.kubeVersion??'1.35.0',recipe.apiVersions??[],recipe.skipCrds??false,recipe.skipSchemaValidation??false])),outputDigest:hash(JSON.stringify(value))}});
       });
     }
   }
