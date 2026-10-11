@@ -204,7 +204,16 @@ These observations prove dependencies, not peer authorization.
 ### 3. Check the live-execution boundary
 
 The implemented command is `npm run verify:worker-core:trust:live`. It runs
-`deploy.sh worker-trust-e2e` in this checkout. Its effects occur in this order:
+`deploy.sh worker-trust-e2e` in this checkout.
+
+After the owners qualify the signing, lifecycle and denial-observation
+prerequisites below, this implemented live command uses deployed workloads and
+a real unit process. It does not use a test-double server or fabricated completion
+result. Local synthetic checks remain separate from this live execution. This
+implementation fact does not establish a live result here or make ambiguous
+negative-probe JSON sufficient denial proof.
+
+Its effects occur in this order:
 
 1. The live script waits for Nova, Buster, Prism Control, and Prism Worker,
    inspects loaded SVIDs, and checks protected proxy paths.

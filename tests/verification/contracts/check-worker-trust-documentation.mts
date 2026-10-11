@@ -21,7 +21,7 @@ for (const heading of [
 for (const heading of [
   '## Purpose', '## Canonical Worker Trust Procedure', '### Preconditions',
   '### 1. Verify source before cluster execution', '### 2. Observe the installed identity chain',
-  '### 3. Execute positive and negative paths', '### Failure distinction',
+  '### 3. Check the live-execution boundary', '### Failure distinction',
   '### Recovery, rotation boundary, and evidence', '## Source Authority',
 ]) assert.ok(use.includes(heading), `Canonical Worker Trust procedure is missing ${heading}`);
 
