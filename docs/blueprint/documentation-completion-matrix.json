@@ -14150,7 +14150,15 @@
       "passCondition": "Ein maschinenlesbares Operator-Aufgabeninventar ordnet Installation, Preflight, Start, Health, Beobachtung, Signal/Resume, Abbruch, Diagnose, Backup, Restore, Upgrade, Rollback und Stilllegung genau einem kanonischen Verfahren zu.",
       "automaticFailure": "Eine Aufgabe fehlt, ist doppelt autoritativ oder verweist auf interne Arbeitsdokumente.",
       "state": "not-accepted",
-      "evidence": [],
+      "evidence": [
+        {
+          "kind": "root-automatic-structural-and-mutation-check",
+          "evidence": "/home/node/Documents/Codex/a98-evidence/root-current-operator-task-registry-gate/result.json",
+          "sourceRevision": "192b99a8fdb63bfea2970d0a686bd22701038bfd",
+          "state": "terminal-pass-bounded",
+          "limit": "Current generated mapping and isolated mutations passed; independent content reviews and package-wide acceptance remain open."
+        }
+      ],
       "reviews": [],
       "readerFixtureIds": [],
       "executionScenarioIds": []
@@ -19930,6 +19938,18 @@
       "sourceCommit": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
       "evidence": "/home/node/Documents/Codex/a98-evidence/root-worker-trust-current-documentation-contract/result.json",
       "acceptanceLimit": "Entire static/contract/typecheck aggregate; no live security result or independent package acceptance."
+    },
+    {
+      "command": "npm run docs:operator-tasks:check",
+      "state": "observed-terminal-pass-root-bounded",
+      "exitCode": 0,
+      "sourceRevision": "192b99a8fdb63bfea2970d0a686bd22701038bfd",
+      "tasks": 13,
+      "lifecycleCapabilities": 14,
+      "sourcesUnchanged": true,
+      "evidence": "/home/node/Documents/Codex/a98-evidence/root-current-operator-task-registry-gate/result.json",
+      "observedEnd": "2026-10-11T21:36:45.787790+00:00",
+      "acceptanceLimit": "Generator currentness, task/procedure structural checks and isolated mutation controls, not independent semantic or AP09.8 acceptance."
     }
   ],
   "reviewAssignments": [
@@ -26355,7 +26375,19 @@
       "rootTrustAggregate": "Observed terminal0, Sources unchanged; static/contract/typecheck only.",
       "qualificationState": "HOLD; provisional6886 qualification reverted;0d48 discovery/95e registry retained until superseding semantic qualification.",
       "rootFullNewIntegration": "Prepared but not started: wait for superseding scanner freeze and qualification. Historical241-test PASS is not current-candidate proof.",
-      "independentAcceptance": "AP09.8 not accepted; full gates and final Astra still required."
+      "independentAcceptance": "AP09.8 not accepted; full gates and final Astra still required.",
+      "currentOperatorTaskGate": {
+        "command": "npm run docs:operator-tasks:check",
+        "state": "observed-terminal-pass-root-bounded",
+        "exitCode": 0,
+        "sourceRevision": "192b99a8fdb63bfea2970d0a686bd22701038bfd",
+        "tasks": 13,
+        "lifecycleCapabilities": 14,
+        "sourcesUnchanged": true,
+        "evidence": "/home/node/Documents/Codex/a98-evidence/root-current-operator-task-registry-gate/result.json",
+        "observedEnd": "2026-10-11T21:36:45.787790+00:00",
+        "acceptanceLimit": "Generator currentness, task/procedure structural checks and isolated mutation controls, not independent semantic or AP09.8 acceptance."
+      }
     }
   }
 }
