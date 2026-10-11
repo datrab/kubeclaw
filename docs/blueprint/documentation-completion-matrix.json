@@ -22643,7 +22643,7 @@
       "independentAcceptance": false
     },
     "publicationDiscoveryCorrection": {
-      "state": "Generic candidate superseded pending independent audit of omitted qualified documentation helper registration; failed candidates retained, no accepted generic rewrite",
+      "state": "independent Source FAIL2findings5false-green forms; corrective writer next",
       "author": "/root/pv_selector_publication_correction_writer",
       "authorSeal": "/home/node/Documents/Codex/a98-evidence/pv-selector-publication-author-root-seal.json",
       "reviewer": "/root/pv_publication_discovery_source_fresh",
@@ -22654,7 +22654,27 @@
         "separately bound native selector falsely included"
       ],
       "independentAcceptance": false,
-      "boundaryReviewer": "/root/pv_documentation_boundary_source_fresh"
+      "boundaryReviewer": "/root/pv_documentation_boundary_source_fresh",
+      "boundarySourceSeal": "/home/node/Documents/Codex/a98-evidence/pv-documentation-boundary-source-root-seal.json",
+      "correctiveEvidenceDirectory": "/home/node/Documents/Codex/a98-evidence/pv-documentation-boundary-integration-writer",
+      "currentAuthorSeal": "/home/node/Documents/Codex/a98-evidence/pv-documentation-boundary-integration-author-root-seal.json",
+      "currentSourceReviewer": "/root/pv_documentation_boundary_integrated_source_fresh",
+      "currentSource": {
+        "reviewer": "/root/pv_documentation_boundary_integrated_source_fresh",
+        "verdict": "FAIL",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-documentation-boundary-integrated-source-root-seal.json",
+        "report": "/home/node/Documents/Codex/a98-evidence/pv-documentation-boundary-integrated-source-fresh/report.md",
+        "findings": [
+          "F1 namespace/default/destructured Node module.createRequire capability missed",
+          "F2 tracked loader call/apply capability forwarding missed"
+        ],
+        "independentProbes": {
+          "tests": 33,
+          "pass": 28,
+          "falseGreen": 5
+        },
+        "scope": "complete targeted qualification and preserved generic discovery; not package acceptance"
+      }
     },
     "integratedApiPublication": {
       "state": "terminal-PASS",
@@ -22667,6 +22687,77 @@
       "sourceHashesUnchanged": true,
       "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-publication/result.json",
       "scope": "Nine dynamically discovered API test files; independent Source nevertheless FAILs three additional cases. Not acceptance."
+    },
+    "litellmSelectedDatabaseIndependentReviews": {
+      "reviewedRevision": "ebcc04066d42c94b4a4e0fc85e3393dae3d61f78",
+      "source": {
+        "reviewer": "/root/litellm_selected_database_source_fresh",
+        "verdict": "FAIL",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/litellm-selected-database-source-root-seal.json",
+        "finding": "DAT006-SRC-01: false universal absence of row-retention scheduler; both selected versions have conditional cleanup, no repository-selected policy."
+      },
+      "reader": {
+        "reviewer": "/root/litellm_database_recovery_reader_fresh",
+        "verdict": "PASS bounded Reader; executable restore unsupported",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/litellm-database-recovery-reader-root-seal.json",
+        "limits": "No live recovery, READER-OPERATOR execution, A97 or global package acceptance."
+      },
+      "assignedCorrection": "/root/litellm_retention_correction_writer",
+      "state": "Source current43claims PASS; Reader current2materialFAIL; followup author now correcting exact two reader gaps",
+      "independentAcceptance": false,
+      "frozenCorrection": {
+        "files": {
+          "docs/site/understand/data-and-state.md": "299d74919979e78dfa76e963f092ab4dc7c02448f037f57841b336944db8de52",
+          "docs/site/use/recovery.md": "011c385765c0529fca46fdf8d46ec7fa51a811f047091c642d18bdd021cc0d4b"
+        },
+        "authorSeals": [
+          "/home/node/Documents/Codex/a98-evidence/litellm-retention-correction-writer-root-seal.json",
+          "/home/node/Documents/Codex/a98-evidence/litellm-recovery-navigation-writer-root-seal.json"
+        ],
+        "sourceReviewer": "/root/litellm_retention_complete_source_fresh",
+        "readerReviewer": "/root/litellm_retention_recovery_reader_fresh",
+        "independentAcceptance": false
+      },
+      "operatorGate": {
+        "state": "terminal-PASS",
+        "exitCode": 0,
+        "session": 25736,
+        "result": "/home/node/Documents/Codex/a98-evidence/litellm-corrected-operator-gate-root/result.json",
+        "sourceHashesUnchanged": true,
+        "scope": "13 tasks,14 lifecycle capabilities and mandatory registry mutations; not semantic or package acceptance."
+      },
+      "currentReader": {
+        "reviewer": "/root/litellm_retention_recovery_reader_fresh",
+        "verdict": "FAIL",
+        "report": "/home/node/Documents/Codex/a98-evidence/litellm-retention-recovery-reader-fresh/report.md",
+        "findings": [
+          "F1 missing read-only effective retention identification, precedence and value meanings",
+          "F2 missing concrete Job-bound completed-group verification procedure"
+        ],
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/litellm-retention-recovery-reader-fresh-root-seal.json"
+      },
+      "nextWriter": "/root/litellm_readonly_retention_backup_procedure_writer",
+      "currentSource": {
+        "reviewer": "/root/litellm_retention_complete_source_fresh",
+        "verdict": "PASS bounded Source only",
+        "claims": 43,
+        "subcriteria": 6,
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/litellm-retention-complete-source-fresh-root-seal.json",
+        "report": "/home/node/Documents/Codex/a98-evidence/litellm-retention-complete-source-fresh/report.md",
+        "scope": "Complete current DAT006 source claims; not full gates/package/global or live success."
+      }
+    },
+    "integratedApiDocumentationBoundary": {
+      "state": "terminal-PASS",
+      "session": 31799,
+      "exitCode": 0,
+      "tests": 181,
+      "pass": 181,
+      "fail": 0,
+      "skipped": 0,
+      "sourceHashesUnchanged": true,
+      "result": "/home/node/Documents/Codex/a98-evidence/root-integrated-api-documentation-boundary/result.json",
+      "scope": "Nine complete API suites; independent Source probes identify five additional graph/consumer holes, so not acceptance."
     }
   }
 }
