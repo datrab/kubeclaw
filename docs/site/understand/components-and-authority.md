@@ -211,7 +211,12 @@ They do not prove deployment in each environment.
 An approved baseline also gives visual tests a stable comparison target.
 
 **Cost:** Prism adds state, artifact, approval, and provenance boundaries.
-Its current result path does not have Buster's Ed25519 artifact signature.
+Its current result path provides no durable artifact signature. Buster remote
+results also use digest and receipt bindings, not Ed25519 signatures. The
+separate signed source snapshot comes from Nova.
+
+> [The Buster result contract carries a digest and receipt](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/contracts/pipeline-test-gate/v1/src/types.ts#L416-L429),
+> while [the source snapshot carries the Ed25519 attestation](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/contracts/pipeline-test-gate/v1/src/types.ts#L385-L401).
 
 > **Source evidence — baseline handoff**
 >

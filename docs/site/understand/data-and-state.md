@@ -115,7 +115,7 @@ The four classes have strict meanings:
 | `observer-checkpoints.jsonl` | Persistent authority | `S01` | Nova observer recovery frontier |
 | `observer-deliveries.jsonl` | Persistent authority | `S01` | Nova observer attempt history |
 | `reconciliation.jsonl` | Persistent authority | `S01` | Nova or imported-attempt reconciliation decisions; the configured root selects the owner |
-| `signals.jsonl` | Persistent authority | `S01` | Nova authenticated resume inputs |
+| `signals.jsonl` | Persistent authority | `S01` | Nova resume inputs validated against the wait; caller authentication is outside this file contract |
 | `claim.json` | Persistent authority | `S03` | One resource-lock claim |
 | `owner.json` | Persistent authority | `S03` | One resource-lock owner record |
 | `resource-locks` | Persistent authority | `S03` | Root for Nova resource locks |
@@ -436,7 +436,7 @@ Buster separates five things that have similar roles:
 2. The committed source snapshot says which source can run.
 3. Durable admission says that Buster accepted storage liability.
 4. Attempt records and evidence say what each provider did.
-5. The signed result and completion receipt authorize Nova's one-time import.
+5. Nova verifies the result digest and bound receipt before its one-time import.
 
 Evidence bytes are content addressed. Buster verifies containment, declared file
 identity, count, total bytes, media type, size, and digest before publication.

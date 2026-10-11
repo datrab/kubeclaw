@@ -552,7 +552,7 @@ questions.
 | Canonical lifecycle event | Nova committed a lifecycle fact at a verified journal position | That an external side effect completed unless a verified receipt supports it |
 | Effect receipt | The selected adapter recorded the exact terminal effect result under its idempotency key | That a dashboard or notification received a copy |
 | Artifact reference plus verified bytes | Exact content, size, media type, producer, and digest | That the artifact changed pipeline state without the corresponding lifecycle record |
-| Signed Buster remote result and receipt | Buster produced the bound result for the accepted job and source identity | That Nova imported it, unless Nova's journal records the import path |
+| Buster remote result digest and receipt | The returned bytes match the bound result and job identities checked by Nova; the receipt is a deterministic integrity binding, not an asymmetric signature | Independent proof of the producer's identity, or that Nova imported it, unless Nova's journal records the import path |
 | Redis stream entry | A configured adapter appended one projection and received a stream ID | Canonical lifecycle order, indefinite retention, or successful downstream consumption |
 | Observer delivery and checkpoint | Nova attempted delivery and, after success, advanced one observer/run frontier | Business success inside a sink beyond the sink's adapter contract |
 | Runtime log | Diagnostic text from one process or tool | Complete event order, identity binding, or durable product state by itself |

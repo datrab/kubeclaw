@@ -124,6 +124,76 @@ audit location and retention end date, and every failed cleanup. There is no
 automatic rollback after PVC or namespace deletion; recovery is from the final
 verified media through the canonical restore procedure.
 
+### Retire the Former Qdrant Installation
+
+Use this procedure only for the former `qdrant` release in namespace `kubeclaw`.
+Qdrant is not a current platform dependency. This procedure deletes its selected
+claims and changes their bound volumes to reclaim policy `Delete`. It is not a
+general storage cleanup command.
+
+Run from an independent administration host and the pinned source checkout.
+Use the [supported tools](README.md#version-and-tool-boundary), Bash, Python 3,
+Helm, and kubectl. Set `KUBE_CONTEXT` to the intended context in your kubeconfig.
+The administrator needs reads of claims and cluster-scoped volumes, permission
+to patch those volumes, Helm release removal, and deletion of the named
+workloads, services, Secrets, policies, and claims. Do not grant broader access
+merely to make the command succeed.
+
+Before starting, stop former Qdrant consumers. The storage owner must approve
+data deletion and identify every selected claim and volume. Keep a final backup
+and an isolated restore result if the data must remain recoverable. Stop if a
+selected resource is shared, ownership is uncertain, or the backup is incomplete.
+
+1. Confirm the context's API server and cluster identity independently. From the
+   checkout, inspect the release and claims without changing them:
+
+   ```bash
+   : "${KUBE_CONTEXT:?Set the intended kubeconfig context}"
+   helm --kube-context "$KUBE_CONTEXT" --namespace kubeclaw list --all
+   kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get pvc -o json
+   ```
+
+   The script selects claims named `qdrant-storage-qdrant-0` or
+   `qdrant-snapshots-qdrant-0`, or claims whose instance and name labels identify
+   Qdrant. It also accepts the legacy `app` name label. Retain the original
+   claim names, UIDs, bound-volume names, and volume reclaim policies privately.
+   For each bound volume, compare its `claimRef` namespace, name, and UID with
+   the claim. A name alone is not ownership proof.
+2. After the storage owner's deletion decision, run:
+
+   ```bash
+   bash scripts/remove-qdrant.sh --delete-data
+   ```
+
+   The script checks all selected bound-volume ownership before removing the
+   release. It removes the named workloads, credentials, and network policies.
+   For each bound volume, a JSON Patch tests the original claim namespace, name,
+   and UID before setting reclaim policy `Delete`. It then deletes the claim and
+   waits up to 180 seconds for the volume's API deletion. A failed ownership test
+   stops the command. An unbound selected claim has no volume patch.
+3. Retain the command exit status and output. Compare a new release, workload,
+   policy, Secret, claim, and volume inventory with the recorded identities.
+   Success means the selected Kubernetes resources are absent. API deletion does
+   not prove that the storage driver erased underlying data; obtain the storage
+   owner's disposal evidence separately. Roll out updated agents to remove
+   former Qdrant health probes.
+
+If any command fails, stop and preserve the original inventory and observations.
+Some earlier deletions can already have succeeded. Diagnose permissions,
+ownership tests, finalizers, attachments, and provisioner errors before an
+owner-approved continuation; do not force-delete resources or blindly rerun the
+whole procedure. `--ignore-not-found` permits absence, but does not prove a
+previous deletion or erase result. There is no rollback after storage deletion.
+Recovery requires the retained backup and the storage owner's restore procedure.
+The script removes its temporary claim files on exit, so retain the inventory
+before running it. No live retirement result is established by this guide.
+
+> **Source evidence — bounded Qdrant retirement**
+>
+> [The command requires explicit context and deletion intent, then selects claims](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L6-L31).
+> [It verifies bound-volume ownership before release and resource removal](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L33-L55).
+> [The conditional volume patch tests ownership before claim deletion and bounded waits](https://github.com/datrab/kubeclaw/blob/2f404b02baae29d3b6c5422f7d61481127da1382/scripts/remove-qdrant.sh#L57-L78).
+
 ## Supported Versions
 
 Use the [shared version rules](README.md#version-and-tool-boundary).
