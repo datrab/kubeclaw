@@ -18580,6 +18580,57 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
       "owner": "/root",
       "acceptanceLimit": "Complete independent Source FAIL; baseline436/33/9 PASS cannot close negative mutation finding."
+    },
+    {
+      "id": "A98-20261011-INSTALLATION-TASK-SOURCE-F1",
+      "state": "open-whole-batch-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-03",
+        "A98-13"
+      ],
+      "description": "Wrong-SVID probes accept connection errors/503; actual authorization denial requires independently qualified observations before mutation.",
+      "owner": "/root/trust_denial_retirement_complete_batch_writer",
+      "reviewer": "/root/installation_task_inventory_corrected_complete_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-source-fresh-root-seal.json",
+      "acceptanceLimit": "Independent Reader scoped PASS does not compensate technical Source FAIL."
+    },
+    {
+      "id": "A98-20261011-INSTALLATION-TASK-SOURCE-F2",
+      "state": "open-whole-batch-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-03",
+        "A98-13"
+      ],
+      "description": "Teardown keeps independently applied recovery CronJob, two ConfigMaps and two Cilium policies while deleting backup PVC; retained inventory claim incorrect.",
+      "owner": "/root/trust_denial_retirement_complete_batch_writer",
+      "reviewer": "/root/installation_task_inventory_corrected_complete_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-source-fresh-root-seal.json",
+      "acceptanceLimit": "Independent Reader scoped PASS does not compensate technical Source FAIL."
+    },
+    {
+      "id": "A98-20261011-INSTALLATION-TASK-SOURCE-F3",
+      "state": "open-whole-batch-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-03",
+        "A98-13"
+      ],
+      "description": "Linked operate.md package.json pin has unchanged narrow command but stale complete file.",
+      "owner": "/root/trust_denial_retirement_complete_batch_writer",
+      "reviewer": "/root/installation_task_inventory_corrected_complete_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-source-fresh-root-seal.json",
+      "acceptanceLimit": "Independent Reader scoped PASS does not compensate technical Source FAIL."
     }
   ],
   "checks": [
@@ -21968,13 +22019,43 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/unknown-alias-class-output-complete-source-fresh-root-seal.json",
       "verifiedArtifacts": 39,
       "scope": "Complete frozen scanner/acquisition/receiver/protected qualification, actual OPS ownership/native/caller guards"
+    },
+    {
+      "agent": "/root/installation_task_inventory_corrected_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal FAIL at candidate2a3fe02; pages now released for Source correction",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-source-fresh/report.md",
+      "reportSha256": "9aa98fb74074a1d295a02c848501ff2a3678b7c45784ad06ae829943cd36f0ec",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-source-fresh-root-seal.json",
+      "verifiedArtifacts": 23,
+      "scope": "Complete assigned linked installation/maintenance/trust route and task inventory; no global/package/live approval"
+    },
+    {
+      "agent": "/root/installation_task_inventory_corrected_complete_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal PASS assigned route at candidate2a3fe02; pages now released for Source correction",
+      "report": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-reader-fresh/report.md",
+      "reportSha256": "97e32db4d30b381eec30d1349e8ef74c85926f643fae398220828a790299879e",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/installation-task-inventory-corrected-complete-reader-fresh-root-seal.json",
+      "verifiedArtifacts": 247,
+      "scope": "Complete assigned linked installation/maintenance/trust route and task inventory; no global/package/live approval"
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open: corrected doc source and task generated inventory committed/pushed; actual registry gate13tasks14capabilities PASS, new complete Source/Reader reviews running; tooling independent full Source FAIL10findings.",
+    "stage": "AP09.8 open: root F9/F10 correction candidates and protected controls completed; Source doc FAIL3/Reader route PASS rootsealed23/247, parallel scanner/docs/qualification authors active.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish scanner F1-F8 correction; assign separate exclusive output-discovery/registry F9/F10 correction and semantic qualification after scanner freeze. Complete fresh doc Source/Reader and distinct Quality. Root integrated tests/new complete tooling Source, then configuration generation/full gates/mutations/Astra. No AP09.8 acceptance/parity/deletion yet.",
+    "next": "Finish whole scanner capability F1-F8 batch and final freeze; semantically qualify current Source including root F9/F10 and generic public baseline. Finish denial/retirement/pin doc correction; root stable full suite and new distinct complete Source/Reader/Quality reviews. No configuration generation/full acceptance/parity/deletion yet.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -26195,7 +26276,7 @@
       "privateTaskRegistryCheck": "/home/node/Documents/Codex/a98-evidence/worker-trust-task-registry-private-validation/result.json",
       "privateTaskRegistryVerdict": "Generation/currentness PASS13 tasks, actual procedure check FAIL duplicate npm-ci literal; no published gate pass",
       "toolingCandidate": "b27 scanner / 2bb33tests; full fresh independent Source review running; annotation alias/method and YAML mode findings provisional until full report",
-      "qualityReview": "New corrected linked route not yet reviewed; required after complete candidate and generated task mapping",
+      "qualityReview": "Pending corrected candidate after Source issues addressed; no Quality/Astra waiver",
       "canonicalCommandAuthorSeal": "/home/node/Documents/Codex/a98-evidence/install-task-canonical-command-correction-writer-root-seal.json",
       "canonicalCommandAuthorArtifacts": 81,
       "documentationSourceCommit": "d573c31a1d62a6fc7034d04dca92c9b98134f5b0",
@@ -26221,7 +26302,15 @@
         "source": "/root/installation_task_inventory_corrected_complete_source_fresh",
         "reader": "/root/installation_task_inventory_corrected_complete_reader_fresh",
         "quality": "pending distinct fresh identity after slot available"
-      }
+      },
+      "rootStaticSourceAndCapturedAuthCorrection": "/home/node/Documents/Codex/a98-evidence/static-source-codex-custody-root-correction/report.json",
+      "rootStaticAndCapturedChecks": "11 selected capture controls PASS,12 protected historical-baseline controls PASS,27 production tests PASS before extra public-checkout control added; not fresh independent approval",
+      "scannerCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "scannerFreeze": "Provisional1f75/17d9 REOPENED for helper-argument/container-return capability family; qualification HOLD until superseding freeze",
+      "qualificationIntegrator": "/root/annotation_yaml_static_custody_authority_integrator",
+      "docCorrectionWriter": "/root/trust_denial_retirement_complete_batch_writer",
+      "lastCompleteDocReader": "PASS assigned candidate2a3fe02 with247root-verifiedartifacts; newmodifiedcandidate requiresnewreview",
+      "lastCompleteDocSource": "FAIL3findings with23root-verifiedartifacts; wholebatchcorrectionrunning"
     }
   }
 }
