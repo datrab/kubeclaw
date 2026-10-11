@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import YAML from 'yaml';
-import { apiProductSelection, jsonPatchSelectedEntries, inheritedSecretFieldSelection, versionedApiReceiverRegistries } from '../docs-api-product-scope.mjs';
+import { apiProductSelection, jsonPatchSelectedEntries, inheritedSecretFieldSelection, serializedSecretFieldSelection, versionedApiReceiverRegistries } from '../docs-api-product-scope.mjs';
 
 const apiVersion = 'admissionregistration.k8s.io/v1';
 const kind = 'ValidatingWebhookConfiguration';
@@ -105,6 +105,36 @@ test('inherited Secret selection retains served source fields and subtracts actu
   assert.deepEqual(selected.rewrites,inheritedSecret().rewrittenPaths);
 });
 
+function serializedSecret() {
+  return {...inheritedSecret(),operation:'source-bound-kubernetes-get-serialized-text-transform-apply',
+    sourceReceiver:{apiVersion:'v1',kind:'Secret',requestMethod:'GET',format:'yaml',
+      nameExpression:'${3:-$name}',namespaceExpression:'$SRC_NS'},
+    removedPaths:[],rewrittenPaths:[],unknownLiveValues:true,
+    serializedTransforms:[{tool:'sed',argv:['s/namespace: ${SRC_NS}/namespace: ${target_namespace}/'],
+      inputFormat:'yaml',scope:'first matching text sequence per line',patternTemplate:'namespace: ${SRC_NS}',
+      replacementTemplate:'namespace: ${target_namespace}',sourceNamespaceExpression:'$SRC_NS',
+      targetNamespaceExpression:'${2:-$NAMESPACE}'}]};
+}
+test('serialized Secret transfer preserves server metadata without inventing a structural namespace rewrite', () => {
+  const transfer=serializedSecret(),selected=serializedSecretFieldSelection('v1','Secret',transfer);
+  for(const field of ['$.metadata.uid','$.metadata.resourceVersion','$.metadata.creationTimestamp','$.metadata.ownerReferences','$.metadata.finalizers'])assert(selected.metadataPaths.includes(field),field);
+  assert(selected.boundaries.some(row=>row.fieldPath==='$.data'));
+  assert(selected.boundaries.some(row=>row.fieldPath==='$.immutable'));
+  assert.deepEqual(selected.rewrites,[]);
+  assert.match(selected.valueStatus,/not a structural namespace rewrite/);
+});
+test('serialized Secret transfer rejects changed text transforms, field filters and claimed live values', () => {
+  for(const mutate of [t=>t.serializedTransforms[0].argv[0]+='g',
+    t=>t.serializedTransforms[0].tool='awk',t=>t.serializedTransforms[0].scope='all matches',
+    t=>t.rewrittenPaths.push({fieldPath:'$.metadata.namespace',value:'target'}),
+    t=>t.removedPaths.push('$.metadata.uid'),t=>t.unknownLiveValues=false,
+    t=>t.retainedRootFields.push('inventedField'),
+    t=>{t.retainedRootFields=t.retainedRootFields.filter(f=>f!=='data');t.excludedRootFields.push('data');},
+    t=>t.sourceReceiver.kind='ConfigMap']){
+    const transfer=serializedSecret();mutate(transfer);
+    assert.throws(()=>serializedSecretFieldSelection('v1','Secret',transfer),/SERIALIZED_SECRET_|INHERITED_SECRET_/);
+  }
+});
 test('inherited source selection refuses unknown fields, receiver drift and removal of its rewritten destination', () => {
   const unknown=inheritedSecret();unknown.retainedRootFields.push('inventedSourceField');
   assert.throws(()=>inheritedSecretFieldSelection('v1','Secret',unknown),/INHERITED_SECRET_FIELD_SET/);
@@ -180,4 +210,43 @@ test('source-bound range templates select authored subject fields without invent
     value.subjects.__docsSupportedSequenceTransform.operation='unknown-transform';
     assert.throws(selectValue,/SEQUENCE_APPEND_UNQUALIFIED/);
   } finally {fs.rmSync(root,{recursive:true,force:true});}
+});
+
+function selectPartialMerge(value, overrides = {}) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'api-partial-merge-'));
+  try {
+    const bytes = YAML.stringify(value);
+    fs.writeFileSync(path.join(root, 'patch.yaml'), bytes);
+    const context = {path:'patch.yaml',document:0,
+      sourceDigest:createHash('sha256').update(bytes).digest('hex'),requestMethod:'PATCH',requestPatchType:'merge',
+      requestReceiver:{apiVersion:'v1',kind:'Secret',name:'$name',nameExpression:'$name',namespaceExpression:'$namespace'},
+      ...overrides};
+    return apiProductSelection('v1','Secret',[context],versionedApiReceiverRegistries.get('v1'),root);
+  } finally { fs.rmSync(root,{recursive:true,force:true}); }
+}
+
+test('receiver-qualified partial Secret merge selects submitted data without invented identity or defaults', () => {
+  const selected = selectPartialMerge({data:{'actual-key':'c2VjcmV0'}});
+  assert.ok(selected.fieldPaths.includes('$.data'));
+  assert.equal(selected.fieldPaths.includes('$.apiVersion'),false);
+  assert.equal(selected.fieldPaths.includes('$.kind'),false);
+  assert.equal(selected.fieldPaths.includes('$.type'),false);
+  assert.equal(selected.fieldPaths.includes('$.immutable'),false);
+  assert.equal(selected.metadataPaths.length,0);
+  assert.equal(selected.applicability['$.data'][0].requestReceiver.name,'$name');
+  assert.equal(selected.applicability['$.data'][0].requestPatchType,'merge');
+});
+
+test('partial merge rejects missing receivers, conflicting identities and non-object request bodies', () => {
+  for (const overrides of [
+    {requestReceiver:undefined},
+    {requestReceiver:{apiVersion:'v1',kind:'ConfigMap',name:'$name'}},
+    {requestReceiver:{apiVersion:'apps/v1',kind:'Secret',name:'$name'}},
+    {requestReceiver:{apiVersion:'v1',kind:'Secret',name:' '}},
+    {requestMethod:'POST'},
+  ]) assert.throws(()=>selectPartialMerge({data:{key:'eA=='}},overrides),/API_PRODUCT_MERGE_PATCH_RECEIVER_UNQUALIFIED/);
+  for (const value of [[],null,'body']) assert.throws(()=>selectPartialMerge(value),/API_PRODUCT_MERGE_PATCH_BODY_UNQUALIFIED/);
+  for (const value of [{kind:'ConfigMap',data:{}},{apiVersion:'apps/v1',data:{}}])
+    assert.throws(()=>selectPartialMerge(value),/API_PRODUCT_MERGE_PATCH_IDENTITY_CONFLICT/);
+  assert.throws(()=>selectPartialMerge({data:{}},{requestPatchType:undefined}),/API_PRODUCT_RESOURCE_DRIFT/);
 });

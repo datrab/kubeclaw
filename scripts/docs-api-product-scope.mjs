@@ -372,6 +372,38 @@ export function inheritedSecretFieldSelection(apiVersion, kind, transfer) {
   return { boundaries, metadataPaths: [...metadataPaths].sort(), rewrites: transfer.rewrittenPaths };
 }
 
+export function serializedSecretFieldSelection(apiVersion, kind, transfer) {
+  assert(transfer.operation === 'source-bound-kubernetes-get-serialized-text-transform-apply'
+    && transfer.sourceReceiver?.format === 'yaml' && transfer.unknownLiveValues === true,
+    'API_PRODUCT_SERIALIZED_SECRET_SOURCE_UNQUALIFIED');
+  assert(transfer.removedPaths?.length === 0 && transfer.rewrittenPaths?.length === 0
+    && Array.isArray(transfer.serializedTransforms) && transfer.serializedTransforms.length === 1,
+    'API_PRODUCT_SERIALIZED_SECRET_TRANSFORM_UNQUALIFIED');
+  assert(Array.isArray(transfer.retainedRootFields) && Array.isArray(transfer.excludedRootFields)
+    && ['apiVersion','kind','metadata','data','type','immutable'].every(field => transfer.retainedRootFields.includes(field))
+    && transfer.excludedRootFields.every(field => field === 'stringData'),
+    'API_PRODUCT_SERIALIZED_SECRET_FIELD_FILTER_UNQUALIFIED');
+  const transform = transfer.serializedTransforms[0];
+  assert(transform.tool === 'sed' && transform.inputFormat === 'yaml'
+    && JSON.stringify(transform.argv) === JSON.stringify(['s/namespace: ${SRC_NS}/namespace: ${target_namespace}/'])
+    && transform.patternTemplate === 'namespace: ${SRC_NS}'
+    && transform.replacementTemplate === 'namespace: ${target_namespace}'
+    && transform.sourceNamespaceExpression === '$SRC_NS'
+    && transform.targetNamespaceExpression === '${2:-$NAMESPACE}'
+    && transform.scope === 'first matching text sequence per line',
+    'API_PRODUCT_SERIALIZED_SECRET_TRANSFORM_UNQUALIFIED');
+  assert(transfer.sourceReceiver.namespaceExpression === '$SRC_NS'
+    && transfer.sourceReceiver.nameExpression === '${3:-$name}',
+    'API_PRODUCT_SERIALIZED_SECRET_SOURCE_UNQUALIFIED');
+  const selected = inheritedSecretFieldSelection(apiVersion, kind, transfer);
+  const allMetadata = apiResourceFieldBoundaries(apiVersion, kind)
+    .filter(row => tokens(row.fieldPath)[0] === 'metadata').map(row => canonical(row.fieldPath));
+  assert(allMetadata.every(field => selected.metadataPaths.includes(field)),
+    'API_PRODUCT_SERIALIZED_SECRET_METADATA_FILTER_UNQUALIFIED');
+  return { ...selected, serializedTransforms: transfer.serializedTransforms,
+    valueStatus: 'Live source values are not fetched. Text substitution is not a structural namespace rewrite and can also change scalar or annotation text.' };
+}
+
 // Re-read source documents, not a stored totals/selected-path assertion. Each
 // context digest binds changes, removals and renames to the maintenance gate.
 export function apiProductSelection(apiVersion, kind, contexts, receivers, root = process.cwd()) {
@@ -407,12 +439,22 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       ['MethodConnect','CONNECT'], ['MethodOptions','OPTIONS'], ['MethodTrace','TRACE'],
     ]).get(context.requestMethod) ?? context.requestMethod;
     const jsonPatch = context.requestPatchType === 'json';
+    const mergePatch = context.requestPatchType === 'merge';
+    if (mergePatch) {
+      assert(requestMethod === 'PATCH' && context.requestReceiver?.apiVersion === apiVersion
+        && context.requestReceiver?.kind === kind
+        && typeof context.requestReceiver?.name === 'string' && context.requestReceiver.name.trim().length > 0,
+        'API_PRODUCT_MERGE_PATCH_RECEIVER_UNQUALIFIED');
+      assert(value && typeof value === 'object' && !Array.isArray(value), 'API_PRODUCT_MERGE_PATCH_BODY_UNQUALIFIED');
+      assert((!Object.hasOwn(value, 'apiVersion') || value.apiVersion === apiVersion)
+        && (!Object.hasOwn(value, 'kind') || value.kind === kind), 'API_PRODUCT_MERGE_PATCH_IDENTITY_CONFLICT');
+    }
     if (jsonPatch) {
       assert(requestMethod === 'PATCH' && context.requestReceiver?.apiVersion === apiVersion && context.requestReceiver?.kind === kind
         && typeof context.requestReceiver?.name === 'string' && context.requestReceiver.name.length > 0, 'API_PRODUCT_JSON_PATCH_RECEIVER_UNQUALIFIED');
       assert.deepEqual(value, context.patchOperations, 'API_PRODUCT_JSON_PATCH_BODY_DRIFT');
     }
-    assert(jsonPatch || value?.apiVersion === apiVersion && value?.kind === kind, `API_PRODUCT_RESOURCE_DRIFT: ${context.path}#${context.document}`);
+    assert(jsonPatch || mergePatch || value?.apiVersion === apiVersion && value?.kind === kind, `API_PRODUCT_RESOURCE_DRIFT: ${context.path}#${context.document}`);
     const instances = [];
     let patchEvidence = null;
     let sequenceEvidence = null;
@@ -445,7 +487,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         }
       }
       if (boundary) {
-        add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: sequenceEvidence ? canonical(actualPath) : actualPath, sourceDigest: context.sourceDigest, ...(sequenceEvidence ?? {}), ...(context.conditions?.length ? { conditions: context.conditions } : {}), ...(context.requestMethod ? { requestMethod: context.requestMethod, ...(context.requestAlternatives ? { requestAlternatives: context.requestAlternatives } : {}) } : {}), ...(patchEvidence ?? {}) });
+        add(boundary, { reason: patchEvidence ? `json-patch-${patchEvidence.role}` : actual.length ? 'authored-resource-field' : 'authored-resource-root', path: context.path, document: context.document, fieldPath: sequenceEvidence ? canonical(actualPath) : actualPath, sourceDigest: context.sourceDigest, ...(sequenceEvidence ?? {}), ...(mergePatch ? { requestPatchType:'merge', requestReceiver:context.requestReceiver } : {}), ...(context.conditions?.length ? { conditions: context.conditions } : {}), ...(context.requestMethod ? { requestMethod: context.requestMethod, ...(context.requestAlternatives ? { requestAlternatives: context.requestAlternatives } : {}) } : {}), ...(patchEvidence ?? {}) });
         if(requestMethod!=='PATCH'&&kind==='CSIDriver'&&actualPath==='$.spec.volumeLifecycleModes'&&Array.isArray(node)&&node.length===0) {
           const receiverDefault=runtimeDefaultApplicability(kind,actualPath,{},value,records.get(boundary.fieldPath));
           const child=authority.find(row=>matches(tokens(row.fieldPath),[...actual,0]));
@@ -493,6 +535,26 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
         }
         if(node.__docsSupportedSchemaPassthrough) {
           const transfer = node.__docsSupportedSchemaPassthrough;
+          if (transfer.serializedTransforms || transfer.operation === 'source-bound-kubernetes-get-serialized-text-transform-apply') {
+            const producer = context.forwardedProducer;
+            assert(actual.length === 0 && context.producer === 'shell-shape'
+              && requestMethod === 'APPLY' && context.requestOperation === 'kubectl-apply'
+              && producer?.path === context.path && Number.isInteger(producer.line) && producer.line > 0
+              && producer.command === 'kubectl' && producer.constructorFunction === 'copy_secret_from_source'
+              && JSON.stringify(producer.argv) === JSON.stringify(['get','secret','$source_name','-n','$SRC_NS','-o','yaml'])
+              && Array.isArray(producer.dependencies) && producer.dependencies.length > 0
+              && JSON.stringify(producer.serializedTransforms) === JSON.stringify(transfer.serializedTransforms),
+              'API_PRODUCT_SERIALIZED_SECRET_SOURCE_UNQUALIFIED');
+            const inherited = serializedSecretFieldSelection(apiVersion, kind, transfer);
+            for (const child of inherited.boundaries) add(child, {
+              reason:'inherited-served-secret-serialized-text-transfer', path:context.path,
+              document:context.document, fieldPath:child.fieldPath, sourceDigest:context.sourceDigest,
+              ...transfer, forwardedProducer:producer, requestMethod:context.requestMethod,
+              requestOperation:context.requestOperation, requestInvocation:context.requestInvocation,
+              valueStatus:inherited.valueStatus });
+            inherited.metadataPaths.forEach(field => metadataPaths.add(field));
+            return;
+          }
           if (transfer.validation === 'source-bound-kubernetes-get-sanitize-createOrPatch') {
             assert(actual.length === 0 && context.producer === 'go-shape'
               && typeof context.factoryExpression === 'string' && Array.isArray(context.factoryDependencies),

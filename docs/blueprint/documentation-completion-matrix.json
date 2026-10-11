@@ -19318,6 +19318,18 @@
       "tree": "/home/node/Documents/Codex/a98-evidence/ap097-quality-2f404b02",
       "report": "/home/node/Documents/Codex/a98-evidence/ap097-quality-2f404-fresh-report/report.md",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-quality-root-seal.json"
+    },
+    {
+      "agent": "/root/ap097_full_quality_9a252_fresh",
+      "role": "quality",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "revision": "9a2520230b51e12ced66ecdfd5df06bf50210713",
+      "state": "running",
+      "scope": "All53 AP09.7 requirements and all12 A97 Quality facets; full affected current content, no Source/Reader/Astra or live acceptance.",
+      "tree": "/home/node/Documents/Codex/a98-evidence/ap097-quality-9a252023"
     }
   ],
   "continuation": {
@@ -20358,7 +20370,12 @@
         "scripts/tests/api-reference.test.mjs"
       ]
     },
-    "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged."
+    "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
+    "activeAgents": [
+      "/root/infrastructure_actual_invocation_correction_writer",
+      "/root/pv_schema_reference_correction_writer",
+      "/root/ap097_full_quality_9a252_fresh"
+    ]
   },
   "productBoundaries": [
     {
