@@ -22069,7 +22069,16 @@
       "verificationRepeatState": "terminal PASS",
       "limit": "Bounded consumer tests only; no full integrated suite or independent PASS.",
       "verificationRepeatExitCode": 0,
-      "receipt": "/home/node/Documents/Codex/a98-evidence/root-range-template-selection-correction.json"
+      "receipt": "/home/node/Documents/Codex/a98-evidence/root-range-template-selection-correction.json",
+      "consumerSpecificNegativeControls": {
+        "observedAt": "2026-10-11T13:36:53.391436+00:00",
+        "session": 27590,
+        "exitCode": 0,
+        "passed": 2,
+        "testFileSha256": "d69cb7914ac45bb9514c54ad462f334e97bf3fed2b9cc0bb4d63ca52e89e936b",
+        "proof": "Both authored unknown-field probes must fail specifically with API_PRODUCT_FIELD_OUTSIDE_AUTHORITY from the actual selected-field consumer; unrelated earlier failures cannot satisfy these tests.",
+        "limit": "Synthetic consumer fixtures, not original producer mutation gate or independent review."
+      }
     }
   }
 }

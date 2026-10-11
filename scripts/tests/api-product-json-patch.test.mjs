@@ -132,7 +132,7 @@ test('symbolic inherited sequence checks appended authored values without claimi
     assert.equal(evidence.appendedItemOrdinal,0);
     assert.match(evidence.itemPosition,/length is unknown/);
     value.spec.template.spec.containers.__docsSupportedSequenceAppend.items[0].inventedUnservedField=true;
-    assert.throws(()=>selectValue(value));
+    assert.throws(()=>selectValue(value),/API_PRODUCT_FIELD_OUTSIDE_AUTHORITY/);
     delete value.spec.template.spec.containers.__docsSupportedSequenceAppend.items[0].inventedUnservedField;
     value.spec.template.spec.containers.__docsSupportedSequenceAppend.spread=true;
     assert.throws(()=>selectValue(value),/SEQUENCE_APPEND_UNQUALIFIED/);
@@ -175,7 +175,7 @@ test('source-bound range templates select authored subject fields without invent
     assert.equal(evidence.sourceTemplateOrdinal,0);
     assert.equal(Object.hasOwn(evidence,'appendedItemOrdinal'),false);
     value.subjects.__docsSupportedSequenceTransform.items[0].inventedUnservedField=true;
-    assert.throws(selectValue);
+    assert.throws(selectValue,/API_PRODUCT_FIELD_OUTSIDE_AUTHORITY/);
     delete value.subjects.__docsSupportedSequenceTransform.items[0].inventedUnservedField;
     value.subjects.__docsSupportedSequenceTransform.operation='unknown-transform';
     assert.throws(selectValue,/SEQUENCE_APPEND_UNQUALIFIED/);
