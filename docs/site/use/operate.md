@@ -116,6 +116,14 @@ and decision record.
 Run from `<repository-root>` unless a command states another location.
 Set no implicit Kubernetes context.
 
+The machine that runs Nova's CLI needs Linux file locking and `/usr/bin/flock`
+with `--exclusive`, `--timeout`, and `--conflict-exit-code` support. Nova uses
+that fixed executable to protect durable state updates. A BusyBox `flock` that
+lacks these options is insufficient. Stop before a run or resume if this
+interface is unavailable; a lock error does not prove that a signal was
+accepted. Preserve the journal and diagnose the executable before retrying.
+[Lock acquisition and release](https://github.com/datrab/kubeclaw/blob/425be378fa25d26835a5418d65bfd457e151cc16/skills/nova/core/state/file-mutex.ts#L4-L22).
+
 Record these inputs:
 
 - Full source commit.

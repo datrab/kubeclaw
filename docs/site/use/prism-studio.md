@@ -391,10 +391,10 @@ that field, and the controller has no storage-profile selection for it. Stop
 before using this path as evidence of a working storage configuration. The Prism
 maintainer must resolve the producer and receiver mismatch first.
 
-[The authored lease request](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/scripts/deploy.sh#L1853-L1871)
-and [the declared lease spec](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L34-L186)
+[The authored lease request](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/scripts/deploy.sh#L1853-L1871)
+and [the declared lease spec](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L34-L186)
 show this boundary. The controller uses
-[fixed namespace quota and limit settings](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/cmd/buster-namespace-controller/main.go#L931-L961).
+[fixed namespace quota and limit settings](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/cmd/buster-namespace-controller/main.go#L931-L961).
 A successful lease response does not prove that this field selected storage.
 
 The reviewed Ops kubectl client defaults to strict field validation. If this
@@ -412,7 +412,7 @@ context, lease name and error output. Inspect that exact lease and its namespace
 before retrying or deleting anything. The script installs its cleanup trap only
 after lease readiness and namespace checks; an earlier failure can leave
 resources without that trap.
-[Lease polling and cleanup setup](https://github.com/datrab/kubeclaw/blob/bc55a98da5897ed97ffdc0fdf9703fb9f04cd14b/scripts/deploy.sh#L1873-L1901)
+[Lease polling and cleanup setup](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/scripts/deploy.sh#L1873-L1901)
 define that recovery boundary. See the
 [open lease-input issue](../status/open-issues.md#prism-test-lease-requests-an-undeclared-storage-profile)
 for the required product correction and separate target-environment proof.
@@ -1011,7 +1011,8 @@ Studio provides two change paths.
 
 #### Typed visual edits
 
-The visual editor converts supported Puck changes into Prism operations:
+Studio's visual editor converts the supported actions below into typed Prism
+operations. Each operation identifies the document elements to change:
 
 - insert a node;
 - remove a node;

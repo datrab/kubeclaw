@@ -77,6 +77,12 @@ storage authority from it by inference.
 
 ## OpenClaw and Codex boundary
 
+ACP means [Agent Client Protocol](https://docs.openclaw.ai/tools/acp-agents).
+OpenClaw uses an ACP backend plugin to run external coding tools in sessions.
+The runtime-dispatch target [selects this path with `runtime: "acp"`](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugins/runtime-dispatch/src/openclaw.ts#L230-L238).
+See [OpenClaw session lifecycle](../understand/openclaw.md#session-lifecycle)
+for polling, cancellation, and uncertain session recovery.
+
 Helm renders OpenClaw gateway configuration and managed agent entries. The
 gateway configuration controls the host process, authentication, model route,
 ACP backend, channel, and plugin allowlist. Pipeline stage fields such as

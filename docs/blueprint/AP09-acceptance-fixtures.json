@@ -283,11 +283,11 @@
     },
     {
       "id": "EXEC-WAIT-RESUME", "acceptanceIds": ["A98-05", "A99-04", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/operate.md", "injectedFaultId": "WAIT-VALID-AND-REPLAYED-SIGNAL",
-      "objective": "Drive a run into waiting, issue one valid resume signal, replay it, and prove one authorized transition.", "setup": "Use the registered wait fixture, issuer identity, signature material, and clean journal.",
+      "objective": "Drive a run into waiting, issue one valid resume signal, replay it, and prove one authorized transition.", "setup": "Before the measured deployment run, register the exact pipeline, platform, signal-template, and wait-stage package paths at the reviewed revision. Use a fresh run with a clean journal and protected operator access to signal creation and the CLI. Read waitId, signalType, authorizedIssuer, expiry, and payload requirements from that run's durable wait-request.v2 record. Create the closed eight-field resume-signal.v2 envelope with its caller-supplied issuer; it has no signature field or signature-material prerequisite. Test the registered wrong issuer and wrong wait identity before the valid signal. Retain the same signal bytes and idempotencyKey for replay after resolution; expect stale or terminal rejection with no second transition. Local contract-test fixtures do not replace the required deployment evidence.",
       "expectedObservations": [
-        { "id": "wait-persisted", "passCondition": "The wait request, issuer, identity, deadline, and journal head are persisted before the signal." },
-        { "id": "valid-signal-resumes-once", "passCondition": "The valid signal advances the intended wait exactly once with the documented causal event." },
-        { "id": "replay-is-idempotent", "passCondition": "The replayed signal does not create a second transition or consume another budget." },
+        { "id": "wait-persisted", "passCondition": "The wait request, authorized issuer type and ID, wait identity, expiry including explicit null, and journal head are persisted before the signal." },
+        { "id": "valid-signal-resumes-once", "passCondition": "With protected CLI access, the schema-valid signal matches the active wait's caller-supplied issuer, type, identity, and time rules and advances that wait exactly once with the documented causal event. Issuer matching is not authenticated identity proof." },
+        { "id": "replay-is-idempotent", "passCondition": "Replaying the identical signal after resolution returns the documented stale or terminal rejection and does not create a second transition or consume another budget." },
         { "id": "wrong-signal-rejected", "passCondition": "The registered wrong issuer or wait identity is rejected without changing run state." }
       ], "failureThreshold": "FAIL after missing persisted authority, duplicate transition, accepted wrong signal, or unbound manual state change."
     },
