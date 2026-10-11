@@ -17434,6 +17434,44 @@
       "state": "terminal-pass-author-only",
       "scope": "All3Service fences sh-nPASS and begin assert_cluster_binding; allpriorclassifications preserved,3added after checking immutablebaseline. Fulloperator check now fails generatedopenissues npmci imperative, sourceinputcorrected awaiting generation; treecheck fails staleoutput after3classification corrections.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/demo-current-rehearsal"
+    },
+    {
+      "command": "node scripts/docs-status.mjs --check",
+      "state": "terminal-pass-author-check-not-independent-acceptance",
+      "sourceRevision": "16fb2fa1debd8306a2186d6cad8f5759dae5b4bb",
+      "generatedRevision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
+      "scope": "Status generated view validated independently of producer overlays; status check terminal0.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/root-partial-generation-16fb-receipt.json"
+    },
+    {
+      "command": "node scripts/docs-tree-boundary.mjs --check",
+      "state": "terminal-pass-author-check-not-independent-acceptance",
+      "sourceRevision": "16fb2fa1debd8306a2186d6cad8f5759dae5b4bb",
+      "generatedRevision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
+      "scope": "All2936 files classified,162 canonical readers,0 misplaced legacy sources. No parity readiness or deletion approval.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/tree-16fb-check.log"
+    },
+    {
+      "command": "node scripts/check-operator-task-registry.mjs",
+      "state": "terminal-pass-author-check-not-independent-acceptance",
+      "sourceRevision": "16fb2fa1debd8306a2186d6cad8f5759dae5b4bb",
+      "generatedRevision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
+      "scope": "Complete canonical site check:13 unique tasks and14 lifecycle capabilities.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/operator-16fb-generated-check.log"
+    },
+    {
+      "command": "node scripts/check-operator-task-registry-mutations.mjs",
+      "state": "terminal-pass-author-check-not-independent-acceptance",
+      "sourceRevision": "16fb2fa1debd8306a2186d6cad8f5759dae5b4bb",
+      "generatedRevision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
+      "scope": "Full mutation suite, canonical site included; no isolated-site exception. Both implementation authorities and command-binding positive/negative fixtures.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/operator-16fb-generated-mutations.log"
+    },
+    {
+      "command": "Root verify complete historical c1c295 independent review seal",
+      "state": "terminal-pass-integrity-only",
+      "scope": "All11607 artifacts match manifest3fb173e9ef991324a4f28a59fb01e99df89584afedb47cd25fb489353cc168ad; immutable historical FAIL retained, not current acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-selection-c1c295-root-complete-seal-integrity.json"
     }
   ],
   "reviewAssignments": [
@@ -18759,7 +18797,7 @@
     {
       "agent": "/root/producer_c770_eight_findings_correction_writer",
       "role": "Author",
-      "state": "running-exclusive-six-producer-files",
+      "state": "interrupted-no-final-review-report-or-live-agent-on-runtime-resumption",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
@@ -18797,7 +18835,7 @@
     {
       "agent": "/root/a98_current_reader_complete_fresh",
       "role": "Reader",
-      "state": "running-complete-ap09-8-current-reader-scope",
+      "state": "interrupted-no-final-review-report-or-live-agent-on-runtime-resumption",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
@@ -18808,20 +18846,53 @@
     {
       "agent": "/root/stateful_notfound_425_complete63_source_fresh",
       "role": "Source",
-      "state": "running-new-fresh-complete-corrected63",
+      "state": "interrupted-no-final-review-report-or-live-agent-on-runtime-resumption",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "high",
       "forkTurns": "none",
       "revision": "425be378fa25d26835a5418d65bfd457e151cc16",
       "scope": "All63 complete currentrecords,424cases/allcurrentcaptions/retained999components and actualtype/provenance/default routes. Independently assess NotFound correction; no previousfinding-only approval.",
       "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-notfound-425-complete63-source-fresh"
+    },
+    {
+      "agent": "/root/producer_recovery_writer",
+      "role": "author",
+      "state": "running",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
+      "scope": "Complete existing six-file producer corrections and all P01-P08 families; actual registry-derived native callers, no historical language assumptions.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/producer-recovery-writer"
+    },
+    {
+      "agent": "/root/stateful_425_recovery_source_fresh",
+      "role": "Source",
+      "state": "running",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "425be378fa25d26835a5418d65bfd457e151cc16",
+      "scope": "Fresh full63 source review with all424 cases and current captions. Interrupted prior attempt is not acceptance.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/stateful-425-recovery-source-fresh"
+    },
+    {
+      "agent": "/root/reader_plain_language_fixture_writer",
+      "role": "author",
+      "state": "running",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "forkTurns": "none",
+      "revision": "192dbe9f70d5b73a5159dbc92f955e68b9928591",
+      "scope": "Define ACP and Puck from actual sources; repair unsigned wait fixture setup without weakening mandatory execution.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/reader-plain-language-fixture-writer"
     }
   ],
   "continuation": {
     "stage": "AP09.8: producer eight-family corrections and independent exact70 selection provenance; package not accepted",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Seal original d8 complete70+supplemental5 Source and historical838 full review. Start NEW fresh Source reviewer for complete corrected affected63 records, actualselection provenance and retained typed/case/caption content. Producer P01–P08 full correction/checks still pending. Stable generation then full gates/Reader/Quality/Astra required.",
+    "next": "Finish six producer correction files and full fresh Source63. Correct plain language/unsigned wait fixture. Stable canonical generation, all required gates and fresh Reader/Quality/Sol then Astra acceptance remain required. AP09.8 not accepted; no mass parity or deletion.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -18834,9 +18905,9 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/producer_c770_eight_findings_correction_writer",
-      "/root/stateful_notfound_425_complete63_source_fresh",
-      "/root/a98_current_reader_complete_fresh"
+      "/root/producer_recovery_writer",
+      "/root/stateful_425_recovery_source_fresh",
+      "/root/reader_plain_language_fixture_writer"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -19576,7 +19647,8 @@
         "UNREVIEWED": 19
       },
       "evidence": "/home/node/Documents/Codex/a98-evidence/workload-current-candidate-full-source-fresh/final-full-950-source-20261010/report.md"
-    }
+    },
+    "currentGeneratedRevision": "192dbe9f70d5b73a5159dbc92f955e68b9928591"
   },
   "productBoundaries": [
     {
