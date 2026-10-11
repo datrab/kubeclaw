@@ -18674,6 +18674,76 @@
       "owner": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
       "reviewer": "/root/trust_denial_retirement_corrected_full_reader_fresh",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/trust-denial-retirement-corrected-full-reader-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261011-OPERATOR-CONTROL-SOURCE-F01",
+      "state": "open-complete-family-correction",
+      "catalogueIds": [
+        "OPR-004"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-05",
+        "A98-13"
+      ],
+      "description": "Recovery/diagnose direct audit entries bypass stopped run/adapter writers, verified raw original state and strict copied-journal inspection. FileJournal can truncate partial bytes before parsefailure. Equivalent plugins/buster-suite entries added to wholefamily authorownership.",
+      "owner": "/root/raw_audit_entry_complete_family_writer",
+      "reviewer": "/root/operator_wait_resume_cancellation_complete_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/operator-wait-resume-cancellation-complete-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261011-MISSING-EXEC-WAIT-RESUME",
+      "state": "open-required-execution-evidence",
+      "catalogueIds": [
+        "OPR-004",
+        "OPR-005"
+      ],
+      "acceptanceIds": [
+        "A98-05",
+        "A99-04",
+        "A913-05"
+      ],
+      "executionScenarioId": "EXEC-WAIT-RESUME",
+      "description": "Required deployment-class scenario lacks registered passing receipt. Explicit deferred list does not include this scenario; local source/unit/rehearsal not substituted.",
+      "owner": "/root",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/operator-wait-resume-cancellation-complete-source-fresh-root-seal.json",
+      "evidenceReadiness": "/home/node/Documents/Codex/a98-evidence/root-required-deployment-readiness/result.json"
+    },
+    {
+      "id": "A98-20261011-MISSING-EXEC-CANCELLATION",
+      "state": "open-required-execution-evidence",
+      "catalogueIds": [
+        "OPR-004",
+        "OPR-005"
+      ],
+      "acceptanceIds": [
+        "A98-05",
+        "A99-04",
+        "A913-05"
+      ],
+      "executionScenarioId": "EXEC-CANCELLATION",
+      "description": "Required deployment-class scenario lacks registered passing receipt. Explicit deferred list does not include this scenario; local source/unit/rehearsal not substituted.",
+      "owner": "/root",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/operator-wait-resume-cancellation-complete-source-fresh-root-seal.json",
+      "evidenceReadiness": "/home/node/Documents/Codex/a98-evidence/root-required-deployment-readiness/result.json"
+    },
+    {
+      "id": "A98-20261011-MISSING-EXEC-RESTART-RECOVERY",
+      "state": "open-required-execution-evidence",
+      "catalogueIds": [
+        "OPR-004",
+        "OPR-005"
+      ],
+      "acceptanceIds": [
+        "A98-05",
+        "A99-04",
+        "A913-05"
+      ],
+      "executionScenarioId": "EXEC-RESTART-RECOVERY",
+      "description": "Required deployment-class scenario lacks registered passing receipt. Explicit deferred list does not include this scenario; local source/unit/rehearsal not substituted.",
+      "owner": "/root",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/operator-wait-resume-cancellation-complete-source-fresh-root-seal.json",
+      "evidenceReadiness": "/home/node/Documents/Codex/a98-evidence/root-required-deployment-readiness/result.json"
     }
   ],
   "checks": [
@@ -22227,6 +22297,21 @@
       "state": "active-complete-four-page-and-task-route-review",
       "sourceRevision": "f71e69642699b0c3d35a012798ec68b1aeb7270d",
       "scope": "Complete four-page current Source review after immutable attempt/deletion-window corrections; no global/package acceptance."
+    },
+    {
+      "agent": "/root/operator_wait_resume_cancellation_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-FAIL-complete-OPR004-005",
+      "report": "/home/node/Documents/Codex/a98-evidence/operator-wait-resume-cancellation-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/operator-wait-resume-cancellation-complete-source-fresh-root-seal.json",
+      "reportSha256": "a0e462e7e072a5349f4fa9d2645380e2f41589183f06d5ed3f9e6c3b6dcb28c2",
+      "verifiedArtifacts": 30,
+      "scope": "OPR004FAILunsafe auditentryF01;OPR005source/contentPASS;A9805contentFAIL and mandatorydeploymentreceipts separatelymissing."
     }
   ],
   "continuation": {
@@ -26490,7 +26575,7 @@
       "rootStaticSourceAndCapturedAuthCorrection": "/home/node/Documents/Codex/a98-evidence/static-source-codex-custody-root-correction/report.json",
       "rootStaticAndCapturedChecks": "11 selected capture controls PASS,12 protected historical-baseline controls PASS,27 production tests PASS before extra public-checkout control added; not fresh independent approval",
       "scannerCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "scannerFreeze": "6886/f18/7b38 provisional freezes WITHHELD. Superseding singleton/unknown-alternative/module-attribute/dict-snapshot finite role-custody corrections +fullnative/receivingreplay in progress; no qualification.",
+      "scannerFreeze": "4f98WITHHELD afteractual realcorpus supported supervisor snapshot producer/forwarding flow rejected;generic producer-custody correction+fullreplay pending. Prior6886/f18/7b38withheld.",
       "qualificationIntegrator": "/root/annotation_yaml_static_custody_authority_integrator",
       "docCorrectionWriter": "/root/trust_denial_retirement_complete_batch_writer",
       "lastCompleteDocReader": "FAIL2 fullcorrected Reader;71 verified artifacts. R1storage-lifetime exclusion andR2immutable failed-observation evidence. Corrected trust/signing/lifecycle/5retainedresource facetsPASS.",
@@ -26517,7 +26602,11 @@
       "documentationBatchState": "Authorfrozencommitted;1179rootverifiedartifacts;newcompletefreshSourceactive. Reader/Qualitynextdistinctfreshidentities when slots available.",
       "currentRootGates": "/home/node/Documents/Codex/a98-evidence/root-install-evidence-retirement-lifetime-gates/result.json",
       "rootCurrentGateVerdict": "Actual wholetrust+operatorgate terminal0 Sources unchanged;notsemantic/live/package approval.",
-      "remainingOperatorControlReview": "/root/operator_wait_resume_cancellation_complete_source_fresh; potential F01 mandatoryrawstatepreservation absent recovery/diagnose auditentrypaths;fullreportpending."
+      "remainingOperatorControlReview": "/root/operator_wait_resume_cancellation_complete_source_fresh; potential F01 mandatoryrawstatepreservation absent recovery/diagnose auditentrypaths;fullreportpending.",
+      "operatorControlReview": "TerminalfullSourceFAILF01 plus3 separatelymissingmandatorydeployment receipts;30rootverifiedartifacts.",
+      "rawAuditFamilyWriter": "/root/raw_audit_entry_complete_family_writer",
+      "rawAuditFamilyState": "Fourpage read-onlyprep ready;exclusive recovery,diagnose,plugins,workflows/buster-suite; awaiting completecurrent4pageSource freeze release.",
+      "currentSourceProvisionalFindings": "Freshcomplete4pageSource independently reproduces unchecked identities.txt localwrite falselycomplete, examining creatingUIDprovenance;2WorkerTrust narrowlinks pointat noncommandlines. Fullreportpending."
     }
   }
 }
