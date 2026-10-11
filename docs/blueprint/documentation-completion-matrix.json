@@ -18744,6 +18744,57 @@
       "owner": "/root",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/operator-wait-resume-cancellation-complete-source-fresh-root-seal.json",
       "evidenceReadiness": "/home/node/Documents/Codex/a98-evidence/root-required-deployment-readiness/result.json"
+    },
+    {
+      "id": "A98-20261011-PROBE-CREATING-RETENTION-SOURCE-F1",
+      "state": "open-complete-family-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-03",
+        "A98-09",
+        "A98-13"
+      ],
+      "description": "Required local identities/status/write/remove failure can still yield capture complete. Explicitly propagate every local retention failure and keep commandexit distinct.",
+      "owner": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
+      "reviewer": "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261011-PROBE-CREATING-RETENTION-SOURCE-F2",
+      "state": "open-complete-family-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-03",
+        "A98-09",
+        "A98-13"
+      ],
+      "description": "Name lookups seed allegedly creating namespace/Pod/PVC UIDs after mutation/partial/denied response. Capture authenticated creating responses or reconcile original identities; never adopt replacement as original.",
+      "owner": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
+      "reviewer": "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261011-PROBE-CREATING-RETENTION-SOURCE-F3",
+      "state": "open-complete-family-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-03",
+        "A98-09",
+        "A98-13"
+      ],
+      "description": "WorkerTrust negative-probe links cite image/volumeMounts lines145/175, not commands146/182. Mechanically valid/current wholefile links lack semantic support.",
+      "owner": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
+      "reviewer": "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh-root-seal.json"
     }
   ],
   "checks": [
@@ -22312,6 +22363,22 @@
       "reportSha256": "a0e462e7e072a5349f4fa9d2645380e2f41589183f06d5ed3f9e6c3b6dcb28c2",
       "verifiedArtifacts": 30,
       "scope": "OPR004FAILunsafe auditentryF01;OPR005source/contentPASS;A9805contentFAIL and mandatorydeploymentreceipts separatelymissing."
+    },
+    {
+      "agent": "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-FAIL-complete-assigned-scope",
+      "sourceRevision": "f71e69642699b0c3d35a012798ec68b1aeb7270d",
+      "report": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh-root-seal.json",
+      "verifiedArtifacts": 327,
+      "reportSha256": "7c8701cd37fb30e5db800db813920ac00475fa99ed6051c789c0b3f9569705c7",
+      "scope": "F1–F4 SourceFAIL;61unchangedguardedfiles112currentpins;bounded retirementconcurrency5resourcefacetPASS, notpackage approval."
     }
   ],
   "continuation": {
@@ -23354,8 +23421,8 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/operator_wait_resume_cancellation_complete_source_fresh",
-      "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh"
+      "/root/raw_audit_entry_complete_family_writer",
+      "/root/install_evidence_retirement_lifetime_complete_batch_writer"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -26579,7 +26646,7 @@
       "qualificationIntegrator": "/root/annotation_yaml_static_custody_authority_integrator",
       "docCorrectionWriter": "/root/trust_denial_retirement_complete_batch_writer",
       "lastCompleteDocReader": "FAIL2 fullcorrected Reader;71 verified artifacts. R1storage-lifetime exclusion andR2immutable failed-observation evidence. Corrected trust/signing/lifecycle/5retainedresource facetsPASS.",
-      "lastCompleteDocSource": "FAIL1 full corrected review;86 verified artifacts. Trustdenial/signing/lifecycle/receipt/5retainedresource facetsPASS, genericretirement lifetime exclusionFAIL.",
+      "lastCompleteDocSource": "FullcorrectedreviewFAIL4, artifactsrootverified; broadmaintenancewindow5resourcesboundedPASS; installlocalwrite/creatingidentity/trustlinks/adjacentaudit needwholebatchfix.",
       "observedAt": "2026-10-11T21:35:42.906733+00:00",
       "fourPageCorrectionCommit": "a2abcd45b78b3ce2d54883f56295532b3601002e",
       "rootTrustAggregate": "Observed terminal0, Sources unchanged; static/contract/typecheck only.",
@@ -26605,8 +26672,11 @@
       "remainingOperatorControlReview": "/root/operator_wait_resume_cancellation_complete_source_fresh; potential F01 mandatoryrawstatepreservation absent recovery/diagnose auditentrypaths;fullreportpending.",
       "operatorControlReview": "TerminalfullSourceFAILF01 plus3 separatelymissingmandatorydeployment receipts;30rootverifiedartifacts.",
       "rawAuditFamilyWriter": "/root/raw_audit_entry_complete_family_writer",
-      "rawAuditFamilyState": "Fourpage read-onlyprep ready;exclusive recovery,diagnose,plugins,workflows/buster-suite; awaiting completecurrent4pageSource freeze release.",
-      "currentSourceProvisionalFindings": "Freshcomplete4pageSource independently reproduces unchecked identities.txt localwrite falselycomplete, examining creatingUIDprovenance;2WorkerTrust narrowlinks pointat noncommandlines. Fullreportpending."
+      "rawAuditFamilyState": "Released afterguardterminal;writerowns4pagesrecovery/diagnose/plugins/buster-suite.",
+      "currentSourceProvisionalFindings": "Freshcomplete4pageSource independently reproduces unchecked identities.txt localwrite falselycomplete, examining creatingUIDprovenance;2WorkerTrust narrowlinks pointat noncommandlines. Fullreportpending.",
+      "probeIdentityWriter": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
+      "probeIdentityWriterState": "Released wholelocalretention/creatingUIDprovenance+trustcitationcorrection;exclusiveinstall+worker-trust only.",
+      "scannerState": "4f98WITHHELD actualcorpusregression;genericsnapshotproducer/preciseforwardingrole correction actual436gatePASS,48-testcandidate/fullsupersedingreplaypending."
     }
   }
 }
