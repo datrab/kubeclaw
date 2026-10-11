@@ -366,21 +366,21 @@
       "title": "Worker trust",
       "canonical": "docs/site/use/worker-trust.md#canonical-worker-trust-procedure",
       "owner": "security operator",
-      "implementationAuthorities": ["skills/worker/core/worker/trust.ts", "scripts/deploy.sh"],
-      "supportedStartState": "SPIRE namespaces, server, agents, CSI, and selected workloads present",
-      "productLimits": ["Complete expiry and independent restore proof is not established"],
+      "implementationAuthorities": ["skills/worker/core/worker/trust.ts", "scripts/deploy.sh", "tests/verification/live/worker-trust-cluster-e2e.sh", "scripts/production-receipt-attestation.mjs"],
+      "supportedStartState": "Selected Nova, Buster, and Prism workloads and SPIRE identity delivery present; external operator receipt authority and independent lifecycle evidence qualified before installation effects",
+      "productLimits": ["The live verifier requires Prism", "Original durable request and creating-resource identities need independently qualified capture and reconciliation", "Asynchronous cleanup suppresses failures and does not prove absence", "Durable Prism design and agent state is not removed by temporary Job cleanup", "Complete expiry and independent restore proof is not established"],
       "procedure": {
         "supportedStartStateAndVersion": ["docs/site/use/worker-trust.md#supported-start-state-version-location-and-authority"],
         "executionLocation": ["docs/site/use/worker-trust.md#supported-start-state-version-location-and-authority"],
         "implementationAuthority": ["docs/site/use/worker-trust.md#source-authority"],
-        "preconditions": ["docs/site/use/worker-trust.md#preconditions"],
-        "orderedSteps": ["docs/site/use/worker-trust.md#1-verify-source-before-cluster-execution", "docs/site/use/worker-trust.md#2-observe-the-installed-identity-chain", "docs/site/use/worker-trust.md#3-execute-positive-and-negative-paths"],
-        "expectedObservations": ["docs/site/use/worker-trust.md#3-execute-positive-and-negative-paths"],
-        "stopConditions": ["docs/site/use/worker-trust.md#1-verify-source-before-cluster-execution"],
+        "preconditions": ["docs/site/use/worker-trust.md#preconditions", "docs/site/use/worker-trust.md#prepare-the-production-receipt-authority", "docs/site/use/worker-trust.md#3-check-the-live-execution-boundary"],
+        "orderedSteps": ["docs/site/use/worker-trust.md#prepare-the-production-receipt-authority", "docs/site/use/worker-trust.md#1-verify-source-before-cluster-execution", "docs/site/use/worker-trust.md#2-observe-the-installed-identity-chain", "docs/site/use/worker-trust.md#3-check-the-live-execution-boundary"],
+        "expectedObservations": ["docs/site/use/worker-trust.md#required-results-and-cleanup-observations"],
+        "stopConditions": ["docs/site/use/worker-trust.md#prepare-the-production-receipt-authority", "docs/site/use/worker-trust.md#1-verify-source-before-cluster-execution", "docs/site/use/worker-trust.md#3-check-the-live-execution-boundary"],
         "failureDistinction": ["docs/site/use/worker-trust.md#failure-distinction"],
         "recoveryRollback": ["docs/site/use/worker-trust.md#recovery-rotation-boundary-and-evidence"],
-        "cleanup": ["docs/site/use/worker-trust.md#3-execute-positive-and-negative-paths", "docs/site/use/worker-trust.md#recovery-rotation-boundary-and-evidence"],
-        "evidence": ["docs/site/use/worker-trust.md#recovery-rotation-boundary-and-evidence"]
+        "cleanup": ["docs/site/use/worker-trust.md#required-results-and-cleanup-observations", "docs/site/use/worker-trust.md#recovery-rotation-boundary-and-evidence"],
+        "evidence": ["docs/site/use/worker-trust.md#prepare-the-production-receipt-authority", "docs/site/use/worker-trust.md#required-results-and-cleanup-observations", "docs/site/use/worker-trust.md#recovery-rotation-boundary-and-evidence"]
       }
     }
   ],

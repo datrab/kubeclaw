@@ -550,29 +550,141 @@ Use all applicable authorities in one change record.
 
 ## Prepare a Release Change
 
-Run from a clean checkout:
+### Acquire a reviewed runtime selection
 
-Complete the canonical
-[Locked Dependency Installation](quickstart.md#locked-dependency-installation)
-first. Retain its sanitized registry, lock digest, output, exit status, and
-worktree proof with the release record.
+A receipt is the build's stored record of its source commit, workflow run and
+attempt, and immutable image digests. Promotion selects that record; it does
+not rebuild the images. The selection commit is the Git commit that contains
+the accepted receipts and generated values. It is usually later than the
+image-build commit. Record both. If `releases/runtime-code.json` is selected,
+record its separate code-bundle commit and run/attempt too. Code bundles are
+archives loaded by the agent; they are not container images.
+
+The current checkout has no `releases/runtime-images.json`. Stop runtime
+installation until a selection is accepted. The release maintainer performs
+this task in `github.com/datrab/kubeclaw`, or the explicitly approved repository
+whose receipts and image references the environment uses:
+
+1. Open **Actions → Build Runtime Images And Skill Bundles**. Select one
+   [successful run on `main`, triggered by `push` or `workflow_dispatch`](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L43-L53). Record
+   its numeric run ID, attempt and full source commit. Confirm the durable
+   release `runtime-images-<run-id>-<attempt>` contains exactly the intended
+   `runtime-images.json` receipt and images. A successful code-only build can
+   have no image receipt; it is not sufficient for this manual image promotion.
+2. Confirm that **Actions → Promote image release** is enabled and the maintainer
+   can dispatch it. The workflow reads Actions, release contents and packages.
+   The repository administrator must configure `DEPENDENCY_APP_ID` and
+   `DEPENDENCY_APP_PRIVATE_KEY` for a GitHub App installed on this repository.
+   [The workflow creates its App token from those configured inputs](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L77-L86).
+   Its token must be authorized to push the `release/runtime-<run-id>` branch
+   and create a pull request (Contents write and Pull requests write). Reviewers need the repository's review and merge
+   authority under branch protection. Stop if the app or authority is absent;
+   do not use an operator's cluster credentials as a substitute.
+3. Choose **Run workflow**, branch `main`, `family=runtime`, and
+   [`source_run_id=<run-id>`](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L1-L14). Record the promotion run ID. Wait for its source
+   verification, materialization, immutable-image scan, and PR creation to
+   finish. The [scan and artifact steps](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L65-L76) run before the
+   [branch push and PR creation](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L107-L113). On success, retain the `proposed-runtime-release` artifact and the
+   PR **Select runtime release <run-id>**, branch `release/runtime-<run-id>`,
+   base `main`. An artifact or a partially pushed branch without that accepted
+   PR does not authorize installation. If a run fails, retain its failed step;
+   check whether the branch or PR already exists before deciding to retry.
+4. Review the receipt's source run/attempt, source commit and image digests,
+   the scan outcome, generated `releases/values/*.yaml`, selected code receipt
+   if present, and every other changed file. Stop on stale chart/value bytes,
+   missing images or bundles, incompatible private settings, or an unexplained
+   change. Obtain the change and data-compatibility approvals before merge.
+   With `GITOPS_ENABLED=true`, this workflow also proposes production Argo
+   [manifests](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/promote-runtime.yaml#L101-L111): after continuous GitOps is bootstrapped, merging can authorize
+   automatic deployment. Obtain that environment owner's approval before
+   merge. The separate **Publish production deployment** workflow can push
+   compatible selections to `main` when GitOps is enabled; do not treat that
+   [automatic path](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/.github/workflows/auto-promote-runtime.yaml#L14-L18) as completion of this manual promotion task.
+5. Merge the approved selection PR. Record the full accepted checkout commit
+   on `main`, PR URL, review approvals, promotion run and artifact. This is
+   `<selection-commit>` below. Do not check out only the image-build commit:
+   that commit need not contain the later selection files.
+
+No workflow was dispatched for this page, and no successful promotion,
+scan or merge is claimed.
+
+### Obtain and verify the selected checkout
+
+Run on the administration machine. `<new-checkout-path>` is a new disposable
+absolute directory; `<selection-commit>` is the reviewed 40-character checkout
+commit from the preceding step. Git read access is required. The checkout may
+contain production GitOps files, but these commands do not sync or deploy them.
 
 ```bash
-git status --short
-git rev-parse HEAD
-npm run versions:check
-node scripts/updates/materialize-release.mjs --family=runtime --check
+export SELECTED_CHECKOUT_COMMIT="<selection-commit>"
+export SELECTED_REPOSITORY_URL="https://github.com/datrab/kubeclaw.git"
+export SELECTED_CHECKOUT_PATH="<new-checkout-path>"
+[[ $SELECTED_CHECKOUT_COMMIT =~ ^[a-f0-9]{40}$ ]] || exit 1
+case "$SELECTED_CHECKOUT_PATH" in /*) ;; *) exit 1 ;; esac
+test ! -e "$SELECTED_CHECKOUT_PATH"
+git clone --no-checkout "$SELECTED_REPOSITORY_URL" "$SELECTED_CHECKOUT_PATH"
+cd "$SELECTED_CHECKOUT_PATH"
+git checkout --detach "$SELECTED_CHECKOUT_COMMIT"
+test "$(git rev-parse HEAD)" = "$SELECTED_CHECKOUT_COMMIT"
+test -z "$(git status --porcelain)"
+test -f releases/runtime-images.json
 ```
 
-For Ops images, replace `runtime` with `ops`.
+Complete [Locked Dependency Installation](quickstart.md#locked-dependency-installation)
+in this disposable checkout. Follow its locked installation and retain the
+registry identity, lock digest, tool versions and installation result. The repository administrator supplies a read-only GitHub identity in
+`GITHUB_TOKEN` for the verification below; do not put it in arguments or logs.
+`GITHUB_REPOSITORY` is the owner/repository whose stored receipts you accepted.
+The verifier checks every selected runtime/code/Ops receipt present in the
+checkout, so that identity must be able to read each corresponding run and
+release. Stop if the identity or receipt access is unavailable.
 
-The current source tree has an Ops selection but no runtime selection.
-The runtime check must fail until a reviewed promotion creates `releases/runtime-images.json`.
+```bash
+export GITHUB_REPOSITORY="datrab/kubeclaw"
+: "${GITHUB_TOKEN:?Read-only GitHub receipt-verification identity required}"
+export GITHUB_TOKEN
+node scripts/updates/verify-release-source.mjs
+node scripts/updates/materialize-release.mjs --family=runtime --check
+npm run versions:check
+node --input-type=module <<'NODE'
+import { selectedRelease } from './scripts/updates/deployment-release.mjs';
+const release = selectedRelease(process.cwd(), 'runtime');
+console.log(JSON.stringify({ imageCommit: release.commit,
+  imageRun: release.sourceRunId, imageAttempt: release.sourceRunAttempt,
+  codeCommit: release.code?.commit ?? null,
+  codeRun: release.code?.sourceRunId ?? null,
+  codeAttempt: release.code?.sourceRunAttempt ?? null }));
+NODE
+test -z "$(git status --porcelain)"
+unset GITHUB_TOKEN
+```
 
-Do not create a replacement file by hand.
-Run the promotion workflow with one successful same-commit build receipt set.
+Expected observation: each command exits zero; the identity report matches
+the reviewed receipt(s), and the worktree stays clean. `--check` compares the
+existing generated values without replacing them. If values are absent or
+stale, stop. In a separate disposable repair checkout, the release maintainer
+may run `node scripts/updates/materialize-release.mjs --family=runtime`, review
+its exact generated diff and commit it through another selection PR. Resume
+only from that accepted clean commit and repeat these checks. Do not repair
+values in the installation checkout, invent a receipt, or replace a digest
+with `latest`.
 
-If version inputs change, use the controlled generation path:
+The [local release boundary rejects absent selection](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/updates/deployment-release.mjs#L33-L43).
+The [configuration verifier requires the exact source file set and bytes](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/updates/release-configuration.mjs#L25-L38)
+from the [selected code commit, or image commit when no code receipt is selected](https://github.com/datrab/kubeclaw/blob/b6e4a0d774434b8c39b2575322436e3fba708914/scripts/updates/materialize-release.mjs#L5-L9).
+A later documentation-only checkout is eligible only when the release owner
+explicitly accepts its commit and these same checks pass. The checks establish
+configuration equality, not that owner's approval, data compatibility or live
+readiness. Record the checkout commit separately from the receipt commits.
+
+Retain the review/merge references, run and attempt identities, artifact and
+receipt digests, scan status, checkout commit, sanitized check outputs and
+exit statuses. For Ops image acquisition, use the same workflow with `family=ops`
+and a successful `.github/workflows/build-ops-mcp.yaml` run; its local family
+check is `--family=ops`. This does not authorize an Ops deployment.
+
+If version inputs change, use the controlled generation path in a separate
+reviewed change:
 
 ```bash
 npm run versions:sync
@@ -580,10 +692,8 @@ npm run versions:check
 node --test tests/verification/deployment/versions.test.mjs
 ```
 
-Review every generated diff with the version change.
-Do not edit generated digests to make a check pass.
-
-Keep promotion and receipt evidence with the version authorities in this section.
+Review every generated diff with the version change. Do not edit generated
+digests to make a check pass.
 
 ## Change Plan
 
@@ -606,13 +716,18 @@ Do not start with an undecided irreversible point.
 
 ## Render and Compare
 
+Before rendering, [select Prism and check the trust boundary](install.md#select-prism-and-check-the-trust-boundary).
+Keep the reviewed exported `KUBECLAW_DEPLOY_PRISM` value in the bound shell.
 Render the actual selected configuration:
 
 ```bash
 assert_cluster_binding
+case "$KUBECLAW_DEPLOY_PRISM" in true|false) ;; *) exit 1 ;; esac
 ./scripts/deploy.sh render nova > "<evidence-dir>/nova.yaml"
 ./scripts/deploy.sh render buster > "<evidence-dir>/buster.yaml"
-./scripts/deploy.sh render prism > "<evidence-dir>/prism.yaml"
+if [[ $KUBECLAW_DEPLOY_PRISM == true ]]; then
+  ./scripts/deploy.sh render prism > "<evidence-dir>/prism.yaml"
+fi
 ```
 
 Protect rendered files because they can reveal private configuration.
@@ -1130,13 +1245,13 @@ That command destroys the namespace and included state.
 >
 > **Claim:** `teardown-agents` and `teardown-prism` remove bounded workload releases. `teardown` keeps the namespace and Secrets but deletes every remaining PVC. `teardown-all` deletes the namespace.
 >
-> **Implementation:** [The bounded agent teardown uninstalls only Nova and Buster](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L2692-L2699). [The destructive teardown enumerates and deletes all remaining PVCs](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L2780-L2825). [The namespace branch deletes the complete namespace](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L2806-L2817).
+> **Implementation:** [The bounded agent teardown uninstalls only Nova and Buster](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2692-L2699). [The destructive teardown enumerates and deletes all remaining PVCs](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2780-L2825). [The namespace branch deletes the complete namespace](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2806-L2817).
 >
-> **Contract or setting:** [`KUBECLAW_DEPLOY_PRISM` decides whether broad teardown first uninstalls Prism](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L2828-L2838).
+> **Contract or setting:** [`KUBECLAW_DEPLOY_PRISM` decides whether broad teardown first uninstalls Prism](https://github.com/datrab/kubeclaw/blob/2a8558d795054d25aa4b72dbdc296c9321ba38f6/scripts/deploy.sh#L2828-L2838).
 >
 > **Test evidence:** No repository test executes destructive PVC deletion against a live namespace. The documented command paths are protected by a regression check.
 >
-> **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`.
+> **Revision:** `2a8558d795054d25aa4b72dbdc296c9321ba38f6`.
 >
 > **Limit:** The available static evidence does not prove successful cleanup, backup integrity, external-resource removal, or data-destruction approval in a live environment.
 
