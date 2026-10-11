@@ -2138,7 +2138,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2210,7 +2210,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2283,7 +2283,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2356,7 +2356,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2467,7 +2467,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -2540,7 +2540,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3168,7 +3168,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3246,7 +3246,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3323,7 +3323,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3398,7 +3398,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3475,7 +3475,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3552,7 +3552,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3631,7 +3631,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3688,6 +3688,7 @@
       ],
       "acceptanceIds": [
         "A97-05",
+        "A97-08",
         "A97-11",
         "A97-12"
       ],
@@ -3705,7 +3706,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3718,7 +3719,7 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L211",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "HTTP service method/path/auth/limits/timeout are endpoint-inventory scope under 05; 11/12 preserve full source comparison and endpoint discovery. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "HTTP/service endpoint catalogue explicitly includes Peer Identity and Auth alongside method/path/port/schema, limits, timeout and error responses. Peer Identity and Auth explicitly belong to the endpoint catalogue. Corrected COM-001 includes 08 for authentication/authorization, so excluding the same peer/auth facet here is incoherent. The scoped identity/secret/network/artifact-trust facet retains trust boundaries, credential source/rotation/least privilege/ingress-egress/artifact identity/negative access; render is not live enforcement. Contribution facets only; no content/gate/package acceptance.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
@@ -3727,7 +3728,6 @@
           "A97-04",
           "A97-06",
           "A97-07",
-          "A97-08",
           "A97-09",
           "A97-10"
         ],
@@ -3735,7 +3735,7 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md"
     },
     {
       "id": "COM-009",
@@ -3785,7 +3785,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3863,7 +3863,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -3937,7 +3937,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4014,7 +4014,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4092,7 +4092,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4167,7 +4167,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4244,7 +4244,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4322,7 +4322,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4400,7 +4400,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4459,6 +4459,7 @@
       "acceptanceIds": [
         "A97-02",
         "A97-03",
+        "A97-05",
         "A97-06",
         "A97-08",
         "A97-10",
@@ -4479,7 +4480,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4520,13 +4521,12 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L221",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Credentials are explicit in the LiteLLM PostgreSQL scope, so credential source/authority and rotation must also feed the secret/identity matrix 08. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "LiteLLM PostgreSQL owner, schema/migration authority, explicit Credentials and Connection Pool, startup/upgrade/retention/capacity/backup/restore verification. Connection Pool is expressly in this client/database scope. A97-05 includes active Store paths and limits, not only HTTP endpoints. Pool/client startup and DATABASE_URL are concrete communication semantics. The scoped active connection/event/stream/store/provider facet retains producer/consumer/transport/authentication/timeout/limits/order/persistence/outage checks. Contribution facets only; no content/gate/package acceptance.",
       "evidenceState": "Current bounded reviewed facets linked; remaining whole requirement/gates/final Astra not accepted",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
           "A97-04",
-          "A97-05",
           "A97-07",
           "A97-09"
         ],
@@ -4534,7 +4534,7 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md"
     },
     {
       "id": "DAT-007",
@@ -4584,7 +4584,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4659,7 +4659,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4737,7 +4737,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4812,7 +4812,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4888,7 +4888,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -4964,7 +4964,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5041,7 +5041,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5097,6 +5097,7 @@
       ],
       "acceptanceIds": [
         "A97-05",
+        "A97-06",
         "A97-07",
         "A97-11",
         "A97-12"
@@ -5115,7 +5116,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5128,14 +5129,13 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L229",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Observer delivery/checkpoint/retry/restart support 05/07. A97-10 is specific to the six named dependency failures, not any retry. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Delivery Journal and checkpoint-after-success, required/best-effort exhaustion, restart and Recovery State; these explicitly own durable delivery/checkpoint authority and replay state. Delivery Journal, success checkpoints, Recovery State and restart are explicit durable store authority. Current source options contain FileJournal events/checkpoints/deliveries; records are appended, checkpoints transact, and recovery reads them. 05/07 do not replace store authority. The scoped durable store facet retains authority/schema/writer/reader/consistency/locks/fencing/retention/capacity/backup/restore/corruption/loss/retirement, including honest unimplemented paths. Contribution facets only; no content/gate/package acceptance.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-01",
           "A97-02",
           "A97-03",
           "A97-04",
-          "A97-06",
           "A97-08",
           "A97-09",
           "A97-10"
@@ -5144,7 +5144,7 @@
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md"
     },
     {
       "id": "TEL-006",
@@ -5187,7 +5187,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5264,7 +5264,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5336,7 +5336,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5412,7 +5412,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5487,7 +5487,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5561,7 +5561,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5637,7 +5637,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5711,7 +5711,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5785,7 +5785,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5858,7 +5858,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5914,6 +5914,7 @@
         "A97-02",
         "A97-05",
         "A97-06",
+        "A97-08",
         "A97-10",
         "A97-11",
         "A97-12"
@@ -5932,7 +5933,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -5945,20 +5946,19 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L245",
       "acceptanceMappingAuthority": "docs/blueprint/AP09-acceptance-contract.md#L259-L270",
-      "acceptanceMappingRationale": "Named Redis/PostgreSQL/Tailscale dependency, protocol/store/route recovery map directly to 01/02/05/06/10/11/12. These are contribution facets only; no whole gate or content acceptance is granted.",
+      "acceptanceMappingRationale": "Named Redis/PostgreSQL/Tailscale dependencies, protocols/stores/migration/retention, explicitly Credentials, routes and recovery. Catalogue expressly includes Credentials for Redis/PostgreSQL/Tailscale. Credential sources and route trust are A97-08 duties; named dependency identity under 02 does not substitute for security-matrix contribution. The scoped identity/secret/network/artifact-trust facet retains trust boundaries, credential source/rotation/least privilege/ingress-egress/artifact identity/negative access; render is not live enforcement. Contribution facets only; no content/gate/package acceptance.",
       "acceptanceMappingExclusions": {
         "ids": [
           "A97-03",
           "A97-04",
           "A97-07",
-          "A97-08",
           "A97-09"
         ],
         "rule": "Excluded rows govern a different named infrastructure class, a distinct specialist role, or a separate complete inventory/journey not required by this catalogue scope. Incidental shared page or shared source path does not itself add the gate. General cross-cutting evidence, current-claim correctness and independent role rules still apply; exclusions do not waive package-level gates."
       },
       "acceptanceMappingRequiredReviews": "A97-11 requires independently selecting diagnosis/safe recovery for EVERY dependency and separately comparing ALL applicable matrix entries to current Sources; not satisfied by this mapping review. Three reviewer identities and fresh contexts remain required by contract rules.",
       "acceptanceMappingDriftObligations": "For every scoped endpoint/store/event/secret/runtime-service/Ops tool, A97-12 requires real discovery and red-on-undocumented-addition evidence; product scope also preserves change/remove/rename detection. Linking an existing checker, pinning old source or a current green baseline cannot satisfy this.",
-      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-all-requirement-mapping-source-fresh/report.md"
+      "acceptanceMappingCorrectionSource": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md"
     },
     {
       "id": "INF-010",
@@ -6007,7 +6007,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6079,7 +6079,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6155,7 +6155,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6256,7 +6256,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6332,7 +6332,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6407,7 +6407,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6482,7 +6482,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6558,7 +6558,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6633,7 +6633,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -6706,7 +6706,7 @@
         "A97-11",
         "A97-12"
       ],
-      "acceptanceMappingState": "corrected-pending-new-independent-validation",
+      "acceptanceMappingState": "corrected-pending-new-full-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -20881,6 +20881,42 @@
       "state": "review complete in substance, report sealing; new material findings, no acceptance",
       "scope": "Complete current retirement procedure and seven records; Source/Reader role only, no publication/live/package acceptance",
       "tree": "/home/node/Documents/Codex/a98-evidence/pv-retirement-corrected-complete-reader-fresh"
+    },
+    {
+      "agent": "/root/ap097_corrected_all_mapping_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "initialMode": "read-only",
+      "state": "completed mapping-onlyFAIL49PASS4FAIL",
+      "scope": "Whole53 mapping and636individualfacets only; not content/gate acceptance",
+      "report": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh-root-seal.json"
+    },
+    {
+      "agent": "/root/ap097_four_facet_corrected_full_mapping_source_fresh",
+      "role": "source-mapping",
+      "scope": "All53 AP09.7 rows and all636 facet applicability decisions, mapping only; content and gates unaccepted",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active",
+      "baseRevision": "bcf1d131242913f98427dcb7e01050a7529139a2"
+    },
+    {
+      "agent": "/root/pv_retirement_final_discovery_permissions_complete_source_fresh",
+      "role": "source",
+      "scope": "Whole final retirement procedure, seven records and navigation; no global SourceGraph/publication/live acceptance",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active",
+      "baseRevision": "bcf1d131242913f98427dcb7e01050a7529139a2"
     }
   ],
   "continuation": {
@@ -24770,7 +24806,54 @@
             "A97-05"
           ]
         }
-      ]
+      ],
+      "furtherCorrection": {
+        "previousReviewer": "/root/ap097_corrected_all_mapping_source_fresh",
+        "previousVerdict": "mappingFAIL49PASS4FAIL",
+        "report": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh/report.md",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/ap097-corrected-all-mapping-source-fresh-root-seal.json",
+        "changes": [
+          {
+            "id": "COM-008",
+            "added": [
+              "A97-08"
+            ]
+          },
+          {
+            "id": "DAT-006",
+            "added": [
+              "A97-05"
+            ]
+          },
+          {
+            "id": "TEL-005",
+            "added": [
+              "A97-06"
+            ]
+          },
+          {
+            "id": "INF-009",
+            "added": [
+              "A97-08"
+            ]
+          }
+        ],
+        "state": "Four missing facets corrected; NEW all53 independent mapping review active; no content or gate acceptance",
+        "newReviewer": "/root/ap097_four_facet_corrected_full_mapping_source_fresh"
+      }
+    },
+    "pvRetirementFinalCorrection": {
+      "state": "Author correction frozen; NEW complete independent Source review active; Reader and Quality pending; no acceptance",
+      "author": "/root/pv_retirement_complete_procedure_correction_writer",
+      "report": "/home/node/Documents/Codex/a98-evidence/pv-retirement-reference-access-final-correction-writer/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-reference-access-final-correction-writer-root-seal.json",
+      "verifiedArtifacts": 69,
+      "reportSha256": "96b0bc086a7495fec8bd50a495a958e7fcf0c63823a34dc6a757fd853ddbb14d",
+      "maintenanceSha256": "a10f719d3f8da7745affc89274191cf8a3e396aac57051c7f42b3e4d835e9d91",
+      "helperSha256": "02d9af8019e1300767aa0ca507607004aa6ee6e107fb455da3579af46e551f51",
+      "authorChecks": "Nine snippet/refusal/capture, eight actual-script synthetic scenarios, four navigation tests rerun and passed; bounded author only",
+      "priorAuthorBundle": "97-entry prior bundle artifact-integrity FAIL:96 saved entries match, overwritten navigation timing log missing; never awarded current independent acceptance",
+      "remaining": "Coupled registry/boundary integration; final Source permalink refresh after commit; new full distinct Source/Reader/Quality; generated output/publication/link gates and package acceptance"
     }
   }
 }
