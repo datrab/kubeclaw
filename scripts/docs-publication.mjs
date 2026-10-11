@@ -11,7 +11,7 @@ import { pluginSourceClosure, pluginInvocationFacts, pluginCapabilityRoutes } fr
 import { dependencySchemaFacts } from './plugin-schema-dependencies.mjs';
 import { invocationDependencyBoundaries } from './plugin-dependency-boundaries.mjs';
 import { markdownInlineLinks, stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
-import { publicationAssets, copyPublicationAssets } from './lib/docs-publication-assets.mjs';
+import { publicationAssets, copyPublicationAssets, publicationPages } from './lib/docs-publication-assets.mjs';
 import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -846,7 +846,10 @@ function checkSite() {
     errors.push(`Local verification has ${localVerificationById.size} results for ${plugins.length} discovered packages`);
   }
   for (const plugin of plugins) if (!localVerificationById.has(plugin.manifest.id)) errors.push(`Local verification is missing ${plugin.manifest.id}`);
-  const pages = walk(siteRoot).filter((file) => file.endsWith('.md')).sort();
+  let pages = [];
+  try {
+    pages = publicationPages(siteRoot, JSON.parse(fs.readFileSync(path.join(root, 'docs/config/documentation-tree-classification.json'), 'utf8')));
+  } catch (error) { errors.push(error.message); }
   try { publicationAssets(siteRoot); }
   catch (error) { errors.push(error.message); }
   for (const file of pages) {

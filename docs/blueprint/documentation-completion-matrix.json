@@ -19909,6 +19909,65 @@
       "rootArtifactIntegrity": "/home/node/Documents/Codex/a98-evidence/studio-current-pin-root-artifact-integrity.json",
       "authorChecks": "Prism full unmodified guide gate0;220links74files full byte-equivalence/ranges;14Bash syntax;87local links. Repository refs1:3missingHelmanchors+mixedPluginRuntimecalloutRootcorrected.",
       "limits": "Historical executions retain actual082/ec2 dates and source revisions. No live/independent/global acceptance."
+    },
+    "governance267GeneratedVerified": {
+      "sourceRevision": "267232a4d4ab602e4bdcf9e509381535b4ae8ee4",
+      "generatedRevision": "98254187269e58734fdcdcd19ff7d0c5d5af37ef",
+      "state": "generated-check-pass-not-content-acceptance",
+      "pages": 152,
+      "sourceFilesAuthenticated": 5589,
+      "receipt": "/home/node/Documents/Codex/a98-evidence/governance-267-generated-receipt.json",
+      "limits": "Page set completeness and owner metadata generation only. No requirement/gate closed."
+    },
+    "interruptedReviewRecovery": {
+      "state": "new-identities-required-no-final-verdict-inherited",
+      "interruptedAgents": [
+        "/root/approval_corrected_complete_source_fresh",
+        "/root/publication_complete_origin_source_fresh",
+        "/root/producer_recovery_writer"
+      ],
+      "observed": "Live collaboration list initially Root only; no matching producer processes; old suite/join handles missing, no end receipts. Preserve all existing evidence.",
+      "partialSourceFindings": [
+        {
+          "path": "docs/site/understand/nova-core.md",
+          "finding": "Receipt repair or administrative recovery wording exceeds actual supported effect-recovery guard."
+        },
+        {
+          "path": "docs/site/understand/nova-core.md",
+          "finding": "Wait/resume signal type and payload index incomplete for installed consumers."
+        },
+        {
+          "path": "docs/site/understand/nova-core.md",
+          "finding": "Decision history/inference status and reconsideration conditions missing."
+        }
+      ],
+      "limits": "Partial findings are preserved leads, not completed review or acceptance. New complete fresh review follows author correction."
+    },
+    "batchedCorrectionWork": {
+      "state": "active",
+      "authorNova": "/root/nova_complete_boundaries_writer",
+      "exclusiveNovaFile": "docs/site/understand/nova-core.md",
+      "authorProducer": "/root/producer_v3_recovery_writer",
+      "producerFiles": [
+        "scripts/docs-api-go-output-role-adapter.go",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-output-role-classification.mjs",
+        "scripts/docs-api-producer-adapter-authorities.json",
+        "scripts/docs-api-python-output-adapter.py",
+        "scripts/tests/api-reference.test.mjs"
+      ],
+      "reviewerPublication": "/root/publication_full_recovered_source_fresh",
+      "reviewPublicationRevision": "98254187269e58734fdcdcd19ff7d0c5d5af37ef",
+      "policy": "Integrate coherent author releases into one stable candidate, regenerate after Source commit, then fresh full affected Source/Reader/Quality scope. Preserve valid unchanged evidence through actual source/content equivalence; do not shrink quality/scope or declare old execution at a newer revision."
+    },
+    "publicationCanonicalMarkdownCorrection": {
+      "state": "author-candidate-pending-complete-fresh-review",
+      "baseRevision": "98254187269e58734fdcdcd19ff7d0c5d5af37ef",
+      "finding": "Publication discovers every Markdown page by extension; unknown metadata-valid internal Markdown could enter the output. Independent interrupted source reviewer identified A912-01 gap; no final review verdict inherited.",
+      "correction": "Publication pages must exactly match existing explicit docs/config/documentation-tree-classification.json canonical Markdown records. Reject unknown, missing, misclassified, duplicate, moved or unsafe records before build. No second publication registry.",
+      "authorTests": "12 asset/link/page tests terminal0, including metadata-valid unknown page, missing page, noncanonical classification, duplicate, traversal and expectedPath mismatch. Actual registered page set152 retained.",
+      "checkLog": "/home/node/Documents/Codex/a98-evidence/publication-classified-pages-check.log",
+      "limits": "No independent content/package acceptance. Full publication check observed separately; generator manifests/links/unknown Markdown are not Reader/Quality/globalAstra proof."
     }
   },
   "productBoundaries": [

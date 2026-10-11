@@ -21,6 +21,43 @@ const files = new Set([
   'use/workflows/wait-resume/signal.template.json',
 ]);
 
+export function publicationPages(siteRoot, classification) {
+  if (classification?.schemaVersion !== 'kubeclaw-documentation-tree-classification.v1'
+    || !Array.isArray(classification.files)) throw new Error('Publication needs the explicit documentation classification');
+  const registered = new Set();
+  const seen = new Set();
+  for (const record of classification.files) {
+    if (!record || typeof record.path !== 'string' || seen.has(record.path)) {
+      throw new Error('Invalid or duplicate documentation classification path');
+    }
+    seen.add(record.path);
+    if (!record.path.startsWith('docs/site/') || !record.path.endsWith('.md')) continue;
+    const relative = record.path.slice('docs/site/'.length);
+    if (relative !== path.posix.normalize(relative) || relative.startsWith('../')
+      || relative.includes('\\') || path.isAbsolute(relative)
+      || record.class !== 'canonical-reader-documentation' || record.expectedPath !== record.path) {
+      throw new Error(`Page has no canonical publication classification: ${record.path}`);
+    }
+    registered.add(relative);
+  }
+  const pages = [];
+  function visit(directory) {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const source = path.join(directory, entry.name);
+      if (entry.isSymbolicLink()) throw new Error(`Publication source must not be a symlink: ${source}`);
+      if (entry.isDirectory()) { visit(source); continue; }
+      if (!entry.isFile()) throw new Error(`Publication source must be a regular file: ${source}`);
+      const relative = path.relative(siteRoot, source).split(path.sep).join('/');
+      if (!relative.endsWith('.md')) continue;
+      if (!registered.delete(relative)) throw new Error(`Reader page has no publication allowance: ${relative}`);
+      pages.push(source);
+    }
+  }
+  visit(siteRoot);
+  if (registered.size) throw new Error(`Registered reader pages are missing: ${[...registered].sort().join(', ')}`);
+  return pages.sort();
+}
+
 export function publicationAssets(siteRoot) {
   const assets = [];
   function visit(directory) {
