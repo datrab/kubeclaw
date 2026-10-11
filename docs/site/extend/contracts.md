@@ -344,8 +344,7 @@ node tests/verification/contracts/check-pipeline-report-adapter-registry.mts
 These are local contract checks. They do not deploy a role or perform an end-to-end
 pipeline run. Package-specific behavior needs its own test and boundary check.
 
-The original observer command only loaded assertion definitions. It did not execute them.
-The corrected observer command checks registry identities, role inclusion, and activation.
+The observer command checks registry identities, role inclusion, and activation.
 Run observer recovery separately to test delivery behavior.
 The other recorded checks cover contract and registry behavior.
 They do not prove package-specific effects, persistent recovery, or deployment.

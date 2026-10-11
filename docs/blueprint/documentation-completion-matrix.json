@@ -6007,7 +6007,8 @@
       "sourceDependencies": [
         "versions.json",
         "releases/ops-images.json",
-        "scripts/deploy.sh"
+        "scripts/deploy.sh",
+        "scripts/remove-qdrant.sh"
       ],
       "sourceVerification": "pending-current-claim-inspection",
       "contentKind": "authored",
@@ -6047,7 +6048,14 @@
         "astra-final"
       ],
       "state": "not-accepted",
-      "evidence": [],
+      "evidence": [
+        {
+          "revision": "674e73fdd8c90ca237aa2e6d505abe49fc57b008",
+          "kind": "bounded-author-correction",
+          "scope": "Source-bound former Qdrant retirement subsection; no live proof or full OPR-008 acceptance",
+          "receipt": "/home/node/Documents/Codex/a98-evidence/retirement-and-integrity-root-author-checks.json"
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/a98_source_review_round2",
@@ -22246,6 +22254,21 @@
       "additionalCorrection": "communication remote result schema is buster-plan-result.v1, actual contract types.ts416–429",
       "infraIntermediateRootSeal": "/home/node/Documents/Codex/a98-evidence/infrastructure-operation-intermediate-root-seal.json",
       "infraState": "26bound/12realgaps/3parserartifacts; original87162terminalFAIL",
+      "independentAcceptance": false
+    },
+    "ap097QualityWorkingLanguageCorrections": {
+      "state": "author-corrected; immutable reviewer FAIL preserved",
+      "reviewer": "/root/ap097_full_quality_2f404_fresh",
+      "reviewedRevision": "2f404b02baae29d3b6c5422f7d61481127da1382",
+      "files": [
+        "docs/site/extend/contracts.md",
+        "docs/site/understand/platform-and-operations.md"
+      ],
+      "corrections": [
+        "Replace observer author-correction history with current command behavior",
+        "Remove for-this-correction wording from selected embedding test boundary"
+      ],
+      "check": "git diff --check PASS",
       "independentAcceptance": false
     }
   }

@@ -568,8 +568,8 @@ This memory error does not write a Nova stage result or a Prism operation row.
 > **Implementation:** The linked adapter, JSON/vector readers, and memory manager.
 > **Contract or setting:** The chart selects `openai-compatible`, the remote key,
 > and `gemini-embedding-001`; upstream defaults select the timeout and retry budgets.
-> **Test evidence:** No upstream client test or deployed embedding test was run
-> for this correction. The evidence is source inspection and local link checks.
+> **Test evidence:** No upstream client test or deployed embedding result is
+> established here. The evidence is source inspection and local link checks.
 > **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`.
 > **Limit:** No image/source attestation, live route result, provider quota proof,
 > or end-to-end owner deadline follows from this inspection.
