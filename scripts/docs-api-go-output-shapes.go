@@ -286,6 +286,129 @@ func main() {
 			}
 			return out
 		}
+		// A typed primitive slice filtered by a single source range is an
+		// inherited sequence, not one fabricated loop element. Preserve its
+		// exact binding when the closed filter grammar is structurally proven.
+		primitiveFilter := func(key string, before token.Pos) bool {
+			choices := []ast.Expr{}
+			for _, rhs := range bindings[key] {
+				if rhs.End() < before {
+					choices = append(choices, rhs)
+				}
+			}
+			if len(choices) != 2 {
+				return false
+			}
+			initial, ok := choices[0].(*ast.CompositeLit)
+			if !ok || len(initial.Elts) != 0 {
+				return false
+			}
+			array, ok := initial.Type.(*ast.ArrayType)
+			if !ok || array.Len != nil {
+				return false
+			}
+			element, ok := array.Elt.(*ast.Ident)
+			if !ok || !map[string]bool{"string": true, "int": true, "int64": true, "bool": true}[element.Name] {
+				return false
+			}
+			var loop *ast.RangeStmt
+			for parent := conditionParents[choices[1]]; parent != nil; parent = conditionParents[parent] {
+				if found, ok := parent.(*ast.RangeStmt); ok {
+					loop = found
+					break
+				}
+			}
+			if loop == nil || loop.Tok != token.DEFINE || len(loop.Body.List) != 1 {
+				return false
+			}
+			value, ok := loop.Value.(*ast.Ident)
+			if !ok {
+				return false
+			}
+			branch, ok := loop.Body.List[0].(*ast.IfStmt)
+			if !ok || branch.Init != nil || branch.Else != nil || len(branch.Body.List) != 1 {
+				return false
+			}
+			comparison, ok := branch.Cond.(*ast.BinaryExpr)
+			if !ok || (comparison.Op != token.EQL && comparison.Op != token.NEQ) {
+				return false
+			}
+			left, leftOK := comparison.X.(*ast.Ident)
+			right, rightOK := comparison.Y.(*ast.Ident)
+			if !(leftOK && left.Obj == value.Obj || rightOK && right.Obj == value.Obj) {
+				return false
+			}
+			closed := true
+			ast.Inspect(comparison, func(n ast.Node) bool {
+				if _, call := n.(*ast.CallExpr); call {
+					closed = false
+				}
+				return true
+			})
+			assignment, ok := branch.Body.List[0].(*ast.AssignStmt)
+			if !closed || !ok || len(assignment.Lhs) != 1 || len(assignment.Rhs) != 1 || assignment.Rhs[0] != choices[1] {
+				return false
+			}
+			target, ok := assignment.Lhs[0].(*ast.Ident)
+			if !ok || bindingKey(target) != key {
+				return false
+			}
+			appendCall, ok := choices[1].(*ast.CallExpr)
+			if !ok || callName(appendCall.Fun) != "append" || len(appendCall.Args) != 2 || appendCall.Ellipsis.IsValid() {
+				return false
+			}
+			base, baseOK := appendCall.Args[0].(*ast.Ident)
+			item, itemOK := appendCall.Args[1].(*ast.Ident)
+			return baseOK && itemOK && bindingKey(base) == key && item.Obj == value.Obj
+		}
+		// Source-defined unconditional range appends describe a repeated
+		// template with unknown runtime cardinality, never a singleton body.
+		repeatedTemplate := func(key string, before token.Pos) (*ast.RangeStmt, ast.Expr, bool) {
+			choices := []ast.Expr{}
+			for _, rhs := range bindings[key] {
+				if rhs.End() < before {
+					choices = append(choices, rhs)
+				}
+			}
+			if len(choices) != 2 {
+				return nil, nil, false
+			}
+			initial, ok := choices[0].(*ast.CompositeLit)
+			if !ok || len(initial.Elts) != 0 {
+				return nil, nil, false
+			}
+			array, ok := initial.Type.(*ast.ArrayType)
+			if !ok || array.Len != nil {
+				return nil, nil, false
+			}
+			var loop *ast.RangeStmt
+			for parent := conditionParents[choices[1]]; parent != nil; parent = conditionParents[parent] {
+				if found, ok := parent.(*ast.RangeStmt); ok {
+					loop = found
+					break
+				}
+			}
+			if loop == nil || loop.Tok != token.DEFINE || len(loop.Body.List) != 1 {
+				return nil, nil, false
+			}
+			assignment, ok := loop.Body.List[0].(*ast.AssignStmt)
+			if !ok || len(assignment.Lhs) != 1 || len(assignment.Rhs) != 1 || assignment.Rhs[0] != choices[1] {
+				return nil, nil, false
+			}
+			target, ok := assignment.Lhs[0].(*ast.Ident)
+			if !ok || bindingKey(target) != key {
+				return nil, nil, false
+			}
+			appendCall, ok := choices[1].(*ast.CallExpr)
+			if !ok || callName(appendCall.Fun) != "append" || len(appendCall.Args) != 2 || appendCall.Ellipsis.IsValid() {
+				return nil, nil, false
+			}
+			base, ok := appendCall.Args[0].(*ast.Ident)
+			if !ok || bindingKey(base) != key {
+				return nil, nil, false
+			}
+			return loop, appendCall.Args[1], true
+		}
 		activeConditions := map[*ast.IfStmt]bool{}
 		var eval func(ast.Expr, map[string]bool) any
 		eval = func(expr ast.Expr, seen map[string]bool) any {
@@ -345,6 +468,14 @@ func main() {
 					return nil
 				}
 				key := bindingKey(x)
+				if primitiveFilter(key, x.Pos()) {
+					return map[string]any{"__docsDynamicExpression": x.Name}
+				}
+				if loop, item, qualified := repeatedTemplate(key, x.Pos()); qualified {
+					var source bytes.Buffer
+					format.Node(&source, fset, loop.X)
+					return map[string]any{"__docsDynamicExpression": x.Name, "__docsSupportedSequenceTransform": map[string]any{"operation": "range-append", "items": []any{eval(item, seen)}, "sourceExpression": source.String(), "cardinality": "unknown-runtime-count", "sourceLine": fset.Position(loop.Pos()).Line}}
+				}
 				seenKey := key + ":" + strconv.Itoa(int(x.Pos()))
 				if !seen[seenKey] {
 					choices := bindings[key]
@@ -359,9 +490,6 @@ func main() {
 						if choice.End() < x.Pos() && permitted {
 							chosen = choice
 						}
-					}
-					if chosen == nil && len(choices) > 0 {
-						chosen = choices[0]
 					}
 					if chosen != nil {
 						// A conditional scalar assignment is not an unconditional
@@ -677,29 +805,55 @@ func main() {
 			}
 			return true
 		})
-		literalConditionVariants := func(literal *ast.CompositeLit) []map[*ast.IfStmt]bool {
-			referenced := map[string]bool{}
+		expressionConditionVariants := func(expression ast.Expr) []map[*ast.IfStmt]bool {
+			referenced := map[string]token.Pos{}
 			var visit func(ast.Expr)
 			visit = func(e ast.Expr) {
 				ast.Inspect(e, func(n ast.Node) bool {
 					if id, ok := n.(*ast.Ident); ok && id.Obj != nil {
 						key := bindingKey(id)
-						if !referenced[key] {
-							referenced[key] = true
+						if id.Pos() > referenced[key] {
+							referenced[key] = id.Pos()
 							for _, rhs := range bindings[key] {
-								visit(rhs)
+								if rhs.End() < id.Pos() {
+									visit(rhs)
+								}
 							}
 						}
 					}
 					return true
 				})
 			}
-			visit(literal)
+			visit(expression)
 			branches := []*ast.IfStmt{}
-			dominant := enclosingConditions(literal)
+			dominant := enclosingConditions(expression)
+			useAncestors := map[ast.Node]bool{}
+			for ancestor := parents[expression]; ancestor != nil; ancestor = parents[ancestor] {
+				useAncestors[ancestor] = true
+			}
 			seen := map[*ast.IfStmt]bool{}
 			for key := range referenced {
+				if primitiveFilter(key, referenced[key]) {
+					continue
+				}
+				if _, _, qualified := repeatedTemplate(key, referenced[key]); qualified {
+					continue
+				}
 				for _, rhs := range bindings[key] {
+					if rhs.End() >= referenced[key] {
+						continue
+					}
+					for ancestor := parents[rhs]; ancestor != nil && ancestor != owner(rhs); ancestor = parents[ancestor] {
+						// A constructor inside the same iteration consumes that
+						// iteration's lexical bindings, not a collapsed final loop.
+						if useAncestors[ancestor] {
+							continue
+						}
+						switch ancestor.(type) {
+						case *ast.ForStmt, *ast.RangeStmt, *ast.SwitchStmt, *ast.TypeSwitchStmt, *ast.SelectStmt:
+							panic(fmt.Sprintf("API_PRODUCT_GO_BINDING_CONTROL_UNQUALIFIED: %s:%d", name, fset.Position(rhs.Pos()).Line))
+						}
+					}
 					for branch := range enclosingConditions(rhs) {
 						if _, required := dominant[branch]; required {
 							continue
@@ -713,12 +867,22 @@ func main() {
 			}
 			sort.Slice(branches, func(i, j int) bool { return branches[i].Pos() < branches[j].Pos() })
 			if len(branches) > 5 {
-				panic(fmt.Sprintf("API_PRODUCT_GO_CONSTRUCTOR_CONDITIONS_UNQUALIFIED: %s:%d", name, fset.Position(literal.Pos()).Line))
+				panic(fmt.Sprintf("API_PRODUCT_GO_CONSTRUCTOR_CONDITIONS_UNQUALIFIED: %s:%d", name, fset.Position(expression.Pos()).Line))
 			}
 			variants := []map[*ast.IfStmt]bool{{}}
 			for _, branch := range branches {
 				next := []map[*ast.IfStmt]bool{}
 				for _, variant := range variants {
+					reachable := true
+					for ancestor, required := range enclosingConditions(branch) {
+						if taken, selected := variant[ancestor]; selected && taken != required {
+							reachable = false
+						}
+					}
+					if !reachable {
+						next = append(next, variant)
+						continue
+					}
 					for _, value := range []bool{false, true} {
 						copy := map[*ast.IfStmt]bool{}
 						for key, v := range variant {
@@ -1228,13 +1392,27 @@ func main() {
 						}
 					}
 					if kind != "" {
-						if body, ok := eval(call.Args[3], map[string]bool{}).(map[string]any); ok {
-							if _, authored := body["apiVersion"]; !authored {
-								body["apiVersion"] = version
-								body["kind"] = kind
-								result[name] = append(result[name], output{Value: body, Line: fset.Position(call.Pos()).Line, Position: int(call.Pos()), InferredIdentity: true, RequestMethod: method, RequestPath: eval(call.Args[2], map[string]bool{}), Conditions: receiverConditions})
+						if id, bound := call.Args[3].(*ast.Ident); bound {
+							checkLiteralEffects(id)
+						}
+						for _, variant := range expressionConditionVariants(call.Args[3]) {
+							activeConditions = variant
+							if body, ok := eval(call.Args[3], map[string]bool{}).(map[string]any); ok {
+								if _, authored := body["apiVersion"]; !authored {
+									body["apiVersion"] = version
+									body["kind"] = kind
+									conditions := append([]conditionSelection{}, receiverConditions...)
+									for branch, taken := range variant {
+										var b bytes.Buffer
+										format.Node(&b, fset, branch.Cond)
+										conditions = append(conditions, conditionSelection{Expression: b.String(), Result: taken})
+									}
+									sort.Slice(conditions, func(i, j int) bool { return conditions[i].Expression < conditions[j].Expression })
+									result[name] = append(result[name], output{Value: body, Line: fset.Position(call.Pos()).Line, Position: int(call.Pos()), InferredIdentity: true, RequestMethod: method, RequestPath: eval(call.Args[2], map[string]bool{}), Conditions: conditions})
+								}
 							}
 						}
+						activeConditions = map[*ast.IfStmt]bool{}
 					}
 				}
 			}
@@ -1279,7 +1457,7 @@ func main() {
 						expressions = []ast.Expr{&ast.Ident{Name: id.Name, Obj: id.Obj, NamePos: last}}
 					}
 				}
-				for _, variant := range literalConditionVariants(literal) {
+				for _, variant := range expressionConditionVariants(literal) {
 					activeConditions = variant
 					for _, expression := range expressions {
 						value := eval(expression, map[string]bool{})

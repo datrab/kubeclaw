@@ -22079,6 +22079,50 @@
         "proof": "Both authored unknown-field probes must fail specifically with API_PRODUCT_FIELD_OUTSIDE_AUTHORITY from the actual selected-field consumer; unrelated earlier failures cannot satisfy these tests.",
         "limit": "Synthetic consumer fixtures, not original producer mutation gate or independent review."
       }
+    },
+    "nativeConditionalEffectCorrection": {
+      "state": "author correction checkpoint; fresh independent full affected Source review pending",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/native-conditional-correction-root-seal.json",
+      "artifactsVerified": 35,
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/native-submission-effects-correction-writer/conditional-finalizer-correction/REPORT.md",
+      "authorReceipt": "/home/node/Documents/Codex/a98-evidence/native-submission-effects-correction-writer/conditional-finalizer-correction/receipt.json",
+      "actualGoRows": 32,
+      "receiverGroups": 11,
+      "terminalChecks": {
+        "extended20": {
+          "handle": 66709,
+          "exit": 0
+        },
+        "inherited14": {
+          "handle": 6534,
+          "exit": 0
+        },
+        "conditional10": {
+          "handle": 79727,
+          "exit": 0
+        },
+        "runtimeCurrentAndAllSelection": {
+          "handle": 42331,
+          "exit": 0
+        },
+        "python8FrozenAndExtendedAssertions": {
+          "exit": 0
+        },
+        "closingAssertions": {
+          "exit": 0
+        }
+      },
+      "files": {
+        "scripts/docs-api-go-output-role-adapter.go": "3ba4a6dd59801ead8f2060e958739fda0bd52de91aef287468428671a0fe7a31",
+        "scripts/docs-api-go-output-shapes.go": "fe51680e52795c85c48793f4adb3544b4ea831919dbedd2a71cf1f77239f1b1c"
+      },
+      "limitations": [
+        "Opaque unknownTransform(finalizers) remains source-bound conditional symbolic expression, not qualified helper execution or known authored append.",
+        "Pinned nativeHTTP recipe remains unchanged; earlier sequence negative failures at raw custody do not prove consumer-specific appended-field rejection.",
+        "No live inherited Secret or finalizer contents/cardinality/index are inferred.",
+        "Counts identify inventory only; consumer selected actual source fields and conditions."
+      ],
+      "scope": "No whole-package, full mutation, Reader, Quality or live acceptance."
     }
   }
 }
