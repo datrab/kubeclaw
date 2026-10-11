@@ -114,7 +114,7 @@ Outputs:
 
 ## Failure Behavior
 
-Preparation returns deployment evidence and, when requested, credential provenance. Cleanup calls release and requires a successful response. Provider-level tests do not prove deletion in a real cluster.
+Preparation returns deployment evidence and, when requested, credential provenance. With delete retention, cleanup calls release and requires a successful response. With retain retention, provider cleanup does not request release; lease expiry and controller retention policy still bound the lifetime. Provider-level tests do not prove deletion in a real cluster. Use [Prepare and release a Kubernetes fixture](../../use/workflows/kubernetes-fixture.md) for the supported Buster entry point, required authorities, expected outputs, retention and failure recovery.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.
