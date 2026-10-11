@@ -133,7 +133,8 @@ general storage cleanup command.
 
 Run from an independent administration host and the pinned source checkout.
 Use the [supported tools](README.md#version-and-tool-boundary), Bash, Python 3,
-Helm, and kubectl. Set `KUBE_CONTEXT` to the intended context in your kubeconfig.
+Helm, and kubectl. Complete the cluster binding with `NAMESPACE=kubeclaw`.
+Set `KUBE_CONTEXT` to the bound `EXPECTED_CONTEXT` in your kubeconfig.
 The administrator needs reads of claims and cluster-scoped volumes, permission
 to patch those volumes, Helm release removal, and deletion of the named
 workloads, services, Secrets, policies, and claims. Do not grant broader access
@@ -148,7 +149,12 @@ selected resource is shared, ownership is uncertain, or the backup is incomplete
    checkout, inspect the release and claims without changing them:
 
    ```bash
+   assert_cluster_binding
    : "${KUBE_CONTEXT:?Set the intended kubeconfig context}"
+   if [ "$KUBE_CONTEXT" != "$EXPECTED_CONTEXT" ] || [ "$NAMESPACE" != kubeclaw ]; then
+     printf '%s\n' 'Qdrant retirement requires the bound context and kubeclaw namespace' >&2
+     exit 1
+   fi
    helm --kube-context "$KUBE_CONTEXT" --namespace kubeclaw list --all
    kubectl --context "$KUBE_CONTEXT" --namespace kubeclaw get pvc -o json
    ```
@@ -162,7 +168,8 @@ selected resource is shared, ownership is uncertain, or the backup is incomplete
 2. After the storage owner's deletion decision, run:
 
    ```bash
-   bash scripts/remove-qdrant.sh --delete-data
+   assert_cluster_binding
+   KUBE_CONTEXT="$EXPECTED_CONTEXT" bash scripts/remove-qdrant.sh --delete-data
    ```
 
    The script checks all selected bound-volume ownership before removing the

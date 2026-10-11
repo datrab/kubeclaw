@@ -1154,7 +1154,9 @@ this outer observer stopped the operation. It does not prove the client's
 terminal error or remote cancellation. Keep stderr and the exit code.
 
 ```bash
+assert_cluster_binding
 bounded_memory_cli() {
+  assert_cluster_binding
   kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
     node --input-type=module -e '
 import { spawn } from "node:child_process";
@@ -1183,7 +1185,6 @@ child.on("close", (code, signal) => {
 });
 ' "$@"
 }
-assert_cluster_binding
 bounded_memory_cli 210 status --agent main --deep --json \
   > "$EVIDENCE_DIR/memory-before.json" 2> "$EVIDENCE_DIR/memory-before.stderr"
 ```
@@ -1200,6 +1201,7 @@ Create one new note, index it, and query its content. The generated file name
 is exclusive to this exercise. Retain its receipt for cleanup.
 
 ```bash
+assert_cluster_binding
 kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
   node --input-type=module -e '
 import fs from "node:fs";
@@ -1389,6 +1391,7 @@ bounded CLI observer, with a distinct output file. Keep its exit code even if
 the command fails.
 
 ```bash
+assert_cluster_binding
 set +e
 bounded_memory_cli 210 search --agent main \
   --query "Where does the amber observatory keep its calibration record?" --json \
@@ -1474,6 +1477,7 @@ trap - EXIT HUP INT TERM
 Repeat the supported memory calls after route restoration.
 
 ```bash
+assert_cluster_binding
 bounded_memory_cli 900 index --agent main --verbose \
   > "$EVIDENCE_DIR/memory-index-recovery.txt" 2> "$EVIDENCE_DIR/memory-index-recovery.stderr"
 bounded_memory_cli 210 status --agent main --deep --json \
@@ -1496,6 +1500,7 @@ query. Do not reset the agent database or delete source sessions to clean up a
 single probe. Recall bookkeeping and provider request records can remain.
 
 ```bash
+assert_cluster_binding
 kubectl -n "$NAMESPACE" exec -i deployment/agent-nova -c kubeclaw -- \
   node --input-type=module -e '
 import fs from "node:fs";
