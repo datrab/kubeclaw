@@ -1018,9 +1018,13 @@ operations. Each operation identifies the document elements to change:
 - remove a node;
 - duplicate a subtree;
 - move a node;
-- set node properties;
-- set responsive properties;
+- change node properties exposed by the editor;
 - apply an atomic operation batch.
+
+The visual editor has no control for changing responsive properties.
+Its available property controls are defined in the
+[layout and text fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-config.tsx#L37-L64)
+and [generic block fields](https://github.com/datrab/kubeclaw/blob/ec2a42ed215a2fa7dbd3172ef70ef446084963a9/skills/prism/studio/puck-config.tsx#L71-L94).
 
 Every operation carries `baseRevision`.
 Control applies it only to the current revision and creates a new immutable
