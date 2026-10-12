@@ -8856,10 +8856,28 @@
           "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
           "verdict": "PASS",
           "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/capacity_complete_current_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+          "reportSha256": "9c57486cf477ef5d01d160a9f1656f66fcabac72d96c9c62d793f1c5bda85482",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh-root-seal.json",
+          "verifiedArtifacts": 5,
+          "verifiedInputs": 57,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [
-        "A98-R2-SERVICE-BUDGET-RECORD"
+        "A98-R2-SERVICE-BUDGET-RECORD",
+        "A98-20261012-CAPACITY-CURRENT-S1",
+        "A98-20261012-CAPACITY-CURRENT-S2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L269",
       "acceptanceMappingBasis": {
@@ -10174,6 +10192,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "openFindingIds": [
@@ -10184,7 +10220,10 @@
         "A98-ARGO-TRACKING-CONTROLLER-VERSION",
         "A98-20261012-CANONICAL-REFLECTION-S1",
         "A98-20261012-CANONICAL-REFLECTION-S2",
-        "A98-20261012-CANONICAL-REFLECTION-S3"
+        "A98-20261012-CANONICAL-REFLECTION-S3",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L285",
       "acceptanceMappingBasis": {
@@ -10280,6 +10319,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "openFindingIds": [
@@ -10299,7 +10356,10 @@
         "A98-20261012-LEXICAL-DIAGNOSTIC-S2",
         "A98-20261012-CANONICAL-REFLECTION-S1",
         "A98-20261012-CANONICAL-REFLECTION-S2",
-        "A98-20261012-CANONICAL-REFLECTION-S3"
+        "A98-20261012-CANONICAL-REFLECTION-S3",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L286",
       "acceptanceMappingBasis": {
@@ -10490,6 +10550,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "openFindingIds": [
@@ -10510,7 +10588,10 @@
         "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
         "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5",
         "A98-20261012-CANONICAL-REFLECTION-S1",
-        "A98-20261012-CANONICAL-REFLECTION-S2"
+        "A98-20261012-CANONICAL-REFLECTION-S2",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L288",
       "acceptanceMappingBasis": {
@@ -10713,6 +10794,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "openFindingIds": [
@@ -10730,7 +10829,10 @@
         "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5",
         "A98-20261012-CANONICAL-REFLECTION-S1",
         "A98-20261012-CANONICAL-REFLECTION-S2",
-        "A98-20261012-CANONICAL-REFLECTION-S3"
+        "A98-20261012-CANONICAL-REFLECTION-S3",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L290",
       "acceptanceMappingBasis": {
@@ -10951,6 +11053,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "openFindingIds": [
@@ -10959,7 +11079,10 @@
         "A98-20261012-CANONICAL-REFLECTION-S2",
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-CANONICAL-REFLECTION-S4",
-        "A98-20261012-CANONICAL-REFLECTION-S5"
+        "A98-20261012-CANONICAL-REFLECTION-S5",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L293",
       "acceptanceMappingBasis": {
@@ -11717,7 +11840,41 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L321"
     },
@@ -11760,8 +11917,47 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
-      "openFindingIds": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
+      "openFindingIds": [
+        "AP09-DEV-20261012-F1",
+        "AP09-DEV-20261012-F2",
+        "AP09-DEV-20261012-F3",
+        "AP09-DEV-20261012-QF01"
+      ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L322"
     },
     {
@@ -11803,8 +11999,46 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
-      "openFindingIds": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
+      "openFindingIds": [
+        "AP09-DEV-20261012-F1",
+        "AP09-DEV-20261012-F2",
+        "AP09-DEV-20261012-F3"
+      ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L323"
     },
     {
@@ -11846,7 +12080,41 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L324"
     },
@@ -11889,8 +12157,44 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
-      "openFindingIds": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
+      "openFindingIds": [
+        "AP09-DEV-20261012-F4"
+      ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L325"
     },
     {
@@ -11932,7 +12236,41 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L326"
     },
@@ -11975,7 +12313,41 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L327"
     },
@@ -12018,7 +12390,41 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L328"
     },
@@ -12061,7 +12467,41 @@
       ],
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L329"
     },
@@ -13216,12 +13656,33 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "openFindingIds": [
         "A98-20261012-CANONICAL-REFLECTION-S1",
         "A98-20261012-CANONICAL-REFLECTION-S2",
-        "A98-20261012-CANONICAL-REFLECTION-S3"
+        "A98-20261012-CANONICAL-REFLECTION-S3",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L359"
     },
@@ -13658,13 +14119,34 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "openFindingIds": [
         "A98-SOURCE-NEW-SHELL-SECRET",
         "A98-20261012-CANONICAL-REFLECTION-S1",
         "A98-20261012-CANONICAL-REFLECTION-S2",
-        "A98-20261012-CANONICAL-REFLECTION-S3"
+        "A98-20261012-CANONICAL-REFLECTION-S3",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L368"
     },
@@ -15238,10 +15720,27 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-complete-corrected-quality-fresh-root-seal.json",
           "verifiedArtifacts": 232,
           "verifiedInputs": 76
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [
-        "A98-20261012-CORE-COMPLETE-QUALITY-QF01"
+        "A98-20261012-CORE-COMPLETE-QUALITY-QF01",
+        "AP09-DEV-20261012-QF01"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L420"
     },
@@ -15307,9 +15806,27 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-complete-corrected-quality-fresh-root-seal.json",
           "verifiedArtifacts": 232,
           "verifiedInputs": 76
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
-      "openFindingIds": [],
+      "openFindingIds": [
+        "AP09-DEV-20261012-QF01"
+      ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L421"
     },
     {
@@ -15374,6 +15891,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-complete-corrected-quality-fresh-root-seal.json",
           "verifiedArtifacts": 232,
           "verifiedInputs": 76
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [],
@@ -15441,6 +15974,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-complete-corrected-quality-fresh-root-seal.json",
           "verifiedArtifacts": 232,
           "verifiedInputs": 76
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [
@@ -15510,6 +16059,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-complete-corrected-quality-fresh-root-seal.json",
           "verifiedArtifacts": 232,
           "verifiedInputs": 76
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [],
@@ -15595,6 +16160,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-stable-complete-reader-fresh-root-seal.json",
           "verifiedArtifacts": 23,
           "verifiedInputs": 74
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [],
@@ -15662,6 +16243,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-complete-corrected-quality-fresh-root-seal.json",
           "verifiedArtifacts": 232,
           "verifiedInputs": 76
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [],
@@ -15729,6 +16326,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-complete-corrected-quality-fresh-root-seal.json",
           "verifiedArtifacts": 232,
           "verifiedInputs": 76
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [],
@@ -15814,6 +16427,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-stable-complete-reader-fresh-root-seal.json",
           "verifiedArtifacts": 23,
           "verifiedInputs": 74
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [
@@ -15883,6 +16512,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-complete-corrected-quality-fresh-root-seal.json",
           "verifiedArtifacts": 232,
           "verifiedInputs": 76
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "openFindingIds": [
@@ -16141,6 +16786,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/stable-operator-core-complete-source-fresh-root-seal.json",
           "verifiedArtifacts": 163,
           "verifiedInputs": 130
+        },
+        {
+          "agent": "/root/capacity_complete_current_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+          "reportSha256": "9c57486cf477ef5d01d160a9f1656f66fcabac72d96c9c62d793f1c5bda85482",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh-root-seal.json",
+          "verifiedArtifacts": 5,
+          "verifiedInputs": 57,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "readerFixtureIds": [],
@@ -16216,6 +16877,22 @@
           "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
           "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
           "scope": "Assigned Prism partition only"
+        },
+        {
+          "agent": "/root/capacity_complete_current_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+          "reportSha256": "9c57486cf477ef5d01d160a9f1656f66fcabac72d96c9c62d793f1c5bda85482",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh-root-seal.json",
+          "verifiedArtifacts": 5,
+          "verifiedInputs": 57,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "readerFixtureIds": [
@@ -16262,6 +16939,22 @@
           "reportSha256": "5757ff187989b0667716209c7821ad666b962c6374068a961f3594fa9aa2bcaf",
           "reviewedRevision": "fe426bd75db277b04cf405cc2057063b75fa0a1d",
           "scope": "Assigned Prism partition only"
+        },
+        {
+          "agent": "/root/capacity_complete_current_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+          "reportSha256": "9c57486cf477ef5d01d160a9f1656f66fcabac72d96c9c62d793f1c5bda85482",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh-root-seal.json",
+          "verifiedArtifacts": 5,
+          "verifiedInputs": 57,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "readerFixtureIds": [
@@ -16275,7 +16968,24 @@
       "automaticFailure": "An unverified restore is presented as verified, an incomplete path is presented as supported, or the limitation has no safe boundary and follow-up condition.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/capacity_complete_current_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+          "reportSha256": "9c57486cf477ef5d01d160a9f1656f66fcabac72d96c9c62d793f1c5bda85482",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh-root-seal.json",
+          "verifiedArtifacts": 5,
+          "verifiedInputs": 57,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "readerFixtureIds": [
         "READER-OPERATOR-02",
         "READER-OPERATOR-03"
@@ -16338,6 +17048,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/stable-operator-core-complete-source-fresh-root-seal.json",
           "verifiedArtifacts": 163,
           "verifiedInputs": 130
+        },
+        {
+          "agent": "/root/capacity_complete_current_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+          "reportSha256": "9c57486cf477ef5d01d160a9f1656f66fcabac72d96c9c62d793f1c5bda85482",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh-root-seal.json",
+          "verifiedArtifacts": 5,
+          "verifiedInputs": 57,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "readerFixtureIds": [],
@@ -16369,6 +17095,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "readerFixtureIds": [],
@@ -16401,7 +17145,10 @@
         "A98-20261012-CANONICAL-REFLECTION-S2",
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-CANONICAL-REFLECTION-S4",
-        "A98-20261012-CANONICAL-REFLECTION-S5"
+        "A98-20261012-CANONICAL-REFLECTION-S5",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ]
     },
     {
@@ -16435,6 +17182,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "readerFixtureIds": [],
@@ -16464,7 +17229,10 @@
         "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
         "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5",
         "A98-20261012-CANONICAL-REFLECTION-S1",
-        "A98-20261012-CANONICAL-REFLECTION-S2"
+        "A98-20261012-CANONICAL-REFLECTION-S2",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ]
     },
     {
@@ -16541,6 +17309,22 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/stable-operator-core-complete-source-fresh-root-seal.json",
           "verifiedArtifacts": 163,
           "verifiedInputs": 130
+        },
+        {
+          "agent": "/root/capacity_complete_current_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+          "reportSha256": "9c57486cf477ef5d01d160a9f1656f66fcabac72d96c9c62d793f1c5bda85482",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh-root-seal.json",
+          "verifiedArtifacts": 5,
+          "verifiedInputs": 57,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
         }
       ],
       "readerFixtureIds": [
@@ -16583,6 +17367,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "readerFixtureIds": [],
@@ -16613,7 +17415,10 @@
         "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5",
         "A98-20261012-CANONICAL-REFLECTION-S1",
         "A98-20261012-CANONICAL-REFLECTION-S2",
-        "A98-20261012-CANONICAL-REFLECTION-S3"
+        "A98-20261012-CANONICAL-REFLECTION-S3",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ]
     },
     {
@@ -16855,9 +17660,49 @@
       "automaticFailure": "Global vorinstallierte oder persönliche Konfiguration bleibt ungenannt.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "openFindingIds": [
+        "AP09-DEV-20261012-F1",
+        "AP09-DEV-20261012-F2",
+        "AP09-DEV-20261012-F3",
+        "AP09-DEV-20261012-QF01"
+      ]
     },
     {
       "id": "A910-02",
@@ -16865,7 +17710,41 @@
       "automaticFailure": "Die Karte ist nur ein Verzeichnisbaum oder verschweigt eine Ownership- oder Generierungsgrenze.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": []
     },
@@ -16875,9 +17754,48 @@
       "automaticFailure": "Ein Meta-Skript wird genannt, ohne seine Pflichtvoraussetzungen oder Teilfehler zu erklären.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "openFindingIds": [
+        "AP09-DEV-20261012-F1",
+        "AP09-DEV-20261012-F2",
+        "AP09-DEV-20261012-F3"
+      ]
     },
     {
       "id": "A910-04",
@@ -16957,11 +17875,50 @@
       "automaticFailure": "Ein universeller „run all tests“-Hinweis ersetzt Change-to-check.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+          "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+          "verifiedArtifacts": 10,
+          "verifiedInputs": 93,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        },
+        {
+          "agent": "/root/developer_handbook_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+          "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+          "verifiedArtifacts": 7,
+          "verifiedInputs": 7,
+          "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+        }
+      ],
       "readerFixtureIds": [
         "READER-PLATFORM-02"
       ],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "openFindingIds": [
+        "AP09-DEV-20261012-F1",
+        "AP09-DEV-20261012-F2",
+        "AP09-DEV-20261012-F3"
+      ]
     },
     {
       "id": "A910-12",
@@ -17020,6 +17977,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "readerFixtureIds": [],
@@ -17029,7 +18004,10 @@
         "A98-20261012-CANONICAL-REFLECTION-S2",
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-CANONICAL-REFLECTION-S4",
-        "A98-20261012-CANONICAL-REFLECTION-S5"
+        "A98-20261012-CANONICAL-REFLECTION-S5",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ]
     },
     {
@@ -17056,6 +18034,24 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "readerFixtureIds": [],
@@ -17065,7 +18061,10 @@
         "A98-20261012-CANONICAL-REFLECTION-S2",
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-CANONICAL-REFLECTION-S4",
-        "A98-20261012-CANONICAL-REFLECTION-S5"
+        "A98-20261012-CANONICAL-REFLECTION-S5",
+        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
       ]
     },
     {
@@ -17201,10 +18200,32 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 94,
           "verifiedInputs": 5773
+        },
+        {
+          "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL2",
+          "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+          "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+          "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+          "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+          "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+          "verifiedArtifacts": 87,
+          "verifiedInputs": 933
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "openFindingIds": [
+        "A98-20261012-KNOWN-BINDING-R1",
+        "A98-20261012-KNOWN-BINDING-R2"
+      ]
     },
     {
       "id": "A912-01",
@@ -18002,7 +19023,7 @@
     {
       "id": "A98-R2-SERVICE-BUDGET-RECORD",
       "reportedAtRevision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
-      "state": "open-under-correction-pending-new-independent-review",
+      "state": "independently-resolved-current-source-facet-other-roles-pending",
       "pages": [
         "docs/site/use/capacity.md"
       ],
@@ -18013,7 +19034,9 @@
         "A98-02",
         "A98-13"
       ],
-      "description": "Per-service budget record missing measured values/warn/stop/growth/owner/response. Root added operator-populated complete template; actual measurements not claimed; independent acceptance pending."
+      "description": "Per-service budget record missing measured values/warn/stop/growth/owner/response. Root added operator-populated complete template; actual measurements not claimed; independent acceptance pending.",
+      "independentSourceReport": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+      "resolutionBoundary": "Template realreadings/warnstop/growth/ownerresponse PASS current39aae5; wholecapacityFAIL2 selectedcontrols/versionrights distinct, no livedata fabricated."
     },
     {
       "id": "A98-R2-PRISM-DUPLICATE-DEFAULTS",
@@ -21567,6 +22590,237 @@
       "reportSha256": "73bcb8949a2fcf2c0bfb24338f7d0e025cd16d1318ad13e8b058f3c0c8eb690d",
       "correctionOwner": "/root/superseding_lexical_source_qualification_integrator",
       "evidenceBoundary": "Actual native witnesses and receiving/consumer failures; complete report governs. No product runtime correction."
+    },
+    {
+      "id": "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+      "state": "independently-resolved-assigned-source-facet-global-gates-pending",
+      "reportedBy": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "pages": [
+        "scripts/docs-configuration-inventory.mjs"
+      ],
+      "requirements": [
+        "CFG-010",
+        "CFG-011",
+        "CFG-013",
+        "CFG-015",
+        "CFG-018",
+        "REF-003",
+        "REF-012"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14",
+        "A911-01",
+        "A911-02"
+      ],
+      "finding": "Known getenv.__call__(**literal-map) executes native read but no explicit positional/key keyword causes scanner empty output on fdbcb4. Bounded missing acquired key failclosed correction now2cfe; not a universal kwargs evaluator.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/reader-getter-yaml-complete-batch-writer/known-reader-kwargs-witness.json",
+      "correctionOwner": "/root/annotation_yaml_failclosed_complete_batch_writer",
+      "evidenceBoundary": "Original38 +validfuture2 and Root284 retained withdrawn/historical at fdb. Current63/native125 authorterminal0; real receivers and independent Source pending.",
+      "independentReview": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+      "resolutionBoundary": "Knownprotocol/kwargsfacet PASS at2cfe actual63/native125/27; newwrapper andNamedExpr failures separate. Notwholegateapproval."
+    },
+    {
+      "id": "A98-20261012-KNOWN-BINDING-R1",
+      "state": "open-under-coherent-author-correction",
+      "reportedBy": "/root/known_reader_binding_complete_tool_source_fresh",
+      "pages": [
+        "scripts/docs-configuration-inventory.mjs"
+      ],
+      "requirements": [
+        "CFG-010",
+        "CFG-011",
+        "CFG-013",
+        "CFG-015",
+        "CFG-018",
+        "REF-003",
+        "REF-012"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14",
+        "A911-01",
+        "A911-02",
+        "A911-12"
+      ],
+      "authority": "scripts/docs-configuration-inventory.mjs:5057",
+      "finding": "Recognizable absolute env/sudo and nestedliteral shell wrappers lose Python acquisition;3native/actualfalseGREEN436.",
+      "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+      "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+      "correctionOwner": "/root/annotation_yaml_failclosed_complete_batch_writer"
+    },
+    {
+      "id": "A98-20261012-KNOWN-BINDING-R2",
+      "state": "open-under-coherent-author-correction",
+      "reportedBy": "/root/known_reader_binding_complete_tool_source_fresh",
+      "pages": [
+        "scripts/docs-configuration-inventory.mjs"
+      ],
+      "requirements": [
+        "CFG-010",
+        "CFG-011",
+        "CFG-013",
+        "CFG-015",
+        "CFG-018",
+        "REF-003",
+        "REF-012"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14",
+        "A911-01",
+        "A911-02",
+        "A911-12"
+      ],
+      "authority": "scripts/docs-configuration-inventory.mjs:5872",
+      "finding": "Global/nonlocalNamedExpr skips genericexternal capability-write guard;6native/actualfalseGREEN436.",
+      "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+      "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+      "correctionOwner": "/root/annotation_yaml_failclosed_complete_batch_writer"
+    },
+    {
+      "id": "A98-20261012-CAPACITY-CURRENT-S1",
+      "state": "open-under-coherent-author-correction",
+      "reportedBy": "/root/capacity_complete_current_source_fresh",
+      "pages": [
+        "docs/site/use/capacity.md"
+      ],
+      "requirements": [
+        "OPR-009"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-04",
+        "A98-06",
+        "A98-07",
+        "A98-13"
+      ],
+      "finding": "Missingcanonicalmap to selectedproductcapacity/retention/pressure/backup/projection controls.",
+      "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+      "correctionOwner": "/root/capacity_controls_complete_correction_writer"
+    },
+    {
+      "id": "A98-20261012-CAPACITY-CURRENT-S2",
+      "state": "open-under-coherent-author-correction",
+      "reportedBy": "/root/capacity_complete_current_source_fresh",
+      "pages": [
+        "docs/site/use/capacity.md"
+      ],
+      "requirements": [
+        "OPR-009"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-04",
+        "A98-06",
+        "A98-07",
+        "A98-13"
+      ],
+      "finding": "Missing explicitsharedactualacceptedtool/server pair and concrete readpermissions.",
+      "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+      "correctionOwner": "/root/capacity_controls_complete_correction_writer"
+    },
+    {
+      "id": "AP09-DEV-20261012-F1",
+      "state": "author-corrected-pending-new-complete-independent-review",
+      "reportedBy": "/root/developer_handbook_complete_source_fresh",
+      "pages": [
+        "docs/site/extend/developer-handbook.md"
+      ],
+      "requirements": [
+        "DEV-002",
+        "DEV-003"
+      ],
+      "acceptanceIds": [
+        "A910-01",
+        "A910-03",
+        "A910-11"
+      ],
+      "finding": "Missing isolatedpinnedPyYAML6.0.3 prep for Opspolicy command.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-baseline-writer/five-finding-correction/REPORT.md",
+      "correctionSHA256": "ccebdd16f6aee7445784433e9fa298669e2f47dc2516dd4cf19e3d1bc438f36e",
+      "evidenceBoundary": "WholeSource+Quality originalFAIL frozenb3; coherent5findingscorrected currentcce author16artifacts/14sourceinputs proof, new wholeSource active Quality/Reader stillpending."
+    },
+    {
+      "id": "AP09-DEV-20261012-F2",
+      "state": "author-corrected-pending-new-complete-independent-review",
+      "reportedBy": "/root/developer_handbook_complete_source_fresh",
+      "pages": [
+        "docs/site/extend/developer-handbook.md"
+      ],
+      "requirements": [
+        "DEV-002",
+        "DEV-003"
+      ],
+      "acceptanceIds": [
+        "A910-01",
+        "A910-03",
+        "A910-11"
+      ],
+      "finding": "Separate observabilityGo1.24 module/hardcoded/usr/local/go/bin/go prerequisites missing.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-baseline-writer/five-finding-correction/REPORT.md",
+      "correctionSHA256": "ccebdd16f6aee7445784433e9fa298669e2f47dc2516dd4cf19e3d1bc438f36e",
+      "evidenceBoundary": "WholeSource+Quality originalFAIL frozenb3; coherent5findingscorrected currentcce author16artifacts/14sourceinputs proof, new wholeSource active Quality/Reader stillpending."
+    },
+    {
+      "id": "AP09-DEV-20261012-F3",
+      "state": "author-corrected-pending-new-complete-independent-review",
+      "reportedBy": "/root/developer_handbook_complete_source_fresh",
+      "pages": [
+        "docs/site/extend/developer-handbook.md"
+      ],
+      "requirements": [
+        "DEV-002",
+        "DEV-003"
+      ],
+      "acceptanceIds": [
+        "A910-01",
+        "A910-03",
+        "A910-11"
+      ],
+      "finding": "RemoteBusterfixtures absoluteGNU/usr/bin/tar prerequisite omitted.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-baseline-writer/five-finding-correction/REPORT.md",
+      "correctionSHA256": "ccebdd16f6aee7445784433e9fa298669e2f47dc2516dd4cf19e3d1bc438f36e",
+      "evidenceBoundary": "WholeSource+Quality originalFAIL frozenb3; coherent5findingscorrected currentcce author16artifacts/14sourceinputs proof, new wholeSource active Quality/Reader stillpending."
+    },
+    {
+      "id": "AP09-DEV-20261012-F4",
+      "state": "author-corrected-pending-new-complete-independent-review",
+      "reportedBy": "/root/developer_handbook_complete_source_fresh",
+      "pages": [
+        "docs/site/extend/developer-handbook.md"
+      ],
+      "requirements": [
+        "DEV-005"
+      ],
+      "acceptanceIds": [],
+      "finding": "Upstreamchecksums20minute CI jobtimeout omitted.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-baseline-writer/five-finding-correction/REPORT.md",
+      "correctionSHA256": "ccebdd16f6aee7445784433e9fa298669e2f47dc2516dd4cf19e3d1bc438f36e",
+      "evidenceBoundary": "WholeSource+Quality originalFAIL frozenb3; coherent5findingscorrected currentcce author16artifacts/14sourceinputs proof, new wholeSource active Quality/Reader stillpending."
+    },
+    {
+      "id": "AP09-DEV-20261012-QF01",
+      "state": "author-corrected-pending-new-complete-independent-review",
+      "reportedBy": "/root/developer_handbook_complete_quality_fresh",
+      "pages": [
+        "docs/site/extend/developer-handbook.md"
+      ],
+      "requirements": [
+        "DEV-002",
+        "QUA-001",
+        "QUA-002"
+      ],
+      "acceptanceIds": [
+        "A910-01"
+      ],
+      "finding": "Consequentialfirstuse fsync/inode storage terms not plainlydefined.",
+      "correctionReport": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-baseline-writer/five-finding-correction/REPORT.md",
+      "correctionSHA256": "ccebdd16f6aee7445784433e9fa298669e2f47dc2516dd4cf19e3d1bc438f36e",
+      "evidenceBoundary": "WholeSource+Quality originalFAIL frozenb3; coherent5findingscorrected currentcce author16artifacts/14sourceinputs proof, new wholeSource active Quality/Reader stillpending."
     }
   ],
   "checks": [
@@ -22997,6 +24251,53 @@
       "sourceAndPagesUnchanged": true,
       "cause": "Reader-boundary diagnostic output selector stale; qualification-author correction in progress.",
       "acceptanceLimit": "No full current PASS and no semantic/package acceptance."
+    },
+    {
+      "command": "node --test --test-concurrency=2: all dynamically selected api-*.test.mjs plus python-environment-discovery and ops-bootstrap-environment-contracts",
+      "state": "terminal-pass-superseded-scanner-candidate",
+      "sessionId": 93210,
+      "pid": 314872,
+      "exitCode": 0,
+      "tests": 284,
+      "passed": 284,
+      "failed": 0,
+      "skipped": 0,
+      "startedAt": "2026-10-12T09:57:25.024Z",
+      "endedAt": "2026-10-12T10:03:46.135Z",
+      "report": "/home/node/Documents/Codex/a98-evidence/root-integrated-protocol-wrapper-module-self-export/result.json",
+      "reportSha256": "b85be11a14e81234e41d588e277a40ba347d76d3b9f023ccda621ae9b707e2ec",
+      "log": "/home/node/Documents/Codex/a98-evidence/root-integrated-protocol-wrapper-module-self-export/tests.log",
+      "logSha256": "7724c0eda410fc64e893acbdfe8e2d2627c62218bbba9c1cc012ffa92558ff80",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/root-integrated-protocol-wrapper-module-self-export/root-terminal-seal.json",
+      "inputEquality": {
+        "count": 37,
+        "beforeAfterAndCurrent": true,
+        "coordinatedEightSourceFilesMatch": true
+      },
+      "executedBy": "/root",
+      "evidenceBoundary": "Current complete11 API/Python/OPS maintained suites only; no independent semantic review, full configuration mutations, publication/deployment or package/global approval.",
+      "currentlyApplicableToWholeToolCandidate": false,
+      "supersededBecause": "Author final audit observed real known getenv.__call__(**kwargs) omission on frozen fdbcb4; subsequent reader-key failclosed guard changes scanner/tests and requires justified Source qualification rebind. Original284 outcome remains true at its exact recorded inputs."
+    },
+    {
+      "command": "Current complete11 API/Python/OPS maintained suites",
+      "state": "terminal-pass-not-semantic-approval",
+      "sessionId": 52212,
+      "pid": 334449,
+      "tests": 285,
+      "passed": 285,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "startedAt": "2026-10-12T10:30:44.268Z",
+      "endedAt": "2026-10-12T10:34:19.798Z",
+      "executedBy": "/root",
+      "report": "/home/node/Documents/Codex/a98-evidence/root-integrated-known-reader-key-superseding/result.json",
+      "reportSha256": "1f838977c6a168263e5fd4afeec03b91ca23fb9ad8c3a2bff411e1dd4d2379a8",
+      "logSha256": "6187dd10929ffc0e3e1bed38956ce13cdacc6822c5d248507d1352203d8cef5b",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/root-integrated-known-reader-key-superseding/root-terminal-seal.json",
+      "verifiedInputs": 37,
+      "evidenceBoundary": "Current2cfe/42b/7b candidate unitcorpus285PASS; independentSourceFAIL2 has9actualfalsegreens. Nofullmutation/reader/deployment/globalapproval."
     }
   ],
   "reviewAssignments": [
@@ -25517,13 +26818,111 @@
       "reasoningEffort": "medium",
       "forkTurns": "none",
       "freshContext": true,
-      "state": "active-complete-developer-baseline-author",
+      "state": "terminal-complete-author-candidate-not-accepted",
       "scope": "DEV001-009 handbook and A91001/02/03/11 handbook facets plus preregistered READER-PLATFORM-02 desiredbehavior fixture; not full SDK/deepguide package or practical exercise approval.",
       "exclusiveFiles": [
         "docs/site/extend/developer-handbook.md",
         "docs/site/extend/examples/platform-change-nova-lifecycle.json"
       ],
-      "sourceRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e"
+      "sourceRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-baseline-writer/REPORT.md",
+      "reportSha256": "0342a31168af390d0c37cb2136125d4c00606835931a333120bb3dd0d8a22549",
+      "rootCompositeSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-composite-root-seal.json",
+      "supersedingFixtureReport": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-baseline-writer/public-fixture-boundary-correction/REPORT.md",
+      "frozenFiles": {
+        "docs/site/extend/developer-handbook.md": "b3f07aed9cebaf35a1b0a5c3ff210f8b45a0cf8092d4facab200319c7a844139",
+        "docs/site/extend/examples/platform-change-nova-lifecycle.json": "2a1d752198305331536e73a771fb0e2096eb501266f43612f6286ca786e406fc"
+      },
+      "scopeLimit": "OnlyauthorDEV001-009/gatehandbookfacets; original20/current86 plus correction5 sealed; no practicalexercise/independent/global approval."
+    },
+    {
+      "agent": "/root/developer_handbook_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-FAIL",
+      "scope": "Fulltwofiles DEV001-009 and A91001/02/03/11 contentSource facets; currentpublicationnav/classification and registeredpracticalexercise separate.",
+      "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh/REPORT.md",
+      "reportSha256": "39f4de78b5f8a358d43346e1d0c0dc6b14ebf682b3f4fabad848a5992c371974",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-source-fresh-root-seal.json",
+      "verifiedArtifacts": 10,
+      "verifiedInputs": 93,
+      "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+    },
+    {
+      "agent": "/root/known_reader_binding_complete_tool_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-FAIL2",
+      "scope": "CompleteF1-F10/receiving/canonical/default/consumer/qualification ToolSource; wrapper andglobal/nonlocalNamedExpr gaps, nootherrole/globalgrant.",
+      "sourceRevision": "ad312e3e4f15223809fadef90bd90e1f689ce941",
+      "report": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh/report.md",
+      "reportSha256": "91016ce1c3206f047703246c745e1b609eb9d23770b9771466fae25b98038270",
+      "manifestSha256": "5a119cbb2a3f3b94f9c6abbd9e0997f23d4bcb8c56c744e550cf39b43fa4c2a8",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
+      "verifiedArtifacts": 87,
+      "verifiedInputs": 933
+    },
+    {
+      "agent": "/root/developer_handbook_complete_quality_fresh",
+      "role": "quality",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-FAIL",
+      "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh/REPORT.md",
+      "reportSha256": "20e4364313380f80d39577a5b51aa85dadcdebddafe0fe7a360e3849e330cfeb",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-quality-fresh-root-seal.json",
+      "verifiedArtifacts": 7,
+      "verifiedInputs": 7,
+      "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+    },
+    {
+      "agent": "/root/capacity_complete_current_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-FAIL",
+      "report": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh/report.md",
+      "reportSha256": "9c57486cf477ef5d01d160a9f1656f66fcabac72d96c9c62d793f1c5bda85482",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-complete-current-source-fresh-root-seal.json",
+      "verifiedArtifacts": 5,
+      "verifiedInputs": 57,
+      "scopeLimit": "Fullassignedrole only; specificpositive facetsnotwholepackage. Handbook Source4/Quality1 nowonecoherentauthorbatch; capacitySource2correctionactive."
+    },
+    {
+      "agent": "/root/capacity_controls_complete_correction_writer",
+      "role": "author",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "exclusive-owned-files",
+      "state": "active",
+      "scope": "WholecapacityS1/S2 onlycapacity.md; preservepassedmeasuredbudget template."
+    },
+    {
+      "agent": "/root/developer_handbook_corrected_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active",
+      "scope": "Newfreshwholehandbook+fixtureSourceDEV001009/A91001020311 afterall5coherentauthorcorrections."
     }
   ],
   "continuation": {
@@ -26581,17 +27980,18 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/superseding_lexical_source_qualification_integrator",
-      "/root/developer_handbook_complete_baseline_writer"
+      "/root/capacity_controls_complete_correction_writer",
+      "/root/developer_handbook_corrected_complete_source_fresh"
     ],
     "currentNextSteps": [
-      "Finish coherent S1-S3 scanner and S4-S5 API author batches in parallel; keep owned files exclusive.",
-      "Root verifies final evidence/source guards and runs required full integration once on corrected stable candidate; then new complete fresh Tool Source.",
-      "Commit checked Source, generate against full Source SHA separately, finish required mutation/gates and registered execution; complete remaining AP09.8 reviews and Astra before parity."
+      "Complete coherentwrapper+NamedExpr toolauthorbatch thenjustified API Source rebind/currentaffectedcontrols+Rootsharedsuite+NEWfullSource; waitcompletefindings beforefurthercorrections.",
+      "Complete capacityselectedcontrol/version/readaccess docwriter thenfreshroletriad; servicebudget template SourcefacetalreadyPASS.",
+      "Finish newfull correctedDeveloperSource, separatefreshQuality andReader; noformalexercise/publicationglobalclaim.",
+      "Afterstable acceptedtoolcandidate commitcheckedSource/fullSHA generation separately; currentrequired mutations/gates/deployment/API inventory/evidence/Astra/AP98/parity/rest remainopen."
     ],
     "lastVerifiedSourceCommit": "95e57db04c9da7c6d3801319ce84328fb51a26b8",
     "lastVerifiedRemoteCommit": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
-    "verifiedAt": "2026-10-12T09:39:52.707570+00:00",
+    "verifiedAt": "2026-10-12T11:07:38.606956+00:00",
     "deploymentRegistrationClarification": {
       "state": "Asked user for existing registration path; documentation work continues independently.",
       "authority": [
@@ -26631,6 +28031,14 @@
       "notCatalogueRequirement": "A98-12 journey pages remain explicit supplementaryScope, not silently omitted from package.",
       "state": "authoritative criteria mapped by main agent; independent final scope validation pending",
       "limits": "All requirements/gates remain not-accepted; cross-package and standard obligations continue."
+    },
+    "currentRootSuite": {
+      "state": "terminal-pass-superseded-scanner-candidate",
+      "sessionId": 93210,
+      "report": "/home/node/Documents/Codex/a98-evidence/root-integrated-protocol-wrapper-module-self-export/result.json",
+      "tests": 284,
+      "inputGuard": "37unchanged and coordinated8freezeequal",
+      "remaining": "New2cfe scanner/2484 tests63 PASS/native125; semantic rebind and actual affected receiving/fresh full Source still pending. Root284 applies oldfdb candidate, not current whole tool approval."
     }
   },
   "productBoundaries": [
@@ -30258,6 +31666,69 @@
         "sourceRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e"
       },
       "limits": "Thematic author preparation permitted AP092-10; no AP099 acceptance before parity, no bulkparity/deletion, no persistent product changes. Shared navigation/classification ownedRoot and will integrate after complete stable batch."
+    },
+    "protocolWrapperModuleSelfExportRootSuite": {
+      "command": "node --test --test-concurrency=2: all dynamically selected api-*.test.mjs plus python-environment-discovery and ops-bootstrap-environment-contracts",
+      "state": "terminal-pass-superseded-scanner-candidate",
+      "sessionId": 93210,
+      "pid": 314872,
+      "exitCode": 0,
+      "tests": 284,
+      "passed": 284,
+      "failed": 0,
+      "skipped": 0,
+      "startedAt": "2026-10-12T09:57:25.024Z",
+      "endedAt": "2026-10-12T10:03:46.135Z",
+      "report": "/home/node/Documents/Codex/a98-evidence/root-integrated-protocol-wrapper-module-self-export/result.json",
+      "reportSha256": "b85be11a14e81234e41d588e277a40ba347d76d3b9f023ccda621ae9b707e2ec",
+      "log": "/home/node/Documents/Codex/a98-evidence/root-integrated-protocol-wrapper-module-self-export/tests.log",
+      "logSha256": "7724c0eda410fc64e893acbdfe8e2d2627c62218bbba9c1cc012ffa92558ff80",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/root-integrated-protocol-wrapper-module-self-export/root-terminal-seal.json",
+      "inputEquality": {
+        "count": 37,
+        "beforeAfterAndCurrent": true,
+        "coordinatedEightSourceFilesMatch": true
+      },
+      "executedBy": "/root",
+      "evidenceBoundary": "Current complete11 API/Python/OPS maintained suites only; no independent semantic review, full configuration mutations, publication/deployment or package/global approval."
+    },
+    "knownReaderKwargsSupersedingCorrection": {
+      "finding": "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+      "scannerSHA": "2cfe1e665005be4f4ad0ebb651a2f13409ca4f0d62a52c6a57aeb334d520f969",
+      "testSHA": "2484bc3005ab984fa78e80f1a3d035d310b2ee9b3d3c569fbd2eb629d8236092",
+      "authorTests": "63PASS125nativeobservations; qualification/realreceiving/freshindependent reviewpending",
+      "scope": "NoS4/S5APImechanism or productruntime change; existing role/codefact reuse requires exact declared bodies/dependencies."
+    },
+    "knownReaderKeySupersedingRootSuite": {
+      "command": "Current complete11 API/Python/OPS maintained suites",
+      "state": "terminal-pass-not-semantic-approval",
+      "sessionId": 52212,
+      "pid": 334449,
+      "tests": 285,
+      "passed": 285,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "startedAt": "2026-10-12T10:30:44.268Z",
+      "endedAt": "2026-10-12T10:34:19.798Z",
+      "executedBy": "/root",
+      "report": "/home/node/Documents/Codex/a98-evidence/root-integrated-known-reader-key-superseding/result.json",
+      "reportSha256": "1f838977c6a168263e5fd4afeec03b91ca23fb9ad8c3a2bff411e1dd4d2379a8",
+      "logSha256": "6187dd10929ffc0e3e1bed38956ce13cdacc6822c5d248507d1352203d8cef5b",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/root-integrated-known-reader-key-superseding/root-terminal-seal.json",
+      "verifiedInputs": 37,
+      "evidenceBoundary": "Current2cfe/42b/7b candidate unitcorpus285PASS; independentSourceFAIL2 has9actualfalsegreens. Nofullmutation/reader/deployment/globalapproval."
+    },
+    "developerHandbookFiveFindingAuthorCorrection": {
+      "state": "complete-author-candidate-pending-new-independent-reviews",
+      "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-complete-baseline-writer/five-finding-correction/REPORT.md",
+      "reportSha256": "024a061a76493a47cb4a4ab5f9bcec2268eb01462fef7c13cc9e01832451682c",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-five-finding-correction-root-seal.json",
+      "handbookSHA256": "ccebdd16f6aee7445784433e9fa298669e2f47dc2516dd4cf19e3d1bc438f36e",
+      "fixtureSHA256": "2a1d752198305331536e73a771fb0e2096eb501266f43612f6286ca786e406fc",
+      "artifactsVerified": 16,
+      "affectedProductInputsVerified": 14,
+      "prereqStatus": "Pythonyaml/absoluteGo/tar remainunavailable; originalactualnativefailurespreserved, no falsequalifiedexecution."
     }
   }
 }
