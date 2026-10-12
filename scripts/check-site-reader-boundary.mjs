@@ -77,8 +77,21 @@ const forbiddenText = [
   [/\b(?:und|oder|der|das|für|wird|werden|kann|muss|nicht|wenn|dann|zum|zur|einer|einem|einen|dieser|diese|dieses|sowie|bevor|nachdem|teilweise|vollständig|geprüft|fehlgeschlagene|dauerhafte|tatsächliche|ursachen|bleiben|wartet|laufende|quoten|sperr|korruptionsfälle|typprüfung|daten|unverändert|lokal|dateisystem|helmtests|kommandos|explizite|unvollständig|dokumentation|entscheidung|prüfung|fehler|ergebnis|quelle|schritte?|verwenden|ausführen|ändern)\b|[äöüß]/giu, 'non-English reader prose'],
 ];
 
+function isCryptoEncodingToken(text, match) {
+  const before = text.slice(0, match.index);
+  const after = text.slice(match.index + match[0].length);
+  if (match[0] === 'DER') {
+    return /\bSPKI\s+$/u.test(before) && /^\s+bytes\b/u.test(after);
+  }
+  if (match[0] !== 'der') return false;
+  const format = /\bformat\s*:\s*(["'])$/u.exec(before);
+  return Boolean(format && after.startsWith(format[1]));
+}
+
 const findViolations = text => forbiddenText.flatMap(([pattern, description]) =>
-  [...text.matchAll(pattern)].map(match => ({ index: match.index, description })));
+  [...text.matchAll(pattern)]
+    .filter(match => description !== 'non-English reader prose' || !isCryptoEncodingToken(text, match))
+    .map(match => ({ index: match.index, description })));
 
 function withoutExternalUrls(text) {
   return text.replace(/https?:\/\/[^\s)>]+/gu, value => ' '.repeat(value.length));
@@ -105,6 +118,10 @@ function h1Errors(documents) {
 function assertNegativeFixtures() {
   const fixtures = [
     ['German generator prose', 'Teilweise geprüft; vollständige Recovery bleibt unvollständig.', 'non-English reader prose'],
+    ['German article in prose', 'Stop: der Controller fails.', 'non-English reader prose'],
+    ['German article in code comment', '```js\n// der Controller fails\n```', 'non-English reader prose'],
+    ['German display string', "console.log('der Controller');", 'non-English reader prose'],
+    ['German after crypto token', "SPKI DER bytes; der Controller fails.", 'non-English reader prose'],
     ['work-package label', 'AP9.8 implementation notes', 'work-package label'],
     ['acceptance ID', 'Complete G07 before release.', 'internal acceptance-gate identifier'],
     ['review ID', 'See PCR-BUSTER-ENGINE-001.', 'internal review identifier'],
@@ -122,6 +139,15 @@ function assertNegativeFixtures() {
   for (const [name, text, expected] of fixtures) {
     if (!findViolations(text).some(item => item.description === expected)) {
       throw new Error(`Reader-boundary negative fixture was not detected: ${name}`);
+    }
+  }
+  for (const text of [
+    'Compare the approved fingerprint of the public key SPKI DER bytes.',
+    "publicKey.export({ type: 'spki', format: 'der' })",
+    'publicKey.export({ type: "spki", format: "der" })',
+  ]) {
+    if (findViolations(text).length) {
+      throw new Error('Reader-boundary check mistook a crypto encoding token for German prose');
     }
   }
   if (findViolations(withoutExternalUrls('See https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.35/.')).length) {
