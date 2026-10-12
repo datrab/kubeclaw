@@ -673,8 +673,15 @@ preparation fails before invocation. Open output files before invoking the
 command, so a local open failure cannot become an apparent API exit. Seal the
 original command receipt before copying it to the working files. If local retention cannot write the exit
 file, keep the partial attempt and the shell's known status;
-this is incomplete evidence and forbids cleanup. Read-only file modes prevent
-accidental overwrite; retain these directories with the audit owner. On an
+this is incomplete evidence and forbids cleanup. Each latest working file is published from a unique private staging file with
+mode 0600. This permits repeated capture and polling with GNU or BusyBox tools,
+while historical receipts stay read-only. Directory or symbolic-link working
+targets stop publication. Every staging copy, mode change and exact-path rename
+must succeed. Retain a failed staging file with the incomplete attempt; do not
+reuse it. Keep exclusive ownership of this private evidence directory through
+capture and cleanup, so another writer cannot replace these checked paths.
+Read-only historical file modes prevent accidental overwrite; retain these
+directories with the audit owner. On an
 interrupted shell or failed local copy, retain even an incomplete attempt and
 stop cleanup until the owner reconciles it. Do not rerun preparation in the
 same evidence directory or overwrite any previous attempt.
@@ -703,6 +710,17 @@ PREFLIGHT_PROVIDER_ASSET_ID=''
 PROBE_CAPTURE_STATUS=not-run
 PROBE_RUN_STATUS=not-run
 mkdir -m 0700 "$PREFLIGHT_EVIDENCE_DIR/observations" "$PREFLIGHT_EVIDENCE_DIR/captures"
+# Publish a writable latest copy without changing the sealed source receipt.
+probe_working_copy() {
+  local source="$1" destination="$2" staging
+  [[ -f $source && ! -L $source ]] || return 1
+  [[ ! -L $destination && ( ! -e $destination || -f $destination ) ]] || return 1
+  staging="$(mktemp "$PREFLIGHT_EVIDENCE_DIR/.working.XXXXXX")" || return 1
+  cp -T -- "$source" "$staging" || return 1
+  chmod 0600 -- "$staging" || return 1
+  [[ ! -L $destination && ( ! -e $destination || -f $destination ) ]] || return 1
+  mv -f -T -- "$staging" "$destination" || return 1
+}
 # Each read owns new output, stderr and exit files before the working copy changes.
 probe_observe() {
   local file="$1" status observation output_fd stderr_fd
@@ -725,9 +743,9 @@ probe_observe() {
   exec {stderr_fd}>&- || return 1
   printf '%s\n' "$status" > "$observation/exit" || return 1
   chmod -R a-w -- "$observation" || return 1
-  cp -T -- "$observation/output" "$PREFLIGHT_EVIDENCE_DIR/$file" || return 1
-  cp -T -- "$observation/stderr" "$PREFLIGHT_EVIDENCE_DIR/$file.stderr" || return 1
-  cp -T -- "$observation/exit" "$PREFLIGHT_EVIDENCE_DIR/$file.exit" || return 1
+  probe_working_copy "$observation/output" "$PREFLIGHT_EVIDENCE_DIR/$file" || return 1
+  probe_working_copy "$observation/stderr" "$PREFLIGHT_EVIDENCE_DIR/$file.stderr" || return 1
+  probe_working_copy "$observation/exit" "$PREFLIGHT_EVIDENCE_DIR/$file.exit" || return 1
   printf '%s\t%s\t%s\n' "$observation" "$file" "$status" >> "$PREFLIGHT_EVIDENCE_DIR/observation-index.tsv" || return 1
   PROBE_RETENTION_STATUS=complete
   return "$status"
@@ -855,8 +873,9 @@ probe_capture() {
   printf '%s\n' "state-exit-$status; retention completion requires successful wrapper return" > "$capture/status.txt" || return 1
   mkdir -m 0700 "$capture/working-files" || return 1
   for capture_file in "$PREFLIGHT_EVIDENCE_DIR"/*; do
+    [[ ! -L $capture_file ]] || return 1
     [[ -f $capture_file ]] || continue
-    cp -- "$capture_file" "$capture/working-files/" || return 1
+    probe_working_copy "$capture_file" "$capture/working-files/${capture_file##*/}" || return 1
   done
   printf '%s\t%s\t%s\n' "$capture" state-recorded "$status" >> "$PREFLIGHT_EVIDENCE_DIR/capture-index.tsv" || return 1
   chmod -R a-w -- "$capture" || return 1
@@ -1111,7 +1130,7 @@ fs.writeFileSync(process.argv[3], JSON.stringify({apiVersion: 'v1', kind: 'Delet
   preconditions: {uid: clearance.namespaceUID}}) + '\n', {flag: 'wx', mode: 0o600});
 NODE
 PREFLIGHT_PROVIDER_ASSET_ID="$(node -e 'process.stdout.write(JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8")).providerAssetId)' "$PREFLIGHT_CLEANUP_CLEARANCE")"
-cp -- "$PREFLIGHT_CLEANUP_CLEARANCE" "$PREFLIGHT_EVIDENCE_DIR/cleanup-clearance.json" || exit 1
+probe_working_copy "$PREFLIGHT_CLEANUP_CLEARANCE" "$PREFLIGHT_EVIDENCE_DIR/cleanup-clearance.json" || exit 1
 assert_cluster_binding
 if probe_observe delete.stdout bound_kubectl delete --raw "/api/v1/namespaces/$PREFLIGHT_NAMESPACE" \
   -f "$PREFLIGHT_EVIDENCE_DIR/namespace-delete-options.json"; then :; else exit 1; fi

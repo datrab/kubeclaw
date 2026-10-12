@@ -319,7 +319,7 @@ or treat the live command's exit zero as independent denial proof.
 >
 > **Claim:** The wrong-SVID probes accept fetch errors and any non-2xx status; direct TLS probes accept network errors and timeouts. The final JSON does not distinguish these causes.
 >
-> **Implementation:** [Direct TLS error and timeout handling](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L38-L52) and [Prism](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L146-L146) / [Buster wrong-SVID commands](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L182-L182).
+> **Implementation:** [Direct TLS error and timeout handling](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L43-L55) and [Prism](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L146-L146) / [Buster wrong-SVID commands](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L182-L182).
 >
 > **Contract or setting:** [The final JSON names required positive and negative routes](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L190-L199).
 >
