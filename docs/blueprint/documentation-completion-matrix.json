@@ -18793,6 +18793,70 @@
       "owner": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
       "reviewer": "/root/install_evidence_retirement_lifetime_corrected_full_source_fresh",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261012-CANONICAL-RUN-CONTROL-S01",
+      "state": "open-complete-family-correction",
+      "catalogueIds": [
+        "OPR-004"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-05",
+        "A98-13"
+      ],
+      "description": "Canonical resume lacks immediate original identity/stoppedwriters/newverifiedraw+adaptercopies/strictcopiedjournal prerequisites before both commands and every retry.",
+      "owner": "/root/raw_audit_entry_complete_family_writer",
+      "reviewer": "/root/raw_audit_entry_complete_corrected_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-corrected-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261012-CANONICAL-RUN-CONTROL-S02",
+      "state": "open-complete-family-correction",
+      "catalogueIds": [
+        "OPR-004"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-05",
+        "A98-13"
+      ],
+      "description": "Final recovery audit needs a fresh stoppedwriter capture/strict inspection after changed state; old pre-recovery capture cannot substitute.",
+      "owner": "/root/raw_audit_entry_complete_family_writer",
+      "reviewer": "/root/raw_audit_entry_complete_corrected_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-corrected-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261012-CANONICAL-RUN-CONTROL-S03",
+      "state": "open-complete-family-correction",
+      "catalogueIds": [
+        "OPR-004"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-05",
+        "A98-13"
+      ],
+      "description": "Closed-envelope validation before durable wait transition must be distinguished from prior FileJournal/lock physical mutations even on rejection.",
+      "owner": "/root/raw_audit_entry_complete_family_writer",
+      "reviewer": "/root/raw_audit_entry_complete_corrected_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-corrected-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261012-CANONICAL-RUN-CONTROL-S04",
+      "state": "open-complete-family-correction",
+      "catalogueIds": [
+        "OPR-004"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-05",
+        "A98-13"
+      ],
+      "description": "Cleanup after digest alone can be read as removing retained raw-byte directories; preserve original captures/manifests/failedtails/repairchanges under retention authority.",
+      "owner": "/root/raw_audit_entry_complete_family_writer",
+      "reviewer": "/root/raw_audit_entry_complete_corrected_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-corrected-source-fresh-root-seal.json"
     }
   ],
   "checks": [
@@ -22398,6 +22462,22 @@
         "A98-13"
       ],
       "scope": "Entire recovery/diagnose/plugins/buster-suite plus canonical rawpreservation/currentimplementation; no package/global/deployment acceptance."
+    },
+    {
+      "agent": "/root/raw_audit_entry_complete_corrected_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-FAIL-canonical-entry-family-and-scope-incomplete",
+      "sourceRevision": "37920d4f92dd95764c7df2c20748a5a0f59fb829",
+      "report": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-corrected-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-corrected-source-fresh-root-seal.json",
+      "reportSha256": "de16ffcef480360fafec1e42c53579e2244f8195f0f43b2c5788ed3f1b6b823a",
+      "verifiedArtifacts": 68,
+      "scopeLimit": "Whole raw/audit/recover/resume entry family reviewed; unrelated preserved generatedmatrix/componentbackup fullsemantic audit incomplete. No assignment/wholefile/global/deployment approval."
     }
   ],
   "continuation": {
@@ -23441,7 +23521,7 @@
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
       "/root/install_evidence_retirement_lifetime_complete_batch_writer",
-      "/root/raw_audit_entry_complete_corrected_source_fresh"
+      "/root/raw_audit_entry_complete_family_writer"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -26699,7 +26779,10 @@
       "rawAuditSourceCommit": "37920d4f92dd95764c7df2c20748a5a0f59fb829",
       "rawAuditAuthorSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-family-writer-root-seal.json",
       "rawAuditAuthorArtifacts": 35,
-      "rawAuditAuthorChecks": "13changedfences syntaxPASS,214localroutesPASS,1676whole-filecurrent/inboundsSourcepins;unchangedpluginmatrix/componentbackupsections;operatorgatePASS;fullrefsFAIL3generatedhelm anchors remainsopen."
+      "rawAuditAuthorChecks": "13changedfences syntaxPASS,214localroutesPASS,1676whole-filecurrent/inboundsSourcepins;unchangedpluginmatrix/componentbackupsections;operatorgatePASS;fullrefsFAIL3generatedhelm anchors remainsopen.",
+      "rawAuditFreshSource": "TerminalFAIL4canonicaloperatefindings;68rootverifiedartifacts;fourentrypagefacetsPASS only;unrelated preservedmatrix/componentbackup semanticsINCOMPLETE notassignmentaccepted.",
+      "rawAuditFamilyWriterState": "Nowexclusiveoperate.md canonicalwholefamilycorrection;originalfourpages remainfrozencommitted37920d4f.",
+      "rawAuditFullScopeRemaining": "FreshfullSource/Reader/Quality require entire affectedcanonical+delegatedroutes and sufficient independent generatedfacts/componentbackup proof, notcurrentness-only acceptance."
     }
   }
 }
