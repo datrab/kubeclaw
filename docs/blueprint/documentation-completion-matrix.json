@@ -22478,6 +22478,18 @@
       "reportSha256": "de16ffcef480360fafec1e42c53579e2244f8195f0f43b2c5788ed3f1b6b823a",
       "verifiedArtifacts": 68,
       "scopeLimit": "Whole raw/audit/recover/resume entry family reviewed; unrelated preserved generatedmatrix/componentbackup fullsemantic audit incomplete. No assignment/wholefile/global/deployment approval."
+    },
+    {
+      "agent": "/root/canonical_delegated_run_control_corrected_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active-complete-five-page-canonical-and-delegated-review",
+      "sourceRevision": "b9f0228a44fc7ac71d90747bed9bb4cefdf83381",
+      "scope": "Entire affected raw/audit/recover/resume family plus semanticfacts proof beyond mechanicalpins; incomplete preserved matrix/backup facts cannot be assumedaccepted."
     }
   ],
   "continuation": {
@@ -23521,7 +23533,7 @@
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
       "/root/install_evidence_retirement_lifetime_complete_batch_writer",
-      "/root/raw_audit_entry_complete_family_writer"
+      "/root/canonical_delegated_run_control_corrected_source_fresh"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -26782,7 +26794,12 @@
       "rawAuditAuthorChecks": "13changedfences syntaxPASS,214localroutesPASS,1676whole-filecurrent/inboundsSourcepins;unchangedpluginmatrix/componentbackupsections;operatorgatePASS;fullrefsFAIL3generatedhelm anchors remainsopen.",
       "rawAuditFreshSource": "TerminalFAIL4canonicaloperatefindings;68rootverifiedartifacts;fourentrypagefacetsPASS only;unrelated preservedmatrix/componentbackup semanticsINCOMPLETE notassignmentaccepted.",
       "rawAuditFamilyWriterState": "Nowexclusiveoperate.md canonicalwholefamilycorrection;originalfourpages remainfrozencommitted37920d4f.",
-      "rawAuditFullScopeRemaining": "FreshfullSource/Reader/Quality require entire affectedcanonical+delegatedroutes and sufficient independent generatedfacts/componentbackup proof, notcurrentness-only acceptance."
+      "rawAuditFullScopeRemaining": "FreshfullSource/Reader/Quality require entire affectedcanonical+delegatedroutes and sufficient independent generatedfacts/componentbackup proof, notcurrentness-only acceptance.",
+      "canonicalOperateSourceCommit": "b9f0228a44fc7ac71d90747bed9bb4cefdf83381",
+      "canonicalOperateAuthorSeal": "/home/node/Documents/Codex/a98-evidence/canonical-run-control-raw-retention-complete-batch-writer-root-seal.json",
+      "canonicalOperateAuthorArtifacts": 76,
+      "canonicalOperateState": "S01–S04authorcorrectedcommitted/pushed;fresh5pageSourceactive;noindependentapprovalyet.",
+      "canonicalOperateAuthorChecks": "11fencessyntaxPASS,25currentwholefilepins,30localroutes,privateexacthelper+4guardedcommandfixturesPASS,operatorcurrentness/structural/mutationsPASS;fullrefs3FAIL anddeploymenttrio remainopen."
     }
   }
 }
