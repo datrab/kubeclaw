@@ -1,7 +1,7 @@
 {
   "schemaVersion": "kubeclaw-documentation-completion-working-matrix.v1",
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
-  "sourceRevision": "3f3b417b65e3c55a7677224ffd2191aef1e29266",
+  "sourceRevision": "37920d4f92dd95764c7df2c20748a5a0f59fb829",
   "authorIdentity": "/root",
   "catalogueAuthority": "docs/blueprint/generated/ap09-catalogue.json",
   "acceptanceAuthority": "docs/blueprint/AP09-acceptance-contract.md",
@@ -18787,8 +18787,6 @@
       ],
       "acceptanceIds": [
         "A98-02",
-        "A98-03",
-        "A98-09",
         "A98-13"
       ],
       "description": "WorkerTrust negative-probe links cite image/volumeMounts lines145/175, not commands146/182. Mechanically valid/current wholefile links lack semantic support.",
@@ -22379,6 +22377,27 @@
       "verifiedArtifacts": 327,
       "reportSha256": "7c8701cd37fb30e5db800db813920ac00475fa99ed6051c789c0b3f9569705c7",
       "scope": "F1–F4 SourceFAIL;61unchangedguardedfiles112currentpins;bounded retirementconcurrency5resourcefacetPASS, notpackage approval."
+    },
+    {
+      "agent": "/root/raw_audit_entry_complete_corrected_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "active-complete-four-page-raw-audit-family-review",
+      "sourceRevision": "37920d4f92dd95764c7df2c20748a5a0f59fb829",
+      "catalogueIds": [
+        "OPR-004",
+        "OPR-005"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-05",
+        "A98-13"
+      ],
+      "scope": "Entire recovery/diagnose/plugins/buster-suite plus canonical rawpreservation/currentimplementation; no package/global/deployment acceptance."
     }
   ],
   "continuation": {
@@ -23421,8 +23440,8 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/raw_audit_entry_complete_family_writer",
-      "/root/install_evidence_retirement_lifetime_complete_batch_writer"
+      "/root/install_evidence_retirement_lifetime_complete_batch_writer",
+      "/root/raw_audit_entry_complete_corrected_source_fresh"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -26672,11 +26691,15 @@
       "remainingOperatorControlReview": "/root/operator_wait_resume_cancellation_complete_source_fresh; potential F01 mandatoryrawstatepreservation absent recovery/diagnose auditentrypaths;fullreportpending.",
       "operatorControlReview": "TerminalfullSourceFAILF01 plus3 separatelymissingmandatorydeployment receipts;30rootverifiedartifacts.",
       "rawAuditFamilyWriter": "/root/raw_audit_entry_complete_family_writer",
-      "rawAuditFamilyState": "Released afterguardterminal;writerowns4pagesrecovery/diagnose/plugins/buster-suite.",
+      "rawAuditFamilyState": "Fourfilescommitted/pushed;newfreshSourcecompletefamilyreviewactive. Reader/Qualitypending.",
       "currentSourceProvisionalFindings": "Freshcomplete4pageSource independently reproduces unchecked identities.txt localwrite falselycomplete, examining creatingUIDprovenance;2WorkerTrust narrowlinks pointat noncommandlines. Fullreportpending.",
       "probeIdentityWriter": "/root/install_evidence_retirement_lifetime_complete_batch_writer",
       "probeIdentityWriterState": "Released wholelocalretention/creatingUIDprovenance+trustcitationcorrection;exclusiveinstall+worker-trust only.",
-      "scannerState": "4f98WITHHELD actualcorpusregression;genericsnapshotproducer/preciseforwardingrole correction actual436gatePASS,48-testcandidate/fullsupersedingreplaypending."
+      "scannerState": "4f98WITHHELD actualcorpusregression;genericsnapshotproducer/preciseforwardingrole correction actual436gatePASS,48-testcandidate/fullsupersedingreplaypending.",
+      "rawAuditSourceCommit": "37920d4f92dd95764c7df2c20748a5a0f59fb829",
+      "rawAuditAuthorSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-family-writer-root-seal.json",
+      "rawAuditAuthorArtifacts": 35,
+      "rawAuditAuthorChecks": "13changedfences syntaxPASS,214localroutesPASS,1676whole-filecurrent/inboundsSourcepins;unchangedpluginmatrix/componentbackupsections;operatorgatePASS;fullrefsFAIL3generatedhelm anchors remainsopen."
     }
   }
 }
