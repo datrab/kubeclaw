@@ -1,5 +1,12 @@
 # Beschlossener Arbeitsplan — 12. Oktober 2026
 
+**Aktueller Einstieg für OpenClaw:** [OPENCLAW-CONFIG-GOAL.md](OPENCLAW-CONFIG-GOAL.md).
+D21/D22 sind maßgeblich: Systemindex `pipeline.config.json` aus dem bestehenden
+Swarm-Einstieg; Projektworkflow `pipeline.json` getrennt. C0 ist offen; keine
+Implementierungsfreigabe. Ältere Namens-/Abschlussformulierungen unten sind
+historisch beziehungsweise durch diese Fortschreibung präzisiert.
+
+
 Grundlagen: [D17–D19](decisions.md), [Bestandsaufnahme aller 16 Bereiche](assessment-20261012.md), [detailliertes Ausführungsrefactoring](worker-execution-simplification-20261012.md), ursprüngliche [Abnahmebedingungen](acceptance-20260920.md). Die Zielarchitektur und Reihenfolge sind vom Auftraggeber bestätigt. **Der aktuelle Auftrag ist Dokumentation, noch keine Codeimplementierung.** Findingstatus und bestehende Arbeitsbaumänderungen bleiben erhalten.
 
 ## Verbindliche Reihenfolge
@@ -110,3 +117,20 @@ GitOps/SPIRE und REGISTER bleiben außerhalb dieser zwölf historischen offenen 
 Die Reihenfolge ist festgelegt. Für Phase 2 fehlt die konkrete freigegebene Test-Refactoring-Spezifikation aus der anderen Session. Vor dem jeweiligen Implementierungsschnitt sind außerdem tatsächliche Runtime-/Storage-/Registry-/Zugriffsprofile zu binden; Angaben werden nicht erfunden. Offene Detailentscheidungen rechtfertigen keine stillschweigende Einschränkung der bestätigten Zielarchitektur oder Sicherheitsgrenzen.
 
 Dieser Plan hält die heutige Entscheidung dauerhaft fest. Ein Startauftrag für Phase 1 oder ein anderes konkretes Paket ist eine separate nächste Handlung; dieser Dokumentationsauftrag integriert keine neue Behebung.
+
+## Konkrete CONFIG-Pakete aus der Cloud-Aufnahme
+
+Die [aktuelle Umsetzungsvorlage](cloud-config-assessment-20261012.md#5-umsetzungsschritte-und-erstes-paket-zur-zustimmung) konkretisiert Phase 1 in C1–C6. C1 migriert die sechs bestehenden Komponentenautoren samt Buster-Profilvariante zu einer Repo-Autorenwurzel und erzeugt die bestehende Runtime-Lieferform aus einem Systemmanifest. Nova-CLI, Modulbindung, defaultfreie Pluginresolver und D18-Ausführung sind keine stillen Bestandteile dieses ersten Pakets. C1 wurde noch nicht freigegeben; historische Reihenfolge, Findingstatus und spätere Teststandardabhängigkeit bleiben unverändert.
+
+**Vorgelagert ist C0:** Die vollständige semantische Feld-/Consumerinventur und
+Zieldefinition gehört zum bereits beauftragten Dokumentationsumfang und ist noch
+offen. Ihre Auslassung aus der ersten C1–C6-Paketliste war unzutreffend. C0 braucht
+keine neue Implementierungsfreigabe; erst nach Abschluss/Review wird C1 abschließend
+zur Umsetzung vorgelegt. Davon getrennt bleibt die F1–F6-Abnahme nach tatsächlicher
+Implementierung. Quellen-/Gruppenabdeckung ist kein Ersatz für C0.
+
+Aktuelle Begriffsfestlegung D21: Die vorhandene `swarm.config.json` ist bereits
+ein Komponentenreferenz-Einstieg. Ihr Zielname wird `pipeline.config.json`;
+`pipeline.json` bleibt Projektworkflow. Eine zusätzliche `system.json` ist nicht
+vorgesehen. Die Namensfrage ist geklärt; Autorenort, konkrete Referenz-/Schema-/
+CLI-/Liefermigration werden in C0 ermittelt und im freigegebenen Paket umgesetzt.

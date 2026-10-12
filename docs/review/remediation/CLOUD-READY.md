@@ -1,5 +1,12 @@
 # Codex Cloud: gesicherter Arbeitsstand
 
+**Aktueller Einstieg für OpenClaw:** [OPENCLAW-CONFIG-GOAL.md](OPENCLAW-CONFIG-GOAL.md).
+D21/D22 sind maßgeblich: Systemindex `pipeline.config.json` aus dem bestehenden
+Swarm-Einstieg; Projektworkflow `pipeline.json` getrennt. C0 ist offen; keine
+Implementierungsfreigabe. Ältere Namens-/Abschlussformulierungen unten sind
+historisch beziehungsweise durch diese Fortschreibung präzisiert.
+
+
 Aktueller Einstieg für die vom Auftraggeber am 12. Oktober 2026 verlangte
 Repositoryübergabe. Zielbranch: **`codex/cloud-config-handoff-20261012`**.
 Der Branch ist ein Arbeitsstand-Checkpoint auf Basis von
@@ -32,7 +39,8 @@ Aktive Arbeit ist die gemeinsame Konkretisierung der codegestützten CONFIG-
 Definition und ihrer ersten Umsetzungspakete. Der Repositorycheckpoint selbst
 ist keine neue Implementierungsfreigabe.
 
-`pipeline.json` soll gemeinsamer Systemeinstieg mit Komponentenreferenzen sein.
+Nach D21 heißt der zentrale Ziel-Einstieg `pipeline.config.json` und entwickelt
+die vorhandene `swarm.config.json` weiter. `pipeline.json` bleibt Projektworkflow.
 Geeignete Änderungen gelten für neu startende fachliche Module; gestartete
 Einheiten behalten ihren dauerhaft vor Dispatch gebundenen Stand. Evals binden
 eine feste Generation. Keine stillen Fallbacks oder doppelte Autoren; aktuelle
@@ -106,3 +114,7 @@ Der isolierte Checkout des Source-/Evidence-Checkpoints `0b6cd8dbcaa9df478f8f454
 ## Bestätigte GitHub-Verfügbarkeit
 
 Der frische Clone direkt von GitHub lieferte den erwarteten Commit; alle 18.457 ausgewählten Inhaltsidentitäten/Symlinkziele stimmen erneut, und der Registercheck besteht im Remotecheckout. Upload des ersten vollständigen Checkpoints: etwa 39,07 MiB dank Gitkompression/Deduplizierung, trotz ca. 2,65 GB logischer Belegbytes. Rund 7,52 GB große Tool-/DB-/Cachebytes bleiben lokal erhalten und außerhalb Git. `main` bleibt unverändert. Die Remoteprüfung macht weder alte Securityläufe erneut bestanden noch neue CONFIG-/Runtimeimplementierung fertig.
+
+## Aktuelle Cloud-CONFIG-Aufnahme
+
+Die am aktuellen Branchstand durchgeführte [Codeaufnahme und konkrete C1-Vorlage](cloud-config-assessment-20261012.md) ergänzt die Übergabe. [Neuer Quellenindex](../evidence/cloud-config-assessment-20261012/source-index.json), [Prüfprotokoll](../evidence/cloud-config-assessment-20261012/verification.json) und [frischer unabhängiger Review](independent-cloud-config-assessment-20261012.md) unterscheiden Quellenprüfung, lokale Tests und ausstehende Abnahme. Implementierung weiterhin erst nach Zustimmung zum konkreten Paket. Der freigegebene Teststandard der anderen Session fehlt weiterhin als aktueller Repo-Nachweis.

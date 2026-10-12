@@ -1,0 +1,114 @@
+{
+  "observedAtUtc": "2026-10-12T11:54:34.001762+00:00",
+  "sourceCommit": "4b4684667c2dc27d01583fbec395c94d9f7a0456",
+  "branch": "codex/cloud-config-handoff-20261012",
+  "mode": "documentation and read-only assessment, no product implementation",
+  "versions": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "helm": "3.18.4+gd80839c"
+  },
+  "helmPreparation": {
+    "source": "https://get.helm.sh/helm-v3.18.4-linux-amd64.tar.gz",
+    "sha256": "f8180838c23d7c7d797b208861fecb591d9ce1690d8704ed1e4cb8e2add966c1",
+    "comparison": "official downloaded .sha256sum",
+    "path": "/workspace/scratch/helm/linux-amd64/helm",
+    "notCommitted": "binary/archive are reconstructible local tools"
+  },
+  "checks": [
+    {
+      "command": "git clone --branch codex/cloud-config-handoff-20261012 --single-branch https://github.com/datrab/kubeclaw.git /workspace/kubeclaw",
+      "exitCode": 0,
+      "meaning": "fresh complete clone; no shallow history"
+    },
+    {
+      "command": "git merge-base --is-ancestor cc020126 HEAD",
+      "exitCode": 0,
+      "meaning": "handoff ancestor; delta only task document"
+    },
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "log": "npm-ci.log",
+      "meaning": "root lockfile dependencies, lifecycle scripts not run"
+    },
+    {
+      "command": "node scripts/review/remediation-register.mjs --check",
+      "exitCode": 0,
+      "log": "register-check.log",
+      "meaning": "consistency only, no finding acceptance"
+    },
+    {
+      "command": "npm run verify:config:components",
+      "exitCode": 1,
+      "log": "config-tests-missing-helm.log",
+      "tests": 649,
+      "passed": 298,
+      "failed": 351,
+      "skipped": 0,
+      "meaning": "initial environment incomplete: helm missing; not a product failure classification or pass"
+    },
+    {
+      "command": "PATH=/workspace/scratch/helm/linux-amd64:$PATH npm run verify:config:components",
+      "exitCode": 1,
+      "log": "config-tests-helm-3.18.4.log",
+      "tests": 649,
+      "passed": 645,
+      "failed": 4,
+      "skipped": 0,
+      "meaning": "tsc succeeds; four Helmnegative assertions mismatch error wording. All four actual invocations reject old fields; suite remains failed, tests unchanged",
+      "failures": [
+        "CI05 worker.native.maximumInputBytes (tests/verification/deployment/prism-swarm-config.test.mjs:107)",
+        "CI05 native.maximumInputBytes (same test group)",
+        "CR06 worker.native.maximumResultBytes (same file:143)",
+        "CP06 worker.native.resourcePolicy.tasks (same file:158)"
+      ],
+      "actualDiagnostic": "Additional property <field> is not allowed",
+      "expectedPatterns": {
+        "CI05.maximumInputBytes": "additional properties 'maximumInputBytes' not allowed",
+        "CI05.native": "additional properties 'native' not allowed",
+        "CR06": "additional properties",
+        "CP06": "resource policy must be authored|additional properties"
+      }
+    },
+    {
+      "command": "python docs/review/evidence/cloud-config-assessment-20261012/collect.py",
+      "exitCode": 0,
+      "meaning": "source hashes/declarations/navigation only; not consumer behavior proof"
+    },
+    {
+      "command": "node scripts/config/inventory-settings.mjs",
+      "exitCode": 0,
+      "meaning": "1408 discovery candidates; schema-unresolved, not F1 acceptance"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "meaning": "whitespace check only"
+    }
+  ],
+  "limits": [
+    "No live deployment/host/kernel or security scanner acceptance",
+    "No paid model/Eval requests",
+    "No approved other-session test standard or active production Nova profile inferred",
+    "Semantic groups are decision scope, not complete F1 field acceptance"
+  ],
+  "logIdentities": [
+    {
+      "path": "npm-ci.log",
+      "sha256": "7a5ca22abe6bd50c1ac6de8934bdf4a141f7c89c86f66651165d88d5fb7dc20d"
+    },
+    {
+      "path": "config-tests-missing-helm.log",
+      "sha256": "a02e943f77874b67ea695176baeadd9a223f58b65cf298325deb4305d3119cec"
+    },
+    {
+      "path": "config-tests-helm-3.18.4.log",
+      "sha256": "48f26407032dd430339f921bc3d22a7fc2c69f92ee5c373ead8b9dc4213e61f5"
+    },
+    {
+      "path": "register-check.log",
+      "sha256": "c5e201217130fbac5199a42c25b7bfc644c33dfb7d94c78ac87050107cc0403b"
+    }
+  ]
+}

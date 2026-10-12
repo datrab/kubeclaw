@@ -1,5 +1,10 @@
 # Auftrag für die Cloud-Session: Config-Zentralisierung
 
+**Aktueller autonomer Einstieg:** [OPENCLAW-CONFIG-GOAL.md](OPENCLAW-CONFIG-GOAL.md).
+D21/D22 ergänzen diesen Auftrag: zentraler Zielname `pipeline.config.json`,
+Projektworkflow bleibt `pipeline.json`; vollständiges C0 vor Implementierungsfreigabe,
+frischer unabhängiger Prüfer und explizite Fallback-/Codequalitätsgates.
+
 Du übernimmst die Bestandsaufnahme und gemeinsame Definition der Config-Zentralisierung für `datrab/kubeclaw`.
 
 Arbeite die folgenden Schritte der Reihe nach ab. Prüfe Aussagen anhand des Codes und unterscheide bestehendes Verhalten, bereits beschlossene Änderungen und offene Vorschläge. Übernimm historische Bewertungen nicht ungeprüft. Dokumentiere Ergebnisse und Entscheidungen im Repository, damit die Arbeit ohne den bisherigen Chat fortgesetzt werden kann.
@@ -34,7 +39,7 @@ Gib dem Nutzer nach dieser Prüfung ein kurzes Ergebnis: Was ist vorhanden, was 
 Lies insbesondere:
 
 - [CLOUD-READY.md](CLOUD-READY.md)
-- [decisions.md](decisions.md), insbesondere D17 bis D20
+- [decisions.md](decisions.md), insbesondere D17 bis D22
 - [implementation-order-20261012.md](implementation-order-20261012.md)
 - [config-definition-20261012.md](config-definition-20261012.md)
 - [config-scope-inventory-20261012.json](config-scope-inventory-20261012.json)
@@ -52,9 +57,9 @@ Das Ziel ist:
 - Eine zentrale Config pro Engine.
 - Eine zentrale Config pro Plugin.
 - Eine zentrale Config für Core und Worker Core.
-- Eine zentrale `pipeline.json` als gemeinsamer Einstieg für das gesamte System.
+- Eine zentrale `pipeline.config.json` als gemeinsamer Einstieg für das gesamte System.
 
-Die `pipeline.json` soll Komponenten, Abläufe und Profile referenzieren. Konkrete Einstellungen bleiben in den zuständigen Komponentendateien. Sie soll keine zweite Sammlung derselben Einstellungen werden.
+Die `pipeline.config.json` soll Komponenten, Abläufe und Profile referenzieren. Konkrete Einstellungen bleiben in den zuständigen Komponentendateien. Sie soll keine zweite Sammlung derselben Einstellungen werden.
 
 Prüfe anhand des Codes, welche weiteren Konfigurationsbereiche eigene Zuständigkeiten benötigen, beispielsweise Dienste, Agenten, Modellprofile, Prompts, Deployment, Projektabläufe und Evals. Übernimm vorgeschlagene Dateinamen oder Aufteilungen nicht blind.
 
@@ -75,7 +80,7 @@ Bereits beschlossen:
 - Geheimnisse gehören nicht als Klartext in normale Konfigurationsdateien. Referenzen, Berechtigungen und Versionierung müssen sauber definiert werden.
 - Nicht jede interne Konstante muss ein Nutzerparameter werden. Begründe, welche Werte sinnvoll konfigurierbar sind.
 
-Ein bekannter Punkt ist die Namenskollision: Das vorhandene CLI-Argument `--pipeline` bezeichnet aktuell eine Ablaufdefinition. Die geplante zentrale `pipeline.json` hat eine andere Zuständigkeit. Definiere dafür eine verständliche Lösung.
+Das vorhandene CLI-Argument `--pipeline` bezeichnet eine Ablaufdefinition (`pipeline.json`). Der zentrale Zielname lautet nach D21 `pipeline.config.json` und entwickelt den bestehenden `swarm.config.json`-Einstieg weiter. Definiere anhand tatsächlicher Aufrufer die eindeutige CLI-/Loader-/Referenzmigration; kein zusätzlicher Systemeinstieg und kein stiller Altname-Fallback.
 
 ## 4. Vollständige Bestandsaufnahme und konkrete Zieldefinition
 

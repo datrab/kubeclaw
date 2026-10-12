@@ -1,0 +1,117 @@
+{
+  "sourceBase": "4b4684667c2dc27d01583fbec395c94d9f7a0456",
+  "branch": "codex/cloud-config-handoff-20261012",
+  "handoffGoal": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+  "scope": "all current handoff document/evidence changes; runtime and tests unchanged",
+  "currentState": {
+    "C0": "open, authorized investigation",
+    "C1-C6": "not approved, not implemented",
+    "centralTargetName": "pipeline.config.json",
+    "workflowDocument": "pipeline.json",
+    "runtimeName": "swarm.config.json until approved migration"
+  },
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "c43d8c194f9335d16a442a6712b601fc5461d1826c4cbf0e6d8f19ef9846058e",
+      "bytes": 3601
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/README.md",
+      "sha256": "4eadeafcc52307de4db584fe7f7bda28378310d0bfa42863f13f1db99c93ec31",
+      "bytes": 2521
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/collect.py",
+      "sha256": "25f738a5f17b7d95e80bf30c6d6e4c0ef5b8dc721b0a208a3aaf73f8516f32e5",
+      "bytes": 7565
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/config-tests-helm-3.18.4.log",
+      "sha256": "48f26407032dd430339f921bc3d22a7fc2c69f92ee5c373ead8b9dc4213e61f5",
+      "bytes": 97341
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/config-tests-missing-helm.log",
+      "sha256": "a02e943f77874b67ea695176baeadd9a223f58b65cf298325deb4305d3119cec",
+      "bytes": 387006
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/handoff-validation.json",
+      "sha256": "bcdff3dcabe2c809d5f88cca62c6a1021a3ae68b3ff4e9cc3f98371b063ec3d6",
+      "bytes": 1647
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/npm-ci.log",
+      "sha256": "7a5ca22abe6bd50c1ac6de8934bdf4a141f7c89c86f66651165d88d5fb7dc20d",
+      "bytes": 364
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/register-check.log",
+      "sha256": "c5e201217130fbac5199a42c25b7bfc644c33dfb7d94c78ac87050107cc0403b",
+      "bytes": 121
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/settings-discovery.json",
+      "sha256": "9356d3b15d8da9c9a6ec93c0db82289a10f0c5311e7861182b56b17df9e908d0",
+      "bytes": 728787
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/source-index.json",
+      "sha256": "895793da447a0016cbd70913eaa4a08b710c46e92094466560cae6bc18e8d6f2",
+      "bytes": 4243087
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/verification.json",
+      "sha256": "726f380b4b37c92ab084eb19c186b3c9387923b5ed22ff285a21585e0e3b617a",
+      "bytes": 4354
+    },
+    {
+      "path": "docs/review/remediation/CLOUD-CONFIG-TASK.md",
+      "sha256": "bdae34f2a2f17f5e15c9b8d352a07f1f145983ddb952ac0c463c6875dd95af95",
+      "bytes": 11328
+    },
+    {
+      "path": "docs/review/remediation/CLOUD-READY.md",
+      "sha256": "fc3eb4fa33e7483145eb247c0eb0cb81d7b2c8d5653666eb4fe6ea81146cbad6",
+      "bytes": 8489
+    },
+    {
+      "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "edb7c3013e1337973b7ac0187d7bfb24085f49892e5fc4a2b7b2b2dd7e6b0916",
+      "bytes": 19045
+    },
+    {
+      "path": "docs/review/remediation/cloud-config-assessment-20261012.md",
+      "sha256": "bff1bef1bf82e8b409ec465ce438c7dc20283f9a87c1ea5fd20c8bf54e95aa10",
+      "bytes": 50344
+    },
+    {
+      "path": "docs/review/remediation/config-definition-20261012.md",
+      "sha256": "4f9cb26749291d49b0a8bb730951098d96f2505147ceaf9549c7f5e3e15a7796",
+      "bytes": 29608
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "54334d80235d6716e6af5b06e72d114fc3ec01af1b66a449a82a5b1562cd3e34",
+      "bytes": 28277
+    },
+    {
+      "path": "docs/review/remediation/implementation-order-20261012.md",
+      "sha256": "f78a820d557776387eb28b004345ea0bf87394fb0cc1c355f7437cdfdcf83a25",
+      "bytes": 18935
+    },
+    {
+      "path": "docs/review/remediation/independent-cloud-config-assessment-20261012.md",
+      "sha256": "75f6eee82561d046f72c36912b3e246646a417966d9d95a41710c5d5842a82da",
+      "bytes": 11051
+    },
+    {
+      "path": "docs/review/remediation/independent-openclaw-handoff-20261012.md",
+      "sha256": "7191bd4e29e11fbb6fed80b04c9f224ea71481bdbe3b9710c839d27c6c8b2a82",
+      "bytes": 12688
+    }
+  ],
+  "selfIdentity": "Provided by enclosing Git commit, not self-referential hash",
+  "review": "docs/review/remediation/independent-openclaw-handoff-20261012.md"
+}

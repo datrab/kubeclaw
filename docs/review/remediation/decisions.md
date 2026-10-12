@@ -306,3 +306,65 @@ ist vom neuen Systemeinstieg ausdrücklich zu unterscheiden und zu migrieren.
 Kein generisches Hotreload laufender Arbeit, keine stillen Fallbacks und keine
 neue große Configserverinfrastruktur aus dieser Entscheidung ableiten.
 Dieser Auftrag definiert CONFIG; noch keine neue Codebehebung integriert.
+
+
+## D21 — Zentraler Einstieg pipeline.config.json; Workflow bleibt pipeline.json
+
+Am 2026-10-12 hat der Auftraggeber die Umbenennung der vorhandenen
+`swarm.config.json` in **`pipeline.config.json`** angefragt. Dies wird als konkrete
+Zielnamensentscheidung für die weitere Definition und genehmigte Migration
+übernommen: vorhandenen Einstieg und geeignete Loader weiterverwenden, keinen
+zweiten manuell gepflegten Systemeinstieg erstellen. Die zentrale Config
+referenziert Komponenten/Abläufe/Profile; konkrete Settings bleiben bei ihren
+jeweiligen Autoren. **`pipeline.json` bezeichnet weiterhin den Projektworkflow.**
+
+Damit wird ausschließlich die ältere zentrale Dateinamensfestlegung aus D20
+präzisiert/abgelöst. D20s Eigentum-, Modul-, Recovery-, Budget- und Evalregeln
+bleiben unverändert. Frühere Namensentwürfe (`pipeline.json` als Systemeinstieg,
+Beibehaltung des Swarmnamens oder zusätzliche `system.json`) bleiben historisch
+lesbar, sind aber keine aktuellen konkurrierenden Ziele.
+
+Dies ist eine Zielnamensentscheidung, keine bereits ausgeführte Dateiumbenennung,
+Schema-/CLI-/Chartmigration oder Freigabe sämtlicher Implementierungspakete.
+Nach C0 sind alle tatsächlichen Referenzen/Liefer-/Releasepfade im konkreten
+Paket zu migrieren. Ein alten Namen automatisch suchender Fallback ist kein Ziel.
+
+## D22 — OpenClaw-Übergabe, vollständige Prüfgates und Codequalität
+
+Am 2026-10-12 will der Auftraggeber die Aufgabe an OpenClaw für `/goal` übergeben.
+Alle Arbeitsanweisungen, bestätigten Entscheidungen, tatsächlichen Grenzen,
+Tasks und Abnahmekriterien sollen ohne vorigen Chat im Repo stehen. Die
+[aktuelle Übergabe](OPENCLAW-CONFIG-GOAL.md) ist der autonome Einstieg.
+
+C0 (vollständige semantische Bestandsaufnahme und konkrete Definition) bleibt
+beauftragt und offen. C1–C6 brauchen weiterhin Zustimmung zum konkreten
+Umsetzungspaket; `/goal` ist keine stillschweigende neue Implementierungsfreigabe.
+Eine Quellen-/Gruppeninventur oder ein reviewbares kleines C1 schließt C0 nicht.
+
+Verbindlich gefordert: keine hardcodierten Fallbacks für konfigurierbare
+Produktionssettings, keine konkurrierenden Autoren und kein Spaghetticode.
+D17/F3a und die neue F-CODE-Prüfung konkretisieren dies: Settingsfehler vor Wirkung
+ablehnen; klare fachliche Zuständigkeiten, zusammenhängende Module und schmale
+Kompositionsgrenzen; keine duplizierten Decoder/Defaults, zyklische Ownership,
+versteckten global veränderlichen Configzustände oder unbegründete Frameworks.
+Nicht jede begründete Protokollkonstante ist ein Settingsfallback; die fachliche
+Abgrenzung wird im Inventar nachgewiesen, nicht als Umgehung benutzt.
+
+Abnahme benötigt vollständige Anforderungs-/Setting-/Pflichtfallzuordnung,
+exakte Source-/Test-/Lieferidentitäten, echte Produktionswirkung, beabsichtigte
+Fehlergrenzen, isolierte semantische Mutanten und erhaltene Rohlogs/Fehlversuche.
+Keine gelöschten/abgeschwächten Tests, vergrößerten Budgets, ausgelassenen Fälle
+oder historischen grünen Meldungen als Ersatz. A1–A8/F1–F6/F-DOC bleiben Pflicht.
+
+C0 und jeder behauptete Paket-/Gesamtabschluss erhalten einen **frischen
+unabhängigen Subagenten mit frischem Kontext**, ohne Implementierungsrolle oder
+übernommene Autoren-Chatgeschichte. Der Reviewer prüft selbst Vollständigkeit,
+Consumerverdrahtung, Fallback-/Recoverygrenzen, Codequalität, Teständerungen und
+Rohbelege; bei Implementierung wiederholt er entscheidende echte Prüfungen.
+Korrekturen werden nachgeprüft. Fehlt dieser Reviewer oder eine notwendige
+Prüfvoraussetzung, bleibt das Gate blockiert statt Selbstabnahme/PASS.
+
+Diese Kriterien machen Abschlussbehauptungen überprüfbar; sie behaupten keinen
+unfehlbaren Schutz gegen Fälschung. Die Übergabe umfasst keine Deployments,
+produktiven Hostaktionen, bezahlten Evalkampagnen, vorgezogenen Test-/Worker-
+Refactorings oder automatische Findingpromotionen.

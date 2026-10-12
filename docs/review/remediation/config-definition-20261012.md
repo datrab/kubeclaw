@@ -1,5 +1,17 @@
 # CONFIG: vollständiger Zielumfang, Zuständigkeiten und Bedienung
 
+**Aktueller Einstieg für OpenClaw:** [OPENCLAW-CONFIG-GOAL.md](OPENCLAW-CONFIG-GOAL.md).
+D21/D22 sind maßgeblich: Systemindex `pipeline.config.json` aus dem bestehenden
+Swarm-Einstieg; Projektworkflow `pipeline.json` getrennt. C0 ist offen; keine
+Implementierungsfreigabe. Ältere Namens-/Abschlussformulierungen unten sind
+historisch beziehungsweise durch diese Fortschreibung präzisiert.
+
+
+## Historische Definition vor D21
+
+Die folgende ursprüngliche Definition wird als Beleg erhalten. Für aktuellen
+Auftrag, Zielnamen und Prüfgates gelten D21/D22 und OPENCLAW-CONFIG-GOAL.md.
+
 Stand: 12. Oktober 2026. **Codegestützte Definition vor der nächsten Migration, keine neue Implementierung.** Grundlage: D17, D18/D19, gültige F1–F6-Abnahme und die neue [Code-/Schemainventur](config-scope-inventory-20261012.json).
 
 Vom Auftraggeber bestätigt: zentrale Config je Engine/Plugin/Core/Worker Core; **`pipeline.json` als Systemeinstieg mit Referenzen**, keine Kopie sämtlicher Einstellungen in einer zweiten Datei. Für geeignete Tuningwerte übernehmen **neu startende Module** Änderungen; ein laufendes Modul behält seinen gebundenen Stand. Grundlegende Run-/Recovery-/Berechtigungsbindungen bleiben stabil; Evals binden einen festen Konfigurationsstand. Ziel: einfache Verwaltung, möglichst große sinnvolle Anpassbarkeit, wenig Reibung und spätere Optimierung aller Komponenten.
@@ -183,3 +195,7 @@ Die wesentliche Ergänzung zu den ursprünglich genannten vier Ebenen sind Agent
 Der nicht implementierende Prüfer hat alle 48 Paket-IDs und 57 direkten Schemapfade unabhängig enumeriert. Seine beiden Hinweise — keine doppelte editierbare Profilautorität und dauerhafte Modulbindung vor Dispatch ohne D04-Budgetreset — sind aufgenommen und anschließend bestätigt. Die erweiterte Inventur bindet 136 Quellen; 135 sind beim Abschlussvergleich unverändert, `decisions.md` ist durch die dokumentierte D20-Entscheidung erwartbar geändert. Der [vollständige Prüfbericht](independent-config-definition-20261012.md) nennt Methoden und Grenzen. Das Review ist keine semantische F1-Gesamtabnahme oder bereits implementierte Modul-Dynamik.
 
 Für den Wechsel in eine neue Ausführungsumgebung: [Cloud-Übergabe](resume/CLOUD-HANDOFF-20261012.md). Dokumente im Repositoryverzeichnis sind noch nicht automatisch committed, gepusht oder im Cloud-Checkout vorhanden. Die Übergabe nennt den tatsächlichen dirty Stand und ausdrücklich nicht übertragene Rohbelege/Caches.
+
+## 14. Konkretisierung im aktuellen Cloud-Checkout
+
+Die [Cloud-Aufnahme](cloud-config-assessment-20261012.md) ordnet den Repo-Scope in 39 Consumergruppen, benennt zusätzliche Shell-/Entrypoint-/OpenClaw-/Ops-Quellen, konkrete Modulgrenzen und C1-Abnahmefälle. Ihre Root-, CLI- und Modulzuordnung sind konkrete Empfehlungen zur Entscheidung, keine bereits bestätigten Implementierungsdetails. Der frühere Stand oben bleibt als historische Definition erhalten. Die 48 Pipeline-Manifeste sind weiterhin korrekt; zusätzlich existieren zwei OpenClaw-Erweiterungen mit anderer API. Die Vorlage begrenzt semantische F1-Abnahme ausdrücklich und ersetzt keine vollständigen Feldwirkungstests.
