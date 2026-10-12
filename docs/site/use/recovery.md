@@ -674,8 +674,15 @@ against deployed backup media.
 > [group verifier](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L97-L129),
 > [scheduled reuse and latest-only CLI](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L166-L185).
 > Contract or setting: the [rendered Job runs `scheduled`](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/render-postgresql-recovery.mjs#L63-L83).
-> Test evidence: local syntax and copy-selection checks; native media
-> verification, live Job execution and transfer have not been run here.
+> Test evidence: [The native harness asserts backup verification, scheduled
+> reuse, secret exclusion and wrong-key rejection](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/tests/verification/deployment/postgresql-recovery-native.mts#L110-L117).
+> Status: **SOURCE ONLY; NOT EXECUTED**. These assertions are not an observed
+> native test result. The page's private-root copy-selection guards have no
+> maintained repository test. Local syntax and synthetic subprocess
+> inheritance checks passed; they do not verify PostgreSQL archives.
+> The full offline check **FAILED** on BusyBox `realpath` options and musl
+> regular-expression support. Native media verification, live Job execution
+> and transfer remain **NOT EXECUTED**.
 > Revision: KubeClaw `ebcc04066d42c94b4a4e0fc85e3393dae3d61f78`.
 > Limit: offline integrity is not restore or application proof.
 
@@ -734,6 +741,14 @@ it does not provision or start the servers
 The harness checks schema, model/key rows, ownership, transactional failure,
 SQL authentication, and legacy/AES credential decryption
 ([restore and data checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L111-L137)).
+Native test status: **SOURCE ONLY; NOT EXECUTED**. The linked assertions describe
+what the harness attempts; no native execution result is available for this
+check. Execution requires the two externally supplied disposable servers,
+the selected PostgreSQL client directory and the pinned LiteLLM crypto runtime
+listed above. Until those prerequisites are supplied, stop before running the
+harness. Synthetic subprocess inheritance checks and the failed offline check
+do not establish SQL, archive, decryption or application recovery results.
+
 It does not start the selected LiteLLM image, call LiteLLM readiness or model
 APIs, test valid and invalid API keys through LiteLLM, prove budgets, make a
 real model request, perform client cutover, or roll that cutover back.

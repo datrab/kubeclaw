@@ -150,6 +150,22 @@ and [its mutex creates the append-lock file](https://github.com/datrab/kubeclaw/
 A later audit failure does not restore discarded bytes. Recovery and resume
 can open the same journals before rejecting a run or signal.
 
+
+> **Source evidence — durable audit and journal effects**
+>
+> **Claim:** Audit rebuilds events from the journal. Opening FileJournal can truncate an incomplete tail and create an append-lock file; preserve stopped-writer raw bytes first.
+>
+> **Implementation:** [readPipelineAudit](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/telemetry/audit.ts#L14-L27); [FileJournal opening](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/state/journal.ts#L30-L77); [FileMutex lock file](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/state/file-mutex.ts#L8-L21).
+>
+> **Contract or setting:** The [audit projection shape](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/telemetry/audit.ts#L19-L27) binds the original run ID and journal head. [Durable Run Inspection](#durable-run-inspection) supplies the required preservation conditions.
+>
+> **Test evidence:** [Audit reconstruction, redaction and corrupt-history regression](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/reliability/audit-projection.test.mts#L10-L28) and [lock exception, exclusion and stable-inode regression](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/reliability/state-ownership.test.mjs#L83-L91): **SOURCE ONLY; NOT EXECUTED**. These test sources were read. There is no maintained repository test for the complete operator raw-copy and adapter-preservation procedure.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** These sources do not establish live recovery, external-effect reconciliation, or harmless audit of an active or incomplete run.
+
+
 Follow the canonical section to define `preserve_run_state`, verify a complete
 raw run copy, and preserve the owning adapters' stores through their declared
 backup procedures. Retain partial bytes, signals, effects, snapshots, and lock
@@ -328,6 +344,22 @@ procedures below.
 These are operator exercises, not claims that the failures have already been
 run. Each exercise must produce its own failed observation, safe-stop decision,
 restoration record, end-consumer verification, and cleanup result.
+
+
+> **Source evidence — controlled-exercise helper checks**
+>
+> **Claim:** The page distinguishes source authority, local helper checks and actual dependency-failure results. The fault guards bind selected object lifetimes; they do not provide a cluster-wide fence.
+>
+> **Implementation:** [Fault-window helpers](#bind-the-fault-window-to-object-lifetimes) and [memory observer helpers](#prepare-the-openclaw-memory-reader); the [maintained smoke wrapper](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L1571-L1579) is a separate runtime check.
+>
+> **Contract or setting:** [JSON Patch test semantics](https://www.rfc-editor.org/rfc/rfc6902#section-4.6) and [Kubernetes update conflicts](https://kubernetes.io/docs/reference/using-api/api-concepts/#updates-to-existing-resources); namespace/consumer exclusion and Node.js 24 are required above each procedure.
+>
+> **Test evidence:** There is no maintained repository test for these page-defined fault-binding, cause-classification and cleanup helpers as a complete procedure. **LOCAL CHECKS PASSED:** 32 Bash and 53 Node syntax checks in their published modes; 20 native-default CommonJS programs ran on synthetic fixtures, with bounded mutation/cause probes. The six actual dependency scenarios are **NOT EXECUTED**.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** Local parsing and synthetic helpers do not prove cluster enforcement, target-image compatibility, pipeline success or end-consumer recovery.
+
 
 Use a registered non-production acceptance environment during an approved
 fault window. The operator must have an independent cluster administration
@@ -552,6 +584,22 @@ The [audit reader rebuilds hash-verified durable events from filesystem state](h
 These mechanisms explain why Redis availability and readable Nova lifecycle
 state are separate observations. The checks for this page did not execute a Redis outage.
 
+
+> **Source evidence — Redis health and durable run authority**
+>
+> **Claim:** Enabled role health bounds Redis connection/command waits; startup writes a health-stream entry. Nova audit remains a separate filesystem authority.
+>
+> **Implementation:** [openRedis and PING](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L797-L824); [startup XADD](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L825-L840); [readPipelineAudit](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/telemetry/audit.ts#L14-L27).
+>
+> **Contract or setting:** [Enabled startup/readiness checks and failed exit](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L903-L929); the selected role render must enable Redis health and Nova stream checks.
+>
+> **Test evidence:** [Filesystem audit regression with unavailable projections](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/reliability/audit-projection.test.mts#L10-L28): **SOURCE ONLY; NOT EXECUTED**. It covers audit reconstruction, not a Redis outage. There is no maintained repository test for this role-health/outage procedure. **LOCAL CHECKS PASSED:** the extracted cause classifier and before/during/after audit comparison used synthetic data.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** No actual Redis denial, in-window live audit, authenticated stream recovery or unchanged-PVC result was executed here.
+
+
 Before the first audit in this exercise, complete
 [Inspect a Run](operate.md#inspect-a-run) and define its canonical
 `preserve_run_state` helper in the same shell. Select an existing run from its
@@ -715,6 +763,22 @@ and the [selected Control image's Node dependencies](https://github.com/datrab/k
 Its five-second connection/query deadlines are operator observer limits, not
 the live Control pool's timeout. The [Control HTTP error response](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/control-server.ts#L923-L931)
 reports a failed readiness database query as status 422.
+
+
+> **Source evidence — separate PostgreSQL owners and consumers**
+>
+> **Claim:** Prism Control queries its selected database for readiness; Worker bounds its nonce-database checks. LiteLLM consumes a separate Secret/database configuration.
+>
+> **Implementation:** [Control ready query](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/control-server.ts#L145-L149); [WorkerNonceDatabase limits](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/worker-readiness.ts#L32-L50); [LiteLLM database startup configuration](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/my-values/infra/litellm-deployment.yaml#L32-L63).
+>
+> **Contract or setting:** [Control DATABASE_URL Secret reference](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/prism/templates/workloads.yaml#L98-L103) and [Control HTTP error response](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/control-server.ts#L923-L931); the five-second direct SQL observer is an operator limit.
+>
+> **Test evidence:** [Worker native connection-refusal and query-cancellation tests](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/tests/worker-readiness.test.mts#L8-L41): **SOURCE ONLY; NOT EXECUTED**. The cancellation case requires an isolated migrated database. These tests do not cover Control, Studio or the opposite LiteLLM outage. There is no maintained repository test for that complete two-window procedure. **LOCAL CHECKS PASSED:** direct cause-classifier vectors used a private SQL dependency double.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** No live database loss/restoration or Studio reader was executed. The existing-document comparison cannot verify a retained artifact digest.
+
 
 This exercise targets Prism PostgreSQL only. Precondition: `prism-smoke` passes,
 LiteLLM and its separate `statefulset/postgresql` are ready, and no Prism write
@@ -957,6 +1021,22 @@ image receipt](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77
 A `/v2/` response is only a reachability observation. It does not replace those
 assertions or a node pull. This live proof was not run for this page.
 
+
+> **Source evidence — BuildKit publication and imported image receipt**
+>
+> **Claim:** The maintained preflight requires completed remote work, matching import evidence and a digest-qualified image before it emits its build receipt.
+>
+> **Implementation:** [Build preflight checks and receipt](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L88-L127); [deployment command selection](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L2036-L2042).
+>
+> **Contract or setting:** [Resolved container plan and limits](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L58-L86) bind the source/request sent to the selected Buster provider.
+>
+> **Test evidence:** [Maintained build preflight assertions](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L88-L116): **SOURCE ONLY; NOT EXECUTED**. This program is both the task implementation and its maintained test authority. It was read, not run. **LOCAL CHECKS PASSED:** selector/endpoint helpers used synthetic objects.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** No real build, registry push, digest verification, import, node pull or application consumer result is established.
+
+
 This lab-profile exercise requires the selected writable Service to be
 `registry-local` and the mirror to be `registry-mirror`. For another production
 registry, use that registry owner's maintained deny-push policy and restore
@@ -1127,6 +1207,22 @@ through the registry owner's authorized read, verify any returned manifest
 against that request, and resolve its terminal outcome without changed input.
 This page has no supported original-state read to supply those steps today.
 
+
+> **Source evidence — original build custody and retry boundary**
+>
+> **Claim:** Each preflight creates a new run, source and idempotency identity, then removes temporary source/state. A wrapper failure can follow successful remote work. A new preflight cannot reconcile the original uncertain push.
+>
+> **Implementation:** [Fixture/run creation](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L16-L49); [new request identity](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L81-L86); [temporary-state removal](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L127-L129).
+>
+> **Contract or setting:** [Receipt signing after preflight](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L2010-L2033) and the original-identity custody/stop conditions in this section apply before any new build.
+>
+> **Test evidence:** [Maintained successful build assertions](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L88-L116): **SOURCE ONLY; NOT EXECUTED**. They test successful remote completion/import; they do not test original failed-state custody, uncertain-push reconciliation or same-image consumer recovery. There is no maintained repository test for those unavailable operator steps.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** The Nova/Buster/registry owners must provide the original-state read described above. Route restoration or a distinct diagnostic image cannot close original-image recovery.
+
+
 Restore the captured selector using the guarded original Service. Keep the
 trap armed until selector comparison and endpoint checks pass. These restore
 the route only. Do not start another preflight from this recovery block:
@@ -1196,6 +1292,22 @@ The [deployment wrapper waits for both cluster objects to disappear](https://git
 These are functional route and cleanup checks; this page does not claim they
 ran against a Tailnet. The OAuth rejection check below classifies recorded
 operator output. It fails if that output lacks a recognizable rejection.
+
+
+> **Source evidence — Tailscale fixture, receipt and cleanup**
+>
+> **Claim:** The maintained preflight allocates a new lease/exposure, requires the HTTP node and imported result to pass, and returns the selected fixture identities. The wrapper separately observes cluster cleanup.
+>
+> **Implementation:** [Fixture and route nodes](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-tailscale-production-preflight.mts#L126-L145); [receipt/import identity assertions](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-tailscale-production-preflight.mts#L174-L204); [cleanup observation](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L2552-L2578).
+>
+> **Contract or setting:** [Probe image and credential prerequisites](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-tailscale-production-preflight.mts#L16-L46) and [controller lease-ownership labels](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/cmd/buster-namespace-controller/main.go#L788-L806).
+>
+> **Test evidence:** [Maintained Tailscale preflight assertions](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-tailscale-production-preflight.mts#L174-L204): **SOURCE ONLY; NOT EXECUTED**. They require a configured cluster, worker and Tailnet. There is no maintained repository test for this page's OAuth-rejection classifier and failed-fixture cleanup helper. **LOCAL CHECKS PASSED:** fingerprint, rejection and UID/resource-version cleanup probes used synthetic data or an owned loopback API.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** No actual OAuth rejection, Tailnet device/route, authorized client response or cluster cleanup was executed here.
+
 
 Precondition: the official operator is ready, `IngressClass/tailscale` exists,
 the digest-pinned probe image is pullable, the secure OAuth source file is
@@ -2313,21 +2425,20 @@ bounded_memory_cli 210 search --agent main \
   > "$EVIDENCE_DIR/memory-query-cleanup.json" 2> "$EVIDENCE_DIR/memory-query-cleanup.stderr"
 ```
 
+
 > **Source evidence — memory-consumer procedure**
 >
-> **Claim:** The selected CLI reaches the configured memory manager; the query
-> retry, timeout, and error rules come from that manager.
-> **Implementation:** The linked CLI runtime, retry policy, and query wrapper.
-> **Contract or setting:** The linked chart memory settings and SecretRef bootstrap.
-> **Test evidence:** Bash and Node syntax checks passed. Offline extracted
-> helpers stopped before exec on failed binding and changed consumer identity.
-> Owned local process probes checked normal exit, deadline escalation, and a
-> surviving descendant after direct-child close. These are operator-helper
-> checks, not OpenClaw consumer results. No target-image or live memory execution is established here.
-> **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`;
-> KubeClaw configuration `4d3068465a2e202d2d5073b77e9273c308497995`.
-> **Limit:** Syntax and source checks do not prove image compatibility, actual
-> request counts, timeout injection, or live end-consumer recovery.
+> **Claim:** The selected CLI reaches the configured memory manager. Query retries and error mapping belong to that manager; direct HTTP probes test only the model route.
+>
+> **Implementation:** [CLI search and error exit](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L197-L238); [query retry invocation](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-ops.ts#L610-L665).
+>
+> **Contract or setting:** [Query/index retry profiles](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L65-L82); [managed memory settings and SecretRef](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75); [restart synchronization](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L516-L524).
+>
+> **Test evidence:** There is no maintained KubeClaw repository test for these operator memory helpers or the selected target-image CLI exercise. **LOCAL CHECKS PASSED:** published Bash/Node syntax, extracted binding/consumer guards, and owned Linux process probes for normal exit, deadline escalation and a surviving descendant after direct-child close. Those probes used a synthetic child, not OpenClaw. The linked CLI, configuration and retry sources are **SOURCE ONLY**; the actual target-image memory reader is **NOT EXECUTED**.
+>
+> **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`; KubeClaw configuration `4d3068465a2e202d2d5073b77e9273c308497995`.
+>
+> **Limit:** These local checks do not prove image compatibility, managed SecretRef resolution, actual retry counts, upstream timeout injection, semantic memory recovery or remote cancellation.
 
 **Current verification boundary:** The pinned sources expose and configure this
 CLI path. These commands have not been run against the selected target image
@@ -2354,6 +2465,21 @@ failed admission](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073
 Those checks cover the source/Git prefix, not a full live Buster run. This
 unavailable-revision exercise and its later successful run are not recorded as
 executed here.
+
+
+> **Source evidence — immutable Git source admission**
+>
+> **Claim:** The compiler binds the requested architecture ref; failed source admission prevents downstream review/sync/implementation instead of substituting another revision.
+>
+> **Implementation:** [Project source prefix](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/project/source.ts#L33-L65); [exact subject ref resolution](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/common/plugin-runtime/sdk/src/review-subject.ts#L50-L75); [blocked source stage](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/plugins/preflight-contract/src/source-stage.ts#L20-L40).
+>
+> **Contract or setting:** The original project descriptor and [source admission binding](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/project/source.ts#L33-L65) determine the required ref. Fault and restored descriptors have separate run identities.
+>
+> **Test evidence:** [Mandatory source failure and invalid binding regression](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/reliability/project-source.test.mjs#L37-L53): **SOURCE ONLY; NOT EXECUTED**. This regression source was read. It covers the source/Git prefix, not the full remote Buster path. **LOCAL CHECKS PASSED:** failed-source audit helpers used synthetic records.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** No actual unavailable-origin exercise, Git fetch, full pipeline, restored run or remote import was executed here.
 
 Before either run audit below, complete
 [Inspect a Run](operate.md#inspect-a-run) and define the canonical
@@ -2612,6 +2738,22 @@ its binding checks, before this exercise can accept an externalized result.
 Preserve the summary and audit unchanged; do not reconstruct the decision from
 counts or edit the journal. This is a current operator boundary, not a missing
 receipt that can be ignored.
+
+
+> **Source evidence — source receipt and bounded audit projection**
+>
+> **Claim:** Verified job state supplies source revision/tree/archive, plan and stage identity. Lifecycle effect IDs bind completed results; results above 16 KiB become summaries that this operator helper cannot accept as the original receipt.
+>
+> **Implementation:** [bindGateCoverage](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/contracts/pipeline-test-gate/v1/src/coverage-result.ts#L17-L27); [effectAppender and auditResult](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/execution/engine-runtime.ts#L53-L82).
+>
+> **Contract or setting:** [Coverage result fields](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/contracts/pipeline-test-gate/v1/src/coverage-result.ts#L5-L14) and the exact original run/effect/source checks in the compact receipt helper above.
+>
+> **Test evidence:** [Remote skipped-coverage and source/plan binding regression](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/reliability/coverage-remote.test.mts#L62-L76): **SOURCE ONLY; NOT EXECUTED**. It checks remote coverage decisions, not this operator receipt read. There is no maintained repository test for the compact-receipt helper or its externalized-result stop. **LOCAL CHECKS PASSED:** the compact receipt projection used synthetic effect-linked records.
+>
+> **Revision:** 4d3068465a2e202d2d5073b77e9273c308497995
+>
+> **Limit:** No actual remote result or restored-run receipt was read. An externalized summary requires the release/runtime owner's documented original-result read before recovery can close.
+
 
 The final ancestry check allows the governed project stages to produce a later
 candidate while proving that Buster received a source descended from the exact

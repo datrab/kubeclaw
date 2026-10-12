@@ -29309,13 +29309,43 @@
       "verifiedGuardedInputs": 30,
       "pageSha256": "a60c8ae63c96ebc4bae509c1301de96e6ad9aceb4209c3f74865817f7caef4bb",
       "scope": "CompletecurrentOPR007Sourcecontentonly; originalgroup/threecorrections checked. ActualwholeofflineFAILEDunsupportedhost preserved; ReaderQuality/practical/gates/global separate."
+    },
+    {
+      "agent": "/root/diagnose_corrected_complete_reader_fresh",
+      "role": "reader",
+      "state": "terminal-complete-assigned-PASS",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "report": "/home/node/Documents/Codex/a98-evidence/diagnose-corrected-complete-reader-fresh/report.md",
+      "reportSha256": "c4337541c9a2df8081f36467a253605ab6778fe2750d87db09dd53d5fcd9242d",
+      "manifestSha256": "847928156ce0829aa16a03228c1037e249aff9b9e593c8d708b83eb1f15eafc6",
+      "verifiedArtifacts": 174,
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/diagnose-corrected-complete-reader-fresh-root-seal.json",
+      "pageSha256": "e31675fad53c6d5e590f22656fcb630feb03b9fa63e671d38c974cb8c86bd021",
+      "scope": "Complete diagnosis Reader PASS on e316; current evidence-callout correction changes prose, so this is historical whole-page approval with unchanged executable controls reusable after equality proof."
+    },
+    {
+      "agent": "/root/recovery_evidence_final_complete_quality_fresh",
+      "role": "quality",
+      "state": "terminal-complete-assigned-PASS",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "report": "/home/node/Documents/Codex/a98-evidence/recovery-evidence-final-complete-quality-fresh/report.md",
+      "reportSha256": "5634af9b9ce94e4cca37ad01a8fe3e0bc87a4f95458482837f0a315a2bf4d71a",
+      "manifestSha256": "9698f6c9351fba6211db531afc0d0956d2bb1fcbb3f31cfc027c346866088967",
+      "verifiedArtifacts": 42,
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/recovery-evidence-final-complete-quality-fresh-root-seal.json",
+      "pageSha256": "944988014bbfecd79138d2180f47631218ecea38efef9ae4bc3239e4e76a1a52",
+      "scope": "Complete current recovery Quality PASS only; no native/live, Source/Reader transfer, gate or global approval."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open. Rootcurrent291PASS43inputs andauthor38actualreceivingPASS9inputs bothterminal/currentsealed. Current69Sourceunit159native qualifiedSourcepair bound; freshwholeSource review collectingfurthercounterexamples, no SourcePASSyet. Ledgerreconciler independentlycombiningvalidcurrentcontentroleevidence, reportpending.",
+    "stage": "AP09.8 open. Current Root295 tests and63 receiving decisions terminal PASS with sealed bounded inputs. Fresh Tool Source collecting new gaps. Recovery944 Quality PASS, fresh Source running; diagnosis DQ-01 author report pending.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish complete currentSource review beforejointanynewfindingscorrection; integrate onlyvalid scopedledgerclosures. Sourcecommit+revisionboundgeneration afterknownSource findingsclosed, not green unit totals. Fullmutations/manual/requireddeployment/Astra/AP98transition/parity/AP99–13/AP10/AP11 stillrequired.",
+    "next": "Finish complete Tool Source report, correct all findings together; complete distinct final document reviews in parallel. Integrate stable checked content, then Source commit and separate revision-bound generation. Full mandatory gates/mutations, required deployment evidence, Astra/AP98 and all parity/AP99-13/AP10/AP11 remain.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -29328,8 +29358,9 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/bounded_key_final_complete_tool_source_fresh",
-      "/root/ap98_finding_evidence_reconciliation"
+      "/root/external_key_top_stdin_complete_tool_source_fresh",
+      "/root/recovery_final_evidence_complete_source_fresh",
+      "/root/recovery_final_evidence_complete_reader_fresh"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -34560,6 +34591,56 @@
       "verifiedArtifacts": 106,
       "seal": "/home/node/Documents/Codex/a98-evidence/root-dependent-key-yaml-file-receiving/root-terminal-seal.json",
       "scope": "ActualRootreceivers baseline/restored436/intendedSource negatives; notindependentSource/fullregisteredmutations/globalapproval."
+    },
+    "externalKeyTopStdinRootSuite": {
+      "at": "2026-10-12T14:13:14.951745+00:00",
+      "originalSessionId": 40105,
+      "pid": 416150,
+      "observedTerminalExitCode": 0,
+      "tests": 295,
+      "passed": 295,
+      "failed": 0,
+      "skipped": 0,
+      "verifiedInputs": 43,
+      "resultSha256": "ebcd8159e2e07587408e4177a2fc1a61a112548bbb557060c54e8cf2645b419c",
+      "logSha256": "bf5b15118faf4bafd0680131969e60104e5cca98b67bd2a9f6e5333dff8d92ea",
+      "scope": "Actual Root execution on recorded Tool candidate. New independent Source findings remain open; no full mutation, package or global acceptance. Later documentation prose deltas do not change Tool inputs.",
+      "seal": "/home/node/Documents/Codex/a98-evidence/root-integrated-external-key-top-level-stdin/root-terminal-seal.json",
+      "state": "terminal-PASS-bounded-check-only"
+    },
+    "externalKeyTopStdinRootReceiving": {
+      "at": "2026-10-12T14:16:13.150227+00:00",
+      "originalSessionId": 86014,
+      "observedTerminalExitCode": 0,
+      "decisions": 63,
+      "passed": 63,
+      "failed": 0,
+      "qualified9CurrentEqual": true,
+      "scope": "Actual Root execution on recorded Tool candidate. New independent Source findings remain open; no full mutation, package or global acceptance. Later documentation prose deltas do not change Tool inputs.",
+      "seal": "/home/node/Documents/Codex/a98-evidence/root-external-key-top-level-stdin-receiving/root-terminal-seal.json",
+      "state": "terminal-PASS-bounded-check-only"
+    },
+    "currentParallelReviewStatus": {
+      "at": "2026-10-12T14:31:35.890987+00:00",
+      "baseRevision": "54a010ec5a337e5bbc4a08331510d2fe2d71c886",
+      "toolSource": "Complete fresh independent review still collecting all findings. Preliminary getter-alias external key custody and heredoc separator custody gaps require full report before coherent correction. Root295/63 passing known cases do not negate these new counterexamples.",
+      "diagnose": "DQ-01 author finalized ten boxes, Root full-read/sealed125 artifacts/current5bc065 candidate; all executable inputs unchanged. Fresh complete Source/Reader/Quality roles required.",
+      "recovery": "Current944 complete Quality PASS; fresh full Source now running, new distinct Reader next. Earlier a60 Source/Reader PASS historical, exact unchanged controls reusable.",
+      "generation": "Handbook/capacity generated-map correction and three generated Helm boundary strings await proper Source-commit/full-SHA generation. Existing dirty generated outputs preserved."
+    },
+    "diagnoseEvidenceCalloutAuthor": {
+      "at": "2026-10-12T14:33:22.971340+00:00",
+      "verifiedArtifacts": 125,
+      "manifestSha256": "efdf83c016371f6ed2ea9f1ed9f9fa2140cfa3b6dbec4ddc966fcf590bdc0d3a",
+      "reportSha256": "e02549b8fb368d40a5be2aaff03e8496437a7bda5ff1bcd246ccb1c77113df76",
+      "currentPageSha256": "5bc06556def06f1edb61193867ea499c9c407f092ffe7530e817d91d5e55853b",
+      "scope": "Root read complete author report and verified125 artifacts/current page; author proof only, fresh complete roles pending.",
+      "report": "/home/node/Documents/Codex/a98-evidence/diagnose-evidence-callouts-complete-batch-writer/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/diagnose-evidence-callouts-complete-batch-writer-root-seal.json",
+      "state": "complete-author-source-presentation-only",
+      "all32Bash53NodeUnchanged": true,
+      "maintainedTests": "SOURCE ONLY; NOT EXECUTED",
+      "freshCompleteRoles": "required; olde316 whole-page Source/Reader verdicts not transferred"
     }
   }
 }
