@@ -6910,7 +6910,7 @@
         "scripts/deploy.sh",
         "docs/generated/inventory/deploy-script.json"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "author-corrected-current-source-review-active",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6948,7 +6948,13 @@
         "astra-final"
       ],
       "state": "not-accepted",
-      "evidence": [],
+      "evidence": [
+        {
+          "class": "root-bounded-automatic-gates",
+          "receipt": "/home/node/Documents/Codex/a98-evidence/root-complete-operator-correction-gates/result.json",
+          "limit": "Both commands exit0; no semantic/Reader/live approval."
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/a98_source_review_round2",
@@ -6967,6 +6973,13 @@
           "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
           "verdict": "PASS",
           "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/install_creating_identity_corrected_complete_source_fresh",
+          "role": "source",
+          "revision": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
+          "verdict": "PENDING",
+          "scope": "Fresh full installation/trust/retirement source inspection."
         }
       ],
       "openFindingIds": [
@@ -6999,7 +7012,7 @@
         "skills/nova/core/execution/engine-snapshots.ts",
         "skills/nova/core/execution/engine-run.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "complete-assigned-source-fail-buster-location",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7037,7 +7050,13 @@
         "astra-final"
       ],
       "state": "not-accepted",
-      "evidence": [],
+      "evidence": [
+        {
+          "class": "independent-source",
+          "report": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh/report.md",
+          "limit": "Required deployed execution receipts are absent; no final requirement acceptance."
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/a98_source_review_round2",
@@ -7056,11 +7075,23 @@
           "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
           "verdict": "FAIL",
           "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/canonical_delegated_run_control_corrected_source_fresh",
+          "role": "source",
+          "revision": "b9f0228a44fc7ac71d90747bed9bb4cefdf83381",
+          "verdict": "FAIL",
+          "scope": "Complete assigned five-page Source contribution; no deployment/Reader/Quality/package acceptance.",
+          "report": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh/report.md",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh-root-seal.json"
         }
       ],
       "openFindingIds": [
         "A98-R2-NAMESPACE-CONTINUITY",
-        "A98-R2-PRISM-RESUME-AUTHORITY"
+        "A98-R2-PRISM-RESUME-AUTHORITY",
+        "A98-20261012-BUST-SRC-01",
+        "A98-20261012-MATRIX-SRC-02",
+        "A98-20261012-MATRIX-SRC-03"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L264"
     },
@@ -7079,7 +7110,7 @@
         "skills/nova/core/execution/engine-snapshots.ts",
         "skills/nova/core/execution/engine-run.ts"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "complete-assigned-source-pass-cancellation-boundary-only",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7116,7 +7147,13 @@
         "astra-final"
       ],
       "state": "not-accepted",
-      "evidence": [],
+      "evidence": [
+        {
+          "class": "independent-source",
+          "report": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh/report.md",
+          "limit": "Required deployed execution receipts are absent; no final requirement acceptance."
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/a98_source_review_round2",
@@ -7135,6 +7172,15 @@
           "revision": "e3fa70c3fe3a1a4a32af503201a19e0b5df14c61",
           "verdict": "PASS",
           "scope": "role-specific bounded review; no global acceptance"
+        },
+        {
+          "agent": "/root/canonical_delegated_run_control_corrected_source_fresh",
+          "role": "source",
+          "revision": "b9f0228a44fc7ac71d90747bed9bb4cefdf83381",
+          "verdict": "PASS",
+          "scope": "Complete assigned five-page Source contribution; no deployment/Reader/Quality/package acceptance.",
+          "report": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh/report.md",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh-root-seal.json"
         }
       ],
       "openFindingIds": [],
@@ -18885,7 +18931,7 @@
     },
     {
       "id": "A98-20261012-BUST-SRC-01",
-      "state": "open-coherent-source-correction",
+      "state": "author-source-corrected-committed-pending-generation-and-independent-review",
       "catalogueIds": [
         "OPR-004"
       ],
@@ -18897,11 +18943,14 @@
       "owner": "/root/buster_visual_source_findings_complete_writer",
       "reviewer": "/root/canonical_delegated_run_control_corrected_source_fresh",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh-root-seal.json",
-      "scope": "Assigned independent Source facets, not entire catalogue requirement approval."
+      "scope": "Assigned independent Source facets, not entire catalogue requirement approval.",
+      "correctionCommit": "d147c1d729fa4a7ef518f37667b90299cde7aeee",
+      "authorSeal": "/home/node/Documents/Codex/a98-evidence/buster-visual-source-findings-complete-writer-root-seal.json",
+      "limit": "Buster page source corrected; visual generator corrected, published generated matrix still pending qualified source-bound regeneration."
     },
     {
       "id": "A98-20261012-MATRIX-SRC-02",
-      "state": "open-coherent-source-correction",
+      "state": "author-source-corrected-committed-pending-generation-and-independent-review",
       "catalogueIds": [
         "OPR-004"
       ],
@@ -18913,7 +18962,10 @@
       "owner": "/root/buster_visual_source_findings_complete_writer",
       "reviewer": "/root/canonical_delegated_run_control_corrected_source_fresh",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh-root-seal.json",
-      "scope": "Assigned independent Source facets, not entire catalogue requirement approval."
+      "scope": "Assigned independent Source facets, not entire catalogue requirement approval.",
+      "correctionCommit": "d147c1d729fa4a7ef518f37667b90299cde7aeee",
+      "authorSeal": "/home/node/Documents/Codex/a98-evidence/buster-visual-source-findings-complete-writer-root-seal.json",
+      "limit": "Buster page source corrected; visual generator corrected, published generated matrix still pending qualified source-bound regeneration."
     },
     {
       "id": "A98-20261012-MATRIX-SRC-03",
@@ -20299,6 +20351,30 @@
       "sourceCommit": "1129d185912b5f75c9e9bfdb9a6c0748e883e3fd",
       "evidence": "/home/node/Documents/Codex/a98-evidence/root-reader-boundary-crypto-tokens/result.json",
       "scope": "Bounded crypto token false-positive correction preserves German paired negatives; full gate still fails on three generated bookkeeping phrases."
+    },
+    {
+      "state": "observed-terminal-pass-author-bounded",
+      "commands": [
+        {
+          "command": "node --test scripts/tests/plugin-dependency-boundaries.test.mjs",
+          "exitCode": 0,
+          "passed": 14,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "command": "private check-candidate.py",
+          "exitCode": 0,
+          "scopedRecords": 22
+        },
+        {
+          "command": "private location-family-probe.py",
+          "exitCode": 0
+        }
+      ],
+      "sourceCommit": "d147c1d729fa4a7ef518f37667b90299cde7aeee",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/buster-visual-source-findings-complete-writer-root-seal.json",
+      "limit": "Syntax/pins/private generator candidates and exact clean/dirty/moved project preconditions; actual four CLI commands deliberately exit1 before state access; no live or independent approval."
     }
   ],
   "reviewAssignments": [
@@ -22620,7 +22696,7 @@
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open: install/trust corrected commit4ed48fa6; root full trust/operator PASS, independent three-page Source active; full five-page Source FAIL3 corrections parallel with scanner lexical audit.",
+    "stage": "AP09.8 open: install/trust Source corrected4ed48fa6/full fresh Source active; Buster+visual Source correctedd147c1d7, published matrix regeneration pending; scanner lexical/Secret-copy correction and semantic qualification audit active.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
     "next": "Finish Buster/visual and Secret-copy claim correction; finish superseding scanner lexical binding/native/full receiving proof and semantic qualification; root complete suite and checked Source commits, then source-bound generation and fresh full independent Source/Reader/Quality. Mandatory deployment trio, full mutation/gates/Astra remain; no parity or deletion.",
@@ -23659,8 +23735,8 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/buster_visual_source_findings_complete_writer",
-      "/root/install_creating_identity_corrected_complete_source_fresh"
+      "/root/install_creating_identity_corrected_complete_source_fresh",
+      "/root/superseding_lexical_source_qualification_integrator"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -26884,7 +26960,7 @@
       "rootStaticAndCapturedChecks": "11 selected capture controls PASS,12 protected historical-baseline controls PASS,27 production tests PASS before extra public-checkout control added; not fresh independent approval",
       "scannerCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
       "scannerFreeze": "1674 WITHDRAWN: full replay78/78 historical PASS cannot qualify superseding lexical-binding correction. Owning-definition lexical namespaces need precise forwarder custody checks.",
-      "qualificationIntegrator": "/root/annotation_yaml_static_custody_authority_integrator",
+      "qualificationIntegrator": "/root/superseding_lexical_source_qualification_integrator",
       "docCorrectionWriter": "/root/trust_denial_retirement_complete_batch_writer",
       "lastCompleteDocReader": "FAIL2 fullcorrected Reader;71 verified artifacts. R1storage-lifetime exclusion andR2immutable failed-observation evidence. Corrected trust/signing/lifecycle/5retainedresource facetsPASS.",
       "lastCompleteDocSource": "FullcorrectedreviewFAIL4, artifactsrootverified; broadmaintenancewindow5resourcesboundedPASS; installlocalwrite/creatingidentity/trustlinks/adjacentaudit needwholebatchfix.",
@@ -26929,7 +27005,11 @@
       "canonicalOperateAuthorSeal": "/home/node/Documents/Codex/a98-evidence/canonical-run-control-raw-retention-complete-batch-writer-root-seal.json",
       "canonicalOperateAuthorArtifacts": 76,
       "canonicalOperateState": "Fresh complete Source raw/signal/recovery/retention facets PASS, full five-page family FAIL on Buster location and two generated matrix claims.",
-      "canonicalOperateAuthorChecks": "11fencessyntaxPASS,25currentwholefilepins,30localroutes,privateexacthelper+4guardedcommandfixturesPASS,operatorcurrentness/structural/mutationsPASS;fullrefs3FAIL anddeploymenttrio remainopen."
+      "canonicalOperateAuthorChecks": "11fencessyntaxPASS,25currentwholefilepins,30localroutes,privateexacthelper+4guardedcommandfixturesPASS,operatorcurrentness/structural/mutationsPASS;fullrefs3FAIL anddeploymenttrio remainopen.",
+      "busterVisualSourceCommit": "d147c1d729fa4a7ef518f37667b90299cde7aeee",
+      "busterVisualAuthorSeal": "/home/node/Documents/Codex/a98-evidence/buster-visual-source-findings-complete-writer-root-seal.json",
+      "busterVisualState": "Author corrected and Source committed; no shared generated output changed; full current generation then fresh independent Source/Reader/Quality required.",
+      "qualificationIntegratorState": "Semantic audit active, no rebind before superseding scanner freeze and actual complete terminal proof."
     }
   }
 }
