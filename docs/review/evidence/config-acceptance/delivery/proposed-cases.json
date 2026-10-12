@@ -1,0 +1,338 @@
+[
+  {
+    "id": "DLV-CASE-CONFIG-ONLY-CI",
+    "settingIds": [
+      "DLV-DELIVERY-IMAGEINPUTS",
+      "DLV-DELIVERY-DEPLOYMENTINPUTS"
+    ],
+    "requirementIds": [
+      "F-AUTH",
+      "F-VAL",
+      "F-DELIVERY",
+      "F-EFFECT"
+    ],
+    "scope": "local proposed implementation acceptance; live deployment separately blocked",
+    "productiveCaller": "scripts/updates/runtime-inputs.mjs \u2192 real GitHub image/deploy job if",
+    "inputProfile": "isolated git fixture changes only pipeline.config.json, every selected component and runtime variant individually; prior selected image receipt A; detect event against B",
+    "priorState": "immutable selected A identity and preserved release/state; no production host effects",
+    "expectedEffectOrBoundary": "config-only generation changes reach intended build/package job. Retired filename mutation rejected rather than invisible. Workflow graph pipeline.json retains independent classification.",
+    "observerMethod": "actual productive output/error plus exact selected content/image/config digests; no count-only assertion",
+    "command": "node --test tests/verification/deployment/code-release.test.mjs",
+    "sourceDigests": {
+      "scripts/updates/runtime-inputs.mjs": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a"
+    },
+    "testDigests": {
+      "tests/verification/deployment/code-release.test.mjs": "da5d0ca02110e35dbddb65cfadfcbde4e72b95217d2b5216cb6e1ccc6b3198a7"
+    },
+    "toolDependencyImageConfigIdentities": "freeze Node/Helm/Go/Docker and source/image/config identities at implementation; proposed cases no image/config selected yet",
+    "rawEvidencePath": null,
+    "result": "not-run",
+    "reason": "C1/C3 implementation not authorized; specification pending fresh review",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-CASE-DOCKER-COMPLETE-GENERATION",
+    "settingIds": [
+      "DLV-DELIVERY-ALLOWLIST"
+    ],
+    "requirementIds": [
+      "F-AUTH",
+      "F-VAL",
+      "F-DELIVERY",
+      "F-EFFECT"
+    ],
+    "scope": "local proposed implementation acceptance; live deployment separately blocked",
+    "productiveCaller": "Docker build-push-action context . \u2192 Dockerfile.buster-runtime COPY \u2192 startup preflight",
+    "inputProfile": "complete selected generation A; .dockerignore default deny preserved; valid isolated B author/profile inputs",
+    "priorState": "immutable selected A identity and preserved release/state; no production host effects",
+    "expectedEffectOrBoundary": "every COPY source admitted and image contains complete intended generation; missing ref fails before process effects; protected my-values/.env/keys remain excluded; actual image startup loader observes B. Go matcher is supplemental, not real build substitute.",
+    "observerMethod": "actual productive output/error plus exact selected content/image/config digests; no count-only assertion",
+    "command": "go test ./... (cwd scripts/tests/docker-context); docker build --file docker/Dockerfile.buster-runtime --build-arg KUBECLAW_BUILD_REVISION=<source> -t c1-buster-proof .",
+    "sourceDigests": {
+      ".dockerignore": "29c8a2f2b7249ece0f29276657794e4de7a18fe2909839ae20408a02f8f466fa"
+    },
+    "testDigests": {
+      "scripts/tests/docker-context/context_test.go": "c87e5ab33ae4190d5ab2c62f6134c2b644fe96f789e2182f8aa6e83602d336fd"
+    },
+    "toolDependencyImageConfigIdentities": "freeze Node/Helm/Go/Docker and source/image/config identities at implementation; proposed cases no image/config selected yet",
+    "rawEvidencePath": null,
+    "result": "not-run",
+    "reason": "C1/C3 implementation not authorized; specification pending fresh review",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-CASE-RELEASE-DRIFT-ALIASES",
+    "settingIds": [
+      "DLV-DELIVERY-CONFIGURATIONPATHS",
+      "DLV-DELIVERY-CONFIGURATIONALIASES"
+    ],
+    "requirementIds": [
+      "F-AUTH",
+      "F-VAL",
+      "F-DELIVERY",
+      "F-EFFECT"
+    ],
+    "scope": "local proposed implementation acceptance; live deployment separately blocked",
+    "productiveCaller": "verifyReleaseConfiguration \u2192 materialize-release \u2192 selected release renderer",
+    "inputProfile": "preserved successful receipt for A; byte-identical rename/package generation B; mutate each author, schema target, alias link, profile/file set",
+    "priorState": "immutable selected A identity and preserved release/state; no production host effects",
+    "expectedEffectOrBoundary": "valid selected generation materializes; drift, alias retarget/replacement (even equal bytes), absent/extra file and old competing author reject at release configuration guard; whole closure includes config outside charts if relocated.",
+    "observerMethod": "actual productive output/error plus exact selected content/image/config digests; no count-only assertion",
+    "command": "node --test tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/release-images.test.mjs",
+    "sourceDigests": {
+      "scripts/updates/release-configuration.mjs": "25913c0267162ddb0c89b36cf6c141061431bd9ead08990ff195cc9808a23fc6"
+    },
+    "testDigests": {
+      "tests/verification/deployment/release-configuration.test.mjs": "61ede5f0d88cdb3f85ce4ab9a08cb48beba439acb6f8aedecc27a3ddfd964d92"
+    },
+    "toolDependencyImageConfigIdentities": "freeze Node/Helm/Go/Docker and source/image/config identities at implementation; proposed cases no image/config selected yet",
+    "rawEvidencePath": null,
+    "result": "not-run",
+    "reason": "C1/C3 implementation not authorized; specification pending fresh review",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-CASE-ROLE-PACKAGING-CLOSURE",
+    "settingIds": [
+      "DLV-ROLE-PACKAGE-NOVA-SCHEMAVERSION",
+      "DLV-ROLE-PACKAGE-NOVA-ROLE",
+      "DLV-ROLE-PACKAGE-NOVA-ENTRYPOINT",
+      "DLV-ROLE-PACKAGE-NOVA-PACKAGES",
+      "DLV-ROLE-PACKAGE-NOVA-PLUGINS",
+      "DLV-ROLE-PACKAGE-NOVA-EXTENSIONS",
+      "DLV-ROLE-PACKAGE-NOVA-EXTERNALCAPABILITIES",
+      "DLV-ROLE-PACKAGE-PRISM-SCHEMAVERSION",
+      "DLV-ROLE-PACKAGE-PRISM-ROLE",
+      "DLV-ROLE-PACKAGE-PRISM-ENTRYPOINT",
+      "DLV-ROLE-PACKAGE-PRISM-PACKAGES",
+      "DLV-ROLE-PACKAGE-PRISM-PLUGINS",
+      "DLV-ROLE-PACKAGE-PRISM-EXTENSIONS",
+      "DLV-ROLE-PACKAGE-PRISM-EXTERNALCAPABILITIES",
+      "DLV-ROLE-PACKAGE-BUSTER-SCHEMAVERSION",
+      "DLV-ROLE-PACKAGE-BUSTER-ROLE",
+      "DLV-ROLE-PACKAGE-BUSTER-ENTRYPOINT",
+      "DLV-ROLE-PACKAGE-BUSTER-PACKAGES",
+      "DLV-ROLE-PACKAGE-BUSTER-PLUGINS",
+      "DLV-ROLE-PACKAGE-BUSTER-EXTENSIONS",
+      "DLV-ROLE-PACKAGE-BUSTER-EXTERNALCAPABILITIES"
+    ],
+    "requirementIds": [
+      "F-AUTH",
+      "F-VAL",
+      "F-DELIVERY",
+      "F-EFFECT"
+    ],
+    "scope": "local proposed implementation acceptance; live deployment separately blocked",
+    "productiveCaller": "package-agent-skill-bundle.sh \u2192 build-runtime-role-bundle.mjs \u2192 /app/skills bundle facade and selected config",
+    "inputProfile": "three roles; explicit complete A/B selected profile refs; fixed source/build/version identities",
+    "priorState": "immutable selected A identity and preserved release/state; no production host effects",
+    "expectedEffectOrBoundary": "bundle manifests include exactly correct role packages/plugins/extensions/external capabilities; selected config closure reaches productive role loader via approved packaging path; collision/symlink/source mutation/unknown selector rejects. Package marker count alone insufficient.",
+    "observerMethod": "actual productive output/error plus exact selected content/image/config digests; no count-only assertion",
+    "command": "node scripts/check-runtime-role-manifests.mjs; bash scripts/package-agent-skill-bundle.sh <nova|buster|prism> <temp>/<role>-<commit>.tgz <commit> v2 <built-at>; node --test tests/verification/deployment/code-release.test.mjs",
+    "sourceDigests": {
+      "packaging/runtime/roles/nova.json": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23",
+      "packaging/runtime/roles/prism.json": "8723f462ad3597f2f1bfd2dd6f1028274c3a442af6c4485c1ae3597c12c4b3fe",
+      "packaging/runtime/roles/buster.json": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc"
+    },
+    "testDigests": {
+      "tests/verification/deployment/code-release.test.mjs": "da5d0ca02110e35dbddb65cfadfcbde4e72b95217d2b5216cb6e1ccc6b3198a7"
+    },
+    "toolDependencyImageConfigIdentities": "freeze Node/Helm/Go/Docker and source/image/config identities at implementation; proposed cases no image/config selected yet",
+    "rawEvidencePath": null,
+    "result": "not-run",
+    "reason": "C1/C3 implementation not authorized; specification pending fresh review",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-CASE-GENERATION-MOUNT",
+    "settingIds": [
+      "DLV-CHART-KUBECLAW-BUSTERCOMPONENTFILE",
+      "DLV-CHART-KUBECLAW-SWARMCONFIG-OVERRIDEONRESTART",
+      "DLV-CHART-PRISM-BUSTERCOMPONENTFILE"
+    ],
+    "requirementIds": [
+      "F-AUTH",
+      "F-VAL",
+      "F-DELIVERY",
+      "F-EFFECT"
+    ],
+    "scope": "local proposed implementation acceptance; live deployment separately blocked",
+    "productiveCaller": "kubeclaw.swarmBundle \u2192 both chart ConfigMaps \u2192 Pod readonly /etc/kubeclaw/swarm \u2192 real loaders",
+    "inputProfile": "selected six-owner generation A; full valid alternate B; buster runtime profile selection; old equal-valued swarmConfigJson/old name/ref",
+    "priorState": "immutable selected A identity and preserved release/state; no production host effects",
+    "expectedEffectOrBoundary": "exact file closure and ConfigMap bytes/checksum agree across actual charts/packages; B reaches real loaders; old inline author rejected; malformed/escaping/duplicate/unknown refs rejected before mount/use. Four historical diagnostic mismatches retain semantic negative obligation.",
+    "observerMethod": "actual productive output/error plus exact selected content/image/config digests; no count-only assertion",
+    "command": "node --test tests/verification/deployment/prism-swarm-config.test.mjs; helm package charts/kubeclaw --destination <temp>; helm package charts/prism --destination <temp>",
+    "sourceDigests": {
+      "charts/kubeclaw/templates/_swarm-config.tpl": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "charts/kubeclaw/templates/deployment.yaml": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "charts/kubeclaw/values.yaml": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "charts/prism/values.yaml": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "charts/prism/templates/_swarm-bundle.tpl": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+    },
+    "testDigests": {
+      "tests/verification/deployment/prism-swarm-config.test.mjs": "ba4bcd6bd8bc01379ef02ed7d8a9ff49a46f4da270ad6eba5247d4f7199f2a72"
+    },
+    "toolDependencyImageConfigIdentities": "freeze Node/Helm/Go/Docker and source/image/config identities at implementation; proposed cases no image/config selected yet",
+    "rawEvidencePath": null,
+    "result": "not-run",
+    "reason": "C1/C3 implementation not authorized; specification pending fresh review",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-CASE-HEALTH-PROFILE",
+    "settingIds": [
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-TIMEOUT-MS",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-STARTUP-STATUS-PATH",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-STARTUP-EVENT-LOG-PATH",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REDIS-STREAM",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REDIS-STREAM-MAX-LEN",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REGISTRIES",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REQUIRE-STARTUP-MARKER",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-GATEWAY",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REDIS",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REDIS-STREAM",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-LITELLM",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REGISTRIES",
+      "DLV-GATEWAY-HEALTH-REDIS-HOST",
+      "DLV-GATEWAY-HEALTH-REDIS-PORT",
+      "DLV-GATEWAY-HEALTH-REDIS-USERNAME",
+      "DLV-GATEWAY-HEALTH-REDIS-PASSWORD",
+      "DLV-GATEWAY-HEALTH-REDISMAXRETRIESPERREQUEST",
+      "DLV-GATEWAY-HEALTH-REDISENABLEREADYCHECK",
+      "DLV-GATEWAY-HEALTH-OPENCLAW-GATEWAY-URL",
+      "DLV-GATEWAY-HEALTH-GATEWAY-PORT",
+      "DLV-GATEWAY-HEALTH-OPENCLAW-GATEWAY-TOKEN",
+      "DLV-GATEWAY-HEALTH-LITELLM-URL",
+      "DLV-GATEWAY-HEALTH-LITELLM-API-KEY",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-DRAIN-FILE",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-MANIFEST",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-ENABLED",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-AGENT",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-EXPECTED-COMMIT",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-CONTRACT-VERSION",
+      "DLV-GATEWAY-HEALTH-MODE",
+      "DLV-GATEWAY-HEALTH-AGENT-NAME",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CONTAINER-ROLE",
+      "DLV-GATEWAY-HEALTH-HOSTNAME",
+      "DLV-GATEWAY-HEALTH-SWARM-CONFIG"
+    ],
+    "requirementIds": [
+      "F-AUTH",
+      "F-VAL",
+      "F-DELIVERY",
+      "F-EFFECT"
+    ],
+    "scope": "local proposed implementation acceptance; live deployment separately blocked",
+    "productiveCaller": "Kubernetes probe exec node /runtime-config/kubeclaw-health.mjs \u2192 actual fetch/Redis/filesystem",
+    "inputProfile": "complete A/B health profiles with different timeout/stream length/check activation/endpoints; existing marker/connection state",
+    "priorState": "immutable selected A identity and preserved release/state; no production host effects",
+    "expectedEffectOrBoundary": "each distinct adjustable consumer sees A/B; stream MAXLEN and timeouts change real operations; cannot claim endpoint via fake transport. Per-effect tests specified before C3.",
+    "observerMethod": "actual productive output/error plus exact selected content/image/config digests; no count-only assertion",
+    "command": "after C3 implement exact new tests at generated productive boundary; existing node tests/verification/contracts/check-rollout-health.mjs supplemental",
+    "sourceDigests": {
+      "charts/kubeclaw/templates/deployment.yaml": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    "testDigests": {
+      "tests/verification/contracts/check-rollout-health.mjs": "16e75b8d5c9e234ba3e9217ab348600589491b57f5e41a5b6ea0f4461f9fa01c"
+    },
+    "toolDependencyImageConfigIdentities": "freeze Node/Helm/Go/Docker and source/image/config identities at implementation; proposed cases no image/config selected yet",
+    "rawEvidencePath": null,
+    "result": "not-run",
+    "reason": "C1/C3 implementation not authorized; specification pending fresh review",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-CASE-HEALTH-MISSING-BOUNDS",
+    "settingIds": [
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-TIMEOUT-MS",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-STARTUP-STATUS-PATH",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-STARTUP-EVENT-LOG-PATH",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REDIS-STREAM",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REDIS-STREAM-MAX-LEN",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REGISTRIES",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REQUIRE-STARTUP-MARKER",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-GATEWAY",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REDIS",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REDIS-STREAM",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-LITELLM",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REGISTRIES",
+      "DLV-GATEWAY-HEALTH-REDIS-HOST",
+      "DLV-GATEWAY-HEALTH-REDIS-PORT",
+      "DLV-GATEWAY-HEALTH-REDIS-USERNAME",
+      "DLV-GATEWAY-HEALTH-REDIS-PASSWORD",
+      "DLV-GATEWAY-HEALTH-REDISMAXRETRIESPERREQUEST",
+      "DLV-GATEWAY-HEALTH-REDISENABLEREADYCHECK",
+      "DLV-GATEWAY-HEALTH-OPENCLAW-GATEWAY-URL",
+      "DLV-GATEWAY-HEALTH-GATEWAY-PORT",
+      "DLV-GATEWAY-HEALTH-OPENCLAW-GATEWAY-TOKEN",
+      "DLV-GATEWAY-HEALTH-LITELLM-URL",
+      "DLV-GATEWAY-HEALTH-LITELLM-API-KEY",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-DRAIN-FILE",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-MANIFEST",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-ENABLED",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-AGENT",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-EXPECTED-COMMIT",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-CONTRACT-VERSION",
+      "DLV-GATEWAY-HEALTH-MODE",
+      "DLV-GATEWAY-HEALTH-AGENT-NAME",
+      "DLV-GATEWAY-HEALTH-KUBECLAW-CONTAINER-ROLE",
+      "DLV-GATEWAY-HEALTH-HOSTNAME",
+      "DLV-GATEWAY-HEALTH-SWARM-CONFIG"
+    ],
+    "requirementIds": [
+      "F-AUTH",
+      "F-VAL",
+      "F-DELIVERY",
+      "F-EFFECT"
+    ],
+    "scope": "local proposed implementation acceptance; live deployment separately blocked",
+    "productiveCaller": "health profile validation before probe script generation/effects",
+    "inputProfile": "missing timeout/check flags; NaN/negative/0/overlarge milliseconds; integer suffix; invalid boolean; old ENV equal-valued input",
+    "priorState": "immutable selected A identity and preserved release/state; no production host effects",
+    "expectedEffectOrBoundary": "reject each at explicit author validator before file generation or Redis/network effect; positive same-boundary complete control required",
+    "observerMethod": "actual productive output/error plus exact selected content/image/config digests; no count-only assertion",
+    "command": "proposed C3 strict health consumer cases, not yet implemented",
+    "sourceDigests": {
+      "charts/kubeclaw/templates/deployment.yaml": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    "testDigests": {
+      "tests/verification/contracts/check-rollout-health.mjs": "16e75b8d5c9e234ba3e9217ab348600589491b57f5e41a5b6ea0f4461f9fa01c"
+    },
+    "toolDependencyImageConfigIdentities": "freeze Node/Helm/Go/Docker and source/image/config identities at implementation; proposed cases no image/config selected yet",
+    "rawEvidencePath": null,
+    "result": "not-run",
+    "reason": "C1/C3 implementation not authorized; specification pending fresh review",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-CASE-HEALTH-MARKER-GENERATION",
+    "settingIds": [
+      "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REQUIRE-STARTUP-MARKER"
+    ],
+    "requirementIds": [
+      "F-AUTH",
+      "F-VAL",
+      "F-DELIVERY",
+      "F-EFFECT"
+    ],
+    "scope": "local proposed implementation acceptance; live deployment separately blocked",
+    "productiveCaller": "startup marker writer \u2192 readiness marker reader",
+    "inputProfile": "A startup passed; B publishes; restored/stale/wrong-role marker; crash before/after marker persist",
+    "priorState": "immutable selected A identity and preserved release/state; no production host effects",
+    "expectedEffectOrBoundary": "current stale marker cannot silently certify B; marker owner/instance/config generation exact, crash-safe identity; invalid B never partial activation",
+    "observerMethod": "actual productive output/error plus exact selected content/image/config digests; no count-only assertion",
+    "command": "proposed C3 actual generated marker/readiness cases",
+    "sourceDigests": {
+      "charts/kubeclaw/templates/deployment.yaml": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    "testDigests": {
+      "tests/verification/contracts/check-rollout-health.mjs": "16e75b8d5c9e234ba3e9217ab348600589491b57f5e41a5b6ea0f4461f9fa01c"
+    },
+    "toolDependencyImageConfigIdentities": "freeze Node/Helm/Go/Docker and source/image/config identities at implementation; proposed cases no image/config selected yet",
+    "rawEvidencePath": null,
+    "result": "not-run",
+    "reason": "C1/C3 implementation not authorized; specification pending fresh review",
+    "reviewerConfirmation": "pending"
+  }
+]

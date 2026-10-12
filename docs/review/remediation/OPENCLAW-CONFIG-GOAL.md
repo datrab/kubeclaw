@@ -1,5 +1,19 @@
 # OpenClaw /goal: CONFIG inventory, definition and gated implementation
 
+## Current C0 work checkpoint
+
+Active work branch: `codex/config-c0-semantic-inventory-20261012`, based on the
+handoff commit `9452d35524192f8665bc87254b3c63a361e7bd4a`. The current
+[working definition](config-definition-current.md),
+[semantic inventory](config-semantic-inventory.json),
+[acceptance matrix](config-acceptance-matrix.json) and
+[raw evidence](../evidence/config-acceptance/README.md) persist incremental work.
+**C0 remains in progress and is not accepted.** Schema/candidate rows with open
+consumers and incomplete proposed cases remain explicit; they do not satisfy
+the gates below. A fresh independent reviewer checks the work against code.
+No production/test implementation, C1 approval, deployment or finding closure
+has occurred. Continue semantic closure and review before asking for approval.
+
 Current handoff: 12 October 2026, `datrab/kubeclaw`, branch
 `codex/cloud-config-handoff-20261012`. This file is the current autonomous task
 entry and does not require the previous chat or `AGENTS.md`. The user has disabled

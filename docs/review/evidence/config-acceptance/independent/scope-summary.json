@@ -1,0 +1,166 @@
+{
+  "identity": {
+    "head": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+    "tree": "89fa8e4d683cf442deb189d60ce8b7cc1ff05327"
+  },
+  "trackedSources": 22665,
+  "candidateObligations": 52029,
+  "byKind": {
+    "author-or-data-leaf": 17683,
+    "literal-default-cli-invariant-or-task-candidate": 15523,
+    "environment-reader-or-author": 3615,
+    "schema-document-leaf": 15041,
+    "dynamic-environment-map": 167
+  },
+  "exactFieldMatches": 557,
+  "inventoryRows": 1791,
+  "matrixCases": 1067,
+  "rowsWithoutCaseLinkFromMatrix": [],
+  "readErrors": [
+    {
+      "path": "charts/gitops/templates/applications.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/archviewer.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/demo-ready-service.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "reason": "ScannerError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/pvc.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/secret.yaml",
+      "reason": "ConstructorError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/service-extra-nodeports.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/service.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/kubeclaw/templates/serviceaccount.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/ops-pod/templates/kubeconfig.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/ops-pod/templates/network.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/ops-pod/templates/rbac.yaml",
+      "reason": "ConstructorError"
+    },
+    {
+      "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/backup-storage-check.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/backup.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/configmap-swarm-config.yaml",
+      "reason": "ScannerError"
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/ingestion.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/jobs.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/networkpolicy.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/postgresql.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/product-decisions-networkpolicy.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/serviceaccounts.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/services.yaml",
+      "reason": "ParserError"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "reason": "ParserError"
+    }
+  ],
+  "warning": "Conservative lexical/data superset. No candidate is excluded by scanner alone; false positives and delivery-copied tests require semantic disposition. Exact field match does not prove contract correctness. Schema leaves include keywords; logical refs must also be checked."
+}

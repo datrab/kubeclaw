@@ -1,0 +1,5847 @@
+[
+  {
+    "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+    "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.api-flow:flow",
+      "type": null,
+      "contractId": "kubeclaw.api-flow@1",
+      "module": "skills/buster/plugins/api-flow/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/api-flow/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "flowFile"
+      ],
+      "properties": {
+        "flowFile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "endpointName": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+        },
+        "requestTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000,
+          "default": 10000
+        },
+        "maximumResponseBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216,
+          "default": 1048576
+        },
+        "maximumSteps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256,
+          "default": 64
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+    "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.axe:axe",
+      "type": null,
+      "contractId": "kubeclaw.axe@1",
+      "module": "skills/buster/plugins/axe/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/axe/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "routes"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https?://",
+          "maxLength": 2048
+        },
+        "endpointName": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 64
+        },
+        "routes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^/(?!/)[^?#\\r\\n]*$",
+            "maxLength": 1024
+          }
+        },
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "maxLength": 64
+          },
+          "default": [
+            "desktop",
+            "mobile"
+          ]
+        },
+        "profileFile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "tags": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "default": [
+            "wcag2a",
+            "wcag2aa"
+          ]
+        },
+        "exclude": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "default": []
+        },
+        "acceptances": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "rule",
+              "route",
+              "selector",
+              "reason",
+              "expiresAt"
+            ],
+            "properties": {
+              "rule": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "route": {
+                "type": "string",
+                "pattern": "^/(?!/)[^?#\\r\\n]*$",
+                "maxLength": 1024
+              },
+              "selector": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 1024
+              },
+              "expiresAt": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              }
+            }
+          },
+          "default": []
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 120000,
+          "default": 30000
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+    "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.container-build:buildkit",
+      "type": null,
+      "contractId": "kubeclaw.container-build@1",
+      "module": "skills/buster/plugins/container-build/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/container-build/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "buildContext",
+        "definition"
+      ],
+      "properties": {
+        "buildContext": {
+          "$ref": "#/$defs/path"
+        },
+        "definition": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "dockerfile"
+              ],
+              "properties": {
+                "type": {
+                  "const": "dockerfile"
+                },
+                "dockerfile": {
+                  "$ref": "#/$defs/path"
+                },
+                "target": {
+                  "$ref": "#/$defs/name"
+                },
+                "buildArgs": {
+                  "type": "object",
+                  "maxProperties": 32,
+                  "propertyNames": {
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                  },
+                  "additionalProperties": {
+                    "type": "string",
+                    "maxLength": 4096
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "template"
+              ],
+              "properties": {
+                "type": {
+                  "const": "template"
+                },
+                "template": {
+                  "const": "node-static@1"
+                }
+              }
+            }
+          ]
+        },
+        "outputName": {
+          "$ref": "#/$defs/name"
+        },
+        "platform": {
+          "type": "string",
+          "pattern": "^linux/[a-z0-9_+-]+(?:/[a-z0-9._+-]+)?$",
+          "maxLength": 64
+        }
+      },
+      "$defs": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+    "sha256": "72fc0422bb8f35b01b44405d217a3a1a4d62c4f875ddbe3bce1ddb814126025f",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.coverage-budget:lcov",
+      "type": null,
+      "contractId": "kubeclaw.coverage-budget@1",
+      "module": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/coverage-budget/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "minimumLinePercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "combine": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+    "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.demo-auth-smoke:session",
+      "type": null,
+      "contractId": "kubeclaw.demo-auth-smoke@1",
+      "module": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol",
+        "loginPath",
+        "usernameKey",
+        "passwordKey",
+        "cookieName",
+        "protectedPath",
+        "usernamePointer",
+        "assertions"
+      ],
+      "properties": {
+        "protocol": {
+          "const": "json-session.v1"
+        },
+        "loginPath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "usernameKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "passwordKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "cookieName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "protectedPath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "usernamePointer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "assertions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "pointer",
+              "equals"
+            ],
+            "properties": {
+              "pointer": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "equals": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+    "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.direct-command:command",
+      "type": null,
+      "contractId": "kubeclaw.direct-command@1",
+      "module": "skills/buster/plugins/direct-command/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/direct-command/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "executable",
+        "resultMode"
+      ],
+      "properties": {
+        "executable": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+        },
+        "args": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "workingDirectory": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "environment": {
+          "type": "object",
+          "maxProperties": 64,
+          "propertyNames": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "resultMode": {
+          "enum": [
+            "junit-required",
+            "exit-code"
+          ]
+        },
+        "reports": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "$ref": "#/$defs/report"
+          }
+        },
+        "coverage": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/coverage"
+          }
+        },
+        "artifacts": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/artifact"
+          }
+        }
+      },
+      "$defs": {
+        "report": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "format",
+            "path",
+            "mediaType"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+            },
+            "format": {
+              "const": "junit"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "mediaType": {
+              "enum": [
+                "application/junit+xml",
+                "application/xml",
+                "text/xml"
+              ]
+            }
+          }
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "format",
+            "path",
+            "mediaType"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+            },
+            "format": {
+              "const": "lcov"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "mediaType": {
+              "const": "text/lcov"
+            }
+          }
+        },
+        "artifact": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "path",
+            "mediaType"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "mediaType": {
+              "enum": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/http/schemas/config.schema.json",
+    "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.http:request",
+      "type": null,
+      "contractId": "kubeclaw.http@1",
+      "module": "skills/buster/plugins/http/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/http/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "endpointName": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/(?!/)",
+          "maxLength": 2048
+        },
+        "method": {
+          "enum": [
+            "GET",
+            "HEAD"
+          ],
+          "default": "GET"
+        },
+        "accept": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^[^\\r\\n]+$",
+          "default": "*/*"
+        },
+        "expectedStatuses": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599
+          }
+        },
+        "expectedText": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "expectedContentType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-z0-9!#$&^_.+-]+/[a-z0-9!#$&^_.+-]+$"
+        },
+        "maximumResponseBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216,
+          "default": 1048576
+        },
+        "requestTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000,
+          "default": 10000
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+    "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.kubernetes-fixture:deployment",
+      "type": null,
+      "contractId": "kubeclaw.kubernetes-fixture@1",
+      "module": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "serviceName",
+        "servicePort"
+      ],
+      "properties": {
+        "image": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reference",
+            "digest"
+          ],
+          "properties": {
+            "reference": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9.-]+(?::[0-9]{1,5})?/[a-z0-9]+(?:[._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$",
+              "maxLength": 2048
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
+          }
+        },
+        "serviceName": {
+          "$ref": "#/$defs/dnsLabel"
+        },
+        "servicePort": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "serviceTargetPort": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "namespacePrefix": {
+          "$ref": "#/$defs/namespacePrefix"
+        },
+        "retention": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "enum": [
+                "delete",
+                "retain"
+              ]
+            },
+            "seconds": {
+              "type": "integer",
+              "minimum": 60,
+              "maximum": 604800
+            }
+          }
+        },
+        "readinessTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "secretReferences": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._-]+$",
+            "maxLength": 253
+          }
+        },
+        "testCredentials": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "secretName"
+          ],
+          "properties": {
+            "mode": {
+              "const": "generate"
+            },
+            "secretName": {
+              "$ref": "#/$defs/dnsLabel"
+            }
+          }
+        }
+      },
+      "$defs": {
+        "dnsLabel": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+        },
+        "namespacePrefix": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,40}[a-z0-9])?$",
+          "maxLength": 42
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+    "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.lighthouse:lighthouse",
+      "type": null,
+      "contractId": "kubeclaw.lighthouse@1",
+      "module": "skills/buster/plugins/lighthouse/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/lighthouse/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purpose",
+        "routes",
+        "settingsFile",
+        "profile"
+      ],
+      "properties": {
+        "purpose": {
+          "enum": [
+            "performance",
+            "seo",
+            "best-practices"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https?://",
+          "maxLength": 2048
+        },
+        "endpointName": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 64
+        },
+        "routes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^/(?!/)[^?#\\r\\n]*$",
+            "maxLength": 1024
+          }
+        },
+        "settingsFile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "profile": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 64
+        },
+        "budget": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 64
+        },
+        "runs": {
+          "enum": [
+            1,
+            3,
+            5
+          ]
+        },
+        "acceptances": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "audit",
+              "route",
+              "reason",
+              "expiresAt"
+            ],
+            "properties": {
+              "audit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "route": {
+                "type": "string",
+                "pattern": "^/(?!/)[^?#\\r\\n]*$",
+                "maxLength": 1024
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 1024
+              },
+              "expiresAt": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              }
+            }
+          },
+          "default": []
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 10000,
+          "maximum": 180000,
+          "default": 120000
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "purpose": {
+                "const": "performance"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "runs": {
+                "enum": [
+                  3,
+                  5
+                ],
+                "default": 3
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "purpose": {
+                "enum": [
+                  "seo",
+                  "best-practices"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "runs": {
+                "const": 1,
+                "default": 1
+              },
+              "budget": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+    "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.openapi:operations",
+      "type": null,
+      "contractId": "kubeclaw.openapi@1",
+      "module": "skills/buster/plugins/openapi/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/openapi/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "specFile"
+      ],
+      "properties": {
+        "specFile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "endpointName": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "operationId"
+            ],
+            "properties": {
+              "operationId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "pathParameters": {
+                "type": "object",
+                "maxProperties": 32,
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "boolean"
+                    }
+                  ]
+                }
+              },
+              "query": {
+                "type": "object",
+                "maxProperties": 32,
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "boolean"
+                    }
+                  ]
+                }
+              },
+              "headers": {
+                "type": "object",
+                "maxProperties": 32,
+                "additionalProperties": {
+                  "type": "string",
+                  "maxLength": 4096
+                }
+              },
+              "body": {},
+              "cleanup": {
+                "type": "boolean",
+                "default": false
+              },
+              "expectedStatuses": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 16,
+                "uniqueItems": true,
+                "items": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 599
+                }
+              }
+            }
+          }
+        },
+        "tags": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "requestTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000,
+          "default": 10000
+        },
+        "maximumResponseBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216,
+          "default": 1048576
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "operations"
+          ],
+          "properties": {
+            "operations": true
+          }
+        },
+        {
+          "required": [
+            "tags"
+          ],
+          "properties": {
+            "tags": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+    "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.playwright:playwright",
+      "type": null,
+      "contractId": "kubeclaw.playwright@1",
+      "module": "skills/buster/plugins/playwright/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/playwright/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projectDirectory",
+        "configFile"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https?://",
+          "maxLength": 2048
+        },
+        "endpointName": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "projectDirectory": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?:\\.|(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+)$"
+        },
+        "configFile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "workers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 3600000,
+          "default": 600000
+        },
+        "minimumExecutedTests": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "requiredTests": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 10000,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+    "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.security-providers:headers",
+      "type": null,
+      "contractId": "kubeclaw.security-headers@1",
+      "module": "skills/buster/plugins/security-providers/src/headers.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/security-providers/schemas/headers.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "paths",
+        "policy"
+      ],
+      "properties": {
+        "profile": {
+          "enum": [
+            "web-https-v1",
+            "api-http-v1"
+          ]
+        },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^/(?!/)",
+            "maxLength": 2048
+          }
+        },
+        "requestTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        },
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "add": {
+              "type": "array",
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/rule"
+              }
+            },
+            "replace": {
+              "type": "array",
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/rule"
+              }
+            },
+            "remove": {
+              "type": "array",
+              "maxItems": 32,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9.-]+$",
+                "maxLength": 128
+              }
+            }
+          }
+        },
+        "policy": {
+          "$ref": "#/$defs/policy"
+        }
+      },
+      "$defs": {
+        "rule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "header",
+            "severity",
+            "kind"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+$",
+              "maxLength": 128
+            },
+            "header": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$",
+              "maxLength": 128
+            },
+            "severity": {
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "info"
+              ]
+            },
+            "kind": {
+              "enum": [
+                "present",
+                "equals",
+                "contains",
+                "hsts-min-age"
+              ]
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            }
+          }
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile"
+          ],
+          "properties": {
+            "profile": {
+              "const": "strict-v1"
+            },
+            "acceptances": {
+              "type": "array",
+              "maxItems": 128,
+              "items": {
+                "$ref": "#/$defs/acceptance"
+              }
+            }
+          }
+        },
+        "acceptance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "findingId",
+            "reason",
+            "expiresAt"
+          ],
+          "properties": {
+            "findingId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9._:@/-]+$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 1024
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+    "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.security-providers:dependency-trivy",
+      "type": null,
+      "contractId": "kubeclaw.dependency-scan-trivy@1",
+      "module": "skills/buster/plugins/security-providers/src/dependency.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/security-providers/schemas/dependency.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projectDirectory",
+        "policy"
+      ],
+      "properties": {
+        "projectDirectory": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 900000
+        },
+        "policy": {
+          "$ref": "#/$defs/policy"
+        }
+      },
+      "$defs": {
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile"
+          ],
+          "properties": {
+            "profile": {
+              "const": "strict-v1"
+            },
+            "acceptances": {
+              "type": "array",
+              "maxItems": 128,
+              "items": {
+                "$ref": "#/$defs/acceptance"
+              }
+            }
+          }
+        },
+        "acceptance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "findingId",
+            "reason",
+            "expiresAt"
+          ],
+          "properties": {
+            "findingId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9._:@/-]+$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 1024
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+    "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.security-providers:image-trivy",
+      "type": null,
+      "contractId": "kubeclaw.image-scan-trivy@1",
+      "module": "skills/buster/plugins/security-providers/src/image.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/security-providers/schemas/image.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy"
+      ],
+      "properties": {
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 900000
+        },
+        "policy": {
+          "$ref": "#/$defs/policy"
+        }
+      },
+      "$defs": {
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile"
+          ],
+          "properties": {
+            "profile": {
+              "const": "strict-v1"
+            },
+            "acceptances": {
+              "type": "array",
+              "maxItems": 128,
+              "items": {
+                "$ref": "#/$defs/acceptance"
+              }
+            }
+          }
+        },
+        "acceptance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "findingId",
+            "reason",
+            "expiresAt"
+          ],
+          "properties": {
+            "findingId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9._:@/-]+$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 1024
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+    "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.security-providers:kubernetes-policy",
+      "type": null,
+      "contractId": "kubeclaw.kubernetes-policy-security@1",
+      "module": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy"
+      ],
+      "properties": {
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000
+        },
+        "policy": {
+          "$ref": "#/$defs/policy"
+        }
+      },
+      "$defs": {
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile"
+          ],
+          "properties": {
+            "profile": {
+              "const": "strict-v1"
+            },
+            "acceptances": {
+              "type": "array",
+              "maxItems": 128,
+              "items": {
+                "$ref": "#/$defs/acceptance"
+              }
+            }
+          }
+        },
+        "acceptance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "findingId",
+            "reason",
+            "expiresAt"
+          ],
+          "properties": {
+            "findingId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9._:@/-]+$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 1024
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+    "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.security-providers:kubernetes-runtime",
+      "type": null,
+      "contractId": "kubeclaw.kubernetes-runtime-security@1",
+      "module": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy"
+      ],
+      "properties": {
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000
+        },
+        "policy": {
+          "$ref": "#/$defs/policy"
+        }
+      },
+      "$defs": {
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile"
+          ],
+          "properties": {
+            "profile": {
+              "const": "strict-v1"
+            },
+            "acceptances": {
+              "type": "array",
+              "maxItems": 128,
+              "items": {
+                "$ref": "#/$defs/acceptance"
+              }
+            }
+          }
+        },
+        "acceptance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "findingId",
+            "reason",
+            "expiresAt"
+          ],
+          "properties": {
+            "findingId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9._:@/-]+$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 1024
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+    "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.size-budget:artifact",
+      "type": null,
+      "contractId": "kubeclaw.size-budget@1",
+      "module": "skills/buster/plugins/size-budget/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/size-budget/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "enum": [
+            "auto",
+            "file",
+            "tar",
+            "tar-gzip"
+          ]
+        },
+        "maximumTotalBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumFileCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "matchingFiles": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "pattern",
+              "maximumBytes"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/name"
+              },
+              "pattern": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "maximumBytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "requireMatch": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "maximumGrowthBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maximumGrowthPercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "largestFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "$defs": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+    "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.tailscale-exposure:exposure",
+      "type": null,
+      "contractId": "kubeclaw.tailscale-exposure@1",
+      "module": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "retentionMode": {
+          "enum": [
+            "release",
+            "await-readiness"
+          ]
+        },
+        "endpointName": {
+          "$ref": "#/$defs/dnsLabel"
+        },
+        "hostname": {
+          "$ref": "#/$defs/dnsLabel"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/(?:[^/?#\\r\\n][^?#\\r\\n]*)?$",
+          "maxLength": 1024
+        },
+        "readinessTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        }
+      },
+      "$defs": {
+        "dnsLabel": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+    "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da",
+    "registration": {
+      "kind": "testProviders",
+      "id": "kubeclaw.visual:visual",
+      "type": null,
+      "contractId": "kubeclaw.visual@1",
+      "module": "skills/buster/plugins/visual/src/provider.js",
+      "export": "provider",
+      "schema": "skills/buster/plugins/visual/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifestFile",
+        "profileFile",
+        "targets"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https?://",
+          "maxLength": 2048
+        },
+        "endpointName": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 64
+        },
+        "manifestFile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "profileFile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          }
+        },
+        "comparisonProfile": {
+          "enum": [
+            "strict-v1",
+            "balanced-v1"
+          ],
+          "default": "strict-v1"
+        },
+        "overrides": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "maximumDifferencePercent": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "pixelThreshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "uncertaintyMarginPercent": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        },
+        "masks": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target",
+              "selectors"
+            ],
+            "properties": {
+              "target": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+              },
+              "selectors": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 32,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 512
+                }
+              }
+            }
+          }
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 120000,
+          "default": 30000
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+    "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "registration": {
+      "kind": "observers",
+      "id": "kubeclaw.agent-observability:ingester",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/agent-observability/src/observers.ts",
+      "export": "ingest",
+      "schema": "skills/common/plugins/agent-observability/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+    "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "registration": {
+      "kind": "observers",
+      "id": "kubeclaw.agent-observability:evidence",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/agent-observability/src/observers.ts",
+      "export": "recordEvidence",
+      "schema": "skills/common/plugins/agent-observability/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/schemas/config.schema.json",
+    "sha256": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.artifact-store:artifact-store",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/artifact-store/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactRoot"
+      ],
+      "properties": {
+        "artifactRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maxArtifactBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100000
+        },
+        "maximumStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 268435456
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+    "sha256": "489dac2930cb42ad50dcd8174928471ecdd9b5be25354916aaa3813bed50e2b6",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.command-runner:command",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/command-runner/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/command-runner/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedExecutables",
+        "allowedWorkingRoots",
+        "maxOutputBytes",
+        "maxExecutionMs",
+        "terminationGraceMs"
+      ],
+      "properties": {
+        "allowedExecutables": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "executableCatalog": {
+          "type": "object",
+          "maxProperties": 128,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allowedWorkingRoots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "maxOutputBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxExecutionMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "terminationGraceMs": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+    "sha256": "74c9d8c0287172334bd345b52d95de103c38559884d518d2d6f5b0cbb327505a",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.git-workspace:git",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/git-workspace/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/git-workspace/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedRepositoryRoots",
+        "workspaceRoot",
+        "gitExecutable",
+        "authorName",
+        "authorEmail",
+        "maxExecutionMs",
+        "maxOutputBytes",
+        "terminationGraceMs"
+      ],
+      "properties": {
+        "allowedRepositoryRoots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "workspaceRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gitExecutable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authorName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320,
+          "pattern": "^[^\\r\\n\\u0000]+$"
+        },
+        "authorEmail": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320,
+          "pattern": "^[^\\r\\n\\u0000]+$"
+        },
+        "maxExecutionMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600000
+        },
+        "maxOutputBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        },
+        "terminationGraceMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60000
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+    "sha256": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.network-http:http",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/network-http/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/network-http/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedOrigins"
+      ],
+      "properties": {
+        "allowedOrigins": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "allowedMethods": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "PATCH",
+              "DELETE"
+            ]
+          },
+          "default": [
+            "GET"
+          ]
+        },
+        "allowedHeaders": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "default": [
+            "accept",
+            "content-type",
+            "idempotency-key"
+          ]
+        },
+        "maxRequestBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1048576
+        },
+        "maxResponseBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1048576
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 30000
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+    "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3",
+    "registration": {
+      "kind": "observers",
+      "id": "kubeclaw.notification-observer:notifications",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/notification-observer/src/observer.ts",
+      "export": "observe",
+      "schema": "skills/common/plugins/notification-observer/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pipelineLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "modelLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stageLabels": {
+          "type": "object",
+          "maxProperties": 256,
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "maxMessageChars": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 8192
+        },
+        "suppressEventTypes": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+    "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3",
+    "registration": {
+      "kind": "observers",
+      "id": "kubeclaw.notification-observer:preview-delivery",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/notification-observer/src/observer.ts",
+      "export": "deliverPreview",
+      "schema": "skills/common/plugins/notification-observer/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pipelineLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "modelLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stageLabels": {
+          "type": "object",
+          "maxProperties": 256,
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "maxMessageChars": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 8192
+        },
+        "suppressEventTypes": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+    "sha256": "d3e3295509aaa3d9c1c13fe1fca014058b36ae860621140025cd64734c5834fe",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.openclaw-agent-events:source",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hooks"
+      ],
+      "properties": {
+        "hooks": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "agent_end",
+              "llm_input",
+              "llm_output",
+              "subagent_spawned",
+              "subagent_delivery_target",
+              "subagent_ended",
+              "before_tool_call",
+              "after_tool_call",
+              "model_call_started",
+              "model_call_ended",
+              "session_start",
+              "session_end"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "maxQueueEvents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000,
+          "default": 256
+        },
+        "maxQueueBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216,
+          "default": 1048576
+        },
+        "drainTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60000,
+          "default": 5000
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+    "sha256": "4054963cbfc17820e7f11be45ed3bf087d09d16ffc9f2dd14953358637f7ebd4",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.operator-messaging:operator",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/operator-messaging/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targets",
+        "deliveryRoot"
+      ],
+      "properties": {
+        "deliveryRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maximumDeliveryRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100000
+        },
+        "maximumDeliveryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 268435456
+        },
+        "targets": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$": {
+              "type": "object",
+              "additionalProperties": false,
+              "anyOf": [
+                {
+                  "properties": {
+                    "endpoint": {},
+                    "tokenSecret": {}
+                  },
+                  "required": [
+                    "endpoint",
+                    "tokenSecret"
+                  ]
+                },
+                {
+                  "properties": {
+                    "endpointOrigin": {},
+                    "endpointSecret": {}
+                  },
+                  "required": [
+                    "endpointOrigin",
+                    "endpointSecret"
+                  ]
+                }
+              ],
+              "properties": {
+                "receiptEndpoint": {
+                  "type": "string",
+                  "format": "uri",
+                  "pattern": "^https?://"
+                },
+                "endpoint": {
+                  "type": "string",
+                  "format": "uri",
+                  "pattern": "^https?://"
+                },
+                "endpointOrigin": {
+                  "type": "string",
+                  "format": "uri",
+                  "pattern": "^https?://[^/?#]+/?$"
+                },
+                "endpointSecret": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+                },
+                "tokenSecret": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+                },
+                "maxPayloadBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1048576,
+                  "default": 65536
+                },
+                "format": {
+                  "type": "string",
+                  "enum": [
+                    "json",
+                    "discord_webhook"
+                  ],
+                  "default": "json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+    "sha256": "eecab538d12754deef07c9e1ff456f7fb9e27612dda944ed671877e80a021875",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.redis-transport:publisher",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "export": "activatePublisher",
+      "schema": "skills/common/plugins/redis-transport/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "passwordSecret",
+        "streamPrefix",
+        "maxLen",
+        "dedupTtlMs",
+        "timeoutMs"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^rediss?://[^/@:]+:[0-9]+$",
+          "maxLength": 512
+        },
+        "passwordSecret": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+        },
+        "streamPrefix": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9:_-]{0,127}$"
+        },
+        "maxLen": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "dedupTtlMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 31536000000
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+    "sha256": "eecab538d12754deef07c9e1ff456f7fb9e27612dda944ed671877e80a021875",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.redis-transport:telemetry",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "export": "activateTelemetry",
+      "schema": "skills/common/plugins/redis-transport/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "passwordSecret",
+        "streamPrefix",
+        "maxLen",
+        "dedupTtlMs",
+        "timeoutMs"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^rediss?://[^/@:]+:[0-9]+$",
+          "maxLength": 512
+        },
+        "passwordSecret": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+        },
+        "streamPrefix": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9:_-]{0,127}$"
+        },
+        "maxLen": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "dedupTtlMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 31536000000
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+    "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.runtime-dispatch:runtime",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targets"
+      ],
+      "properties": {
+        "targets": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "endpoint"
+            ],
+            "properties": {
+              "endpoint": {
+                "type": "string",
+                "format": "uri"
+              },
+              "authentication": {
+                "enum": [
+                  "hmac",
+                  "spiffe-proxy"
+                ],
+                "default": "hmac"
+              },
+              "tokenSecret": {
+                "type": "string",
+                "minLength": 1
+              },
+              "maxRequestBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8388608,
+                "default": 1048576
+              },
+              "maxResponseBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8388608,
+                "default": 1048576
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "authentication": {
+                      "const": "spiffe-proxy"
+                    }
+                  },
+                  "required": [
+                    "authentication"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "endpoint": {
+                      "type": "string",
+                      "pattern": "^http://(127\\.0\\.0\\.1|localhost|\\[::1\\]):"
+                    }
+                  },
+                  "not": {
+                    "properties": {
+                      "tokenSecret": {}
+                    },
+                    "required": [
+                      "tokenSecret"
+                    ]
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "tokenSecret": {}
+                  },
+                  "required": [
+                    "tokenSecret"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+    "sha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.runtime-dispatch:openclaw",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targets"
+      ],
+      "properties": {
+        "targets": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "endpoint",
+              "tokenSecret",
+              "runtime",
+              "model",
+              "cwd",
+              "repositoryRoot",
+              "resultPathPrefix"
+            ],
+            "properties": {
+              "endpoint": {
+                "type": "string",
+                "format": "uri"
+              },
+              "tokenSecret": {
+                "type": "string",
+                "minLength": 1
+              },
+              "runtime": {
+                "enum": [
+                  "acp",
+                  "subagent"
+                ]
+              },
+              "agentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "agentRole": {
+                "type": "string",
+                "minLength": 1
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "thinking": {
+                "type": "string",
+                "minLength": 1
+              },
+              "controllerSessionKey": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "collectorMode": {
+                "type": "boolean",
+                "default": false
+              },
+              "spawnIntervalMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 60000,
+                "default": 1500
+              },
+              "tokenizerEncoding": {
+                "const": "o200k_base",
+                "default": "o200k_base"
+              },
+              "maxPromptBytes": {
+                "const": 900000,
+                "default": 900000
+              },
+              "maxInputTokens": {
+                "const": 120000,
+                "default": 120000
+              },
+              "maxOutputTokens": {
+                "const": 6000,
+                "default": 6000
+              },
+              "maxContextTokens": {
+                "const": 128000,
+                "default": 128000
+              },
+              "cwd": {
+                "type": "string",
+                "pattern": "^/"
+              },
+              "repositoryRoot": {
+                "type": "string",
+                "pattern": "^/"
+              },
+              "workspaceRoot": {
+                "type": "string",
+                "pattern": "^/",
+                "description": "Trusted Git workspace root required for attempt-owned runtime workspaces."
+              },
+              "pollMs": {
+                "type": "integer",
+                "minimum": 10,
+                "default": 1000
+              },
+              "maxPollMs": {
+                "type": "integer",
+                "minimum": 10,
+                "default": 15000
+              },
+              "maxPolls": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1800
+              },
+              "sessionTimeoutMs": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 86400000,
+                "default": 1800000
+              },
+              "resultPathPrefix": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+              },
+              "resultEndpoint": {
+                "type": "string",
+                "format": "uri"
+              },
+              "resultTokenSecret": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "dependentRequired": {
+              "resultEndpoint": [
+                "resultTokenSecret"
+              ],
+              "resultTokenSecret": [
+                "resultEndpoint"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+    "sha256": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.secret-resolver:secrets",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/secret-resolver/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/secret-resolver/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "environment"
+      ],
+      "properties": {
+        "environment": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/state-store/schemas/config.schema.json",
+    "sha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.state-store:state",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/state-store/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/state-store/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "root"
+      ],
+      "properties": {
+        "root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maxEntryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1048576
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100000
+        },
+        "maximumStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 268435456
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+    "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "registration": {
+      "kind": "observers",
+      "id": "kubeclaw.telemetry-observer:telemetry",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/telemetry-observer/src/observer.ts",
+      "export": "observe",
+      "schema": "skills/common/plugins/telemetry-observer/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+    "sha256": "2b0186fbdf59b80a4c247cfd9622e88c8d3d2bec986e75647e1a178e777bf3c8",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.telemetry-store:telemetry",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/telemetry-store/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "root"
+      ],
+      "properties": {
+        "root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maxRecordBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1048576
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100000
+        },
+        "maximumStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 268435456
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+    "sha256": "31dccf98f7921ed10af125417de5e913a899ad39eca6efc6386d28c7d64fdc8e",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.transport-publisher:publisher",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/transport-publisher/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targets",
+        "deliveryRoot"
+      ],
+      "properties": {
+        "deliveryRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maximumDeliveryRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100000
+        },
+        "maximumDeliveryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 268435456
+        },
+        "targets": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "endpoint",
+              "signingSecret"
+            ],
+            "properties": {
+              "endpoint": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https?://"
+              },
+              "signingSecret": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+              },
+              "maxPayloadBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1048576,
+                "default": 262144
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/common/plugins/wait-store/schemas/config.schema.json",
+    "sha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.wait-store:waits",
+      "type": null,
+      "contractId": null,
+      "module": "skills/common/plugins/wait-store/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/common/plugins/wait-store/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "root"
+      ],
+      "properties": {
+        "root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maxEntryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1048576
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100000
+        },
+        "maximumStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 268435456
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+    "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.architecture-validator:architecture",
+      "type": "kubeclaw.validate.architecture",
+      "contractId": null,
+      "module": "skills/nova/plugins/architecture-validator/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/architecture-validator/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent"
+      ],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agentRole": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json",
+    "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.blueprint-sync:sync",
+      "type": "kubeclaw.generate.blueprint-sync",
+      "contractId": null,
+      "module": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json",
+    "sha256": "77f3bc2d1d9a25347219cbb5f11d8580e57390abee3936a6de044b6d5cea68c5",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.buster-quality-gate:quality",
+      "type": "kubeclaw.test.quality-evaluation",
+      "contractId": null,
+      "module": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agentRole": {
+          "type": "string",
+          "minLength": 1
+        },
+        "testAgentEnabled": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/case-study/schemas/config.schema.json",
+    "sha256": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.case-study:case-study",
+      "type": "kubeclaw.report.case-study",
+      "contractId": null,
+      "module": "skills/nova/plugins/case-study/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/case-study/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent"
+      ],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
+    "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.delivery-lint:delivery-lint",
+      "type": "kubeclaw.lint.delivery",
+      "contractId": null,
+      "module": "skills/nova/plugins/delivery-lint/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/delivery-lint/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+    "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.demo-handoff:candidate",
+      "type": "kubeclaw.demo.candidate",
+      "contractId": null,
+      "module": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+    "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.demo-handoff:delivery",
+      "type": "kubeclaw.demo.delivery",
+      "contractId": null,
+      "module": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+    "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.demo-handoff:ready",
+      "type": "kubeclaw.demo.ready",
+      "contractId": null,
+      "module": "skills/nova/plugins/demo-handoff/src/ready.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+    "sha256": "908e54cafb1d4edac6aeffe49ded47dc578f87e3d37952b247b7520aa4560fa4",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.demo-handoff:handoff",
+      "type": null,
+      "contractId": null,
+      "module": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "candidateStageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "deliveryStageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "readyStageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "manifestStageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "endpoint": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "tokenPath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "caPath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "stateRoot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "operatorTarget": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 60000
+        }
+      },
+      "required": [
+        "candidateStageId",
+        "deliveryStageId",
+        "readyStageId",
+        "manifestStageId",
+        "endpoint",
+        "tokenPath",
+        "caPath",
+        "stateRoot",
+        "operatorTarget",
+        "timeoutMs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/schemas/config.schema.json",
+    "sha256": "45d20ce3dd08dcecb65fb0b0dbd76bf63b917038a968dce4d20963167b78f581",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.human-approval:approval",
+      "type": "kubeclaw.decision.human-approval",
+      "contractId": null,
+      "module": "skills/nova/plugins/human-approval/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/human-approval/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "issuerId"
+      ],
+      "properties": {
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])\\S(?:[\\s\\S]*\\S)?$"
+        },
+        "issuerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])\\S(?:[\\s\\S]*\\S)?$"
+        },
+        "timeoutMinutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 525600,
+          "default": 60
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/schemas/config.schema.json",
+    "sha256": "45d20ce3dd08dcecb65fb0b0dbd76bf63b917038a968dce4d20963167b78f581",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.human-approval:architecture-approval",
+      "type": "kubeclaw.decision.architecture-approval",
+      "contractId": null,
+      "module": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/human-approval/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "issuerId"
+      ],
+      "properties": {
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])\\S(?:[\\s\\S]*\\S)?$"
+        },
+        "issuerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])\\S(?:[\\s\\S]*\\S)?$"
+        },
+        "timeoutMinutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 525600,
+          "default": 60
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+    "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.implementation-agent:implementation",
+      "type": "kubeclaw.agent.implementation",
+      "contractId": null,
+      "module": "skills/nova/plugins/implementation-agent/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/implementation-agent/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent"
+      ],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agentRole": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/lint/schemas/config.schema.json",
+    "sha256": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.lint:pre-check",
+      "type": "kubeclaw.lint.pre-check",
+      "contractId": null,
+      "module": "skills/nova/plugins/lint/src/stage.ts",
+      "export": "executePreCheck",
+      "schema": "skills/nova/plugins/lint/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyPath",
+        "policyProject"
+      ],
+      "properties": {
+        "policyPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policyProject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "includeDebt": {
+          "type": "boolean",
+          "default": false
+        },
+        "includeExperimental": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/lint/schemas/config.schema.json",
+    "sha256": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.lint:full",
+      "type": "kubeclaw.lint.full",
+      "contractId": null,
+      "module": "skills/nova/plugins/lint/src/stage.ts",
+      "export": "executeFull",
+      "schema": "skills/nova/plugins/lint/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyPath",
+        "policyProject"
+      ],
+      "properties": {
+        "policyPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policyProject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "includeDebt": {
+          "type": "boolean",
+          "default": false
+        },
+        "includeExperimental": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+    "sha256": "07d9497e85246c310e93213a90ff22d7b1323302051902e6a75e3e0f6bb46b24",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.lint:executor",
+      "type": null,
+      "contractId": null,
+      "module": "skills/nova/plugins/lint/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/nova/plugins/lint/schemas/adapter-config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedRepositoryRoots",
+        "allowedPolicyRoots"
+      ],
+      "properties": {
+        "allowedRepositoryRoots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allowedPolicyRoots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+    "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.pipeline-review:review",
+      "type": "kubeclaw.report.pipeline-review",
+      "contractId": null,
+      "module": "skills/nova/plugins/pipeline-review/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/pipeline-review/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent"
+      ],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agentRole": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+    "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.pipeline-review:evidence",
+      "type": null,
+      "contractId": null,
+      "module": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+      "export": "activate",
+      "schema": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storageRoot",
+        "orchestratorIssuerId",
+        "maximumJournalBytes",
+        "maximumArtifactBytes",
+        "maximumBundleBytes"
+      ],
+      "properties": {
+        "storageRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "orchestratorIssuerId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maximumJournalBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maximumArtifactBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maximumBundleBytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+    "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.preflight-contract:validate",
+      "type": "kubeclaw.validate.preflight-contract",
+      "contractId": null,
+      "module": "skills/nova/plugins/preflight-contract/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/preflight-contract/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+    "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.preflight-contract:source",
+      "type": "kubeclaw.validate.source-preflight",
+      "contractId": null,
+      "module": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/preflight-contract/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "path": "skills/nova/plugins/prism-design/schemas/config.schema.json",
+    "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.prism-design:design",
+      "type": "kubeclaw.design.prism",
+      "contractId": null,
+      "module": "skills/nova/plugins/prism-design/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/prism-design/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent",
+        "target",
+        "issuerId",
+        "timeoutMinutes"
+      ],
+      "properties": {
+        "agent": {
+          "const": "prism"
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuerId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeoutMinutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 525600
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+    "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.project-summary:summary",
+      "type": "kubeclaw.report.project-summary",
+      "contractId": null,
+      "module": "skills/nova/plugins/project-summary/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/project-summary/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "agentRole": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deliveryManifestEncoding": {
+          "const": "delivery-manifest.utf16-v1"
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+    "sha256": "282ed6bdc8d07486e6e34b40cec822036a5cc851af4369e55f68ab7f146eef47",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.remote-test-gate:plan",
+      "type": null,
+      "contractId": null,
+      "module": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "endpoint",
+        "authentication",
+        "sourcePrivateKeySecret",
+        "sourceAuthority",
+        "stateRoot",
+        "allowedRepositoryRoots"
+      ],
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "authentication": {
+          "enum": [
+            "bearer",
+            "spiffe-proxy"
+          ]
+        },
+        "tokenSecret": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourcePrivateKeySecret": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceAuthority": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stateRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowedRepositoryRoots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "authentication": {
+                "const": "bearer"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "tokenSecret": {}
+            },
+            "required": [
+              "tokenSecret"
+            ]
+          },
+          "else": {
+            "properties": {
+              "endpoint": {
+                "type": "string",
+                "pattern": "^http://(127\\.0\\.0\\.1|localhost|\\[::1\\]):"
+              }
+            },
+            "not": {
+              "properties": {
+                "tokenSecret": {}
+              },
+              "required": [
+                "tokenSecret"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
+    "sha256": "767de53403900e5b72e8f35bb6d238eed5a889b6cb9141fb18b1ce56aef8461d",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.remote-test-gate:evidence",
+      "type": null,
+      "contractId": null,
+      "module": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "export": "activate",
+      "schema": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stateRoot",
+        "manifestStageId",
+        "gateStageId"
+      ],
+      "properties": {
+        "stateRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "manifestStageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gateStageId": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+    "sha256": "f41b62a39c7f0dd5f959e94807d8bb60352fc4bbdab28929214c9199106978a2",
+    "registration": {
+      "kind": "adapters",
+      "id": "kubeclaw.repository-adapter:repository",
+      "type": null,
+      "contractId": null,
+      "module": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+      "export": "activate",
+      "schema": "skills/nova/plugins/repository-adapter/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repositoryRoot"
+      ],
+      "properties": {
+        "repositoryRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maxFileBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxChangedPaths": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expectedHead": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/review/schemas/config.schema.json",
+    "sha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.review:review",
+      "type": "kubeclaw.decision.review",
+      "contractId": null,
+      "module": "skills/nova/plugins/review/src/stage.ts",
+      "export": "execute",
+      "schema": "skills/nova/plugins/review/schemas/config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent"
+      ],
+      "properties": {
+        "reviewSemanticEncoding": {
+          "const": "review-semantics.utf16-v1"
+        },
+        "reportArtifactEncoding": {
+          "const": "kubeclaw-json.utf16.v1"
+        },
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "enum": [
+            "gate",
+            "lean",
+            "audit"
+          ],
+          "default": "gate"
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schemaVersion",
+            "profile",
+            "blocking",
+            "limits",
+            "scope",
+            "verification",
+            "simplification",
+            "ranking",
+            "followUp",
+            "governor"
+          ],
+          "properties": {
+            "schemaVersion": {
+              "const": "review-policy.v2"
+            },
+            "profile": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+            },
+            "blocking": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "priorities",
+                "categories",
+                "requireIntroducedByDiff",
+                "requireDirectEvidence"
+              ],
+              "properties": {
+                "priorities": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 4,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "P0",
+                      "P1",
+                      "P2",
+                      "P3"
+                    ]
+                  },
+                  "allOf": [
+                    {
+                      "contains": {
+                        "const": "P0"
+                      }
+                    }
+                  ]
+                },
+                "categories": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 5,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "correctness",
+                      "security",
+                      "contract",
+                      "architecture",
+                      "simplification"
+                    ]
+                  },
+                  "allOf": [
+                    {
+                      "contains": {
+                        "const": "correctness"
+                      }
+                    },
+                    {
+                      "contains": {
+                        "const": "security"
+                      }
+                    },
+                    {
+                      "contains": {
+                        "const": "contract"
+                      }
+                    }
+                  ]
+                },
+                "requireIntroducedByDiff": {
+                  "type": "boolean"
+                },
+                "requireDirectEvidence": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "limits": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maxProposals",
+                "maxRootCauses",
+                "maxInstancesPerCluster",
+                "maxBundleBytes",
+                "maxContextFiles",
+                "maxInitialContextFiles",
+                "maxContextFileBytes",
+                "maxContextBytes",
+                "maxInitialContextBytes",
+                "maxDependencyDepth",
+                "maxExpansionFiles",
+                "maxAdvisories"
+              ],
+              "properties": {
+                "maxProposals": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "maxRootCauses": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                },
+                "maxInstancesPerCluster": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                "maxBundleBytes": {
+                  "type": "integer",
+                  "minimum": 1024,
+                  "maximum": 16777216
+                },
+                "maxContextFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "maxInitialContextFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "maxContextFileBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2097152
+                },
+                "maxContextBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16777216
+                },
+                "maxInitialContextBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16777216
+                },
+                "maxDependencyDepth": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "maxExpansionFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16
+                },
+                "maxAdvisories": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              }
+            },
+            "scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "outsideScope",
+                "unknownScope",
+                "retainPreExisting"
+              ],
+              "properties": {
+                "outsideScope": {
+                  "enum": [
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "unknownScope": {
+                  "enum": [
+                    "blocked",
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "retainPreExisting": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "verification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "semanticVerifier",
+                "insufficientFindingEvidence",
+                "unverifiedRequirement"
+              ],
+              "properties": {
+                "semanticVerifier": {
+                  "enum": [
+                    "disabled",
+                    "p0-only",
+                    "all-blockers"
+                  ]
+                },
+                "insufficientFindingEvidence": {
+                  "enum": [
+                    "reject",
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "unverifiedRequirement": {
+                  "enum": [
+                    "blocked",
+                    "orchestrator_required"
+                  ]
+                }
+              }
+            },
+            "simplification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "enabled",
+                "registryVersion",
+                "enabledRules",
+                "maxRecommendations",
+                "minimumConfidence"
+              ],
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "registryVersion": {
+                  "const": "simplification-rules.v1"
+                },
+                "enabledRules": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "SIM001",
+                      "SIM002",
+                      "SIM003",
+                      "SIM004",
+                      "SIM005",
+                      "SIM006",
+                      "SIM007",
+                      "SIM008"
+                    ]
+                  }
+                },
+                "maxRecommendations": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "minimumConfidence": {
+                  "enum": [
+                    "high",
+                    "medium",
+                    "low"
+                  ]
+                }
+              }
+            },
+            "ranking": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "priorityWeights",
+                "categoryWeights",
+                "introducedByDiffBonus",
+                "directEvidenceBonus"
+              ],
+              "properties": {
+                "priorityWeights": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "P0",
+                    "P1",
+                    "P2",
+                    "P3"
+                  ],
+                  "properties": {
+                    "P0": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P1": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P2": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P3": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    }
+                  }
+                },
+                "categoryWeights": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "correctness",
+                    "security",
+                    "contract",
+                    "architecture",
+                    "simplification"
+                  ],
+                  "properties": {
+                    "correctness": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "security": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "contract": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "architecture": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "simplification": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    }
+                  }
+                },
+                "introducedByDiffBonus": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "directEvidenceBonus": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              }
+            },
+            "followUp": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "retainedPriorities",
+                "maxItems"
+              ],
+              "properties": {
+                "retainedPriorities": {
+                  "type": "array",
+                  "minItems": 0,
+                  "maxItems": 4,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "P0",
+                      "P1",
+                      "P2",
+                      "P3"
+                    ]
+                  }
+                },
+                "maxItems": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              }
+            },
+            "governor": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maxRepairCycles",
+                "fileGrowthMultiplier",
+                "nonTestLocGrowthMultiplier",
+                "absoluteFileAllowance",
+                "absoluteNonTestLocAllowance"
+              ],
+              "properties": {
+                "maxRepairCycles": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "fileGrowthMultiplier": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "nonTestLocGrowthMultiplier": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "absoluteFileAllowance": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 256
+                },
+                "absoluteNonTestLocAllowance": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000000
+                }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "outsideScope": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "unknownScope": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "verification": {
+                        "type": "object",
+                        "properties": {
+                          "insufficientFindingEvidence": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "then": {
+                "type": "object",
+                "properties": {
+                  "followUp": {
+                    "type": "object",
+                    "properties": {
+                      "retainedPriorities": {
+                        "type": "array",
+                        "minItems": 1
+                      },
+                      "maxItems": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "const": true
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabledRules": {
+                        "type": "array",
+                        "minItems": 1
+                      },
+                      "maxRecommendations": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              },
+              "else": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabledRules": {
+                        "type": "array",
+                        "maxItems": 0
+                      },
+                      "maxRecommendations": {
+                        "const": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "reviewSemanticEncoding": {
+                "const": "review-semantics.utf16-v1"
+              }
+            },
+            "required": [
+              "reviewSemanticEncoding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reportArtifactEncoding": {
+                "const": "kubeclaw-json.utf16.v1"
+              }
+            },
+            "required": [
+              "reportArtifactEncoding"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+    "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.review:repository-audit",
+      "type": "kubeclaw.audit.repository-review",
+      "contractId": null,
+      "module": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+      "export": "executeRepositoryAudit",
+      "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent",
+        "reviewerModel"
+      ],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewerModel": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exact model identity used by repository-audit cache keys."
+        },
+        "reviewerRuntime": {
+          "enum": [
+            "acp",
+            "subagent"
+          ],
+          "default": "subagent"
+        },
+        "reviewerAgentId": {
+          "type": "string",
+          "minLength": 1,
+          "default": "codex"
+        },
+        "reviewerThinking": {
+          "type": "string",
+          "minLength": 1,
+          "default": "high"
+        },
+        "profile": {
+          "enum": [
+            "gate",
+            "lean",
+            "audit"
+          ],
+          "default": "audit"
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schemaVersion",
+            "profile",
+            "blocking",
+            "limits",
+            "scope",
+            "verification",
+            "simplification",
+            "ranking",
+            "followUp",
+            "governor"
+          ],
+          "properties": {
+            "schemaVersion": {
+              "const": "review-policy.v2"
+            },
+            "profile": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+            },
+            "blocking": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "priorities",
+                "categories",
+                "requireIntroducedByDiff",
+                "requireDirectEvidence"
+              ],
+              "properties": {
+                "priorities": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 4,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "P0",
+                      "P1",
+                      "P2",
+                      "P3"
+                    ]
+                  },
+                  "allOf": [
+                    {
+                      "contains": {
+                        "const": "P0"
+                      }
+                    }
+                  ]
+                },
+                "categories": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 5,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "correctness",
+                      "security",
+                      "contract",
+                      "architecture",
+                      "simplification"
+                    ]
+                  },
+                  "allOf": [
+                    {
+                      "contains": {
+                        "const": "correctness"
+                      }
+                    },
+                    {
+                      "contains": {
+                        "const": "security"
+                      }
+                    },
+                    {
+                      "contains": {
+                        "const": "contract"
+                      }
+                    }
+                  ]
+                },
+                "requireIntroducedByDiff": {
+                  "type": "boolean"
+                },
+                "requireDirectEvidence": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "limits": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maxProposals",
+                "maxRootCauses",
+                "maxInstancesPerCluster",
+                "maxBundleBytes",
+                "maxContextFiles",
+                "maxInitialContextFiles",
+                "maxContextFileBytes",
+                "maxContextBytes",
+                "maxInitialContextBytes",
+                "maxDependencyDepth",
+                "maxExpansionFiles",
+                "maxAdvisories"
+              ],
+              "properties": {
+                "maxProposals": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "maxRootCauses": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                },
+                "maxInstancesPerCluster": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                "maxBundleBytes": {
+                  "type": "integer",
+                  "minimum": 1024,
+                  "maximum": 16777216
+                },
+                "maxContextFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "maxInitialContextFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "maxContextFileBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2097152
+                },
+                "maxContextBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16777216
+                },
+                "maxInitialContextBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16777216
+                },
+                "maxDependencyDepth": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "maxExpansionFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16
+                },
+                "maxAdvisories": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              }
+            },
+            "scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "outsideScope",
+                "unknownScope",
+                "retainPreExisting"
+              ],
+              "properties": {
+                "outsideScope": {
+                  "enum": [
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "unknownScope": {
+                  "enum": [
+                    "blocked",
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "retainPreExisting": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "verification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "semanticVerifier",
+                "insufficientFindingEvidence",
+                "unverifiedRequirement"
+              ],
+              "properties": {
+                "semanticVerifier": {
+                  "enum": [
+                    "disabled",
+                    "p0-only",
+                    "all-blockers"
+                  ]
+                },
+                "insufficientFindingEvidence": {
+                  "enum": [
+                    "reject",
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "unverifiedRequirement": {
+                  "enum": [
+                    "blocked",
+                    "orchestrator_required"
+                  ]
+                }
+              }
+            },
+            "simplification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "enabled",
+                "registryVersion",
+                "enabledRules",
+                "maxRecommendations",
+                "minimumConfidence"
+              ],
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "registryVersion": {
+                  "const": "simplification-rules.v1"
+                },
+                "enabledRules": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "SIM001",
+                      "SIM002",
+                      "SIM003",
+                      "SIM004",
+                      "SIM005",
+                      "SIM006",
+                      "SIM007",
+                      "SIM008"
+                    ]
+                  }
+                },
+                "maxRecommendations": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "minimumConfidence": {
+                  "enum": [
+                    "high",
+                    "medium",
+                    "low"
+                  ]
+                }
+              }
+            },
+            "ranking": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "priorityWeights",
+                "categoryWeights",
+                "introducedByDiffBonus",
+                "directEvidenceBonus"
+              ],
+              "properties": {
+                "priorityWeights": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "P0",
+                    "P1",
+                    "P2",
+                    "P3"
+                  ],
+                  "properties": {
+                    "P0": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P1": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P2": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P3": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    }
+                  }
+                },
+                "categoryWeights": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "correctness",
+                    "security",
+                    "contract",
+                    "architecture",
+                    "simplification"
+                  ],
+                  "properties": {
+                    "correctness": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "security": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "contract": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "architecture": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "simplification": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    }
+                  }
+                },
+                "introducedByDiffBonus": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "directEvidenceBonus": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              }
+            },
+            "followUp": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "retainedPriorities",
+                "maxItems"
+              ],
+              "properties": {
+                "retainedPriorities": {
+                  "type": "array",
+                  "minItems": 0,
+                  "maxItems": 4,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "P0",
+                      "P1",
+                      "P2",
+                      "P3"
+                    ]
+                  }
+                },
+                "maxItems": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              }
+            },
+            "governor": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maxRepairCycles",
+                "fileGrowthMultiplier",
+                "nonTestLocGrowthMultiplier",
+                "absoluteFileAllowance",
+                "absoluteNonTestLocAllowance"
+              ],
+              "properties": {
+                "maxRepairCycles": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "fileGrowthMultiplier": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "nonTestLocGrowthMultiplier": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "absoluteFileAllowance": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 256
+                },
+                "absoluteNonTestLocAllowance": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000000
+                }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "outsideScope": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "unknownScope": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "verification": {
+                        "type": "object",
+                        "properties": {
+                          "insufficientFindingEvidence": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "then": {
+                "type": "object",
+                "properties": {
+                  "followUp": {
+                    "type": "object",
+                    "properties": {
+                      "retainedPriorities": {
+                        "type": "array",
+                        "minItems": 1
+                      },
+                      "maxItems": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "const": true
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabledRules": {
+                        "type": "array",
+                        "minItems": 1
+                      },
+                      "maxRecommendations": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              },
+              "else": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabledRules": {
+                        "type": "array",
+                        "maxItems": 0
+                      },
+                      "maxRecommendations": {
+                        "const": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+    "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+    "registration": {
+      "kind": "stages",
+      "id": "kubeclaw.review:repository-revalidation",
+      "type": "kubeclaw.audit.repository-review-revalidation",
+      "contractId": null,
+      "module": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "export": "executeRepositoryRevalidation",
+      "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json"
+    },
+    "document": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent",
+        "reviewerModel"
+      ],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewerModel": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exact model identity used by repository-audit cache keys."
+        },
+        "reviewerRuntime": {
+          "enum": [
+            "acp",
+            "subagent"
+          ],
+          "default": "subagent"
+        },
+        "reviewerAgentId": {
+          "type": "string",
+          "minLength": 1,
+          "default": "codex"
+        },
+        "reviewerThinking": {
+          "type": "string",
+          "minLength": 1,
+          "default": "high"
+        },
+        "profile": {
+          "enum": [
+            "gate",
+            "lean",
+            "audit"
+          ],
+          "default": "audit"
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schemaVersion",
+            "profile",
+            "blocking",
+            "limits",
+            "scope",
+            "verification",
+            "simplification",
+            "ranking",
+            "followUp",
+            "governor"
+          ],
+          "properties": {
+            "schemaVersion": {
+              "const": "review-policy.v2"
+            },
+            "profile": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+            },
+            "blocking": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "priorities",
+                "categories",
+                "requireIntroducedByDiff",
+                "requireDirectEvidence"
+              ],
+              "properties": {
+                "priorities": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 4,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "P0",
+                      "P1",
+                      "P2",
+                      "P3"
+                    ]
+                  },
+                  "allOf": [
+                    {
+                      "contains": {
+                        "const": "P0"
+                      }
+                    }
+                  ]
+                },
+                "categories": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 5,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "correctness",
+                      "security",
+                      "contract",
+                      "architecture",
+                      "simplification"
+                    ]
+                  },
+                  "allOf": [
+                    {
+                      "contains": {
+                        "const": "correctness"
+                      }
+                    },
+                    {
+                      "contains": {
+                        "const": "security"
+                      }
+                    },
+                    {
+                      "contains": {
+                        "const": "contract"
+                      }
+                    }
+                  ]
+                },
+                "requireIntroducedByDiff": {
+                  "type": "boolean"
+                },
+                "requireDirectEvidence": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "limits": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maxProposals",
+                "maxRootCauses",
+                "maxInstancesPerCluster",
+                "maxBundleBytes",
+                "maxContextFiles",
+                "maxInitialContextFiles",
+                "maxContextFileBytes",
+                "maxContextBytes",
+                "maxInitialContextBytes",
+                "maxDependencyDepth",
+                "maxExpansionFiles",
+                "maxAdvisories"
+              ],
+              "properties": {
+                "maxProposals": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 128
+                },
+                "maxRootCauses": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                },
+                "maxInstancesPerCluster": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                "maxBundleBytes": {
+                  "type": "integer",
+                  "minimum": 1024,
+                  "maximum": 16777216
+                },
+                "maxContextFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "maxInitialContextFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                },
+                "maxContextFileBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2097152
+                },
+                "maxContextBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16777216
+                },
+                "maxInitialContextBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16777216
+                },
+                "maxDependencyDepth": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "maxExpansionFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16
+                },
+                "maxAdvisories": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              }
+            },
+            "scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "outsideScope",
+                "unknownScope",
+                "retainPreExisting"
+              ],
+              "properties": {
+                "outsideScope": {
+                  "enum": [
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "unknownScope": {
+                  "enum": [
+                    "blocked",
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "retainPreExisting": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "verification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "semanticVerifier",
+                "insufficientFindingEvidence",
+                "unverifiedRequirement"
+              ],
+              "properties": {
+                "semanticVerifier": {
+                  "enum": [
+                    "disabled",
+                    "p0-only",
+                    "all-blockers"
+                  ]
+                },
+                "insufficientFindingEvidence": {
+                  "enum": [
+                    "reject",
+                    "follow_up",
+                    "orchestrator_required"
+                  ]
+                },
+                "unverifiedRequirement": {
+                  "enum": [
+                    "blocked",
+                    "orchestrator_required"
+                  ]
+                }
+              }
+            },
+            "simplification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "enabled",
+                "registryVersion",
+                "enabledRules",
+                "maxRecommendations",
+                "minimumConfidence"
+              ],
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "registryVersion": {
+                  "const": "simplification-rules.v1"
+                },
+                "enabledRules": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "SIM001",
+                      "SIM002",
+                      "SIM003",
+                      "SIM004",
+                      "SIM005",
+                      "SIM006",
+                      "SIM007",
+                      "SIM008"
+                    ]
+                  }
+                },
+                "maxRecommendations": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "minimumConfidence": {
+                  "enum": [
+                    "high",
+                    "medium",
+                    "low"
+                  ]
+                }
+              }
+            },
+            "ranking": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "priorityWeights",
+                "categoryWeights",
+                "introducedByDiffBonus",
+                "directEvidenceBonus"
+              ],
+              "properties": {
+                "priorityWeights": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "P0",
+                    "P1",
+                    "P2",
+                    "P3"
+                  ],
+                  "properties": {
+                    "P0": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P1": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P2": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "P3": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    }
+                  }
+                },
+                "categoryWeights": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "correctness",
+                    "security",
+                    "contract",
+                    "architecture",
+                    "simplification"
+                  ],
+                  "properties": {
+                    "correctness": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "security": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "contract": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "architecture": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "simplification": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000
+                    }
+                  }
+                },
+                "introducedByDiffBonus": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "directEvidenceBonus": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              }
+            },
+            "followUp": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "retainedPriorities",
+                "maxItems"
+              ],
+              "properties": {
+                "retainedPriorities": {
+                  "type": "array",
+                  "minItems": 0,
+                  "maxItems": 4,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "P0",
+                      "P1",
+                      "P2",
+                      "P3"
+                    ]
+                  }
+                },
+                "maxItems": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              }
+            },
+            "governor": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maxRepairCycles",
+                "fileGrowthMultiplier",
+                "nonTestLocGrowthMultiplier",
+                "absoluteFileAllowance",
+                "absoluteNonTestLocAllowance"
+              ],
+              "properties": {
+                "maxRepairCycles": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "fileGrowthMultiplier": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "nonTestLocGrowthMultiplier": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "absoluteFileAllowance": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 256
+                },
+                "absoluteNonTestLocAllowance": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000000
+                }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "outsideScope": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "unknownScope": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "verification": {
+                        "type": "object",
+                        "properties": {
+                          "insufficientFindingEvidence": {
+                            "const": "follow_up"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "then": {
+                "type": "object",
+                "properties": {
+                  "followUp": {
+                    "type": "object",
+                    "properties": {
+                      "retainedPriorities": {
+                        "type": "array",
+                        "minItems": 1
+                      },
+                      "maxItems": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "const": true
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabledRules": {
+                        "type": "array",
+                        "minItems": 1
+                      },
+                      "maxRecommendations": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              },
+              "else": {
+                "type": "object",
+                "properties": {
+                  "simplification": {
+                    "type": "object",
+                    "properties": {
+                      "enabledRules": {
+                        "type": "array",
+                        "maxItems": 0
+                      },
+                      "maxRecommendations": {
+                        "const": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]

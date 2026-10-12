@@ -1,0 +1,3391 @@
+{
+  "rows": [
+    {
+      "id": "AUTH-PRISM-CACHE-maximumInFlight",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/execution-cache.ts",
+        "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumInFlight",
+        "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+        "lines": [
+          2,
+          7,
+          22,
+          49
+        ]
+      },
+      "current": {
+        "valueOrDefault": 4,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "positive safe integer",
+      "unit": "count",
+      "reader": "execute rejects pending.size >= limit with PRISM_ENGINE_IN_FLIGHT_LIMIT",
+      "productiveCallerChain": [
+        "skills/prism/server/native-worker-host.ts::main",
+        "PrismEngine constructor",
+        "EngineExecutionCache constructor/execute/#retain"
+      ],
+      "validation": {
+        "semantic": "constructor all three safe integer >=1 else PRISM_ENGINE_CACHE_LIMIT_INVALID",
+        "schema": "no central author schema yet"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/cache/maximumInFlight",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: native host engine instance startup"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Bound pending ownership; RAM admission, not durable replay.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CACHE-maximumInFlight-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumCompletedEntries",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/execution-cache.ts",
+        "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumCompletedEntries",
+        "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+        "lines": [
+          3,
+          8,
+          22,
+          73
+        ]
+      },
+      "current": {
+        "valueOrDefault": 32,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "positive safe integer",
+      "unit": "count",
+      "reader": "#retain evicts oldest completed key while count >= limit",
+      "productiveCallerChain": [
+        "skills/prism/server/native-worker-host.ts::main",
+        "PrismEngine constructor",
+        "EngineExecutionCache constructor/execute/#retain"
+      ],
+      "validation": {
+        "semantic": "constructor all three safe integer >=1 else PRISM_ENGINE_CACHE_LIMIT_INVALID",
+        "schema": "no central author schema yet"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/cache/maximumCompletedEntries",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: native host engine instance startup"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Completed cache optimization only; durable Control replay remains separate.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CACHE-maximumCompletedEntries-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumCompletedBytes",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/execution-cache.ts",
+        "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumCompletedBytes",
+        "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+        "lines": [
+          4,
+          9,
+          22,
+          72,
+          74
+        ]
+      },
+      "current": {
+        "valueOrDefault": 16777216,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "positive safe integer",
+      "unit": "bytes",
+      "reader": "#retain measures UTF-8 serialized result/key/fingerprint; oversize not retained, oldest evicted until fit",
+      "productiveCallerChain": [
+        "skills/prism/server/native-worker-host.ts::main",
+        "PrismEngine constructor",
+        "EngineExecutionCache constructor/execute/#retain"
+      ],
+      "validation": {
+        "semantic": "constructor all three safe integer >=1 else PRISM_ENGINE_CACHE_LIMIT_INVALID",
+        "schema": "no central author schema yet"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/cache/maximumCompletedBytes",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: native host engine instance startup"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "RAM cache quota does not delete durable result/evidence or reset claims.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CACHE-maximumCompletedBytes-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-timeoutMs",
+      "owner": "prism-execution",
+      "scope": {
+        "instance": "prism-execution",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.timeoutMs",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "current": {
+        "valueOrDefault": 300000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "worker-attempt-envelope.v3 finite limit domain; contract validation by worker",
+      "unit": "milliseconds",
+      "reader": "WorkerAttemptExecutor consumes accepted envelope.limits.timeoutMs",
+      "productiveCallerChain": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "contracts/pipeline-worker-core/v1 schema workerAttemptEnvelope",
+        "semantic": "accepted envelope resource/spec digest validated; original operation stored by reserveNativePrismOperation"
+      },
+      "targetAuthorRef": "config/engines/prism-execution.config.json#/profiles/<selected>/attempt/timeoutMs",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J inherited from parent M; immutable accepted standalone operation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-timeoutMs-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs",
+      "owner": "prism-execution",
+      "scope": {
+        "instance": "prism-execution",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.cleanupTimeoutMs",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "current": {
+        "valueOrDefault": 10000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "worker-attempt-envelope.v3 finite limit domain; contract validation by worker",
+      "unit": "milliseconds",
+      "reader": "WorkerAttemptExecutor consumes accepted envelope.limits.cleanupTimeoutMs",
+      "productiveCallerChain": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "contracts/pipeline-worker-core/v1 schema workerAttemptEnvelope",
+        "semantic": "accepted envelope resource/spec digest validated; original operation stored by reserveNativePrismOperation"
+      },
+      "targetAuthorRef": "config/engines/prism-execution.config.json#/profiles/<selected>/attempt/cleanupTimeoutMs",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J inherited from parent M; immutable accepted standalone operation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-logBytes",
+      "owner": "prism-execution",
+      "scope": {
+        "instance": "prism-execution",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.logBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "current": {
+        "valueOrDefault": 1048576,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "worker-attempt-envelope.v3 finite limit domain; contract validation by worker",
+      "unit": "bytes",
+      "reader": "WorkerAttemptExecutor consumes accepted envelope.limits.logBytes",
+      "productiveCallerChain": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "contracts/pipeline-worker-core/v1 schema workerAttemptEnvelope",
+        "semantic": "accepted envelope resource/spec digest validated; original operation stored by reserveNativePrismOperation"
+      },
+      "targetAuthorRef": "config/engines/prism-execution.config.json#/profiles/<selected>/attempt/logBytes",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J inherited from parent M; immutable accepted standalone operation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-logBytes-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-resultBytes",
+      "owner": "prism-execution",
+      "scope": {
+        "instance": "prism-execution",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.resultBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "current": {
+        "valueOrDefault": 16777216,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "worker-attempt-envelope.v3 finite limit domain; contract validation by worker",
+      "unit": "bytes",
+      "reader": "WorkerAttemptExecutor consumes accepted envelope.limits.resultBytes",
+      "productiveCallerChain": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "contracts/pipeline-worker-core/v1 schema workerAttemptEnvelope",
+        "semantic": "accepted envelope resource/spec digest validated; original operation stored by reserveNativePrismOperation"
+      },
+      "targetAuthorRef": "config/engines/prism-execution.config.json#/profiles/<selected>/attempt/resultBytes",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J inherited from parent M; immutable accepted standalone operation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-resultBytes-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-evidenceBytes",
+      "owner": "prism-execution",
+      "scope": {
+        "instance": "prism-execution",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.evidenceBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "current": {
+        "valueOrDefault": 134217728,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "worker-attempt-envelope.v3 finite limit domain; contract validation by worker",
+      "unit": "bytes",
+      "reader": "WorkerAttemptExecutor consumes accepted envelope.limits.evidenceBytes",
+      "productiveCallerChain": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "contracts/pipeline-worker-core/v1 schema workerAttemptEnvelope",
+        "semantic": "accepted envelope resource/spec digest validated; original operation stored by reserveNativePrismOperation"
+      },
+      "targetAuthorRef": "config/engines/prism-execution.config.json#/profiles/<selected>/attempt/evidenceBytes",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J inherited from parent M; immutable accepted standalone operation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-evidenceBytes-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-evidenceFiles",
+      "owner": "prism-execution",
+      "scope": {
+        "instance": "prism-execution",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.evidenceFiles",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "current": {
+        "valueOrDefault": 64,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "worker-attempt-envelope.v3 finite limit domain; contract validation by worker",
+      "unit": "count",
+      "reader": "WorkerAttemptExecutor consumes accepted envelope.limits.evidenceFiles",
+      "productiveCallerChain": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "contracts/pipeline-worker-core/v1 schema workerAttemptEnvelope",
+        "semantic": "accepted envelope resource/spec digest validated; original operation stored by reserveNativePrismOperation"
+      },
+      "targetAuthorRef": "config/engines/prism-execution.config.json#/profiles/<selected>/attempt/evidenceFiles",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J inherited from parent M; immutable accepted standalone operation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Existing stored attempt wins on reserve/replay; config must not reset claim/deadline/budget or repeat uncertain effect.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-ATTEMPT-evidenceFiles-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-CLAIM-LIFETIME",
+      "owner": "prism-execution",
+      "scope": {
+        "instance": "prism-execution",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "expires",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          35,
+          41,
+          50
+        ]
+      },
+      "current": {
+        "valueOrDefault": 600000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "positive duration; current claim and queue deadline both now+10*60000",
+      "unit": "milliseconds",
+      "reader": "prismNativeAttempt sets claim.expiresAt and queueDeadline from same expires",
+      "productiveCallerChain": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "semantic": "worker envelope claim/schema + execution expiry checks; no operator duration validator exists"
+      },
+      "targetAuthorRef": "config/engines/prism-execution.config.json#/profiles/<selected>/claimLifetimeMs",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J before reserve; preserve original stored deadline"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Claim expiry and queue admission share producer expiry; changes apply new operation only.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CLAIM-LIFETIME-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-INGEST-TEXT-LIMIT",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/engine/index.ts",
+        "field": "ingest.text.length",
+        "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+        "lines": [
+          107,
+          108,
+          111
+        ]
+      },
+      "current": {
+        "valueOrDefault": 200000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "positive UTF-16 string length maximum",
+      "unit": "UTF-16 code units",
+      "reader": "ingest rejects empty or text.length>200000 with ingest text length is invalid",
+      "productiveCallerChain": [
+        "native-worker-host.ts::main",
+        "PrismEngine.execute/executeOnce/ingest",
+        "DesignProvider.embed"
+      ],
+      "validation": {
+        "semantic": "String(input.text ?? empty).trim then finite hardcoded upper bound; task text remains task input"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/maximumIngestTextCodeUnits",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J inherited M; not HTTP body byte limit"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Larger input changes actual accepted text before provider call; UTF-16 units are not bytes.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INGEST-TEXT-LIMIT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Dormant exported provider has adjustable timeout policy; productive host currently chooses deterministic provider directly.",
+      "source": {
+        "path": "skills/prism/engine/design-providers.ts",
+        "field": "options.timeoutMs",
+        "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+        "lines": [
+          44,
+          51,
+          78,
+          88,
+          89,
+          130,
+          131
+        ]
+      },
+      "current": {
+        "valueOrDefault": 60000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "number today unchecked; target finite positive supported timer domain",
+      "unit": "milliseconds",
+      "reader": "propose/embed each compose AbortSignal.timeout(this.#timeoutMs)",
+      "productiveCallerChain": [
+        "exported OpenAICompatibleDesignProvider library; no productive constructor found",
+        "native-worker-host.ts constructs DeterministicDesignProvider instead"
+      ],
+      "validation": {
+        "semantic": "timeout domain not checked at constructor; HTTPS/internal svc endpoints checked separately"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/provider/timeoutMs",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J; new provider instance bound before dispatch"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "No active-model selection/composition proof exists. Future C3 must connect actual provider; no current paid/model effect claimed.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "current-production-composition-absent"
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-SYSTEM-PROMPT",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Edit-worthy instruction policy, not protocol constant; no current productive model composition.",
+      "source": {
+        "path": "skills/prism/engine/design-providers.ts",
+        "field": "messages.system.content",
+        "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+        "lines": [
+          32,
+          92,
+          100,
+          103,
+          110,
+          112,
+          113,
+          134
+        ]
+      },
+      "current": {
+        "valueOrDefault": "Return JSON with an operations array. Use only Prism typed operations. Do not return code or markdown.",
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "string supported by actual chat messages wire shape",
+      "unit": "text",
+      "reader": "HTTP request messages[0].content hardcoded instruction",
+      "productiveCallerChain": [
+        "OpenAICompatibleDesignProvider.propose; dormant export",
+        "native host actual provider is DeterministicDesignProvider"
+      ],
+      "validation": {
+        "semantic": "returned operations require array and validatePrism(operation); no prompt author/template validator"
+      },
+      "targetAuthorRef": "config/prompts/prism-design-system.txt owned by prism-engine",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "J: prompt bytes/hash bind with provider operation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Result schema remains invariant; changing instruction cannot bypass typed operation or approval contract.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DESIGN-SYSTEM-PROMPT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "current-production-composition-absent"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-ROOT",
+      "owner": "prism-ingestion",
+      "scope": {
+        "instance": "prism-ingestion",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "PRISM_QUARANTINE_ROOT",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          12
+        ]
+      },
+      "current": {
+        "valueOrDefault": "/quarantine",
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "string; no root/path restriction here",
+      "unit": "path",
+      "reader": "mkdir/readdir/stat/unlink/writeFile under selected root",
+      "productiveCallerChain": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "validation": {
+        "semantic": "native filesystem IO",
+        "schema": "none central today; config future strict validator required"
+      },
+      "targetAuthorRef": "config/services/prism-ingestion.config.json#/profiles/<selected>/PRISM_QUARANTINE_ROOT",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: ingestion service composition; new acquisitions use captured policy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INGESTION-ROOT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-TTL",
+      "owner": "prism-ingestion",
+      "scope": {
+        "instance": "prism-ingestion",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "PRISM_QUARANTINE_TTL_MS",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          14,
+          15
+        ]
+      },
+      "current": {
+        "valueOrDefault": 3600000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "safe integer then coerced into [60000,86400000]",
+      "unit": "milliseconds",
+      "reader": "mtime age >= quarantineTtl selects digest file removal",
+      "productiveCallerChain": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "validation": {
+        "semantic": "noninteger throws PRISM_QUARANTINE_TTL_MS must be a finite integer; out-of-domain clamped",
+        "schema": "none central today; config future strict validator required"
+      },
+      "targetAuthorRef": "config/services/prism-ingestion.config.json#/profiles/<selected>/PRISM_QUARANTINE_TTL_MS",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: ingestion service composition; new acquisitions use captured policy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INGESTION-TTL-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-PORT",
+      "owner": "prism-ingestion",
+      "scope": {
+        "instance": "prism-ingestion",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "PORT",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          97
+        ]
+      },
+      "current": {
+        "valueOrDefault": 8080,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "Number(env.PORT??8080); net.listen validates port",
+      "unit": "TCP port",
+      "reader": "createServer.listen on 0.0.0.0 selected port",
+      "productiveCallerChain": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "validation": {
+        "semantic": "native Node listen validation",
+        "schema": "none central today; config future strict validator required"
+      },
+      "targetAuthorRef": "config/services/prism-ingestion.config.json#/profiles/<selected>/PORT",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: ingestion service composition; new acquisitions use captured policy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INGESTION-PORT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-ACQUIRED-BYTES",
+      "owner": "prism-ingestion",
+      "scope": {
+        "instance": "prism-ingestion",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "getPinned.size",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          39,
+          40,
+          73
+        ]
+      },
+      "current": {
+        "valueOrDefault": 6000000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "positive integer max; three source/upload checks",
+      "unit": "bytes",
+      "reader": "incoming https streamed size destroys request; content-length/upload bytes rejects oversize",
+      "productiveCallerChain": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "validation": {
+        "semantic": "source is too large / uploaded content is invalid or too large",
+        "schema": "none central today; config future strict validator required"
+      },
+      "targetAuthorRef": "config/services/prism-ingestion.config.json#/profiles/<selected>/getPinned.size",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: ingestion service composition; new acquisitions use captured policy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INGESTION-ACQUIRED-BYTES-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-REQUEST-BYTES",
+      "owner": "prism-ingestion",
+      "scope": {
+        "instance": "prism-ingestion",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "handleRequest.size",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          39,
+          40,
+          73
+        ]
+      },
+      "current": {
+        "valueOrDefault": 2000000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "positive integer max body accumulated before parse",
+      "unit": "bytes",
+      "reader": "request loop throws above max then 422",
+      "productiveCallerChain": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "validation": {
+        "semantic": "acquisition request is too large",
+        "schema": "none central today; config future strict validator required"
+      },
+      "targetAuthorRef": "config/services/prism-ingestion.config.json#/profiles/<selected>/handleRequest.size",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: ingestion service composition; new acquisitions use captured policy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INGESTION-REQUEST-BYTES-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-HTTP-TIMEOUT",
+      "owner": "prism-ingestion",
+      "scope": {
+        "instance": "prism-ingestion",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "request.setTimeout",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          43
+        ]
+      },
+      "current": {
+        "valueOrDefault": 15000,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "Node socket inactivity timeout, not absolute attempt deadline",
+      "unit": "milliseconds",
+      "reader": "HTTPS request.setTimeout destroys source request",
+      "productiveCallerChain": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "validation": {
+        "semantic": "source request timed out",
+        "schema": "none central today; config future strict validator required"
+      },
+      "targetAuthorRef": "config/services/prism-ingestion.config.json#/profiles/<selected>/request.setTimeout",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: ingestion service composition; new acquisitions use captured policy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INGESTION-HTTP-TIMEOUT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-REDIRECTS",
+      "owner": "prism-ingestion",
+      "scope": {
+        "instance": "prism-ingestion",
+        "profile": "current code-owned startup policy; target complete selected owner profile"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "redirects",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          50,
+          55
+        ]
+      },
+      "current": {
+        "valueOrDefault": 3,
+        "precedence": "explicit constructor/input if supported, otherwise actual hardcoded producer default recorded here; no target implementation"
+      },
+      "typeUnitDomain": "loop redirects<=3 follows up to four requests before final redirect exhaustion",
+      "unit": "redirect count",
+      "reader": "acquire validates HTTPS at each redirect then too many source redirects",
+      "productiveCallerChain": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "validation": {
+        "semantic": "too many source redirects",
+        "schema": "none central today; config future strict validator required"
+      },
+      "targetAuthorRef": "config/services/prism-ingestion.config.json#/profiles/<selected>/redirects",
+      "activationScope": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: ingestion service composition; new acquisitions use captured policy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-INGESTION-REDIRECTS-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+      ],
+      "semanticStatus": "source-traced"
+    }
+  ],
+  "sources": [
+    {
+      "path": "skills/prism/engine/design-providers.ts",
+      "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+    },
+    {
+      "path": "skills/prism/engine/execution-cache.ts",
+      "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+    },
+    {
+      "path": "skills/prism/engine/index.ts",
+      "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+    },
+    {
+      "path": "skills/prism/server/native-worker-host.ts",
+      "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+    },
+    {
+      "path": "skills/prism/control/native-operation.ts",
+      "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+    },
+    {
+      "path": "skills/prism/control/native-operation-store.ts",
+      "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+    },
+    {
+      "path": "skills/prism/server/ingestion.ts",
+      "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+    },
+    {
+      "path": "skills/prism/server/control.ts",
+      "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+    },
+    {
+      "path": "skills/prism/server/control-server.ts",
+      "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+    },
+    {
+      "path": "skills/prism/server/worker-artifacts.ts",
+      "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+    },
+    {
+      "path": "skills/prism/engine/worker-binding.ts",
+      "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    }
+  ],
+  "cases": [
+    {
+      "id": "AUTH-PRISM-CACHE-maximumInFlight-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-CACHE-maximumInFlight"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/native-worker-host.ts::main",
+        "PrismEngine constructor",
+        "EngineExecutionCache constructor/execute/#retain"
+      ],
+      "inputProfile": {
+        "current": 4,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "execute rejects pending.size >= limit with PRISM_ENGINE_IN_FLIGHT_LIMIT",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumCompletedEntries-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-CACHE-maximumCompletedEntries"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/native-worker-host.ts::main",
+        "PrismEngine constructor",
+        "EngineExecutionCache constructor/execute/#retain"
+      ],
+      "inputProfile": {
+        "current": 32,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "#retain evicts oldest completed key while count >= limit",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumCompletedBytes-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-CACHE-maximumCompletedBytes"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/native-worker-host.ts::main",
+        "PrismEngine constructor",
+        "EngineExecutionCache constructor/execute/#retain"
+      ],
+      "inputProfile": {
+        "current": 16777216,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "#retain measures UTF-8 serialized result/key/fingerprint; oversize not retained, oldest evicted until fit",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-timeoutMs-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-ATTEMPT-timeoutMs"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 300000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "WorkerAttemptExecutor consumes accepted envelope.limits.timeoutMs",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 10000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "WorkerAttemptExecutor consumes accepted envelope.limits.cleanupTimeoutMs",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-logBytes-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-ATTEMPT-logBytes"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 1048576,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "WorkerAttemptExecutor consumes accepted envelope.limits.logBytes",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-resultBytes-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-ATTEMPT-resultBytes"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 16777216,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "WorkerAttemptExecutor consumes accepted envelope.limits.resultBytes",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-evidenceBytes-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-ATTEMPT-evidenceBytes"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 134217728,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "WorkerAttemptExecutor consumes accepted envelope.limits.evidenceBytes",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-evidenceFiles-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-ATTEMPT-evidenceFiles"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 64,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "WorkerAttemptExecutor consumes accepted envelope.limits.evidenceFiles",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-CLAIM-LIFETIME-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-CLAIM-LIFETIME"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/control/native-operation.ts::runNativePrismOperation",
+        "prismNativeAttempt",
+        "reserveNativePrismOperation",
+        "requestWorkerResult",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 600000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "prismNativeAttempt sets claim.expiresAt and queueDeadline from same expires",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-INGEST-TEXT-LIMIT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-INGEST-TEXT-LIMIT"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts::main",
+        "PrismEngine.execute/executeOnce/ingest",
+        "DesignProvider.embed"
+      ],
+      "inputProfile": {
+        "current": 200000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "ingest rejects empty or text.length>200000 with ingest text length is invalid",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "exported OpenAICompatibleDesignProvider library; no productive constructor found",
+        "native-worker-host.ts constructs DeterministicDesignProvider instead"
+      ],
+      "inputProfile": {
+        "current": 60000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "propose/embed each compose AbortSignal.timeout(this.#timeoutMs)",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-SYSTEM-PROMPT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DESIGN-SYSTEM-PROMPT"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "OpenAICompatibleDesignProvider.propose; dormant export",
+        "native host actual provider is DeterministicDesignProvider"
+      ],
+      "inputProfile": {
+        "current": "Return JSON with an operations array. Use only Prism typed operations. Do not return code or markdown.",
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "HTTP request messages[0].content hardcoded instruction",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-ROOT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-INGESTION-ROOT"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "inputProfile": {
+        "current": "/quarantine",
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "mkdir/readdir/stat/unlink/writeFile under selected root",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-TTL-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-INGESTION-TTL"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "inputProfile": {
+        "current": 3600000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "mtime age >= quarantineTtl selects digest file removal",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-PORT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-INGESTION-PORT"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "inputProfile": {
+        "current": 8080,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "createServer.listen on 0.0.0.0 selected port",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-ACQUIRED-BYTES-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-INGESTION-ACQUIRED-BYTES"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "inputProfile": {
+        "current": 6000000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "incoming https streamed size destroys request; content-length/upload bytes rejects oversize",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-REQUEST-BYTES-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-INGESTION-REQUEST-BYTES"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "inputProfile": {
+        "current": 2000000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "request loop throws above max then 422",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-HTTP-TIMEOUT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-INGESTION-HTTP-TIMEOUT"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "inputProfile": {
+        "current": 15000,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "HTTPS request.setTimeout destroys source request",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-REDIRECTS-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-INGESTION-REDIRECTS"
+      ],
+      "requirementIds": [
+        "F-EFFECT",
+        "F-BIND",
+        "C0-C"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "docker Prism ingestion entrypoint",
+        "server/ingestion.ts composition",
+        "handleRequest/acquire/getPinned/reapQuarantine"
+      ],
+      "inputProfile": {
+        "current": 3,
+        "alternative": "exact complete valid alternative profile not yet specified"
+      },
+      "priorState": "new operation/process; no existing bound operation replaced",
+      "expectedEffectOrRejectingBoundary": "acquire validates HTTPS at each redirect then too many source redirects",
+      "observerMethod": "record real selected consumer value plus actual effect; complete expected behavioral oracle pending",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+        "sources": [
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/control/native-operation.ts",
+            "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+          },
+          {
+            "path": "skills/prism/control/native-operation-store.ts",
+            "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+          },
+          {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717"
+          },
+          {
+            "path": "skills/prism/server/control-config.ts",
+            "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+          },
+          {
+            "path": "skills/prism/server/control.ts",
+            "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-config.ts",
+            "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+          },
+          {
+            "path": "skills/prism/server/worker.ts",
+            "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+          },
+          {
+            "path": "skills/prism/server/worker-artifacts.ts",
+            "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+          },
+          {
+            "path": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "AUTH-PRISM-REMAINDER",
+      "reason": "Remaining Prism trust/endpoints/product authority/browser/render/domain/evaluation limits and generic worker residual constants require field-level semantic closure; exact alternative profiles/oracles still incomplete."
+    }
+  ]
+}
