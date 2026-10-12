@@ -46,10 +46,22 @@ capability policy, tools, network, and target system.
 
 ## Before You Start
 
-Run repository proofs from the repository root. Run production work from the
-Nova installation that owns the project and pipeline state. For a production
-run, the operator needs permission to start and inspect that Nova pipeline. The
-Buster service account, token, source key, and capability credentials remain
+Run repository proofs from the KubeClaw repository root. Run production
+compile, start, audit, and recovery commands from the original KubeClaw checkout
+in the Nova installation that owns the pipeline state. Its `package.json`
+defines `npm run pipeline`; the project descriptor's `repositoryRoot` separately
+selects the source repository. That repository can be elsewhere and does not
+need a Nova npm script. Keep the command shell in the original KubeClaw checkout
+and use absolute platform, project, graph, and evidence paths.
+
+The [pipeline npm script](https://github.com/datrab/kubeclaw/blob/63fe81768c0c922ad0a9a2bf68981d7fa1c38cc1/package.json#L42)
+loads the [Nova dispatcher](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/pipeline.ts#L1-L14).
+The [project CLI](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/project/cli.ts#L46-L51)
+checks the selected project's HEAD and clean working tree with `git -C` before
+starting a new run. Compilation does not perform those two source checks.
+
+For a production run, the operator needs permission to start and inspect that
+Nova pipeline. The Buster service account, token, source key, and capability credentials remain
 service-owned; a project author does not need direct access to them.
 
 Confirm these facts before either path:
@@ -167,7 +179,8 @@ limits, and plan digest. Changing any one of them requires a new plan identity.
 There is no separate manual Buster submission command. Compile the project
 first. Replace `<platform.json>` with the operator-owned platform file,
 `<project.json>` with the project descriptor, and `<new-pipeline.json>` with a
-path that does not exist:
+new absolute path that does not exist. Run this command from the original
+KubeClaw checkout, with absolute platform and project paths:
 
 ```text
 npm run pipeline -- \
@@ -181,8 +194,10 @@ not contain the intended Buster quality stage and test scope. Record its
 `definitionDigest`, derived `runId`, and completion scope. Compilation checks
 registration and grants. It does not contact Buster.
 
-Start the project run from the project repository while its committed HEAD is
-the intended `baseRevision` and its working tree is clean:
+Before starting, check that the repository selected by the descriptor's
+`repositoryRoot` has committed HEAD equal to its intended `baseRevision` and a
+clean working tree. Stop on either mismatch. Run the start command from the
+same original KubeClaw checkout used for compilation:
 
 ```text
 npm run pipeline -- \
@@ -248,7 +263,8 @@ reconciliation methods stop recovery. If an incident owner later authorizes
 canonical tail repair, retain original bytes first and record the command and
 its actual file changes. Then follow
 [Recover After Interruption](../operate.md#recover-after-interruption) with the
-same original project, platform, graph, package snapshot, and run identity:
+same original project, platform, graph, package snapshot, and run identity.
+Run the recovery command from the original KubeClaw checkout:
 
 ```text
 npm run pipeline -- \
@@ -375,16 +391,24 @@ channel, network-flow, or lifecycle evidence for this Nova project run.
 
 Run only in a registered non-production acceptance environment during an
 approved window. The descriptor must already contain independently resolved
-plans and grants for this installation. The source repository must be clean at
-the selected commit. External credentials and signing keys remain in their
-owning stores.
+plans and grants for this installation. Run every npm and deployment-script
+command below from the original KubeClaw checkout, with its installed locked
+dependencies. Keep this location through compile, start, preservation, and
+audit. The descriptor's source repository can be a separate checkout; its HEAD
+must equal `baseRevision` and its working tree must be clean. External credentials
+and signing keys remain in their owning stores.
 
-Create a new evidence directory outside the project repository. Refuse an
-existing directory so an earlier run cannot be overwritten or mixed with this
-one.
+Create a new evidence directory outside both the project repository and the
+original KubeClaw checkout. Refuse an existing directory so an earlier run cannot
+be overwritten or mixed with this one.
 
 ```bash
 set -euo pipefail
+export NOVA_REPOSITORY="<absolute-path-to-original-kubeclaw-checkout>"
+cd "$NOVA_REPOSITORY"
+test "$NOVA_REPOSITORY" = "$(pwd -P)"
+test -f package.json
+test -f skills/nova/pipeline.ts
 assert_cluster_binding
 : "${NAMESPACE:?Complete the installation cluster binding first}"
 : "${PRISM_NAMESPACE:?Complete the installation cluster binding first}"
@@ -399,14 +423,15 @@ test -f "$PLATFORM_FILE"
 test -f "$PROJECT_FILE"
 export PROJECT_REPOSITORY="$(node -e '
 const value = JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8"));
-if (value.schemaVersion !== "nova-project.v2" || typeof value.repositoryRoot !== "string") process.exit(1);
+if (value.schemaVersion !== "nova-project.v2" || typeof value.repositoryRoot !== "string"
+  || value.baseRevision !== process.env.RELEASE_COMMIT) process.exit(1);
 process.stdout.write(value.repositoryRoot);
 ' "$PROJECT_FILE")"
 test "$PROJECT_REPOSITORY" = "$(cd "$PROJECT_REPOSITORY" && pwd -P)"
 evidence_parent="$(cd "$(dirname "$EVIDENCE_DIR")" && pwd -P)"
 test "$EVIDENCE_DIR" = "$evidence_parent/$(basename "$EVIDENCE_DIR")"
 case "$EVIDENCE_DIR" in
-  "$PROJECT_REPOSITORY"|"$PROJECT_REPOSITORY"/*) exit 1 ;;
+  "$PROJECT_REPOSITORY"|"$PROJECT_REPOSITORY"/*|"$NOVA_REPOSITORY"|"$NOVA_REPOSITORY"/*) exit 1 ;;
 esac
 test ! -e "$EVIDENCE_DIR"
 mkdir -m 0700 "$EVIDENCE_DIR"
@@ -547,6 +572,7 @@ console.log(JSON.stringify({ model: body.model ?? "gemini-embedding-001", dimens
   | tee "$EVIDENCE_DIR/container-build-prerequisite.txt"
 ./scripts/deploy.sh nova-tailscale-preflight "$TAILSCALE_PROBE_IMAGE" \
   | tee "$EVIDENCE_DIR/tailscale-prerequisite.txt"
+test "$(git -C "$PROJECT_REPOSITORY" rev-parse --verify HEAD)" = "$RELEASE_COMMIT"
 test -z "$(git -C "$PROJECT_REPOSITORY" status --porcelain)"
 ```
 
