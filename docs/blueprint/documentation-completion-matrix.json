@@ -10285,7 +10285,9 @@
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
         "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2"
+        "A98-20261012-KNOWN-BINDING-R2",
+        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+        "A98-20261012-YAML-FILE-STDIN-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L285",
       "acceptanceMappingBasis": {
@@ -10429,7 +10431,9 @@
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
         "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2"
+        "A98-20261012-KNOWN-BINDING-R2",
+        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+        "A98-20261012-YAML-FILE-STDIN-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L286",
       "acceptanceMappingBasis": {
@@ -10669,7 +10673,9 @@
         "A98-20261012-CANONICAL-REFLECTION-S2",
         "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
         "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2"
+        "A98-20261012-KNOWN-BINDING-R2",
+        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+        "A98-20261012-YAML-FILE-STDIN-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L288",
       "acceptanceMappingBasis": {
@@ -10918,7 +10924,9 @@
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
         "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2"
+        "A98-20261012-KNOWN-BINDING-R2",
+        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+        "A98-20261012-YAML-FILE-STDIN-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L290",
       "acceptanceMappingBasis": {
@@ -11176,7 +11184,9 @@
         "A98-20261012-CANONICAL-REFLECTION-S5",
         "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
         "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2"
+        "A98-20261012-KNOWN-BINDING-R2",
+        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+        "A98-20261012-YAML-FILE-STDIN-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L293",
       "acceptanceMappingBasis": {
@@ -14105,7 +14115,9 @@
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
         "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2"
+        "A98-20261012-KNOWN-BINDING-R2",
+        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+        "A98-20261012-YAML-FILE-STDIN-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L359"
     },
@@ -14577,7 +14589,9 @@
         "A98-20261012-CANONICAL-REFLECTION-S3",
         "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
         "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2"
+        "A98-20261012-KNOWN-BINDING-R2",
+        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+        "A98-20261012-YAML-FILE-STDIN-R2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L368"
     },
@@ -24931,6 +24945,33 @@
       "evidence": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
       "evidenceSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
       "evidenceBoundary": "Complete current independentFAIL3, all findings collected before onecoherentwriter assignment. Sixactualfalsegreens/twoadjacentnegative/fourbaseline-restored; source identity failureactual. No green285/287 ordocroleproof offsets."
+    },
+    {
+      "id": "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+      "state": "open-pending-joint-correction-and-fresh-review",
+      "reportedBy": "/root/bounded_key_final_complete_tool_source_fresh",
+      "role": "source",
+      "description": "Supported simple alias/conditional/keyword/protocol environment keys escape containing-scope NamedExpr sensitivity: eight native actual whole-receiver false GREEN436 cases.",
+      "authority": "scripts/docs-configuration-inventory.mjs:5494-5501,5896-5908",
+      "report": "/home/node/Documents/Codex/a98-evidence/bounded-key-final-complete-tool-source-fresh/report.md",
+      "reportSha256": "7bd804c4e5203c59c05dc36c45abbf1f7a3b3ac79374809b26caa7856fd8a17d",
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14"
+      ],
+      "correction": "Cover already-supported recognized finite-key dependencies or usefully reject/invalidate affected containing key; preserve passive foreign controls without general interpretation."
+    },
+    {
+      "id": "A98-20261012-YAML-FILE-STDIN-R2",
+      "state": "open-pending-joint-correction-and-fresh-review",
+      "reportedBy": "/root/bounded_key_final_complete_tool_source_fresh",
+      "role": "source",
+      "description": "Explicit fileInput program has no decoded positions; YAML forwarding calls positions.map and crashes before file custody.",
+      "authority": "scripts/docs-configuration-inventory.mjs:5331-5332",
+      "report": "/home/node/Documents/Codex/a98-evidence/bounded-key-final-complete-tool-source-fresh/report.md",
+      "reportSha256": "7bd804c4e5203c59c05dc36c45abbf1f7a3b3ac79374809b26caa7856fd8a17d",
+      "correction": "Preserve finite no-position file-input variant and Source custody or intentional useful rejection; retain inline/heredoc positions and standalone passive control."
     }
   ],
   "checks": [
@@ -29165,8 +29206,39 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active",
-      "scope": "New wholeF1-F10 currenta3/19ae/c8/3131 Source, fullcurrentreceiving/Rootproof tovalidate; additionalcountercases beingcollected, reportpending."
+      "state": "terminal-complete-assigned-FAIL2",
+      "scope": "New wholeF1-F10 currenta3/19ae/c8/3131 Source, fullcurrentreceiving/Rootproof tovalidate; additionalcountercases beingcollected, reportpending.",
+      "report": "/home/node/Documents/Codex/a98-evidence/bounded-key-final-complete-tool-source-fresh/report.md",
+      "reportSha256": "7bd804c4e5203c59c05dc36c45abbf1f7a3b3ac79374809b26caa7856fd8a17d",
+      "scopeLimit": "Complete assigned Tool Source only; no Reader/Quality/package/global acceptance."
+    },
+    {
+      "agent": "/root/diagnose_complete_current_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "state": "assigned-running",
+      "assignedAt": "2026-10-12T13:01:19.761904+00:00",
+      "observedHead": "8f10f6c8d1ae274efc1493cba739bec95fe833a1",
+      "scope": [
+        "docs/site/use/diagnose.md"
+      ],
+      "scopeLimit": "Complete assigned topic only; no package/global acceptance. Source read-only; author exclusive page writes."
+    },
+    {
+      "agent": "/root/recovery_complete_current_content_writer",
+      "role": "author",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "state": "assigned-running",
+      "assignedAt": "2026-10-12T13:01:19.761904+00:00",
+      "observedHead": "8f10f6c8d1ae274efc1493cba739bec95fe833a1",
+      "scope": [
+        "docs/site/use/recovery.md"
+      ],
+      "scopeLimit": "Complete assigned topic only; no package/global acceptance. Source read-only; author exclusive page writes."
     }
   ],
   "continuation": {
@@ -30337,6 +30409,13 @@
       ],
       "author": "/root/shell_comprehension_custody_complete_batch_writer",
       "scope": "Independent complete assigned Tool Source FAIL; no package/content/global acceptance."
+    },
+    "activeAssignedTopics": {
+      "at": "2026-10-12T13:01:19.761904+00:00",
+      "scannerJointCorrection": "/root/shell_comprehension_custody_complete_batch_writer",
+      "diagnoseSource": "/root/diagnose_complete_current_source_fresh",
+      "recoveryAuthor": "/root/recovery_complete_current_content_writer",
+      "metadataCommit": "8f10f6c8d1ae274efc1493cba739bec95fe833a1"
     }
   },
   "productBoundaries": [
