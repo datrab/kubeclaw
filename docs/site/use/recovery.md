@@ -730,21 +730,54 @@ after it; do not claim Prism recovery or application-reader acceptance.
 
 ## Pipeline State Recovery
 
-Do not restore one journal file without its related effects, waits, artifacts, and snapshots.
-Restore the complete run root from one consistent point.
+Use the original platform file, run ID, graph or project, package snapshot,
+storage root, and configuration from the retained start record. Run the
+inspection and recovery commands from the original Nova repository with the
+[shared version and tool prerequisites](README.md#version-and-tool-boundary).
+The Nova operator and each adapter-store owner must establish and verify the
+writer fence. Stop if ownership or the original identity is unknown.
+
+Do not restore one journal file without its related effects, waits, artifacts,
+and snapshots. Restore the complete run root from one consistent point. Keep
+Nova and the owning adapter writers stopped after restoration.
+
+Audit can change storage: it creates an append-lock file and can truncate an
+incomplete journal tail before parsing. Recovery and resume also open these
+journals. Backup checksums and the resulting audit JSON do not preserve the
+restored raw bytes.
 
 After filesystem restoration:
 
-1. Keep Nova stopped.
-2. Verify file ownership, permissions, and backup checksums.
-3. Read the audit for `<run-id>`.
-4. Reject journal corruption or changed graph identity.
-5. Reconcile every accepted external effect without a terminal receipt.
-6. Start Nova only after reconciliation.
-7. Use the supported recovery command from [Configure and Operate](operate.md).
+1. Verify file ownership, permissions, backup checksums, and the original run
+   and platform identities.
+2. Complete [Inspect a Run](operate.md#inspect-a-run) before audit, recovery,
+   or resume. Preserve and verify a new raw copy of the restored run and the
+   owning adapters' stores while their writers remain stopped. Keep partial
+   journal bytes, signals, effects, snapshots, and lock files.
+3. Require successful strict parsing of every copied run journal. On a copy,
+   identity, sequence, hash, or incomplete-record failure, retain the raw copy
+   and manifest and stop. Do not run audit to make the journal pass.
+4. Only after those checks, capture the canonical audit and its exit status
+   through [Inspect a Run](operate.md#inspect-a-run). Stop on audit failure or
+   changed graph identity; retain both raw bytes and command output.
+5. Reconcile every accepted external effect without a terminal receipt through
+   its owning contract. Stop while an outcome is unknown or no supported
+   reconciliation method exists.
+6. Use [Recover After Interruption](operate.md#recover-after-interruption)
+   only when its original-identity and reconciliation checks pass. That
+   command reopens the original run; starting a new run is not recovery.
+7. After the command exits and writers are stopped, repeat raw preservation
+   and strict inspection before the final audit. Compare the original and
+   final state and retain recovery output, external receipts, and cleanup.
 
-Do not recover a terminal run.
-Do not resume a wait with a signal from before the restored point.
+If the owning incident procedure later authorizes canonical tail repair,
+retain the verified original raw bytes first, reconcile external effects, and
+record the authorized command and its actual file changes. The automatic
+truncation is not proof that recovery succeeded.
+
+Do not recover a terminal run. Do not resume a wait with a signal from before
+the restored point. Retain the writer-fence record and all failed attempts;
+release writers only through the owners' verified recovery procedure.
 
 ## Node or Cluster Loss
 
@@ -760,7 +793,9 @@ Required order after platform recovery:
 5. Restore stateful services and verify native data.
 6. Restore Nova, Buster, Prism, and role PVCs.
 7. Deploy workloads without changing image or schema versions.
-8. Verify mTLS, role smoke, pipeline audit, and Prism application data.
+8. Verify mTLS, role smoke, and Prism application data. For Nova, complete
+   [Pipeline State Recovery](#pipeline-state-recovery), including raw
+   preservation and strict inspection before pipeline audit.
 9. Rebuild derived data.
 10. Reopen admission only after verification.
 
@@ -807,7 +842,7 @@ not authorize the request.
 | Identity | Expected SVID passes identity verification and the intended application request succeeds; a wrong identity is denied |
 | Database | Native integrity plus application query |
 | Artifacts | Digest verification plus application reader |
-| Nova | Audit projection and legal recovery decision |
+| Nova | [Pipeline State Recovery](#pipeline-state-recovery): stopped writers, verified raw run and adapter copies, strict copied-journal inspection, then audit projection and legal recovery decision |
 | Buster | Existing job, result, evidence, and receipt readers |
 | Prism | Real project, design revision, baseline, and Studio open |
 | Ops Pod | Login state, MCP verification, workspace, and independent management path |
@@ -857,3 +892,6 @@ At the irreversible point, record:
 - Actual data loss and elapsed recovery time, or explicit `not measured` results, plus comparison with each approved target.
 - Cutover and irreversible-point record.
 - Failed restore evidence and retained original media.
+- For Nova, original run/platform identities, writer-fence proof, verified raw
+  run and adapter copies, manifests, strict inspection results, and every
+  authorized repair command with its actual changes.

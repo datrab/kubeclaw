@@ -205,12 +205,33 @@ mean that every blocking test passed. Nova must fetch the exact result digest,
 verify its identities and receipts, import every referenced evidence digest,
 and then calculate the gate decision.
 
-Audit the durable run with the returned identity:
+Before audit, complete [Inspect a Run](../operate.md#inspect-a-run) at the
+original Nova repository in Bash. Use the original platform path and the run
+ID from the retained start command. Confirm that the run owner has exited,
+stop new writes to that run and the owning adapter stores, and preserve
+verified raw run and adapter copies. Audit can create append locks and truncate
+an incomplete journal tail before parsing. Require successful strict parsing
+of every copied run journal. Keep rejected raw bytes and stop on copy,
+identity, or parse failure. Define the canonical `preserve_run_state` helper
+in this shell; do not duplicate or replace it with a storage-opening reader.
 
-```text
-npm run pipeline -- \
-  --platform "<platform.json>" \
-  --audit "<run-id>"
+If a run is still active, retain its command output and use supported component
+or provider observations. Stop before audit when stopped-writer ownership and
+preservation cannot be established. Process containment is not a successful
+suite result. With all preservation checks complete, audit the returned identity:
+
+```bash
+export RUN_CONTROL_PLATFORM="<original-platform.json>"
+export RUN_CONTROL_RUN_ID="<run-id>"
+preserve_run_state || exit 1
+audit_status=0
+npm --silent run pipeline -- \
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --audit "$RUN_CONTROL_RUN_ID" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/audit.json" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/audit.stderr" || audit_status=$?
+printf '%s\n' "$audit_status" > "$RUN_CONTROL_OBSERVATION_ROOT/audit.exit" || exit 1
+test "$audit_status" -eq 0 || exit 1
 ```
 
 Record the Nova run and operation IDs, Buster job ID, plan digest, source revision, and
@@ -219,7 +240,15 @@ operation, the state moves outside `accepted`, `running`, and a terminal state,
 or Nova reports an identity or digest mismatch. A transport retry can reuse the
 stored request only when its bytes and idempotency key are unchanged.
 
-After process interruption, recover the same project and run identity:
+After process interruption, repeat [Inspect a Run](../operate.md#inspect-a-run)
+with stopped run and adapter writers before audit or recovery. Retain original
+raw bytes, require strict copied-journal inspection, and reconcile accepted
+external effects through their owning contracts. Unknown outcomes or absent
+reconciliation methods stop recovery. If an incident owner later authorizes
+canonical tail repair, retain original bytes first and record the command and
+its actual file changes. Then follow
+[Recover After Interruption](../operate.md#recover-after-interruption) with the
+same original project, platform, graph, package snapshot, and run identity:
 
 ```text
 npm run pipeline -- \
@@ -308,7 +337,10 @@ revision and output. The proof owns temporary directories and removes them in
 its finalizer. If the process is killed, inspect only operating-system temporary
 storage for a directory with the proof prefix. Do not remove project files.
 
-For production, do not resubmit different content with an existing job ID.
+For production, complete [Inspect a Run](../operate.md#inspect-a-run) before
+any audit or interrupted-run recovery. Preserve verified raw run and adapter
+copies with writers stopped; strict copied-journal failure preserves raw bytes
+and stops the task. Do not resubmit different content with an existing job ID.
 Reconnect through Nova when Buster has accepted the job. The current pipeline
 CLI has no supported operator cancellation command. Process termination is not
 durable cancellation. For urgent containment, preserve evidence, stop new
@@ -536,9 +568,27 @@ if (value.status !== "succeeded" || value.completionScope !== "demo-handoff"
   || value.acceptanceReadiness !== "ready-for-acceptance") process.exit(1);
 process.stdout.write(value.runId);
 ' "$EVIDENCE_DIR/run-terminal.json")"
+```
+
+The returned terminal result is required before preservation. Do not stop an
+active pipeline and call that a successful exercise. Before the final audit,
+complete [Inspect a Run](../operate.md#inspect-a-run) in the same shell, using
+this original `PLATFORM_FILE` and `RUN_ID`. Verify that all run and owning-adapter
+writers stopped, retain verified adapter copies through their declared backup
+procedures, and define the canonical `preserve_run_state` helper. Audit can
+change locks and truncate an incomplete tail before parsing. Keep rejected raw
+bytes and stop on failed preservation or strict copied-journal inspection.
+Unknown ownership or an unavailable adapter backup stops the audit and leaves
+the exercise incomplete.
+
+```bash
+export RUN_CONTROL_PLATFORM="$PLATFORM_FILE"
+export RUN_CONTROL_RUN_ID="$RUN_ID"
+preserve_run_state || exit 1
+printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$EVIDENCE_DIR/raw-terminal.txt" || exit 1
 npm --silent run pipeline -- \
-  --platform "$PLATFORM_FILE" \
-  --audit "$RUN_ID" \
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --audit "$RUN_CONTROL_RUN_ID" \
   > "$EVIDENCE_DIR/audit-terminal.json"
 ```
 
@@ -618,7 +668,10 @@ effects, Buster result digest, and terminal event correlate to `RUN_ID`. The
 Nova terminal journal is pipeline authority. On an uncertain external outcome,
 do not start a replacement run. Reconcile the original effect, Buster job,
 registry digest, and lease identities. Keep the descriptor, compiled graph,
-audit, decision, and external receipts under their retention policies. Remove
+verified raw run and adapter copies, manifests, strict inspection results,
+audit, decision, and external receipts under their retention policies. Any
+later authorized canonical repair must keep the original bytes and record the
+command and its actual changes. Remove
 no unidentified namespace, lease, image, or registry blob.
 
 ## Expected Result

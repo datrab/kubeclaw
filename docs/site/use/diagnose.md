@@ -62,7 +62,8 @@ Use the same order for every incident:
 2. Check cluster and storage availability.
 3. Check workload health and Kubernetes events.
 4. Check service and role logs.
-5. Read durable run and job state.
+5. Read durable run and job state. For Nova, complete
+   [Durable Run Inspection](#durable-run-inspection) before audit.
 6. Check the external system for accepted effects.
 7. Decide retry, reconciliation, recovery, or escalation.
 
@@ -134,19 +135,53 @@ A passing smoke does not prove a specific pipeline attempt.
 
 ## Durable Run Inspection
 
-Read the canonical audit:
+Before any audit, recovery, or resume, complete
+[Inspect a Run](operate.md#inspect-a-run) in Bash at the original Nova
+repository root. Use the original platform path and run ID from the retained
+start command. Confirm that the run owner has exited, that no new operation
+can write the run, and that the owning adapter writers are stopped. Stop if
+ownership or the original identities are unknown. Do not audit an active run
+to discover its identity; use the retained command output and the component's
+supported observation path while work continues.
+
+Audit is not read-only. [The audit reader opens FileJournal](https://github.com/datrab/kubeclaw/blob/1864cd8c9d82cafb2f259ac72bb8dfba67388882/skills/nova/core/telemetry/audit.ts#L14-L18).
+[Its constructor truncates an incomplete tail before parsing](https://github.com/datrab/kubeclaw/blob/1864cd8c9d82cafb2f259ac72bb8dfba67388882/skills/nova/core/state/journal.ts#L30-L77),
+and [its mutex creates the append-lock file](https://github.com/datrab/kubeclaw/blob/1864cd8c9d82cafb2f259ac72bb8dfba67388882/skills/nova/core/state/file-mutex.ts#L8-L21).
+A later audit failure does not restore discarded bytes. Recovery and resume
+can open the same journals before rejecting a run or signal.
+
+Follow the canonical section to define `preserve_run_state`, verify a complete
+raw run copy, and preserve the owning adapters' stores through their declared
+backup procedures. Retain partial bytes, signals, effects, snapshots, and lock
+files. Require successful strict parsing of every copied run journal before
+ordinary audit. On a copy comparison, incomplete record, sequence, or hash
+failure, preserve the raw copy and manifest and stop. Do not repair the source
+to make inspection pass.
+
+After the adapter copies are verified and writers remain stopped, capture the
+audit with the same original identities:
 
 ```bash
-npm run pipeline -- \
-  --platform "<platform.json>" \
-  --audit "<run-id>"
+export RUN_CONTROL_PLATFORM="<original-platform.json>"
+export RUN_CONTROL_RUN_ID="<original-run-id>"
+preserve_run_state || exit 1
+audit_status=0
+npm --silent run pipeline -- \
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --audit "$RUN_CONTROL_RUN_ID" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/audit.json" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/audit.stderr" || audit_status=$?
+printf '%s\n' "$audit_status" > "$RUN_CONTROL_OBSERVATION_ROOT/audit.exit" || exit 1
+test "$audit_status" -eq 0 || exit 1
 ```
 
-Preserve the JSON before recovery.
-Compare it with provider and Kubernetes evidence by identity, not by time alone.
-
-Do not edit journal, snapshot, effect, wait, or receipt files.
-Manual edits break the recovery and audit boundary.
+Retain the raw-copy path and manifests with the incident record, alongside
+JSON, stderr, and exit status. Compare the audit with provider and Kubernetes
+evidence by identity, not by time alone. If a later owner-authorized incident
+procedure permits canonical tail repair, keep the original raw bytes,
+reconcile external effects, and record the command and its actual changes.
+Do not edit journal, snapshot, effect, wait, or receipt files to manufacture a
+recovery result.
 
 ## Capacity and Growth
 
@@ -198,7 +233,7 @@ Never submit a second request from absence of a UI update alone.
 | Git operation conflicts | Worktree path, lock owner, branch, remote state | Resolve in the owned worktree; reconcile a possibly successful push |
 | Gate failed | Gate decision, original report, source digest, provider receipt | Repair the defect or follow the declared repair route |
 | External effect is uncertain | Effect request, idempotency key, external resource, receipt | Inspect the external state, preserve evidence, stop, and escalate; never blind-retry or edit the journal |
-| Resume fails | Active wait ID, signal type, issuer, expiry, graph digest | Create one matching current signal or start a new run |
+| Resume fails | Preserve raw state through [Durable Run Inspection](#durable-run-inspection), then check active wait ID, signal type, issuer, expiry, and graph digest | Stop on rejected copied journals or unknown effects; use [Resume a Waiting Run](operate.md#approve-or-resume-a-wait) only with the original identities and current wait |
 | Cancellation seems incomplete | Durable terminal event, process owner, child processes | Keep resources; escalate until quiescence is proven |
 | Plugin is unavailable | Registry validation, activation log, selected provider, grant | Correct platform configuration and start a new governed run |
 | PVC is `Lost`, or events report `ClaimLost` / `ClaimMisbound` | Read stored `volumeName`, the named PV and namespace/name/UID in `claimRef`; compare retained prior identities, not names alone | Follow [lost binding diagnosis](../reference/configuration-change-impact.md#a-previously-bound-claim-loses-its-binding); stop before replacement storage or claimRef edits and obtain storage-owner data observations |
@@ -244,6 +279,10 @@ For Buster, current ownership does not cover every capability child in productio
 [Whole-attempt resource ownership](../status/open-issues.md#capability-work-is-missing-from-the-attempt-budget) tracks the boundary.
 
 ## Lost Responses and Uncertain Effects
+
+For Nova, complete [Durable Run Inspection](#durable-run-inspection) before
+using audit to find the request or receipt. Keep stopped-writer raw copies and
+strict inspection results before any recovery or resume.
 
 Use this decision sequence:
 
@@ -338,6 +377,16 @@ The [audit reader rebuilds hash-verified durable events from filesystem state](h
 These mechanisms explain why Redis availability and readable Nova lifecycle
 state are separate observations. The checks for this page did not execute a Redis outage.
 
+Before the first audit in this exercise, complete
+[Inspect a Run](operate.md#inspect-a-run) and define its canonical
+`preserve_run_state` helper in the same shell. Select an existing run from its
+retained start record whose Nova owner has exited. Verify its original
+`PLATFORM_FILE` and `SELECTED_RUN_ID`, stop new writes to that run and its
+owning adapter stores, and retain verified adapter copies. Keep these writers
+stopped through both audits. Do not interrupt an active pipeline to manufacture
+a successful Redis exercise. If ownership or preservation cannot be established,
+stop before the fault. Role health checks are separate from run writers.
+
 Precondition: `statefulset/redis-master` has a positive ready replica count,
 its PVC is bound, and both role smoke checks pass. Both roles must have Redis
 health checks enabled; Nova must also have its Redis stream startup check
@@ -356,7 +405,11 @@ kubectl -n "$NAMESPACE" get pvc -l app.kubernetes.io/name=redis \
   -o jsonpath='{range .items[*]}{.metadata.name}{" "}{.metadata.uid}{"\n"}{end}' \
   | sort > "$EVIDENCE_DIR/redis-pvc-before.txt"
 test -s "$EVIDENCE_DIR/redis-pvc-before.txt"
-npm --silent run pipeline -- --platform "$PLATFORM_FILE" --audit "$SELECTED_RUN_ID" \
+export RUN_CONTROL_PLATFORM="$PLATFORM_FILE"
+export RUN_CONTROL_RUN_ID="$SELECTED_RUN_ID"
+preserve_run_state || exit 1
+printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$EVIDENCE_DIR/redis-raw-before.txt" || exit 1
+npm --silent run pipeline -- --platform "$RUN_CONTROL_PLATFORM" --audit "$RUN_CONTROL_RUN_ID" \
   > "$EVIDENCE_DIR/redis-nova-audit-before.json"
 redis_restore_pending=1
 restore_redis() {
@@ -411,7 +464,9 @@ try {
   console.log(JSON.stringify({ streamKey: stream, entryId: rows[0][0] }));
 } finally { await redis.quit().catch(() => redis.disconnect()); }
 ' > "$EVIDENCE_DIR/redis-stream-after.json"
-npm --silent run pipeline -- --platform "$PLATFORM_FILE" --audit "$SELECTED_RUN_ID" \
+preserve_run_state || exit 1
+printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$EVIDENCE_DIR/redis-raw-after.txt" || exit 1
+npm --silent run pipeline -- --platform "$RUN_CONTROL_PLATFORM" --audit "$RUN_CONTROL_RUN_ID" \
   > "$EVIDENCE_DIR/redis-nova-audit-after.json"
 node - "$EVIDENCE_DIR/redis-nova-audit-before.json" \
   "$EVIDENCE_DIR/redis-nova-audit-after.json" "$SELECTED_RUN_ID" <<'NODE'
@@ -1844,6 +1899,16 @@ Those checks cover the source/Git prefix, not a full live Buster run. This
 unavailable-revision exercise and its later successful run are not recorded as
 executed here.
 
+Before either run audit below, complete
+[Inspect a Run](operate.md#inspect-a-run) and define the canonical
+`preserve_run_state` helper in this shell. Each start command must have exited;
+verify stopped run and adapter writers and preserve the owning adapter stores
+through their declared backup procedures for that exact run. Use the original
+`PLATFORM_FILE` and each descriptor's original run ID. A returned status alone
+does not prove that all writers stopped. On missing ownership, failed copies,
+or rejected strict copied journals, retain raw bytes and stop before audit or
+any new run. No interruption or tail repair can substitute for terminal success.
+
 Use a disposable registered `nova-project.v2` project whose repository and
 immutable release ref are owned by the acceptance operator. Its compact Buster
 plan must finish without another human wait so this exercise can distinguish
@@ -1951,9 +2016,21 @@ npm --silent run pipeline -- \
 git_run_status=$?
 set -e
 test "$git_run_status" -eq 1
+```
+
+Before the fault-run audit, verify stopped writers and complete the adapter
+copies for `GIT_FAULT_RUN_ID` through their declared backup procedures. Then
+perform the canonical raw-run preservation and strict copied-journal checks.
+Stop and retain raw bytes if either store copy or inspection fails.
+
+```bash
+export RUN_CONTROL_PLATFORM="$PLATFORM_FILE"
+export RUN_CONTROL_RUN_ID="$GIT_FAULT_RUN_ID"
+preserve_run_state || exit 1
+printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$GIT_EXERCISE_DIR/raw-fault.txt" || exit 1
 npm --silent run pipeline -- \
-  --platform "$PLATFORM_FILE" \
-  --audit "$GIT_FAULT_RUN_ID" \
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --audit "$RUN_CONTROL_RUN_ID" \
   > "$GIT_EXERCISE_DIR/audit-fault.json"
 node - "$GIT_EXERCISE_DIR/run-fault.json" \
   "$GIT_EXERCISE_DIR/audit-fault.json" <<'NODE'
@@ -2001,9 +2078,22 @@ npm --silent run pipeline -- \
   --project "$GIT_SUCCESS_PROJECT" \
   > "$GIT_EXERCISE_DIR/run-success.json" \
   2> "$GIT_EXERCISE_DIR/run-success.stderr"
+```
+
+Before the successful-run audit, verify stopped writers and complete the
+adapter copies for `GIT_SUCCESS_RUN_ID` through their declared backup
+procedures. Preserve and strictly inspect this distinct run's raw bytes.
+Missing copy or ownership proof stops the exercise; retain the terminal
+command output and do not replace it with an interrupted run.
+
+```bash
+export RUN_CONTROL_PLATFORM="$PLATFORM_FILE"
+export RUN_CONTROL_RUN_ID="$GIT_SUCCESS_RUN_ID"
+preserve_run_state || exit 1
+printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$GIT_EXERCISE_DIR/raw-success.txt" || exit 1
 npm --silent run pipeline -- \
-  --platform "$PLATFORM_FILE" \
-  --audit "$GIT_SUCCESS_RUN_ID" \
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --audit "$RUN_CONTROL_RUN_ID" \
   > "$GIT_EXERCISE_DIR/audit-success.json"
 node - "$GIT_EXERCISE_DIR/run-success.json" \
   "$GIT_EXERCISE_DIR/audit-success.json" \
@@ -2119,7 +2209,10 @@ Stop and escalate for any of these conditions:
 
 ## Recovery and Cleanup
 
-Use [Configure and Operate](operate.md) for supported run recovery.
+Before run audit, recovery, or resume, complete
+[Durable Run Inspection](#durable-run-inspection). Use
+[Recover After Interruption](operate.md#recover-after-interruption) for supported
+run recovery; stop while copied journals or external outcomes remain uncertain.
 Use [Back Up and Recover](recovery.md) for state restoration.
 
 After resolution:

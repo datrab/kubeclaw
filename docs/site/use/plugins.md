@@ -309,12 +309,40 @@ approved window:
 npm run pipeline -- \
   --platform "<candidate-platform.json>" \
   --project "<controlled-project.json>"
-npm run pipeline -- \
-  --platform "<candidate-platform.json>" \
-  --audit "<run-id>"
 ```
 
-Take `<run-id>` from the first command when it returns one. Stop new admission on
+Take `<run-id>` from the start command when it returns one. Before audit,
+complete [Inspect a Run](operate.md#inspect-a-run) in the same Bash shell.
+Use that original candidate-platform path and run ID, confirm the run owner
+has exited, stop new run and owning-adapter writes, and preserve verified raw
+run and adapter copies. Audit can create locks and truncate an incomplete
+journal tail before parsing. Require successful strict parsing of the copied
+journals; retain rejected bytes and stop on any failure. Define the canonical
+`preserve_run_state` helper from that section before this block:
+
+```bash
+export RUN_CONTROL_PLATFORM="<candidate-platform.json>"
+export RUN_CONTROL_RUN_ID="<run-id>"
+preserve_run_state || exit 1
+audit_status=0
+npm --silent run pipeline -- \
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --audit "$RUN_CONTROL_RUN_ID" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/audit.json" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/audit.stderr" || audit_status=$?
+printf '%s\n' "$audit_status" > "$RUN_CONTROL_OBSERVATION_ROOT/audit.exit" || exit 1
+test "$audit_status" -eq 0 || exit 1
+```
+
+Retain the raw-copy path, manifests, audit stdout/stderr, and actual exit status.
+If an owner later authorizes canonical tail repair, keep original bytes,
+reconcile external effects, and record the command and actual file changes.
+If startup remains active, ownership is unknown, or adapter stores cannot be
+quiesced and copied, stop before audit. Keep the original command output and
+use the component owner's supported observation path. Process containment does
+not prove the controlled project succeeded.
+
+Stop new admission on
 adapter startup or readiness failure, or when startup remains pending after its
 timeout. Retain the adapter ID, dependency, configuration digest, elapsed time,
 available run identity, and known or unresolved shutdown outcome. Do not treat
@@ -339,12 +367,37 @@ reconciled.
 
 ### 4. Drain and disable
 
-Stop admission of new projects that select the registration. Audit every active
-run and let safe work reach a terminal state:
+Stop admission of new projects that select the registration. Inventory each
+pinned run from its retained start record and supported component observations.
+Let safe active work finish under its original owner. Do not run audit while
+that run or its owning adapter stores have active writers.
+
+For each run whose owner has exited, complete
+[Inspect a Run](operate.md#inspect-a-run) before audit. Use its original
+platform and run ID, verify stopped writers, and preserve verified raw run and
+owning-adapter copies. Audit can change lock files and incomplete journal tails.
+Require strict copied-journal inspection to succeed; preserve rejected raw
+bytes and stop on failure. With the canonical helper defined in the same shell:
 
 ```bash
-npm run pipeline -- --platform "<active-platform.json>" --audit "<run-id>"
+export RUN_CONTROL_PLATFORM="<original-platform.json>"
+export RUN_CONTROL_RUN_ID="<run-id>"
+preserve_run_state || exit 1
+audit_status=0
+npm --silent run pipeline -- --platform "$RUN_CONTROL_PLATFORM" --audit "$RUN_CONTROL_RUN_ID" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/audit.json" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/audit.stderr" || audit_status=$?
+printf '%s\n' "$audit_status" > "$RUN_CONTROL_OBSERVATION_ROOT/audit.exit" || exit 1
+test "$audit_status" -eq 0 || exit 1
 ```
+
+Retain a separate raw-copy path, manifests, audit output, and exit status for
+each run. If a writer remains active or its ownership cannot be established,
+keep the plugin and dependencies available and stop disablement. This page
+provides no non-mutating live audit command. An owner-supported containment
+procedure can stop a process, but cannot establish terminal completion. Any
+later authorized canonical repair retains original bytes and records actual
+changes through [Inspect a Run](operate.md#inspect-a-run).
 
 There is no supported operator cancel command. If a run remains active or
 waiting, keep the plugin package, schema, configuration, secrets, and dependency
