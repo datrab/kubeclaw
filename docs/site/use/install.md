@@ -5,7 +5,7 @@ Audience: Kubernetes platform operator, security operator
 Owner: platform operations
 Evidence: scripts/deploy.sh; docs/generated/inventory/deploy-script.json
 Applies to: current selected runtime release
-Last verified: 2026-10-11; local extracted-command and release-boundary checks only; no live cluster result is available
+Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available
 
 ## Objective
 
@@ -378,7 +378,7 @@ complete. No such reduced-profile result is established here.
 >
 > **Revision:** `d68da902c174574d1186ffd4a3ff29e95b63474e`.
 >
-> **Limit:** Source inspection establishes selection and the verifier's prerequisites; it does not establish live trust or a reduced-profile verifier.
+> **Limit:** These source paths establish selection and the verifier's prerequisites; it does not establish live trust or a reduced-profile verifier.
 
 The application and Prism namespaces are already exported and read-only in
 the bound shell. Inspect those exact targets without changing either value:
@@ -483,7 +483,7 @@ Never use an unreviewed default namespace to fill a missing plan entry.
 | Operation | Resources and verbs to include | Scope |
 | --- | --- | --- |
 | Initial discovery and binding | `get` named namespaces, nodes, DNS Service, StorageClass and Argo CRD; `list` nodes, StorageClasses, kube-system Pods and DNS EndpointSlices | Cluster; `kube-system` for DNS/Pods |
-| Disposable probe | Namespace `create`, named `get`, `delete`, `list`, `watch`; Pod and PVC `get`, `list`, `watch`, `create`, `patch` for apply; event `list`; Pod log `get`; named StorageClass/PV `get`, PV `list`/`watch` for observation | Exact future probe namespace; namespaces/StorageClass/PVs are cluster-scoped |
+| Disposable probe | Namespace `create`, named `get`, `delete`, `list`, `watch`; Pod and PVC `get`, `list`, `watch`, `create` for single-object creation; event `list`; Pod log `get`; named StorageClass/PV `get`, PV `list`/`watch` for observation | Exact future probe namespace; namespaces/StorageClass/PVs are cluster-scoped |
 | Namespace and Secret setup | Namespace `get`, `create`, `patch`; Secret `get`, `list`, `create`, `patch` including key checks/copy | Application, separately selected Prism and Tailscale namespaces; source Secret `get` in `SRC_NS` (default `default`) when copy is selected |
 | Helm release storage, waits and atomic cleanup | Secret `get`, `list`, `create`, `update`, `patch`, `delete`; workload/Pod/Job `get`, `list`, `watch`; `get`, `create`, `update`, `patch`, `delete` for each selected chart resource and hook | Every selected release namespace; cluster scope for cluster-scoped chart resources |
 | Selected chart/manifests | Deployments, StatefulSets, DaemonSets, ReplicaSets, Jobs, CronJobs, Pods, Services, ConfigMaps, Secrets, ServiceAccounts, PVCs, Ingresses, NetworkPolicies, CiliumNetworkPolicies, PodDisruptionBudgets and Roles/RoleBindings as actually rendered | Their rendered namespaces; includes `spire-server`, `spire-system` and selected Tailscale namespace |
@@ -545,7 +545,7 @@ done < "$PREFLIGHT_AUTHORIZATION_PLAN"
 # These probe reads are required regardless of which runtime options are selected.
 for auth_verb in get list watch create delete; do require_authority "$auth_verb" namespaces cluster; done
 for auth_resource in pods persistentvolumeclaims; do
-  for auth_verb in get list watch create patch; do require_authority "$auth_verb" "$auth_resource" "$PREFLIGHT_NAMESPACE"; done
+  for auth_verb in get list watch create; do require_authority "$auth_verb" "$auth_resource" "$PREFLIGHT_NAMESPACE"; done
 done
 require_authority list events "$PREFLIGHT_NAMESPACE"
 require_authority get pods/log "$PREFLIGHT_NAMESPACE"
@@ -641,13 +641,39 @@ A `Delete` reclaim policy requests provisioner deletion; it is not a deletion
 receipt. A `Retain` or unknown policy requires a separately approved exact
 provider cleanup procedure, so stop this default probe before claim creation.
 
+Before the first namespace CREATE, the platform and storage owners must enforce
+exclusive ownership for the complete probe lifetime. It must prevent namespace,
+Pod and PVC creation, deletion or replacement by competing administrators,
+controllers or desired-state changes. The approved original CREATE operations and initial storage allocation and
+binding remain permitted within the owned procedure. Exclude competing changes
+to the recorded PVC/PV binding or provider asset, and unowned objects or
+configuration changes. A Pending claim that binds during reconciliation needs
+fresh owner clearance before deletion. An unexpected changed binding or
+replacement requires owner reconciliation; never change the approved baseline
+to make cleanup pass. Keep this exclusion through each dependent mutation,
+reconciliation, namespace deletion, and the final independent Kubernetes and
+provider disposition checks. Confirm that it still applies before each write.
+A shell variable or UID comparison does not enforce this exclusion.
+Check that the current namespace UID equals the original creating UID before
+PVC and Pod creation. A precheck is non-atomic; if the owner cannot enforce
+that complete lifetime exclusion, stop creation and retain evidence.
+
 Every `probe_snapshot` and event/log read first writes a new private directory
 under `observations`. It retains the command, UTC time, reason, complete output,
 stderr and actual exit status, including failed reads. The root-level files are
 latest working copies for `probe_field`; they are not the historical record.
 Each guarded `probe_capture` also keeps its output, stderr, exit, completion
-status and all working files in a new `captures` directory, even when capture
-stops early. The indexes identify each attempt. Read-only file modes prevent
+state result and all working files in a new `captures` directory, even when capture
+stops early. The indexes identify each attempt. `PROBE_CAPTURE_STATUS=complete` is set only
+after every required local write, copy, index, permission and terminal output
+operation succeeds. The API command exit remains in its observation even if
+local retention fails; `PROBE_RETENTION_STATUS` reports retention separately.
+`PROBE_COMMAND_STATUS` is the command's actual exit, or `not-run` when local
+preparation fails before invocation. Open output files before invoking the
+command, so a local open failure cannot become an apparent API exit. Seal the
+original command receipt before copying it to the working files. If local retention cannot write the exit
+file, keep the partial attempt and the shell's known status;
+this is incomplete evidence and forbids cleanup. Read-only file modes prevent
 accidental overwrite; retain these directories with the audit owner. On an
 interrupted shell or failed local copy, retain even an incomplete attempt and
 stop cleanup until the owner reconciles it. Do not rerun preparation in the
@@ -657,11 +683,12 @@ same evidence directory or overwrite any previous attempt.
 export PREFLIGHT_STORAGE_CLASS="<storage-class>"
 export PREFLIGHT_STORAGE_REQUEST="<storage-request>"
 export PREFLIGHT_EVIDENCE_DIR="<evidence-dir>"
-export PREFLIGHT_IMAGE="$(node -e '
+PREFLIGHT_IMAGE="$(node -e '
 const value = require("./versions.json").buildArgs.OPS_NODE_BASE;
 if (!/^[^@]+@sha256:[a-f0-9]{64}$/.test(value)) process.exit(1);
 process.stdout.write(value);
-')"
+')" || exit 1
+export PREFLIGHT_IMAGE
 : "${PREFLIGHT_NAMESPACE:?Complete the authorization preflight first}"
 test -n "$PREFLIGHT_STORAGE_CLASS" && test -n "$PREFLIGHT_STORAGE_REQUEST"
 test ! -e "$PREFLIGHT_EVIDENCE_DIR"
@@ -678,20 +705,31 @@ PROBE_RUN_STATUS=not-run
 mkdir -m 0700 "$PREFLIGHT_EVIDENCE_DIR/observations" "$PREFLIGHT_EVIDENCE_DIR/captures"
 # Each read owns new output, stderr and exit files before the working copy changes.
 probe_observe() {
-  local file="$1" status observation
+  local file="$1" status observation output_fd stderr_fd
+  PROBE_RETENTION_STATUS=failed
+  PROBE_COMMAND_STATUS=not-run
   shift
   observation="$(mktemp -d "$PREFLIGHT_EVIDENCE_DIR/observations/read.XXXXXX")" || return 1
   date -u +%Y-%m-%dT%H:%M:%SZ > "$observation/time.txt" || return 1
   printf '%s\n' "${PROBE_CAPTURE_REASON:-initial preparation}" > "$observation/reason.txt" || return 1
   printf '%q ' "$@" > "$observation/command.txt" || return 1
   printf '\n' >> "$observation/command.txt" || return 1
-  if "$@" > "$observation/output" 2> "$observation/stderr"; then status=0; else status=$?; fi
+  exec {output_fd}> "$observation/output" || return 1
+  if exec {stderr_fd}> "$observation/stderr"; then :; else
+    exec {output_fd}>&- || return 1
+    return 1
+  fi
+  if "$@" >&"$output_fd" 2>&"$stderr_fd"; then status=0; else status=$?; fi
+  PROBE_COMMAND_STATUS="$status"
+  exec {output_fd}>&- || return 1
+  exec {stderr_fd}>&- || return 1
   printf '%s\n' "$status" > "$observation/exit" || return 1
-  cp -- "$observation/output" "$PREFLIGHT_EVIDENCE_DIR/$file" || return 1
-  cp -- "$observation/stderr" "$PREFLIGHT_EVIDENCE_DIR/$file.stderr" || return 1
-  cp -- "$observation/exit" "$PREFLIGHT_EVIDENCE_DIR/$file.exit" || return 1
-  printf '%s\t%s\t%s\n' "$observation" "$file" "$status" >> "$PREFLIGHT_EVIDENCE_DIR/observation-index.tsv" || return 1
   chmod -R a-w -- "$observation" || return 1
+  cp -T -- "$observation/output" "$PREFLIGHT_EVIDENCE_DIR/$file" || return 1
+  cp -T -- "$observation/stderr" "$PREFLIGHT_EVIDENCE_DIR/$file.stderr" || return 1
+  cp -T -- "$observation/exit" "$PREFLIGHT_EVIDENCE_DIR/$file.exit" || return 1
+  printf '%s\t%s\t%s\n' "$observation" "$file" "$status" >> "$PREFLIGHT_EVIDENCE_DIR/observation-index.tsv" || return 1
+  PROBE_RETENTION_STATUS=complete
   return "$status"
 }
 probe_snapshot() {
@@ -699,7 +737,7 @@ probe_snapshot() {
   local arguments=(get "$resource" "$name" --ignore-not-found -o json)
   [[ -z $namespace ]] || arguments+=(-n "$namespace")
   if probe_observe "$file" bound_kubectl "${arguments[@]}"; then return 0; else status=$?; fi
-  printf 'PROBE_READ_FAILED: %s/%s\n' "$resource" "$name" >&2
+  printf 'PROBE_READ_FAILED: %s/%s\n' "$resource" "$name" >&2 || return 1
   return "$status"
 }
 probe_field() {
@@ -711,12 +749,32 @@ for (const field of process.argv[3].split('.')) value = value?.[field];
 process.stdout.write(value === undefined || value === null ? '' : String(value));
 NODE
 }
+probe_field_equals() {
+  local observed
+  observed="$(probe_field "$1" "$2")" || return 1
+  test "$observed" = "$3"
+}
+probe_created_uid() {
+  node - "$PREFLIGHT_EVIDENCE_DIR/$1" "$2" "$3" "${4:-}" <<'NODE'
+const fs = require('node:fs');
+const [file, kind, name, namespace] = process.argv.slice(2);
+const object = JSON.parse(fs.readFileSync(file, 'utf8'));
+if (object.apiVersion !== 'v1' || object.kind !== kind || object.metadata?.name !== name
+  || (object.metadata.namespace ?? '') !== namespace
+  || typeof object.metadata.uid !== 'string' || !object.metadata.uid
+  || object.metadata.deletionTimestamp) throw new Error('CREATING_RESPONSE_REQUIRED');
+process.stdout.write(object.metadata.uid);
+NODE
+}
 probe_capture_state() {
   PROBE_CAPTURE_STATUS=failed
   probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace.json || return 1
   SNAPSHOT_NAMESPACE_UID="$(probe_field namespace.json metadata.uid)" || return 1
   if [[ -n $PREFLIGHT_NAMESPACE_UID && $SNAPSHOT_NAMESPACE_UID != "$PREFLIGHT_NAMESPACE_UID" ]]; then
     printf '%s\n' 'PROBE_NAMESPACE_IDENTITY_CHANGED_OR_ABSENT' >&2; return 1
+  fi
+  if [[ -n $SNAPSHOT_NAMESPACE_UID && -z $PREFLIGHT_NAMESPACE_UID ]]; then
+    printf '%s\n' 'PROBE_NAMESPACE_CREATING_IDENTITY_UNKNOWN' >&2; return 1
   fi
   probe_snapshot pod dependency-probe pod.json "$PREFLIGHT_NAMESPACE" || return 1
   probe_snapshot pvc dependency-probe pvc.json "$PREFLIGHT_NAMESPACE" || return 1
@@ -726,7 +784,9 @@ probe_capture_state() {
   if [[ -n ${PREFLIGHT_POD_UID:-} && $observed_pod_uid != "$PREFLIGHT_POD_UID" ]]; then
     printf '%s\n' 'PROBE_POD_IDENTITY_CHANGED_OR_ABSENT' >&2; return 1
   fi
-  PREFLIGHT_POD_UID="$observed_pod_uid"
+  if [[ -n $observed_pod_uid && -z $PREFLIGHT_POD_UID ]]; then
+    printf '%s\n' 'PROBE_POD_CREATING_IDENTITY_UNKNOWN' >&2; return 1
+  fi
   observed_pvc_uid="$(probe_field pvc.json metadata.uid)" || return 1
   observed_pv_name="$(probe_field pvc.json spec.volumeName)" || return 1
   if [[ -n $PREFLIGHT_PVC_UID && $observed_pvc_uid != "$PREFLIGHT_PVC_UID" ]]; then
@@ -735,7 +795,9 @@ probe_capture_state() {
   if [[ -n $PREFLIGHT_PV_NAME && $observed_pv_name != "$PREFLIGHT_PV_NAME" ]]; then
     printf '%s\n' 'PROBE_PV_BINDING_CHANGED' >&2; return 1
   fi
-  PREFLIGHT_PVC_UID="$observed_pvc_uid"
+  if [[ -n $observed_pvc_uid && -z $PREFLIGHT_PVC_UID ]]; then
+    printf '%s\n' 'PROBE_PVC_CREATING_IDENTITY_UNKNOWN' >&2; return 1
+  fi
   PREFLIGHT_PV_NAME="$observed_pv_name"
   PREFLIGHT_PROVISIONER="$(probe_field storageclass.json provisioner)" || return 1
   PREFLIGHT_RECLAIM_POLICY="$(probe_field storageclass.json reclaimPolicy)" || return 1
@@ -744,11 +806,17 @@ probe_capture_state() {
     observed_pv_uid="$(probe_field pv.json metadata.uid)" || return 1
     test -n "$observed_pv_uid" || return 1
     if [[ -n $PREFLIGHT_PV_UID && $observed_pv_uid != "$PREFLIGHT_PV_UID" ]]; then return 1; fi
+    probe_field_equals pv.json spec.claimRef.namespace "$PREFLIGHT_NAMESPACE" || return 1
+    probe_field_equals pv.json spec.claimRef.name dependency-probe || return 1
+    probe_field_equals pv.json spec.claimRef.uid "$PREFLIGHT_PVC_UID" || return 1
     PREFLIGHT_PV_UID="$observed_pv_uid"
     PREFLIGHT_RECLAIM_POLICY="$(probe_field pv.json spec.persistentVolumeReclaimPolicy)" || return 1
-    PREFLIGHT_PROVIDER_ASSET_ID="$(probe_field pv.json spec.csi.volumeHandle)" || return 1
+    local observed_asset
+    observed_asset="$(probe_field pv.json spec.csi.volumeHandle)" || return 1
+    if [[ -n $PREFLIGHT_PROVIDER_ASSET_ID && $observed_asset != "$PREFLIGHT_PROVIDER_ASSET_ID" ]]; then return 1; fi
+    PREFLIGHT_PROVIDER_ASSET_ID="$observed_asset"
   else
-    printf '%s\n' 'NO_PV_VISIBLE: provider allocation is not established' > "$PREFLIGHT_EVIDENCE_DIR/pv-state.txt"
+    printf '%s\n' 'NO_PV_VISIBLE: provider allocation is not established' > "$PREFLIGHT_EVIDENCE_DIR/pv-state.txt" || return 1
   fi
   probe_observe events.txt bound_kubectl -n "$PREFLIGHT_NAMESPACE" get events \
     --sort-by=.metadata.creationTimestamp || return 1
@@ -760,99 +828,110 @@ const state = pod?.status?.containerStatuses?.find(item => item.name === 'probe'
 process.exit(state?.running || state?.terminated ? 0 : 1);
 NODE
   then
-    printf '%s\n' 'ATTEMPTING: log read outcome follows in probe.log.exit' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt"
+    printf '%s\n' 'ATTEMPTING: log read outcome follows in probe.log.exit' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt" || return 1
     probe_observe probe.log bound_kubectl -n "$PREFLIGHT_NAMESPACE" logs pod/dependency-probe || return 1
-    printf '%s\n' 'AVAILABLE: log read succeeded' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt"
+    printf '%s\n' 'AVAILABLE: log read succeeded' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt" || return 1
   else
-    rm -f -- "$PREFLIGHT_EVIDENCE_DIR/probe.log" "$PREFLIGHT_EVIDENCE_DIR/probe.log.stderr" "$PREFLIGHT_EVIDENCE_DIR/probe.log.exit"
-    printf '%s\n' 'NOT_AVAILABLE: Pod absent or probe container has not started' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt"
+    rm -f -- "$PREFLIGHT_EVIDENCE_DIR/probe.log" "$PREFLIGHT_EVIDENCE_DIR/probe.log.stderr" "$PREFLIGHT_EVIDENCE_DIR/probe.log.exit" || return 1
+    printf '%s\n' 'NOT_AVAILABLE: Pod absent or probe container has not started' > "$PREFLIGHT_EVIDENCE_DIR/probe-log-status.txt" || return 1
   fi
   printf '%s\n' "namespace_uid=$PREFLIGHT_NAMESPACE_UID" "observed_namespace_uid=$SNAPSHOT_NAMESPACE_UID" \
     "pod_uid=$PREFLIGHT_POD_UID" "pvc_uid=$PREFLIGHT_PVC_UID" "pv_name=$PREFLIGHT_PV_NAME" "pv_uid=$PREFLIGHT_PV_UID" \
     "provisioner=$PREFLIGHT_PROVISIONER" "provider_asset_id=$PREFLIGHT_PROVIDER_ASSET_ID" \
     "reclaim_policy=$PREFLIGHT_RECLAIM_POLICY" "run_status=$PROBE_RUN_STATUS" \
-    > "$PREFLIGHT_EVIDENCE_DIR/identities.txt"
-  PROBE_CAPTURE_STATUS=complete
+    > "$PREFLIGHT_EVIDENCE_DIR/identities.txt" || return 1
+  PROBE_CAPTURE_STATUS=state-checked
 }
 probe_capture() {
   local capture status capture_file
+  PROBE_CAPTURE_STATUS=failed
   PROBE_CAPTURE_REASON="${1:?Supply the observation or recovery decision}"
   capture="$(mktemp -d "$PREFLIGHT_EVIDENCE_DIR/captures/capture.XXXXXX")" || return 1
   date -u +%Y-%m-%dT%H:%M:%SZ > "$capture/time.txt" || return 1
   printf '%s\n' "$PROBE_CAPTURE_REASON" > "$capture/reason.txt" || return 1
   if probe_capture_state > "$capture/output" 2> "$capture/stderr"; then status=0; else status=$?; fi
+  PROBE_CAPTURE_STATUS=failed
   printf '%s\n' "$status" > "$capture/exit" || return 1
-  printf '%s\n' "$PROBE_CAPTURE_STATUS" > "$capture/status.txt" || return 1
+  printf '%s\n' "state-exit-$status; retention completion requires successful wrapper return" > "$capture/status.txt" || return 1
   mkdir -m 0700 "$capture/working-files" || return 1
   for capture_file in "$PREFLIGHT_EVIDENCE_DIR"/*; do
     [[ -f $capture_file ]] || continue
     cp -- "$capture_file" "$capture/working-files/" || return 1
   done
-  printf '%s\t%s\t%s\n' "$capture" "$PROBE_CAPTURE_STATUS" "$status" >> "$PREFLIGHT_EVIDENCE_DIR/capture-index.tsv" || return 1
+  printf '%s\t%s\t%s\n' "$capture" state-recorded "$status" >> "$PREFLIGHT_EVIDENCE_DIR/capture-index.tsv" || return 1
   chmod -R a-w -- "$capture" || return 1
-  cat -- "$capture/output"
-  cat -- "$capture/stderr" >&2
-  return "$status"
+  cat -- "$capture/output" || return 1
+  cat -- "$capture/stderr" >&2 || return 1
+  [[ $status == 0 ]] || return "$status"
+  printf '%s\n' complete > "$PREFLIGHT_EVIDENCE_DIR/capture-status.txt" || return 1
+  PROBE_CAPTURE_STATUS=complete
+  return 0
 }
 
 assert_cluster_binding
 probe_snapshot storageclass "$PREFLIGHT_STORAGE_CLASS" storageclass-before.json
 PREFLIGHT_PROVISIONER="$(probe_field storageclass-before.json provisioner)"
 test -n "$PREFLIGHT_PROVISIONER"
-test "$(probe_field storageclass-before.json reclaimPolicy)" = Delete
+probe_field_equals storageclass-before.json reclaimPolicy Delete
 probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace-before.json
-test -z "$(probe_field namespace-before.json metadata.uid)"
+probe_field_equals namespace-before.json metadata.uid ''
 for auth_resource in pods persistentvolumeclaims; do
-  for auth_verb in get list watch create patch; do require_authority "$auth_verb" "$auth_resource" "$PREFLIGHT_NAMESPACE"; done
+  for auth_verb in get list watch create; do require_authority "$auth_verb" "$auth_resource" "$PREFLIGHT_NAMESPACE"; done
 done
 require_authority get pods/log "$PREFLIGHT_NAMESPACE"
 require_authority list events "$PREFLIGHT_NAMESPACE"
-if bound_kubectl create namespace "$PREFLIGHT_NAMESPACE" \
-  > "$PREFLIGHT_EVIDENCE_DIR/namespace-create.stdout" 2> "$PREFLIGHT_EVIDENCE_DIR/namespace-create.stderr"; then
-  PROBE_RUN_STATUS=namespace-created
-  if probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace-created.json; then
-    if PREFLIGHT_NAMESPACE_UID="$(probe_field namespace-created.json metadata.uid)"; then :;
-    else PROBE_RUN_STATUS=namespace-identity-read-failed; fi
-  fi
-else
-  PROBE_RUN_STATUS="namespace-create-uncertain-exit-$?"
-fi
-printf '%s\n' "$PROBE_RUN_STATUS" > "$PREFLIGHT_EVIDENCE_DIR/run-status.txt"
+if probe_observe namespace-create.json bound_kubectl create namespace "$PREFLIGHT_NAMESPACE" -o json; then
+  if PREFLIGHT_NAMESPACE_UID="$(probe_created_uid namespace-create.json Namespace "$PREFLIGHT_NAMESPACE")"; then
+    readonly PREFLIGHT_NAMESPACE_UID
+    PROBE_RUN_STATUS=namespace-created
+  else PROBE_RUN_STATUS=namespace-creating-response-invalid; fi
+else PROBE_RUN_STATUS="namespace-create-uncertain-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS"; fi
+printf '%s\n' "$PROBE_RUN_STATUS" > "$PREFLIGHT_EVIDENCE_DIR/run-status.txt" || exit 1
+
 ```
 
-Proceed to claim/Pod apply only when `PROBE_RUN_STATUS=namespace-created` and
-`PREFLIGHT_NAMESPACE_UID` is nonempty. Namespace creation success alone does
-not prove the subsequent UID read succeeded. If either condition fails, run
-`probe_capture "uncertain namespace creation; observe only"` in a guarded `if` as shown below, retain the creation/read exit
-records, and ask the cluster owner to reconcile the uncertain creation. Do not
-adopt an existing namespace or delete one whose creating UID is unknown.
-After creation, the run block repeats the probe authorization checks in guarded calls.
-If any check fails, it records `authorization-changed`, skips apply and captures
-the namespace for partial-state recovery. A changed
-grant must not lead directly to an unobserved cleanup write.
+Proceed to claim/Pod creation only when `PROBE_RUN_STATUS=namespace-created`
+and `PREFLIGHT_NAMESPACE_UID` came from the retained successful CREATE response.
+The `-o json` response is one Namespace object, not the ordinary
+`namespace/<name> created` message. A later GET is an observation and must never
+supply the creating UID. Invalid JSON, a missing UID, wrong kind/name/namespace,
+a failed local retention operation, or a denied/lost response stops creation.
+Run the guarded capture below for evidence only. Keep all uncertain resources.
+The cluster owner must reconcile the authenticated creating audit record and
+original response, not approve today's same-name object's UID. The owner must
+supply a maintained identity-safe recovery procedure before any further write;
+this page has no generic command to adopt unknown original identities.
 
+The same rule applies separately to the PVC and Pod. Each single-object CREATE
+response establishes only that object's original UID, which becomes read-only.
+No multi-object apply response or partial output is treated as a complete
+creating receipt. PVC creation can succeed before Pod creation fails. Preserve each
+attempt and do not repeat creation to hide that partial result. A present
+object without creating proof stops complete capture and cleanup; successful
+absence is only an observation, not proof of no earlier provider allocation.
 
 ### Run the probe and capture every outcome
 
-The block applies only with the known creating namespace UID; otherwise it
-captures the uncertain namespace state and makes no further write. Each nonzero apply
-or wait result is recorded without closing the bound shell. An apply failure
-can leave only some objects; a wait failure does not remove them. Do not repeat
-apply to conceal that partial result.
+The block creates resources only with the known creating namespace UID and
+owner-enforced lifetime exclusion. Otherwise it captures observations and makes
+no further write. Every creation or wait attempt retains its output and actual
+exit separately from local retention failure. A wait failure does not remove
+resources. Stop on a partial or uncertain creation result.
 
 ```bash
 if [[ $PROBE_RUN_STATUS == namespace-created && -n $PREFLIGHT_NAMESPACE_UID ]]; then
 assert_cluster_binding
 for auth_resource in pods persistentvolumeclaims; do
-  for auth_verb in get list watch create patch; do
+  for auth_verb in get list watch create; do
     require_authority "$auth_verb" "$auth_resource" "$PREFLIGHT_NAMESPACE" || PROBE_RUN_STATUS=authorization-changed
   done
 done
 require_authority get pods/log "$PREFLIGHT_NAMESPACE" || PROBE_RUN_STATUS=authorization-changed
 require_authority list events "$PREFLIGHT_NAMESPACE" || PROBE_RUN_STATUS=authorization-changed
 if [[ $PROBE_RUN_STATUS == namespace-created ]]; then
-if bound_kubectl -n "$PREFLIGHT_NAMESPACE" apply -f - \
-  > "$PREFLIGHT_EVIDENCE_DIR/apply.stdout" 2> "$PREFLIGHT_EVIDENCE_DIR/apply.stderr" <<EOF
+probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace-before-pvc.json || PROBE_RUN_STATUS=namespace-read-failed
+if [[ $PROBE_RUN_STATUS == namespace-created ]] && probe_field_equals namespace-before-pvc.json metadata.uid "$PREFLIGHT_NAMESPACE_UID"; then
+if probe_observe pvc-create.json bound_kubectl -n "$PREFLIGHT_NAMESPACE" create -f - -o json <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -863,7 +942,19 @@ spec:
   resources:
     requests:
       storage: ${PREFLIGHT_STORAGE_REQUEST}
----
+EOF
+then
+  if PREFLIGHT_PVC_UID="$(probe_created_uid pvc-create.json PersistentVolumeClaim dependency-probe "$PREFLIGHT_NAMESPACE")"; then
+    readonly PREFLIGHT_PVC_UID
+    PROBE_RUN_STATUS=pvc-created
+  else PROBE_RUN_STATUS=pvc-creating-response-invalid; fi
+else PROBE_RUN_STATUS="pvc-create-uncertain-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS"; fi
+if [[ $PROBE_RUN_STATUS == pvc-created ]]; then
+probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace-before-pod.json || PROBE_RUN_STATUS=namespace-read-failed
+if [[ $PROBE_RUN_STATUS == pvc-created ]] && probe_field_equals namespace-before-pod.json metadata.uid "$PREFLIGHT_NAMESPACE_UID"; then
+probe_snapshot pvc dependency-probe pvc-before-pod.json "$PREFLIGHT_NAMESPACE" || PROBE_RUN_STATUS=pvc-read-failed
+if [[ $PROBE_RUN_STATUS == pvc-created ]] && probe_field_equals pvc-before-pod.json metadata.uid "$PREFLIGHT_PVC_UID"; then
+if probe_observe pod-create.json bound_kubectl -n "$PREFLIGHT_NAMESPACE" create -f - -o json <<EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -900,42 +991,31 @@ spec:
       persistentVolumeClaim: {claimName: dependency-probe}
 EOF
 then
-  PROBE_RUN_STATUS=applied
-  printf '%s\n' 0 > "$PREFLIGHT_EVIDENCE_DIR/apply.exit"
-else
-  probe_exit=$?
-  printf '%s\n' "$probe_exit" > "$PREFLIGHT_EVIDENCE_DIR/apply.exit"
-  PROBE_RUN_STATUS="apply-failed-exit-$probe_exit"
+  if PREFLIGHT_POD_UID="$(probe_created_uid pod-create.json Pod dependency-probe "$PREFLIGHT_NAMESPACE")"; then
+    readonly PREFLIGHT_POD_UID
+    PROBE_RUN_STATUS=created
+  else PROBE_RUN_STATUS=pod-creating-response-invalid; fi
+else PROBE_RUN_STATUS="pod-create-uncertain-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS"; fi
+else PROBE_RUN_STATUS=pvc-identity-changed; fi
+else PROBE_RUN_STATUS=namespace-identity-changed; fi
 fi
-if [[ $PROBE_RUN_STATUS == applied ]]; then
-  if bound_kubectl -n "$PREFLIGHT_NAMESPACE" wait pvc/dependency-probe \
-    --for=jsonpath='{.status.phase}'=Bound --timeout=180s \
-    > "$PREFLIGHT_EVIDENCE_DIR/pvc-wait.stdout" 2> "$PREFLIGHT_EVIDENCE_DIR/pvc-wait.stderr"; then
-    PROBE_RUN_STATUS=pvc-bound
-    printf '%s\n' 0 > "$PREFLIGHT_EVIDENCE_DIR/pvc-wait.exit"
-  else
-    probe_exit=$?; printf '%s\n' "$probe_exit" > "$PREFLIGHT_EVIDENCE_DIR/pvc-wait.exit"
-    PROBE_RUN_STATUS="pvc-wait-failed-exit-$probe_exit"
-  fi
+if [[ $PROBE_RUN_STATUS == created ]]; then
+  if probe_observe pvc-wait.stdout bound_kubectl -n "$PREFLIGHT_NAMESPACE" wait pvc/dependency-probe \
+    --for=jsonpath='{.status.phase}'=Bound --timeout=180s; then PROBE_RUN_STATUS=pvc-bound
+  else PROBE_RUN_STATUS="pvc-wait-failed-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS"; fi
 fi
 if [[ $PROBE_RUN_STATUS == pvc-bound ]]; then
-  if bound_kubectl -n "$PREFLIGHT_NAMESPACE" wait pod/dependency-probe \
-    --for=jsonpath='{.status.phase}'=Succeeded --timeout=180s \
-    > "$PREFLIGHT_EVIDENCE_DIR/pod-wait.stdout" 2> "$PREFLIGHT_EVIDENCE_DIR/pod-wait.stderr"; then
-    PROBE_RUN_STATUS=pod-succeeded
-    printf '%s\n' 0 > "$PREFLIGHT_EVIDENCE_DIR/pod-wait.exit"
-  else
-    probe_exit=$?; printf '%s\n' "$probe_exit" > "$PREFLIGHT_EVIDENCE_DIR/pod-wait.exit"
-    PROBE_RUN_STATUS="pod-wait-failed-exit-$probe_exit"
-  fi
+  if probe_observe pod-wait.stdout bound_kubectl -n "$PREFLIGHT_NAMESPACE" wait pod/dependency-probe \
+    --for=jsonpath='{.status.phase}'=Succeeded --timeout=180s; then PROBE_RUN_STATUS=pod-succeeded
+  else PROBE_RUN_STATUS="pod-wait-failed-command-$PROBE_COMMAND_STATUS-retention-$PROBE_RETENTION_STATUS"; fi
+fi
+else PROBE_RUN_STATUS=namespace-identity-changed; fi
 fi
 fi
-fi
-printf '%s\n' "$PROBE_RUN_STATUS" > "$PREFLIGHT_EVIDENCE_DIR/run-status.txt"
-if probe_capture "capture after creation, apply or wait result"; then
-  printf '%s\n' "$PROBE_CAPTURE_STATUS" > "$PREFLIGHT_EVIDENCE_DIR/capture-status.txt"
+printf '%s\n' "$PROBE_RUN_STATUS" > "$PREFLIGHT_EVIDENCE_DIR/run-status.txt" || exit 1
+if probe_capture "capture after creation or wait result"; then :
 else
-  printf '%s\n' 'CAPTURE_FAILED: retain resources and recover read authority' > "$PREFLIGHT_EVIDENCE_DIR/capture-status.txt"
+  printf '%s\n' 'CAPTURE_FAILED: retain resources and recover read authority' > "$PREFLIGHT_EVIDENCE_DIR/capture-status.txt" || exit 1
 fi
 ```
 
@@ -947,7 +1027,7 @@ PV's actual reclaim policy is `Delete`, and the last line of `probe.log` is
 ```bash
 test "$PROBE_RUN_STATUS" = pod-succeeded
 test "$PROBE_CAPTURE_STATUS" = complete
-test "$(probe_field pvc.json status.phase)" = Bound
+probe_field_equals pvc.json status.phase Bound
 test -n "$PREFLIGHT_PVC_UID" && test -n "$PREFLIGHT_PV_UID"
 test "$PREFLIGHT_RECLAIM_POLICY" = Delete
 test "$(tail -n 1 "$PREFLIGHT_EVIDENCE_DIR/probe.log")" = DNS_AND_STORAGE_PROBE_PASSED
@@ -960,8 +1040,8 @@ must not replace capture or delete failure evidence.
 
 | Captured state | Exact safe next action |
 | --- | --- |
-| Namespace creation failed or UID read failed | Run the guarded `probe_capture` call above. Preserve `namespace-create.*` and named-read exits. A present namespace with no known creating UID stays untouched. Cluster owner reconciles the create request, checks its audit record and confirms the creating identity; do not adopt its UID from a later name lookup. |
-| Apply failed; PVC or Pod absent | Successful empty named snapshots establish API absence of that object. Retain the other present object and its UID. Send the captured apply result and PVC/Pod state to the cluster/storage owners before any retry or cleanup. An absent Pod has no required log stream. |
+| Namespace creating response failed or invalid | Run the guarded `probe_capture` call above. Preserve `namespace-create.*` and named-read exits. A present namespace with no known creating UID stays untouched. Cluster owner reconciles the create request, checks its audit record and confirms the creating identity; do not adopt its UID from a later name lookup. |
+| PVC or Pod creation failed, partial or uncertain | Successful empty named snapshots establish API absence of that object. Retain the other present object and its UID. Send the retained creating response or uncertain request result and PVC/Pod state to the cluster/storage owners before any retry or cleanup. An absent Pod has no required log stream. |
 | PVC Pending, unbound or binding timed out | `pvc.json`, `storageclass.json` and `events.txt` show the exact claim UID, conditions and provisioner. No PV name or provider ID is assumed. Storage owner reconciles that claim with provisioner operations and identifies any allocated asset before authorizing cleanup. Do not call `get pv` with an empty name. |
 | Pod Pending, Failed, image pull or mount failure | Read captured Pod status and events. Capture logs only when the probe container has actually started. No started container is recorded as `NOT_AVAILABLE`, not as a successful DNS/storage result. Resolve the named scheduler, registry, mount or DNS owner; do not substitute a different image or class merely to pass. |
 | Capture denied, API failure, changed namespace/Pod/PVC/PV identity | The corresponding `.exit`/`.stderr` files identify the failed observation. Keep the namespace, claim and any volume. Restore the bound read authority through the platform owner, then repeat `probe_capture "read authority repaired; owner permits observation"` in the guarded form. Keep all previous observation and capture directories. Never interpret a denied read as absence or run deletion from stale snapshots. |
@@ -977,8 +1057,8 @@ old failure record.
 Before deletion, the cluster and storage owners must reconcile the current
 captured state and approve cleanup of this exact disposable namespace. The
 storage owner supplies a private `<probe-cleanup-clearance-json>` outside Git,
-with these fields: `namespaceUID`, `pvcUID`, `pvUID` (empty strings for
-successfully observed absent/unbound objects), `providerAssetId` (the known
+with these fields: `namespaceUID`, `pvcUID` (the original creating UIDs),
+`pvUID` (the first observed bound PV UID, or empty for an unbound claim), `providerAssetId` (the known
 asset, or empty only after an owned provider reconciliation proves no allocated
 asset), `safeToDeleteNamespace: true`, `approvedBy`, and `reconciliationReceipt`.
 The receipt identifies the provider lookup, any in-progress allocation and its
@@ -987,6 +1067,16 @@ owner's approval through the independent planning-record authority; checking
 JSON shape is not authentication of that approval. This applies to a Pending
 PVC too. Without that reconciliation, keep the namespace and escalate using
 the exact claim UID; there is no universal provider cleanup command.
+
+Cleanup requires independently authenticated creating provenance for every
+created namespace, Pod and PVC, and the still-enforced lifetime exclusion.
+Unknown creating identities, including a present object after a failed CREATE
+response, forbid this default cleanup. The storage owner must authenticate the
+first observed PV UID, original PVC binding and provider asset against its
+provisioning record before approving them; a GET alone is not PV provenance.
+Keep these identities and the approved binding immutable. A new binding,
+replacement PV or different provider asset requires a new owner reconciliation,
+not a changed baseline or automatic approval.
 
 Use the same bound shell. Capture again before matching the approval, because
 a Pending claim can bind while the owners investigate. If identities changed
@@ -1021,33 +1111,32 @@ fs.writeFileSync(process.argv[3], JSON.stringify({apiVersion: 'v1', kind: 'Delet
   preconditions: {uid: clearance.namespaceUID}}) + '\n', {flag: 'wx', mode: 0o600});
 NODE
 PREFLIGHT_PROVIDER_ASSET_ID="$(node -e 'process.stdout.write(JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8")).providerAssetId)' "$PREFLIGHT_CLEANUP_CLEARANCE")"
-cp -- "$PREFLIGHT_CLEANUP_CLEARANCE" "$PREFLIGHT_EVIDENCE_DIR/cleanup-clearance.json"
+cp -- "$PREFLIGHT_CLEANUP_CLEARANCE" "$PREFLIGHT_EVIDENCE_DIR/cleanup-clearance.json" || exit 1
 assert_cluster_binding
-if bound_kubectl delete --raw "/api/v1/namespaces/$PREFLIGHT_NAMESPACE" \
-  -f "$PREFLIGHT_EVIDENCE_DIR/namespace-delete-options.json" \
-  > "$PREFLIGHT_EVIDENCE_DIR/delete.stdout" 2> "$PREFLIGHT_EVIDENCE_DIR/delete.stderr"; then
-  printf '%s\n' 0 > "$PREFLIGHT_EVIDENCE_DIR/delete.exit"
-else printf '%s\n' "$?" > "$PREFLIGHT_EVIDENCE_DIR/delete.exit"; exit 1; fi
-if bound_kubectl wait --for=delete "namespace/$PREFLIGHT_NAMESPACE" --timeout=180s \
-  > "$PREFLIGHT_EVIDENCE_DIR/delete-wait.stdout" 2> "$PREFLIGHT_EVIDENCE_DIR/delete-wait.stderr"; then
-  printf '%s\n' 0 > "$PREFLIGHT_EVIDENCE_DIR/delete-wait.exit"
-else printf '%s\n' "$?" > "$PREFLIGHT_EVIDENCE_DIR/delete-wait.exit"; exit 1; fi
+if probe_observe delete.stdout bound_kubectl delete --raw "/api/v1/namespaces/$PREFLIGHT_NAMESPACE" \
+  -f "$PREFLIGHT_EVIDENCE_DIR/namespace-delete-options.json"; then :; else exit 1; fi
+if probe_observe delete-wait.stdout bound_kubectl wait --for=delete "namespace/$PREFLIGHT_NAMESPACE" \
+  --timeout=180s; then :; else exit 1; fi
 probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace-after.json
-test -z "$(probe_field namespace-after.json metadata.uid)"
+probe_field_equals namespace-after.json metadata.uid ''
 if [[ -n $PREFLIGHT_PV_NAME ]]; then
   for attempt in $(seq 1 60); do
     probe_snapshot pv "$PREFLIGHT_PV_NAME" pv-after.json
-    [[ -n $(probe_field pv-after.json metadata.uid) ]] || break
+    AFTER_PV_UID="$(probe_field pv-after.json metadata.uid)" || exit 1
+    [[ -n $AFTER_PV_UID ]] || break
     sleep 2
   done
-  test -z "$(probe_field pv-after.json metadata.uid)"
+  probe_field_equals pv-after.json metadata.uid ''
 fi
 printf '%s\n' 'namespace-absent; recorded PV absent or no PV was bound; provider proof still required' \
-  > "$PREFLIGHT_EVIDENCE_DIR/kubernetes-disposition.txt"
+  > "$PREFLIGHT_EVIDENCE_DIR/kubernetes-disposition.txt" || exit 1
 ```
 
 The raw DELETE sends a [UID precondition](https://kubernetes.io/docs/reference/kubernetes-api/definitions/delete-options-v1-meta/)
 to the API, so a different namespace with the same name must not be deleted.
+That precondition does not freeze namespace membership, PVC binding or provider
+operations. The complete owned exclusion window remains required through the
+final independent Kubernetes and provider disposition checks.
 [`kubectl` accepts a single local request-body file for raw DELETE](https://github.com/kubernetes/kubectl/blob/v0.34.0/pkg/cmd/delete/delete.go#L275-L307).
 The local raw-request interface was checked with kubectl `v1.34.11` against
 an isolated HTTP fixture; this is not a supported-cluster-version or live

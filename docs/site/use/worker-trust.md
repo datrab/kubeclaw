@@ -5,7 +5,7 @@ Audience: Kubernetes operator, security operator
 Owner: platform operations and workload-identity owner
 Evidence: scripts/deploy.sh; tests/verification/live/worker-trust-cluster-e2e.sh
 Applies to: the exact selected release, SPIRE trust domain, and recorded cluster
-Last verified: 2026-10-11; local command and receipt-contract checks only; no live trust result is available
+Last verified: 2026-10-12; local command and receipt-contract checks only; no live trust result is available
 
 ## Purpose
 
@@ -154,7 +154,8 @@ does not establish owner approval, live trust, or receipt success.
 >
 > **Claim:** The wrapper performs the live identity exercise before a Nova unit transaction and receipt signing; keys are otherwise checked only after those effects.
 >
-> **Implementation:** [The wrapper sequence](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L2672-L2680), [fixed public-key path](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L79-L79), and [signer's external-key and worker-revision checks](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L1970-L2008) define this boundary.
+> **Implementation:** [The wrapper sequence](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L2672-L2680), [fixed public-key path](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L79-L79) define the sequence and key location.
+> The [signer's external-key and worker-revision checks](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L1970-L2008) define this boundary.
 >
 > **Contract or setting:** [The attestation module requires Ed25519 and records the public-key fingerprint](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/production-receipt-attestation.mjs#L66-L85). [Secret setup owns a different source-attestation keypair](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/my-values/setup-secrets.sh#L610-L638).
 >
@@ -178,8 +179,9 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 
 Expected observation is zero from each command. On 2026-10-09, the Prism
 deployment source check passed at `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61`
-with Node.js `v24.21.0`. The other checks and live Worker Trust exercise have no
-new execution result here. Run all three checks for your selected checkout.
+with Node.js `v24.21.0`. `verify:worker-core:trust` also passed locally on 2026-10-12.
+No new deployment-truth or live Worker Trust result is available.
+Run all three checks for your selected checkout.
 Stop on any nonzero exit; a local source check does not prove live peer authorization.
 
 ### 2. Observe the installed identity chain
@@ -317,7 +319,7 @@ or treat the live command's exit zero as independent denial proof.
 >
 > **Claim:** The wrong-SVID probes accept fetch errors and any non-2xx status; direct TLS probes accept network errors and timeouts. The final JSON does not distinguish these causes.
 >
-> **Implementation:** [Direct TLS error and timeout handling](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L38-L52) and [Prism](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L145-L145) / [Buster wrong-SVID commands](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L175-L175).
+> **Implementation:** [Direct TLS error and timeout handling](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L38-L52) and [Prism](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L146-L146) / [Buster wrong-SVID commands](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L182-L182).
 >
 > **Contract or setting:** [The final JSON names required positive and negative routes](https://github.com/datrab/kubeclaw/blob/430633accc4a374a740b5f12f384eeeb9dce228d/tests/verification/live/worker-trust-cluster-e2e.sh#L190-L199).
 >
@@ -388,7 +390,8 @@ read-back. Live success is still unproved here.
 >
 > **Claim:** The live verifier admits durable Prism work and suppresses cleanup outcomes; the wrapper separately persists a signed unit receipt.
 >
-> **Implementation:** [Internal test identity and suppressed asynchronous cleanup](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/live/worker-trust-cluster-e2e.sh#L12-L23), [design dispatch with discarded accepted response](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/live/worker-trust-cluster-e2e.sh#L91-L105), and [Control's persisted request, round and agent admission](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/skills/prism/server/control-server.ts#L214-L229) establish the lifecycle effects.
+> **Implementation:** [Internal test identity and suppressed asynchronous cleanup](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/live/worker-trust-cluster-e2e.sh#L12-L23), [design dispatch with discarded accepted response](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/live/worker-trust-cluster-e2e.sh#L91-L105) establish the script effects.
+> The [Control's persisted request, round and agent admission](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/skills/prism/server/control-server.ts#L214-L229) establish the lifecycle effects.
 >
 > **Contract or setting:** [The unit wrapper executes remotely before signing and stores the fixed unit receipt](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/scripts/deploy.sh#L2011-L2052). [The unit transaction checks imported evidence and emits its own receipt](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/e2e/nova-unit-production-preflight.mts#L101-L131).
 > [The unit preflight requires its token, source key and provider adapter](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/tests/verification/e2e/nova-unit-production-preflight.mts#L20-L43); [Nova's selected values provide the Secret references](https://github.com/datrab/kubeclaw/blob/8c22254ea6cc3f6e98e3e453f2ff91c8ec4eba32/my-values/nova-values.yaml#L120-L129).
