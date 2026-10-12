@@ -1,0 +1,34 @@
+✔ all historical and integration identities and real evidence resolve; actual generated files match (1394.372691ms)
+✔ missing historical ID (2.494904ms)
+✔ substituted historical ID with unchanged total (2.261407ms)
+✔ duplicate ID (2.610376ms)
+✔ missing integration ID (2.015051ms)
+✔ wrong status sum (2.131154ms)
+✔ wrong family sum (1.848287ms)
+✔ unknown status (3.389336ms)
+✔ missing original evidence (3.205132ms)
+✔ unresolvable original commit (6.584477ms)
+✔ unresolvable original path (6.174997ms)
+✔ missing implementation evidence (3.649573ms)
+✔ missing evidence file (7.504691ms)
+✔ missing evidence object report (45.384445ms)
+✔ unresolvable commit evidence (12.108578ms)
+✔ missing integration evidence (443.303214ms)
+✔ status drift (399.10087ms)
+✔ missing Markdown ID (379.4338ms)
+✔ missing Markdown evidence (384.435897ms)
+✔ wrong register sum (357.845281ms)
+✔ wrong progress sum (325.659883ms)
+✔ wrong handoff sum (385.527835ms)
+✔ generation repairs only counters/views, preserves every finding and historical checkpoint, and is idempotent (1205.687653ms)
+✔ malformed source prevents generation without touching generated files (19.326071ms)
+✔ unresolvable original prevents generation without touching any register files (21.476396ms)
+✔ all individual source statuses are rendered, not inferred from available evidence (6.330921ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5568.311693

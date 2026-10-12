@@ -1,0 +1,31 @@
+{
+  "checkedCommit": "0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493",
+  "mode": "real isolated checkout; original evidence retained; mechanical register verification only",
+  "results": [
+    {
+      "name": "register-check",
+      "command": [
+        "node",
+        "scripts/review/remediation-register.mjs",
+        "--check"
+      ],
+      "commit": "0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493",
+      "checkout": "/home/node/Documents/Codex/2026-10-12/files-pasted-by-the-user-bitte/work/cloud-checkout",
+      "exitCode": 0,
+      "seconds": 0.672
+    },
+    {
+      "name": "register-tests",
+      "command": [
+        "node",
+        "--test",
+        "scripts/tests/remediation-register.test.mjs"
+      ],
+      "commit": "0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493",
+      "checkout": "/home/node/Documents/Codex/2026-10-12/files-pasted-by-the-user-bitte/work/cloud-checkout",
+      "exitCode": 0,
+      "seconds": 5.662
+    }
+  ],
+  "notProductionOrFindingAcceptance": true
+}

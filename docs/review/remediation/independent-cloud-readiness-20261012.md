@@ -39,3 +39,16 @@ Der Hauptagent hat bestätigt, diese kleinen Dateien vollständig zu erhalten. G
 ## Noch ausstehend in diesem Bericht
 
 Der tatsächliche Snapshot-/Commitbaum wurde im ersten Planreview noch nicht vorgelegt. Daher keine Behauptung, dass alle vorgesehenen Dateien bereits im Checkpoint oder auf GitHub vorhanden sind. Nach Vorlage gezielte independent Inhalts-/Symlink-/Ausschlusskontrolle und lesende Registerprüfung ergänzen. Architektur-, CONFIG- und Findingimplementierung bleiben durch den Publishauftrag nicht automatisch freigegeben.
+
+## Unabhängige Prüfung des tatsächlichen Checkpoints
+
+Lesender isolierter Checkout: `/home/node/Documents/Codex/2026-10-12/files-pasted-by-the-user-bitte/work/cloud-checkout`. HEAD eigenständig geprüft: **`0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493`**, vorgelegter Tree `564694c510d7c73d9b62506b7d89f715f02066f2`. Das Folgende prüft den tatsächlich ausgecheckten Gitcheckpoint, noch keinen Remote-Push oder fremden Cloudstart.
+
+- **18.457/18.457 ausgewählte Evidenceeinträge stimmen** mit `evidence-selection.json`: sämtliche normalen Dateiinhalt-SHA256 eigenständig neu berechnet; alle **14 Symlinktargets** separat auf tatsächlichen Linktyp und Zieltext geprüft. Normale Dateibytes insgesamt **2.651.824.156**. Keine Abweichung und kein fehlender ausgewählter Beleg.
+- **21/21 kleine Toolprovenienzdateien vorhanden und mit neu berechneten SHA256 korrekt**; tatsächlich enthält der Toolingbaum genau diese 21 Dateien. Auch `official-downloads.json`, ursprüngliche stdout/stderr, DBmetadaten und OCImanifeste bleiben verfügbar.
+- Sämtliche **15.757 ausgeschlossenen Toolingpfade fehlen** im Checkpoint. Das entspricht dem dokumentierten Ausschluss, nicht versehentlicher Evidencebereinigung. `.kube` fehlt.
+- Tatsächlicher Gitbaum hat **22.641 Dateien**; eigene `git ls-tree -rl HEAD`-Auswertung findet **keine Datei ab 50 MiB** und keinen `.kube`-Pfad.
+- Frischer lesender Lauf im Snapshot: `node scripts/review/remediation-register.mjs --check` **bestanden**. Damit sind die vom Checker geforderten aktuellen Register-/Rohbeleg-/Originalobjektreferenzen dort auflösbar. Die 26er Testsuite wurde hier ausdrücklich nicht nochmals von mir wiederholt; sie wird vom Hauptagenten separat ausgeführt.
+- Quellrepository bleibt `main` bei `cd9f235345f5fd8736a2ffe75d806288e4d538db`. Eigene Quellenindex-SHA256: **`af0153f23b1f22dab43a579d4947b0f557a698083c04331229328be83e4ebac3`**, entsprechend mitgeteiltem unverändertem Baselinestand. Keine meiner Prüfungen schrieb Repo/main/Index.
+
+**Ergebnis:** Der konkrete Checkpoint bewahrt die vorgesehene Source-/Rohbeleg-/Entwurfsübergabe und kleine Toolprovenienz, ohne die großen Caches/alten DB-/Toolbytes als notwendige Gitdaten mitzunehmen. Das ist eine überprüfbare GitHubveröffentlichungsvorbereitung. Remoteverfügbarkeit muss nach Push separat über exakten Branchcommit bestätigt werden. Kein neuer Runtimepass, Release, akzeptiertes kumulatives Integrationsmanifest oder Findingabschluss wird daraus abgeleitet; spätere Cloudläufe sind erst dort tatsächlich zu prüfen.

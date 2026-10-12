@@ -96,3 +96,7 @@ ohne Merge und ohne neue Behebung. Der ursprüngliche lokale Branch und Index
 bleiben erhalten. Die Absicherung umfasst Quellen-/Treeidentitäten,
 Registerkonsistenz, Originalreferenzen, Belegauswahl und eine unabhängige Prüfung;
 sie ist kein neuer Gesamtlauf aller historischen Tests.
+
+## Tatsächlich ausgeführte Checkpointprüfung
+
+Der isolierte Checkout des Source-/Evidence-Checkpoints `0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493` bestand Registercheck und alle 26 Registertests ohne Skips/Fehler. Das [Rohlaufresultat](../evidence/cloud-readiness-20261012/snapshot-verification.json) bindet Kommandos und Stand; der [unabhängige Bericht](independent-cloud-readiness-20261012.md) bestätigt alle 18.457 ausgewählten Inhaltsidentitäten/Symlinkziele, alle 21 Toolprovenienzdateien, die Cacheausschlüsse und unveränderten ursprünglichen Main-/Indexstand. Diese nachfolgende Dokumentationsfortschreibung ändert keinen Produktionscode. Zwei bereits vorher nicht auflösbare kurze Implementation-Commitangaben werden im Review als historisches Limit geführt, nicht still korrigiert. Keine fachliche Runtime-/Findingabnahme.
