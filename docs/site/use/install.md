@@ -618,9 +618,13 @@ The probe uses the digest-pinned Alpine-based Node.js image recorded as
 [`OPS_NODE_BASE` in `versions.json`](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/versions.json#L28-L29).
 The repository also uses that value as
 [the Ops image build input](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/ops/pod/Dockerfile#L1-L3).
-Its BusyBox `nslookup` client is the DNS probe. This check proves the selected
-cluster can pull that exact image; it does not prove that later workload images
-are available.
+Its BusyBox `nslookup` client is the DNS probe. A successful probe establishes
+availability and execution of this pinned image on the node that ran the Pod.
+With [`imagePullPolicy: IfNotPresent`](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy), the node can use a cached image.
+This result does not prove an uncached registry pull, registry reachability,
+availability on other nodes, or availability of later workload images. Use the platform owner's
+[node/client qualification](maintenance.md#install-and-prove-the-selected-clients)
+for the separate per-node uncached-pull proof.
 
 Choose `<unique-id>` and the future probe namespace during authorization
 preflight, not after mutation. `<storage-request>` is a positive Kubernetes

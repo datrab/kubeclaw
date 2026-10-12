@@ -19210,7 +19210,7 @@
     },
     {
       "id": "A98-20261012-PROBE-PULL-CLAIM-QF01",
-      "state": "open-author-correction-pending",
+      "state": "author-correction-frozen-pending-complete-fresh-reviews",
       "catalogueIds": [
         "OPR-003"
       ],
@@ -19222,7 +19222,11 @@
       "owner": "/root/probe_identity_retention_recovered_writer",
       "reviewer": "/root/late_pv_identity_complete_quality_fresh",
       "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh/REPORT.md",
-      "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh-root-seal.json"
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh-root-seal.json",
+      "candidateInstallSha256": "8ff7e0d41674ab6a725c0ae091af8fe57c77a55b5c17794853eb904a5d7debed",
+      "authorReport": "/home/node/Documents/Codex/a98-evidence/probe-image-availability-claim-correction-writer/report.md",
+      "authorRootSeal": "/home/node/Documents/Codex/a98-evidence/probe-image-availability-claim-correction-writer-root-seal.json",
+      "acceptanceLimit": "All commands byte-identical; previous Source/Reader PASS remain tied5dfd; no currentwhole-page approval."
     }
   ],
   "checks": [
@@ -23061,10 +23065,10 @@
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open: assigned Source/Reader PASS; complete QualityFAIL1 cached-image pull overclaim, author preparing correction; frozen tools new Root full11suite running.",
+    "stage": "AP09.8 open: Root full11suite268PASS, fresh complete ToolSource ongoing provisionalF6 finding; image-availability prose corrected, known publication language author active before new full Quality.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish exact diagnostic qualification and Root full11-suite; fresh complete tool Source; source commit then pinned full generation/gates/mutations; full corrected operator-family reviews, required deployment evidence and Astra remain before AP09.8 closure.",
+    "next": "Complete cached-image assurance prose correction and fresh full Quality; full tool Source active after Root268/268PASS. Qualified source commit, pinned full generation/gates/mutations, full operator-family reviews/deployment/Astra remain.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -24099,7 +24103,8 @@
     },
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
-      "/root/probe_identity_retention_recovered_writer"
+      "/root/lexical_diagnostic_complete_tool_source_fresh",
+      "/root/publication_language_known_findings_writer"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -27455,10 +27460,54 @@
       "busterVisualState": "Author corrected and Source committed; no shared generated output changed; full current generation then fresh independent Source/Reader/Quality required.",
       "qualificationIntegratorState": "Final frozen f9badd6b/cae72d66; Root1998 artifacts/869 inputs verified; bounded affected2/publication28/protected12/captured11/diagnostic9 PASS. Fresh Rootfull11suite session22876 PID252692 currently running.",
       "rootFullNewReplay": {
-        "state": "running-confirmed-live-handle",
-        "session": 22876,
-        "pid": 252692,
-        "receiptDirectory": "/home/node/Documents/Codex/a98-evidence/root-integrated-reader-boundary-diagnostic-qualification"
+        "state": "observed-terminal-PASS",
+        "exitCode": 0,
+        "tests": 268,
+        "passed": 268,
+        "failed": 0,
+        "skipped": 0,
+        "sourceAndPagesUnchanged": true,
+        "receipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-reader-boundary-diagnostic-qualification/result.json",
+        "end": "2026-10-12T07:31:29.082Z",
+        "limit": "Selected full11suite only; no semantic/global/deployment/mutation acceptance."
+      },
+      "toolingSourceReviewCurrent": {
+        "agent": "/root/lexical_diagnostic_complete_tool_source_fresh",
+        "role": "source",
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "medium",
+        "forkTurns": "none",
+        "freshContext": true,
+        "initialMode": "read-only",
+        "state": "active-complete-F1-F10-family",
+        "scope": "Full scanner/acquisition/receiving/native/OPS/static/captured/defaultpublic/diagnostic qualification; changed and unchanged material claims."
+      },
+      "probeImageAvailabilityCorrection": {
+        "state": "author-frozen-prose-only",
+        "installSha256": "8ff7e0d41674ab6a725c0ae091af8fe57c77a55b5c17794853eb904a5d7debed",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/probe-image-availability-claim-correction-writer-root-seal.json",
+        "allFencedBodiesUnchanged": true,
+        "checks": "Operator0/trust0; publication1 known stale outputs and language findings. Final small prose wording change after those gates disclosed."
+      },
+      "toolSourceProvisionalFinding": {
+        "state": "independent-reviewer-reported-native-witness-complete-scope-pending",
+        "reviewer": "/root/lexical_diagnostic_complete_tool_source_fresh",
+        "facet": "F6",
+        "sourceSha256": "4263f0e834ca8dd71e2be1cc3276306d0121f19c81fec9ceb06eb2fdee51c3db",
+        "finding": "os.__dict__[getenv] and os.__getattribute__(getenv) environment reads silently produce zero scanner discoveries; native Python witnesses record both reads. Reviewer proving full receiving effect and finishing other families before correction batch.",
+        "evidence": "/home/node/Documents/Codex/a98-evidence/lexical-diagnostic-complete-tool-source-fresh/witness-results.json",
+        "limit": "Not final complete Source report; no author edits to frozen tool candidate during review."
+      },
+      "publicationLanguageKnownFindings": {
+        "state": "author-active",
+        "owner": "/root/publication_language_known_findings_writer",
+        "files": [
+          "docs/site/use/maintenance.md",
+          "docs/site/understand/nova-core.md",
+          "docs/status/open-issues.json"
+        ],
+        "evidence": "/home/node/Documents/Codex/a98-evidence/probe-image-availability-claim-correction-writer/docs-publication-check.log",
+        "remaining": "Four maintenance/two Nova/four generated issue language violations; generated status Root-owned later. No full Qualityreview until known corrections frozen."
       }
     }
   }
