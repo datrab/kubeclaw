@@ -6910,7 +6910,7 @@
         "scripts/deploy.sh",
         "docs/generated/inventory/deploy-script.json"
       ],
-      "sourceVerification": "author-corrected-current-source-review-active",
+      "sourceVerification": "complete-assigned-source-fail-GNU-refresh-and-TLS-evidence",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6978,8 +6978,10 @@
           "agent": "/root/install_creating_identity_corrected_complete_source_fresh",
           "role": "source",
           "revision": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
-          "verdict": "PENDING",
-          "scope": "Fresh full installation/trust/retirement source inspection."
+          "verdict": "FAIL",
+          "scope": "Complete three-page assigned Source contribution, current creating provenance/passive evidence facets pass; GNU repeated-copy and TLS citation defects remain.",
+          "report": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh/report.md",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json"
         }
       ],
       "openFindingIds": [
@@ -6993,7 +6995,9 @@
         "A98-20261011-QUALITY-Q2",
         "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-SOURCE-FRESH-1",
         "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-1",
-        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-2"
+        "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-2",
+        "A98-20261012-GNU-COPY-F1",
+        "A98-20261012-TLS-RANGE-F2"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L263"
     },
@@ -7411,7 +7415,7 @@
         "scripts/deploy.sh",
         "scripts/remove-qdrant.sh"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "complete-assigned-maintenance-source-pass-only",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7485,6 +7489,15 @@
           "reportSha256": "25c2ab039a42e8247e10540b3151cd40ca853915ceb3d8539c3a85f4b03c9ee8",
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/pv-retirement-seven-records-reader-fresh-root-seal.json",
           "verifiedArtifacts": 9
+        },
+        {
+          "agent": "/root/install_creating_identity_corrected_complete_source_fresh",
+          "role": "source",
+          "revision": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
+          "verdict": "PASS",
+          "scope": "Complete assigned maintenance/retirement Source contribution only, no live/deployment/Reader/Quality/final gate approval.",
+          "report": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh/report.md",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json"
         }
       ],
       "openFindingIds": [
@@ -18793,7 +18806,7 @@
     },
     {
       "id": "A98-20261011-PROBE-CREATING-RETENTION-SOURCE-F1",
-      "state": "author-corrected-committed-pending-fresh-full-source",
+      "state": "source-facet-pass-current-family-still-fail-other-findings",
       "catalogueIds": [
         "OPR-003"
       ],
@@ -18809,11 +18822,14 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh-root-seal.json",
       "correctionCommit": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
       "currentReviewer": "/root/install_creating_identity_corrected_complete_source_fresh",
-      "authorIntegrityEvidence": "/home/node/Documents/Codex/a98-evidence/probe-identity-retention-recovered-writer/root-integrity-verification.json"
+      "authorIntegrityEvidence": "/home/node/Documents/Codex/a98-evidence/probe-identity-retention-recovered-writer/root-integrity-verification.json",
+      "currentSourceReviewer": "/root/install_creating_identity_corrected_complete_source_fresh",
+      "currentSourceSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json",
+      "limit": "Creating identity/local-error/wrong-SVID facets independently pass; GNU copy recapture and directTLS timeout link remain separate FAILs, Reader/Quality/gates pending."
     },
     {
       "id": "A98-20261011-PROBE-CREATING-RETENTION-SOURCE-F2",
-      "state": "author-corrected-committed-pending-fresh-full-source",
+      "state": "source-facet-pass-current-family-still-fail-other-findings",
       "catalogueIds": [
         "OPR-003"
       ],
@@ -18829,11 +18845,14 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh-root-seal.json",
       "correctionCommit": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
       "currentReviewer": "/root/install_creating_identity_corrected_complete_source_fresh",
-      "authorIntegrityEvidence": "/home/node/Documents/Codex/a98-evidence/probe-identity-retention-recovered-writer/root-integrity-verification.json"
+      "authorIntegrityEvidence": "/home/node/Documents/Codex/a98-evidence/probe-identity-retention-recovered-writer/root-integrity-verification.json",
+      "currentSourceReviewer": "/root/install_creating_identity_corrected_complete_source_fresh",
+      "currentSourceSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json",
+      "limit": "Creating identity/local-error/wrong-SVID facets independently pass; GNU copy recapture and directTLS timeout link remain separate FAILs, Reader/Quality/gates pending."
     },
     {
       "id": "A98-20261011-PROBE-CREATING-RETENTION-SOURCE-F3",
-      "state": "author-corrected-committed-pending-fresh-full-source",
+      "state": "source-facet-pass-current-family-still-fail-other-findings",
       "catalogueIds": [
         "OPR-003"
       ],
@@ -18847,7 +18866,10 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-evidence-retirement-lifetime-corrected-full-source-fresh-root-seal.json",
       "correctionCommit": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
       "currentReviewer": "/root/install_creating_identity_corrected_complete_source_fresh",
-      "authorIntegrityEvidence": "/home/node/Documents/Codex/a98-evidence/probe-identity-retention-recovered-writer/root-integrity-verification.json"
+      "authorIntegrityEvidence": "/home/node/Documents/Codex/a98-evidence/probe-identity-retention-recovered-writer/root-integrity-verification.json",
+      "currentSourceReviewer": "/root/install_creating_identity_corrected_complete_source_fresh",
+      "currentSourceSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json",
+      "limit": "Creating identity/local-error/wrong-SVID facets independently pass; GNU copy recapture and directTLS timeout link remain separate FAILs, Reader/Quality/gates pending."
     },
     {
       "id": "A98-20261012-CANONICAL-RUN-CONTROL-S01",
@@ -18982,6 +19004,37 @@
       "reviewer": "/root/canonical_delegated_run_control_corrected_source_fresh",
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-delegated-run-control-corrected-source-fresh-root-seal.json",
       "scope": "Assigned independent Source facets, not entire catalogue requirement approval."
+    },
+    {
+      "id": "A98-20261012-GNU-COPY-F1",
+      "state": "open-complete-family-author-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-09",
+        "A98-13"
+      ],
+      "description": "Sealed0400 observation copied into new working files retains0400; ordinary GNU cp cannot truncate next working destination, breaking repaired reads/cleanup recapture/PV polling. BusyBox local tests did not expose GNU default.",
+      "owner": "/root/probe_identity_retention_recovered_writer",
+      "reviewer": "/root/install_creating_identity_corrected_complete_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json"
+    },
+    {
+      "id": "A98-20261012-TLS-RANGE-F2",
+      "state": "open-complete-family-author-correction",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Direct TLS source link L38-L52 omits timeout handler at53; cite complete relevant function L43-L55.",
+      "owner": "/root/probe_identity_retention_recovered_writer",
+      "reviewer": "/root/install_creating_identity_corrected_complete_source_fresh",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json"
     }
   ],
   "checks": [
@@ -22690,16 +22743,24 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active-complete-install-trust-maintenance-review",
+      "state": "terminal-complete-assigned-source-fail-two",
       "sourceRevision": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
-      "scope": "Complete three-page installation/trust/retirement semantic family, independently inspect current sources and exact local command evidence; no package or live acceptance."
+      "scope": "Complete three-page installation/trust/retirement semantic family, independently inspect current sources and exact local command evidence; no package or live acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json",
+      "verifiedArtifacts": 3152,
+      "findings": [
+        "GNU-working-copy-refresh",
+        "TLS-timeout-source-range"
+      ],
+      "limit": "Complete three-page source; no native GNU executable, live/global/Reader/Quality approval."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open: install/trust Source corrected4ed48fa6/full fresh Source active; Buster+visual Source correctedd147c1d7, published matrix regeneration pending; scanner lexical/Secret-copy correction and semantic qualification audit active.",
+    "stage": "AP09.8 open: current complete install/trust/maintenance Source FAIL2; full GNU working-copy/TLS correction active. Buster/visual source corrected; scanner lexical/Secret-copy correction and API qualification audit active.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish Buster/visual and Secret-copy claim correction; finish superseding scanner lexical binding/native/full receiving proof and semantic qualification; root complete suite and checked Source commits, then source-bound generation and fresh full independent Source/Reader/Quality. Mandatory deployment trio, full mutation/gates/Astra remain; no parity or deletion.",
+    "next": "Complete/install repeated-copy family final proofs and new fresh full Source; finish scanner lexical/native/full receiving terminal proof, semantic qualification and full integrated suite; source-bound generation and independent full Source/Reader/Quality/Astra. No parity/deletion; required deployment/mutations/gates still open.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -23735,7 +23796,7 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/install_creating_identity_corrected_complete_source_fresh",
+      "/root/probe_identity_retention_recovered_writer",
       "/root/superseding_lexical_source_qualification_integrator"
     ],
     "currentNextSteps": [
@@ -26952,9 +27013,9 @@
       "toolingCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
       "protectedStaticSourceAndCapturedAuth": "F9/F10 open; root coordinates exclusive output owner after slot available",
       "freshDocumentationReviews": {
-        "source": "/root/install_creating_identity_corrected_complete_source_fresh",
-        "reader": "pending distinct fresh identity after corrections",
-        "quality": "pending distinct fresh identity after Source corrections"
+        "source": "completed current three-page Source FAIL2; new fresh identity required after correction",
+        "reader": "pending corrected source-accepted candidate",
+        "quality": "pending corrected source-accepted candidate"
       },
       "rootStaticSourceAndCapturedAuthCorrection": "/home/node/Documents/Codex/a98-evidence/static-source-codex-custody-root-correction/report.json",
       "rootStaticAndCapturedChecks": "11 selected capture controls PASS,12 protected historical-baseline controls PASS,27 production tests PASS before extra public-checkout control added; not fresh independent approval",
@@ -26963,7 +27024,7 @@
       "qualificationIntegrator": "/root/superseding_lexical_source_qualification_integrator",
       "docCorrectionWriter": "/root/trust_denial_retirement_complete_batch_writer",
       "lastCompleteDocReader": "FAIL2 fullcorrected Reader;71 verified artifacts. R1storage-lifetime exclusion andR2immutable failed-observation evidence. Corrected trust/signing/lifecycle/5retainedresource facetsPASS.",
-      "lastCompleteDocSource": "FullcorrectedreviewFAIL4, artifactsrootverified; broadmaintenancewindow5resourcesboundedPASS; installlocalwrite/creatingidentity/trustlinks/adjacentaudit needwholebatchfix.",
+      "lastCompleteDocSource": "Terminal complete three-page Source FAIL2;3152 root-verified artifacts. Original creating-provenance/local-retention/negativeSVID/preservation facets pass; GNU repeated working-copy refresh and TLS timeout evidence range need full correction.",
       "observedAt": "2026-10-12T05:54:01.833192+00:00",
       "fourPageCorrectionCommit": "a2abcd45b78b3ce2d54883f56295532b3601002e",
       "rootTrustAggregate": "Observed terminal0, Sources unchanged; static/contract/typecheck only.",
@@ -26983,16 +27044,16 @@
         "acceptanceLimit": "Generator currentness, task/procedure structural checks and isolated mutation controls, not independent semantic or AP09.8 acceptance."
       },
       "documentationBatchWriter": "/root/probe_identity_retention_recovered_writer",
-      "documentationBatchState": "Current install/trust committed and pushed; full root trust/operator gates both0 with sources unchanged; author evidence is not independent acceptance.",
+      "documentationBatchState": "Current4ed48fa6 reviewed fullSourceFAIL2, sameauthor resumed full repeated-copy family and TLS correction; new Source/Reader/Quality after final correction.",
       "currentRootGates": "/home/node/Documents/Codex/a98-evidence/root-complete-operator-correction-gates/result.json",
       "rootCurrentGateVerdict": "Observed both terminal0, eight pages and relevant sources unchanged; no live or semantic acceptance.",
       "remainingOperatorControlReview": "Complete five-page Source terminal FAIL3; no outstanding semantic scope placeholder. Required deployment receipts still missing.",
       "operatorControlReview": "TerminalfullSourceFAILF01 plus3 separatelymissingmandatorydeployment receipts;30rootverifiedartifacts.",
       "rawAuditFamilyWriter": "/root/raw_audit_entry_complete_family_writer",
       "rawAuditFamilyState": "Fourfilescommitted/pushed;newfreshSourcecompletefamilyreviewactive. Reader/Qualitypending.",
-      "currentSourceProvisionalFindings": "Replaced provisional status by sealed full FAIL3; independent install/trust/maintenance Source now active.",
+      "currentSourceProvisionalFindings": "Replaced provisional GNU/TLS by complete terminal FAIL2 and sealed findings.",
       "probeIdentityWriter": "/root/probe_identity_retention_recovered_writer",
-      "probeIdentityWriterState": "Recovered complete author frozen and committed; 9757 artifacts and 44 inputs root hash verified; new independent complete Source active.",
+      "probeIdentityWriterState": "Active complete GNU-working-copy/staging and TLS range correction; prior author evidence immutable; no independent acceptance.",
       "scannerState": "Recovered historical session85740 terminal0 per writer receipt; lexical candidate sessions73666/25247 terminal0 reported, no superseding freeze or full current replay yet.",
       "rawAuditSourceCommit": "37920d4f92dd95764c7df2c20748a5a0f59fb829",
       "rawAuditAuthorSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-family-writer-root-seal.json",
