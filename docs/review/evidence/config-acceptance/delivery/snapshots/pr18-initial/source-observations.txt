@@ -1,0 +1,127 @@
+$ ['git', 'rev-parse', 'HEAD', 'HEAD^{tree}']
+exit=0
+9452d35524192f8665bc87254b3c63a361e7bd4a
+89fa8e4d683cf442deb189d60ce8b7cc1ff05327
+
+$ ['rg', '-n', 'configuredValue|resolveConfig|mergeConfigInputs', 'skills/common/plugins/openclaw-agent-observer/src/config.ts', 'skills/common/plugins/openclaw-agent-observer/src/index.ts', 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts']
+exit=0
+skills/common/plugins/openclaw-agent-observer/src/observer-support.ts:21:export function mergeConfigInputs(...configs: unknown[]): Record<string, unknown> {
+skills/common/plugins/openclaw-agent-observer/src/index.ts:25:  mergeConfigInputs,
+skills/common/plugins/openclaw-agent-observer/src/index.ts:59:    this.config = this.resolveConfig();
+skills/common/plugins/openclaw-agent-observer/src/index.ts:69:    const config = this.resolveConfig();
+skills/common/plugins/openclaw-agent-observer/src/index.ts:79:      config = this.resolveConfig(extractPluginConfig(event, hookContext));
+skills/common/plugins/openclaw-agent-observer/src/index.ts:100:      config = this.resolveConfig();
+skills/common/plugins/openclaw-agent-observer/src/index.ts:120:      config = this.resolveConfig();
+skills/common/plugins/openclaw-agent-observer/src/index.ts:195:  private resolveConfig(hookConfig?: unknown): AgentObserverConfig {
+skills/common/plugins/openclaw-agent-observer/src/index.ts:197:      mergeConfigInputs(this.registrationConfig, this.serviceConfig, hookConfig),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:83:function configuredValue(
+skills/common/plugins/openclaw-agent-observer/src/config.ts:95:    enabled: requiredBooleanValue(configuredValue(config, env, 'enabled', 'OPENCLAW_AGENT_OBSERVER_ENABLED'), 'enabled'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:96:    redisHost: stringValue(configuredValue(config, env, 'redisHost', 'REDIS_HOST')),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:97:    redisPort: positivePort(configuredValue(config, env, 'redisPort', 'REDIS_PORT')),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:98:    redisUsername: stringValue(configuredValue(config, env, 'redisUsername', 'REDIS_USERNAME')),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:99:    redisPassword: stringValue(configuredValue(config, env, 'redisPassword', 'REDIS_PASSWORD')),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:100:    redisTls: boolValue(configuredValue(config, env, 'redisTls', 'REDIS_TLS'), false),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:101:    redisNetworkIsolation: configuredValue(config, env, 'redisNetworkIsolation', 'REDIS_NETWORK_ISOLATION') as boolean | string | undefined,
+skills/common/plugins/openclaw-agent-observer/src/config.ts:102:    maxEventBytes: normalizeAgentObservabilityMaxEventBytes(configuredValue(config, env, 'maxEventBytes', 'OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES')),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:103:    maxQueuePerStream: positiveInteger(configuredValue(config, env, 'maxQueuePerStream', 'OPENCLAW_AGENT_OBSERVER_MAX_QUEUE_PER_STREAM'), 'maxQueuePerStream'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:104:    redisCommandTimeoutMs: positiveInteger(configuredValue(config, env, 'redisCommandTimeoutMs', 'OPENCLAW_AGENT_OBSERVER_REDIS_COMMAND_TIMEOUT_MS'), 'redisCommandTimeoutMs'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:105:    streamMaxLen: positiveInteger(configuredValue(config, env, 'streamMaxLen', 'OPENCLAW_AGENT_OBSERVER_STREAM_MAXLEN'), 'streamMaxLen'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:106:    deadLetterMaxLen: positiveInteger(configuredValue(config, env, 'deadLetterMaxLen', 'OPENCLAW_AGENT_OBSERVER_DEADLETTER_MAXLEN'), 'deadLetterMaxLen'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:107:    controlWriteMaxAttempts: positiveInteger(configuredValue(config, env, 'controlWriteMaxAttempts', 'OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_MAX_ATTEMPTS'), 'controlWriteMaxAttempts'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:108:    controlWriteRetryBaseMs: positiveInteger(configuredValue(config, env, 'controlWriteRetryBaseMs', 'OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_RETRY_BASE_MS'), 'controlWriteRetryBaseMs'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:109:    controlWriteRetryMaxMs: positiveInteger(configuredValue(config, env, 'controlWriteRetryMaxMs', 'OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_RETRY_MAX_MS'), 'controlWriteRetryMaxMs'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:110:    hookPriority: integerValue(configuredValue(config, env, 'hookPriority', 'OPENCLAW_AGENT_OBSERVER_HOOK_PRIORITY'), 'hookPriority'),
+skills/common/plugins/openclaw-agent-observer/src/config.ts:111:    hookTimeoutMs: positiveInteger(configuredValue(config, env, 'hookTimeoutMs', 'OPENCLAW_AGENT_OBSERVER_HOOK_TIMEOUT_MS'), 'hookTimeoutMs'),
+
+$ ['rg', '-n', 'newController|envInt|controllerPollInterval|configureReadiness|configureProduct|os.Getenv', 'cmd/buster-namespace-controller/main.go', 'cmd/buster-namespace-controller/demo-readiness-lifecycle.go', 'cmd/buster-namespace-controller/demo-product.go']
+exit=0
+cmd/buster-namespace-controller/demo-product.go:58:func (c *controller) configureProduct() error {
+cmd/buster-namespace-controller/demo-product.go:59:	enabled := os.Getenv("BUSTER_PRODUCT_ENABLED")
+cmd/buster-namespace-controller/demo-product.go:66:	key, err := base64.StdEncoding.Strict().DecodeString(os.Getenv("BUSTER_PRODUCT_VERIFY_KEY"))
+cmd/buster-namespace-controller/demo-product.go:68:	cfg := &productConfig{Audience: os.Getenv("BUSTER_PRODUCT_AUDIENCE"), Producer: os.Getenv("BUSTER_PRODUCT_PRODUCER"), Issuer: os.Getenv("BUSTER_PRODUCT_ISSUER"), PublicKey: key, Actors: map[string]bool{}}
+cmd/buster-namespace-controller/demo-product.go:70:	if err != nil || len(key) != ed25519.PublicKeySize || !readyText(cfg.Audience) || !readyText(cfg.Issuer) || len(parts) != 4 || parts[0] != "system" || parts[1] != "serviceaccount" || !readyName.MatchString(parts[2]) || !readyName.MatchString(parts[3]) || cfg.Producer == c.readiness.Producer || json.Unmarshal([]byte(os.Getenv("BUSTER_PRODUCT_ACTORS_JSON")), &actors) != nil || len(actors) == 0 {
+cmd/buster-namespace-controller/demo-readiness-lifecycle.go:17:func (c *controller) configureReadiness() error {
+cmd/buster-namespace-controller/demo-readiness-lifecycle.go:18:	if os.Getenv("BUSTER_READY_LISTEN") == "" {
+cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21:	config := &readinessConfig{Address: os.Getenv("BUSTER_READY_LISTEN"), Audience: os.Getenv("BUSTER_READY_AUDIENCE"), Producer: os.Getenv("BUSTER_READY_PRODUCER"), Certificate: os.Getenv("BUSTER_READY_TLS_CERT"), Key: os.Getenv("BUSTER_READY_TLS_KEY")}
+cmd/buster-namespace-controller/main.go:108:	ctrl, err := newController()
+cmd/buster-namespace-controller/main.go:132:func newController() (*controller, error) {
+cmd/buster-namespace-controller/main.go:135:	host := os.Getenv("KUBERNETES_SERVICE_HOST")
+cmd/buster-namespace-controller/main.go:148:	ttlSeconds := envInt("BUSTER_DEFAULT_TTL_SECONDS", 7200)
+cmd/buster-namespace-controller/main.go:149:	maxTTLSeconds := envInt("BUSTER_MAX_TTL_SECONDS", 86400)
+cmd/buster-namespace-controller/main.go:150:	pollInterval, err := controllerPollInterval()
+cmd/buster-namespace-controller/main.go:176:	if err := ctrl.configureReadiness(); err != nil {
+cmd/buster-namespace-controller/main.go:179:	if err := ctrl.configureProduct(); err != nil {
+cmd/buster-namespace-controller/main.go:184:	for _, name := range splitCSV(os.Getenv("BUSTER_ALLOWED_SOURCE_SECRETS")) {
+cmd/buster-namespace-controller/main.go:1858:	if value := os.Getenv(envName); strings.TrimSpace(value) != "" {
+cmd/buster-namespace-controller/main.go:1865:	value := strings.TrimSpace(os.Getenv(name))
+cmd/buster-namespace-controller/main.go:1872:func envInt(name string, fallback int) int {
+cmd/buster-namespace-controller/main.go:1873:	value := strings.TrimSpace(os.Getenv(name))
+cmd/buster-namespace-controller/main.go:1884:func controllerPollInterval() (time.Duration, error) {
+cmd/buster-namespace-controller/main.go:1885:	value := strings.TrimSpace(os.Getenv("BUSTER_CONTROLLER_POLL_MS"))
+
+$ ['rg', '-n', 'loadProduction|configuredService|configuredRuntime|recordLimits|configuredCapabilities', 'skills/buster/engine/test-gates/production.ts']
+exit=0
+15:export function loadProductionBusterRemotePlanRuntime(
+34:  const service = configuredService(value, directory, environment, preparation, { buster: { ...settings, execution: executionPolicy, clusterInvokers }, workerLocalRuntime }, workerRevision, authority.sourceAttestationPublicKey);
+35:  return configuredRuntime(value, directory, service, settings, authority);
+38:function configuredService(value: Record<string, unknown>, directory: string, environment: NodeJS.ProcessEnv,
+42:  const records = object(value.recordLimits, 'recordLimits');
+49:  const capabilities = configuredCapabilities(sources, directory, environment, settings.buster.clusterInvokers, value.clusterBindings);
+53:      recordLimits: {
+54:        maximumRecords: integer(records.maximumRecords, 'recordLimits.maximumRecords'),
+55:        maximumBytes: integer(records.maximumBytes, 'recordLimits.maximumBytes'),
+56:        maximumRecordBytes: integer(records.maximumRecordBytes, 'recordLimits.maximumRecordBytes'),
+73:function configuredCapabilities(sources: ReturnType<typeof capabilitySources>, directory: string, environment: NodeJS.ProcessEnv,
+109:function configuredRuntime(value: Record<string, unknown>, directory: string, service: BusterRemotePlanService,
+
+$ ['rg', '-n', 'isImageInput|isDeploymentInput|configurationPaths|configurationAliases|COPY .*config|SWARM_CONFIG', 'scripts/updates/runtime-inputs.mjs', 'scripts/updates/release-configuration.mjs', 'docker/Dockerfile.buster-runtime']
+exit=0
+docker/Dockerfile.buster-runtime:24:COPY scripts/buster-runtime-config-root.mjs /usr/local/libexec/buster-runtime-config-root.mjs
+docker/Dockerfile.buster-runtime:107:COPY charts/kubeclaw/files/config/swarm.config.json charts/kubeclaw/files/config/prism-control.config.json charts/kubeclaw/files/config/prism-studio.config.json charts/kubeclaw/files/config/prism-worker.config.json charts/kubeclaw/files/config/prism-execution.config.json charts/kubeclaw/files/config/buster-engine.config.json charts/kubeclaw/files/config/worker-core.config.json /etc/kubeclaw/swarm/
+docker/Dockerfile.buster-runtime:144:COPY scripts/registry-client-config.mjs /app/scripts/registry-client-config.mjs
+docker/Dockerfile.buster-runtime:149:ENV SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
+scripts/updates/release-configuration.mjs:5:const configurationPaths = {
+scripts/updates/release-configuration.mjs:10:const configurationAliases = {
+scripts/updates/release-configuration.mjs:36:    if (configurationAliases[relative] !== fs.readlinkSync(path.join(root, relative))) throw new Error(`RELEASE_CONFIGURATION_SYMLINK: ${relative}`);
+scripts/updates/release-configuration.mjs:48:    const target = configurationAliases[entry.name];
+scripts/updates/release-configuration.mjs:63:      if (!stat.isSymbolicLink() || fs.readlinkSync(path.join(root, name)) !== configurationAliases[name]) throw new Error(`RELEASE_CONFIGURATION_ALIAS_CHANGED: ${name}`);
+scripts/updates/release-configuration.mjs:75:  if (!/^[a-f0-9]{40}$/u.test(commit) || !configurationPaths[family]) throw new Error('RELEASE_CONFIGURATION_IDENTITY_INVALID');
+scripts/updates/release-configuration.mjs:87:  const entries = readEntries(configurationPaths[family]);
+scripts/updates/release-configuration.mjs:89:  for (const relative of configurationPaths[family]) assertNoLinkedAncestors(root, relative);
+scripts/updates/release-configuration.mjs:90:  const names = configurationPaths[family].flatMap(relative => filesUnder(root, relative)).sort();
+scripts/updates/release-configuration.mjs:94:  return { sourceCommit: commit, paths: configurationPaths[family] };
+scripts/updates/runtime-inputs.mjs:7:export function isImageInput(file) {
+scripts/updates/runtime-inputs.mjs:13:export function isDeploymentInput(file) {
+scripts/updates/runtime-inputs.mjs:14:  return isImageInput(file) || /^(?:skills\/|contracts\/|packaging\/runtime\/|charts\/(?:kubeclaw|prism)\/|my-values\/(?:nova|buster|prism-agent|prism)-values\.yaml$|gitops\/production\/(?:config\.json|overlays\/)|scripts\/(?:package-agent-skill-bundle\.sh|build-runtime-role-bundle\.mjs|deploy\.sh|gitops[^/]*\.mjs|updates\/)|\.github\/workflows\/(?:build-images|auto-promote-runtime)\.yaml$)/u.test(file);
+scripts/updates/runtime-inputs.mjs:38:  const deployment = changed(isDeploymentInput);
+scripts/updates/runtime-inputs.mjs:43:  const images = deployment && (changed(isImageInput) || (process.env.GITHUB_EVENT_NAME !== 'pull_request'
+scripts/updates/runtime-inputs.mjs:44:    && (!selectedCommit || inputDigest(root, selectedCommit, isImageInput) !== inputDigest(root, head, isImageInput))));
+
+$ ['rg', '-n', 'validateNativeNodePolicy|nativePoolPolicy|nativeNodeReservation|runtime|nodeVersion|ExecStart', 'scripts/native-worker-node-policy.mjs', 'scripts/render-native-worker-node.mjs', 'scripts/install-native-worker-pools-stage.sh']
+exit=0
+scripts/install-native-worker-pools-stage.sh:14:"$node" -e 'const fs=require("fs"); const p=JSON.parse(fs.readFileSync(process.argv[1])); if(p.nodeVersion!==process.versions.node) throw Error("Selected host Node version mismatch")' "$generated/native-node-policy.json"
+scripts/install-native-worker-pools-stage.sh:34:# Pin systemd's executable path to the already verified host runtime.
+scripts/install-native-worker-pools-stage.sh:40:const expected = 'ExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs';
+scripts/install-native-worker-pools-stage.sh:42:fs.writeFileSync(process.argv[3], source.replace(expected, 'ExecStart=/usr/local/bin/node /opt/kubeclaw/native/prepare-native-worker-pools.mjs'), {flag:'wx', mode:0o600});
+scripts/render-native-worker-node.mjs:6:import { loadNativeNodePolicy, nativeNodeReservation, nativePoolPolicy, validateNativeNodePolicy } from './native-worker-node-policy.mjs';
+scripts/render-native-worker-node.mjs:11:  const selected = validateNativeNodePolicy(policy);
+scripts/render-native-worker-node.mjs:12:  const pools = Object.fromEntries(['buster', 'prism'].map(role => [role, nativePoolPolicy(selected, role)]));
+scripts/render-native-worker-node.mjs:14:  const nodeVersion = /^node:(\d+\.\d+\.\d+)-/.exec(version)?.[1];
+scripts/render-native-worker-node.mjs:15:  if (!nodeVersion) throw new Error('NATIVE_HOST_NODE_VERSION_NOT_SELECTED');
+scripts/render-native-worker-node.mjs:16:  const setup = { schemaVersion: 1, nodeVersion, pools: Object.fromEntries(Object.entries(pools).map(([role, pool]) => [role, pool.limits])) };
+scripts/render-native-worker-node.mjs:17:  const kubelet = { ...nativeNodeReservation(selected), cgroupDriver: 'systemd', cgroupsPerQOS: true, enforceNodeAllocatable: ['pods'] };
+scripts/render-native-worker-node.mjs:35:  const containerdVersion = selected.runtime?.containerdVersion;
+scripts/render-native-worker-node.mjs:40:    namespace: selected.pools[role].namespace, container: role === 'buster' ? 'buster-v2-runtime' : 'worker',
+scripts/render-native-worker-node.mjs:58:ExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs /etc/kubeclaw/native-node-policy.json --serve
+scripts/native-worker-node-policy.mjs:16:export function validateNativeNodePolicy(policy) {
+scripts/native-worker-node-policy.mjs:36:export function loadNativeNodePolicy(file) { return validateNativeNodePolicy(load(fs.readFileSync(file, 'utf8'))); }
+scripts/native-worker-node-policy.mjs:38:export function nativePoolPolicy(policy, role) {
+scripts/native-worker-node-policy.mjs:39:  const selected = validateNativeNodePolicy(policy);
+scripts/native-worker-node-policy.mjs:45:    nodeIdentityFile: '/etc/kubeclaw/native-node-id', runtimeIdentityFile: '/etc/kubeclaw/native-runtime-identity.json',
+scripts/native-worker-node-policy.mjs:51:export function nativeNodeReservation(policy) {
+scripts/native-worker-node-policy.mjs:52:  const selected = validateNativeNodePolicy(policy);
+
+$ ['node', 'docs/review/evidence/config-acceptance/delivery/collect-delivery.cjs']
+exit=0
+{"rows":221,"sources":38,"gaps":6,"status":"incremental C0; not exhaustive acceptance"}
+

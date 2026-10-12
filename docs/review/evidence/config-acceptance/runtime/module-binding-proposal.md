@@ -162,7 +162,7 @@ fail for intended semantic reason, not build/setup failure.
 
 ## Remaining C0 obligations
 
-1,072 rows are not a completion claim. Most schema-location rows still require
+1,221 rows are not a completion claim. Most schema-location rows still require
 field-specific default/reader/error/activation/task-policy disposition; 4,642 syntax
 candidates include task-data sentinels and validators as well as real settings and need
 explicit explanation. The broad schema discovery case passes identity/ID extraction

@@ -1,0 +1,63 @@
+[
+  {
+    "id": "DLV-C0-HEALTH-REQUIRED-MISSING-MARKER",
+    "scope": "local-source-observation",
+    "sourceSha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "extractedReaderSha256": "2c0b6a27a8a4276b91895a14520de11511ad315166c5a6e004346c5d57787a26",
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/delivery/extracted-kubeclaw-health.mjs",
+      "startup-status"
+    ],
+    "environment": {
+      "KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER": "true",
+      "KUBECLAW_HEALTH_STARTUP_STATUS_PATH": "docs/review/evidence/config-acceptance/delivery/nonexistent-startup-status.json"
+    },
+    "expectedExit": 1,
+    "actualExit": 1,
+    "result": "passed",
+    "meaning": "confirms current behavior only, not approved target acceptance",
+    "rawEvidence": "docs/review/evidence/config-acceptance/delivery/health-source-checks.txt",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-C0-HEALTH-EXPLICIT-DISABLED-MARKER",
+    "scope": "local-source-observation",
+    "sourceSha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "extractedReaderSha256": "2c0b6a27a8a4276b91895a14520de11511ad315166c5a6e004346c5d57787a26",
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/delivery/extracted-kubeclaw-health.mjs",
+      "startup-status"
+    ],
+    "environment": {
+      "KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER": "false"
+    },
+    "expectedExit": 0,
+    "actualExit": 0,
+    "result": "passed",
+    "meaning": "confirms current behavior only, not approved target acceptance",
+    "rawEvidence": "docs/review/evidence/config-acceptance/delivery/health-source-checks.txt",
+    "reviewerConfirmation": "pending"
+  },
+  {
+    "id": "DLV-C0-HEALTH-INVALID-BOOLEAN-BYPASS",
+    "scope": "local-source-observation",
+    "sourceSha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "extractedReaderSha256": "2c0b6a27a8a4276b91895a14520de11511ad315166c5a6e004346c5d57787a26",
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/delivery/extracted-kubeclaw-health.mjs",
+      "startup-status"
+    ],
+    "environment": {
+      "KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER": "not-a-boolean"
+    },
+    "expectedExit": 0,
+    "actualExit": 0,
+    "result": "passed",
+    "meaning": "confirms current behavior only, not approved target acceptance",
+    "rawEvidence": "docs/review/evidence/config-acceptance/delivery/health-source-checks.txt",
+    "reviewerConfirmation": "pending"
+  }
+]

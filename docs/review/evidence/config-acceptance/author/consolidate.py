@@ -55,7 +55,13 @@ definitions = {
     'F-DELIVERY': 'Real author/materializer/CI/buildcontext/package/image closure',
     'F-BIND': 'Atomic publish, crash/retry/parallel/module/Eval stability',
     'F-MUT': 'Isolated semantic mutants killed at intended real boundary',
-    'F-CODE': 'Coherent owner/dependency map, loaders/business/bindings separated'
+    'F-CODE': 'Coherent owner/dependency map, loaders/business/bindings separated',
+    'IC0-001': 'Independent finding: omitted productive literal/template policies',
+    'IC0-002': 'Independent finding: shared lease protocol authority and aliases',
+    'IC0-003': 'Independent finding: actual run-lived adapter activation',
+    'IC0-004': 'Independent finding: exact complete field-case specification',
+    'IC0-005': 'Independent finding: final identity/integrity freeze and recheck',
+    'IC0-006': 'Independent finding: actual suite and execution prerequisites'
 }
 identity = {
     'sourceCommit': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
@@ -109,7 +115,7 @@ inventory = {'schemaVersion':1,'status':'in-progress-not-C0-accepted','identity'
              'candidateLedger':'docs/review/evidence/config-acceptance/author/candidate-ledger.json',
              'sourceBoundary':'docs/review/evidence/config-acceptance/author/source-boundary.json'}
 matrix = {'schemaVersion':1,'status':'in-progress-not-approval-ready','identity':identity,
-          'requirements':[{'id':k,'description':v,'source':'docs/review/remediation/OPENCLAW-CONFIG-GOAL.md' if k.startswith(('C0-','F-')) else 'docs/review/remediation/acceptance-20260920.md' if k.startswith(('A','F')) else 'docs/review/remediation/decisions.md'} for k,v in definitions.items()],
+          'requirements':[{'id':k,'description':v,'source':'docs/review/remediation/independent-config-c0-9452d355.md' if k.startswith('IC0-') else 'docs/review/remediation/OPENCLAW-CONFIG-GOAL.md' if k.startswith(('C0-','F-')) else 'docs/review/remediation/acceptance-20260920.md' if k.startswith(('A','F')) else 'docs/review/remediation/decisions.md'} for k,v in definitions.items()],
           'cases':list(cases.values()),'acceptance':{k:'not-run' for k in ['C0-A','C0-B','C0-C','C0-D','C0-E']},
           'implementationAuthorization':None,
           'historicalEvidence':'docs/review/evidence/cloud-config-assessment-20261012/verification.json',

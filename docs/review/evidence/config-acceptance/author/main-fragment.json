@@ -1260,6 +1260,2033 @@
         "docs/review/evidence/config-acceptance/author/prism-source-read.log"
       ],
       "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-PORT",
+      "owner": "prism-agent-bridge",
+      "scope": {
+        "instance": "prism-agent-bridge",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "PORT",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          4
+        ]
+      },
+      "current": {
+        "valueOrDefault": 18080,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "Number(env.PORT || 18080); TCP listen supported integer port",
+      "unit": "TCP port",
+      "reader": "server.listen(port,127.0.0.1,tick)",
+      "productiveCallerChain": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "validation": {
+        "semantic": "Node listen validates; empty string also default",
+        "schema": "none central"
+      },
+      "targetAuthorRef": "config/services/prism-agent-bridge.config.json#/profiles/<selected>/PORT",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bridge composition; persisted Control jobs keep identity"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-BRIDGE-PORT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-CONTROL",
+      "owner": "prism-agent-bridge",
+      "scope": {
+        "instance": "prism-agent-bridge",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "PRISM_CONTROL_URL",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          5
+        ]
+      },
+      "current": {
+        "valueOrDefault": "http://127.0.0.1:28080",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "URL resolved by AgentJobRunner/controlRequest/new URL; no explicit trust restriction at composition",
+      "unit": "URL",
+      "reader": "fetch /v1/dispatch; controlRequest /v1/agent/jobs",
+      "productiveCallerChain": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "validation": {
+        "semantic": "URL constructor rejects malformed; no dedicated scheme/origin validator here",
+        "schema": "none central"
+      },
+      "targetAuthorRef": "config/services/prism-agent-bridge.config.json#/profiles/<selected>/CONTROL",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bridge composition; persisted Control jobs keep identity"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-BRIDGE-CONTROL-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-BODY",
+      "owner": "prism-agent-bridge",
+      "scope": {
+        "instance": "prism-agent-bridge",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "size",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          8,
+          9
+        ]
+      },
+      "current": {
+        "valueOrDefault": 2000000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "integer request byte maximum accumulated before JSON parse",
+      "unit": "bytes",
+      "reader": "readJson throws request too large; response422",
+      "productiveCallerChain": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "validation": {
+        "semantic": "size>2000000; caught error",
+        "schema": "none central"
+      },
+      "targetAuthorRef": "config/services/prism-agent-bridge.config.json#/profiles/<selected>/BODY",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bridge composition; persisted Control jobs keep identity"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-BRIDGE-BODY-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-DISPATCH",
+      "owner": "prism-agent-bridge",
+      "scope": {
+        "instance": "prism-agent-bridge",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "AbortSignal.timeout",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          14,
+          26
+        ]
+      },
+      "current": {
+        "valueOrDefault": 30000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "AbortSignal timer supported duration",
+      "unit": "milliseconds",
+      "reader": "dispatch fetch /v1/dispatch",
+      "productiveCallerChain": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "validation": {
+        "semantic": "AbortSignal.timeout; abort caught422",
+        "schema": "none central"
+      },
+      "targetAuthorRef": "config/services/prism-agent-bridge.config.json#/profiles/<selected>/DISPATCH",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bridge composition; persisted Control jobs keep identity"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-BRIDGE-DISPATCH-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-JOB-LOOKUP",
+      "owner": "prism-agent-bridge",
+      "scope": {
+        "instance": "prism-agent-bridge",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "controlRequest",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          2,
+          26
+        ]
+      },
+      "current": {
+        "valueOrDefault": 10000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "AbortSignal timer duration",
+      "unit": "milliseconds",
+      "reader": "design-set/revise persisted job GET before 202",
+      "productiveCallerChain": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "validation": {
+        "semantic": "payload jobId must be string; no newly admitted work from bridge",
+        "schema": "none central"
+      },
+      "targetAuthorRef": "config/services/prism-agent-bridge.config.json#/profiles/<selected>/JOB-LOOKUP",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bridge composition; persisted Control jobs keep identity"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-BRIDGE-JOB-LOOKUP-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-POLL",
+      "owner": "prism-agent-bridge",
+      "scope": {
+        "instance": "prism-agent-bridge",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "setInterval",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          33
+        ]
+      },
+      "current": {
+        "valueOrDefault": 1000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "positive interval; current unchecked hardcoded",
+      "unit": "milliseconds",
+      "reader": "AgentJobRunner.tick every1000 while alive",
+      "productiveCallerChain": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "validation": {
+        "semantic": "tick errors logged; clearInterval on SIGTERM/INT",
+        "schema": "none central"
+      },
+      "targetAuthorRef": "config/services/prism-agent-bridge.config.json#/profiles/<selected>/POLL",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bridge composition; persisted Control jobs keep identity"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-BRIDGE-POLL-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs",
+      "owner": "prism-database-bootstrap",
+      "scope": {
+        "instance": "prism-database-bootstrap",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "connectionTimeoutMs",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          10
+        ]
+      },
+      "current": {
+        "valueOrDefault": 5000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "positive integer policy; no local operator numeric validator",
+      "unit": "milliseconds",
+      "reader": "database connection establishment timeout",
+      "productiveCallerChain": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "validation": {
+        "semantic": "required credential ENV throws <name> is required; numeric policies fixed code",
+        "retryableCodes": [
+          "ECONNREFUSED",
+          "ECONNRESET",
+          "EHOSTUNREACH",
+          "ENETUNREACH",
+          "ETIMEDOUT",
+          "57P03"
+        ]
+      },
+      "targetAuthorRef": "config/services/prism-database-bootstrap.config.json#/profiles/<selected>/connectionTimeoutMs",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bootstrap startup only; no ordinary upgrade credential rotation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts",
+      "owner": "prism-database-bootstrap",
+      "scope": {
+        "instance": "prism-database-bootstrap",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "maximumAttempts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          10
+        ]
+      },
+      "current": {
+        "valueOrDefault": 60,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "positive integer policy; no local operator numeric validator",
+      "unit": "count",
+      "reader": "bootstrap retry attempt upper bound",
+      "productiveCallerChain": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "validation": {
+        "semantic": "required credential ENV throws <name> is required; numeric policies fixed code",
+        "retryableCodes": [
+          "ECONNREFUSED",
+          "ECONNRESET",
+          "EHOSTUNREACH",
+          "ENETUNREACH",
+          "ETIMEDOUT",
+          "57P03"
+        ]
+      },
+      "targetAuthorRef": "config/services/prism-database-bootstrap.config.json#/profiles/<selected>/maximumAttempts",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bootstrap startup only; no ordinary upgrade credential rotation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs",
+      "owner": "prism-database-bootstrap",
+      "scope": {
+        "instance": "prism-database-bootstrap",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "retryDelayMs",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          10
+        ]
+      },
+      "current": {
+        "valueOrDefault": 2000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "positive integer policy; no local operator numeric validator",
+      "unit": "milliseconds",
+      "reader": "wait between bootstrap connection attempts",
+      "productiveCallerChain": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "validation": {
+        "semantic": "required credential ENV throws <name> is required; numeric policies fixed code",
+        "retryableCodes": [
+          "ECONNREFUSED",
+          "ECONNRESET",
+          "EHOSTUNREACH",
+          "ENETUNREACH",
+          "ETIMEDOUT",
+          "57P03"
+        ]
+      },
+      "targetAuthorRef": "config/services/prism-database-bootstrap.config.json#/profiles/<selected>/retryDelayMs",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: bootstrap startup only; no ordinary upgrade credential rotation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-ADMIN_DATABASE_URL",
+      "owner": "deployment-secret-bindings",
+      "scope": {
+        "instance": "deployment-secret-bindings",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Only external reference/resolver revision belongs in config. Secret bytes remain external, this row stores no actual credential.",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "ADMIN_DATABASE_URL",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          8
+        ]
+      },
+      "current": {
+        "valueOrDefault": "external ENV bytes; never captured",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "required nonempty credential value, unversioned ENV resolver",
+      "unit": "secret reference",
+      "reader": "bootstrap captures required(environment,name) once",
+      "productiveCallerChain": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "validation": {
+        "semantic": "ADMIN_DATABASE_URL is required",
+        "revision": "no immutable external revision contract established",
+        "retryableCodes": [
+          "ECONNREFUSED",
+          "ECONNRESET",
+          "EHOSTUNREACH",
+          "ENETUNREACH",
+          "ETIMEDOUT",
+          "57P03"
+        ]
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/secretRefs/ADMIN_DATABASE_URL",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: initialization; established ordinary upgrade does not rotate credentials"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DB-SECRET-ADMIN_DATABASE_URL-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_MIGRATOR_PASSWORD",
+      "owner": "deployment-secret-bindings",
+      "scope": {
+        "instance": "deployment-secret-bindings",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Only external reference/resolver revision belongs in config. Secret bytes remain external, this row stores no actual credential.",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_MIGRATOR_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "current": {
+        "valueOrDefault": "external ENV bytes; never captured",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "required nonempty credential value, unversioned ENV resolver",
+      "unit": "secret reference",
+      "reader": "bootstrap captures required(environment,name) once",
+      "productiveCallerChain": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "validation": {
+        "semantic": "PRISM_MIGRATOR_PASSWORD is required",
+        "revision": "no immutable external revision contract established",
+        "retryableCodes": [
+          "ECONNREFUSED",
+          "ECONNRESET",
+          "EHOSTUNREACH",
+          "ENETUNREACH",
+          "ETIMEDOUT",
+          "57P03"
+        ]
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/secretRefs/PRISM_MIGRATOR_PASSWORD",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: initialization; established ordinary upgrade does not rotate credentials"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_MIGRATOR_PASSWORD-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_RUNTIME_PASSWORD",
+      "owner": "deployment-secret-bindings",
+      "scope": {
+        "instance": "deployment-secret-bindings",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Only external reference/resolver revision belongs in config. Secret bytes remain external, this row stores no actual credential.",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_RUNTIME_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "current": {
+        "valueOrDefault": "external ENV bytes; never captured",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "required nonempty credential value, unversioned ENV resolver",
+      "unit": "secret reference",
+      "reader": "bootstrap captures required(environment,name) once",
+      "productiveCallerChain": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "validation": {
+        "semantic": "PRISM_RUNTIME_PASSWORD is required",
+        "revision": "no immutable external revision contract established",
+        "retryableCodes": [
+          "ECONNREFUSED",
+          "ECONNRESET",
+          "EHOSTUNREACH",
+          "ENETUNREACH",
+          "ETIMEDOUT",
+          "57P03"
+        ]
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/secretRefs/PRISM_RUNTIME_PASSWORD",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: initialization; established ordinary upgrade does not rotate credentials"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_RUNTIME_PASSWORD-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_READONLY_PASSWORD",
+      "owner": "deployment-secret-bindings",
+      "scope": {
+        "instance": "deployment-secret-bindings",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "secret-reference",
+      "classificationReason": "Only external reference/resolver revision belongs in config. Secret bytes remain external, this row stores no actual credential.",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_READONLY_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "current": {
+        "valueOrDefault": "external ENV bytes; never captured",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "required nonempty credential value, unversioned ENV resolver",
+      "unit": "secret reference",
+      "reader": "bootstrap captures required(environment,name) once",
+      "productiveCallerChain": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "validation": {
+        "semantic": "PRISM_READONLY_PASSWORD is required",
+        "revision": "no immutable external revision contract established",
+        "retryableCodes": [
+          "ECONNREFUSED",
+          "ECONNRESET",
+          "EHOSTUNREACH",
+          "ENETUNREACH",
+          "ETIMEDOUT",
+          "57P03"
+        ]
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/secretRefs/PRISM_READONLY_PASSWORD",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S: initialization; established ordinary upgrade does not rotate credentials"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_READONLY_PASSWORD-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-ENABLE",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "prism-control",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_DECISIONS_ENABLED",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          24
+        ]
+      },
+      "current": {
+        "valueOrDefault": "false unless ENV exactly true",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "string ENV strict true; any other/missing silently disables",
+      "unit": "boolean",
+      "reader": "loadProductConfig returns undefined unless true; Control skips product authority",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "currently no invalid-boolean rejection; enabled requires complete authority fields"
+      },
+      "targetAuthorRef": "config/services/prism-control.config.json#/profiles/<selected>/productAuthority/enabled",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: authority generation and existing signed/lease history stay stable"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-ENABLE-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ORIGIN",
+      "owner": "deployment-product-authority",
+      "scope": {
+        "instance": "deployment-product-authority",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_ORIGIN",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          26
+        ]
+      },
+      "current": {
+        "valueOrDefault": "required when enabled; no configured fallback",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "HTTPS origin without path/credentials/query/fragment",
+      "unit": "origin/identity policy",
+      "reader": "productActor validates origin+CSRF before mutation",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "product authority requires HTTPS origins",
+        "inactive": "returns undefined without evaluating fields when disabled"
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/productAuthority/PRISM_PRODUCT_ORIGIN",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: authority/grants not module tuning"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ORIGIN-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_CONTROLLER_URL",
+      "owner": "deployment-product-authority",
+      "scope": {
+        "instance": "deployment-product-authority",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_URL",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          27
+        ]
+      },
+      "current": {
+        "valueOrDefault": "required when enabled; no configured fallback",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "HTTPS origin same restriction",
+      "unit": "origin/identity policy",
+      "reader": "signed intent forwarded to controller origin",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "product authority requires HTTPS origins",
+        "inactive": "returns undefined without evaluating fields when disabled"
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/productAuthority/PRISM_PRODUCT_CONTROLLER_URL",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: authority/grants not module tuning"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_CONTROLLER_URL-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_OPERATORS",
+      "owner": "deployment-product-authority",
+      "scope": {
+        "instance": "deployment-product-authority",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_OPERATORS",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          29
+        ]
+      },
+      "current": {
+        "valueOrDefault": "required when enabled; no configured fallback",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "nonempty array of unique nonblank trimmed strings serialized JSON",
+      "unit": "origin/identity policy",
+      "reader": "productActor allowlist has(session.user)",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "explicit product operator allowlist is required",
+        "inactive": "returns undefined without evaluating fields when disabled"
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/productAuthority/PRISM_PRODUCT_OPERATORS",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: authority/grants not module tuning"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_OPERATORS-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ISSUER",
+      "owner": "deployment-product-authority",
+      "scope": {
+        "instance": "deployment-product-authority",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_ISSUER",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          33
+        ]
+      },
+      "current": {
+        "valueOrDefault": "required when enabled; no configured fallback",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "nonempty trimmed string",
+      "unit": "origin/identity policy",
+      "reader": "signProductIntent payload.issuer and controller trust",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "PRISM_PRODUCT_ISSUER is required",
+        "inactive": "returns undefined without evaluating fields when disabled"
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/productAuthority/PRISM_PRODUCT_ISSUER",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: authority/grants not module tuning"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ISSUER-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_PRIVATE_KEY_FILE",
+      "owner": "deployment-secret-bindings",
+      "scope": {
+        "instance": "deployment-secret-bindings",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "secret-reference",
+      "classificationReason": "File path selects external secret/trust content; only ref/version and authorized consumer are config, not actual key/token bytes.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_PRIVATE_KEY_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          31
+        ]
+      },
+      "current": {
+        "valueOrDefault": "external file reference required when enabled; secret bytes not recorded",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "nonempty trimmed path; actual private key must Ed25519",
+      "unit": "secret file reference",
+      "reader": "readFile/createPrivateKey; dedicated ed25519 signer",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "PRISM_PRODUCT_PRIVATE_KEY_FILE is required; privateKey asymmetricKeyType ed25519 else product issuer requires a dedicated Ed25519 key"
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/secretRefs/PRISM_PRODUCT_PRIVATE_KEY_FILE",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: external revision refs stable with authority generation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_PRIVATE_KEY_FILE-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_CA_FILE",
+      "owner": "deployment-secret-bindings",
+      "scope": {
+        "instance": "deployment-secret-bindings",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "secret-reference",
+      "classificationReason": "File path selects external secret/trust content; only ref/version and authorized consumer are config, not actual key/token bytes.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_CA_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          34
+        ]
+      },
+      "current": {
+        "valueOrDefault": "external file reference required when enabled; secret bytes not recorded",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "nonempty trimmed path; actual private key must Ed25519",
+      "unit": "secret file reference",
+      "reader": "controller TLS trustedCA file",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "PRISM_PRODUCT_CONTROLLER_CA_FILE is required; privateKey asymmetricKeyType ed25519 else product issuer requires a dedicated Ed25519 key",
+        "actualTransport": "productController rereads CA file per call, rejectUnauthorized true; absence fixed revision pin remains current gap."
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/secretRefs/PRISM_PRODUCT_CONTROLLER_CA_FILE",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: external revision refs stable with authority generation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_CA_FILE-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_TOKEN_FILE",
+      "owner": "deployment-secret-bindings",
+      "scope": {
+        "instance": "deployment-secret-bindings",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "secret-reference",
+      "classificationReason": "File path selects external secret/trust content; only ref/version and authorized consumer are config, not actual key/token bytes.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_TOKEN_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          34
+        ]
+      },
+      "current": {
+        "valueOrDefault": "external file reference required when enabled; secret bytes not recorded",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "nonempty trimmed path; actual private key must Ed25519",
+      "unit": "secret file reference",
+      "reader": "authenticated controller token file",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "PRISM_PRODUCT_CONTROLLER_TOKEN_FILE is required; privateKey asymmetricKeyType ed25519 else product issuer requires a dedicated Ed25519 key",
+        "actualTransport": "productController reads file each invocation; token.trim required, token.length <=64000 UTF-16 units and no CR/LF. This is not fixed secret revision binding."
+      },
+      "targetAuthorRef": "config/deployment/operator.config.json#/profiles/<selected>/secretRefs/PRISM_PRODUCT_CONTROLLER_TOKEN_FILE",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: external revision refs stable with authority generation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_TOKEN_FILE-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-DECISION-TTL",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "prism-control",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "signProductIntent.expiry",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          61,
+          62,
+          67
+        ]
+      },
+      "current": {
+        "valueOrDefault": 300000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "max decision lifetime constrained by actor.expiresAt, floor to seconds",
+      "unit": "milliseconds",
+      "reader": "expiresAt=floor(min(now+300000,session expiry)/1000)*1000; expiry<=now rejected",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "operator session expires before decision issuance; session/lease subject remains unchanged"
+      },
+      "targetAuthorRef": "config/services/prism-control.config.json#/profiles/<selected>/productAuthority/decisionTtlMs",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "S/R: signer policy lifetime; no backdating old signed envelope"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-DECISION-TTL-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-DOMAIN",
+      "owner": "prism-product-protocol",
+      "scope": {
+        "instance": "prism-product-protocol",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "protocol-invariant",
+      "classificationReason": "Changing tag changes signature meaning across producer/verifier; cannot be safely tuned as service setting.",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRODUCT_DOMAIN",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          6,
+          71
+        ]
+      },
+      "current": {
+        "valueOrDefault": "kubeclaw.demo-product-decision.v1\\0",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "exact domain-separated signed contract tag",
+      "unit": "versioned protocol string",
+      "reader": "sign concatenates domain bytes+payload before Ed25519; verifier must same domain",
+      "productiveCallerChain": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "validation": {
+        "semantic": "domain is signature protocol not operator tuning"
+      },
+      "targetAuthorRef": "existing versioned product contract, no new settings author",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "V: coordinated protocol/version migration"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-PRODUCT-DOMAIN-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-ASSET-LENGTH",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "src.length",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          26
+        ]
+      },
+      "current": {
+        "valueOrDefault": 16000000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "UTF-16 string code units length; data: mediaType/base64 prefix required",
+      "unit": "UTF-16 code units",
+      "reader": "renderAssetsFor rejects src length>16000000 with render asset is unavailable",
+      "productiveCallerChain": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "validation": {
+        "semantic": "currently code constants, no central validators; input.capture explicitly true activates browser; input target labels are task data"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/render/ASSET-LENGTH",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "J inherited M: rendering profile bound to operation/Eval; browser instance under admitted owner"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-RENDER-ASSET-LENGTH-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-COMPACT",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "compact",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          73,
+          102
+        ]
+      },
+      "current": {
+        "valueOrDefault": 390,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "positive pixel width supported browser.viewport",
+      "unit": "CSS pixels",
+      "reader": "captureHtml context width for compact",
+      "productiveCallerChain": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "validation": {
+        "semantic": "currently code constants, no central validators; input.capture explicitly true activates browser; input target labels are task data"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/render/WIDTH-COMPACT",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "J inherited M: rendering profile bound to operation/Eval; browser instance under admitted owner"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-RENDER-WIDTH-COMPACT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-REGULAR",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "regular",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          73,
+          102
+        ]
+      },
+      "current": {
+        "valueOrDefault": 768,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "positive pixel width supported browser.viewport",
+      "unit": "CSS pixels",
+      "reader": "captureHtml context width for regular",
+      "productiveCallerChain": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "validation": {
+        "semantic": "currently code constants, no central validators; input.capture explicitly true activates browser; input target labels are task data"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/render/WIDTH-REGULAR",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "J inherited M: rendering profile bound to operation/Eval; browser instance under admitted owner"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-RENDER-WIDTH-REGULAR-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-WIDE",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "wide",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          73,
+          102
+        ]
+      },
+      "current": {
+        "valueOrDefault": 1440,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "positive pixel width, also current unknown-label fallback",
+      "unit": "CSS pixels",
+      "reader": "captureHtml context width for wide or unknown",
+      "productiveCallerChain": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "validation": {
+        "semantic": "currently code constants, no central validators; input.capture explicitly true activates browser; input target labels are task data"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/render/WIDTH-WIDE",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "J inherited M: rendering profile bound to operation/Eval; browser instance under admitted owner"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-RENDER-WIDTH-WIDE-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-HEIGHT",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "height",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          68,
+          106
+        ]
+      },
+      "current": {
+        "valueOrDefault": 1000,
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "positive browser viewport pixel height",
+      "unit": "CSS pixels",
+      "reader": "captureHtml context height",
+      "productiveCallerChain": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "validation": {
+        "semantic": "currently code constants, no central validators; input.capture explicitly true activates browser; input target labels are task data"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/render/HEIGHT",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "J inherited M: rendering profile bound to operation/Eval; browser instance under admitted owner"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-RENDER-HEIGHT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-LOCALE",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "locale",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          108,
+          154
+        ]
+      },
+      "current": {
+        "valueOrDefault": "en-US",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "supported Playwright locale string",
+      "unit": "locale",
+      "reader": "newContext locale; rendererMetadata locale",
+      "productiveCallerChain": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "validation": {
+        "semantic": "currently code constants, no central validators; input.capture explicitly true activates browser; input target labels are task data"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/render/LOCALE",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "J inherited M: rendering profile bound to operation/Eval; browser instance under admitted owner"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-RENDER-LOCALE-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-TIMEZONE",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "timezoneId",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          109
+        ]
+      },
+      "current": {
+        "valueOrDefault": "UTC",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "supported IANA timezone browser context",
+      "unit": "timezone",
+      "reader": "newContext timezoneId; metadata timezone",
+      "productiveCallerChain": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "validation": {
+        "semantic": "currently code constants, no central validators; input.capture explicitly true activates browser; input target labels are task data"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/render/TIMEZONE",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "J inherited M: rendering profile bound to operation/Eval; browser instance under admitted owner"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-RENDER-TIMEZONE-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-MOTION",
+      "owner": "prism-engine",
+      "scope": {
+        "instance": "prism-engine",
+        "profile": "explicit selected complete profile; current author code/ENV"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "reducedMotion",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          110
+        ]
+      },
+      "current": {
+        "valueOrDefault": "reduce",
+        "precedence": "as recorded code/ENV constructor; proposed author removes competing policy values"
+      },
+      "typeUnitDomain": "Playwright reducedMotion domain reduce/no-preference",
+      "unit": "enum",
+      "reader": "newContext media preference and injected animation suppression",
+      "productiveCallerChain": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "validation": {
+        "semantic": "currently code constants, no central validators; input.capture explicitly true activates browser; input target labels are task data"
+      },
+      "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/render/MOTION",
+      "activationScope": {
+        "current": "process composition unless explicitly task/operation scoped",
+        "target": "J inherited M: rendering profile bound to operation/Eval; browser instance under admitted owner"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+      "profileEvalSuitability": "fixed selected generation, policy may be evaluated within exact supported domain; no live model/paid eval proof",
+      "migrationAction": "C3 explicit owner/ref+strict validation; C5 bind closure at run/module/operation boundary. Protocol/task values stay their original contract owner.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-RENDER-MOTION-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-source-read-supplement.log"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
     }
   ],
   "sources": [
@@ -1326,6 +3353,42 @@
     {
       "path": "skills/prism/config/native-worker.ts",
       "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    },
+    {
+      "path": "skills/prism/server/agent-bridge.mjs",
+      "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+    },
+    {
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+    },
+    {
+      "path": "skills/prism/control/product-decisions.ts",
+      "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+    },
+    {
+      "path": "skills/prism/config/database-bootstrap.ts",
+      "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+    },
+    {
+      "path": "skills/prism/engine/browser-capture.ts",
+      "sha256": "722f843dabb944aa29725ab178a7718577fb3351112cd929628b3eaae2cdfae2"
+    },
+    {
+      "path": "skills/prism/engine/render-operation.ts",
+      "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+    },
+    {
+      "path": "skills/prism/server/bootstrap-database.ts",
+      "sha256": "4cacc0a24266f58196bd6f6a74abeeb4f7bb95f833312fe691e9f6c0a76d28ee"
+    },
+    {
+      "path": "skills/prism/server/product-controller.ts",
+      "sha256": "1b2ccc2bbe84e204b5ca40f749c3faf5308bad4e5052228a3ba40550d1bb77b1"
+    },
+    {
+      "path": "skills/prism/server/product-decisions.ts",
+      "sha256": "04be267143d97a628ff607527ff67166faf3c32405536292d326c52ac5b1283d"
     }
   ],
   "cases": [
@@ -3378,6 +5441,1206 @@
       "rawEvidencePath": null,
       "result": "not-run",
       "reason": "unapproved implementation case proposal; full profile/oracle/test does not yet exist",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-PORT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-BRIDGE-PORT"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "inputProfile": {
+        "current": 18080,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "server.listen(port,127.0.0.1,tick)",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-CONTROL-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-BRIDGE-CONTROL"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "inputProfile": {
+        "current": "http://127.0.0.1:28080",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "fetch /v1/dispatch; controlRequest /v1/agent/jobs",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-BODY-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-BRIDGE-BODY"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "inputProfile": {
+        "current": 2000000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "readJson throws request too large; response422",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-DISPATCH-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-BRIDGE-DISPATCH"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "inputProfile": {
+        "current": 30000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "dispatch fetch /v1/dispatch",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-JOB-LOOKUP-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-BRIDGE-JOB-LOOKUP"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "inputProfile": {
+        "current": 10000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "design-set/revise persisted job GET before 202",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-POLL-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-BRIDGE-POLL"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "server/agent-bridge.mjs composition",
+        "readJson/dispatch/AgentJobRunner.tick/controlRequest"
+      ],
+      "inputProfile": {
+        "current": 1000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "AgentJobRunner.tick every1000 while alive",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "inputProfile": {
+        "current": 5000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "database connection establishment timeout",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "inputProfile": {
+        "current": 60,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "bootstrap retry attempt upper bound",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "inputProfile": {
+        "current": 2000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "wait between bootstrap connection attempts",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-ADMIN_DATABASE_URL-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DB-SECRET-ADMIN_DATABASE_URL"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "inputProfile": {
+        "current": "external ENV bytes; never captured",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "bootstrap captures required(environment,name) once",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_MIGRATOR_PASSWORD-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_MIGRATOR_PASSWORD"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "inputProfile": {
+        "current": "external ENV bytes; never captured",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "bootstrap captures required(environment,name) once",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_RUNTIME_PASSWORD-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_RUNTIME_PASSWORD"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "inputProfile": {
+        "current": "external ENV bytes; never captured",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "bootstrap captures required(environment,name) once",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_READONLY_PASSWORD-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_READONLY_PASSWORD"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/bootstrap-database.ts composition",
+        "prismDatabaseBootstrapConfig",
+        "pg.Pool(connectionString,connectionTimeoutMillis)",
+        "bootstrap retry loop",
+        "bootstrapPrismDatabaseRoles(admin,config.adminUrl,config.passwords)",
+        "admin.end finally"
+      ],
+      "inputProfile": {
+        "current": "external ENV bytes; never captured",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "bootstrap captures required(environment,name) once",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-ENABLE-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-ENABLE"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "false unless ENV exactly true",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "loadProductConfig returns undefined unless true; Control skips product authority",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ORIGIN-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ORIGIN"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "required when enabled; no configured fallback",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "productActor validates origin+CSRF before mutation",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_CONTROLLER_URL-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_CONTROLLER_URL"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "required when enabled; no configured fallback",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "signed intent forwarded to controller origin",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_OPERATORS-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_OPERATORS"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "required when enabled; no configured fallback",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "productActor allowlist has(session.user)",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ISSUER-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ISSUER"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "required when enabled; no configured fallback",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "signProductIntent payload.issuer and controller trust",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_PRIVATE_KEY_FILE-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_PRIVATE_KEY_FILE"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "external file reference required when enabled; secret bytes not recorded",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "readFile/createPrivateKey; dedicated ed25519 signer",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_CA_FILE-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_CA_FILE"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "external file reference required when enabled; secret bytes not recorded",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "controller TLS trustedCA file",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_TOKEN_FILE-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_TOKEN_FILE"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "external file reference required when enabled; secret bytes not recorded",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "authenticated controller token file",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-DECISION-TTL-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-DECISION-TTL"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": 300000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "expiresAt=floor(min(now+300000,session expiry)/1000)*1000; expiry<=now rejected",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-DOMAIN-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-PRODUCT-DOMAIN"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "skills/prism/server/control.ts",
+        "loadControlCompositionConfig -> loadProductConfig",
+        "server/control-server.ts productRoute",
+        "server/product-decisions.ts authorizedProductRoute/submitDurable/reconcile",
+        "control/product-decisions.ts productActor/parseProductIntent/signProductIntent",
+        "server/product-controller.ts productController https.request"
+      ],
+      "inputProfile": {
+        "current": "kubeclaw.demo-product-decision.v1\\0",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "sign concatenates domain bytes+payload before Ed25519; verifier must same domain",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-ASSET-LENGTH-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-RENDER-ASSET-LENGTH"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "inputProfile": {
+        "current": 16000000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "renderAssetsFor rejects src length>16000000 with render asset is unavailable",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-COMPACT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-RENDER-WIDTH-COMPACT"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "inputProfile": {
+        "current": 390,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "captureHtml context width for compact",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-REGULAR-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-RENDER-WIDTH-REGULAR"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "inputProfile": {
+        "current": 768,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "captureHtml context width for regular",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-WIDE-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-RENDER-WIDTH-WIDE"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "inputProfile": {
+        "current": 1440,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "captureHtml context width for wide or unknown",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-HEIGHT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-RENDER-HEIGHT"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "inputProfile": {
+        "current": 1000,
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "captureHtml context height",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-LOCALE-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-RENDER-LOCALE"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "inputProfile": {
+        "current": "en-US",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "newContext locale; rendererMetadata locale",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-TIMEZONE-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-RENDER-TIMEZONE"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "inputProfile": {
+        "current": "UTC",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "newContext timezoneId; metadata timezone",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-MOTION-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-RENDER-MOTION"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local",
+      "productiveCaller": [
+        "native-worker-host.ts composition",
+        "PrismEngine.executeOnce(render)",
+        "renderOperation/renderHtml/captureHtml",
+        "Playwright browser context/screenshot/ariaSnapshot"
+      ],
+      "inputProfile": {
+        "current": "reduce",
+        "alternative": "complete profile and exact alternative currently open"
+      },
+      "priorState": "new process/operation; previous durable state unchanged",
+      "expectedEffectOrRejectingBoundary": "newContext media preference and injected animation suppression",
+      "observerMethod": "specific behavior oracle remains to be finalized at real consumer",
+      "command": "node --test tests/verification/reliability/config-prism-residual.test.mts",
+      "sourceIdentity": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "implementation unauthorized; exact future case specification still incomplete",
       "reviewerConfirmation": null,
       "specificationStatus": "incomplete"
     }
