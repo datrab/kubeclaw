@@ -18,6 +18,11 @@ the original authors' motives.
 Use this guide before you create a package or change Core.
 It identifies the smallest supported change that solves your problem.
 
+Use the [Developer handbook](developer-handbook.md) to prepare a checkout,
+choose component checks, and follow build and release procedures.
+For a bounded Core change, use the [administrative retry diagnostic exercise](examples/platform-change-nova-lifecycle.json)
+with the handbook’s [lifecycle change procedure](developer-handbook.md#practice-a-bounded-lifecycle-change-and-removal).
+
 Use [Extend Prism safely](platform/prism.md) when the change belongs to a Prism
 contract, service, document operation, renderer, retrieval path, Studio,
 storage boundary, or pipeline handoff.

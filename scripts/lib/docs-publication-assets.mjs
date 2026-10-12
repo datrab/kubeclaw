@@ -11,6 +11,7 @@ const files = new Set([
   'extend/examples/minimal-stage/schemas/result.schema.json',
   'extend/examples/minimal-stage/src/stage.js',
   'extend/examples/minimal-stage/tests/stage.test.mjs',
+  'extend/examples/platform-change-nova-lifecycle.json',
   'reference/generated-documentation-map.json',
   'reference/documentation-route-registry.json',
   'use/workflows/examples/buster-fixture-matrix-report.pipeline.json',

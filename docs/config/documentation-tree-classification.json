@@ -23473,6 +23473,22 @@
       "originalPath": "docs/site/use/workflows/wait-resume/signal.template.json",
       "expectedPath": "docs/site/use/workflows/wait-resume/signal.template.json",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/extend/developer-handbook.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/extend/developer-handbook.md",
+      "expectedPath": "docs/site/extend/developer-handbook.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "expectedPath": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "introducedAfterBaseline": true
     }
   ]
 }
