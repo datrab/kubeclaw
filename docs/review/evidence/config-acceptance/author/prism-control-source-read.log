@@ -1,0 +1,1006 @@
+
+SOURCE skills/prism/server/control-http.ts sha256:df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1
+    1 import { createHash } from "node:crypto";
+    2 import type { IncomingMessage, ServerResponse } from "node:http";
+    3 export async function body(
+    4   request: IncomingMessage,
+    5   maxBytes = 2_000_000,
+    6 ): Promise<unknown> {
+    7   if (
+    8     !(request.headers["content-type"] ?? "")
+    9       .toString()
+   10       .toLowerCase()
+   11       .startsWith("application/json")
+   12   )
+   13     throw new Error("application/json is required");
+   14   const chunks: Buffer[] = [];
+   15   let size = 0;
+   16   for await (const chunk of request) {
+   17     size += chunk.length;
+   18     if (size > maxBytes) throw new Error("request too large");
+   19     chunks.push(chunk);
+   20   }
+   21   return chunks.length
+   22     ? JSON.parse(Buffer.concat(chunks).toString("utf8"))
+   23     : {};
+   24 }
+   25 export function json(
+   26   response: ServerResponse,
+   27   status: number,
+   28   value: unknown,
+   29 ): void {
+   30   response.writeHead(status, {
+   31     "content-type": "application/json",
+   32     "cache-control": "no-store",
+   33   });
+   34   response.end(JSON.stringify(value));
+   35 }
+   36 export function cookies(request: IncomingMessage): Record<string, string> {
+   37   return Object.fromEntries(
+   38     (request.headers.cookie ?? "")
+   39       .split(";")
+   40       .filter(Boolean)
+   41       .map(
+   42         (item) =>
+   43           item.trim().split("=").map(decodeURIComponent) as [string, string],
+   44       ),
+   45   );
+   46 }
+   47 export const sha256 = (value: string | Uint8Array) =>
+   48   `sha256:${createHash("sha256").update(value).digest("hex")}`;
+   49 export const userKey = (identity: string) =>
+   50   `user-${createHash("sha256").update(identity).digest("hex").slice(0, 24)}`;
+
+SOURCE skills/prism/control/session.ts sha256:0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b
+    1 import { createHmac, timingSafeEqual } from "node:crypto";
+    2 
+    3 export type Session = { user: string; audience: "prism"; roles: string[]; expiresAt: number };
+    4 const encode = (value: object): string => Buffer.from(JSON.stringify(value)).toString("base64url");
+    5 export function mintSession(user: string, secret: string, now = Date.now(), roles=["editor"]): string {
+    6   const payload = encode({ user, audience:"prism", roles, expiresAt: now + 15 * 60_000 });
+    7   return `${payload}.${createHmac("sha256", secret).update(payload).digest("base64url")}`;
+    8 }
+    9 export function verifySession(token: string, secret: string, now = Date.now()): Session {
+   10   const [payload, supplied] = token.split("."); if (!payload || !supplied) throw new Error("invalid session");
+   11   const expected = createHmac("sha256", secret).update(payload).digest(); const actual = Buffer.from(supplied, "base64url");
+   12   if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) throw new Error("invalid session");
+   13   const session = JSON.parse(Buffer.from(payload, "base64url").toString()) as Session;
+   14   if (!session.user || session.audience!=="prism" || !Array.isArray(session.roles) || session.expiresAt <= now) throw new Error("expired session"); return session;
+   15 }
+   16 export function exchangeTailscaleIdentity(headers: Record<string, string | undefined>, ingressSecret: string, sessionSecret: string): string {
+   17   if (!ingressSecret || headers["x-prism-ingress-secret"] !== ingressSecret) throw new Error("untrusted ingress");
+   18   const user = headers["tailscale-user-login"]?.trim(); if (!user) throw new Error("missing Tailscale identity");
+   19   return mintSession(user, sessionSecret);
+   20 }
+
+SOURCE skills/prism/server/session-routes.ts sha256:b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644
+    1 import { randomBytes } from "node:crypto";
+    2 import { type IncomingMessage, type ServerResponse } from "node:http";
+    3 import {
+    4   exchangeTailscaleIdentity,
+    5   verifySession,
+    6 } from "../control/session.ts";
+    7 
+    8 import type { ControlContext } from "./control-context.ts";
+    9 import { json, userKey } from "./control-http.ts";
+   10 type RouteContext = Pick<ControlContext, "config">;
+   11 
+   12 export async function sessionRoutes(
+   13   context: RouteContext,
+   14   request: IncomingMessage,
+   15   response: ServerResponse,
+   16   url: URL,
+   17 ): Promise<boolean> {
+   18   if (url.pathname === "/v1/session" && request.method === "POST") {
+   19     await createSession(context, request, response);
+   20     return true;
+   21   }
+   22   return false;
+   23 }
+   24 async function createSession(
+   25   context: RouteContext,
+   26   request: IncomingMessage,
+   27   response: ServerResponse,
+   28 ) {
+   29   const { sessionSecret, ingressSecret } = context.config;
+   30 
+   31   const headers = Object.fromEntries(
+   32     Object.entries(request.headers).map(([key, value]) => [
+   33       key,
+   34       Array.isArray(value) ? value[0] : value,
+   35     ]),
+   36   );
+   37   const token = exchangeTailscaleIdentity(
+   38     headers,
+   39     ingressSecret,
+   40     sessionSecret,
+   41   );
+   42   const csrf = randomBytes(24).toString("base64url");
+   43   response.setHeader("set-cookie", [
+   44     `prism_session=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=900`,
+   45     `prism_csrf=${encodeURIComponent(csrf)}; Secure; SameSite=Strict; Path=/; Max-Age=900`,
+   46   ]);
+   47   return json(response, 201, {
+   48     csrf,
+   49     userId: userKey(verifySession(token, sessionSecret).user),
+   50   });
+   51 }
+
+SOURCE skills/prism/server/control-context.ts sha256:2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02
+    1 import type { IncomingMessage } from "node:http";
+    2 import { runNativePrismOperation } from "../control/native-operation.ts";
+    3 import { verifySession } from "../control/session.ts";
+    4 import {
+    5   ContentAddressedArtifactStore,
+    6   RevisionRepository,
+    7   type Database,
+    8 } from "../storage/index.ts";
+    9 import type { loadControlServerConfig } from "./control-config.ts";
+   10 import { cookies } from "./control-http.ts";
+   11 export function createControlContext(
+   12   pool: Database,
+   13   config: ReturnType<typeof loadControlServerConfig>,
+   14 ) {
+   15   const repository = new RevisionRepository(pool),
+   16     artifacts = new ContentAddressedArtifactStore(config.artifactRoot);
+   17   return Object.freeze({
+   18     pool,
+   19     repository,
+   20     artifacts,
+   21     config,
+   22     runWorker: (
+   23       operation: "generate" | "render" | "evaluate" | "ingest" | "publish",
+   24       input: Record<string, unknown>,
+   25       idempotencyKey: string,
+   26     ) =>
+   27       runNativePrismOperation(
+   28         pool,
+   29         artifacts,
+   30         config,
+   31         operation,
+   32         input,
+   33         idempotencyKey,
+   34       ),
+   35   });
+   36 }
+   37 export type ControlContext = ReturnType<typeof createControlContext>;
+   38 export function authenticated(
+   39   context: ControlContext,
+   40   request: IncomingMessage,
+   41 ) {
+   42   const { sessionSecret } = context.config;
+   43   const values = cookies(request);
+   44   const session = verifySession(values.prism_session ?? "", sessionSecret);
+   45   const csrf = values.prism_csrf ?? "";
+   46   if (
+   47     !["GET", "HEAD"].includes(request.method ?? "") &&
+   48     (!csrf || request.headers["x-prism-csrf"] !== csrf)
+   49   )
+   50     throw new Error("invalid CSRF token");
+   51   return { user: session.user, roles: session.roles, csrf };
+   52 }
+   53 export type AuthenticatedControlContext = ControlContext & {
+   54   readonly actor: ReturnType<typeof authenticated>;
+   55 };
+
+SOURCE skills/prism/server/control-server.ts sha256:079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3
+    1 import {
+    2   createServer,
+    3   type IncomingMessage,
+    4   type ServerResponse,
+    5 } from "node:http";
+    6 import { Console } from "node:console";
+    7 import type { Database } from "../storage/index.ts";
+    8 import { agentRoutes } from "./agent-routes.ts";
+    9 import { approvalRoute } from "./approval-route.ts";
+   10 import { artifactRoute } from "./artifact-route.ts";
+   11 import { baselineRoute } from "./baseline-route.ts";
+   12 import { loadControlCompositionConfig } from "./control-config.ts";
+   13 import {
+   14   authenticated,
+   15   createControlContext,
+   16   type ControlContext,
+   17 } from "./control-context.ts";
+   18 import { json } from "./control-http.ts";
+   19 import { corpusRoutes } from "./corpus-routes.ts";
+   20 import { directionRoutes } from "./direction-routes.ts";
+   21 import { dispatchRoute } from "./dispatch-route.ts";
+   22 import { documentHistoryRoutes, documentRoutes } from "./document-routes.ts";
+   23 import { engineRoute } from "./engine-route.ts";
+   24 import { handleInternalArtifact } from "./internal-artifacts.ts";
+   25 import { preferenceRoutes } from "./preference-routes.ts";
+   26 import { productAuthorityHandler } from "./product-decisions.ts";
+   27 import { projectRoutes } from "./project-routes.ts";
+   28 import { sessionRoutes } from "./session-routes.ts";
+   29 // Match the original Console(ignoreErrors:true) policy. The closed-descriptor
+   30 // regression verifies preserved responses and availability for that failure.
+   31 const diagnostics = new Console({
+   32   stdout: process.stdout,
+   33   stderr: process.stderr,
+   34   ignoreErrors: true,
+   35 });
+   36 
+   37 async function handle(
+   38   context: ControlContext,
+   39   request: IncomingMessage,
+   40   response: ServerResponse,
+   41 ) {
+   42   try {
+   43     const url = new URL(request.url ?? "/", "http://prism-control");
+   44     if (await handlePublic(context, request, response, url)) return;
+   45     return await handleApplication(context, request, response, url);
+   46   } catch (error) {
+   47     diagnostics.error("[prism-control] request failed", {
+   48       method: request.method,
+   49       path: request.url,
+   50       error: error instanceof Error ? error.message : "request failed",
+   51     });
+   52     return json(response, error instanceof SyntaxError ? 400 : 422, {
+   53       error: error instanceof Error ? error.message : "request failed",
+   54     });
+   55   }
+   56 }
+   57 /** Compose the original HTTP service; the caller owns database/listener lifetime. */
+   58 export async function createControlServer(
+   59   pool: Database,
+   60   environment?: NodeJS.ProcessEnv,
+   61 ) {
+   62   return createConfiguredControlServer(
+   63     pool,
+   64     await loadControlCompositionConfig(environment),
+   65   );
+   66 }
+   67 
+   68 /** Build the HTTP service from the already captured production composition. */
+   69 export function createConfiguredControlServer(
+   70   pool: Database,
+   71   composition: Awaited<ReturnType<typeof loadControlCompositionConfig>>,
+   72 ) {
+   73   const { service: config, product: productConfig } = composition;
+   74   const context = createControlContext(pool, config);
+   75   return createServer(
+   76     productAuthorityHandler(
+   77       (request, response) => handle(context, request, response),
+   78       { db: pool, config: productConfig, sessionSecret: config.sessionSecret },
+   79     ),
+   80   );
+   81 }
+   82 
+   83 async function handlePublic(
+   84   context: ControlContext,
+   85   request: IncomingMessage,
+   86   response: ServerResponse,
+   87   url: URL,
+   88 ): Promise<boolean> {
+   89   if (url.pathname === "/health") {
+   90     json(response, 200, { status: "ok" });
+   91     return true;
+   92   }
+   93   if (url.pathname === "/ready") {
+   94     await context.pool.query("SELECT 1");
+   95     json(response, 200, { status: "ready" });
+   96     return true;
+   97   }
+   98   const {
+   99     spiffeEnabled,
+  100     workerSecret,
+  101     trustedWorkerSpiffeId,
+  102     trustedControlSpiffeId,
+  103     trustedPrismAgentSpiffeId,
+  104   } = context.config;
+  105   if (
+  106     await handleInternalArtifact(request, response, url, {
+  107       artifacts: context.artifacts,
+  108       spiffeEnabled,
+  109       workerSecret,
+  110       trustedWorkerSpiffeId,
+  111       trustedControlSpiffeId,
+  112       trustedPrismAgentSpiffeId,
+  113     })
+  114   )
+  115     return true;
+  116   if (await sessionRoutes(context, request, response, url)) return true;
+  117   if (await dispatchRoute(context, request, response, url)) return true;
+  118   if (await agentRoutes(context, request, response, url)) return true;
+  119   return false;
+  120 }
+  121 async function handleApplication(
+  122   context: ControlContext,
+  123   request: IncomingMessage,
+  124   response: ServerResponse,
+  125   url: URL,
+  126 ) {
+  127   const actor = authenticated(context, request);
+  128   const application = { ...context, actor };
+  129   if (await projectRoutes(application, request, response, url)) return;
+  130   if (await documentRoutes(application, request, response, url)) return;
+  131   if (await directionRoutes(application, request, response, url)) return;
+  132   if (await documentHistoryRoutes(application, request, response, url)) return;
+  133   if (await engineRoute(application, request, response, url)) return;
+  134   if (await approvalRoute(application, request, response, url)) return;
+  135   if (await baselineRoute(application, request, response, url)) return;
+  136   if (await corpusRoutes(application, request, response, url)) return;
+  137   if (await preferenceRoutes(application, request, response, url)) return;
+  138   if (await artifactRoute(application, request, response, url)) return;
+  139   return json(response, 404, { error: "not found" });
+  140 }
+
+SOURCE skills/prism/server/internal-auth.ts sha256:e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72
+    1 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
+    2 
+    3 const WINDOW_MS = 5 * 60_000;
+    4 
+    5 export function signInternalRequest(
+    6   secret: string,
+    7   body: Buffer,
+    8   timestamp: number,
+    9   nonce: string,
+   10 ): string {
+   11   const digest = createHash("sha256").update(body).digest("hex");
+   12   return createHmac("sha256", secret)
+   13     .update(`${timestamp}.${nonce}.${digest}`)
+   14     .digest("hex");
+   15 }
+   16 
+   17 export type NonceStore = {
+   18   consume(
+   19     audience: string,
+   20     nonceDigest: string,
+   21     issuedAt: Date,
+   22     expiresAt: Date,
+   23   ): Promise<boolean>;
+   24 };
+   25 
+   26 export class PostgresNonceStore implements NonceStore {
+   27   private readonly db: {
+   28     query(sql: string, params?: unknown[]): Promise<{ rows: unknown[] }>;
+   29   };
+   30   constructor(db: {
+   31     query(sql: string, params?: unknown[]): Promise<{ rows: unknown[] }>;
+   32   }) {
+   33     this.db = db;
+   34   }
+   35   async consume(
+   36     audience: string,
+   37     nonceDigest: string,
+   38     issuedAt: Date,
+   39     expiresAt: Date,
+   40   ): Promise<boolean> {
+   41     await this.db.query(
+   42       "DELETE FROM prism.worker_request_nonce WHERE ctid IN (SELECT ctid FROM prism.worker_request_nonce WHERE expires_at <= now() ORDER BY expires_at LIMIT 1000)",
+   43     );
+   44     const result = await this.db.query(
+   45       "INSERT INTO prism.worker_request_nonce(audience,nonce_digest,issued_at,expires_at) VALUES($1,$2,$3,$4) ON CONFLICT DO NOTHING RETURNING nonce_digest",
+   46       [audience, nonceDigest, issuedAt, expiresAt],
+   47     );
+   48     return result.rows.length === 1;
+   49   }
+   50 }
+   51 
+   52 export async function verifyInternalRequest(
+   53   secret: string,
+   54   body: Buffer,
+   55   headers: Record<string, string | string[] | undefined>,
+   56   nonceStore: NonceStore,
+   57   audience = "prism-worker",
+   58   now = Date.now(),
+   59 ): Promise<void> {
+   60   const timestamp = Number(String(headers["x-prism-timestamp"] ?? ""));
+   61   const nonce = String(headers["x-prism-nonce"] ?? "");
+   62   const supplied = String(headers["x-prism-signature"] ?? "").replace(
+   63     /^v1=/u,
+   64     "",
+   65   );
+   66   if (!Number.isSafeInteger(timestamp) || Math.abs(now - timestamp) > WINDOW_MS)
+   67     throw new Error("internal request expired");
+   68   if (!/^[a-f0-9]{32}$/u.test(nonce) || !/^[a-f0-9]{64}$/u.test(supplied))
+   69     throw new Error("invalid internal request authentication");
+   70   const expected = Buffer.from(
+   71     signInternalRequest(secret, body, timestamp, nonce),
+   72     "hex",
+   73   );
+   74   const actual = Buffer.from(supplied, "hex");
+   75   if (actual.length !== expected.length || !timingSafeEqual(actual, expected))
+   76     throw new Error("invalid internal request authentication");
+   77   const nonceDigest = createHash("sha256").update(nonce).digest("hex");
+   78   if (
+   79     !(await nonceStore.consume(
+   80       audience,
+   81       nonceDigest,
+   82       new Date(timestamp),
+   83       new Date(timestamp + WINDOW_MS),
+   84     ))
+   85   )
+   86     throw new Error("internal request replayed");
+   87 }
+
+SOURCE skills/prism/server/worker-readiness.ts sha256:b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e
+    1 import { Pool } from "pg";
+    2 import { PostgresNonceStore, verifyInternalRequest } from "./internal-auth.ts";
+    3 
+    4 export class WorkerDependencyUnavailable extends Error {
+    5   constructor() { super("PRISM_NONCE_DATABASE_UNAVAILABLE"); }
+    6 }
+    7 
+    8 export async function checkWorkerNonceTable(db: { query(sql: string): Promise<unknown> }): Promise<void> {
+    9   await db.query("SELECT 1 FROM prism.worker_request_nonce LIMIT 1");
+   10 }
+   11 
+   12 export interface WorkerDependencyDiagnostic {
+   13   event: "prism_nonce_dependency_failure";
+   14   phase: "admission" | "connect" | "query" | "idle" | "cancel";
+   15   code: string;
+   16   durationMs: number;
+   17   active: number;
+   18   open: number;
+   19   pending: number;
+   20 }
+   21 
+   22 function safeDatabaseCode(error: unknown): string {
+   23   if (!(error instanceof Error)) return "PG_UNKNOWN";
+   24   const code = "code" in error ? error.code : undefined;
+   25   if (typeof code === "string" && (/^[0-9A-Z]{5}$/u.test(code)
+   26     || ["ECONNREFUSED", "ECONNRESET", "ETIMEDOUT", "EHOSTUNREACH", "ENETUNREACH", "ENOTFOUND", "EAI_AGAIN", "EPIPE"].includes(code))) return code;
+   27   if (error.message === "Connection terminated due to connection timeout"
+   28     || error.message === "timeout exceeded when trying to connect") return "PG_CONNECT_TIMEOUT";
+   29   return "PG_UNKNOWN";
+   30 }
+   31 
+   32 /** Native pool acquisition removes timed-out waiters; SQL has both a server
+   33  * deadline and a connection shutdown deadline. No timed-out SQL is detached.
+   34  * The admission cap equals max, and the pool is private: no timed-out queued
+   35  * borrower can leave a replacement connection starting after its rejection. */
+   36 export class WorkerNonceDatabase {
+   37   private readonly pool: Pool;
+   38   private active = 0;
+   39   private readonly timeoutMs: number;
+   40   private readonly diagnostic: (event: WorkerDependencyDiagnostic) => void;
+   41   constructor(connectionString: string, timeoutMs = 750, diagnostic: (event: WorkerDependencyDiagnostic) => void = event => { process.stderr.write(`${JSON.stringify(event)}\n`); }) {
+   42     this.diagnostic = diagnostic;
+   43     if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2_147_483_647) throw new Error("Invalid nonce dependency deadline");
+   44     this.timeoutMs = timeoutMs;
+   45     this.pool = new Pool({ connectionString, max: 4,
+   46       connectionTimeoutMillis: timeoutMs, statement_timeout: timeoutMs,
+   47       lock_timeout: timeoutMs });
+   48     // Idle connection failures are handled by pg's pool eviction. Never log
+   49     // connection details or credentials in a public readiness response.
+   50     this.pool.on("error", error => this.report("idle", safeDatabaseCode(error), performance.now()));
+   51   }
+   52 
+   53   private report(phase: WorkerDependencyDiagnostic["phase"], code: string, started: number): void {
+   54     this.diagnostic({ event: "prism_nonce_dependency_failure", phase, code,
+   55       durationMs: Math.max(0, Math.round(performance.now() - started)), active: this.active,
+   56       open: this.pool.totalCount, pending: this.pool.waitingCount });
+   57   }
+   58 
+   59   private async run(operation: (db: PostgresNonceStore) => Promise<void>, signal?: AbortSignal): Promise<void> {
+   60     const started = performance.now();
+   61     if (this.active >= 4) {
+   62       this.report("admission", "ADMISSION_LIMIT", started);
+   63       throw new WorkerDependencyUnavailable();
+   64     }
+   65     this.active++;
+   66     try {
+   67       const client = await this.pool.connect().catch((error: unknown) => {
+   68         this.report("connect", safeDatabaseCode(error), started);
+   69         throw new WorkerDependencyUnavailable();
+   70       });
+   71       let closing: Promise<void> | undefined;
+   72       const stop = () => {
+   73         this.report("cancel", signal?.aborted ? "REQUEST_CANCELLED" : "DEPENDENCY_DEADLINE", started);
+   74         closing ??= client.end();
+   75         client.connection.stream.destroy();
+   76       };
+   77       const timer = setTimeout(stop, this.timeoutMs);
+   78       signal?.addEventListener("abort", stop, { once: true });
+   79       if (signal?.aborted) stop();
+   80       const query = async (sql: string, params?: unknown[]) => {
+   81         try { return await client.query(sql, params); }
+   82         catch (error) {
+   83           this.report("query", safeDatabaseCode(error), started);
+   84           throw new WorkerDependencyUnavailable();
+   85         }
+   86       };
+   87       try {
+   88         if (closing) throw new WorkerDependencyUnavailable();
+   89         await checkWorkerNonceTable({ query });
+   90         await operation(new PostgresNonceStore({ query }));
+   91         if (closing) throw new WorkerDependencyUnavailable();
+   92       } finally {
+   93         clearTimeout(timer);
+   94         signal?.removeEventListener("abort", stop);
+   95         await Promise.resolve(closing).finally(() => client.release(Boolean(closing)));
+   96       }
+   97     } finally { this.active--; }
+   98   }
+   99 
+  100   check(signal?: AbortSignal): Promise<void> { return this.run(async () => {}, signal); }
+  101   authenticate(secret: string, body: Buffer, headers: Record<string, string | string[] | undefined>, signal?: AbortSignal): Promise<void> {
+  102     return this.run((store) => verifyInternalRequest(secret, body, headers, store), signal);
+  103   }
+  104   get pendingConnections(): number { return this.pool.waitingCount; }
+  105   get openConnections(): number { return this.pool.totalCount; }
+  106   close(): Promise<void> { return this.pool.end(); }
+  107 }
+
+SOURCE skills/prism/server/corpus-routes.ts sha256:3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf
+    1 import { createHash } from "node:crypto";
+    2 import { type IncomingMessage, type ServerResponse } from "node:http";
+    3 import { ingest, search, type CorpusInput } from "../corpus/index.ts";
+    4 
+    5 import type { AuthenticatedControlContext } from "./control-context.ts";
+    6 import { body, json, sha256 } from "./control-http.ts";
+    7 type RouteContext = Pick<
+    8   AuthenticatedControlContext,
+    9   "pool" | "artifacts" | "runWorker" | "config"
+   10 >;
+   11 
+   12 export async function corpusRoutes(
+   13   context: RouteContext,
+   14   request: IncomingMessage,
+   15   response: ServerResponse,
+   16   url: URL,
+   17 ): Promise<boolean> {
+   18   if (url.pathname === "/v1/artifacts" && request.method === "POST") {
+   19     await uploadArtifact(context, request, response);
+   20     return true;
+   21   }
+   22   if (url.pathname === "/v1/corpus" && request.method === "POST") {
+   23     await ingestCorpus(context, request, response);
+   24     return true;
+   25   }
+   26   if (url.pathname === "/v1/corpus/search" && request.method === "GET") {
+   27     await searchCorpus(context, response, url);
+   28     return true;
+   29   }
+   30   return false;
+   31 }
+   32 async function uploadArtifact(
+   33   context: RouteContext,
+   34   request: IncomingMessage,
+   35   response: ServerResponse,
+   36 ) {
+   37   const { artifacts } = context;
+   38 
+   39   const input = (await body(request, 8_500_000)) as { base64?: string };
+   40   if (!input.base64) throw new Error("base64 is required");
+   41   const decoded = Buffer.from(input.base64, "base64");
+   42   if (
+   43     decoded.byteLength > 6_000_000 ||
+   44     decoded.toString("base64") !== input.base64
+   45   )
+   46     throw new Error("artifact payload is invalid or exceeds 6 MB");
+   47   return json(response, 201, await artifacts.put(decoded));
+   48 }
+   49 async function ingestCorpus(
+   50   context: RouteContext,
+   51   request: IncomingMessage,
+   52   response: ServerResponse,
+   53 ) {
+   54   const { pool } = context;
+   55 
+   56   const input = (await body(request)) as CorpusInput;
+   57   const acquisition = await acquireCorpus(context.config, input);
+   58   let publicationError: unknown;
+   59   let stored: { id: string; digest: string } | undefined;
+   60   try {
+   61     stored = await publishCorpus(context, input, acquisition);
+   62   } catch (error) {
+   63     publicationError = error;
+   64   }
+   65   let cleanupError: unknown;
+   66   try {
+   67     await cleanAcquisition(context.config, acquisition.quarantineDigest);
+   68   } catch (error) {
+   69     cleanupError = error;
+   70   }
+   71   if (publicationError && cleanupError)
+   72     throw new AggregateError(
+   73       [publicationError, cleanupError],
+   74       "corpus publication and quarantine cleanup failed",
+   75     );
+   76   if (publicationError) throw publicationError;
+   77   if (cleanupError) throw cleanupError;
+   78   // ingest returns corpus_revision.id so activation remains bound to the exact governed revision.
+   79   await pool.query(
+   80     "UPDATE prism.corpus_item SET status='active' WHERE current_revision_id=$1",
+   81     [stored!.id],
+   82   );
+   83   return json(response, 201, stored!);
+   84 }
+   85 async function searchCorpus(
+   86   context: RouteContext,
+   87   response: ServerResponse,
+   88   url: URL,
+   89 ) {
+   90   const { pool, runWorker } = context;
+   91 
+   92   const query = url.searchParams.get("q") ?? "";
+   93   const embedded = await runWorker(
+   94     "ingest",
+   95     { text: query },
+   96     `query:${sha256(query)}`,
+   97   );
+   98   const parseFilter = (name: string): Record<string, unknown> | undefined => {
+   99     const value = url.searchParams.get(name);
+  100     if (!value) return undefined;
+  101     const parsed = JSON.parse(value);
+  102     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed))
+  103       throw new Error(`${name} filter must be an object`);
+  104     return parsed as Record<string, unknown>;
+  105   };
+  106   const items = await search(
+  107     pool,
+  108     query,
+  109     Math.min(50, Math.max(1, Number(url.searchParams.get("limit") ?? 10))),
+  110     {
+  111       embedding: embedded.embedding as number[],
+  112       model: String(embedded.model),
+  113     },
+  114     {
+  115       required: parseFilter("required"),
+  116       preferred: parseFilter("preferred"),
+  117       avoid: parseFilter("avoid"),
+  118       sourceFamilyLimit: Math.min(
+  119         10,
+  120         Math.max(1, Number(url.searchParams.get("sourceFamilyLimit") ?? 2)),
+  121       ),
+  122     },
+  123   );
+  124   return json(response, 200, {
+  125     items,
+  126     coverageGap:
+  127       items.length <
+  128       Math.min(50, Math.max(1, Number(url.searchParams.get("limit") ?? 10)))
+  129         ? "The approved corpus does not cover all requested result slots."
+  130         : null,
+  131   });
+  132 }
+  133 
+  134 interface Acquisition {
+  135   normalized: CorpusInput;
+  136   quarantineDigest: string;
+  137   contentBase64: string;
+  138 }
+  139 async function acquireCorpus(
+  140   config: AuthenticatedControlContext["config"],
+  141   input: CorpusInput,
+  142 ): Promise<Acquisition> {
+  143   const { ingestionUrl, ingestionSecret } = config;
+  144   if (input.sourceKind === "public-web")
+  145     throw new Error(
+  146       "public-web ingestion is disabled until a source policy is approved",
+  147     );
+  148   const acquired = await fetch(new URL("/v1/acquisitions", ingestionUrl), {
+  149     method: "POST",
+  150     headers: {
+  151       authorization: `Bearer ${ingestionSecret}`,
+  152       "content-type": "application/json",
+  153     },
+  154     body: JSON.stringify(input),
+  155     signal: AbortSignal.timeout(30_000),
+  156   });
+  157   if (!acquired.ok)
+  158     throw new Error(`corpus acquisition failed: ${acquired.status}`);
+  159   const acquisition = (await acquired.json()) as {
+  160     normalized?: CorpusInput;
+  161     quarantineDigest?: string;
+  162     contentBase64?: string;
+  163   };
+  164   if (
+  165     !acquisition.normalized ||
+  166     !acquisition.quarantineDigest ||
+  167     !acquisition.contentBase64
+  168   )
+  169     throw new Error("corpus acquisition returned invalid evidence");
+  170   return acquisition as Acquisition;
+  171 }
+  172 async function publishCorpus(
+  173   context: Pick<AuthenticatedControlContext, "pool" | "runWorker">,
+  174   input: CorpusInput,
+  175   acquisition: Acquisition,
+  176 ) {
+  177   const { pool, runWorker } = context;
+  178   const sourceBytes = Buffer.from(acquisition.contentBase64, "base64");
+  179   if (
+  180     `sha256:${createHash("sha256").update(sourceBytes).digest("hex")}` !==
+  181     acquisition.quarantineDigest
+  182   )
+  183     throw new Error("corpus acquisition digest mismatch");
+  184   const normalized = {
+  185     ...acquisition.normalized,
+  186     sourceContentDigest: acquisition.quarantineDigest,
+  187   };
+  188   const text = `${normalized.title} ${normalized.summary} ${normalized.tags.join(" ")}`;
+  189   const embedded = await runWorker(
+  190     "ingest",
+  191     { text },
+  192     `corpus:${sha256(JSON.stringify(input))}`,
+  193   );
+  194   return ingest(
+  195     pool,
+  196     normalized,
+  197     {
+  198       embedding: embedded.embedding as number[],
+  199       model: String(embedded.model),
+  200       modelVersion: String(embedded.modelVersion),
+  201       sourceDigest: String(embedded.sourceDigest),
+  202     },
+  203     { activate: false },
+  204   );
+  205 }
+  206 async function cleanAcquisition(
+  207   config: AuthenticatedControlContext["config"],
+  208   quarantineDigest: string,
+  209 ) {
+  210   const { ingestionUrl, ingestionSecret } = config;
+  211   await fetch(
+  212     new URL(`/v1/acquisitions/${quarantineDigest.slice(7)}`, ingestionUrl),
+  213     {
+  214       method: "DELETE",
+  215       headers: { authorization: `Bearer ${ingestionSecret}` },
+  216       signal: AbortSignal.timeout(10_000),
+  217     },
+  218   ).then((result) => {
+  219     if (!result.ok)
+  220       throw new Error(`quarantine cleanup failed: ${result.status}`);
+  221   });
+  222 }
+
+SOURCE skills/prism/corpus/index.ts sha256:99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343
+    1 import { createHash, randomUUID } from "node:crypto";
+    2 import { isIP } from "node:net";
+    3 import { inTransaction, type Database, type Queryable } from "../storage/index.ts";
+    4 
+    5 export type SourceKind =
+    6   "internal-project" | "user-upload" | "generated" | "public-web";
+    7 export type CorpusInput = {
+    8   sourceKind: SourceKind;
+    9   locator?: string;
+   10   title: string;
+   11   summary: string;
+   12   tags: string[];
+   13   sourceFamily?: string;
+   14   surface?: string;
+   15   industry?: string;
+   16   style?: string[];
+   17   rights: "full" | "derived" | "analysis-only" | "temporary";
+   18   contentBase64?: string;
+   19   mediaType?: string;
+   20   sourceContentDigest?: string;
+   21 };
+   22 export type EmbeddingEvidence = {
+   23   embedding: number[];
+   24   model: string;
+   25   modelVersion: string;
+   26   sourceDigest: string;
+   27 };
+   28 const hash = (value: string) =>
+   29   `sha256:${createHash("sha256").update(value).digest("hex")}`;
+   30 export function validateSource(input: CorpusInput): void {
+   31   if(input.sourceContentDigest&&!/^sha256:[a-f0-9]{64}$/u.test(input.sourceContentDigest))throw new Error("source content digest is invalid");
+   32   if (input.sourceKind === "public-web") {
+   33     if (!input.locator) throw new Error("public source needs a locator");
+   34     const url = new URL(input.locator);
+   35     const host = url.hostname.replace(/^\[|\]$/g, "").toLowerCase();
+   36     const unsafeV4 = (value: string) => {
+   37       const parts = value.split(".").map(Number);
+   38       return (
+   39         parts[0] === 10 ||
+   40         parts[0] === 127 ||
+   41         parts[0] === 0 ||
+   42         (parts[0] === 169 && parts[1] === 254) ||
+   43         (parts[0] === 192 && parts[1] === 168) ||
+   44         (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) ||
+   45         parts[0] >= 224
+   46       );
+   47     };
+   48     const unsafeV6 = (value: string) =>
+   49       value === "::1" ||
+   50       value === "::" ||
+   51       value.startsWith("fc") ||
+   52       value.startsWith("fd") ||
+   53       /^fe[89ab]/.test(value) ||
+   54       value.startsWith("ff") ||
+   55       value.startsWith("2001:db8:");
+   56     if (
+   57       url.protocol !== "https:" ||
+   58       host === "localhost" ||
+   59       host.endsWith(".localhost") ||
+   60       (isIP(host) === 4 && unsafeV4(host)) ||
+   61       (isIP(host) === 6 && unsafeV6(host))
+   62     )
+   63       throw new Error("source network is not allowed");
+   64   }
+   65 }
+   66 export async function ingest(
+   67   db: Database,
+   68   input: CorpusInput,
+   69   evidence: EmbeddingEvidence,
+   70   options:{activate?:boolean}={},
+   71 ): Promise<{ id: string; digest: string }> {
+   72   validateSource(input);
+   73   if (
+   74     !evidence.embedding.length ||
+   75     evidence.embedding.length > 4096 ||
+   76     evidence.embedding.some((value) => !Number.isFinite(value))
+   77   )
+   78     throw new Error("valid embedding evidence is required");
+   79   const digest = hash(JSON.stringify(input));
+   80   return inTransaction(db, async (connection) => {
+   81     // Serialize identical inputs before lookup; all writes share this reserved transaction.
+   82     await connection.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [`prism-corpus:${digest}`]);
+   83     const prior = await connection.query<{ id: string }>(
+   84       "SELECT id FROM prism.corpus_revision WHERE content_digest=$1 LIMIT 1",
+   85       [digest],
+   86     );
+   87     if (prior.rows[0]) return { id: prior.rows[0].id, digest };
+   88     return insertRevision(connection, input, evidence, digest, options.activate !== false);
+   89   });
+   90 }
+   91 async function insertRevision(connection: Queryable, input: CorpusInput, evidence: EmbeddingEvidence, digest: string, activate: boolean): Promise<{ id: string; digest: string }> {
+   92   const itemId = randomUUID(),
+   93     revisionId = randomUUID(),
+   94     rightsId = randomUUID();
+   95   const allowDesignUse =
+   96     input.rights === "full" || input.rights === "derived";
+   97   await connection.query(
+   98     "INSERT INTO prism.rights_policy(id,retention,retain_original,allow_derivatives,allow_embedding,allow_design_use,basis) VALUES($1,$2,$3,$4,true,$5,'explicit-ingestion-policy')",
+   99     [
+  100       rightsId,
+  101       input.rights,
+  102       false,
+  103       allowDesignUse,
+  104       allowDesignUse,
+  105     ],
+  106   );
+  107   await connection.query(
+  108     "INSERT INTO prism.corpus_item(id,corpus_key,kind,status) VALUES($1,$2,$3,$4)",
+  109     [itemId, digest, input.sourceKind,!activate?"restricted":"active"],
+  110   );
+  111   await connection.query(
+  112     "INSERT INTO prism.corpus_revision(id,corpus_item_id,revision,source_kind,source_locator_hash,captured_at,normalized,searchable_text,content_digest,normalization_version,rights_id,source_content_digest) VALUES($1,$2,1,$3,$4,now(),$5::jsonb,$6,$7,'v1',$8,$9)",
+  113     [
+  114       revisionId,
+  115       itemId,
+  116       input.sourceKind,
+  117       input.locator ? hash(input.locator) : null,
+  118       JSON.stringify({
+  119         title: input.title,
+  120         summary: input.summary,
+  121         tags: input.tags,
+  122         sourceFamily: input.sourceFamily ?? input.sourceKind,
+  123         ...(input.surface ? { surface: input.surface } : {}),
+  124         ...(input.industry ? { industry: input.industry } : {}),
+  125         ...(input.style ? { style: input.style } : {}),
+  126       }),
+  127       `${input.title} ${input.summary} ${input.tags.join(" ")}`,
+  128       digest,
+  129       rightsId,
+  130       input.sourceContentDigest??null,
+  131     ],
+  132   );
+  133   await connection.query(
+  134     "UPDATE prism.corpus_item SET current_revision_id=$1 WHERE id=$2",
+  135     [revisionId, itemId],
+  136   );
+  137   await connection.query(
+  138     "INSERT INTO prism.corpus_embedding(corpus_revision_id,model,model_version,normalization_version,source_digest,embedding) VALUES($1,$2,$3,'v1',$4,$5::vector)",
+  139     [
+  140       revisionId,
+  141       evidence.model,
+  142       evidence.modelVersion,
+  143       evidence.sourceDigest,
+  144       `[${evidence.embedding.join(",")}]`,
+  145     ],
+  146   );
+  147   return { id: revisionId, digest };
+  148 }
+  149 
+  150 export async function search(
+  151   db: Queryable,
+  152   query: string,
+  153   limit = 10,
+  154   queryEmbedding?: { embedding: number[]; model: string },
+  155   options: {
+  156     required?: Record<string, unknown>;
+  157     preferred?: Record<string, unknown>;
+  158     avoid?: Record<string, unknown>;
+  159     sourceFamilyLimit?: number;
+  160   } = {},
+  161 ): Promise<Array<Record<string, unknown>>> {
+  162   const vector = queryEmbedding?.embedding;
+  163   if (
+  164     vector &&
+  165     (vector.length === 0 || vector.some((value) => !Number.isFinite(value)))
+  166   )
+  167     throw new Error("query embedding is invalid");
+  168   const requiredFilter = JSON.stringify(options.required ?? {});
+  169   const avoidFilter = JSON.stringify(options.avoid ?? {});
+  170   const result = vector
+  171     ? await db.query(
+  172         "WITH eligible AS (SELECT r.*,e.embedding,e.model FROM prism.corpus_revision r JOIN prism.corpus_item i ON i.current_revision_id=r.id JOIN prism.rights_policy p ON p.id=r.rights_id JOIN prism.corpus_embedding e ON e.corpus_revision_id=r.id WHERE i.status='active' AND p.allow_design_use=true AND (p.valid_until IS NULL OR p.valid_until>now()) AND e.model=$4 AND r.normalized @> $5::jsonb AND ($6::jsonb='{}'::jsonb OR NOT r.normalized @> $6::jsonb)), text_rank AS (SELECT id,row_number() OVER(ORDER BY ts_rank(search_vector,websearch_to_tsquery('simple',$1)) DESC,id) AS rank FROM eligible WHERE search_vector @@ websearch_to_tsquery('simple',$1) LIMIT 100), vector_rank AS (SELECT id,row_number() OVER(ORDER BY embedding <=> $3::vector,id) AS rank FROM eligible LIMIT 100), fused AS (SELECT COALESCE(t.id,v.id) id,COALESCE(1.0/(60+t.rank),0)+COALESCE(1.0/(60+v.rank),0) score FROM text_rank t FULL JOIN vector_rank v USING(id)) SELECT r.id,r.normalized,r.source_kind,f.score,'hybrid-rrf-v1' AS ranking FROM fused f JOIN prism.corpus_revision r ON r.id=f.id ORDER BY f.score DESC,r.id LIMIT $2",
+  173         [
+  174           query,
+  175           Math.max(limit * 10, 100),
+  176           `[${vector.join(",")}]`,
+  177           queryEmbedding!.model,
+  178           requiredFilter,
+  179           avoidFilter,
+  180         ],
+  181       )
+  182     : await db.query(
+  183         "SELECT r.id,r.normalized,r.source_kind,ts_rank(r.search_vector,websearch_to_tsquery('simple',$1)) AS score,'text-v1' AS ranking FROM prism.corpus_revision r JOIN prism.corpus_item i ON i.current_revision_id=r.id JOIN prism.rights_policy p ON p.id=r.rights_id WHERE i.status='active' AND p.allow_design_use=true AND (p.valid_until IS NULL OR p.valid_until>now()) AND r.normalized @> $3::jsonb AND ($4::jsonb='{}'::jsonb OR NOT r.normalized @> $4::jsonb) AND r.search_vector @@ websearch_to_tsquery('simple',$1) ORDER BY score DESC,r.id LIMIT $2",
+  184         [query, Math.max(limit * 10, 100), requiredFilter, avoidFilter],
+  185       );
+  186   const matches = (
+  187     normalized: Record<string, unknown>,
+  188     filter: Record<string, unknown> | undefined,
+  189   ) =>
+  190     !filter ||
+  191     Object.entries(filter).every(([key, expected]) => {
+  192       const actual = normalized[key];
+  193       return Array.isArray(expected)
+  194         ? expected.every((value) =>
+  195             Array.isArray(actual) ? actual.includes(value) : actual === value,
+  196           )
+  197         : Array.isArray(actual)
+  198           ? actual.includes(expected)
+  199           : actual === expected;
+  200     });
+  201   const familyLimit = Math.max(1, options.sourceFamilyLimit ?? 2);
+  202   const families = new Map<string, number>();
+  203   const selected: Array<Record<string, unknown>> = [];
+  204   const eligible = result.rows
+  205     .map((row, rank) => ({ row, rank }))
+  206     .filter(({ row }) => {
+  207       const normalized = (row.normalized ?? {}) as Record<string, unknown>;
+  208       return (
+  209         matches(normalized, options.required) &&
+  210         !(
+  211           matches(normalized, options.avoid) &&
+  212           Object.keys(options.avoid ?? {}).length > 0
+  213         )
+  214       );
+  215     })
+  216     .sort((left, right) => {
+  217       const leftPreferred = matches(
+  218         (left.row.normalized ?? {}) as Record<string, unknown>,
+  219         options.preferred,
+  220       );
+  221       const rightPreferred = matches(
+  222         (right.row.normalized ?? {}) as Record<string, unknown>,
+  223         options.preferred,
+  224       );
+  225       return (
+  226         Number(rightPreferred) - Number(leftPreferred) || left.rank - right.rank
+  227       );
+  228     });
+  229   for (const { row } of eligible) {
+  230     const normalized = (row.normalized ?? {}) as Record<string, unknown>;
+  231     const family = String(
+  232       normalized.sourceFamily ?? row.source_kind ?? "unknown",
+  233     );
+  234     if ((families.get(family) ?? 0) >= familyLimit) continue;
+  235     families.set(family, (families.get(family) ?? 0) + 1);
+  236     const preferred = matches(normalized, options.preferred);
+  237     selected.push({
+  238       ...row,
+  239       explanation: {
+  240         ranking: row.ranking,
+  241         requiredMatched: true,
+  242         preferredMatched: preferred,
+  243         sourceFamily: family,
+  244         diversityCap: familyLimit,
+  245       },
+  246     });
+  247     if (selected.length === limit) break;
+  248   }
+  249   return selected;
+  250 }
+  251 export async function expire(db: Queryable, id: string): Promise<void> {
+  252   await db.query(
+  253     "UPDATE prism.corpus_item SET status='expired' WHERE current_revision_id=$1",
+  254     [id],
+  255   );
+  256 }

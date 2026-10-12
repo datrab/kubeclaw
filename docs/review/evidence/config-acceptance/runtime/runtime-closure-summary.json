@@ -1,18 +1,22 @@
 {
   "status": "bounded incremental C0 progress; NOT semantic completion or acceptance",
-  "rows": 1221,
-  "cases": 3361,
+  "rows": 1222,
+  "cases": 3808,
   "results": {
-    "not-run": 2426,
-    "passed": 935
+    "not-run": 2783,
+    "passed": 1025
   },
-  "actualSourceDefinitionCases": 935,
+  "actualSourceDefinitionCases": 1025,
   "commonConcreteFutureCases": 460,
   "compilerRowsRefined": 20,
   "reviewPolicyDefinitionRowsRefined": 141,
   "reviewProductiveProfileContracts": 141,
   "reviewPolicySchemaEffectiveConstraintRows": 186,
   "reviewRegistrationReadRows": 17,
+  "repositoryGradeRowsRefined": 87,
+  "historicalDefinitionCases": 935,
+  "supersededHistoricalCases": 269,
+  "runtimeCodecTargetCorrection": "docs/review/evidence/config-acceptance/runtime/runtime-codec-target-erratum.json",
   "revalidationAcceptedUnusedRows": 94,
   "allC0ClosedFalse": true,
   "integrityErrors": [],
@@ -26,14 +30,16 @@
     "review schema exact domain/whole-policy authority and enumerated productive leaf contracts mapped; container/item/allOf not independent writers; cases notrun; reviewer pending": 186,
     "explicit accepted-but-unused revalidation schema disposition with actual AST/delegate evidence; target rejecting case specified; independent review pending": 94,
     "compiler exact domain/current reader and authority traced; precise incompatible/redundant effect limitations retained; exhaustive independent review pending": 20,
-    "source-traced; independent reviewer and exact approved author location pending": 284,
+    "source-traced; independent reviewer and exact approved author location pending": 197,
+    "repository grade exact current defaults/aliases/null/type/bounds and productive readers/complete current controls mapped; future cases specified; runtime tuple/redundant context limitations explicit; independent review pending": 87,
     "review exact productive field reader/domain/authority and complete valid per-profile cases source-traced; future checks notrun; independent review pending": 141,
     "productive-caller gap: exported resolver API without in-repo runtime invocation; do not infer deployed author": 1,
-    "artifact metadata exact selected store/domain and concrete target missing/alternate/mutant specs; current-vs-target distinction observed; reviewer pending": 1
+    "artifact metadata exact selected store/domain and concrete target missing/alternate/mutant specs; current-vs-target distinction observed; reviewer pending": 1,
+    "finite encoding codec/current canonical target selection material correction; future actual grant/dispatch case notrun; independent review pending": 1
   },
   "remainingObligations": [
-    "333 schema rows retain consumer-review-required status: real Buster provider policy/task fields, Nova stage plugins and remaining common/schema consumers need complete exact defaults/precedence/reader/domain/case closure",
-    "87 repository review grade/default fields need independent actual budget/slicing/dispatch/token/cost consumers, exact aliases/maxInputTokens compatibility and full per-grade profiles/cases",
+    "332 schema rows retain consumer-review-required status: real Buster provider policy/task fields, Nova stage plugins and remaining common/schema consumers need complete exact defaults/precedence/reader/domain/case closure",
+    "87 grade fields now have exact productive source reader/domain/alias/default/null controls and full target A/B specifications; independent semantic review, actual full caller behavioral fixtures and proposed context/encoder/output domain migration remain NOT accepted. Current contextA14000/B18000 rejected, local source math 9813+6000 demonstrates proposed admission only; retained configured target ceiling128000 not measured model capacity",
     "Other supplemental platform, core, SDK/registry/foundation, plugin manifest/literal rows remain source-traced only; per-row recovery/bind/domain/effect exact contracts and candidate dispositions not exhaustively closed",
     "Buster plan/fixture productive caller backlog and all4642 original syntax candidate per-source dispositions remain obligations, not auto-exclusions",
     "Review141 field contracts each have complete actual parser+both owning-schema-valid preserved/A/B controls and named readers; future actual stage/source/certification/HTTP-dispatch/cache/governor/ranking/effect/binding/mutation cases notrun and require fresh reviewer. External installed/runtime model constraints/profiles remain unknown; synthetic identity controls not supported model selectors",
@@ -41,6 +47,6 @@
     "Compiler exact maxConcurrency/no-repair-target maxRemediationCycles/attempt/retry/timeout effect gaps retained; no fabricated alternative behavior",
     "Common460 future proposals still need final actual binding-variable/tool/image/task/selected operator profile hashes and independent verification; metadata3 concrete cases targetnotrun; original unsupported target-key schema failures preserved",
     "No deployed platform/workflow/plugin/model/operator roster or immutable secretstore revision contract invented. Before future live model/runtime checks obtain exact missing external input and record blocked rather than permissive fallback",
-    "Fresh exhaustive independent C0 semantic/case reviewer pending; all1221 rows c0Closed=false; zero missing case links does not imply semantic acceptance"
+    "Fresh exhaustive independent C0 semantic/case reviewer pending; all1222 rows c0Closed=false; zero missing case links does not imply semantic acceptance"
   ]
 }

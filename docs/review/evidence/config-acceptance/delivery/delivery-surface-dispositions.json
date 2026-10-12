@@ -508,7 +508,9 @@
     "path": "skills/buster/engine/test-gates/production.ts",
     "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
     "disposition": "productive-reader-or-author-reviewed",
-    "settingIds": [],
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION"
+    ],
     "openSettingIds": [],
     "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
     "origin": null
@@ -1053,6 +1055,12 @@
       "DLV-CHART-KUBECLAW-GATEWAY-COMMAND",
       "DLV-CHART-KUBECLAW-GATEWAY-PORT",
       "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-ENABLED",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-NODEOPTIONS",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
@@ -1413,23 +1421,7 @@
       "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-ARM64",
       "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-VERSION"
     ],
-    "openSettingIds": [
-      "DLV-IMAGE-BUSTER-RUNTIME-BUILDKIT-BASE",
-      "DLV-IMAGE-BUSTER-RUNTIME-BUSTER-NODE-BASE",
-      "DLV-IMAGE-BUSTER-RUNTIME-DEBIAN-SNAPSHOT",
-      "DLV-IMAGE-BUSTER-RUNTIME-TARGETARCH",
-      "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION",
-      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-VERSION",
-      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-AMD64",
-      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-ARM64",
-      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-VERSION",
-      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-AMD64",
-      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-ARM64",
-      "DLV-IMAGE-BUSTER-RUNTIME-RUFF-VERSION",
-      "DLV-IMAGE-BUSTER-RUNTIME-MYPY-VERSION",
-      "DLV-IMAGE-BUSTER-RUNTIME-PIP-AUDIT-VERSION",
-      "DLV-IMAGE-BUSTER-RUNTIME-SEMGREP-VERSION"
-    ],
+    "openSettingIds": [],
     "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
     "origin": null
   },
@@ -1633,7 +1625,23 @@
     "path": "versions.json",
     "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
     "disposition": "existing version author; Docker arguments individually referenced; infrastructure/tool lock fields require separate inventory",
-    "settingIds": [],
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-BUILDKIT-BASE",
+      "DLV-IMAGE-BUSTER-RUNTIME-BUSTER-NODE-BASE",
+      "DLV-IMAGE-BUSTER-RUNTIME-DEBIAN-SNAPSHOT",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-AMD64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-ARM64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-MYPY-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-PIP-AUDIT-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-RUFF-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-SEMGREP-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-TARGETARCH",
+      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-AMD64",
+      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-ARM64",
+      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-VERSION"
+    ],
     "openSettingIds": [],
     "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
     "origin": null
@@ -1642,7 +1650,23 @@
     "path": "scripts/versions.mjs",
     "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00",
     "disposition": "version validation/projection reader reviewed; remaining infrastructure lock inputs need expansion",
-    "settingIds": [],
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-BUILDKIT-BASE",
+      "DLV-IMAGE-BUSTER-RUNTIME-BUSTER-NODE-BASE",
+      "DLV-IMAGE-BUSTER-RUNTIME-DEBIAN-SNAPSHOT",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-AMD64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-ARM64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-MYPY-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-PIP-AUDIT-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-RUFF-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-SEMGREP-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-TARGETARCH",
+      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-AMD64",
+      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-ARM64",
+      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-VERSION"
+    ],
     "openSettingIds": [],
     "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
     "origin": null
@@ -3329,14 +3353,7 @@
       "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
       "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY"
     ],
-    "openSettingIds": [
-      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
-      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
-      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
-      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
-      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
-      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE"
-    ],
+    "openSettingIds": [],
     "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
     "origin": null
   },
@@ -4643,6 +4660,12 @@
       "DLV-CHART-KUBECLAW-DISCORD-EXISTINGSECRETKEY",
       "DLV-CHART-KUBECLAW-DISCORDWEBHOOK-SECRETKEY",
       "DLV-CHART-KUBECLAW-DISCORDWEBHOOK-SECRETNAME",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -4764,6 +4787,12 @@
       "DLV-CHART-KUBECLAW-DISCORD-EXISTINGSECRETKEY",
       "DLV-CHART-KUBECLAW-DISCORDWEBHOOK-SECRETKEY",
       "DLV-CHART-KUBECLAW-DISCORDWEBHOOK-SECRETNAME",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -4948,6 +4977,12 @@
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -5025,6 +5060,12 @@
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -5102,6 +5143,12 @@
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -5179,6 +5226,12 @@
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -5256,6 +5309,12 @@
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -5333,6 +5392,12 @@
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -5410,6 +5475,12 @@
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -5487,6 +5558,12 @@
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
       "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
       "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
@@ -5747,5 +5824,242 @@
       "url": "https://raw.githubusercontent.com/robfig/cron/v3.0.1/spec.go",
       "sha256": "d238b062c0ab311d30d62b6ab54d505f0e613cd54826e225e14f708849f3bf98"
     }
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go",
+    "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b",
+    "disposition": "exact pinned primary API/defaulting/kubelet/scheduler/cron or offline verification schema inspected; not deployed reader identity",
+    "settingIds": [
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": {
+      "repository": "kubernetes/kubernetes",
+      "tag": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/kubelet/eviction/eviction_manager.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/kubelet/eviction/eviction_manager.go",
+      "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b"
+    }
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go",
+    "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e",
+    "disposition": "exact pinned primary API/defaulting/kubelet/scheduler/cron or offline verification schema inspected; not deployed reader identity",
+    "settingIds": [
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": {
+      "repository": "kubernetes/kubernetes",
+      "tag": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/kubelet/eviction/eviction_manager.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/kubelet/eviction/eviction_manager.go",
+      "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e"
+    }
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/kubelet.go",
+    "sha256": "1d9b1c314f27c60e77710f17c6d446fac83cb44c68bd077312b07ca32aaf7301",
+    "disposition": "exact pinned primary API/defaulting/kubelet/scheduler/cron or offline verification schema inspected; not deployed reader identity",
+    "settingIds": [
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": {
+      "repository": "kubernetes/kubernetes",
+      "tag": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/kubelet/kubelet.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/kubelet/kubelet.go",
+      "sha256": "1d9b1c314f27c60e77710f17c6d446fac83cb44c68bd077312b07ca32aaf7301"
+    }
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/kubelet.go",
+    "sha256": "40a3129435699078ebdf695894a446c62c6a74e2e9256668373910521f29bff2",
+    "disposition": "exact pinned primary API/defaulting/kubelet/scheduler/cron or offline verification schema inspected; not deployed reader identity",
+    "settingIds": [
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": {
+      "repository": "kubernetes/kubernetes",
+      "tag": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/kubelet/kubelet.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/kubelet/kubelet.go",
+      "sha256": "40a3129435699078ebdf695894a446c62c6a74e2e9256668373910521f29bff2"
+    }
+  },
+  {
+    "path": "scripts/runtime-tool-locks.mjs",
+    "sha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-MYPY-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-PIP-AUDIT-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-RUFF-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-SEMGREP-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "scripts/browser-archive-lock.mjs",
+    "sha256": "ec668e5b4658ed819410a301b8c25320ace2c2e6c457aa2cf0e1dc5e084997e9",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-TARGETARCH"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "docker/browser-archives.lock.json",
+    "sha256": "6f82ae5a8f399c89067cb49625d32db08b5d08b6eafb19fe7fd4376e625b578a",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-TARGETARCH"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": ".github/workflows/build-images.yaml",
+    "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "scripts/trivy-database-lock.mjs",
+    "sha256": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "docker/trivy-databases.lock.json",
+    "sha256": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "docker/python-tools/buster.in",
+    "sha256": "382ebca1979ffa306d27ba26dd06def23d8ee702aa9fb7c899299152afb855ea",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-MYPY-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-PIP-AUDIT-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-RUFF-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-SEMGREP-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "docker/python-tools/buster.txt",
+    "sha256": "2b669283e56cb52f64a38f84f25b04a93b084aacd073bcc080c9225de931deab",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-MYPY-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-PIP-AUDIT-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-RUFF-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-SEMGREP-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "docker/runtime-tool-locks.json",
+    "sha256": "d31102688c2da95f7e70b29f63c937b41f5e116dab00f0224ba591b988f8417c",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-MYPY-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-PIP-AUDIT-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-RUFF-VERSION",
+      "DLV-IMAGE-BUSTER-RUNTIME-SEMGREP-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+    "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-AMD64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-ARM64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+    "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-AMD64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-ARM64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+    "disposition": "productive Buster image version/platform/source/lock consumer statically inspected",
+    "settingIds": [
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-AMD64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-ARM64",
+      "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-VERSION"
+    ],
+    "openSettingIds": [],
+    "sourceCompleteness": "linked inspected fields only; no exhaustive non-setting disposition inferred from source hash or absent links",
+    "origin": null
   }
 ]

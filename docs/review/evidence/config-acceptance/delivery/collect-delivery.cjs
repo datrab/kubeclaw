@@ -177,5 +177,6 @@ cp.execFileSync('python3',[path.join(out,'refine-ops-delivery.py')],{stdio:'inhe
 cp.execFileSync('python3',[path.join(out,'refine-semantic-closure.py')],{stdio:'inherit'});
 cp.execFileSync('python3',[path.join(out,'refine-prism-chart.py')],{stdio:'inherit'});
 if(fs.existsSync(path.join(out,'kubernetes-source-acquisitions.json')))cp.execFileSync('python3',[path.join(out,'refine-kubernetes-boundaries.py')],{stdio:'inherit'});
+cp.execFileSync('python3',[path.join(out,'refine-buster-build-inputs.py')],{stdio:'inherit'});
 cp.execFileSync('python3',[path.join(out,'refine-case-links.py')],{stdio:'inherit'});
 const finalFragment=JSON.parse(fs.readFileSync(path.join(out,'inventory-fragment.json'),'utf8'));console.log(JSON.stringify({rows:finalFragment.rows.length,sources:finalFragment.sources.length,gaps:finalFragment.gaps.length,status:identity.status}));

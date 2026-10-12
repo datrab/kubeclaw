@@ -14,12 +14,14 @@ the gates below. A fresh independent reviewer checks the work against code.
 No production/test implementation, C1 approval, deployment or finding closure
 has occurred. Continue semantic closure and review before asking for approval.
 
-The bounded [independent Core challenge](independent-config-c0-core-domain-a07de567.md)
-also remains **NOT ACCEPTED**. ICD-001–004 require tunability/domain corrections,
-unambiguous complete active cases, additional productive Core schema dispositions
-and complete retention caller links. Passing source/definition reproductions do
-not waive these findings or establish global C0. Runtime/delivery/component work
-and raw failures continue to be checkpointed; no implementation approval is asked.
+The original [independent Core challenge](independent-config-c0-core-domain-a07de567.md)
+is preserved with its historical **NOT ACCEPTED** verdict. Its material corrections
+and subsequent RCORE-001/002 fixes are now
+[independently verified at bounded definition scope](independent-config-c0-core-final-recheck-40cf24e7.md).
+This covers adjustable proposed domains, complete canonical case specifications,
+additional schema dispositions and six retention callers, not global C0 or runtime
+acceptance. Runtime/delivery/plugin/agent scope and complete C1 package remain open.
+Raw failures continue to be preserved; no implementation approval is asked.
 
 Current handoff: 12 October 2026, `datrab/kubeclaw`, branch
 `codex/cloud-config-handoff-20261012`. This file is the current autonomous task

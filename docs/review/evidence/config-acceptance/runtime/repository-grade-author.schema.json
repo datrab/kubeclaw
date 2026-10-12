@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "componentBudget",
+    "boundaryBudget",
+    "maxPrimaryJobs",
+    "maxContextExpansionJobs",
+    "maxVerificationJobs",
+    "maxInputTokensPerJob",
+    "maxContextTokensPerJob",
+    "maxPromptBytesPerJob",
+    "maxInitialInputTokens",
+    "maxContextExpansionInputTokens",
+    "maxVerificationInputTokens",
+    "maxTotalInputTokens",
+    "maxEstimatedCostUsd",
+    "maxWallTimeSeconds",
+    "estimatedSecondsPerJob",
+    "inputUsdPerMillionTokens",
+    "outputUsdPerMillionTokens",
+    "concurrency",
+    "maxRetries",
+    "maxRetryAttemptsPerPhase",
+    "enabledLenses"
+  ],
+  "properties": {
+    "componentBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000
+        },
+        "maxTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000
+        }
+      },
+      "required": [
+        "maxFiles",
+        "maxBytes",
+        "maxTokens"
+      ]
+    },
+    "boundaryBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000
+        },
+        "maxTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000
+        },
+        "maxRelations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "maxSlices": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "maxFiles",
+        "maxBytes",
+        "maxTokens",
+        "maxRelations",
+        "maxSlices"
+      ]
+    },
+    "maxPrimaryJobs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "maxContextExpansionJobs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "maxVerificationJobs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "maxInputTokensPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 120000
+    },
+    "maxContextTokensPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 128000
+    },
+    "maxPromptBytesPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 900000
+    },
+    "maxInitialInputTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "maxContextExpansionInputTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "maxVerificationInputTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "maxTotalInputTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "maxEstimatedCostUsd": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 1000000
+    },
+    "maxWallTimeSeconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 604800
+    },
+    "estimatedSecondsPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 86400
+    },
+    "inputUsdPerMillionTokens": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 10000
+    },
+    "outputUsdPerMillionTokens": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 10000
+    },
+    "concurrency": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32
+    },
+    "maxRetries": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "maxRetryAttemptsPerPhase": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+    },
+    "enabledLenses": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "architecture",
+          "contracts",
+          "security",
+          "lifecycle",
+          "resilience",
+          "deployment",
+          "simplification"
+        ]
+      }
+    }
+  },
+  "description": "C0 proposed review AUTHOR schema: 27 budget/policy fields. token encoder and output reserve forbidden even equal-valued: actual runtime TARGET owner authors them; immutable target dependency selection comes from module closure, not this file or SDK runtimeDispatchProfile encoding marker."
+}

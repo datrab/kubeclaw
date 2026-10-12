@@ -66344,7 +66344,6 @@
                 "test"
               ],
               "allowedHostSuffixes": [
-                ".ts.net",
                 ".config-acceptance.ts.net"
               ],
               "maximumExecutionMs": 900000,
@@ -66392,7 +66391,6 @@
         ".ts.net"
       ],
       "B": [
-        ".ts.net",
         ".config-acceptance.ts.net"
       ]
     },

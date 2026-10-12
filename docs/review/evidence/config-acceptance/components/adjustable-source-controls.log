@@ -1,0 +1,165 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/components/check-adjustability-source-controls.mjs",
+  "scope": "C0 real current-reader positive controls supporting bounded target cap comparisons; NO execution under unimplemented target policies/CONFIG, no worker/business/kernel dispatch",
+  "identities": {
+    "head": "40cf24e77388bced59475ece9651c9c94d848368",
+    "node": "v24.21.0",
+    "uid": 0,
+    "files": {
+      "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "skills/worker/core/worker/native-pool-policy.ts": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "skills/worker/core/worker/native-runtime-identity.ts": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "skills/worker/core/worker/native-node-identity.ts": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "docs/review/evidence/config-acceptance/components/check-adjustability-source-controls.mjs": "79f820a2cb113a7d0acb679ad7d5cce1713c620227837797e99a2a41a50c5c65",
+      "charts/kubeclaw/files/config/buster-engine.config.json": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+    },
+    "sourceDigests": {
+      "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "skills/worker/core/worker/native-pool-policy.ts": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "skills/worker/core/worker/native-runtime-identity.ts": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "skills/worker/core/worker/native-node-identity.ts": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780"
+    },
+    "testDigests": {
+      "docs/review/evidence/config-acceptance/components/check-adjustability-source-controls.mjs": "79f820a2cb113a7d0acb679ad7d5cce1713c620227837797e99a2a41a50c5c65"
+    }
+  },
+  "results": [
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-BYTE-CONTROL",
+      "result": "passed",
+      "observed": {
+        "encodedBytes": 14680064,
+        "actualCurrentCap": 16777216,
+        "proposedLower": 12582912,
+        "scope": "real existing preflight/strict Core constructor admitted14MiB; target lower comparison not implemented/executed"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-NODE-CONTROL",
+      "result": "passed",
+      "observed": {
+        "visited": 87500,
+        "arrayMaximum": 1024,
+        "actualCurrentCap": 100000,
+        "proposedLower": 75000
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-DEPTH-CONTROL",
+      "result": "passed",
+      "observed": {
+        "deepestDepth": 56,
+        "rootDepth": 0,
+        "actualCurrentCap": 64,
+        "proposedLower": 48
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-POOL-32768",
+      "result": "passed",
+      "observed": {
+        "bytes": 32768,
+        "proposedLower": 32768,
+        "actualCurrentReaderAccepted": true,
+        "result": {
+          "schemaVersion": 1,
+          "role": "definition",
+          "nodeName": "definition-only",
+          "policyDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "cgroupRoot": "/tmp/core-adjustable-fd-POCIPh/cgroup",
+          "ownershipRoot": "/tmp/core-adjustable-fd-POCIPh/owner",
+          "nodeIdentityFile": "/tmp/core-adjustable-fd-POCIPh/node",
+          "runtimeIdentityFile": "/tmp/core-adjustable-fd-POCIPh/runtime",
+          "maximumActiveScopes": 1,
+          "limits": {
+            "memoryBytes": 1,
+            "tasks": 1,
+            "cpuQuotaMicroseconds": 1000,
+            "cpuPeriodMicroseconds": 1000
+          }
+        },
+        "scope": "synthetic definition policy/UUID, no physical capacity/node claim"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-POOL-49152",
+      "result": "passed",
+      "observed": {
+        "bytes": 49152,
+        "proposedLower": 32768,
+        "actualCurrentReaderAccepted": true,
+        "result": {
+          "schemaVersion": 1,
+          "role": "definition",
+          "nodeName": "definition-only",
+          "policyDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "cgroupRoot": "/tmp/core-adjustable-fd-POCIPh/cgroup",
+          "ownershipRoot": "/tmp/core-adjustable-fd-POCIPh/owner",
+          "nodeIdentityFile": "/tmp/core-adjustable-fd-POCIPh/node",
+          "runtimeIdentityFile": "/tmp/core-adjustable-fd-POCIPh/runtime",
+          "maximumActiveScopes": 1,
+          "limits": {
+            "memoryBytes": 1,
+            "tasks": 1,
+            "cpuQuotaMicroseconds": 1000,
+            "cpuPeriodMicroseconds": 1000
+          }
+        },
+        "scope": "synthetic definition policy/UUID, no physical capacity/node claim"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-RUNTIME-2048",
+      "result": "passed",
+      "observed": {
+        "bytes": 2048,
+        "proposedLower": 2048,
+        "actualCurrentReaderAccepted": true,
+        "result": "actual local boot/ns compare matched",
+        "scope": "genuine local runtime identity, not deployment"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-RUNTIME-3072",
+      "result": "passed",
+      "observed": {
+        "bytes": 3072,
+        "proposedLower": 2048,
+        "actualCurrentReaderAccepted": true,
+        "result": "actual local boot/ns compare matched",
+        "scope": "genuine local runtime identity, not deployment"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-NODE-64",
+      "result": "passed",
+      "observed": {
+        "bytes": 64,
+        "proposedLower": 64,
+        "actualCurrentReaderAccepted": true,
+        "result": "native-node:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "scope": "synthetic definition policy/UUID, no physical capacity/node claim"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-NODE-96",
+      "result": "passed",
+      "observed": {
+        "bytes": 96,
+        "proposedLower": 64,
+        "actualCurrentReaderAccepted": true,
+        "result": "native-node:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "scope": "synthetic definition policy/UUID, no physical capacity/node claim"
+      }
+    }
+  ],
+  "passed": 9,
+  "failed": 0
+}

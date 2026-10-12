@@ -266,3 +266,53 @@ case meaning, freeze new digests and obtain independent recheck of material
 corrections. Keep unspecified global runtime/delivery/agent/plugin/source scope
 open. A bounded migration package may preserve selected literals; it must not be
 presented as complete operator tunability or global CONFIG/C0 acceptance.
+
+
+## Reviewer-owned erratum — count and reachability only, 2026-10-12
+
+This append-only erratum corrects my original ICD-003 count and its use of
+“productive” for two contract roots. It **does not accept any author correction**
+or change ICD-001/002/004, other semantic findings, or the bounded/global verdict.
+The original report bytes are preserved in
+`independent-core-domain/report-before-erratum.md.snapshot`, SHA-256
+`8232caa55d1d9d0c70d66f1682e478db25bfdbc4a582c7ead931d09cfbc67043`.
+
+**Correct total: 75, not 85.** The independently saved field set always contained
+21 registration + 9 health + 13 trust + 13 progress + 12 log + 7 cancellation
+coordinates = **75**. “85” was my arithmetic/reporting error, not an author scope
+reduction or ten missing fields. No fields have been added or removed.
+`expected-schema-obligations.json` remains unchanged, SHA-256
+`b227271570a0940d2764cd80773d691d91dac32d3c735602c2f070ffc46fe91b`.
+My own original registry/local-ref resolver was independently rerun for these
+same six roots, without reading changing author fragments: **75 exact same
+coordinates, zero missing/extra**. Schema bytes remain SHA-256
+`e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610`.
+
+**Correct reachability distinction:** registration (21), health (9), progress
+(13), and log (12) have productive construction/validation in LocalWorkerRuntime
+or WorkerAttemptExecutor: **55 coordinates**. Trust envelope (13) and cancellation
+request (7) are **20 exported contract/schema/test coordinate obligations**; my
+repo-wide tracked source search found no service consumers of
+`signWorkerTrustEnvelope`, `verifyWorkerTrustEnvelope`, `WorkerTrustEnvelopeV1`,
+`checkWorkerCancellationBinding`, or `WorkerCancellationRequestV1` outside their
+contract implementation/exports and contract tests. Generic validator service
+calls name other roots, not trust/cancellation. I withdraw the earlier implication
+that those two roots themselves had productive service callers.
+
+This is not a claim that trust/cancellation have no productive mechanisms:
+`skills/worker/core/worker/trust.ts::authorizeProxiedSpiffePeer` really is consumed
+by Buster remote-plan HTTP and Prism worker/agent/dispatch/artifact routes. It
+uses forwarded SPIFFE identity/peer allowlists, **not workerTrustEnvelope**.
+LocalWorkerRuntime claim expiry and drain abort actual AbortControllers using its
+captured timeout policy, **not workerCancellationRequest/checkWorkerCancellationBinding**.
+Thus those 20 contract coordinates can receive an explicit checked latent/public
+contract disposition; they must not be invented as 20 active operator settings.
+The original need for explicit scope/disposition/handoff remains for the complete
+set, now with correct count and reachability rather than blanket productive status.
+
+Raw exact searches/exit codes, all 75 coordinates, source/script hashes and rerun
+identity are in `erratum-six-roots.json`, `erratum-six-roots.log`, and
+`erratum-reachability-0.log` through `erratum-reachability-3.log`. Command:
+`python3 docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.py`.
+No production/test/author evidence changes or runtime effects occurred. Full
+material correction acceptance awaits a stable author stand and fresh recheck.

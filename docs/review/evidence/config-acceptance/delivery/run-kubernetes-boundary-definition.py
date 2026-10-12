@@ -20,7 +20,9 @@ for chart in ['prism','ops-pod','kubeclaw','kubeclaw-buster']:
   else:
    d={'image':{'digest':'sha256:'+label.lower()*64},'imagePullSecrets':[{'name':'delivery-pull-'+label.lower()}],'auth':{'existingSecret':'delivery-auth-'+label.lower(),'existingSecretKey':'gateway-token'},'litellm':{'existingSecret':'delivery-litellm-'+label.lower(),'existingSecretKey':'api-key'},'discord':{'enabled':True,'existingSecret':'delivery-discord-'+label.lower(),'existingSecretKey':'discord-token'},'agent':{'git':{'enabled':False}},'gateway':{'startupDoctor':{'resources':resources(n)}},'initSetup':{'resources':resources(n)},'resources':resources(n),'workerTrust':{'spiffe':{'enabled':True,'envoy':{'resources':resources(n)}}},'persistence':{'config':{'enabled':True,'size':str(n*10)+'Gi','storageClass':'delivery-storage-'+label.lower(),'accessModes':['ReadWriteOnce']},'workspace':{'enabled':True,'size':str(n*20)+'Gi','storageClass':'delivery-storage-'+label.lower(),'accessModes':['ReadWriteOnce']}}}
    d['serviceAccount']={'create':True}
-   if chart=='kubeclaw-buster':d.update({'agentRole':'buster','busterNative':{'nodeName':'delivery-node','namespace':'default','policyDigest':label.lower()*64},'busterNamespaceBroker':{'enabled':True,'controller':{'resources':resources(n)}},'extraContainers':[{'name':'buster-v2-runtime','image':'ghcr.io/datrab/kubeclaw-buster-runtime@sha256:'+label.lower()*64,'resources':resources(n)}],'runtimeInfrastructure':{'registry':{'endpoint':'https://registry.example.test','transport':'https','authSecretName':'delivery-registry-'+label.lower()}}})
+   if chart=='kubeclaw-buster':
+    d['gateway']['resources']=resources(3*n);d['gateway']['resources']['requests']['ephemeral-storage']=str(n)+'Gi';d['gateway']['resources']['limits']['ephemeral-storage']=str(2*n)+'Gi'
+    d.update({'agentRole':'buster','busterNative':{'nodeName':'delivery-node','namespace':'default','policyDigest':label.lower()*64},'busterNamespaceBroker':{'enabled':True,'controller':{'resources':resources(n)}},'extraContainers':[{'name':'buster-v2-runtime','image':'ghcr.io/datrab/kubeclaw-buster-runtime@sha256:'+label.lower()*64,'resources':resources(n)}],'runtimeInfrastructure':{'registry':{'endpoint':'https://registry.example.test','transport':'https','authSecretName':'delivery-registry-'+label.lower()}}})
   profiles[(chart,label)]=d
 records=[]
 def run(id,args,expected=0,diagnostic=None):
@@ -36,7 +38,9 @@ for (chart,label),profile in profiles.items():
  p=run(id,['helm','template','delivery-'+chart,'charts/'+chart.replace('-buster',''),'--namespace','default','-f',str(f.relative_to(repo))])
  if p.returncode:continue
  manifest=dest/(id+'.yaml');manifest.write_text(p.stdout)
- schemaResult=run('DLV-C0-BOUNDARY-SCHEMA-'+chart.upper()+'-'+label,['kubeconform','-strict','-summary','-kubernetes-version','1.35.6','-schema-location',str(directory/'{{.ResourceKind}}{{.KindSuffix}}.json'),str(manifest.relative_to(repo))])
+ schemaArgs=['kubeconform','-strict','-summary','-kubernetes-version','1.35.6','-schema-location',str(directory/'{{.ResourceKind}}{{.KindSuffix}}.json')]
+ if (out/'pinned-schema-aliases.json').exists():schemaArgs+=['-schema-location',str(out/'pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json')]
+ schemaResult=run('DLV-C0-BOUNDARY-SCHEMA-'+chart.upper()+'-'+label,schemaArgs+[str(manifest.relative_to(repo))])
  summary=re.search(r'Summary: (\d+) resources? found in (\d+) files? - Valid: (\d+), Invalid: (\d+), Errors: (\d+), Skipped: (\d+)',schemaResult.stdout)
  records[-1]['collection']=list(map(int,summary.groups())) if summary else None
  if not summary or int(summary[1])==0 or int(summary[1])!=int(summary[3]) or any(int(summary[i]) for i in [4,5,6]):records[-1]['result']='failed';records[-1]['reason']='nonempty complete collection, all-valid and zero invalid/errors/skips required; exit0 alone cannot pass'
@@ -58,7 +62,7 @@ for row in fragment['rows']:
  if owner=='chart-prism':chart='prism';containers=['worker-trust-proxy'] if prefix=='workerTrust.spiffe.envoy' else ['proof','verify','restore-proof'] if prefix=='backup' else [prefix]
  elif owner=='chart-ops-pod':chart='ops-pod';prefix='resources.'+field.split('.')[1] if field.startswith('resources.') else prefix;containers=[('ops-mcp' if field.split('.')[1]=='mcp' else field.split('.')[1])] if field.startswith('resources.') else ['tailscale']
  else:
-  chart='kubeclaw-buster' if prefix=='busterNamespaceBroker.controller' else 'kubeclaw';containers={'gateway.startupDoctor':['openclaw-state-migration'],'initSetup':['init-setup'],'resources':['kubeclaw'],'workerTrust.spiffe.envoy':['worker-trust-proxy'],'busterNamespaceBroker.controller':['controller']}[prefix]
+  chart='kubeclaw-buster' if prefix in ['busterNamespaceBroker.controller','gateway'] else 'kubeclaw';containers={'gateway.startupDoctor':['openclaw-state-migration'],'initSetup':['init-setup'],'resources':['kubeclaw'],'gateway':['kubeclaw'],'workerTrust.spiffe.envoy':['worker-trust-proxy'],'busterNamespaceBroker.controller':['controller']}[prefix]
  for label in ['A','B']:
   actual=[d['containerResources'][name].get(side,{}).get(unit) for d in witnesses.get(chart+'-'+label,[]) for name in containers if name in d.get('containerResources',{})]
   p=profiles[(chart,label)]
@@ -70,11 +74,39 @@ for row in fragment['rows']:
   resourceComparisons.append({'settingId':row['id'],'profile':chart+'-'+label,'containers':containers,'expected':expected,'actual':actual,'result':'passed' if actual and all(value==expected for value in actual) else 'failed'})
 comparisonPath=dest/'resource-projection-comparisons.json';comparisonPath.write_text(json.dumps(resourceComparisons,indent=2)+'\n')
 if resourceComparisons:records.append({'id':'DLV-C0-BOUNDARY-RESOURCE-PROJECTION-COMPARISONS','command':['python3',str(pathlib.Path(__file__).relative_to(repo))],'exit':0,'expectedExit':0,'expectedDiagnostic':None,'result':'passed' if all(r['result']=='passed' for r in resourceComparisons) else 'failed','rawEvidencePaths':[str(comparisonPath.relative_to(repo))],'reason':'exact enumerated current field/container A/B values, not API or scheduler/CRI effects'})
+# Ref-only alias must retain the exact strict primary definition's required/type
+# and unknown-property behavior, not merely permit a complete CRD document.
+if (out/'pinned-schema-aliases.json').exists():
+ buster=dest/'DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml'
+ if buster.exists():
+  documents=json.loads(subprocess.check_output(['node','--input-type=module','-e',parse,str(buster)],cwd=repo,text=True));crd=next(d for d in documents if d['kind']=='CustomResourceDefinition')
+  for name in ['UNKNOWN','WRONG-TYPE','MISSING-SPEC']:
+   bad=copy.deepcopy(crd)
+   if name=='UNKNOWN':bad['deliveryUnexpectedField']=True;diagnostic='deliveryUnexpectedField'
+   elif name=='WRONG-TYPE':bad['spec']['group']=42;diagnostic='/spec/group'
+   else:del bad['spec'];diagnostic='spec'
+   fixture=dest/('crd-alias-negative-'+name+'.yaml');fixture.write_text(json.dumps(bad,indent=2)+'\n')
+   p=run('DLV-C0-PINNED-CRD-ALIAS-'+name,schemaArgs+[str(fixture.relative_to(repo))],1,diagnostic)
+   summary=re.search(r'Summary: (\d+) resources? found in (\d+) files? - Valid: (\d+), Invalid: (\d+), Errors: (\d+), Skipped: (\d+)',p.stdout)
+   records[-1]['collection']=list(map(int,summary.groups())) if summary else None
+   if not summary or list(map(int,summary.groups())) != [1,1,0,1,0,0]:records[-1]['result']='failed';records[-1]['reason']='negative must collect one CRD and reject via intended canonical schema, not setup/error/skip'
+# Current whole-map precedence: a partial nonempty gateway map does not inherit
+# missing CPU/memory/limits from the otherwise complete root resources author.
+partial=copy.deepcopy(profiles[('kubeclaw-buster','A')]);partial['gateway']['resources']={'requests':{'ephemeral-storage':'1Gi'}}
+partialProfile=dest/'profile-kubeclaw-buster-partial-overlay.json';partialProfile.write_text(json.dumps(partial,indent=2)+'\n')
+partialResult=run('DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP',['helm','template','delivery-kubeclaw-buster','charts/kubeclaw','--namespace','default','-f',str(partialProfile.relative_to(repo))])
+if partialResult.returncode==0:
+ ds=json.loads(subprocess.check_output(['node','--input-type=module','-e',parse,str(dest/'DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP.stdout')],cwd=repo,text=True))
+ dep=next(d for d in ds if d['kind']=='Deployment' and d['metadata']['name']=='agent-buster');actual=next(c for c in dep['spec']['template']['spec']['containers'] if c['name']=='kubeclaw')['resources']
+ records[-1]['actual']=actual;records[-1]['expected']={'requests':{'ephemeral-storage':'1Gi'}}
+ if actual!=records[-1]['expected']:records[-1]['result']='failed';records[-1]['reason']='current template expected whole-map shadow, not per-key root merge'
+ else:records[-1]['reason']='current source permits missing CPU/memory/limits despite complete root author; target required complete central profile negative remains not-run'
 # Exact current Chart versus API/source-only negatives. No kube-apiserver effects.
 base=lambda chart,label='A':['helm','template','delivery-'+chart,'charts/'+chart,'--namespace','default','-f',str((dest/('profile-'+chart+'-'+label+'.json')).relative_to(repo))]
 for id,chart,args,exit,diag in [('PRISM-NEGATIVE-INGESTION-QUANTITY','prism',['--set-string','ingestion.resources.requests.cpu=bad'],1,'ingestion.resources.requests.cpu'),('PRISM-NEGATIVE-TOKEN-EXPIRY','prism',['--set','control.productDecisions.tokenExpirationSeconds=599'],1,'control.productDecisions.tokenExpirationSeconds'),('OPS-MALFORMED-QUANTITY-PERMITTED','ops-pod',['--set-string','resources.codex.requests.cpu=bad'],0,None),('OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED','ops-pod',['--set-string','resources.codex.requests.cpu=2'],0,None),('PRISM-BAD-CRON-PERMITTED','prism',['--set-string','backup.schedule=not-a-cron'],0,None),('OPS-MISSING-SECRET-REFERENCE-PERMITTED','ops-pod',['--set-string','githubSecret=delivery-nonexistent-secret'],0,None),('OPS-PULL-EMPTY-NAME-PERMITTED','ops-pod',['--set-string','imagePullSecrets[0].name='],0,None),('OPS-NEGATIVE-PVC-SIZE-PERMITTED','ops-pod',['--set-string','persistence.size=-1Gi'],0,None)]:run('DLV-C0-BOUNDARY-'+id,base(chart)+args,exit,diag)
 # Persist source/test/tool/config identity for every observation; no hidden schema network.
 sourcefiles=[repo/'charts'/chart/'values.yaml' for chart in ['prism','ops-pod','kubeclaw']]+list((repo/'charts/prism/templates').glob('*'))+list((repo/'charts/ops-pod/templates').glob('*'))+list((repo/'charts/kubeclaw/templates').glob('*'))+[repo/'charts/prism/values.schema.json',pathlib.Path(__file__)]
 sourcefiles += [repo/r['localPath'] for r in schemaAcq['records'] if r['result']=='acquired']
+sourcefiles += list((out/'pinned-schema-aliases').glob('*.json')) if (out/'pinned-schema-aliases').exists() else []
 v={'scope':'actual local current Helm and exact selected Nova offline schema boundary only; NOT Go API validator execution, deployed Kubernetes, runtime admission/resources/Secrets/cron acceptance','records':records,'resourceProjectionComparisons':resourceComparisons,'tools':{'helm':subprocess.check_output(['helm','version','--short'],text=True).strip(),'kubeconform':subprocess.check_output(['kubeconform','-v'],text=True).strip(),'node':subprocess.check_output(['node','--version'],text=True).strip()},'sourceAndCommandDigests':{str(p.relative_to(repo)):digest(p) for p in sourcefiles if p.is_file()},'profileDigests':{f.name:digest(f) for f in dest.glob('profile-*.json')},'fieldWitnesses':witnesses,'resultCounts':dict(collections.Counter(r['result'] for r in records)),'implementationCases':'remain not-run; live selected apiserver/version/feature gates/Secret revisions/CSI/node admission prerequisites pending; no credential values generated or logged'}
 (out/'kubernetes-boundary-definition.json').write_text(json.dumps(v,indent=2)+'\n');print(json.dumps(v['resultCounts']));print(json.dumps([r for r in records if r['result']!='passed'],indent=2)[:2200])

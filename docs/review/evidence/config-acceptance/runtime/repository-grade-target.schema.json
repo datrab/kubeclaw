@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "tokenizerEncoding",
+    "componentBudget",
+    "boundaryBudget",
+    "maxPrimaryJobs",
+    "maxContextExpansionJobs",
+    "maxVerificationJobs",
+    "maxInputTokensPerJob",
+    "maxContextTokensPerJob",
+    "maxPromptBytesPerJob",
+    "maxInitialInputTokens",
+    "maxContextExpansionInputTokens",
+    "maxVerificationInputTokens",
+    "maxTotalInputTokens",
+    "maxOutputTokensPerJob",
+    "maxEstimatedCostUsd",
+    "maxWallTimeSeconds",
+    "estimatedSecondsPerJob",
+    "inputUsdPerMillionTokens",
+    "outputUsdPerMillionTokens",
+    "concurrency",
+    "maxRetries",
+    "maxRetryAttemptsPerPhase",
+    "enabledLenses"
+  ],
+  "properties": {
+    "tokenizerEncoding": {
+      "type": "string",
+      "enum": [
+        "o200k_base",
+        "cl100k_base"
+      ],
+      "description": "Bound budget-counting encoder must equal SAME selected actual runtime target encoder; neither is a new gateway model parameter."
+    },
+    "componentBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000
+        },
+        "maxTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000
+        }
+      },
+      "required": [
+        "maxFiles",
+        "maxBytes",
+        "maxTokens"
+      ]
+    },
+    "boundaryBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000
+        },
+        "maxTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000000
+        },
+        "maxRelations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "maxSlices": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "maxFiles",
+        "maxBytes",
+        "maxTokens",
+        "maxRelations",
+        "maxSlices"
+      ]
+    },
+    "maxPrimaryJobs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "maxContextExpansionJobs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "maxVerificationJobs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "maxInputTokensPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 120000
+    },
+    "maxContextTokensPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 128000
+    },
+    "maxPromptBytesPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 900000
+    },
+    "maxInitialInputTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "maxContextExpansionInputTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "maxVerificationInputTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "maxTotalInputTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "maxOutputTokensPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 6000,
+      "description": "Derived from SAME retained runtime target returned-output admission cap, not independent review author and not gateway max_tokens."
+    },
+    "maxEstimatedCostUsd": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 1000000
+    },
+    "maxWallTimeSeconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 604800
+    },
+    "estimatedSecondsPerJob": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 86400
+    },
+    "inputUsdPerMillionTokens": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 10000
+    },
+    "outputUsdPerMillionTokens": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 10000
+    },
+    "concurrency": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32
+    },
+    "maxRetries": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "maxRetryAttemptsPerPhase": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+    },
+    "enabledLenses": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "architecture",
+          "contracts",
+          "security",
+          "lifecycle",
+          "resilience",
+          "deployment",
+          "simplification"
+        ]
+      }
+    }
+  },
+  "description": "C0 proposed complete EFFECTIVE grade projection fields; encoder/output are required GENERATED projections, NOT authored review fields. All explicit, no defaults/aliases. Shared encoder/output projection and runtime ceilings checked semantically against SAME bound actual runtime profile. Review input and context workload quotas intersect independently; do not require sum of configured maxima below context quota."
+}

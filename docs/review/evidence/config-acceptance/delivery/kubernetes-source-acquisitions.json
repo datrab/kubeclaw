@@ -543,6 +543,111 @@
       "bytes": 27252,
       "result": "acquired",
       "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/poddisruptionbudget-policy-v1.json"
+    },
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json",
+      "status": 200,
+      "sha256": "4b8b5f0e0e383363ee248095abe0ba0fd8b79da64d755c68632cbec9617697d9",
+      "bytes": 54215,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json"
+    },
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json",
+      "status": 200,
+      "sha256": "a705eb1d0de6d38132435c8df35b33097456012b2cd7d92d685442386d1d5db5",
+      "bytes": 42744,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json"
+    },
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "v1.35.6-standalone-strict/_definitions.json",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json",
+      "status": 200,
+      "sha256": "9dbc9ea6042d41e36d908b24897c4ee126e199a0a46856cd60c7dcbe73381e45",
+      "bytes": 1420392,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "tag": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/kubelet/eviction/eviction_manager.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/kubelet/eviction/eviction_manager.go",
+      "status": 200,
+      "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b",
+      "bytes": 26452,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "tag": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/kubelet/eviction/eviction_manager.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/kubelet/eviction/eviction_manager.go",
+      "status": 200,
+      "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e",
+      "bytes": 25911,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "tag": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/kubelet/kubelet.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/kubelet/kubelet.go",
+      "status": 200,
+      "sha256": "1d9b1c314f27c60e77710f17c6d446fac83cb44c68bd077312b07ca32aaf7301",
+      "bytes": 142008,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/kubelet.go"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "tag": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/kubelet/kubelet.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/kubelet/kubelet.go",
+      "status": 200,
+      "sha256": "40a3129435699078ebdf695894a446c62c6a74e2e9256668373910521f29bff2",
+      "bytes": 136646,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/kubelet.go"
+    },
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/README.md",
+      "status": 200,
+      "sha256": "0f0417cb08050baeeda59927269fb6920d3b7129418f66804b50a0e00ada2fa6",
+      "bytes": 1953,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/README.md",
+      "disposition": "investigation only; NOT USED as validation source; unstrict CRD is not a substitute for canonical strict definition"
+    },
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "v1.35.6-local/customresourcedefinition-apiextensions-v1.json",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-local/customresourcedefinition-apiextensions-v1.json",
+      "status": 200,
+      "sha256": "95e10ef81ae70e513186795e21d4b2717fbbef4e2d4eac3085579cfaa0d591ed",
+      "bytes": 2120,
+      "result": "acquired",
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-local/customresourcedefinition-apiextensions-v1.json",
+      "disposition": "investigation only; NOT USED as validation source; unstrict CRD is not a substitute for canonical strict definition"
     }
   ]
 }

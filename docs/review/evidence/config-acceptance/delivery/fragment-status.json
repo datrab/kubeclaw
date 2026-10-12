@@ -1,22 +1,22 @@
 {
   "rows": 801,
-  "sources": 203,
+  "sources": 220,
   "duplicateIds": 0,
   "statuses": {
-    "source-traced": 318,
-    "source-traced-validation-expansion-open": 128,
+    "source-traced": 339,
+    "source-traced-validation-expansion-open": 122,
     "source-traced-pinned-consumer": 69,
     "source-traced-declared-unused": 1,
     "source-traced-external-validator-blocked": 5,
-    "source-traced-buildstep-domain-open": 86,
+    "source-traced-buildstep-domain-open": 71,
     "source-traced-template-domains-open": 188,
     "source-traced-k8s-validation-open": 5,
     "source-traced-external-tailnet-reader-open": 1
   },
-  "openSemanticRows": 413,
-  "caseSpecifications": 100,
+  "openSemanticRows": 392,
+  "caseSpecifications": 102,
   "caseResults": {
-    "not-run": 100
+    "not-run": 102
   },
   "danglingCaseIds": [],
   "acceptance": "C0 INCOMPLETE; static source-traced statuses are not independent acceptance or runtime PASS",

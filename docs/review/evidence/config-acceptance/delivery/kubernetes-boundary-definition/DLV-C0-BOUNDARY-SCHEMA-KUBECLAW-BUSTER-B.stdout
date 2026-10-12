@@ -1,4 +1,1 @@
-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml - CustomResourceDefinition busternamespaceleases.kubeclaw.forgestack.ai failed validation: could not find schema for CustomResourceDefinition
-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml - ValidatingAdmissionPolicy agent-buster-de8812af-namespace-fence failed validation: could not find schema for ValidatingAdmissionPolicy
-docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml - ValidatingAdmissionPolicyBinding agent-buster-de8812af-namespace-fence failed validation: could not find schema for ValidatingAdmissionPolicyBinding
-Summary: 21 resources found in 1 file - Valid: 18, Invalid: 0, Errors: 3, Skipped: 0
+Summary: 21 resources found in 1 file - Valid: 21, Invalid: 0, Errors: 0, Skipped: 0

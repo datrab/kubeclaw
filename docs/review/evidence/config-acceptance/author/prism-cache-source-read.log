@@ -1,0 +1,558 @@
+{"path": "skills/prism/engine/index.ts", "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"}
+1: import { createHash } from "node:crypto";
+2: import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
+3: import { validatePrism } from "@kubeclaw/prism-contracts-v1";
+4: import { applyOperation, type PrismOperation } from "../domain/index.ts";
+5: import { evaluate } from "../evaluation/index.ts";
+6: import {
+7:   EngineExecutionCache,
+8:   type EngineCacheLimits,
+9: } from "./execution-cache.ts";
+10: import { renderOperation } from "./render-operation.ts";
+11: 
+12: export type EngineOperation =
+13:   "generate" | "render" | "evaluate" | "ingest" | "publish";
+14: export type EngineRequest = {
+15:   contract: "kubeclaw.prism-design-engine@1";
+16:   operation: EngineOperation;
+17:   input: Record<string, unknown>;
+18:   idempotencyKey: string;
+19: };
+20: export type EngineResult = {
+21:   operation: EngineOperation;
+22:   output: Record<string, unknown>;
+23: };
+24: export interface DesignProvider {
+25:   propose(
+26:     document: PrismDocument,
+27:     instruction: string,
+28:     signal?: AbortSignal,
+29:   ): Promise<PrismOperation[]>;
+30:   embed(
+31:     text: string,
+32:     signal?: AbortSignal,
+33:   ): Promise<{ embedding: number[]; model: string; modelVersion: string }>;
+34: }
+35: const hash = (value: string) =>
+36:   `sha256:${createHash("sha256").update(value).digest("hex")}`;
+37: function exactInput(
+38:   input: Record<string, unknown>,
+39:   allowed: readonly string[],
+40:   required: readonly string[],
+41: ): void {
+42:   for (const key of Object.keys(input))
+43:     if (!allowed.includes(key))
+44:       throw new Error(`unsupported Prism input field: ${key}`);
+45:   for (const key of required)
+46:     if (!(key in input)) throw new Error(`missing Prism input field: ${key}`);
+47: }
+48: 
+49: function validateOperationInput(request: EngineRequest): void {
+50:   if (request.operation === "generate")
+51:     exactInput(
+52:       request.input,
+53:       ["document", "instruction", "mode"],
+54:       ["document", "instruction"],
+55:     );
+56:   else if (request.operation === "render")
+57:     exactInput(
+58:       request.input,
+59:       ["document", "view", "state", "viewport", "capture", "assetSources"],
+60:       ["document", "view", "state", "viewport"],
+61:     );
+62:   else if (request.operation === "evaluate")
+63:     exactInput(request.input, ["document"], ["document"]);
+64:   else if (request.operation === "ingest")
+65:     exactInput(request.input, ["text"], ["text"]);
+66:   else exactInput(request.input, ["document", "approved"], ["document"]);
+67: }
+68: 
+69: export class PrismEngine {
+70:   private readonly provider: DesignProvider;
+71:   private readonly executions: EngineExecutionCache<EngineResult>;
+72:   constructor(provider: DesignProvider, cacheLimits?: EngineCacheLimits) {
+73:     this.provider = provider;
+74:     this.executions = new EngineExecutionCache(cacheLimits);
+75:   }
+76:   cacheUsage() {
+77:     return this.executions.usage();
+78:   }
+79:   async execute(
+80:     request: EngineRequest,
+81:     options: { signal?: AbortSignal } = {},
+82:   ): Promise<EngineResult> {
+83:     const owner = options.signal;
+84:     owner?.throwIfAborted();
+85:     if (request.contract !== "kubeclaw.prism-design-engine@1")
+86:       throw new Error("unsupported Prism engine contract");
+87:     // Bind deferred execution to the same caller-independent input as its identity.
+88:     const ownedRequest = structuredClone(request);
+89:     const fingerprint = hash(
+90:       JSON.stringify({
+91:         operation: ownedRequest.operation,
+92:         input: ownedRequest.input,
+93:       }),
+94:     );
+95:     return this.executions.execute(
+96:       ownedRequest.idempotencyKey,
+97:       fingerprint,
+98:       () => this.executeOnce(ownedRequest, owner),
+99:       owner,
+100:     );
+101:   }
+102:   private async ingest(
+103:     input: Record<string, unknown>,
+104:     signal?: AbortSignal,
+105:   ): Promise<EngineResult> {
+106:     const text = String(input.text ?? "").trim();
+107:     if (!text || text.length > 200_000)
+108:       throw new Error("ingest text length is invalid");
+109:     const embedded = await this.provider.embed(text, signal);
+110:     if (
+111:       !embedded.embedding.length ||
+112:       embedded.embedding.some((value) => !Number.isFinite(value))
+113:     )
+114:       throw new Error("embedding provider returned an invalid vector");
+115:     return {
+116:       operation: "ingest",
+117:       output: { ...embedded, sourceDigest: hash(text) },
+118:     };
+119:   }
+120:   private async executeOnce(
+121:     request: EngineRequest,
+122:     signal?: AbortSignal,
+123:   ): Promise<EngineResult> {
+124:     signal?.throwIfAborted();
+125:     validateOperationInput(request);
+126:     if (request.operation === "ingest")
+127:       return this.ingest(request.input, signal);
+128:     const document = request.input.document as PrismDocument;
+129:     validatePrism<PrismDocument>("designDocument", document);
+130:     let result: EngineResult;
+131:     if (request.operation === "generate") {
+132:       const operations = await this.provider.propose(
+133:         document,
+134:         String(request.input.instruction ?? ""),
+135:         signal,
+136:       );
+137:       const next = operations.reduce(
+138:         (current, operation) =>
+139:           applyOperation(current, {
+140:             ...operation,
+141:             baseRevision: current.meta.revision,
+142:           } as PrismOperation),
+143:         document,
+144:       );
+145:       result = {
+146:         operation: "generate",
+147:         output: {
+148:           document: next,
+149:           operations,
+150:           mode: String(request.input.mode ?? "refine"),
+151:         },
+152:       };
+153:     } else if (request.operation === "render") {
+154:       result = await renderOperation(document, request.input, signal);
+155:     } else if (request.operation === "evaluate") {
+156:       const report = evaluate(document);
+157:       result = {
+158:         operation: "evaluate",
+159:         output: report,
+160:       };
+161:     } else {
+162:       if (request.input.approved !== true)
+163:         throw new Error("explicit approval is required");
+164:       const canonical = JSON.stringify(document);
+165:       const manifest = {
+166:         schema: "prism.baseline-bundle.v1",
+167:         projectId: document.meta.projectId,
+168:         revision: document.meta.revision,
+169:         designDigest: hash(canonical),
+170:       };
+171:       result = {
+172:         operation: "publish",
+173:         output: { manifest, bundleDigest: hash(JSON.stringify(manifest)) },
+174:       };
+175:     }
+176:     return result;
+177:   }
+178: }
+179: 
+180: export { DeterministicDesignProvider, OpenAICompatibleDesignProvider } from "./design-providers.ts";
+{"path": "skills/prism/engine/execution-cache.ts", "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"}
+1: export interface EngineCacheLimits {
+2:   readonly maximumInFlight: number;
+3:   readonly maximumCompletedEntries: number;
+4:   readonly maximumCompletedBytes: number;
+5: }
+6: export const DEFAULT_ENGINE_CACHE_LIMITS: EngineCacheLimits = Object.freeze({
+7:   maximumInFlight: 4,
+8:   maximumCompletedEntries: 32,
+9:   maximumCompletedBytes: 16 * 1024 * 1024,
+10: });
+11: type Pending<T> = { fingerprint: string; result: Promise<T>; owner: AbortSignal | undefined };
+12: type Completed = { fingerprint: string; serialized: string; bytes: number };
+13: 
+14: /** RAM optimization only; durable request/result replay belongs to Control. */
+15: export class EngineExecutionCache<T> {
+16:   readonly #limits: EngineCacheLimits;
+17:   readonly #pending = new Map<string, Pending<T>>();
+18:   readonly #completed = new Map<string, Completed>();
+19:   #completedBytes = 0;
+20: 
+21:   constructor(limits: EngineCacheLimits = DEFAULT_ENGINE_CACHE_LIMITS) {
+22:     for (const value of [limits.maximumInFlight, limits.maximumCompletedEntries, limits.maximumCompletedBytes]) {
+23:       if (!Number.isSafeInteger(value) || value < 1) throw new Error('PRISM_ENGINE_CACHE_LIMIT_INVALID');
+24:     }
+25:     this.#limits = Object.freeze({ ...limits });
+26:   }
+27: 
+28:   usage() {
+29:     return Object.freeze({ inFlight: this.#pending.size, completedEntries: this.#completed.size,
+30:       completedBytes: this.#completedBytes, totalEntries: this.#pending.size + this.#completed.size });
+31:   }
+32: 
+33:   async execute(key: string, fingerprint: string, execute: () => Promise<T>, owner?: AbortSignal): Promise<T> {
+34:     owner?.throwIfAborted();
+35:     const pending = this.#pending.get(key);
+36:     const completed = this.#completed.get(key);
+37:     if ((pending && pending.fingerprint !== fingerprint) || (completed && completed.fingerprint !== fingerprint)) {
+38:       throw new Error('idempotency key was used for a different request');
+39:     }
+40:     if (pending) {
+41:       if (pending.owner !== owner) throw new Error('PRISM_ENGINE_EXECUTION_OWNER_CONFLICT');
+42:       return pending.result;
+43:     }
+44:     if (completed) {
+45:       this.#completed.delete(key);
+46:       this.#completed.set(key, completed);
+47:       return JSON.parse(completed.serialized) as T;
+48:     }
+49:     if (this.#pending.size >= this.#limits.maximumInFlight) throw new Error('PRISM_ENGINE_IN_FLIGHT_LIMIT');
+50:     // Reserve ownership before beginning execution, including synchronous callbacks.
+51:     const result = Promise.resolve().then(() => {
+52:       owner?.throwIfAborted();
+53:       return execute();
+54:     }).then(value => {
+55:       try {
+56:         owner?.throwIfAborted();
+57:         this.#retain(key, fingerprint, value);
+58:         return value;
+59:       } finally { this.#pending.delete(key); }
+60:     }, (error: unknown) => {
+61:       this.#pending.delete(key);
+62:       throw error;
+63:     });
+64:     // Duplicates share the checked retention settlement, never inner execution alone.
+65:     this.#pending.set(key, { fingerprint, result, owner });
+66:     return result;
+67:   }
+68: 
+69:   #retain(key: string, fingerprint: string, value: T): void {
+70:     const serialized = JSON.stringify(value);
+71:     const bytes = Buffer.byteLength(serialized) + Buffer.byteLength(key) + Buffer.byteLength(fingerprint);
+72:     if (bytes > this.#limits.maximumCompletedBytes) return;
+73:     while (this.#completed.size >= this.#limits.maximumCompletedEntries
+74:       || this.#completedBytes + bytes > this.#limits.maximumCompletedBytes) {
+75:       const oldest = this.#completed.keys().next().value!;
+76:       this.#completedBytes -= this.#completed.get(oldest)!.bytes;
+77:       this.#completed.delete(oldest);
+78:     }
+79:     this.#completed.set(key, { fingerprint, serialized, bytes });
+80:     this.#completedBytes += bytes;
+81:   }
+82: }
+{"path": "skills/prism/engine/design-providers.ts", "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"}
+1: import { createHash } from "node:crypto";
+2: import { validatePrism, type PrismDocument } from "@kubeclaw/prism-contracts-v1";
+3: import type { PrismOperation } from "../domain/index.ts";
+4: import type { DesignProvider } from "./index.ts";
+5: 
+6: export class DeterministicDesignProvider implements DesignProvider {
+7:   async embed(
+8:     text: string,
+9:     signal?: AbortSignal,
+10:   ): Promise<{ embedding: number[]; model: string; modelVersion: string }> {
+11:     signal?.throwIfAborted();
+12:     const bytes = createHash("sha256").update(text).digest();
+13:     return {
+14:       embedding: Array.from(bytes.subarray(0, 16), (value) => value / 255),
+15:       model: "deterministic-test-only",
+16:       modelVersion: "1",
+17:     };
+18:   }
+19:   async propose(
+20:     document: PrismDocument,
+21:     instruction: string,
+22:     signal?: AbortSignal,
+23:   ): Promise<PrismOperation[]> {
+24:     signal?.throwIfAborted();
+25:     const node = document.views.home?.root.children?.[0];
+26:     if (!node) return [];
+27:     return [
+28:       {
+29:         type: "node.props.set",
+30:         baseRevision: document.meta.revision,
+31:         nodeId: node.id,
+32:         props: { content: instruction || "Updated design" },
+33:       },
+34:     ];
+35:   }
+36: }
+37: 
+38: export class OpenAICompatibleDesignProvider implements DesignProvider {
+39:   readonly #endpoint: URL;
+40:   readonly #embeddingEndpoint: URL | null;
+41:   readonly #apiKey: string;
+42:   readonly #model: string;
+43:   readonly #embeddingModel: string;
+44:   readonly #timeoutMs: number;
+45:   constructor(options: {
+46:     endpoint: string;
+47:     embeddingEndpoint: string;
+48:     apiKey: string;
+49:     model: string;
+50:     embeddingModel: string;
+51:     timeoutMs?: number;
+52:   }) {
+53:     const providerUrl = (value: string, label: string) => {
+54:       const url = new URL(value);
+55:       const internalHttp =
+56:         url.protocol === "http:" &&
+57:         (url.hostname.endsWith(".svc.cluster.local") ||
+58:           url.hostname.endsWith(".svc"));
+59:       if (url.protocol !== "https:" && !internalHttp)
+60:         throw new Error(
+61:           `${label} requires HTTPS or an internal Kubernetes Service`,
+62:         );
+63:       return url;
+64:     };
+65:     this.#endpoint = providerUrl(options.endpoint, "design provider");
+66:     if (!options.apiKey || !options.model)
+67:       throw new Error("design provider credentials and model are required");
+68:     if (Boolean(options.embeddingEndpoint) !== Boolean(options.embeddingModel))
+69:       throw new Error(
+70:         "embedding provider endpoint and model must be configured together",
+71:       );
+72:     this.#embeddingEndpoint = options.embeddingEndpoint
+73:       ? providerUrl(options.embeddingEndpoint, "embedding provider")
+74:       : null;
+75:     this.#apiKey = options.apiKey;
+76:     this.#model = options.model;
+77:     this.#embeddingModel = options.embeddingModel;
+78:     this.#timeoutMs = options.timeoutMs ?? 60_000;
+79:   }
+80:   async propose(
+81:     document: PrismDocument,
+82:     instruction: string,
+83:     signal?: AbortSignal,
+84:   ): Promise<PrismOperation[]> {
+85:     const response = await fetch(this.#endpoint, {
+86:       method: "POST",
+87:       signal: signal
+88:         ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)])
+89:         : AbortSignal.timeout(this.#timeoutMs),
+90:       headers: {
+91:         authorization: `Bearer ${this.#apiKey}`,
+92:         "content-type": "application/json",
+93:       },
+94:       body: JSON.stringify({
+95:         model: this.#model,
+96:         response_format: { type: "json_object" },
+97:         messages: [
+98:           {
+99:             role: "system",
+100:             content:
+101:               "Return JSON with an operations array. Use only Prism typed operations. Do not return code or markdown.",
+102:           },
+103:           { role: "user", content: JSON.stringify({ instruction, document }) },
+104:         ],
+105:       }),
+106:     });
+107:     if (!response.ok)
+108:       throw new Error(`design provider failed: ${response.status}`);
+109:     const envelope = (await response.json()) as {
+110:       choices?: Array<{ message?: { content?: string } }>;
+111:     };
+112:     const text = envelope.choices?.[0]?.message?.content;
+113:     if (!text) throw new Error("design provider returned no content");
+114:     const parsed = JSON.parse(text) as { operations?: unknown };
+115:     if (!Array.isArray(parsed.operations))
+116:       throw new Error("design provider returned invalid operations");
+117:     return parsed.operations.map((value) =>
+118:       validatePrism<PrismOperation>("operation", value),
+119:     );
+120:   }
+121:   async embed(
+122:     text: string,
+123:     signal?: AbortSignal,
+124:   ): Promise<{ embedding: number[]; model: string; modelVersion: string }> {
+125:     if (!this.#embeddingEndpoint || !this.#embeddingModel)
+126:       throw new Error("embedding provider is not configured");
+127:     const response = await fetch(this.#embeddingEndpoint, {
+128:       method: "POST",
+129:       signal: signal
+130:         ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)])
+131:         : AbortSignal.timeout(this.#timeoutMs),
+132:       headers: {
+133:         authorization: `Bearer ${this.#apiKey}`,
+134:         "content-type": "application/json",
+135:       },
+136:       body: JSON.stringify({
+137:         model: this.#embeddingModel,
+138:         input: text,
+139:         encoding_format: "float",
+140:       }),
+141:     });
+142:     if (!response.ok)
+143:       throw new Error(`embedding provider failed: ${response.status}`);
+144:     const value = (await response.json()) as {
+145:       data?: Array<{ embedding?: number[] }>;
+146:     };
+147:     const embedding = value.data?.[0]?.embedding;
+148:     if (
+149:       !Array.isArray(embedding) ||
+150:       !embedding.length ||
+151:       embedding.some((item) => !Number.isFinite(item))
+152:     )
+153:       throw new Error("embedding provider returned no valid vector");
+154:     return { embedding, model: this.#embeddingModel, modelVersion: "provider" };
+155:   }
+156: }
+{"path": "skills/prism/server/native-worker-host.ts", "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"}
+1: import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
+2: import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
+3: import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
+4: import { WorkerArtifactClient } from './worker-artifacts.ts';
+5: import { nativeOperationFor } from './worker-operation.ts';
+6: import { nativePrismHostConfig } from '../config/native-worker.ts';
+7: 
+8: const cancellation = new AbortController();
+9: const cancel = () => cancellation.abort(new Error('WORKER_ATTEMPT_CANCELLED'));
+10: process.once('SIGTERM', cancel); process.once('SIGINT', cancel);
+11: 
+12: async function main(): Promise<void> {
+13: const config = nativePrismHostConfig();
+14: const chunks: Buffer[] = [];
+15: let bytes = 0;
+16: for await (const chunk of process.stdin) {
+17:   bytes += chunk.length;
+18:   if (bytes > config.maximumInputBytes) throw new Error('PRISM_NATIVE_INPUT_LIMIT');
+19:   chunks.push(Buffer.from(chunk));
+20: }
+21: const envelope = JSON.parse(Buffer.concat(chunks).toString('utf8')) as WorkerAttemptEnvelopeV3;
+22: validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
+23: const artifacts = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled);
+24: const engine = new PrismEngine(new DeterministicDesignProvider());
+25: const result = await new WorkerAttemptExecutor({ envelope, signal: cancellation.signal,
+26:   operation: nativeOperationFor(envelope, engine, artifacts, config.scope), receiptNamespace: 'prism-native-provisional',
+27:   storeFullLog(attemptId, content, { signal }) {
+28:     if (attemptId !== envelope.attemptId) throw new Error('Prism log attempt identity mismatch');
+29:     return artifacts.upload('prism-full-log', 'log', 'text/plain', Buffer.from(content), signal);
+30:   },
+31: }).execute();
+32: // Closing stdout is not the completion boundary: the supervisor drains the tree and reseals.
+33: process.stdout.write(JSON.stringify(result));
+34: }
+35: try { await main(); }
+36: finally { process.removeListener('SIGTERM', cancel); process.removeListener('SIGINT', cancel); }
+{"path": "skills/prism/server/worker-operation.ts", "sha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471"}
+1: import type { WorkerAttemptEnvelopeV3, WorkerAttemptLimitsV2 } from '@kubeclaw/pipeline-worker-core-contract';
+2: import { observeNativeWorkerResources } from '@kubeclaw/worker-core';
+3: import type { WorkerAttemptContext, WorkerAttemptOperation, WorkerAttemptOperationResult } from '@kubeclaw/worker-core';
+4: import type { PrismEngine } from '../engine/index.ts';
+5: import { executePrismOperation } from '../engine/worker-binding.ts';
+6: import type { WorkerArtifactClient } from './worker-artifacts.ts';
+7: import { PrismBrowserCloseError } from '../engine/browser-capture.ts';
+8: 
+9: /** The same Prism lifecycle runs inside the dedicated native host. */
+10: export function nativeOperationFor(envelope: WorkerAttemptEnvelopeV3, engine: PrismEngine,
+11:   artifacts: WorkerArtifactClient, scope: string): WorkerAttemptOperation<WorkerAttemptEnvelopeV3> {
+12:   const operation = new PrismWorkerOperation(envelope, engine, artifacts);
+13:   return {
+14:     prepare: limits => operation.prepare(limits), execute: context => operation.execute(context),
+15:     terminate: () => operation.terminate(),
+16:     async measure({ signal }) {
+17:       signal.throwIfAborted();
+18:       const resources = observeNativeWorkerResources(scope);
+19:       return { cpuTimeMs: { status: 'observed', value: Math.ceil(resources.cpuTimeMicroseconds / 1000) },
+20:         maximumMemoryBytes: { status: 'observed', value: resources.maximumMemoryBytes },
+21:         maximumTasks: { status: 'observed', value: resources.maximumTasks } };
+22:     },
+23:   };
+24: }
+25: 
+26: export class PrismWorkerOperation implements Omit<WorkerAttemptOperation<WorkerAttemptEnvelopeV3>, 'measure'> {
+27:   private prepared = false;
+28:   private terminated = false;
+29:   private readonly controller = new AbortController();
+30:   private execution: Promise<WorkerAttemptOperationResult> | undefined;
+31:   private settlement: Promise<{ ok: true } | { ok: false; error: unknown }> | undefined;
+32:   private readonly envelope: WorkerAttemptEnvelopeV3;
+33:   private readonly engine: PrismEngine;
+34:   private readonly artifacts: WorkerArtifactClient;
+35:   constructor(envelope: WorkerAttemptEnvelopeV3, engine: PrismEngine, artifacts: WorkerArtifactClient) {
+36:     this.envelope = envelope; this.engine = engine; this.artifacts = artifacts;
+37:   }
+38:   prepare(_limits: WorkerAttemptLimitsV2) {
+39:     if (this.prepared || this.terminated) throw new Error('Prism attempt cannot be prepared again');
+40:     this.prepared = true;
+41:     return undefined;
+42:   }
+43:   execute(context: Pick<WorkerAttemptContext, 'signal' | 'log'>) {
+44:     if (this.execution) throw new Error('Prism attempt execution already started');
+45:     const signal = AbortSignal.any([context.signal, this.controller.signal]);
+46:     this.execution = this.run({ ...context, signal });
+47:     this.settlement = this.execution.then(() => ({ ok: true as const }),
+48:       (error: unknown) => ({ ok: false as const, error }));
+49:     return this.execution;
+50:   }
+51:   async terminate() {
+52:     this.terminated = true;
+53:     this.controller.abort(new Error('Prism attempt terminated'));
+54:     // Core bounds this drain and reports unresolved work; do not detach I/O.
+55:     const settled = await this.settlement;
+56:     if (settled && !settled.ok && settled.error instanceof PrismBrowserCloseError) throw settled.error;
+57:   }
+58:   private async run(context: Pick<WorkerAttemptContext, 'signal' | 'log'>) {
+59:     if (!this.prepared || this.terminated || context.signal.aborted)
+60:       throw new Error("Prism attempt cannot start");
+61:     if (this.envelope.operation.values.operation === "generate")
+62:       throw new Error("Prism generation requires the OpenClaw agent gateway");
+63:     context.log(
+64:       "system",
+65:       `Prism ${String(this.envelope.operation.values.operation)} operation started`,
+66:     );
+67:     const hydratedInput = await readInput(this.envelope, this.artifacts, context.signal);
+68:     const specialistResult = await executePrismOperation(
+69:       this.engine,
+70:       this.envelope.operation,
+71:       this.envelope.executionId,
+72:       hydratedInput,
+73:       context.signal,
+74:     );
+75:     if (this.terminated || context.signal.aborted)
+76:       throw new Error("Prism attempt was cancelled");
+77:     const values={...specialistResult.values};const evidence=[];
+78:     if(typeof values.screenshotBase64==="string"){evidence.push(await this.artifacts.upload("render-screenshot","preview","image/png",Buffer.from(values.screenshotBase64,"base64"), context.signal));delete values.screenshotBase64;}
+79:     if(typeof values.ariaSnapshot==="string"){evidence.push(await this.artifacts.upload("render-aria","accessibility-tree","text/plain",Buffer.from(values.ariaSnapshot), context.signal));delete values.ariaSnapshot;}
+80:     const boundedResult={...specialistResult,values};
+81:     return {
+82:       summary: "Prism operation completed",
+83:       specialistResult:boundedResult,
+84:       evidence,
+85:       exitCode: 0,
+86:       signal: null,
+87:     };
+88:   }
+89: }
+90: 
+91: async function readInput(envelope: WorkerAttemptEnvelopeV3, artifacts: WorkerArtifactClient,
+92:   signal: AbortSignal): Promise<Record<string, unknown>> {
+93:   const inputName = String(envelope.operation.values.inputName ?? '');
+94:   const declared = envelope.inputs.find((item) => item.name === inputName && item.kind === 'artifact');
+95:   if (!declared || declared.kind !== 'artifact' || declared.artifact.mediaType !== 'application/json'
+96:     || declared.artifact.type !== 'prism-engine-input') throw new Error('Prism input artifact is missing or invalid');
+97:   const bytes = await artifacts.read(declared.artifact, signal);
+98:   return JSON.parse(bytes.toString('utf8')) as Record<string, unknown>;
+99: }

@@ -1,8 +1,8 @@
 {
   "method": "static JSON/reference/SHA256 consistency checks; no production/test/package/cluster/host execution",
-  "verificationToolSha256": "84d7f4ce8d7bd69be0e49c8dff463e7fd7754cfc6cf6767797b6dd44ecc42291",
+  "verificationToolSha256": "cec1d8594406f6455efcb8ba9b5fcd89bfc6e18522bdc31053c455815c92d0db",
   "settingRows": 801,
-  "caseSpecifications": 100,
+  "caseSpecifications": 102,
   "issues": [],
   "consistencyResult": "passed",
   "c0Acceptance": "incomplete",
@@ -139,21 +139,6 @@
     "DLV-IMAGE-BUSTER-GATEWAY-OPENCLAW-PLUGIN-VERSION",
     "DLV-IMAGE-BUSTER-GATEWAY-TARGETARCH",
     "DLV-IMAGE-BUSTER-GATEWAY-DEBIAN-SNAPSHOT",
-    "DLV-IMAGE-BUSTER-RUNTIME-BUILDKIT-BASE",
-    "DLV-IMAGE-BUSTER-RUNTIME-BUSTER-NODE-BASE",
-    "DLV-IMAGE-BUSTER-RUNTIME-DEBIAN-SNAPSHOT",
-    "DLV-IMAGE-BUSTER-RUNTIME-TARGETARCH",
-    "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION",
-    "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-VERSION",
-    "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-AMD64",
-    "DLV-IMAGE-BUSTER-RUNTIME-KUBECTL-SHA256-ARM64",
-    "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-VERSION",
-    "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-AMD64",
-    "DLV-IMAGE-BUSTER-RUNTIME-TRIVY-SHA256-ARM64",
-    "DLV-IMAGE-BUSTER-RUNTIME-RUFF-VERSION",
-    "DLV-IMAGE-BUSTER-RUNTIME-MYPY-VERSION",
-    "DLV-IMAGE-BUSTER-RUNTIME-PIP-AUDIT-VERSION",
-    "DLV-IMAGE-BUSTER-RUNTIME-SEMGREP-VERSION",
     "DLV-IMAGE-NAMESPACE-CONTROLLER-CONTROLLER-GO-BASE",
     "DLV-IMAGE-NAMESPACE-CONTROLLER-CONTROLLER-RUNTIME-BASE",
     "DLV-IMAGE-NOVA-OPENCLAW-BASE",
@@ -413,13 +398,7 @@
     "DLV-CHART-GITOPS-GROUPS",
     "DLV-CHART-GITOPS-DESTINATIONS",
     "DLV-CHART-GITOPS-CLUSTERRESOURCEWHITELIST",
-    "DLV-CHART-GITOPS-NAMESPACERESOURCEWHITELIST",
-    "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
-    "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
-    "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
-    "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
-    "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
-    "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE"
+    "DLV-CHART-GITOPS-NAMESPACERESOURCEWHITELIST"
   ],
   "unreviewedCases": [
     "DLV-CASE-CONFIG-ONLY-CI",
@@ -521,10 +500,12 @@
     "DLV-CASE-KUBERNETES-RESOURCE-ENVELOPES",
     "DLV-CASE-KUBERNETES-VOLUME-IDENTITY",
     "DLV-CASE-KUBERNETES-SECRET-PROJECTIONS",
-    "DLV-CASE-KUBERNETES-CRON-SCHEDULE"
+    "DLV-CASE-KUBERNETES-CRON-SCHEDULE",
+    "DLV-CASE-BUSTER-GATEWAY-OVERLAY-MEMBERS",
+    "DLV-CASE-BUSTER-BUILD-PLATFORM-VERSION-CLOSURE"
   ],
   "implementationResults": {
-    "not-run": 100
+    "not-run": 102
   },
   "requiredCaseHarnessGaps": [
     {
@@ -989,6 +970,16 @@
     },
     {
       "id": "DLV-CASE-KUBERNETES-CRON-SCHEDULE",
+      "commandReadiness": "existing command/suite is entrypoint or supplemental regression, not yet the complete new field harness; placeholders require selected artifact/profile identities",
+      "specificationStatus": "exact boundary defined; field fixture/harness/negative-diagnostic expansion pending where stated"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GATEWAY-OVERLAY-MEMBERS",
+      "commandReadiness": "existing command/suite is entrypoint or supplemental regression, not yet the complete new field harness; placeholders require selected artifact/profile identities",
+      "specificationStatus": "exact boundary defined; field fixture/harness/negative-diagnostic expansion pending where stated"
+    },
+    {
+      "id": "DLV-CASE-BUSTER-BUILD-PLATFORM-VERSION-CLOSURE",
       "commandReadiness": "existing command/suite is entrypoint or supplemental regression, not yet the complete new field harness; placeholders require selected artifact/profile identities",
       "specificationStatus": "exact boundary defined; field fixture/harness/negative-diagnostic expansion pending where stated"
     }

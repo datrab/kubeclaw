@@ -1478,5 +1478,149 @@
       "2Gi"
     ],
     "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "300m",
+    "actual": [
+      "300m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "600m",
+    "actual": [
+      "600m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "384Mi",
+    "actual": [
+      "384Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "768Mi",
+    "actual": [
+      "768Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "3",
+    "actual": [
+      "3"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "6",
+    "actual": [
+      "6"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "3Gi",
+    "actual": [
+      "3Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "6Gi",
+    "actual": [
+      "6Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "4Gi",
+    "actual": [
+      "4Gi"
+    ],
+    "result": "passed"
   }
 ]

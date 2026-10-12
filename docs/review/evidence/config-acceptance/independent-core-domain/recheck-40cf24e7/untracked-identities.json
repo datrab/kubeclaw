@@ -1,0 +1,970 @@
+{
+  "docs/review/evidence/config-acceptance/author/check-prism-cache-definition.mjs": {
+    "sha256": "c0fa2847b3ef25e1f9439272342ea11b27a63b81e25dcb2610209e830da60958",
+    "bytes": 2697
+  },
+  "docs/review/evidence/config-acceptance/author/check-prism-control-definition.mjs": {
+    "sha256": "ac746f82287f57e0594a17b58c7d403b74e1d455262b9c3abb2fa02957ebd431",
+    "bytes": 3406
+  },
+  "docs/review/evidence/config-acceptance/author/prism-cache-applicability-corrections.json": {
+    "sha256": "44548be4e00f71fb81d9c8dca017c65c2e1a6ecb1e3eb29a146dbf2f333e911b",
+    "bytes": 27914
+  },
+  "docs/review/evidence/config-acceptance/author/prism-cache-definition-dirty.patch": {
+    "sha256": "e71fa03fc3780c8ed53d346399306b60f00b37e88583c6ba2ed846849cd657f5",
+    "bytes": 20462
+  },
+  "docs/review/evidence/config-acceptance/author/prism-control-definition-dirty.patch.gz": {
+    "sha256": "84c527bd403277b732d1e7edec4dc6b91bb4693f1dec57885610ef7b9f4f1aa2",
+    "bytes": 10853940
+  },
+  "docs/review/evidence/config-acceptance/author/prism-control-policy-dispositions.json": {
+    "sha256": "b349584af94cff8ed1f35702c5fe65ba12982bf06931c353b096fc9ce7e27189",
+    "bytes": 2263
+  },
+  "docs/review/evidence/config-acceptance/author/refine-prism-cache-applicability.py": {
+    "sha256": "5962d66b93553dd3e0e05459047cfc93262116fe09bb692535cc23b70ccf61d7",
+    "bytes": 5989
+  },
+  "docs/review/evidence/config-acceptance/author/trace-prism-control-policies-initial.py.snapshot": {
+    "sha256": "fc6a4d93ccd6a5a38822984f6000f189419acf740b6c14b1ad13b97eba5d296d",
+    "bytes": 14727
+  },
+  "docs/review/evidence/config-acceptance/author/trace-prism-control-policies.py": {
+    "sha256": "0b7260bc727fe96ee0aa4e26ff27e35e54fb207bd066856c541b7607f35f4d04",
+    "bytes": 14899
+  },
+  "docs/review/evidence/config-acceptance/components/active-case-specifications.json": {
+    "sha256": "d36e64c1faf6500c0c30955784e50df2d30ab5e80a4a871b147225dc3c4151aa",
+    "bytes": 2250366
+  },
+  "docs/review/evidence/config-acceptance/components/additional-schema-closure.json": {
+    "sha256": "8541c141660177ab726fbd4bf77ec1422aa660b88a3b373bcd1dade846017b9f",
+    "bytes": 196681
+  },
+  "docs/review/evidence/config-acceptance/components/additional-schema-dispositions.py": {
+    "sha256": "e77de476a89aaaebee43f462306f51adeb19541257b3f62756e4f6f99b7a84a4",
+    "bytes": 12391
+  },
+  "docs/review/evidence/config-acceptance/components/check-adjustability-source-controls.mjs": {
+    "sha256": "79f820a2cb113a7d0acb679ad7d5cce1713c620227837797e99a2a41a50c5c65",
+    "bytes": 5557
+  },
+  "docs/review/evidence/config-acceptance/components/check-icd-corrections.py": {
+    "sha256": "e981c29bb8bcdcdc8b9b783271aabaefb10b0d85fef31f62944c5b197fcb77d2",
+    "bytes": 6275
+  },
+  "docs/review/evidence/config-acceptance/components/core-adjustability-current.md": {
+    "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a",
+    "bytes": 14908
+  },
+  "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json": {
+    "sha256": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43",
+    "bytes": 249443
+  },
+  "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json": {
+    "sha256": "695ea10b3c08a72f93098665e7d4a0b83947a5f436241adc0447c048aabfd1be",
+    "bytes": 43589
+  },
+  "docs/review/evidence/config-acceptance/components/correct-icd-findings.py": {
+    "sha256": "4b3ea5db17259b38596edabc7bd93f10834b0f30d0ec6b693fa7fac552e8aa8c",
+    "bytes": 26942
+  },
+  "docs/review/evidence/config-acceptance/components/finish-icd-corrections.py": {
+    "sha256": "f82a82ad9cfcc4ff7207fbf3001e3a1bb785d5273bbd9087e77129cd070db190",
+    "bytes": 8995
+  },
+  "docs/review/evidence/config-acceptance/components/historical-case-specifications-40cf24.json": {
+    "sha256": "449988c92fe3612fd88bd9f4f85341469ddb00baba2a3ab2058f21339ebb8e5e",
+    "bytes": 2067160
+  },
+  "docs/review/evidence/config-acceptance/components/historical-first-correction-working-snapshot.json": {
+    "sha256": "98caf5f5a96b347aa75128e0310ed60cfe87cea9f332e25b69cae2a1e05e9e1f",
+    "bytes": 2074323
+  },
+  "docs/review/evidence/config-acceptance/components/historical-refined-case-profiles-a07de567.json": {
+    "sha256": "5e7aed5cfda6c010bfb2c27b4dd5ee20714d5993229928c048f231a45556a0da",
+    "bytes": 2588835
+  },
+  "docs/review/evidence/config-acceptance/components/icd-correction-ledger.json": {
+    "sha256": "9140cdff451b8e7638dfac0a05242f76201559b4591994287c1798d114698f32",
+    "bytes": 84494
+  },
+  "docs/review/evidence/config-acceptance/components/icd-correction-stable-receipt.json": {
+    "sha256": "6d646c3bc5475b2c88fb0ccefbe3623154e98bf9067e373f47578b7a323bfabf",
+    "bytes": 18790
+  },
+  "docs/review/evidence/config-acceptance/components/publish-icd-receipt.py": {
+    "sha256": "1ed86422e58245afbad16b9a335ebc5cd11b22758bc7ff12ec6640ce25893da5",
+    "bytes": 8769
+  },
+  "docs/review/evidence/config-acceptance/components/validate-adjustable-core-definitions.mjs": {
+    "sha256": "788e0662e1ea0d9cc66d2ccee2435a2b2edabd8560d5ef5693ef0f12f5a409f0",
+    "bytes": 5472
+  },
+  "docs/review/evidence/config-acceptance/delivery/buster-build-source-observations.json": {
+    "sha256": "39b663f517424003b7cae72b863c5e2387f0c83e85438663bd4d8c56539756bb",
+    "bytes": 14070
+  },
+  "docs/review/evidence/config-acceptance/delivery/buster-build-version-projection-check.json": {
+    "sha256": "b85c56a9d6edec10686e1e2b230bd49bfa09cdd34227c332606051e8061fd858",
+    "bytes": 1900
+  },
+  "docs/review/evidence/config-acceptance/delivery/buster-build-version-projection-check.txt": {
+    "sha256": "4e6b5b1e61ad6a97e18384159381729994f750d2fdb3eb5296d8a352d83e5c65",
+    "bytes": 120
+  },
+  "docs/review/evidence/config-acceptance/delivery/c0-buster-build-definition-cases.json": {
+    "sha256": "bc2a00c7e1d33ec0a0cb94eba7af3af44c594ab4e16b517151c9e60c1926f9a7",
+    "bytes": 3456
+  },
+  "docs/review/evidence/config-acceptance/delivery/delivery-stable-completion-40cf24e7-followup.json": {
+    "sha256": "3811cc5d6e1c2d31280a64c8c820b22a975de125bedb1e00a3527eec0557d5a1",
+    "bytes": 4690
+  },
+  "docs/review/evidence/config-acceptance/delivery/export-current-definition-cases.py": {
+    "sha256": "8f916f84115f9ab3bcb2e7e3407839b38838a9623d462a389763930d8e58887a",
+    "bytes": 3534
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP.stdout": {
+    "sha256": "decb2e6141905726360ecd14d8983abe647eef68c2d650a490be37831364b3bf",
+    "bytes": 240143
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC.stdout": {
+    "sha256": "9ca4277454fed11ffc67553fdf1bc70c69176056e3e3aa4eddd45526d988457f",
+    "bytes": 587
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-UNKNOWN.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-UNKNOWN.stdout": {
+    "sha256": "2017a94854701fdb9467f21d940157750d5fd20c56fff45594c3cae16f8e94de",
+    "bytes": 626
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE.stdout": {
+    "sha256": "8cd9c4650b19248383d44ac9d681db67463fd8139f92fca969399005246f8074",
+    "bytes": 635
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-MISSING-SPEC.yaml": {
+    "sha256": "a6c04c4b97a1877b6ce597894bd38c7a5477e828e7275813841b5d0116768b98",
+    "bytes": 420
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-UNKNOWN.yaml": {
+    "sha256": "cfc835725badf64ca5678d7335579c45210a0ff1f5acceec960558122d9b0c15",
+    "bytes": 37474
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-WRONG-TYPE.yaml": {
+    "sha256": "aaee8658701572017b0d6f05cb7cb6705e3ad1b6cf4c9769668f2a7e1dd450ec",
+    "bytes": 37417
+  },
+  "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-buster-partial-overlay.json": {
+    "sha256": "7b6a21a6b986f3e94279390ca3352efac0fe9d3218ed31829433d1e104d92bc9",
+    "bytes": 3011
+  },
+  "docs/review/evidence/config-acceptance/delivery/materialize-pinned-schema-alias.py": {
+    "sha256": "0b83193b7932dc3aad747e86869b7797d3d6cfcfe2b271f033e540b4119be1da",
+    "bytes": 2218
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/README.md": {
+    "sha256": "0f0417cb08050baeeda59927269fb6920d3b7129418f66804b50a0e00ada2fa6",
+    "bytes": 1953
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-local/customresourcedefinition-apiextensions-v1.json": {
+    "sha256": "95e10ef81ae70e513186795e21d4b2717fbbef4e2d4eac3085579cfaa0d591ed",
+    "bytes": 2120
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json": {
+    "sha256": "9dbc9ea6042d41e36d908b24897c4ee126e199a0a46856cd60c7dcbe73381e45",
+    "bytes": 1420392
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json": {
+    "sha256": "4b8b5f0e0e383363ee248095abe0ba0fd8b79da64d755c68632cbec9617697d9",
+    "bytes": 54215
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json": {
+    "sha256": "a705eb1d0de6d38132435c8df35b33097456012b2cd7d92d685442386d1d5db5",
+    "bytes": 42744
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go": {
+    "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e",
+    "bytes": 25911
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/kubelet.go": {
+    "sha256": "40a3129435699078ebdf695894a446c62c6a74e2e9256668373910521f29bff2",
+    "bytes": 136646
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go": {
+    "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b",
+    "bytes": 26452
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/kubelet.go": {
+    "sha256": "1d9b1c314f27c60e77710f17c6d446fac83cb44c68bd077312b07ca32aaf7301",
+    "bytes": 142008
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases.json": {
+    "sha256": "98cdbcecf4985dbd2da72365eeb32c79c275f28de38e1722e4a7a64090668959",
+    "bytes": 2016
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/customresourcedefinition-apiextensions-v1.json": {
+    "sha256": "df8a2947181c208eb33d92fa1424d6699e7a48b5f31ab0d6e8feaad2df53ef57",
+    "bytes": 387
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-schema-directory-acquisition.json": {
+    "sha256": "39483eb410796a5c1ac1d2ba6ca1c9149425803beeceefd4cd3b051b737221e6",
+    "bytes": 1409691
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-schema-full-directory-tree.json": {
+    "sha256": "97dea27467a57a38eb768e6dd370d20b15407bb7d7a12a4ffa24e175d4ba852a",
+    "bytes": 426391
+  },
+  "docs/review/evidence/config-acceptance/delivery/pinned-schema-root-tree.json": {
+    "sha256": "92d77988c96332f8b2ca55c74055f09c8b4d8ac0a1e9ceae5f82ba0e08be6af8",
+    "bytes": 309667
+  },
+  "docs/review/evidence/config-acceptance/delivery/refine-buster-build-inputs.py": {
+    "sha256": "1795ff00f9a765546da404b4a4b13dff48672aafb0433f13c04482cf6b8cda23",
+    "bytes": 12105
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/README.md": {
+    "sha256": "3064c876e09f56a0913536db2d690f287e21a8ae483f38742465808c18b165b1",
+    "bytes": 395
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/kubernetes-boundary-definition.json": {
+    "sha256": "93185193a81323a377e5c8061657aee043df7fcafa3a5bbe0b5ad2a2e428f569",
+    "bytes": 159688
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED.stdout": {
+    "sha256": "8cddd9b041bfb841bd3aaf60ccec84b7a4f8f3eeb8d9dcd5c82cb2f0d92aa3a5",
+    "bytes": 11970
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED.stdout": {
+    "sha256": "10b2f96a5e077a4c25643a80300bdcdc06125eb69e1c28941719187c51593f05",
+    "bytes": 11981
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED.stdout": {
+    "sha256": "3a6248da6e97d76d04b66549722663db58ff5859823458a025a8df2d96b0619c",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED.stdout": {
+    "sha256": "730cefd0fef047055d1f87eceb49eb59899f85f223b45977daf89f6823a884f3",
+    "bytes": 11958
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED.stdout": {
+    "sha256": "526233d5cecb2f759824b5cec4075ef73421f9f0cc194d6b2dfccf7820786c49",
+    "bytes": 11970
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED.stderr": {
+    "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973",
+    "bytes": 3351
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED.stdout": {
+    "sha256": "619c56b1831f3f3f1454df8e2d42aad5b539a5f169c02732637690add37edb0b",
+    "bytes": 104275
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY.stderr": {
+    "sha256": "763b9fa5ec3903261241d644b9e4d7ee275a66460e556ed6fd7bc4364c186cda",
+    "bytes": 3788
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY.stderr": {
+    "sha256": "c1859fbe442de6709bd31ed267890fa8bebece053a77d2bd5b1650bee8683d70",
+    "bytes": 3535
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.stdout": {
+    "sha256": "3c59bb61156ab984508b93f274348518f2b8593739dfb2cea1d239f1b14486c5",
+    "bytes": 201625
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.yaml": {
+    "sha256": "3c59bb61156ab984508b93f274348518f2b8593739dfb2cea1d239f1b14486c5",
+    "bytes": 201625
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.stdout": {
+    "sha256": "58040c94dc0cd19a8a53703608469f577a68e52329d9f0e4eb305e4ced31479d",
+    "bytes": 201625
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.yaml": {
+    "sha256": "58040c94dc0cd19a8a53703608469f577a68e52329d9f0e4eb305e4ced31479d",
+    "bytes": 201625
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stdout": {
+    "sha256": "bc9a23c9796f7b0c6ae35031067a43527157f7500b2dcf4b25bcf645c7a9c6a5",
+    "bytes": 240301
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml": {
+    "sha256": "bc9a23c9796f7b0c6ae35031067a43527157f7500b2dcf4b25bcf645c7a9c6a5",
+    "bytes": 240301
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stdout": {
+    "sha256": "5bc7b48a39ad27cb30c44bdb6fb8eb436fe243b40c6470949c583cb76fefbf34",
+    "bytes": 240301
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml": {
+    "sha256": "5bc7b48a39ad27cb30c44bdb6fb8eb436fe243b40c6470949c583cb76fefbf34",
+    "bytes": 240301
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stdout": {
+    "sha256": "3a11e0063e771fde3161f3138dc3974a4ad2c38a1550770c7cae728845ba151a",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.yaml": {
+    "sha256": "3a11e0063e771fde3161f3138dc3974a4ad2c38a1550770c7cae728845ba151a",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stdout": {
+    "sha256": "ba35c7b651bc81a6851eb13817591ed52a5828a0b8a0c6b78e957b02e082479a",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.yaml": {
+    "sha256": "ba35c7b651bc81a6851eb13817591ed52a5828a0b8a0c6b78e957b02e082479a",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.stderr": {
+    "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973",
+    "bytes": 3351
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.stdout": {
+    "sha256": "5bae3136741c96db1b87870c7cae9578ae3958bcfecdbcd25d98bca721897a2b",
+    "bytes": 104274
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.yaml": {
+    "sha256": "5bae3136741c96db1b87870c7cae9578ae3958bcfecdbcd25d98bca721897a2b",
+    "bytes": 104274
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.stderr": {
+    "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973",
+    "bytes": 3351
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.stdout": {
+    "sha256": "01ccdf995033308427cdb52598392fa849f8eb0a9de24d510f69ba5ec23479fa",
+    "bytes": 104275
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.yaml": {
+    "sha256": "01ccdf995033308427cdb52598392fa849f8eb0a9de24d510f69ba5ec23479fa",
+    "bytes": 104275
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-A.stdout": {
+    "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d",
+    "bytes": 83
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-B.stdout": {
+    "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d",
+    "bytes": 83
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout": {
+    "sha256": "05900185830a245d4c47042c78595acdd03f5623232b3f6cd3444870e4eea72e",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout": {
+    "sha256": "05900185830a245d4c47042c78595acdd03f5623232b3f6cd3444870e4eea72e",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A.stdout": {
+    "sha256": "abcbbbaa0ced47dd78082a7cfa4a8e6312fe9c0a4089b1a61fcba346305bb3ae",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B.stdout": {
+    "sha256": "abcbbbaa0ced47dd78082a7cfa4a8e6312fe9c0a4089b1a61fcba346305bb3ae",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-A.stdout": {
+    "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-B.stdout": {
+    "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC.stdout": {
+    "sha256": "9ca4277454fed11ffc67553fdf1bc70c69176056e3e3aa4eddd45526d988457f",
+    "bytes": 587
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-PINNED-CRD-ALIAS-UNKNOWN.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-PINNED-CRD-ALIAS-UNKNOWN.stdout": {
+    "sha256": "2017a94854701fdb9467f21d940157750d5fd20c56fff45594c3cae16f8e94de",
+    "bytes": 626
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE.stdout": {
+    "sha256": "8cd9c4650b19248383d44ac9d681db67463fd8139f92fca969399005246f8074",
+    "bytes": 635
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/crd-alias-negative-MISSING-SPEC.yaml": {
+    "sha256": "a6c04c4b97a1877b6ce597894bd38c7a5477e828e7275813841b5d0116768b98",
+    "bytes": 420
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/crd-alias-negative-UNKNOWN.yaml": {
+    "sha256": "cfc835725badf64ca5678d7335579c45210a0ff1f5acceec960558122d9b0c15",
+    "bytes": 37474
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/crd-alias-negative-WRONG-TYPE.yaml": {
+    "sha256": "aaee8658701572017b0d6f05cb7cb6705e3ad1b6cf4c9769668f2a7e1dd450ec",
+    "bytes": 37417
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/profile-kubeclaw-A.json": {
+    "sha256": "69ad21550d02c9564d5a5da73c026caa78428b0bef6294b74250ae8e21f9a796",
+    "bytes": 1870
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/profile-kubeclaw-B.json": {
+    "sha256": "718824c176f7bc20866f9b611de69fabea8eaf34d85257a47aedae6195e6fada",
+    "bytes": 1870
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/profile-kubeclaw-buster-A.json": {
+    "sha256": "49b4a2f164d6faad728b347312f877817fc33cfd64a3124be67842304a6cdfe1",
+    "bytes": 3168
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/profile-kubeclaw-buster-B.json": {
+    "sha256": "aa9bbcacdc82daab3fd758de7c3dea53da64eedf4af92eb3d55d381158e5baa9",
+    "bytes": 3168
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/profile-ops-pod-A.json": {
+    "sha256": "159424e5b2b200e496adae930a43dd678d78798fe80ab66fd7def595fa74c6c6",
+    "bytes": 1389
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/profile-ops-pod-B.json": {
+    "sha256": "a5c7500568511f617cca3f2e9e4c5b1369512253c66f4d6b153408132fa95517",
+    "bytes": 1389
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/profile-prism-A.json": {
+    "sha256": "ebd70730b33a4140c69aac20c0baa6ecc7607a7950cd005e4258be958261c418",
+    "bytes": 3523
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/profile-prism-B.json": {
+    "sha256": "9dd050f2b2ab354a595aed98154061d294dea9d9cd586820e16cf34b78f0a86d",
+    "bytes": 3524
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/resource-projection-comparisons.json": {
+    "sha256": "007248d361ad3e4dec210b9051bdeaa7d64329187c867a3eb06e247e57cae681",
+    "bytes": 32101
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/raw/schema-buster-debug.stdout": {
+    "sha256": "1f3b981f38c68777c5fa961f9370ecf7591afc666ec5989fb6244f403551057d",
+    "bytes": 890
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/run-kubernetes-boundary-definition.py": {
+    "sha256": "646b7703977d50fc5dcf09de6b638f4d04d905300493e8b602e4be05bf352b53",
+    "bytes": 15327
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/README.md": {
+    "sha256": "c5f5702c44b99ef3646b18db547508eb715805e28dcb79a3523103ae863cba1d",
+    "bytes": 366
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/c0-kubernetes-boundary-cases.json": {
+    "sha256": "e711a6ad4b4cc1dd8318587c5acfacd22867357069bb656d0ddaeb50226e75af",
+    "bytes": 555819
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/fragment-status.json": {
+    "sha256": "d8528f6285f5e160bc1b8e637aeee4bee4f4a775a3f135bcc97c07f0542dcbf8",
+    "bytes": 892
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/inventory-fragment.json": {
+    "sha256": "dc68eff75eca522330c2a97f2d6af3db2d7ba896eb898b15945cce07191cdfba",
+    "bytes": 4315997
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/kubernetes-boundary-definition.json": {
+    "sha256": "5d9edf3f7d16d3b512dc017c2ca725cbf622e22f7405ba6140d10ead36341816",
+    "bytes": 149689
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/kubernetes-source-acquisitions.json": {
+    "sha256": "14628e5dbcaee6602636c8f5476326d7721861a144ac77008de6a23b91b4071c",
+    "bytes": 31348
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED.stdout": {
+    "sha256": "8cddd9b041bfb841bd3aaf60ccec84b7a4f8f3eeb8d9dcd5c82cb2f0d92aa3a5",
+    "bytes": 11970
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED.stdout": {
+    "sha256": "10b2f96a5e077a4c25643a80300bdcdc06125eb69e1c28941719187c51593f05",
+    "bytes": 11981
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED.stdout": {
+    "sha256": "3a6248da6e97d76d04b66549722663db58ff5859823458a025a8df2d96b0619c",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED.stdout": {
+    "sha256": "730cefd0fef047055d1f87eceb49eb59899f85f223b45977daf89f6823a884f3",
+    "bytes": 11958
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED.stdout": {
+    "sha256": "526233d5cecb2f759824b5cec4075ef73421f9f0cc194d6b2dfccf7820786c49",
+    "bytes": 11970
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED.stderr": {
+    "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973",
+    "bytes": 3351
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED.stdout": {
+    "sha256": "619c56b1831f3f3f1454df8e2d42aad5b539a5f169c02732637690add37edb0b",
+    "bytes": 104275
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY.stderr": {
+    "sha256": "763b9fa5ec3903261241d644b9e4d7ee275a66460e556ed6fd7bc4364c186cda",
+    "bytes": 3788
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY.stderr": {
+    "sha256": "c1859fbe442de6709bd31ed267890fa8bebece053a77d2bd5b1650bee8683d70",
+    "bytes": 3535
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.stdout": {
+    "sha256": "3c59bb61156ab984508b93f274348518f2b8593739dfb2cea1d239f1b14486c5",
+    "bytes": 201625
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.yaml": {
+    "sha256": "3c59bb61156ab984508b93f274348518f2b8593739dfb2cea1d239f1b14486c5",
+    "bytes": 201625
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.stdout": {
+    "sha256": "58040c94dc0cd19a8a53703608469f577a68e52329d9f0e4eb305e4ced31479d",
+    "bytes": 201625
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.yaml": {
+    "sha256": "58040c94dc0cd19a8a53703608469f577a68e52329d9f0e4eb305e4ced31479d",
+    "bytes": 201625
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stdout": {
+    "sha256": "6fa7235732c2631aea00baafbf85fc8ca8ac96a60d5ead3c2cc92f8e5b8f3ea5",
+    "bytes": 240227
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml": {
+    "sha256": "6fa7235732c2631aea00baafbf85fc8ca8ac96a60d5ead3c2cc92f8e5b8f3ea5",
+    "bytes": 240227
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stderr": {
+    "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7",
+    "bytes": 638
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stdout": {
+    "sha256": "91fe0ebd61493dcb6bc03ab84ead9967787c7f95a4c2c920c6db3c68af06ca5b",
+    "bytes": 240227
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml": {
+    "sha256": "91fe0ebd61493dcb6bc03ab84ead9967787c7f95a4c2c920c6db3c68af06ca5b",
+    "bytes": 240227
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stdout": {
+    "sha256": "3a11e0063e771fde3161f3138dc3974a4ad2c38a1550770c7cae728845ba151a",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.yaml": {
+    "sha256": "3a11e0063e771fde3161f3138dc3974a4ad2c38a1550770c7cae728845ba151a",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stdout": {
+    "sha256": "ba35c7b651bc81a6851eb13817591ed52a5828a0b8a0c6b78e957b02e082479a",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.yaml": {
+    "sha256": "ba35c7b651bc81a6851eb13817591ed52a5828a0b8a0c6b78e957b02e082479a",
+    "bytes": 11971
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.stderr": {
+    "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973",
+    "bytes": 3351
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.stdout": {
+    "sha256": "5bae3136741c96db1b87870c7cae9578ae3958bcfecdbcd25d98bca721897a2b",
+    "bytes": 104274
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.yaml": {
+    "sha256": "5bae3136741c96db1b87870c7cae9578ae3958bcfecdbcd25d98bca721897a2b",
+    "bytes": 104274
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.stderr": {
+    "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973",
+    "bytes": 3351
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.stdout": {
+    "sha256": "01ccdf995033308427cdb52598392fa849f8eb0a9de24d510f69ba5ec23479fa",
+    "bytes": 104275
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.yaml": {
+    "sha256": "01ccdf995033308427cdb52598392fa849f8eb0a9de24d510f69ba5ec23479fa",
+    "bytes": 104275
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-A.stdout": {
+    "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d",
+    "bytes": 83
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-B.stdout": {
+    "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d",
+    "bytes": 83
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout": {
+    "sha256": "1f3b981f38c68777c5fa961f9370ecf7591afc666ec5989fb6244f403551057d",
+    "bytes": 890
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout": {
+    "sha256": "15674fce333bfd3b4b53dd152b17e0cf0e71c71a9a6dff7b48e6b7cce7e5fce2",
+    "bytes": 890
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A.stdout": {
+    "sha256": "abcbbbaa0ced47dd78082a7cfa4a8e6312fe9c0a4089b1a61fcba346305bb3ae",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B.stdout": {
+    "sha256": "abcbbbaa0ced47dd78082a7cfa4a8e6312fe9c0a4089b1a61fcba346305bb3ae",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-A.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-A.stdout": {
+    "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-B.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-B.stdout": {
+    "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd",
+    "bytes": 85
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-kubeclaw-A.json": {
+    "sha256": "69ad21550d02c9564d5a5da73c026caa78428b0bef6294b74250ae8e21f9a796",
+    "bytes": 1870
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-kubeclaw-B.json": {
+    "sha256": "718824c176f7bc20866f9b611de69fabea8eaf34d85257a47aedae6195e6fada",
+    "bytes": 1870
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-kubeclaw-buster-A.json": {
+    "sha256": "910afad793b1712ca19c0195446099d377cfa4fe737750c7aa8172aabeb1247a",
+    "bytes": 2922
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-kubeclaw-buster-B.json": {
+    "sha256": "ed1a51772c116145c61676d6b4e01236161ce927f3bca3381269ecbc38bba6a6",
+    "bytes": 2922
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-ops-pod-A.json": {
+    "sha256": "159424e5b2b200e496adae930a43dd678d78798fe80ab66fd7def595fa74c6c6",
+    "bytes": 1389
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-ops-pod-B.json": {
+    "sha256": "a5c7500568511f617cca3f2e9e4c5b1369512253c66f4d6b153408132fa95517",
+    "bytes": 1389
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-prism-A.json": {
+    "sha256": "ebd70730b33a4140c69aac20c0baa6ecc7607a7950cd005e4258be958261c418",
+    "bytes": 3523
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-prism-B.json": {
+    "sha256": "9dd050f2b2ab354a595aed98154061d294dea9d9cd586820e16cf34b78f0a86d",
+    "bytes": 3524
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/resource-projection-comparisons.json": {
+    "sha256": "b87290580abcf596da6204d109ed1ec064a4cdb7e063875e13c5cf89b19dc702",
+    "bytes": 29161
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/schema-buster-debug.stdout": {
+    "sha256": "1f3b981f38c68777c5fa961f9370ecf7591afc666ec5989fb6244f403551057d",
+    "bytes": 890
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/run-kubernetes-boundary-definition.py": {
+    "sha256": "8c8204b721eb39c19c5138b0845a69151cb391fe9e92f04b9462fef50e088b5e",
+    "bytes": 13387
+  },
+  "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/semantic-closure-artifact-digests.previous.json": {
+    "sha256": "05a9ece494f17b3f7539a5cced6aa99637a3764f680b0774aed2b27bffcadec3",
+    "bytes": 26535
+  },
+  "docs/review/evidence/config-acceptance/delivery/v1.35.6-local-directory-tree.json": {
+    "sha256": "b8e553af5e201305d465ba95455096c38a555f1ffba55366fb7d8c9aa45823b7",
+    "bytes": 431572
+  },
+  "docs/review/evidence/config-acceptance/delivery/v1.35.6-standalone-directory-tree.json": {
+    "sha256": "39ff5b9b9385d44576de3d32b1bd2fd9624f9129190bec81e2f4bb385581e4ec",
+    "bytes": 426256
+  },
+  "docs/review/evidence/config-acceptance/independent-core-domain/erratum-publication-identities.json": {
+    "sha256": "97cd68d256b8a1546c0a8fc6586edee62933201b7e8f96eeaf485eac18680db8",
+    "bytes": 1390
+  },
+  "docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.json": {
+    "sha256": "6039e3a2ceaae8f0b4d8855036d41b472c799743ceb2b452b07b383bac9f4a8c",
+    "bytes": 24907
+  },
+  "docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.py": {
+    "sha256": "1fcedc18be6b5b704a1ecc3b55195ffe7d2a7879c55f7b9c216fedaa07c15e74",
+    "bytes": 3275
+  },
+  "docs/review/evidence/config-acceptance/independent-core-domain/report-before-erratum.md.snapshot": {
+    "sha256": "8232caa55d1d9d0c70d66f1682e478db25bfdbc4a582c7ead931d09cfbc67043",
+    "bytes": 18504
+  },
+  "docs/review/evidence/config-acceptance/runtime/check-repository-grade-target.mjs": {
+    "sha256": "73e9b7589f946637bbb75000bbf5f81bbad232ff27bd377efc621f4f8e23c2cd",
+    "bytes": 10157
+  },
+  "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/case-proposals.json": {
+    "sha256": "6acbd49e23b3b367dcce4cae76241ebd634c81a728c64686349efc48f45c9628",
+    "bytes": 17133239
+  },
+  "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/identity.json": {
+    "sha256": "ce4d9f0b4c2545a3b5485b1b552dcae49af66d3077eb66068ae1538054f7760c",
+    "bytes": 536
+  },
+  "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/inventory-fragment.json": {
+    "sha256": "c200148b09f13440af64ca6c5f922476637ff74d6813821ce9fd599da64da8bf",
+    "bytes": 15927389
+  },
+  "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/runtime-closure-identities.json": {
+    "sha256": "e8342e963fd480c81578e5ea2fced305beb31777dab9acced2aa4549785c1d94",
+    "bytes": 8887
+  },
+  "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/runtime-closure-summary.json": {
+    "sha256": "d10806a5c97c088e5a0621dc9da648435c5469b65956d685682f04cdef7b2c94",
+    "bytes": 4508
+  },
+  "docs/review/evidence/config-acceptance/runtime/define-repository-grade-target.py": {
+    "sha256": "d9caf8e779198c6e2a4678a0b9117899b268f1c5545cbae25378661ac7c53b64",
+    "bytes": 6148
+  },
+  "docs/review/evidence/config-acceptance/runtime/integrate-grade-codec-evidence.py": {
+    "sha256": "3196a65e9ebc27a283eb3514bb352da62a1f8567e6aa5875b2af5060fe295c33",
+    "bytes": 13043
+  },
+  "docs/review/evidence/config-acceptance/runtime/integrate-repository-grade-contracts.py": {
+    "sha256": "9e0267f69c96e8452694b9e6b668b56af98a732e58a764b3ceb595b07f9fe256",
+    "bytes": 16079
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-author.schema.json": {
+    "sha256": "bed0761520958c2a0619ee81ddba96bd914f4ed760ee7d9b524985464d57335d",
+    "bytes": 4682
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-case-dispositions.json": {
+    "sha256": "34c99594e53bd8c40d43a3b664ff8f203827527c5c2811ed9d115eb584d7c230",
+    "bytes": 98818
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-compiler-control.mjs": {
+    "sha256": "8ea14ad9c1f67423e74c531a9e89f4acbf4e5e3b59a8ed8ebd0700292e766084",
+    "bytes": 4168
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-compiler-observations.json": {
+    "sha256": "c2043151462df1018d9c890cdbd8ecd1444bd8cf4843b2c923ba095718f554cd",
+    "bytes": 17392
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-context-delta.json": {
+    "sha256": "3cd6e2b0f1d53aa234408e1f8d94d8b6522683e1e23a1093524ef1ba60293e45",
+    "bytes": 3120
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-contracts.json": {
+    "sha256": "5e31f995c6be6aadeb51aa32be6af1abb54c08b7ba63aaf0a210c9a14f56408d",
+    "bytes": 677762
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-contracts.py": {
+    "sha256": "1099879c5a73a3c954ca243b2c97cb8ecf239e8ffa993cb6215cb9efd244b9ee",
+    "bytes": 20074
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-definition-observations.json": {
+    "sha256": "2537fd4c2976d33d96d87ff2738379a32ce9b8dedd88588bd634b67b13babc8b",
+    "bytes": 837893
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-target-domain.json": {
+    "sha256": "6c2e365983ca5f53039480d5fd2851b09ab69f4a2d51b83b7ed591b76062d7e5",
+    "bytes": 6944
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-target-observations.json": {
+    "sha256": "59b51d616bbb4f247d9e2b392a7c79f1977c8980eb7843e00ef7b6cc87f92da6",
+    "bytes": 221628
+  },
+  "docs/review/evidence/config-acceptance/runtime/repository-grade-target.schema.json": {
+    "sha256": "96a5f298886c312fe92fcbdd83261311d3e91b5cf19489816c2edc86eee7e96c",
+    "bytes": 5400
+  },
+  "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": {
+    "sha256": "d1374fab9c07d4e5f9443e82e6fec8ee979001b1dcaeaa115f061a8c7f930985",
+    "bytes": 3049707
+  },
+  "docs/review/evidence/config-acceptance/runtime/runtime-codec-target-erratum.json": {
+    "sha256": "fa9fd72c8451f28a108a05fe402e5e114eab58e54cca470d8670cdd11f675d6a",
+    "bytes": 10719
+  },
+  "docs/review/evidence/config-acceptance/runtime/runtime-codec-target-erratum.mjs": {
+    "sha256": "0916b9abd9c644fb2e393c53011fd888f977b35914d74937fbffa0e06398bca1",
+    "bytes": 7103
+  },
+  "docs/review/evidence/config-acceptance/runtime/validate-repository-grade-contracts.mjs": {
+    "sha256": "e38740aed6b089acbc12de132827a7266292d1b53268c9503df5c917db719c68",
+    "bytes": 8238
+  }
+}

@@ -24,11 +24,12 @@ python3 docs/review/evidence/config-acceptance/delivery/refine-ops-delivery.py
 python3 docs/review/evidence/config-acceptance/delivery/refine-semantic-closure.py
 python3 docs/review/evidence/config-acceptance/delivery/refine-prism-chart.py
 python3 docs/review/evidence/config-acceptance/delivery/refine-kubernetes-boundaries.py
+python3 docs/review/evidence/config-acceptance/delivery/refine-buster-build-inputs.py
 python3 docs/review/evidence/config-acceptance/delivery/refine-case-links.py
 python3 docs/review/evidence/config-acceptance/delivery/verify-semantic-closure.py
 ```
 
-`collect-delivery.cjs` invokes all six refinements in that order (Kubernetes source
+`collect-delivery.cjs` invokes all seven refinements in that order (Kubernetes source
 refinement only when its acquisition record exists). Pinned
 refinement requires the exact integrity-checked acquisition's extracted source
 root; persisted snapshots permit review without `/tmp`, but not blind collector
@@ -267,11 +268,23 @@ Current boundaries now distinguished:
 `run-kubernetes-boundary-definition.py` produces complete reference-only synthetic
 Prism/Ops/Nova/Buster A/B profiles, actual render outputs, exact container-resource
 comparisons and selected local strict-schema observations. `c0-kubernetes-boundary-cases.json`
-exports the **actual local C0 results**, including failed Buster schema cases.
-Prism/Ops/Nova have nonempty all-valid zero-skip structural collections; Buster
-whole-document validation remains failed for missing CRD/VAP schemas. The selected
-schema repository returns404 for the requested CRD schema; no permissive substitute
-or skip was introduced. Structural schema success is not Go API semantic validation,
+exports the **29 current actual local C0 observations**; prior failed Buster cases
+remain in the immutable checkpoint snapshot, not relabelled.
+Prism/Ops/Nova have nonempty all-valid zero-skip structural collections. At pushed
+checkpoint `40cf24e7`, Buster whole-document validation failed for missing CRD/VAP
+schemas; those exact failures remain archived. Current continuation acquired the
+two VAP/Binding files from the same pinned primary tree. That tree lacks a standalone
+CRD file (raw404 retained), but its **strict canonical `_definitions.json`** contains
+the recursive CRD definition with `additionalProperties=false` and required `spec`.
+`materialize-pinned-schema-alias.py` produces only a `$ref` to that exact immutable
+primary definition; it authors no schema properties, relaxed constraints or broad
+object substitute. Metadata records primary bytes/hash/definition pointer/alias
+hash. Investigation-only primary README and unstrict local CRD snapshots have
+explicit acquisition dispositions and are **not validation inputs**. Current complete Buster collections now validate all21 resources without
+errors or skips. Decisive unknown-property, missing-spec and wrong-type CRD controls
+reject through that same primary definition. The first wrong-type observational
+diagnostic mismatch is preserved under `snapshots/pr40cf24e7-crd-alias-*`.
+Structural schema success is not Go API semantic validation,
 Secret existence, provisioning, scheduling, native credential or runtime effects.
 
 All initial raw failures/incorrect observational expectations are retained under
@@ -289,10 +302,36 @@ which overrides root `.Values.resources` wholesale. `gateway-resource-overlay-di
 retains only audited resource subtrees/source hashes, never unrelated credentials
 or a physical-capacity claim. The empty base map was not sufficient field coverage:
 its six CPU/memory/**ephemeral-storage** request/limit members now have individual
-IDs and remain explicitly `source-traced-validation-expansion-open`. Their exact
-overlay/precedence and ephemeral-storage scheduling/disk-eviction cases are next
-work, not folded into this batch's sixty previously enumerated CPU/memory witnesses.
+IDs. Current continuation traces all six separately: complete synthetic Buster
+gateway A/B maps are materially different from the root maps, and all132 field
+projection comparisons match. A partial nonempty gateway map suppresses root
+CPU/memory/limits entirely; it is not a per-key merge. That current permissiveness
+is a planned target negative, not accepted complete policy. Ephemeral-storage
+requests feed `NodeResourcesFit`; limits drive whole-Pod disk-usage eviction, **not
+hard filesystem quota**. Enforcement depends `kubeCfg.LocalStorageCapacityIsolation`,
+rootfs/log/emptyDir stats and image-filesystem layout. Actual node/API admission and
+eviction cases remain unrun. Arbitrary future hugepage/extended-resource/claims
+members and the strict selected-owner map/default-removal contract remain open.
 The parent map row is a header/alias, not an additional independent setting author.
+
+`refine-buster-build-inputs.py` and `buster-build-source-observations.json` define
+the fifteen actual Buster Docker ARG consumers: FROM base identities, Debian snapshot
+metadata/signature baseline, explicit platform/paired kubectl+Trivy downloads and
+hashes, exact hashed Python wheel-lock membership, browser/DB locks and native
+worker revision. Docker `--build-arg` can still compete with generated defaults;
+`TARGETARCH` binary block can fallbackamd64 while browser loader receives raw input;
+the worker rejects Docker's `KUBECLAW_BUILD_REVISION=unknown` default. Exact supported
+platform/build commands and dependency/context prerequisites are in the proposed
+case. `node scripts/versions.mjs --check` actually passes current44 projections and
+local lock receipts, with command/source digests and raw output retained at
+`buster-build-version-projection-check.*` and `c0-buster-build-definition-cases.json`.
+`export-current-definition-cases.py` links these actual C0 source observations to
+field IDs; `verify-semantic-closure.py` checks raw identities and the strict ref-only
+alias. These are separate from `proposed-cases.json` implementation cases. It proves source projection consistency,
+not image build/download/installed tool effect. Docker context/COPY gaps, baked ENV/
+launcher/UID/capability/APT retry/error/expiry policy literals and remaining image
+ARG/platform readers still need their separate obligations; no whole image closure
+is inferred from these fifteen traced ARGs.
 
 C1 proposal still evolves `swarm.config.json` to `pipeline.config.json` while
 `pipeline.json` remains workflow/task graph. It must migrate real Chart .Files/bundle

@@ -1,0 +1,76 @@
+[
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-canonical-refinements.py"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-positive.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-canonical-refinements.py",
+      "--matrix",
+      "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/negative-oracle-matrix.json"
+    ],
+    "exit": 1,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-negative-oracle.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-canonical-refinements.py",
+      "--matrix",
+      "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/negative-invocation-matrix.json"
+    ],
+    "exit": 1,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-negative-invocation.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-canonical-refinements.py",
+      "--matrix",
+      "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/negative-requirements-matrix.json"
+    ],
+    "exit": 1,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-negative-requirements.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/check-icd-corrections.py",
+      "--residual",
+      "docs/review/evidence/config-acceptance/components/rcore002-before/residual-fragment.json"
+    ],
+    "exit": 1,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/gap-negative-original-duplicate.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/check-icd-corrections.py",
+      "--residual",
+      "docs/review/evidence/config-acceptance/components/rcore002-conflicting-gap-negative-fixture.json"
+    ],
+    "exit": 1,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/gap-negative-conflicting-duplicate.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/check-icd-corrections.py"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/gap-restored-positive.log"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-canonical-refinements.py"
+    ],
+    "exit": 0,
+    "raw": "docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/canonical-restored-positive.log"
+  }
+]

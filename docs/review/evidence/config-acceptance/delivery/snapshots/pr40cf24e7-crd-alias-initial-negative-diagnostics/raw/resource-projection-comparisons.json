@@ -1,0 +1,1626 @@
+[
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "openclaw-state-migration"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "openclaw-state-migration"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "openclaw-state-migration"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "openclaw-state-migration"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "openclaw-state-migration"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "openclaw-state-migration"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "openclaw-state-migration"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-STARTUPDOCTOR-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "openclaw-state-migration"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "init-setup"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "init-setup"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "init-setup"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "init-setup"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "init-setup"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "init-setup"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "init-setup"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-INITSETUP-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "init-setup"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "controller"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "controller"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "controller"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "controller"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "controller"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "controller"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "controller"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "controller"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-CONTROL-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "control"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-CONTROL-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "control"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-CONTROL-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "control"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-CONTROL-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "control"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-CONTROL-RESOURCES-LIMITS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "control"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-CONTROL-RESOURCES-LIMITS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "control"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-CONTROL-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "control"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-CONTROL-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "control"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-STUDIO-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "studio"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-STUDIO-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "studio"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-STUDIO-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "studio"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-STUDIO-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "studio"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-STUDIO-RESOURCES-LIMITS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "studio"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-STUDIO-RESOURCES-LIMITS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "studio"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-STUDIO-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "studio"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-STUDIO-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "studio"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKER-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "worker"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKER-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "worker"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKER-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "worker"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKER-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "worker"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKER-RESOURCES-LIMITS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "worker"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKER-RESOURCES-LIMITS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "worker"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKER-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "worker"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKER-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "worker"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-INGESTION-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "ingestion"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-INGESTION-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "ingestion"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-INGESTION-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "ingestion"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-INGESTION-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "ingestion"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-INGESTION-RESOURCES-LIMITS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "ingestion"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-INGESTION-RESOURCES-LIMITS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "ingestion"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-INGESTION-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "ingestion"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-INGESTION-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "ingestion"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-POSTGRESQL-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "postgresql"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-POSTGRESQL-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "postgresql"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-POSTGRESQL-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "postgresql"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-POSTGRESQL-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "postgresql"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-POSTGRESQL-RESOURCES-LIMITS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "postgresql"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-POSTGRESQL-RESOURCES-LIMITS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "postgresql"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-POSTGRESQL-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "postgresql"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-POSTGRESQL-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "postgresql"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-BACKUP-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "proof",
+      "verify",
+      "restore-proof"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m",
+      "100m",
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-BACKUP-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "proof",
+      "verify",
+      "restore-proof"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m",
+      "200m",
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-BACKUP-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "proof",
+      "verify",
+      "restore-proof"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi",
+      "128Mi",
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-BACKUP-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "proof",
+      "verify",
+      "restore-proof"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi",
+      "256Mi",
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-BACKUP-RESOURCES-LIMITS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "proof",
+      "verify",
+      "restore-proof"
+    ],
+    "expected": "1",
+    "actual": [
+      "1",
+      "1",
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-BACKUP-RESOURCES-LIMITS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "proof",
+      "verify",
+      "restore-proof"
+    ],
+    "expected": "2",
+    "actual": [
+      "2",
+      "2",
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-BACKUP-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "proof",
+      "verify",
+      "restore-proof"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi",
+      "1Gi",
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-BACKUP-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "proof",
+      "verify",
+      "restore-proof"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi",
+      "2Gi",
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m",
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m",
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi",
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi",
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-CPU",
+    "profile": "prism-A",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "1",
+    "actual": [
+      "1",
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-CPU",
+    "profile": "prism-B",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "2",
+    "actual": [
+      "2",
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-A",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi",
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-MEMORY",
+    "profile": "prism-B",
+    "containers": [
+      "worker-trust-proxy"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi",
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-CPU",
+    "profile": "ops-pod-A",
+    "containers": [
+      "codex"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-CPU",
+    "profile": "ops-pod-B",
+    "containers": [
+      "codex"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-MEMORY",
+    "profile": "ops-pod-A",
+    "containers": [
+      "codex"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-MEMORY",
+    "profile": "ops-pod-B",
+    "containers": [
+      "codex"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-CPU",
+    "profile": "ops-pod-A",
+    "containers": [
+      "codex"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-CPU",
+    "profile": "ops-pod-B",
+    "containers": [
+      "codex"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-MEMORY",
+    "profile": "ops-pod-A",
+    "containers": [
+      "codex"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-MEMORY",
+    "profile": "ops-pod-B",
+    "containers": [
+      "codex"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-CPU",
+    "profile": "ops-pod-A",
+    "containers": [
+      "ops-mcp"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-CPU",
+    "profile": "ops-pod-B",
+    "containers": [
+      "ops-mcp"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-MEMORY",
+    "profile": "ops-pod-A",
+    "containers": [
+      "ops-mcp"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-MEMORY",
+    "profile": "ops-pod-B",
+    "containers": [
+      "ops-mcp"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-CPU",
+    "profile": "ops-pod-A",
+    "containers": [
+      "ops-mcp"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-CPU",
+    "profile": "ops-pod-B",
+    "containers": [
+      "ops-mcp"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-MEMORY",
+    "profile": "ops-pod-A",
+    "containers": [
+      "ops-mcp"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-MEMORY",
+    "profile": "ops-pod-B",
+    "containers": [
+      "ops-mcp"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-CPU",
+    "profile": "ops-pod-A",
+    "containers": [
+      "tailscale"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-CPU",
+    "profile": "ops-pod-B",
+    "containers": [
+      "tailscale"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-MEMORY",
+    "profile": "ops-pod-A",
+    "containers": [
+      "tailscale"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-MEMORY",
+    "profile": "ops-pod-B",
+    "containers": [
+      "tailscale"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-CPU",
+    "profile": "ops-pod-A",
+    "containers": [
+      "tailscale"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-CPU",
+    "profile": "ops-pod-B",
+    "containers": [
+      "tailscale"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-MEMORY",
+    "profile": "ops-pod-A",
+    "containers": [
+      "tailscale"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-MEMORY",
+    "profile": "ops-pod-B",
+    "containers": [
+      "tailscale"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "100m",
+    "actual": [
+      "100m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "200m",
+    "actual": [
+      "200m"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "128Mi",
+    "actual": [
+      "128Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "256Mi",
+    "actual": [
+      "256Mi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "1",
+    "actual": [
+      "1"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "2",
+    "actual": [
+      "2"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "1Gi",
+    "actual": [
+      "1Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+    "profile": "kubeclaw-buster-A",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "2Gi",
+    "actual": [
+      "2Gi"
+    ],
+    "result": "passed"
+  },
+  {
+    "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+    "profile": "kubeclaw-buster-B",
+    "containers": [
+      "kubeclaw"
+    ],
+    "expected": "4Gi",
+    "actual": [
+      "4Gi"
+    ],
+    "result": "passed"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "id": "DLV-C0-BUSTER-BUILD-VERSION-PROJECTION-CHECK",
+  "scope": "actual current source/lock projection check only, not real Docker build/artifact/download/runtime acceptance",
+  "command": [
+    "node",
+    "scripts/versions.mjs",
+    "--check"
+  ],
+  "exit": 0,
+  "result": "passed",
+  "rawEvidencePath": "docs/review/evidence/config-acceptance/delivery/buster-build-version-projection-check.txt",
+  "sourceDigests": {
+    "versions.json": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+    "scripts/versions.mjs": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00",
+    "scripts/runtime-tool-locks.mjs": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25",
+    "docker/Dockerfile.buster-runtime": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+    "docker/python-tools/buster.in": "382ebca1979ffa306d27ba26dd06def23d8ee702aa9fb7c899299152afb855ea",
+    "docker/python-tools/buster.txt": "2b669283e56cb52f64a38f84f25b04a93b084aacd073bcc080c9225de931deab",
+    "docker/runtime-tool-locks.json": "d31102688c2da95f7e70b29f63c937b41f5e116dab00f0224ba591b988f8417c",
+    "scripts/browser-archive-lock.mjs": "ec668e5b4658ed819410a301b8c25320ace2c2e6c457aa2cf0e1dc5e084997e9",
+    "docker/browser-archives.lock.json": "6f82ae5a8f399c89067cb49625d32db08b5d08b6eafb19fe7fd4376e625b578a",
+    "scripts/trivy-database-lock.mjs": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510",
+    "docker/trivy-databases.lock.json": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e"
+  },
+  "testDigests": {
+    "scripts/versions.mjs": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+  },
+  "tools": {
+    "node": "v24.21.0"
+  },
+  "reason": "current source declarations and local lock receipts only; actual Docker unavailable and context/COPY gaps remain; fresh independent review pending"
+}

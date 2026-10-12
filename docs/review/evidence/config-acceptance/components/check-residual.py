@@ -10,9 +10,11 @@ assert len(d['caseRefinements'])==148;assert len(d['apiFieldDispositions'])==173
 for s in d['schemaFieldDispositions']:
  assert s['currentAuthorityReason'];assert s['actualProducerAndConsumerChain']
  for f,h in s['sourceDigests'].items():assert hashlib.sha256(pathlib.Path(f).read_bytes()).hexdigest()==h,f
-for name in ['profile-definition-validation.log','refined-profile-definition-validation.log']:
+for name in ['profile-definition-validation.log','refined-profile-definition-validation.log','refined-profile-definition-icd-corrected.log']:
  v=json.loads((p/name).read_text());assert v['passed']==296 and v['failed']==0
- for f,h in v['identities']['files'].items():assert hashlib.sha256(pathlib.Path(f).read_bytes()).hexdigest()==h,(name,f)
+ for f,h in v['identities']['files'].items():
+  actual=p/'historical-refined-case-profiles-a07de567.json' if name=='refined-profile-definition-validation.log' and f==str(p/'refined-case-profiles.json') else pathlib.Path(f)
+  assert hashlib.sha256(actual.read_bytes()).hexdigest()==h,(name,f)
 print('COMMAND: python docs/review/evidence/config-acceptance/components/check-residual.py')
 print('HEAD',subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip());print('rows',len(ids),'cases',len(cases),'sources',len(d['sources']),'classes',dict(collections.Counter(r['class'] for r in d['rows'])));print('All subset integrity/source-definition checks passed; global C0 NOT PASSED.')
 print('stable checkpoint diff:',subprocess.check_output(['git','diff','--name-only','--','docs/review/evidence/config-acceptance/components/semantic-fragment.json','docs/review/evidence/config-acceptance/components/case-profiles.json'],text=True).strip() or '(unchanged)')

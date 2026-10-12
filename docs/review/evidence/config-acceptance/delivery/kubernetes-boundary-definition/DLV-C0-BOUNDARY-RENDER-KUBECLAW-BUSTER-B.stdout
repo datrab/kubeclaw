@@ -6145,11 +6145,13 @@ spec:
 
           resources:
             limits:
-              cpu: "2"
-              memory: 2Gi
+              cpu: "6"
+              ephemeral-storage: 4Gi
+              memory: 6Gi
             requests:
-              cpu: 200m
-              memory: 256Mi
+              cpu: 600m
+              ephemeral-storage: 2Gi
+              memory: 768Mi
 
           lifecycle:
             postStart:

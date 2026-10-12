@@ -1,0 +1,97 @@
+{
+  "reportSha256": "e44a84550e541438aed78980c6060c107cf826a3963cac3516e6b0c08b96f6eb",
+  "files": {
+    "docs/review/remediation/independent-config-c0-core-recheck-40cf24e7.md": {
+      "sha256": "e44a84550e541438aed78980c6060c107cf826a3963cac3516e6b0c08b96f6eb",
+      "bytes": 13540
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/schema-enumeration.log": {
+      "sha256": "9bb0d459fbd4043a928cca27e14d4f1321655a592b8a1080d3cbdab236db16e1",
+      "bytes": 1056
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/whole-scope-audit-summary.json": {
+      "sha256": "f181de8073c66d61a6e9b5b9df58422761e50249eb5a7de0b66d4b31445e54b6",
+      "bytes": 386
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/expected-api-obligations.json": {
+      "sha256": "bb545e7570475153aea81ab16afbfdeb8e0b97d3060d62260b8479d80454452e",
+      "bytes": 341534
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/current-reader-controls.log": {
+      "sha256": "8dd677814994c85b7fc502590fc41c424fa3f8a9155ef82ffd27bcf664c91600",
+      "bytes": 7171
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/author-integrity.log": {
+      "sha256": "bd674400cfe6dd781e38192f2641a4dbdb5398cc25464229f2ded1f50f580ceb",
+      "bytes": 127130
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/full-source-read.log": {
+      "sha256": "4b187f3923572804eb7124bf4957fb3c0137d2eaf8a7a1d359322a5b4ae4a5a3",
+      "bytes": 904119
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/adjustable-profiles.log": {
+      "sha256": "d3a2a58543c807c0f85e9ce549b625c428e49a192d48f187002609e38c2d7312",
+      "bytes": 56875
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/whole-material-obligations.json": {
+      "sha256": "60cef54e27526165dd3ba2697c015e2c32a8faf243a48c082c98942e99a58e05",
+      "bytes": 10844661
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/commands.json": {
+      "sha256": "aff3190b524cb26b877913afffae9d9e703a2790cc8b1830a0e9adcc73bb15a3",
+      "bytes": 1927
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/api-enumeration.log": {
+      "sha256": "d6937e514bc16f12817f5522e4622b87077b7459fbb6cdfb892ac2f456c02417",
+      "bytes": 99
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/enumerate-schema.py": {
+      "sha256": "63f72b209d1fe7d70f914aa5849ce96e4d4ff3d97fa048f905e88ce5116f4971",
+      "bytes": 2539
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/refined-profiles.log": {
+      "sha256": "0983784e4a2fac944c25ddfaba4c649a4e9257a9b193c5682bae31c9e1296fba",
+      "bytes": 373436
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/enumerate-api.mjs": {
+      "sha256": "a0bdc90d2e9366ea00a397d77f2099036fd56a562581451953a8c83ac7e21f7b",
+      "bytes": 2114
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/untracked-identities.json": {
+      "sha256": "813ce5a43e49b0e646310b717a87feaff11adf9d868fe2125396b3f45848b745",
+      "bytes": 57656
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/productive-diff.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/tracked.patch.gz": {
+      "sha256": "0522e3a3513acb031c10ad080f7ae96e8b2defdfe3a4d10a9bcd0f80e667486b",
+      "bytes": 11433074
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/input-identities.json": {
+      "sha256": "25adc4b4ca2155001da125830241d83d71d8a3d735f58f41ecd739d29b37109d",
+      "bytes": 46169
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/additional-contracts.log": {
+      "sha256": "1ebb87bcdfa2feb949982c8197ede59b6db0cece7740b05cca4bb10fd37f2ddf",
+      "bytes": 116
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/input-drift-check.json": {
+      "sha256": "5baa9df892aa7edb8b26e3dc6c7c08650f70d03161885d336a1e52a25a22c404",
+      "bytes": 18
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/git-status.log": {
+      "sha256": "791d1695267182d87c156d1abaca6a5311d2fa7db267fbe0b8443562d5e0ebbd",
+      "bytes": 12530
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/expected-schema-obligations.json": {
+      "sha256": "b227271570a0940d2764cd80773d691d91dac32d3c735602c2f070ffc46fe91b",
+      "bytes": 488852
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/selector-observations.json": {
+      "sha256": "3b4f92d76fadcf988fb06fd9ce360d2c68d2f170b114da302f0c7fcf4cbb55e0",
+      "bytes": 50285
+    }
+  }
+}

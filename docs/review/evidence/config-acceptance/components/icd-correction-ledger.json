@@ -1,0 +1,2357 @@
+{
+  "report": "docs/review/remediation/independent-config-c0-core-domain-a07de567.md",
+  "reportSha256": "c728683197df2a178100c15aaed8687384bc2ad36cab8f3393b81311031793b6",
+  "findings": {
+    "ICD001": {
+      "status": "author-corrected/recheck-pending",
+      "artifacts": [
+        "docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+        "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json",
+        "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json"
+      ],
+      "settingIds": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH",
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-DRAIN-POLL-MS",
+        "CMP-WCORE-POOL-FILE-BYTES",
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-LOCK-STRIPES"
+      ]
+    },
+    "ICD002": {
+      "status": "author-corrected/recheck-pending",
+      "artifacts": [
+        "docs/review/evidence/config-acceptance/components/historical-case-specifications-40cf24.json",
+        "docs/review/evidence/config-acceptance/components/active-case-specifications.json"
+      ],
+      "conservation": {
+        "counts": {
+          "active": 204,
+          "historical": 1,
+          "superseded": 39
+        },
+        "historicalSnapshot": "docs/review/evidence/config-acceptance/components/historical-case-specifications-40cf24.json",
+        "originalRequirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F-AUTH",
+          "F-BIND",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "activeRequirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "C0-D",
+          "D17",
+          "D20",
+          "F-AUTH",
+          "F-BIND",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scopeReduction": false,
+        "activeSpecPath": "docs/review/evidence/config-acceptance/components/active-case-specifications.json",
+        "activeSpecsIncluding148Refinements": 352
+      }
+    },
+    "ICD003": {
+      "status": "author-corrected/recheck-pending",
+      "artifacts": [
+        "docs/review/evidence/config-acceptance/components/additional-schema-closure.json",
+        "docs/review/evidence/config-acceptance/components/additional-root-callsite-search.log",
+        "docs/review/evidence/config-acceptance/components/additional-contract-boundaries.log"
+      ],
+      "actualCoordinates": 75,
+      "reportedCoordinates": 75,
+      "countReason": "Named roots sum75 and independently exact-match expected schema coordinates;10 not invented",
+      "historicalReportArithmetic": 85
+    },
+    "ICD004": {
+      "status": "author-corrected/recheck-pending",
+      "settingIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "constructors": {
+        "prism-native": {
+          "caller": "skills/prism/server/native-worker-host.ts",
+          "current": true,
+          "writer": "artifacts.upload(prism-full-log)",
+          "operation": "skills/prism/server/worker-operation.ts",
+          "phaseCount": 4,
+          "policyIds": [
+            "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE",
+            "AUTH-PRISM-CLAIM-LIFETIME"
+          ],
+          "sourceSha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "prism-agent": {
+          "caller": "skills/prism/server/agent-job-runner.mjs",
+          "current": true,
+          "writer": "artifacts.upload(id-logs)",
+          "operation": "skills/prism/server/agent-process.ts",
+          "phaseCount": 4,
+          "policyIds": [
+            "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+            "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+            "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs"
+          ],
+          "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "buster-provider": {
+          "caller": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+          "current": false,
+          "writer": null,
+          "operation": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+          "phaseCount": 6,
+          "policyIds": [
+            "CMP-buster-engine-execution.provider.claimGraceMs",
+            "CMP-buster-engine-execution.provider.cleanupTimeoutMs"
+          ],
+          "sourceSha256": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "buster-preparation": {
+          "caller": "skills/buster/engine/test-gates/preparation-host.ts",
+          "current": false,
+          "writer": null,
+          "phaseCount": 4,
+          "policyIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance"
+          ],
+          "sourceSha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "buster-historical-import": {
+          "caller": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+          "current": false,
+          "writer": null,
+          "phaseCount": 4,
+          "policyIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance"
+          ],
+          "sourceSha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "buster-source-cleanup": {
+          "caller": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+          "current": false,
+          "writer": null,
+          "phaseCount": 4,
+          "policyIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance"
+          ],
+          "sourceSha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        }
+      }
+    },
+    "nits": {
+      "status": "author-corrected/recheck-pending",
+      "settingIds": [
+        "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS",
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-buster-engine-preparation.attemptEvidenceBytes",
+        "CMP-buster-engine-preparation.attemptEvidenceFiles"
+      ],
+      "changes": [
+        "nonEmptyString vs stableId receiptId vs constructor receiptNamespace",
+        "split wire chunks not calls",
+        "existing min0/no max separate proposed precision"
+      ]
+    }
+  },
+  "acceptance": "NOT ACCEPTED; independent recheck required; production/tests unchanged",
+  "reviewerErratum": {
+    "path": "docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.json",
+    "sha256": "6039e3a2ceaae8f0b4d8855036d41b472c799743ceb2b452b07b383bac9f4a8c",
+    "coordinates": 75,
+    "productivePath": 55,
+    "publicContractOnly": 20,
+    "scopeReduction": false
+  },
+  "findingSourceCaseChanges": {
+    "ICD001": {
+      "artifacts": [
+        "docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+        "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json",
+        "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json"
+      ],
+      "settingIds": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH",
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-DRAIN-POLL-MS",
+        "CMP-WCORE-POOL-FILE-BYTES",
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-LOCK-STRIPES"
+      ],
+      "recheck": "Independent reviewer must examine proposed domain/actual consumer/oracle, not counts",
+      "rows": [
+        {
+          "settingId": "CMP-WCORE-INPUT-BYTES",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.input_bytes",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/server/native-worker-host.ts",
+            "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+            "skills/buster/engine/test-gates/preparation-host.ts",
+            "skills/worker/core/worker/attempt-executor.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 12582912,
+            "maximum": 16777216
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-INPUT-BYTES-VAL",
+            "CMP-WCORE-INPUT-BYTES-EFFECT",
+            "CMP-C0-CORE-INPUT-POSITIVE",
+            "CMP-C0-CORE-INPUT-EXCESS",
+            "CMP-WCORE-INPUT-BYTES-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+            "CMP-C0-CORE-ADJUSTABLE-BYTE-CONTROL"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-JSON-NODES",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.json_nodes",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/server/native-worker-host.ts",
+            "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+            "skills/buster/engine/test-gates/preparation-host.ts",
+            "skills/worker/core/worker/attempt-executor.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 75000,
+            "maximum": 100000
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-JSON-NODES-VAL",
+            "CMP-WCORE-JSON-NODES-EFFECT",
+            "CMP-C0-CORE-NODES-BOUNDARY",
+            "CMP-C0-CORE-NODES-EXCESS",
+            "CMP-WCORE-JSON-NODES-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+            "CMP-C0-CORE-ADJUSTABLE-NODE-CONTROL"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-JSON-DEPTH",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.json_depth",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/server/native-worker-host.ts",
+            "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+            "skills/buster/engine/test-gates/preparation-host.ts",
+            "skills/worker/core/worker/attempt-executor.ts",
+            "contracts/pipeline-worker-core/v1/src/digest.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 48,
+            "maximum": 64
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-JSON-DEPTH-VAL",
+            "CMP-WCORE-JSON-DEPTH-EFFECT",
+            "CMP-C0-CORE-DEPTH-BOUNDARY",
+            "CMP-C0-CORE-DEPTH-EXCESS",
+            "CMP-WCORE-JSON-DEPTH-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+            "CMP-C0-CORE-ADJUSTABLE-DEPTH-CONTROL"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-LOG-PARTS",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.log_parts",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/server/native-worker-host.ts",
+            "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+            "skills/buster/engine/test-gates/preparation-host.ts",
+            "skills/worker/core/worker/attempt-executor.ts",
+            "skills/worker/core/worker/log-decoder.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 7500,
+            "maximum": 10000
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-LOG-PARTS-VAL",
+            "CMP-WCORE-LOG-PARTS-EFFECT",
+            "CMP-C0-CORE-LOG-PART-SOURCE",
+            "CMP-WCORE-LOG-PARTS-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-RETAIN-LOGS",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.retain_logs",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false,
+            "scopeClarification": "One map in one Core author with six actual instance keys, no separate agent/native/Buster authors or omitted fallback."
+          },
+          "sourcePaths": [
+            "skills/prism/server/native-worker-host.ts",
+            "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+            "skills/buster/engine/test-gates/preparation-host.ts",
+            "skills/worker/core/worker/attempt-executor.ts",
+            "skills/buster/engine/test-gates/preparation-historical-host.ts",
+            "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+            "skills/prism/server/agent-job-runner.mjs",
+            "skills/prism/server/worker-operation.ts",
+            "skills/prism/server/agent-process.ts",
+            "skills/buster/engine/test-gates/runner-provider-operation.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "prism-native",
+              "prism-agent",
+              "buster-provider",
+              "buster-preparation",
+              "buster-historical-import",
+              "buster-source-cleanup"
+            ],
+            "properties": {
+              "prism-native": {
+                "type": "boolean"
+              },
+              "prism-agent": {
+                "type": "boolean"
+              },
+              "buster-provider": {
+                "type": "boolean"
+              },
+              "buster-preparation": {
+                "type": "boolean"
+              },
+              "buster-historical-import": {
+                "type": "boolean"
+              },
+              "buster-source-cleanup": {
+                "type": "boolean"
+              }
+            }
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-RETAIN-LOGS-VAL",
+            "CMP-WCORE-RETAIN-LOGS-EFFECT",
+            "CMP-C0-CORE-LOG-PART-SOURCE",
+            "CMP-WCORE-RETAIN-LOGS-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-DRAIN-POLL-MS",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.drain_poll_ms",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/server/worker.ts",
+            "skills/worker/core/worker/native-worker-ownership.ts",
+            "skills/worker/core/worker/native-resource-scope.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 20
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-DRAIN-POLL-MS-VAL",
+            "CMP-WCORE-DRAIN-POLL-MS-EFFECT",
+            "CMP-C0-CORE-DRAIN-POLL-SOURCE",
+            "CMP-WCORE-DRAIN-POLL-MS-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-POOL-FILE-BYTES",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.pool_file_bytes",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/config/native-worker.ts",
+            "skills/buster/engine/test-gates/preparation-config.ts",
+            "skills/worker/core/worker/native-pool-policy.ts",
+            "scripts/prepare-native-worker-pools.mjs"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 32768,
+            "maximum": 65536
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-POOL-FILE-BYTES-VAL",
+            "CMP-WCORE-POOL-FILE-BYTES-EFFECT",
+            "CMP-C0-CORE-POOL-SIZE-POSITIVE",
+            "CMP-C0-CORE-POOL-SIZE-EXCESS",
+            "CMP-WCORE-POOL-FILE-BYTES-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+            "CMP-C0-CORE-ADJUSTABLE-POOL-32768",
+            "CMP-C0-CORE-ADJUSTABLE-POOL-49152"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.runtime_identity_file_bytes",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/config/native-worker.ts",
+            "skills/buster/engine/test-gates/preparation-config.ts",
+            "skills/worker/core/worker/native-runtime-identity.ts",
+            "scripts/prepare-native-worker-pools.mjs"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 2048,
+            "maximum": 4096
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-VAL",
+            "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-EFFECT",
+            "CMP-C0-CORE-RUNTIME-SIZE-POSITIVE",
+            "CMP-C0-CORE-RUNTIME-SIZE-EXCESS",
+            "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+            "CMP-C0-CORE-ADJUSTABLE-RUNTIME-2048",
+            "CMP-C0-CORE-ADJUSTABLE-RUNTIME-3072"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.node_identity_file_bytes",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/config/native-worker.ts",
+            "skills/buster/engine/test-gates/preparation-config.ts",
+            "skills/worker/core/worker/native-node-identity.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 128
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-VAL",
+            "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-EFFECT",
+            "CMP-C0-CORE-NODE-SIZE-POSITIVE",
+            "CMP-C0-CORE-NODE-SIZE-EXCESS",
+            "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+            "CMP-C0-CORE-ADJUSTABLE-NODE-64",
+            "CMP-C0-CORE-ADJUSTABLE-NODE-96"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-JOURNAL-RECORD-BYTES",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.journal_record_bytes",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/prism/server/native-worker-execution.ts",
+            "skills/buster/engine/test-gates/preparation-supervisor.ts",
+            "skills/worker/core/worker/native-attempt-journal.ts",
+            "skills/worker/core/worker/native-journal-capacity.ts",
+            "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+            "skills/worker/core/worker/native-journal-state.ts",
+            "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 32768,
+            "maximum": 65536
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-JOURNAL-RECORD-BYTES-VAL",
+            "CMP-WCORE-JOURNAL-RECORD-BYTES-EFFECT",
+            "CMP-C0-CORE-RECORD-SIZE-POSITIVE",
+            "CMP-C0-CORE-RECORD-SIZE-EXCESS",
+            "CMP-C0-CORE-JOURNAL-TERMINAL-POSITIVE",
+            "CMP-C0-CORE-JOURNAL-TERMINAL-EXCESS",
+            "CMP-WCORE-JOURNAL-RECORD-BYTES-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.journal_diagnostic_units",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/worker/core/worker/native-attempt-journal.ts",
+            "skills/worker/core/worker/native-journal-capacity.ts",
+            "skills/worker/core/worker/native-journal-state.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 2048,
+            "maximum": 4096
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-VAL",
+            "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-EFFECT",
+            "CMP-C0-CORE-JOURNAL-DIAG-POSITIVE",
+            "CMP-C0-CORE-JOURNAL-DIAG-EXCESS",
+            "CMP-C0-CORE-JOURNAL-TERMINAL-POSITIVE",
+            "CMP-C0-CORE-JOURNAL-TERMINAL-EXCESS",
+            "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.ownership_diagnostic_units",
+            "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+            "implemented": false
+          },
+          "sourcePaths": [
+            "skills/worker/core/worker/native-worker-ownership.ts",
+            "skills/worker/core/worker/ownership-store.ts",
+            "skills/worker/core/worker/ownership-capacity.ts",
+            "skills/worker/core/worker/ownership-state.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "minimum": 2048,
+            "maximum": 4096
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-VAL",
+            "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-EFFECT",
+            "CMP-C0-CORE-OWNERSHIP-DIAG-POSITIVE",
+            "CMP-C0-CORE-OWNERSHIP-DIAG-EXCESS",
+            "CMP-C0-CORE-OWNERSHIP-TERMINAL-POSITIVE",
+            "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES"
+          ],
+          "historicalCaseIds": []
+        },
+        {
+          "settingId": "CMP-WCORE-LOCK-STRIPES",
+          "targetAuthor": {
+            "path": "config/components/worker-core.config.json",
+            "field": "settings.runtime.journalLockHexDigits",
+            "status": "proposed R closure; not implemented"
+          },
+          "sourcePaths": [
+            "skills/worker/core/worker/native-attempt-journal.ts",
+            "skills/worker/core/worker/native-journal-state.ts",
+            "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts"
+          ],
+          "supportedTargetDomain": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "activeCaseIds": [
+            "CMP-WCORE-LOCK-STRIPES-VAL",
+            "CMP-WCORE-LOCK-STRIPES-EFFECT",
+            "CMP-C0-CORE-STRIPE-PROJECTION",
+            "CMP-WCORE-LOCK-STRIPES-PROJECTION",
+            "CMP-C0-CORE-ADJUSTABLE-PROFILES"
+          ],
+          "historicalCaseIds": []
+        }
+      ]
+    },
+    "ICD002": {
+      "artifacts": [
+        "docs/review/evidence/config-acceptance/components/historical-case-specifications-40cf24.json",
+        "docs/review/evidence/config-acceptance/components/active-case-specifications.json"
+      ],
+      "settingIds": [],
+      "recheck": "Independent reviewer must examine proposed domain/actual consumer/oracle, not counts",
+      "originalCaseLifecycle": [
+        {
+          "originalCaseId": "CMP-C0-COMPLETE-PROFILES",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-COMPLETE-PROFILES"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-REFINED-COMPLETE-PROFILES",
+          "currentState": "historical",
+          "activeReplacementIds": [
+            "CMP-C0-REFINED-PROFILES-ICD-CORRECTED"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-INPUT-BYTES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-INPUT-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-INPUT-BYTES-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-INPUT-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-NODES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-NODES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-NODES-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-NODES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-DEPTH-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-DEPTH-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-DEPTH-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-DEPTH-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-PARTS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-PARTS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-PARTS-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-PARTS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RETAIN-LOGS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-RETAIN-LOGS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RETAIN-LOGS-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-RETAIN-LOGS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-DRAIN-POLL-MS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-DRAIN-POLL-MS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-DRAIN-POLL-MS-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-DRAIN-POLL-MS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-POOL-FILE-BYTES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-POOL-FILE-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-POOL-FILE-BYTES-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-POOL-FILE-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-RECORD-BYTES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-RECORD-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-RECORD-BYTES-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-RECORD-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-WIRE-BYTES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-WIRE-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-WIRE-BYTES-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-WIRE-BYTES-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-PART-WIRE-UNITS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-PART-WIRE-UNITS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-PART-WIRE-UNITS-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-PART-WIRE-UNITS-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JS-TIMER-MAX-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JS-TIMER-MAX-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JS-TIMER-MAX-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JS-TIMER-MAX-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-CGROUP2-MAGIC-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-CGROUP2-MAGIC-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-CGROUP2-MAGIC-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-CGROUP2-MAGIC-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-CONTROL-HEADER-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-CONTROL-HEADER-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-CONTROL-HEADER-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-CONTROL-HEADER-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LAUNCH-ROOT-AUTHORITY-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LAUNCH-ROOT-AUTHORITY-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LAUNCH-ROOT-AUTHORITY-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LAUNCH-ROOT-AUTHORITY-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LAUNCH-NONSETUID-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LAUNCH-NONSETUID-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LAUNCH-NONSETUID-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LAUNCH-NONSETUID-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-PRIVACY-MODES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-PRIVACY-MODES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-PRIVACY-MODES-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-PRIVACY-MODES-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-ID-DOMAIN-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-ID-DOMAIN-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-ID-DOMAIN-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-ID-DOMAIN-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-KERNEL-COUNTERS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-KERNEL-COUNTERS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-KERNEL-COUNTERS-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-KERNEL-COUNTERS-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-KERNEL-ISOLATION-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-KERNEL-ISOLATION-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-KERNEL-ISOLATION-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-KERNEL-ISOLATION-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-PROTOCOL-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-PROTOCOL-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-PROTOCOL-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-PROTOCOL-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-PROTOCOL-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-PROTOCOL-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-PROTOCOL-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-PROTOCOL-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-CLOCK-NONCE-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-CLOCK-NONCE-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-CLOCK-NONCE-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-CLOCK-NONCE-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-UTF8-PROTOCOL-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-UTF8-PROTOCOL-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-UTF8-PROTOCOL-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-UTF8-PROTOCOL-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-SCHEMAVERSION-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-SCHEMAVERSION-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-SCHEMAVERSION-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-SCHEMAVERSION-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-ROLE-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-ROLE-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-ROLE-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-ROLE-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-NODENAME-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-NODENAME-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-NODENAME-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-NODENAME-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-POLICYDIGEST-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-POLICYDIGEST-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-POLICYDIGEST-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-POLICYDIGEST-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-CGROUPROOT-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-CGROUPROOT-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-CGROUPROOT-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-CGROUPROOT-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-OWNERSHIPROOT-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-OWNERSHIPROOT-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-OWNERSHIPROOT-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-OWNERSHIPROOT-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-NODEIDENTITYFILE-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-NODEIDENTITYFILE-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-NODEIDENTITYFILE-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-NODEIDENTITYFILE-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-LIMITS-MEMORYBYTES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-LIMITS-MEMORYBYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-LIMITS-MEMORYBYTES-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-LIMITS-MEMORYBYTES-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-LIMITS-TASKS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-LIMITS-TASKS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-LIMITS-TASKS-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-LIMITS-TASKS-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-SUPERVISOR-PID-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-SUPERVISOR-PID-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-SUPERVISOR-PID-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-SUPERVISOR-PID-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-CHILD-LIMIT-INHERITANCE-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-CHILD-LIMIT-INHERITANCE-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-CHILD-LIMIT-INHERITANCE-CONTRACT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-CHILD-LIMIT-INHERITANCE-CONTRACT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOCK-STRIPES-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOCK-STRIPES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOCK-STRIPES-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOCK-STRIPES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-prism-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-prism-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-prism-CLAIM",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-prism-CLAIM"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-prism-GRANT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-prism-GRANT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-prism-DIGEST",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-prism-DIGEST"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-agent-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-agent-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-agent-CLAIM",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-agent-CLAIM"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-agent-GRANT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-agent-GRANT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-agent-DIGEST",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-agent-DIGEST"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-preparation-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-preparation-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-preparation-CLAIM",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-preparation-CLAIM"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-preparation-GRANT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-preparation-GRANT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-preparation-DIGEST",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-preparation-DIGEST"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-buster-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-buster-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-buster-CLAIM",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-buster-CLAIM"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-buster-GRANT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-buster-GRANT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-buster-DIGEST",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-buster-DIGEST"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-PRISM-NEW-BUDGET",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-PRISM-NEW-BUDGET"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-PRISM-RECOVERED-BUDGET",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-PRISM-RECOVERED-BUDGET"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-AGENT-UNAVAILABLE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-prism-RESULT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-prism-RESULT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-prism-RESULT-POLICY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-prism-RESULT-POLICY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-prism-RESULT-CLAIM",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-prism-RESULT-CLAIM"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-preparation-RESULT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-preparation-RESULT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-preparation-RESULT-POLICY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-preparation-RESULT-POLICY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-SCHEMA-preparation-RESULT-CLAIM",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-SCHEMA-preparation-RESULT-CLAIM"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptLogBytes-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptLogBytes-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptLogBytes-PROJECTION",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptLogBytes-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptLogBytes-DORMANT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptLogBytes-DORMANT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptEvidenceBytes-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptEvidenceBytes-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptEvidenceBytes-PROJECTION",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptEvidenceBytes-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptEvidenceBytes-DORMANT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptEvidenceBytes-DORMANT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptEvidenceFiles-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptEvidenceFiles-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptEvidenceFiles-PROJECTION",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptEvidenceFiles-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.attemptEvidenceFiles-DORMANT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.attemptEvidenceFiles-DORMANT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.completionPhaseAllowance-VAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.completionPhaseAllowance-PROJECTION",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-buster-engine-preparation.completionPhaseAllowance-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-BEFORE-BIND",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-BEFORE-BIND"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-AFTER-BIND",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-AFTER-BIND"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-PARALLEL-PUBLISH",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-PARALLEL-PUBLISH"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-INVALID-PUBLISH",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-INVALID-PUBLISH"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-STARTED-RECOVERY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-STARTED-RECOVERY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-QUIESCENT-RETRY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-QUIESCENT-RETRY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-UNCERTAIN-RETRY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-UNCERTAIN-RETRY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-RECEIPT-EFFECT",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-RECEIPT-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-PROJECTION",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-FIXED-EVAL",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-FIXED-EVAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-SUCCESS-RELEASE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-SUCCESS-RELEASE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-RELEASE-REPLAY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-RELEASE-REPLAY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C5-PREPARATION-CLEANUP-HISTORY-CAPACITY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C5-PREPARATION-CLEANUP-HISTORY-CAPACITY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-logBytes-ZERO",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-logBytes-ZERO"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-logBytes-NEGATIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-logBytes-NEGATIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-evidenceBytes-ZERO",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-evidenceBytes-ZERO"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-evidenceBytes-NEGATIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-evidenceBytes-NEGATIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-evidenceFiles-ZERO",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-evidenceFiles-ZERO"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-evidenceFiles-NEGATIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-evidenceFiles-NEGATIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-LOG-DECODER-ZERO",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-LOG-DECODER-ZERO"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-LOG-DECODER-ONE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-LOG-DECODER-ONE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-LOG-WIRE-MAX",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-LOG-WIRE-MAX"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-CLEANUP-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-CLEANUP-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-CLEANUP-GATE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-CLEANUP-GATE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-CLEANUP-PREDECESSOR",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-CLEANUP-PREDECESSOR"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-CLEANUP-CURRENT-PROJECTION-GAP",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-CLEANUP-CURRENT-PROJECTION-GAP"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-PREP-COMPLETION-SOURCE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-PREP-COMPLETION-SOURCE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-INPUT-BYTES-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-INPUT-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-INPUT-BYTES-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-INPUT-BYTES-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-INPUT-BYTES-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-INPUT-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-NODES-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-NODES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-NODES-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-NODES-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-NODES-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-NODES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-DEPTH-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-DEPTH-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-DEPTH-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-DEPTH-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JSON-DEPTH-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JSON-DEPTH-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-PARTS-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-PARTS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-PARTS-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-PARTS-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOG-PARTS-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOG-PARTS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RETAIN-LOGS-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-RETAIN-LOGS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RETAIN-LOGS-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-RETAIN-LOGS-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RETAIN-LOGS-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-RETAIN-LOGS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-DRAIN-POLL-MS-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-DRAIN-POLL-MS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-DRAIN-POLL-MS-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-DRAIN-POLL-MS-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-DRAIN-POLL-MS-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-DRAIN-POLL-MS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-POOL-FILE-BYTES-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-POOL-FILE-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-POOL-FILE-BYTES-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-POOL-FILE-BYTES-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-POOL-FILE-BYTES-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-POOL-FILE-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-RECORD-BYTES-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-RECORD-BYTES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-RECORD-BYTES-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-RECORD-BYTES-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-RECORD-BYTES-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-RECORD-BYTES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOCK-STRIPES-FINITE-VAL",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOCK-STRIPES-VAL"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOCK-STRIPES-FINITE-PROJECTION",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOCK-STRIPES-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-WCORE-LOCK-STRIPES-FINITE-CONSUMER",
+          "currentState": "superseded",
+          "activeReplacementIds": [
+            "CMP-WCORE-LOCK-STRIPES-EFFECT"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-INPUT-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-INPUT-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-INPUT-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-INPUT-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-NODES-BOUNDARY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-NODES-BOUNDARY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-NODES-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-NODES-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-DEPTH-BOUNDARY",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-DEPTH-BOUNDARY"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-DEPTH-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-DEPTH-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-POOL-SIZE-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-POOL-SIZE-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-POOL-SIZE-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-POOL-SIZE-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-RUNTIME-SIZE-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-RUNTIME-SIZE-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-RUNTIME-SIZE-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-RUNTIME-SIZE-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-NODE-SIZE-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-NODE-SIZE-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-NODE-SIZE-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-NODE-SIZE-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-JOURNAL-DIAG-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-JOURNAL-DIAG-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-JOURNAL-DIAG-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-JOURNAL-DIAG-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-OWNERSHIP-DIAG-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-OWNERSHIP-DIAG-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-OWNERSHIP-DIAG-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-OWNERSHIP-DIAG-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-JOURNAL-TERMINAL-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-JOURNAL-TERMINAL-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-JOURNAL-TERMINAL-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-JOURNAL-TERMINAL-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-OWNERSHIP-TERMINAL-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-OWNERSHIP-TERMINAL-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-RECORD-SIZE-POSITIVE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-RECORD-SIZE-POSITIVE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-RECORD-SIZE-EXCESS",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-RECORD-SIZE-EXCESS"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-STRIPE-PROJECTION",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-STRIPE-PROJECTION"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-LOG-PART-SOURCE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-LOG-PART-SOURCE"
+          ]
+        },
+        {
+          "originalCaseId": "CMP-C0-CORE-DRAIN-POLL-SOURCE",
+          "currentState": "active",
+          "activeReplacementIds": [
+            "CMP-C0-CORE-DRAIN-POLL-SOURCE"
+          ]
+        }
+      ]
+    },
+    "ICD003": {
+      "artifacts": [
+        "docs/review/evidence/config-acceptance/components/additional-schema-closure.json",
+        "docs/review/evidence/config-acceptance/components/additional-root-callsite-search.log",
+        "docs/review/evidence/config-acceptance/components/additional-contract-boundaries.log"
+      ],
+      "settingIds": [],
+      "recheck": "Independent reviewer must examine proposed domain/actual consumer/oracle, not counts",
+      "coordinateArtifact": "docs/review/evidence/config-acceptance/components/additional-schema-closure.json",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ]
+    },
+    "ICD004": {
+      "artifacts": [],
+      "settingIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "recheck": "Independent reviewer must examine proposed domain/actual consumer/oracle, not counts",
+      "constructors": {
+        "prism-native": {
+          "caller": "skills/prism/server/native-worker-host.ts",
+          "current": true,
+          "writer": "artifacts.upload(prism-full-log)",
+          "operation": "skills/prism/server/worker-operation.ts",
+          "phaseCount": 4,
+          "policyIds": [
+            "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE",
+            "AUTH-PRISM-CLAIM-LIFETIME"
+          ],
+          "sourceSha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "prism-agent": {
+          "caller": "skills/prism/server/agent-job-runner.mjs",
+          "current": true,
+          "writer": "artifacts.upload(id-logs)",
+          "operation": "skills/prism/server/agent-process.ts",
+          "phaseCount": 4,
+          "policyIds": [
+            "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+            "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+            "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs"
+          ],
+          "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "buster-provider": {
+          "caller": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+          "current": false,
+          "writer": null,
+          "operation": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+          "phaseCount": 6,
+          "policyIds": [
+            "CMP-buster-engine-execution.provider.claimGraceMs",
+            "CMP-buster-engine-execution.provider.cleanupTimeoutMs"
+          ],
+          "sourceSha256": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "buster-preparation": {
+          "caller": "skills/buster/engine/test-gates/preparation-host.ts",
+          "current": false,
+          "writer": null,
+          "phaseCount": 4,
+          "policyIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance"
+          ],
+          "sourceSha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "buster-historical-import": {
+          "caller": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+          "current": false,
+          "writer": null,
+          "phaseCount": 4,
+          "policyIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance"
+          ],
+          "sourceSha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        },
+        "buster-source-cleanup": {
+          "caller": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+          "current": false,
+          "writer": null,
+          "phaseCount": 4,
+          "policyIds": [
+            "CMP-buster-engine-preparation.completionPhaseAllowance"
+          ],
+          "sourceSha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+          "phaseRelation": "3 + cleanupPresence + collectEvidencePresence + (retainLogs && storeFullLogPresence) + finalizeResultPresence; add actual startup elapsed before dispatch; no new phase for true without writer"
+        }
+      },
+      "caseIds": [
+        "CMP-WCORE-RETAIN-LOGS-VAL",
+        "CMP-WCORE-RETAIN-LOGS-EFFECT",
+        "CMP-C0-CORE-LOG-PART-SOURCE",
+        "CMP-WCORE-RETAIN-LOGS-PROJECTION",
+        "CMP-C0-CORE-ADJUSTABLE-PROFILES"
+      ]
+    },
+    "nits": {
+      "artifacts": [],
+      "settingIds": [
+        "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS",
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-buster-engine-preparation.attemptEvidenceBytes",
+        "CMP-buster-engine-preparation.attemptEvidenceFiles"
+      ],
+      "recheck": "Independent reviewer must examine proposed domain/actual consumer/oracle, not counts"
+    }
+  },
+  "additionalCorrection": "17 consumer-specific refined witnesses; Tailscale redundant B suffix replaced narrowing and296 fresh loader positives; historical219 exact git checkpoint restored",
+  "actualDefinitionReceipts": [
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-core-profile-definitions.log",
+      "sha256": "38651ccd89a18a18ab1d9dbf85494a461dd350c8a518658abadfc58ec4a346c0"
+    },
+    {
+      "caseId": "CMP-C0-REFINED-PROFILES-ICD-CORRECTED",
+      "log": "docs/review/evidence/config-acceptance/components/refined-profile-definition-icd-corrected.log",
+      "sha256": "0983784e4a2fac944c25ddfaba4c649a4e9257a9b193c5682bae31c9e1296fba"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-BYTE-CONTROL",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-NODE-CONTROL",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-DEPTH-CONTROL",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-POOL-32768",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-POOL-49152",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-RUNTIME-2048",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-RUNTIME-3072",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-NODE-64",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    },
+    {
+      "caseId": "CMP-C0-CORE-ADJUSTABLE-NODE-96",
+      "log": "docs/review/evidence/config-acceptance/components/adjustable-source-controls.log",
+      "sha256": "3b615a63d1d05357234ad7333fe25507046acd608cf79f2b3fcfa21b57b6fea4"
+    }
+  ],
+  "integrityReceipt": {
+    "path": "docs/review/evidence/config-acceptance/components/icd-correction-integrity.log",
+    "sha256": "bd674400cfe6dd781e38192f2641a4dbdb5398cc25464229f2ded1f50f580ceb",
+    "role": "Structural/source identity/requirement conservation only, no independent semantic approval"
+  }
+}

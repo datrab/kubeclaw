@@ -37,6 +37,18 @@
           "memory": "2Gi"
         }
       }
+    },
+    "resources": {
+      "requests": {
+        "cpu": "600m",
+        "memory": "768Mi",
+        "ephemeral-storage": "2Gi"
+      },
+      "limits": {
+        "cpu": "6",
+        "memory": "6Gi",
+        "ephemeral-storage": "4Gi"
+      }
     }
   },
   "initSetup": {

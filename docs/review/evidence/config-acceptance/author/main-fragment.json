@@ -38,8 +38,8 @@
       },
       "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/cache/maximumInFlight",
       "activationScope": {
-        "current": "producer/composition captured once; see specific reader",
-        "target": "S: native host engine instance startup"
+        "current": "Dedicated host process created for one accepted native attempt; one guarded execute call. Process startup is J-scoped in actual composition, not a shared S cache service.",
+        "target": "J: explicit selected instance cache policy bound with accepted native operation; recover original generation. No cache-lifetime rearchitecture or shared service is inferred."
       },
       "recoveryRetryClaimDeadlineBudgetEffects": "Bound pending ownership; RAM admission, not durable replay.",
       "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
@@ -57,12 +57,19 @@
         "F-BIND"
       ],
       "caseIds": [
-        "AUTH-PRISM-CACHE-maximumInFlight-EFFECT"
+        "AUTH-PRISM-CACHE-maximumInFlight-EFFECT",
+        "AUTH-PRISM-CACHE-C0-TYPED-PROFILES"
       ],
       "verifiedSourceEvidence": [
-        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log",
+        "docs/review/evidence/config-acceptance/author/prism-cache-source-read.log"
       ],
-      "semanticStatus": "source-traced"
+      "semanticStatus": "source-traced-current-host-effect-applicability-open",
+      "currentOperationalApplicability": {
+        "host": "native-worker-host.ts constructs one real PrismEngine; PrismWorkerOperation rejects repeated execute and calls engine once",
+        "library": "Exported engine accepts complete explicit cache limits; constructor validates positive safe integers. Separate integration/library consumers can exercise multiple keys.",
+        "distinctLimits": "maximumInFlight/maximumCompletedEntries have no multi-key saturation witness at the current single-operation application host; maximumCompletedBytes can affect retention of that one result but no current operator author exists."
+      }
     },
     {
       "id": "AUTH-PRISM-CACHE-maximumCompletedEntries",
@@ -102,8 +109,8 @@
       },
       "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/cache/maximumCompletedEntries",
       "activationScope": {
-        "current": "producer/composition captured once; see specific reader",
-        "target": "S: native host engine instance startup"
+        "current": "Dedicated host process created for one accepted native attempt; one guarded execute call. Process startup is J-scoped in actual composition, not a shared S cache service.",
+        "target": "J: explicit selected instance cache policy bound with accepted native operation; recover original generation. No cache-lifetime rearchitecture or shared service is inferred."
       },
       "recoveryRetryClaimDeadlineBudgetEffects": "Completed cache optimization only; durable Control replay remains separate.",
       "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
@@ -121,12 +128,19 @@
         "F-BIND"
       ],
       "caseIds": [
-        "AUTH-PRISM-CACHE-maximumCompletedEntries-EFFECT"
+        "AUTH-PRISM-CACHE-maximumCompletedEntries-EFFECT",
+        "AUTH-PRISM-CACHE-C0-TYPED-PROFILES"
       ],
       "verifiedSourceEvidence": [
-        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log",
+        "docs/review/evidence/config-acceptance/author/prism-cache-source-read.log"
       ],
-      "semanticStatus": "source-traced"
+      "semanticStatus": "source-traced-current-host-effect-applicability-open",
+      "currentOperationalApplicability": {
+        "host": "native-worker-host.ts constructs one real PrismEngine; PrismWorkerOperation rejects repeated execute and calls engine once",
+        "library": "Exported engine accepts complete explicit cache limits; constructor validates positive safe integers. Separate integration/library consumers can exercise multiple keys.",
+        "distinctLimits": "maximumInFlight/maximumCompletedEntries have no multi-key saturation witness at the current single-operation application host; maximumCompletedBytes can affect retention of that one result but no current operator author exists."
+      }
     },
     {
       "id": "AUTH-PRISM-CACHE-maximumCompletedBytes",
@@ -167,8 +181,8 @@
       },
       "targetAuthorRef": "config/engines/prism.config.json#/profiles/<selected>/cache/maximumCompletedBytes",
       "activationScope": {
-        "current": "producer/composition captured once; see specific reader",
-        "target": "S: native host engine instance startup"
+        "current": "Dedicated host process created for one accepted native attempt; one guarded execute call. Process startup is J-scoped in actual composition, not a shared S cache service.",
+        "target": "J: explicit selected instance cache policy bound with accepted native operation; recover original generation. No cache-lifetime rearchitecture or shared service is inferred."
       },
       "recoveryRetryClaimDeadlineBudgetEffects": "RAM cache quota does not delete durable result/evidence or reset claims.",
       "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
@@ -186,12 +200,19 @@
         "F-BIND"
       ],
       "caseIds": [
-        "AUTH-PRISM-CACHE-maximumCompletedBytes-EFFECT"
+        "AUTH-PRISM-CACHE-maximumCompletedBytes-EFFECT",
+        "AUTH-PRISM-CACHE-C0-TYPED-PROFILES"
       ],
       "verifiedSourceEvidence": [
-        "docs/review/evidence/config-acceptance/author/prism-source-read.log"
+        "docs/review/evidence/config-acceptance/author/prism-source-read.log",
+        "docs/review/evidence/config-acceptance/author/prism-cache-source-read.log"
       ],
-      "semanticStatus": "source-traced"
+      "semanticStatus": "source-traced-current-host-effect-applicability-open",
+      "currentOperationalApplicability": {
+        "host": "native-worker-host.ts constructs one real PrismEngine; PrismWorkerOperation rejects repeated execute and calls engine once",
+        "library": "Exported engine accepts complete explicit cache limits; constructor validates positive safe integers. Separate integration/library consumers can exercise multiple keys.",
+        "distinctLimits": "maximumInFlight/maximumCompletedEntries have no multi-key saturation witness at the current single-operation application host; maximumCompletedBytes can affect retention of that one result but no current operator author exists."
+      }
     },
     {
       "id": "AUTH-PRISM-ATTEMPT-timeoutMs",
@@ -4363,6 +4384,959 @@
         "docs/review/evidence/config-acceptance/author/prism-native-phase-source-read.log"
       ],
       "semanticStatus": "source-traced"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-TTL",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+        "field": "mintSession expiresAt"
+      },
+      "current": {
+        "valueOrDefault": 900000,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "milliseconds",
+      "reader": "mintSession expiresAt",
+      "productiveCallerChain": [
+        "control-server.sessionRoutes",
+        "exchangeTailscaleIdentity",
+        "mintSession; authenticatedControlContext/product decisions",
+        "verifySession"
+      ],
+      "validation": {
+        "semantic": "Token expiry now+TTL; verifier rejects expiresAt<=now. Cookie Max-Age=900 is separately hardcoded in session-routes twice, requiring one author and seconds projection, not three independent authors.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SESSION-TTL",
+      "activationScope": {
+        "current": "S authentication policy; minted token retains its original expiry after publication",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Token expiry now+TTL; verifier rejects expiresAt<=now. Cookie Max-Age=900 is separately hardcoded in session-routes twice, requiring one author and seconds projection, not three independent authors.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SESSION-TTL-IMPLEMENTATION",
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+        "field": "mintSession roles default"
+      },
+      "current": {
+        "valueOrDefault": [
+          "editor"
+        ],
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "role identities",
+      "reader": "mintSession roles default",
+      "productiveCallerChain": [
+        "sessionRoutes",
+        "exchangeTailscaleIdentity",
+        "mintSession"
+      ],
+      "validation": {
+        "semantic": "Current mint default grants editor; roles array is verified but member types/allowed roles are not validated here. Target role-domain/security review remains open; changing default grants is not a harmless numeric profile change.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SESSION-DEFAULT-ROLES",
+      "activationScope": {
+        "current": "S security policy; existing signed tokens retain their issued roles",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Current mint default grants editor; roles array is verified but member types/allowed roles are not validated here. Target role-domain/security review remains open; changing default grants is not a harmless numeric profile change.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES-IMPLEMENTATION",
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/control-http.ts",
+        "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1",
+        "field": "body maxBytes default"
+      },
+      "current": {
+        "valueOrDefault": 2000000,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "wire bytes",
+      "reader": "body maxBytes default",
+      "productiveCallerChain": [
+        "control-server",
+        "document/direction/approval/project/engine/corpus routes",
+        "body"
+      ],
+      "validation": {
+        "semantic": "Accumulator rejects size>maxBytes before JSON parse; explicit artifact call overrides to8500000. Content-type check uses startsWith(application/json), not exact parsed media-type equality.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/HTTP-BODY-BYTES",
+      "activationScope": {
+        "current": "S parser policy, J accepted-operation input binding must preserve original accepted bytes",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Accumulator rejects size>maxBytes before JSON parse; explicit artifact call overrides to8500000. Content-type check uses startsWith(application/json), not exact parsed media-type equality.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES-IMPLEMENTATION",
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "uploadArtifact body(request,8500000)"
+      },
+      "current": {
+        "valueOrDefault": 8500000,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "wire bytes",
+      "reader": "uploadArtifact body(request,8500000)",
+      "productiveCallerChain": [
+        "control-server",
+        "corpusRoutes POST /v1/artifacts",
+        "uploadArtifact",
+        "body"
+      ],
+      "validation": {
+        "semantic": "JSON/base64 wire budget differs from decoded artifact budget. Required coupled-domain review must account for base64 expansion and JSON overhead; no arbitrary safe integer maximum asserted.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/ARTIFACT-WIRE-BYTES",
+      "activationScope": {
+        "current": "S upload admission policy",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "JSON/base64 wire budget differs from decoded artifact budget. Required coupled-domain review must account for base64 expansion and JSON overhead; no arbitrary safe integer maximum asserted.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "uploadArtifact decoded.byteLength"
+      },
+      "current": {
+        "valueOrDefault": 6000000,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "decoded bytes",
+      "reader": "uploadArtifact decoded.byteLength",
+      "productiveCallerChain": [
+        "corpusRoutes",
+        "uploadArtifact",
+        "artifacts.put"
+      ],
+      "validation": {
+        "semantic": "Reject decoded>6000000 or noncanonical base64 before artifacts.put. Other render/baseline/ingestion caps are separate readers, not implicitly proven aliases.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/ARTIFACT-DECODED-BYTES",
+      "activationScope": {
+        "current": "S artifact admission policy",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Reject decoded>6000000 or noncanonical base64 before artifacts.put. Other render/baseline/ingestion caps are separate readers, not implicitly proven aliases.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus limit default; search limit default"
+      },
+      "current": {
+        "valueOrDefault": 10,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "result slots",
+      "reader": "searchCorpus limit default; search limit default",
+      "productiveCallerChain": [
+        "corpusRoutes GET /v1/corpus/search",
+        "runWorker ingest",
+        "corpus.search"
+      ],
+      "validation": {
+        "semantic": "Request limit is task data; omitted default10 is policy duplicated in route and exported search. Actual route Number/Math clamp admits NaN/fractions to downstream rather than enforcing a supported safe-integer domain.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SEARCH-DEFAULT-LIMIT",
+      "activationScope": {
+        "current": "S query-default policy; each accepted query remains task data",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Request limit is task data; omitted default10 is policy duplicated in route and exported search. Actual route Number/Math clamp admits NaN/fractions to downstream rather than enforcing a supported safe-integer domain.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus Math.min(50,...)"
+      },
+      "current": {
+        "valueOrDefault": 50,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "result slots",
+      "reader": "searchCorpus Math.min(50,...)",
+      "productiveCallerChain": [
+        "corpusRoutes",
+        "searchCorpus",
+        "corpus.search and coverageGap"
+      ],
+      "validation": {
+        "semantic": "Route clamp1..50 is operator capacity policy; duplicate coverageGap clamp must use identical effective limit. Direct exported search has no same upper clamp.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SEARCH-MAX-LIMIT",
+      "activationScope": {
+        "current": "S query admission policy",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Route clamp1..50 is operator capacity policy; duplicate coverageGap clamp must use identical effective limit. Direct exported search has no same upper clamp.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus sourceFamilyLimit ??2; search options fallback"
+      },
+      "current": {
+        "valueOrDefault": 2,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "results per source family",
+      "reader": "searchCorpus sourceFamilyLimit ??2; search options fallback",
+      "productiveCallerChain": [
+        "searchCorpus",
+        "corpus.search",
+        "selected families Map"
+      ],
+      "validation": {
+        "semantic": "Default2 duplicated in HTTP and corpus search. Task requested sourceFamilyLimit is distinct; fallback changes diversity. No current integer/type validator.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SEARCH-FAMILY-DEFAULT",
+      "activationScope": {
+        "current": "S query-default policy",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Default2 duplicated in HTTP and corpus search. Task requested sourceFamilyLimit is distinct; fallback changes diversity. No current integer/type validator.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "sourceFamilyLimit Math.min(10,...)"
+      },
+      "current": {
+        "valueOrDefault": 10,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "results per source family",
+      "reader": "sourceFamilyLimit Math.min(10,...)",
+      "productiveCallerChain": [
+        "searchCorpus",
+        "corpus.search familyLimit",
+        "selection loop"
+      ],
+      "validation": {
+        "semantic": "HTTP clamps1..10; direct corpus.search only Math.max(1,options.sourceFamilyLimit??2). These domains are not identical or interchangeable validators.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SEARCH-FAMILY-MAX",
+      "activationScope": {
+        "current": "S query admission policy",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "HTTP clamps1..10; direct corpus.search only Math.max(1,options.sourceFamilyLimit??2). These domains are not identical or interchangeable validators.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "SQL LIMIT100 and Math.max(limit*10,100)"
+      },
+      "current": {
+        "valueOrDefault": 100,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "candidate rows",
+      "reader": "SQL LIMIT100 and Math.max(limit*10,100)",
+      "productiveCallerChain": [
+        "searchCorpus",
+        "corpus.search",
+        "pool.query hybrid/text SQL"
+      ],
+      "validation": {
+        "semantic": "Hybrid text_rank/vector_rank each cap100 while outer result floor100. Three real readers need one explicit justified policy or separate scope if domains differ; DB behavior not executed here.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SEARCH-CANDIDATE-FLOOR",
+      "activationScope": {
+        "current": "S ranking resource policy; query input remains J data",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Hybrid text_rank/vector_rank each cap100 while outer result floor100. Three real readers need one explicit justified policy or separate scope if domains differ; DB behavior not executed here.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "Math.max(limit*10,100)"
+      },
+      "current": {
+        "valueOrDefault": 10,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "candidate rows per requested slot",
+      "reader": "Math.max(limit*10,100)",
+      "productiveCallerChain": [
+        "corpus.search",
+        "hybrid/text SQL bound parameter"
+      ],
+      "validation": {
+        "semantic": "Both branches oversample result candidates; role of hybrid inner100 cap differs from outer multiplier. DB domain and cost witness remain open.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SEARCH-CANDIDATE-MULTIPLIER",
+      "activationScope": {
+        "current": "S ranking resource policy",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Both branches oversample result candidates; role of hybrid inner100 cap differs from outer multiplier. DB domain and cost witness remain open.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "1.0/(60+rank)"
+      },
+      "current": {
+        "valueOrDefault": 60,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "rank damping factor",
+      "reader": "1.0/(60+rank)",
+      "productiveCallerChain": [
+        "corpus.search hybrid fused SQL",
+        "selected results"
+      ],
+      "validation": {
+        "semantic": "Ranking hyperparameter affects ordering/score, not protocol constant solely because output label hybrid-rrf-v1 is versioned. Version/profile compatibility requires explicit definition.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SEARCH-RRF-DAMPING",
+      "activationScope": {
+        "current": "S ranking policy; algorithm label is separate version contract",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Ranking hyperparameter affects ordering/score, not protocol constant solely because output label hybrid-rrf-v1 is versioned. Version/profile compatibility requires explicit definition.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "acquireCorpus AbortSignal.timeout"
+      },
+      "current": {
+        "valueOrDefault": 30000,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "milliseconds",
+      "reader": "acquireCorpus AbortSignal.timeout",
+      "productiveCallerChain": [
+        "corpusRoutes POST /v1/corpus",
+        "ingestCorpus",
+        "acquireCorpus fetch"
+      ],
+      "validation": {
+        "semantic": "Current POST abort budget30s; no persisted config generation. Must preserve original accepted ingestion endpoint, secret reference and uncertain acquisition effects on retry.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/CORPUS-ACQUIRE-TIMEOUT",
+      "activationScope": {
+        "current": "J acquisition/cleanup workflow closure; service policy captured before dispatch",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Current POST abort budget30s; no persisted config generation. Must preserve original accepted ingestion endpoint, secret reference and uncertain acquisition effects on retry.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "cleanAcquisition AbortSignal.timeout"
+      },
+      "current": {
+        "valueOrDefault": 10000,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "milliseconds",
+      "reader": "cleanAcquisition AbortSignal.timeout",
+      "productiveCallerChain": [
+        "ingestCorpus",
+        "cleanAcquisition DELETE",
+        "revision-specific activation"
+      ],
+      "validation": {
+        "semantic": "DELETE must finish before exact stored revision activation; publication and cleanup errors retained together. Future cleanup timeout must not adopt Latest or reset claim/budget.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/CORPUS-CLEANUP-TIMEOUT",
+      "activationScope": {
+        "current": "J original acquisition cleanup closure",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "DELETE must finish before exact stored revision activation; publication and cleanup errors retained together. Future cleanup timeout must not adopt Latest or reset claim/budget.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-HMAC-WINDOW",
+      "owner": "prism-worker-auth",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+        "field": "WINDOW_MS verification and nonce expiresAt"
+      },
+      "current": {
+        "valueOrDefault": 300000,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "milliseconds",
+      "reader": "WINDOW_MS verification and nonce expiresAt",
+      "productiveCallerChain": [
+        "worker.ts real service composition",
+        "worker-service authenticate auth.database.authenticate",
+        "WorkerDependencyDatabase.authenticate/run",
+        "PostgresNonceStore.consume / verifyInternalRequest"
+      ],
+      "validation": {
+        "semantic": "Absolute timestamp skew>window rejects; same window computes stored nonce expiry. Timestamp itself safe integer. Signature/nonce wire shapes are distinct protocol invariants. Replay DB behavior not executed here.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/workers/prism.config.json#/profiles/<selected>/authentication/HMAC-WINDOW",
+      "activationScope": {
+        "current": "S trust policy; durable nonce retention must cover originally accepted window",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Absolute timestamp skew>window rejects; same window computes stored nonce expiry. Timestamp itself safe integer. Signature/nonce wire shapes are distinct protocol invariants. Replay DB behavior not executed here.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-HMAC-WINDOW-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log",
+        "docs/review/evidence/config-acceptance/author/prism-control-worker-caller-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH",
+      "owner": "prism-worker-auth",
+      "scope": {
+        "instance": "actual control service / worker-auth as identified",
+        "profile": "current code policy; complete target author generation not defined"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+      "source": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+        "field": "PostgresNonceStore.consume DELETE LIMIT1000"
+      },
+      "current": {
+        "valueOrDefault": 1000,
+        "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+      },
+      "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+      "unit": "expired rows per authentication",
+      "reader": "PostgresNonceStore.consume DELETE LIMIT1000",
+      "productiveCallerChain": [
+        "worker.ts real service composition",
+        "worker-service authenticate auth.database.authenticate",
+        "WorkerDependencyDatabase.authenticate/run",
+        "PostgresNonceStore.consume / verifyInternalRequest"
+      ],
+      "validation": {
+        "semantic": "Cleanup throughput policy; DELETE only already expired rows. Database semantics/concurrency proof and proposed domain unresolved, not protocol const.",
+        "schema": "No selected central author or default-free target validator implemented"
+      },
+      "targetAuthorRef": "config/workers/prism.config.json#/profiles/<selected>/authentication/NONCE-CLEANUP-BATCH",
+      "activationScope": {
+        "current": "S storage maintenance policy; nonce identity/audience retained across retry",
+        "target": "Proposed scope above requires independent durable-binding review before implementation"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Cleanup throughput policy; DELETE only already expired rows. Database semantics/concurrency proof and proposed domain unresolved, not protocol const.",
+      "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+      "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH-IMPLEMENTATION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-control-source-read.log",
+        "docs/review/evidence/config-acceptance/author/prism-control-worker-caller-read.log"
+      ],
+      "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+      "c0Closed": false
     }
   ],
   "sources": [
@@ -4525,6 +5499,38 @@
     {
       "path": "skills/worker/core/worker/native-worker-process.ts",
       "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+    },
+    {
+      "path": "skills/prism/server/control-http.ts",
+      "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1"
+    },
+    {
+      "path": "skills/prism/control/session.ts",
+      "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+    },
+    {
+      "path": "skills/prism/server/session-routes.ts",
+      "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+    },
+    {
+      "path": "skills/prism/server/control-context.ts",
+      "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02"
+    },
+    {
+      "path": "skills/prism/server/internal-auth.ts",
+      "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72"
+    },
+    {
+      "path": "skills/prism/server/worker-readiness.ts",
+      "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+    },
+    {
+      "path": "skills/prism/corpus/index.ts",
+      "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4"
     }
   ],
   "cases": [
@@ -9823,6 +10829,1687 @@
       "reason": "C3/C5 not approved; future complete author/harness specification still open",
       "reviewerConfirmation": null,
       "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-C0-TYPED-PROFILES",
+      "settingIds": [
+        "AUTH-PRISM-CACHE-maximumInFlight",
+        "AUTH-PRISM-CACHE-maximumCompletedEntries",
+        "AUTH-PRISM-CACHE-maximumCompletedBytes"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-C",
+        "A2",
+        "A4",
+        "A5"
+      ],
+      "phase": "C0",
+      "scope": "local typed-library definition, not service/native host dispatch",
+      "productiveCaller": "Actual exported PrismEngine + DeterministicDesignProvider + EngineExecutionCache, direct explicit typed profile; application caller applicability independently retained",
+      "inputProfile": {
+        "A": {
+          "maximumInFlight": 4,
+          "maximumCompletedEntries": 32,
+          "maximumCompletedBytes": 16777216
+        },
+        "B": {
+          "maximumInFlight": 2,
+          "maximumCompletedEntries": 16,
+          "maximumCompletedBytes": 8388608
+        }
+      },
+      "priorState": "fresh real engine per complete typed profile; three distinct ingest keys queued before settlement, no mock provider",
+      "expectedEffectOrRejectingBoundary": "A admits three queued library calls, B admits two and rejects third at PRISM_ENGINE_IN_FLIGHT_LIMIT; zero in each field rejected by actual constructor",
+      "observerMethod": [
+        {
+          "profile": "A",
+          "limits": {
+            "maximumInFlight": 4,
+            "maximumCompletedEntries": 32,
+            "maximumCompletedBytes": 16777216
+          },
+          "admitted": 3,
+          "rejected": 0,
+          "usage": {
+            "inFlight": 0,
+            "completedEntries": 3,
+            "completedBytes": 1705,
+            "totalEntries": 3
+          },
+          "result": "passed"
+        },
+        {
+          "profile": "B",
+          "limits": {
+            "maximumInFlight": 2,
+            "maximumCompletedEntries": 16,
+            "maximumCompletedBytes": 8388608
+          },
+          "admitted": 2,
+          "rejected": 1,
+          "usage": {
+            "inFlight": 0,
+            "completedEntries": 2,
+            "completedBytes": 1133,
+            "totalEntries": 2
+          },
+          "result": "passed"
+        },
+        {
+          "field": "maximumInFlight",
+          "input": 0,
+          "boundary": "actual EngineExecutionCache constructor",
+          "result": "passed"
+        },
+        {
+          "field": "maximumCompletedEntries",
+          "input": 0,
+          "boundary": "actual EngineExecutionCache constructor",
+          "result": "passed"
+        },
+        {
+          "field": "maximumCompletedBytes",
+          "input": 0,
+          "boundary": "actual EngineExecutionCache constructor",
+          "result": "passed"
+        }
+      ],
+      "command": "node docs/review/evidence/config-acceptance/author/check-prism-cache-definition.mjs",
+      "sourceIdentity": {
+        "kind": "identity",
+        "head": "40cf24e77388bced59475ece9651c9c94d848368",
+        "tree": "efe3b346df6ce0396f1187271863cf91564fcc1f",
+        "node": "v24.21.0",
+        "sources": [
+          {
+            "path": "docs/review/evidence/config-acceptance/author/check-prism-cache-definition.mjs",
+            "sha256": "c0fa2847b3ef25e1f9439272342ea11b27a63b81e25dcb2610209e830da60958"
+          },
+          {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a"
+          },
+          {
+            "path": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+          },
+          {
+            "path": "skills/prism/server/worker-operation.ts",
+            "sha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+          }
+        ],
+        "dirtyStand": {
+          "patchPath": "docs/review/evidence/config-acceptance/author/prism-cache-definition-dirty.patch",
+          "patchSha256": "e71fa03fc3780c8ed53d346399306b60f00b37e88583c6ba2ed846849cd657f5",
+          "capture": "post-command capture; every actually executed source/test above rechecked unchanged",
+          "untrackedInputs": [
+            {
+              "path": "docs/review/evidence/config-acceptance/author/check-prism-cache-definition.mjs",
+              "sha256": "c0fa2847b3ef25e1f9439272342ea11b27a63b81e25dcb2610209e830da60958"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/author/prism-cache-definition-dirty.patch",
+              "sha256": "e71fa03fc3780c8ed53d346399306b60f00b37e88583c6ba2ed846849cd657f5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/author/refine-prism-cache-applicability.py",
+              "sha256": "5962d66b93553dd3e0e05459047cfc93262116fe09bb692535cc23b70ccf61d7"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/materialize-pinned-schema-alias.py",
+              "sha256": "0b83193b7932dc3aad747e86869b7797d3d6cfcfe2b271f033e540b4119be1da"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/README.md",
+              "sha256": "0f0417cb08050baeeda59927269fb6920d3b7129418f66804b50a0e00ada2fa6"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-local/customresourcedefinition-apiextensions-v1.json",
+              "sha256": "95e10ef81ae70e513186795e21d4b2717fbbef4e2d4eac3085579cfaa0d591ed"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json",
+              "sha256": "9dbc9ea6042d41e36d908b24897c4ee126e199a0a46856cd60c7dcbe73381e45"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json",
+              "sha256": "4b8b5f0e0e383363ee248095abe0ba0fd8b79da64d755c68632cbec9617697d9"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json",
+              "sha256": "a705eb1d0de6d38132435c8df35b33097456012b2cd7d92d685442386d1d5db5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go",
+              "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go",
+              "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases.json",
+              "sha256": "98cdbcecf4985dbd2da72365eeb32c79c275f28de38e1722e4a7a64090668959"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/customresourcedefinition-apiextensions-v1.json",
+              "sha256": "df8a2947181c208eb33d92fa1424d6699e7a48b5f31ab0d6e8feaad2df53ef57"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-schema-directory-acquisition.json",
+              "sha256": "39483eb410796a5c1ac1d2ba6ca1c9149425803beeceefd4cd3b051b737221e6"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-schema-full-directory-tree.json",
+              "sha256": "97dea27467a57a38eb768e6dd370d20b15407bb7d7a12a4ffa24e175d4ba852a"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-schema-root-tree.json",
+              "sha256": "92d77988c96332f8b2ca55c74055f09c8b4d8ac0a1e9ceae5f82ba0e08be6af8"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/README.md",
+              "sha256": "c5f5702c44b99ef3646b18db547508eb715805e28dcb79a3523103ae863cba1d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/c0-kubernetes-boundary-cases.json",
+              "sha256": "e711a6ad4b4cc1dd8318587c5acfacd22867357069bb656d0ddaeb50226e75af"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/fragment-status.json",
+              "sha256": "d8528f6285f5e160bc1b8e637aeee4bee4f4a775a3f135bcc97c07f0542dcbf8"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/inventory-fragment.json",
+              "sha256": "dc68eff75eca522330c2a97f2d6af3db2d7ba896eb898b15945cce07191cdfba"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/kubernetes-boundary-definition.json",
+              "sha256": "5d9edf3f7d16d3b512dc017c2ca725cbf622e22f7405ba6140d10ead36341816"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/kubernetes-source-acquisitions.json",
+              "sha256": "14628e5dbcaee6602636c8f5476326d7721861a144ac77008de6a23b91b4071c"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED.stdout",
+              "sha256": "8cddd9b041bfb841bd3aaf60ccec84b7a4f8f3eeb8d9dcd5c82cb2f0d92aa3a5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED.stdout",
+              "sha256": "10b2f96a5e077a4c25643a80300bdcdc06125eb69e1c28941719187c51593f05"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED.stdout",
+              "sha256": "3a6248da6e97d76d04b66549722663db58ff5859823458a025a8df2d96b0619c"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED.stdout",
+              "sha256": "730cefd0fef047055d1f87eceb49eb59899f85f223b45977daf89f6823a884f3"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED.stdout",
+              "sha256": "526233d5cecb2f759824b5cec4075ef73421f9f0cc194d6b2dfccf7820786c49"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED.stderr",
+              "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED.stdout",
+              "sha256": "619c56b1831f3f3f1454df8e2d42aad5b539a5f169c02732637690add37edb0b"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY.stderr",
+              "sha256": "763b9fa5ec3903261241d644b9e4d7ee275a66460e556ed6fd7bc4364c186cda"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY.stdout",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY.stderr",
+              "sha256": "c1859fbe442de6709bd31ed267890fa8bebece053a77d2bd5b1650bee8683d70"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY.stdout",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.stderr",
+              "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.stdout",
+              "sha256": "3c59bb61156ab984508b93f274348518f2b8593739dfb2cea1d239f1b14486c5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.yaml",
+              "sha256": "3c59bb61156ab984508b93f274348518f2b8593739dfb2cea1d239f1b14486c5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.stderr",
+              "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.stdout",
+              "sha256": "58040c94dc0cd19a8a53703608469f577a68e52329d9f0e4eb305e4ced31479d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.yaml",
+              "sha256": "58040c94dc0cd19a8a53703608469f577a68e52329d9f0e4eb305e4ced31479d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stderr",
+              "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stdout",
+              "sha256": "6fa7235732c2631aea00baafbf85fc8ca8ac96a60d5ead3c2cc92f8e5b8f3ea5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml",
+              "sha256": "6fa7235732c2631aea00baafbf85fc8ca8ac96a60d5ead3c2cc92f8e5b8f3ea5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stderr",
+              "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stdout",
+              "sha256": "91fe0ebd61493dcb6bc03ab84ead9967787c7f95a4c2c920c6db3c68af06ca5b"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml",
+              "sha256": "91fe0ebd61493dcb6bc03ab84ead9967787c7f95a4c2c920c6db3c68af06ca5b"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stdout",
+              "sha256": "3a11e0063e771fde3161f3138dc3974a4ad2c38a1550770c7cae728845ba151a"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.yaml",
+              "sha256": "3a11e0063e771fde3161f3138dc3974a4ad2c38a1550770c7cae728845ba151a"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stdout",
+              "sha256": "ba35c7b651bc81a6851eb13817591ed52a5828a0b8a0c6b78e957b02e082479a"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.yaml",
+              "sha256": "ba35c7b651bc81a6851eb13817591ed52a5828a0b8a0c6b78e957b02e082479a"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.stderr",
+              "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.stdout",
+              "sha256": "5bae3136741c96db1b87870c7cae9578ae3958bcfecdbcd25d98bca721897a2b"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-A.yaml",
+              "sha256": "5bae3136741c96db1b87870c7cae9578ae3958bcfecdbcd25d98bca721897a2b"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.stderr",
+              "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.stdout",
+              "sha256": "01ccdf995033308427cdb52598392fa849f8eb0a9de24d510f69ba5ec23479fa"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-RENDER-PRISM-B.yaml",
+              "sha256": "01ccdf995033308427cdb52598392fa849f8eb0a9de24d510f69ba5ec23479fa"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-A.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-A.stdout",
+              "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-B.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-B.stdout",
+              "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout",
+              "sha256": "1f3b981f38c68777c5fa961f9370ecf7591afc666ec5989fb6244f403551057d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout",
+              "sha256": "15674fce333bfd3b4b53dd152b17e0cf0e71c71a9a6dff7b48e6b7cce7e5fce2"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A.stdout",
+              "sha256": "abcbbbaa0ced47dd78082a7cfa4a8e6312fe9c0a4089b1a61fcba346305bb3ae"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B.stdout",
+              "sha256": "abcbbbaa0ced47dd78082a7cfa4a8e6312fe9c0a4089b1a61fcba346305bb3ae"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-A.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-A.stdout",
+              "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-B.stderr",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/DLV-C0-BOUNDARY-SCHEMA-PRISM-B.stdout",
+              "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-kubeclaw-A.json",
+              "sha256": "69ad21550d02c9564d5a5da73c026caa78428b0bef6294b74250ae8e21f9a796"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-kubeclaw-B.json",
+              "sha256": "718824c176f7bc20866f9b611de69fabea8eaf34d85257a47aedae6195e6fada"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-kubeclaw-buster-A.json",
+              "sha256": "910afad793b1712ca19c0195446099d377cfa4fe737750c7aa8172aabeb1247a"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-kubeclaw-buster-B.json",
+              "sha256": "ed1a51772c116145c61676d6b4e01236161ce927f3bca3381269ecbc38bba6a6"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-ops-pod-A.json",
+              "sha256": "159424e5b2b200e496adae930a43dd678d78798fe80ab66fd7def595fa74c6c6"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-ops-pod-B.json",
+              "sha256": "a5c7500568511f617cca3f2e9e4c5b1369512253c66f4d6b153408132fa95517"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-prism-A.json",
+              "sha256": "ebd70730b33a4140c69aac20c0baa6ecc7607a7950cd005e4258be958261c418"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/profile-prism-B.json",
+              "sha256": "9dd050f2b2ab354a595aed98154061d294dea9d9cd586820e16cf34b78f0a86d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/resource-projection-comparisons.json",
+              "sha256": "b87290580abcf596da6204d109ed1ec064a4cdb7e063875e13c5cf89b19dc702"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/raw/schema-buster-debug.stdout",
+              "sha256": "1f3b981f38c68777c5fa961f9370ecf7591afc666ec5989fb6244f403551057d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/run-kubernetes-boundary-definition.py",
+              "sha256": "8c8204b721eb39c19c5138b0845a69151cb391fe9e92f04b9462fef50e088b5e"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/v1.35.6-local-directory-tree.json",
+              "sha256": "b8e553af5e201305d465ba95455096c38a555f1ffba55366fb7d8c9aa45823b7"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/v1.35.6-standalone-directory-tree.json",
+              "sha256": "39ff5b9b9385d44576de3d32b1bd2fd9624f9129190bec81e2f4bb385581e4ec"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/case-proposals.json",
+              "sha256": "6acbd49e23b3b367dcce4cae76241ebd634c81a728c64686349efc48f45c9628"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/identity.json",
+              "sha256": "ce4d9f0b4c2545a3b5485b1b552dcae49af66d3077eb66068ae1538054f7760c"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/inventory-fragment.json",
+              "sha256": "c200148b09f13440af64ca6c5f922476637ff74d6813821ce9fd599da64da8bf"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/runtime-closure-identities.json",
+              "sha256": "e8342e963fd480c81578e5ea2fced305beb31777dab9acced2aa4549785c1d94"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/runtime-closure-summary.json",
+              "sha256": "d10806a5c97c088e5a0621dc9da648435c5469b65956d685682f04cdef7b2c94"
+            }
+          ]
+        }
+      },
+      "testDigests": [
+        {
+          "path": "docs/review/evidence/config-acceptance/author/check-prism-cache-definition.mjs",
+          "sha256": "c0fa2847b3ef25e1f9439272342ea11b27a63b81e25dcb2610209e830da60958"
+        }
+      ],
+      "toolDependencyImageConfigIdentities": {
+        "node": "v24.21.0",
+        "packageLock": {
+          "path": "package-lock.json",
+          "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+        },
+        "profilesSha256": "e326b8c5c82bae5f82048fa28bb916f8bdb0b2df4ac60cee6c0717a672fe5975"
+      },
+      "rawEvidencePath": "docs/review/evidence/config-acceptance/author/prism-cache-definition.log",
+      "rawEvidenceSha256": "8dc50ed1dd0590025fc3ec0818c1a571cc3c91b34193d09e4d0b40e75221413f",
+      "result": "passed",
+      "reason": "Direct real exported component with real deterministic provider. Native host constructs one engine and invokes one operation only; multi-key library witness does not prove configurable admission/eviction at that productive host. No browser, worker, gateway, paid model or service dispatched.",
+      "reviewerConfirmation": null,
+      "specificationStatus": "executed-current-library-definition; productive host effect not accepted"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-TTL-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SESSION-TTL"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "control-server.sessionRoutes \u2192 exchangeTailscaleIdentity \u2192 mintSession; authenticatedControlContext/product decisions \u2192 verifySession",
+      "inputProfile": {
+        "currentPolicyValue": 900000,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Token expiry now+TTL; verifier rejects expiresAt<=now. Cookie Max-Age=900 is separately hardcoded in session-routes twice, requiring one author and seconds projection, not three independent authors.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/control/session.ts",
+            "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "sessionRoutes \u2192 exchangeTailscaleIdentity \u2192 mintSession",
+      "inputProfile": {
+        "currentPolicyValue": [
+          "editor"
+        ],
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Current mint default grants editor; roles array is verified but member types/allowed roles are not validated here. Target role-domain/security review remains open; changing default grants is not a harmless numeric profile change.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/control/session.ts",
+            "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "control-server \u2192 document/direction/approval/project/engine/corpus routes \u2192 body",
+      "inputProfile": {
+        "currentPolicyValue": 2000000,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Accumulator rejects size>maxBytes before JSON parse; explicit artifact call overrides to8500000. Content-type check uses startsWith(application/json), not exact parsed media-type equality.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/control-http.ts",
+            "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "control-server \u2192 corpusRoutes POST /v1/artifacts \u2192 uploadArtifact \u2192 body",
+      "inputProfile": {
+        "currentPolicyValue": 8500000,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "JSON/base64 wire budget differs from decoded artifact budget. Required coupled-domain review must account for base64 expansion and JSON overhead; no arbitrary safe integer maximum asserted.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "corpusRoutes \u2192 uploadArtifact \u2192 artifacts.put",
+      "inputProfile": {
+        "currentPolicyValue": 6000000,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Reject decoded>6000000 or noncanonical base64 before artifacts.put. Other render/baseline/ingestion caps are separate readers, not implicitly proven aliases.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "corpusRoutes GET /v1/corpus/search \u2192 runWorker ingest \u2192 corpus.search",
+      "inputProfile": {
+        "currentPolicyValue": 10,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Request limit is task data; omitted default10 is policy duplicated in route and exported search. Actual route Number/Math clamp admits NaN/fractions to downstream rather than enforcing a supported safe-integer domain.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "corpusRoutes \u2192 searchCorpus \u2192 corpus.search and coverageGap",
+      "inputProfile": {
+        "currentPolicyValue": 50,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Route clamp1..50 is operator capacity policy; duplicate coverageGap clamp must use identical effective limit. Direct exported search has no same upper clamp.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "searchCorpus \u2192 corpus.search \u2192 selected families Map",
+      "inputProfile": {
+        "currentPolicyValue": 2,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Default2 duplicated in HTTP and corpus search. Task requested sourceFamilyLimit is distinct; fallback changes diversity. No current integer/type validator.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "searchCorpus \u2192 corpus.search familyLimit \u2192 selection loop",
+      "inputProfile": {
+        "currentPolicyValue": 10,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "HTTP clamps1..10; direct corpus.search only Math.max(1,options.sourceFamilyLimit??2). These domains are not identical or interchangeable validators.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "searchCorpus \u2192 corpus.search \u2192 pool.query hybrid/text SQL",
+      "inputProfile": {
+        "currentPolicyValue": 100,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Hybrid text_rank/vector_rank each cap100 while outer result floor100. Three real readers need one explicit justified policy or separate scope if domains differ; DB behavior not executed here.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "corpus.search \u2192 hybrid/text SQL bound parameter",
+      "inputProfile": {
+        "currentPolicyValue": 10,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Both branches oversample result candidates; role of hybrid inner100 cap differs from outer multiplier. DB domain and cost witness remain open.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "corpus.search hybrid fused SQL \u2192 selected results",
+      "inputProfile": {
+        "currentPolicyValue": 60,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Ranking hyperparameter affects ordering/score, not protocol constant solely because output label hybrid-rrf-v1 is versioned. Version/profile compatibility requires explicit definition.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "corpusRoutes POST /v1/corpus \u2192 ingestCorpus \u2192 acquireCorpus fetch",
+      "inputProfile": {
+        "currentPolicyValue": 30000,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Current POST abort budget30s; no persisted config generation. Must preserve original accepted ingestion endpoint, secret reference and uncertain acquisition effects on retry.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "ingestCorpus \u2192 cleanAcquisition DELETE \u2192 revision-specific activation",
+      "inputProfile": {
+        "currentPolicyValue": 10000,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "DELETE must finish before exact stored revision activation; publication and cleanup errors retained together. Future cleanup timeout must not adopt Latest or reset claim/budget.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-HMAC-WINDOW-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-HMAC-WINDOW"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "worker.ts \u2192 worker-service authenticate \u2192 WorkerDependencyDatabase.authenticate/run \u2192 real PostgresNonceStore/verifyInternalRequest",
+      "inputProfile": {
+        "currentPolicyValue": 300000,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Absolute timestamp skew>window rejects; same window computes stored nonce expiry. Timestamp itself safe integer. Signature/nonce wire shapes are distinct protocol invariants. Replay DB behavior not executed here.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/internal-auth.ts",
+            "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          },
+          {
+            "path": "skills/prism/server/worker-service.ts",
+            "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "worker.ts \u2192 worker-service authenticate \u2192 WorkerDependencyDatabase.authenticate/run \u2192 real PostgresNonceStore/verifyInternalRequest",
+      "inputProfile": {
+        "currentPolicyValue": 1000,
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Cleanup throughput policy; DELETE only already expired rows. Database semantics/concurrency proof and proposed domain unresolved, not protocol const.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/internal-auth.ts",
+            "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          },
+          {
+            "path": "skills/prism/server/worker-service.ts",
+            "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SESSION-TTL",
+        "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES",
+        "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-C",
+        "A2",
+        "A4",
+        "A5"
+      ],
+      "phase": "C0",
+      "scope": "local current session exports and genuine loopback HTTP parser",
+      "productiveCaller": "Current exported mintSession/verifySession/body; actual application caller chains retained in rows, not a complete control-server composition test",
+      "inputProfile": {
+        "currentTTL": 900000,
+        "defaultBodyBytes": 2000000,
+        "wirePositiveBytes": 2000000,
+        "wireNegativeBytes": 2000001
+      },
+      "priorState": "Disposable fresh local signing key; explicit now; no deployed secrets, DB, gateway, worker or paid provider",
+      "expectedEffectOrRejectingBoundary": "Session accepts at expiry-1 and rejects at expiry; wrong signing key rejects; actual parser accepts exact2000000 JSON wire bytes and rejects2000001; wrong media type rejects",
+      "observerMethod": [
+        {
+          "id": "session-current-positive",
+          "result": "passed",
+          "expiresAfterMs": 900000,
+          "roles": [
+            "editor"
+          ]
+        },
+        {
+          "id": "session-current-expiry-boundary",
+          "result": "passed",
+          "rejectedAtMs": 900000
+        },
+        {
+          "id": "session-current-wrong-signing-key",
+          "result": "passed"
+        },
+        {
+          "id": "body-current-exact-limit-positive",
+          "result": "passed",
+          "wireBytes": 2000000
+        },
+        {
+          "id": "body-current-over-limit-rejection",
+          "result": "passed",
+          "wireBytes": 2000001
+        },
+        {
+          "id": "body-current-media-type-rejection",
+          "result": "passed"
+        }
+      ],
+      "command": "node docs/review/evidence/config-acceptance/author/check-prism-control-definition.mjs",
+      "sourceIdentity": {
+        "node": "v24.21.0",
+        "commit": "40cf24e77388bced59475ece9651c9c94d848368",
+        "tree": "efe3b346df6ce0396f1187271863cf91564fcc1f",
+        "sources": [
+          {
+            "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-control-definition.mjs",
+            "sha256": "ac746f82287f57e0594a17b58c7d403b74e1d455262b9c3abb2fa02957ebd431"
+          },
+          {
+            "path": "skills/prism/control/session.ts",
+            "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+          },
+          {
+            "path": "skills/prism/server/control-http.ts",
+            "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+          }
+        ],
+        "dirtyStand": {
+          "patchPath": "docs/review/evidence/config-acceptance/author/prism-control-definition-dirty.patch.gz",
+          "patchSha256": "84c527bd403277b732d1e7edec4dc6b91bb4693f1dec57885610ef7b9f4f1aa2",
+          "untrackedInputs": [
+            {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/trace-prism-control-policies.py",
+              "sha256": "fc6a4d93ccd6a5a38822984f6000f189419acf740b6c14b1ad13b97eba5d296d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/author/prism-control-source-read.log",
+              "sha256": "34bb7b555061071d679adc8cdfd460981fd9dd97d16eee318f4a4d951a06609c"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/author/check-prism-control-definition.mjs",
+              "sha256": "ac746f82287f57e0594a17b58c7d403b74e1d455262b9c3abb2fa02957ebd431"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/author/prism-control-definition.log",
+              "sha256": "841ff66596abd88bbf4fe4f33ab2fcf3b09fb0c9005b9a573dd573db835193c3"
+            }
+          ],
+          "capture": "post-command exact tracked patch plus all executed untracked inputs; productive sources unchanged",
+          "decompressedPatchSha256": "0984976ca55719cb655956b94ba14dc583ffd20d51fa53e3e136986a06c9f22f",
+          "compression": "lossless gzip; exact original tracked patch bytes retained"
+        }
+      },
+      "testDigests": [
+        {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-control-definition.mjs",
+          "sha256": "ac746f82287f57e0594a17b58c7d403b74e1d455262b9c3abb2fa02957ebd431"
+        }
+      ],
+      "toolDependencyImageConfigIdentities": {
+        "node": "v24.21.0",
+        "sources": [
+          {
+            "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-control-definition.mjs",
+            "sha256": "ac746f82287f57e0594a17b58c7d403b74e1d455262b9c3abb2fa02957ebd431"
+          },
+          {
+            "path": "skills/prism/control/session.ts",
+            "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+          },
+          {
+            "path": "skills/prism/server/control-http.ts",
+            "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+          }
+        ]
+      },
+      "rawEvidencePath": "docs/review/evidence/config-acceptance/author/prism-control-definition.log",
+      "rawEvidenceSha256": "841ff66596abd88bbf4fe4f33ab2fcf3b09fb0c9005b9a573dd573db835193c3",
+      "result": "passed",
+      "reason": "Six current parser/session definition controls only; no profile migration, cookie projection, DB/replay, target schema, deployment or runtime binding acceptance.",
+      "reviewerConfirmation": null,
+      "specificationStatus": "executed-current-definition-only"
     }
   ],
   "gaps": [
@@ -9837,6 +12524,14 @@
     {
       "id": "AUTH-PRISM-ENDPOINT-TOPOLOGY",
       "reason": "Early URL/peer/trust/credential constraints and complete single-author endpoint\u2194Envoy\u2194Service/NetworkPolicy topology generations require exact target definition. Current new URL is not a safety policy validator; replica startup and retained cleanup locations need C5 cases."
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-APPLICABILITY",
+      "reason": "Exact library domains/witnesses exist, but current application host executes one operation per dedicated engine. Cannot claim multi-key admission/eviction tunability at that productive caller or invent a shared-service migration. Resolve complete target owner/activation/case applicability with independent review; original required EFFECT IDs remain open."
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-POLICIES",
+      "reason": "Sixteen additional productive literal policies traced; actual six parser/session controls do not close adjustable domains, whole owner profiles, DB replay/ranking, alias authority, API grants, complete future executable specifications or independent review."
     }
   ],
   "endpointProjectionDispositions": [
@@ -9854,6 +12549,32 @@
       "class": "generated-binding",
       "authorId": "DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENABLED",
       "reason": "Exact string true enables server policy; absent/other strings select legacy secret mode today. Target explicit boolean required; not separate per-consumer mode author."
+    }
+  ],
+  "cacheApplicabilityCorrections": [
+    {
+      "settingId": "AUTH-PRISM-CACHE-maximumInFlight",
+      "previousActivation": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: native host engine instance startup"
+      },
+      "correction": "Engine is created inside dedicated per-attempt native host, not a persistent multi-order HTTP service. Count/eviction witness at reusable library is not an observed productive host EFFECT."
+    },
+    {
+      "settingId": "AUTH-PRISM-CACHE-maximumCompletedEntries",
+      "previousActivation": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: native host engine instance startup"
+      },
+      "correction": "Engine is created inside dedicated per-attempt native host, not a persistent multi-order HTTP service. Count/eviction witness at reusable library is not an observed productive host EFFECT."
+    },
+    {
+      "settingId": "AUTH-PRISM-CACHE-maximumCompletedBytes",
+      "previousActivation": {
+        "current": "producer/composition captured once; see specific reader",
+        "target": "S: native host engine instance startup"
+      },
+      "correction": "Engine is created inside dedicated per-attempt native host, not a persistent multi-order HTTP service. Count/eviction witness at reusable library is not an observed productive host EFFECT."
     }
   ]
 }

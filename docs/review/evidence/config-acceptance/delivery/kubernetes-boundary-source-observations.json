@@ -3,7 +3,7 @@
   "versionScope": "exact static Kubernetes v1.35.6/v1.34.11 release sources, resolved commits and SHA256 retained; selected kubectl/Nova-schema pins do NOT select live apiserver version; go.mod has no Kubernetes client deps; Charts omit kubeVersion. Actual server/feature-gates/admission/CSI/node identities prerequisite for runtime acceptance, not inferred universal domain.",
   "fieldsByKind": {
     "secret": 29,
-    "resource": 60,
+    "resource": 66,
     "volume-selection": 3,
     "pvc": 14,
     "pvc-reference": 1,
@@ -432,6 +432,78 @@
       "line": 761,
       "endLine": 779,
       "excerpt": "func formatSchedule(cj *batchv1.CronJob, recorder record.EventRecorder) string {\n\tif strings.Contains(cj.Spec.Schedule, \"TZ\") {\n\t\tif recorder != nil {\n\t\t\trecorder.Eventf(cj, corev1.EventTypeWarning, \"UnsupportedSchedule\", \"CRON_TZ or TZ used in schedule %q is not officially supported, see https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/ for more details\", cj.Spec.Schedule)\n\t\t}\n\n\t\treturn cj.Spec.Schedule\n\t}\n\n\tif cj.Spec.TimeZone != nil {\n\t\tif _, err := time.LoadLocation(*cj.Spec.TimeZone); err != nil {\n\t\t\treturn cj.Spec.Schedule\n\t\t}\n\n\t\treturn fmt.Sprintf(\"TZ=%s %s\", *cj.Spec.TimeZone, cj.Spec.Schedule)\n\t}\n\n\treturn cj.Spec.Schedule\n}"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/kubelet.go",
+      "sha256": "1d9b1c314f27c60e77710f17c6d446fac83cb44c68bd077312b07ca32aaf7301",
+      "version": "v1.35.6",
+      "function": "supportLocalStorageCapacityIsolation",
+      "line": 3303,
+      "endLine": 3307,
+      "excerpt": "func (kl *Kubelet) supportLocalStorageCapacityIsolation() bool {\n\treturn kl.GetConfiguration().LocalStorageCapacityIsolation\n}\n\n// isSyncPodWorthy filters out events that are not worthy of pod syncing"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/kubelet.go",
+      "sha256": "40a3129435699078ebdf695894a446c62c6a74e2e9256668373910521f29bff2",
+      "version": "v1.34.11",
+      "function": "supportLocalStorageCapacityIsolation",
+      "line": 3183,
+      "endLine": 3187,
+      "excerpt": "func (kl *Kubelet) supportLocalStorageCapacityIsolation() bool {\n\treturn kl.GetConfiguration().LocalStorageCapacityIsolation\n}\n\n// isSyncPodWorthy filters out events that are not worthy of pod syncing"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go",
+      "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b",
+      "version": "v1.35.6",
+      "function": "localStorageEviction",
+      "line": 508,
+      "endLine": 533,
+      "excerpt": "func (m *managerImpl) localStorageEviction(logger klog.Logger, pods []*v1.Pod, statsFunc statsFunc) []*v1.Pod {\n\tevicted := []*v1.Pod{}\n\tfor _, pod := range pods {\n\t\tpodStats, ok := statsFunc(pod)\n\t\tif !ok {\n\t\t\tcontinue\n\t\t}\n\n\t\tif m.emptyDirLimitEviction(logger, podStats, pod) {\n\t\t\tevicted = append(evicted, pod)\n\t\t\tcontinue\n\t\t}\n\n\t\tif m.podEphemeralStorageLimitEviction(logger, podStats, pod) {\n\t\t\tevicted = append(evicted, pod)\n\t\t\tcontinue\n\t\t}\n\n\t\tif m.containerEphemeralStorageLimitEviction(logger, podStats, pod) {\n\t\t\tevicted = append(evicted, pod)\n\t\t}\n\t}\n\n\treturn evicted\n}\n"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go",
+      "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e",
+      "version": "v1.34.11",
+      "function": "localStorageEviction",
+      "line": 502,
+      "endLine": 527,
+      "excerpt": "func (m *managerImpl) localStorageEviction(pods []*v1.Pod, statsFunc statsFunc) []*v1.Pod {\n\tevicted := []*v1.Pod{}\n\tfor _, pod := range pods {\n\t\tpodStats, ok := statsFunc(pod)\n\t\tif !ok {\n\t\t\tcontinue\n\t\t}\n\n\t\tif m.emptyDirLimitEviction(podStats, pod) {\n\t\t\tevicted = append(evicted, pod)\n\t\t\tcontinue\n\t\t}\n\n\t\tif m.podEphemeralStorageLimitEviction(podStats, pod) {\n\t\t\tevicted = append(evicted, pod)\n\t\t\tcontinue\n\t\t}\n\n\t\tif m.containerEphemeralStorageLimitEviction(podStats, pod) {\n\t\t\tevicted = append(evicted, pod)\n\t\t}\n\t}\n\n\treturn evicted\n}\n"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go",
+      "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b",
+      "version": "v1.35.6",
+      "function": "podEphemeralStorageLimitEviction",
+      "line": 558,
+      "endLine": 582,
+      "excerpt": "func (m *managerImpl) podEphemeralStorageLimitEviction(logger klog.Logger, podStats statsapi.PodStats, pod *v1.Pod) bool {\n\tpodLimits := resourcehelper.PodLimits(pod, resourcehelper.PodResourcesOptions{})\n\t_, found := podLimits[v1.ResourceEphemeralStorage]\n\tif !found {\n\t\treturn false\n\t}\n\n\t// pod stats api summarizes ephemeral storage usage (container, emptyDir, host[etc-hosts, logs])\n\tpodEphemeralStorageTotalUsage := &resource.Quantity{}\n\tif podStats.EphemeralStorage != nil && podStats.EphemeralStorage.UsedBytes != nil {\n\t\tpodEphemeralStorageTotalUsage = resource.NewQuantity(int64(*podStats.EphemeralStorage.UsedBytes), resource.BinarySI)\n\t}\n\tpodEphemeralStorageLimit := podLimits[v1.ResourceEphemeralStorage]\n\tif podEphemeralStorageTotalUsage.Cmp(podEphemeralStorageLimit) > 0 {\n\t\t// the total usage of pod exceeds the total size limit of containers, evict the pod\n\t\tmessage := fmt.Sprintf(podEphemeralStorageMessageFmt, podEphemeralStorageLimit.String())\n\t\tif m.evictPod(logger, pod, immediateEvictionGracePeriodSeconds, message, nil, nil) {\n\t\t\tmetrics.Evictions.WithLabelValues(signalEphemeralPodFsLimit).Inc()\n\t\t\treturn true\n\t\t}\n\t\treturn false\n\t}\n\treturn false\n}\n"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go",
+      "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e",
+      "version": "v1.34.11",
+      "function": "podEphemeralStorageLimitEviction",
+      "line": 552,
+      "endLine": 576,
+      "excerpt": "func (m *managerImpl) podEphemeralStorageLimitEviction(podStats statsapi.PodStats, pod *v1.Pod) bool {\n\tpodLimits := resourcehelper.PodLimits(pod, resourcehelper.PodResourcesOptions{})\n\t_, found := podLimits[v1.ResourceEphemeralStorage]\n\tif !found {\n\t\treturn false\n\t}\n\n\t// pod stats api summarizes ephemeral storage usage (container, emptyDir, host[etc-hosts, logs])\n\tpodEphemeralStorageTotalUsage := &resource.Quantity{}\n\tif podStats.EphemeralStorage != nil && podStats.EphemeralStorage.UsedBytes != nil {\n\t\tpodEphemeralStorageTotalUsage = resource.NewQuantity(int64(*podStats.EphemeralStorage.UsedBytes), resource.BinarySI)\n\t}\n\tpodEphemeralStorageLimit := podLimits[v1.ResourceEphemeralStorage]\n\tif podEphemeralStorageTotalUsage.Cmp(podEphemeralStorageLimit) > 0 {\n\t\t// the total usage of pod exceeds the total size limit of containers, evict the pod\n\t\tmessage := fmt.Sprintf(podEphemeralStorageMessageFmt, podEphemeralStorageLimit.String())\n\t\tif m.evictPod(pod, immediateEvictionGracePeriodSeconds, message, nil, nil) {\n\t\t\tmetrics.Evictions.WithLabelValues(signalEphemeralPodFsLimit).Inc()\n\t\t\treturn true\n\t\t}\n\t\treturn false\n\t}\n\treturn false\n}\n"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go",
+      "sha256": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b",
+      "version": "v1.35.6",
+      "function": "containerEphemeralStorageLimitEviction",
+      "line": 583,
+      "endLine": 610,
+      "excerpt": "func (m *managerImpl) containerEphemeralStorageLimitEviction(logger klog.Logger, podStats statsapi.PodStats, pod *v1.Pod) bool {\n\tthresholdsMap := make(map[string]*resource.Quantity)\n\tfor _, container := range pod.Spec.Containers {\n\t\tephemeralLimit := container.Resources.Limits.StorageEphemeral()\n\t\tif ephemeralLimit != nil && ephemeralLimit.Value() != 0 {\n\t\t\tthresholdsMap[container.Name] = ephemeralLimit\n\t\t}\n\t}\n\n\tfor _, containerStat := range podStats.Containers {\n\t\tcontainerUsed := diskUsage(containerStat.Logs)\n\t\tif !*m.dedicatedImageFs {\n\t\t\tcontainerUsed.Add(*diskUsage(containerStat.Rootfs))\n\t\t}\n\n\t\tif ephemeralStorageThreshold, ok := thresholdsMap[containerStat.Name]; ok {\n\t\t\tif ephemeralStorageThreshold.Cmp(*containerUsed) < 0 {\n\t\t\t\tif m.evictPod(logger, pod, immediateEvictionGracePeriodSeconds, fmt.Sprintf(containerEphemeralStorageMessageFmt, containerStat.Name, ephemeralStorageThreshold.String()), nil, nil) {\n\t\t\t\t\tmetrics.Evictions.WithLabelValues(signalEphemeralContainerFsLimit).Inc()\n\t\t\t\t\treturn true\n\t\t\t\t}\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t}\n\treturn false\n}\n"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go",
+      "sha256": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e",
+      "version": "v1.34.11",
+      "function": "containerEphemeralStorageLimitEviction",
+      "line": 577,
+      "endLine": 604,
+      "excerpt": "func (m *managerImpl) containerEphemeralStorageLimitEviction(podStats statsapi.PodStats, pod *v1.Pod) bool {\n\tthresholdsMap := make(map[string]*resource.Quantity)\n\tfor _, container := range pod.Spec.Containers {\n\t\tephemeralLimit := container.Resources.Limits.StorageEphemeral()\n\t\tif ephemeralLimit != nil && ephemeralLimit.Value() != 0 {\n\t\t\tthresholdsMap[container.Name] = ephemeralLimit\n\t\t}\n\t}\n\n\tfor _, containerStat := range podStats.Containers {\n\t\tcontainerUsed := diskUsage(containerStat.Logs)\n\t\tif !*m.dedicatedImageFs {\n\t\t\tcontainerUsed.Add(*diskUsage(containerStat.Rootfs))\n\t\t}\n\n\t\tif ephemeralStorageThreshold, ok := thresholdsMap[containerStat.Name]; ok {\n\t\t\tif ephemeralStorageThreshold.Cmp(*containerUsed) < 0 {\n\t\t\t\tif m.evictPod(pod, immediateEvictionGracePeriodSeconds, fmt.Sprintf(containerEphemeralStorageMessageFmt, containerStat.Name, ephemeralStorageThreshold.String()), nil, nil) {\n\t\t\t\t\tmetrics.Evictions.WithLabelValues(signalEphemeralContainerFsLimit).Inc()\n\t\t\t\t\treturn true\n\t\t\t\t}\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t}\n\treturn false\n}\n"
     }
   ]
 }

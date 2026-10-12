@@ -1,3 +1,27 @@
+# Current ICD001–004 correction receipt — independent recheck pending
+
+The earlier sections below are preserved historical checkpoint narrative, not the
+current adjustable-domain or closure verdict. Current machine definitions are
+[core-adjustability-current.md](core-adjustability-current.md),
+[icd-correction-ledger.json](icd-correction-ledger.json),
+[active-case-specifications.json](active-case-specifications.json) and the residual
+fragment lifecycle fields. Numeric literal-only proposals are superseded, not
+accepted tuning. Original49rows/219cases remain in the exact40cf24 archive.
+
+Six named retention constructors share one explicit Core instance-map author.
+Additional six-root coordinates are75 (55 productive-path,20 public-contract-only),
+matching the independent append-only erratum; trust/cancellation do not acquire
+invented service callers. Active commands carry exact argv/environment, prior state,
+complete profile/task, boundary and oracle; absent approved future harnesses and
+genuine live fixtures remain prerequisites, never successful runtime observations.
+
+Actual controls:26 proposed Core profile definitions,9 real current-reader positive
+controls and296 corrected current-loader profile definitions. These are C0 scope
+controls only, not future policy implementation or effect/recovery acceptance.
+The independent NOT ACCEPTED report and failed/historical raw logs remain intact.
+
+---
+
 # Worker Core residual and C1 case correction — not C0 acceptance
 
 Owner /root/component_inventory. Existing semantic-fragment.json, case-profiles.json and first checkpoint logs are unchanged. New residual artifacts await parent consolidation/review.

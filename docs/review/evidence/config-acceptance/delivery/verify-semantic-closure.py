@@ -26,11 +26,23 @@ for c in cases:
  if c['result']!='not-run':issues.append({'kind':'unexpected-implementation-result','case':c['id'],'result':c['result']})
 definitionCases=json.loads((out/'c0-definition-cases.json').read_text()) if (out/'c0-definition-cases.json').exists() else []
 if (out/'c0-kubernetes-boundary-cases.json').exists():definitionCases+=json.loads((out/'c0-kubernetes-boundary-cases.json').read_text())
+if (out/'c0-buster-build-definition-cases.json').exists():definitionCases+=json.loads((out/'c0-buster-build-definition-cases.json').read_text())
 for c in definitionCases:
  for f,h in c['sourceDigests'].items():
   if not (repo/f).is_file() or digest(f)!=h:issues.append({'kind':'definition-source-digest-mismatch','case':c['id'],'path':f})
+ for f,h in c.get('testDigests',{}).items():
+  if not (repo/f).is_file() or digest(f)!=h:issues.append({'kind':'definition-test-digest-mismatch','case':c['id'],'path':f})
+ for id in c.get('settingIds',[]):
+  if id not in ids:issues.append({'kind':'dangling-definition-case-setting','case':c['id'],'setting':id})
  for f in c['rawEvidencePath']:
   if not (repo/f).is_file():issues.append({'kind':'definition-raw-evidence-absent','case':c['id'],'path':f})
+# Verify the alias has no independently authored schema constraints or fallback.
+if (out/'pinned-schema-aliases.json').exists():
+ a=json.loads((out/'pinned-schema-aliases.json').read_text());primary=repo/a['source']['localPath'];alias=repo/a['alias']['path'];key=a['definitionPointer'].removeprefix('#/definitions/');schema=json.loads(primary.read_text())['definitions'][key];body=json.loads(alias.read_text())
+ canonical=hashlib.sha256(json.dumps(schema,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+ expected={'$schema':'http://json-schema.org/draft-04/schema#','$ref':primary.resolve().as_uri()+a['definitionPointer']}
+ if digest(a['source']['localPath'])!=a['source']['sha256'] or digest(a['alias']['path'])!=a['alias']['sha256'] or canonical!=a['definitionCanonicalSha256'] or body!=expected or body!=a['alias']['body'] or schema.get('additionalProperties') is not False or schema.get('required')!=['spec']:
+  issues.append({'kind':'pinned-primary-ref-only-alias-identity-mismatch'})
 closed={'source-traced','source-traced-pinned-consumer','source-traced-declared-unused'}
 dispositions=[]
 for s in v['sources']:

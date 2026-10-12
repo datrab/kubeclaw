@@ -1,18 +1,22 @@
 {
   "status": "bounded incremental C0 progress; NOT semantic completion or acceptance",
-  "rows": 1221,
-  "cases": 3361,
+  "rows": 1222,
+  "cases": 3808,
   "results": {
-    "not-run": 2426,
-    "passed": 935
+    "not-run": 2783,
+    "passed": 1025
   },
-  "actualSourceDefinitionCases": 935,
+  "actualSourceDefinitionCases": 1025,
   "commonConcreteFutureCases": 460,
   "compilerRowsRefined": 20,
   "reviewPolicyDefinitionRowsRefined": 141,
   "reviewProductiveProfileContracts": 141,
   "reviewPolicySchemaEffectiveConstraintRows": 186,
   "reviewRegistrationReadRows": 17,
+  "repositoryGradeRowsRefined": 87,
+  "historicalDefinitionCases": 935,
+  "supersededHistoricalCases": 269,
+  "runtimeCodecTargetCorrection": "docs/review/evidence/config-acceptance/runtime/runtime-codec-target-erratum.json",
   "revalidationAcceptedUnusedRows": 94,
   "allC0ClosedFalse": true,
   "integrityErrors": []

@@ -85,6 +85,25 @@ fallback model or automatic old-filename lookup. An explicitly configured model
 fallback list is policy; actual selected model must be recorded and supported by
 the real adapter, not assumed from a profile label.
 
+### Current dispatch codec versus target policy
+
+The current SDK `RuntimeDispatchProfile` is exactly
+`{schemaVersion: 'runtime-dispatch-profile.v1', encoding: 'json-utf16-v1'}`;
+`parseRuntimeDispatchProfile` compares canonical bytes. It is codec/control
+metadata, not an actual target/model/budget selector or a CONFIG-generation
+binding. At `openclaw-adapter.activate`, `targetsFrom(context.config)` captures
+the configured target map; `createDispatchAdapter.invoke` selects its actual
+target by `request.resource.canonicalId`, or rejects `RUNTIME_TARGET_DENIED`.
+Reviewer model/runtime/agent/thinking assertions and cache identity must not be
+described as dispatch selection merely because their names resemble settings.
+
+The proposed M binding must carry the actual complete supported target policy
+within unchanged R grants/canonical identity and persist it before dispatch.
+The existing two-field SDK codec cannot be repurposed as that closure or silently
+extended with model/generation fields. This corrects earlier working-evidence
+wording, which is retained separately as superseded history; no implementation
+or current durable M-selection mechanism is claimed.
+
 ## Actual module and recovery source paths
 
 `skills/nova/project/compiler.ts::moduleStages` creates `implement-<module.id>`,
@@ -188,7 +207,7 @@ The existing chain can accept a valid but changed association setting without
 proving generation-projection equality; rejecting this before command construction
 is an explicit proposed C5 obligation, not a current-code acceptance claim.
 
-### Core domain-preservation limit
+### Historical Core domain-preservation proposal
 
 The [Core domain evidence](../evidence/config-acceptance/components/core-policy-domains.md)
 defines twelve proposed required numeric fields at their existing values and
@@ -203,15 +222,40 @@ checks cover parser/FD/state/journal boundaries; genuine emitter/kernel and
 approved config-projection behavior remain separate cases.
 
 The [fresh independent Core challenge](independent-config-c0-core-domain-a07de567.md)
-has now rejected this bounded definition: ICD-001 requires actual justified
+initially rejected that bounded definition: ICD-001 required actual justified
 tunability or an independently valid invariant reason; preservation alone does
 not close D17/D20/F-EFFECT. ICD-002 requires unambiguous active versus historical
-case dispositions and exact proposed commands. ICD-003 identifies 85 additional
-productive registration/health/trust/progress/log/cancellation schema coordinates;
+case dispositions and exact proposed commands. ICD-003 identifies additional
+registration/health/trust/progress/log/cancellation schema coordinates;
 ICD-004 requires all six actual retention instance projections, including the
 Prism agent. Its safe reproductions passed only source/definition checks. These
 findings remain open for author correction and independent recheck; no scope
 reduction or new user approval is inferred.
+
+The reviewer's append-only erratum corrects its arithmetic to **75**, not 85,
+without changing the six-root field set: 55 registration/health/progress/log
+coordinates have productive callers; 20 trust/cancellation coordinates are
+exported contract/test surfaces without a discovered repository service caller.
+Those helpers are distinct from productive SPIFFE peer authorization and local
+abort mechanisms. The original review and raw identity snapshot remain preserved;
+this count/reachability correction does not accept the author's pending fixes.
+
+### Current bounded Core corrective review
+
+The [final independent recheck](independent-config-c0-core-final-recheck-40cf24e7.md)
+verifies the subsequent proposed adjustable domains, exact 640-coordinate set,
+six retention caller mappings and original-case conservation. All 148 component
+refinements now have one canonical current action/oracle/invocation/lifecycle;
+their previous generic text is preserved as historical. RCORE-001/002 are corrected.
+The twelve numeric policies have bounded reductions or justified discrete choices,
+not const-only target tuning. Complete six-owner A/B definitions and retention
+choices are specified; they are not implemented config delivery or runtime PASS.
+
+This bounded corrective finding disposition does not close unrelated source,
+candidate, runtime/delivery/plugin/agent inventory or global C0 review. The original
+reports and failed evidence remain unchanged. Future binding serialization must
+include its complete header before applying selected journal quota projections;
+current shape-only definition controls cannot satisfy that future obligation.
 
 ## C1 proposal boundaries — not yet ready for approval
 
@@ -239,6 +283,33 @@ rejections with same-boundary positive controls, real Chart/image/filter/release
 closure, atomic A/B, startup freeze, isolated semantic mutants and F-CODE/F-DOC.
 Existing four Helm diagnostic-assertion failures are preserved and assigned to
 the eventual approved test correction, not silently weakened during C0.
+
+## Additional Prism control policies — source traced, not closed
+
+The author fragment now distinguishes sixteen further current policies: session
+expiry/default roles, HTTP and decoded-artifact admission, query defaults/caps,
+candidate oversampling and RRF damping, acquisition/cleanup deadlines, HMAC skew
+and nonce cleanup batch. Requested query values remain task data; their omitted
+defaults and service capacity/ranking limits are separate policies. HTTP clamps
+and the exported corpus-search defaults are not identical validators: the route
+does not reject NaN/fractional numeric inputs. No target safe domain is inferred
+from these clamps, and no DB ranking/replay behavior has been executed.
+
+Session expiry and both cookie Max-Age copies must have one authoritative lifetime
+with explicit milliseconds-to-seconds projection. Changing default editor grants
+requires a defined security domain, not a generic numeric alternate profile.
+The worker HMAC window and nonce maintenance belong to worker authentication,
+not an additional control-service author. Original acquisitions/cleanup and nonce
+history must retain their accepted closure; current policy cannot fill recovery.
+
+[Six current source-definition controls](../evidence/config-acceptance/author/prism-control-definition.log)
+exercise actual session exports and genuine loopback IncomingMessages at the
+unchanged parser. Exact two-million-byte JSON is accepted; one extra byte and
+wrong media type reject; session expiry and wrong signing key reject. This is not
+a migrated config loader, complete service profile, cookie/DB projection, deployed
+API, replay storage or future runtime-binding proof. All sixteen future field
+cases remain explicitly incomplete/not-run pending supported adjustable domains,
+complete generations, real harnesses and independent review.
 
 ## Acceptance state
 

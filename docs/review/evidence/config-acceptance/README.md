@@ -17,11 +17,13 @@ No production source, original tests or historical raw evidence is changed here.
   identities and raw failed attempts. Historical verification remains separate.
 - `independent/` and the independent report under remediation are reviewer-owned
   evidence. Author summaries do not substitute for independent source enumeration.
-- `independent-core-domain/` binds the newer bounded Core challenge. Its
-  [report](../../remediation/independent-config-c0-core-domain-a07de567.md) is
-  **NOT ACCEPTED** (ICD-001–004), even though its safe definition reproductions
-  pass. Numeric const-only policies do not close tunability; active/historical
-  case conflicts, additional productive schemas and retention caller links remain.
+- `independent-core-domain/` preserves the original bounded Core challenge and its
+  historical **NOT ACCEPTED** verdict. The
+  [final corrective recheck](../../remediation/independent-config-c0-core-final-recheck-40cf24e7.md)
+  independently verifies ICD-001–004 definitions and RCORE-001/002 integration
+  corrections. All 148 canonical refinements preserve original requirements;
+  proposed profiles, 640 schema coordinates and six retention callers remain
+  distinct from runtime proof. This is not global C0 acceptance.
 
 From repo root:
 
@@ -88,3 +90,35 @@ live scheduling proof. Reader-version pins do not prove deployed API identity.
 Runtime's 935 passed records are C0 source/definition checks; its 2,426 future
 cases remain not-run and all rows remain `c0Closed=false`. No global C0 or later
 gate follows from these counts or the absence of integrity errors.
+
+## Fifth incremental checkpoint
+
+Current consolidated bookkeeping: **2,316 rows, 4,141 case IDs, 26 open gaps**.
+The bounded Core corrective review is independently verified; its two corrective
+gap records are retained in `resolvedCorrectionGaps` with the exact reviewer-report
+hash, not silently deleted from history. No row or runtime acceptance is inferred.
+All 148 canonical component refinements match their active specifications;
+structural integrity has zero errors, while strict C0 completion rejects **72,642
+open obligations**. Raw outputs are `author/*-checkpoint-5.log`.
+
+Delivery's newer exact pinned-schema observations pass **29 current definitions**
+and **132 projection comparisons**; both Buster full renders validate all 21
+documents, without skips. The CRD reader is an explicit strict primary-schema
+reference alias, not a permissive fallback. Previous missing-schema and initial
+negative-diagnostic failures remain preserved. These are not deployed API, image,
+scheduling, Secretstore or admission/CSI behavior proofs; 392 delivery semantic
+rows and 102 implementation cases remain open/not-run.
+
+Runtime now records 1,222 rows and 3,808 cases: 935 historical definition records,
+90 newer narrow source/definition records and 2,783 not-run cases. Superseded case
+obligations remain linked. The SDK canonical dispatch profile is codec metadata,
+not the actual target-selection or config-binding mechanism; the current versus
+proposed grade-context relation is explicitly retained as an unapproved question.
+Core's bounded definitions retain 640 coordinates, six callers, 219 unchanged
+historical cases and 352 active specifications. Proposed 26 profile checks, nine
+current-reader controls and 296 loader checks do not become runtime proof.
+
+Six additional Prism session/parser controls and sixteen source-traced control
+policies are preserved separately; complete adjustable domains and future real
+service cases remain open. The unchanged 649-test suite's five failures are not
+overwritten. No C1 approval or global C0 acceptance follows from this checkpoint.

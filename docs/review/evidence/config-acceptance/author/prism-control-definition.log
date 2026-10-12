@@ -1,0 +1,59 @@
+{
+  "identity": {
+    "node": "v24.21.0",
+    "commit": "40cf24e77388bced59475ece9651c9c94d848368",
+    "tree": "efe3b346df6ce0396f1187271863cf91564fcc1f",
+    "sources": [
+      {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-control-definition.mjs",
+        "sha256": "ac746f82287f57e0594a17b58c7d403b74e1d455262b9c3abb2fa02957ebd431"
+      },
+      {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+      },
+      {
+        "path": "skills/prism/server/control-http.ts",
+        "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "session-current-positive",
+      "result": "passed",
+      "expiresAfterMs": 900000,
+      "roles": [
+        "editor"
+      ]
+    },
+    {
+      "id": "session-current-expiry-boundary",
+      "result": "passed",
+      "rejectedAtMs": 900000
+    },
+    {
+      "id": "session-current-wrong-signing-key",
+      "result": "passed"
+    },
+    {
+      "id": "body-current-exact-limit-positive",
+      "result": "passed",
+      "wireBytes": 2000000
+    },
+    {
+      "id": "body-current-over-limit-rejection",
+      "result": "passed",
+      "wireBytes": 2000001
+    },
+    {
+      "id": "body-current-media-type-rejection",
+      "result": "passed"
+    }
+  ],
+  "limits": "Six current parser/session definition controls only; no profile migration, cookie projection, DB/replay, target schema, deployment or runtime binding acceptance."
+}

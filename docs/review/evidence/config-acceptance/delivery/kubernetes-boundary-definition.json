@@ -32,6 +32,8 @@
         "1.35.6",
         "-schema-location",
         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-A.yaml"
       ],
       "exit": 0,
@@ -82,6 +84,8 @@
         "1.35.6",
         "-schema-location",
         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-B.yaml"
       ],
       "exit": 0,
@@ -132,6 +136,8 @@
         "1.35.6",
         "-schema-location",
         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.yaml"
       ],
       "exit": 0,
@@ -182,6 +188,8 @@
         "1.35.6",
         "-schema-location",
         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.yaml"
       ],
       "exit": 0,
@@ -232,6 +240,8 @@
         "1.35.6",
         "-schema-location",
         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.yaml"
       ],
       "exit": 0,
@@ -282,6 +292,8 @@
         "1.35.6",
         "-schema-location",
         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.yaml"
       ],
       "exit": 0,
@@ -332,12 +344,14 @@
         "1.35.6",
         "-schema-location",
         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml"
       ],
-      "exit": 1,
+      "exit": 0,
       "expectedExit": 0,
       "expectedDiagnostic": null,
-      "result": "failed",
+      "result": "passed",
       "rawEvidencePaths": [
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stderr"
@@ -345,12 +359,11 @@
       "collection": [
         21,
         1,
-        18,
+        21,
         0,
-        3,
+        0,
         0
-      ],
-      "reason": "nonempty complete collection, all-valid and zero invalid/errors/skips required; exit0 alone cannot pass"
+      ]
     },
     {
       "id": "DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B",
@@ -383,12 +396,14 @@
         "1.35.6",
         "-schema-location",
         "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml"
       ],
-      "exit": 1,
+      "exit": 0,
       "expectedExit": 0,
       "expectedDiagnostic": null,
-      "result": "failed",
+      "result": "passed",
       "rawEvidencePaths": [
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout",
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stderr"
@@ -396,12 +411,11 @@
       "collection": [
         21,
         1,
-        18,
+        21,
         0,
-        3,
+        0,
         0
-      ],
-      "reason": "nonempty complete collection, all-valid and zero invalid/errors/skips required; exit0 alone cannot pass"
+      ]
     },
     {
       "id": "DLV-C0-BOUNDARY-RESOURCE-PROJECTION-COMPARISONS",
@@ -417,6 +431,131 @@
         "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/resource-projection-comparisons.json"
       ],
       "reason": "exact enumerated current field/container A/B values, not API or scheduler/CRI effects"
+    },
+    {
+      "id": "DLV-C0-PINNED-CRD-ALIAS-UNKNOWN",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-UNKNOWN.yaml"
+      ],
+      "exit": 1,
+      "expectedExit": 1,
+      "expectedDiagnostic": "deliveryUnexpectedField",
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-UNKNOWN.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-UNKNOWN.stderr"
+      ],
+      "collection": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-WRONG-TYPE.yaml"
+      ],
+      "exit": 1,
+      "expectedExit": 1,
+      "expectedDiagnostic": "/spec/group",
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE.stderr"
+      ],
+      "collection": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-MISSING-SPEC.yaml"
+      ],
+      "exit": 1,
+      "expectedExit": 1,
+      "expectedDiagnostic": "spec",
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC.stderr"
+      ],
+      "collection": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP",
+      "command": [
+        "helm",
+        "template",
+        "delivery-kubeclaw-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-buster-partial-overlay.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP.stderr"
+      ],
+      "actual": {
+        "requests": {
+          "ephemeral-storage": "1Gi"
+        }
+      },
+      "expected": {
+        "requests": {
+          "ephemeral-storage": "1Gi"
+        }
+      },
+      "reason": "current source permits missing CPU/memory/limits despite complete root author; target required complete central profile negative remains not-run"
     },
     {
       "id": "DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY",
@@ -2083,6 +2222,150 @@
         "2Gi"
       ],
       "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "profile": "kubeclaw-buster-A",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "300m",
+      "actual": [
+        "300m"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+      "profile": "kubeclaw-buster-B",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "600m",
+      "actual": [
+        "600m"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
+      "profile": "kubeclaw-buster-A",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "384Mi",
+      "actual": [
+        "384Mi"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
+      "profile": "kubeclaw-buster-B",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "768Mi",
+      "actual": [
+        "768Mi"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "profile": "kubeclaw-buster-A",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "1Gi",
+      "actual": [
+        "1Gi"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+      "profile": "kubeclaw-buster-B",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "2Gi",
+      "actual": [
+        "2Gi"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "profile": "kubeclaw-buster-A",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "3",
+      "actual": [
+        "3"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+      "profile": "kubeclaw-buster-B",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "6",
+      "actual": [
+        "6"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "profile": "kubeclaw-buster-A",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "3Gi",
+      "actual": [
+        "3Gi"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+      "profile": "kubeclaw-buster-B",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "6Gi",
+      "actual": [
+        "6Gi"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "profile": "kubeclaw-buster-A",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "2Gi",
+      "actual": [
+        "2Gi"
+      ],
+      "result": "passed"
+    },
+    {
+      "settingId": "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE",
+      "profile": "kubeclaw-buster-B",
+      "containers": [
+        "kubeclaw"
+      ],
+      "expected": "4Gi",
+      "actual": [
+        "4Gi"
+      ],
+      "result": "passed"
     }
   ],
   "tools": {
@@ -2142,7 +2425,7 @@
     "charts/kubeclaw/templates/service.yaml": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2",
     "charts/kubeclaw/templates/configmap-gateway.yaml": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
     "charts/prism/values.schema.json": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
-    "docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py": "8c8204b721eb39c19c5138b0845a69151cb391fe9e92f04b9462fef50e088b5e",
+    "docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py": "2dc8674c14806c8a362db1b6c5643779354f74eb69207ced9b8321508659e3ca",
     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/go.mod": "0032376ecb8246a023f905f3529f1543ad1da52cc7722e594adc0249ecc0b769",
     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/core/validation/validation.go": "a9caab845cd895822bcdca6d3564022feb609a87a459c4e9c1a4e5fc7eebc80f",
     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/batch/validation/validation.go": "84de54a1606bfa5aeeb39bab21b9c3978c41f7f9488a9704f14765f10130ef0d",
@@ -2188,12 +2471,21 @@
     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/rolebinding-rbac-v1.json": "87ab620d0adddcd2803b92357fce2854af752326df8c5408a7588aae98b3031d",
     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/clusterrole-rbac-v1.json": "0777f91c4fa08bd3989b6db8c59dad0429a63dec8f59e883ff55c947a14d0d5f",
     "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/clusterrolebinding-rbac-v1.json": "e2d0471b444cf7ea4fd69d7eba1b16e06215503bfbc650450c2b6ad9b40f863c",
-    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/poddisruptionbudget-policy-v1.json": "da73f50ad0264d73f668eecaa9959da65afe2846602a7a5c8fd51f7799d6a258"
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/poddisruptionbudget-policy-v1.json": "da73f50ad0264d73f668eecaa9959da65afe2846602a7a5c8fd51f7799d6a258",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json": "4b8b5f0e0e383363ee248095abe0ba0fd8b79da64d755c68632cbec9617697d9",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json": "a705eb1d0de6d38132435c8df35b33097456012b2cd7d92d685442386d1d5db5",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json": "9dbc9ea6042d41e36d908b24897c4ee126e199a0a46856cd60c7dcbe73381e45",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/eviction_manager.go": "47b0615776c0d808330c055809c97ec9e9e99b45a1ef3f501b469bff4502621b",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/eviction_manager.go": "f397e5b94b5f9fca71c635467fb856f5886c3e44ac0b0e7121f6a1ecf274668e",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/kubelet.go": "1d9b1c314f27c60e77710f17c6d446fac83cb44c68bd077312b07ca32aaf7301",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/kubelet.go": "40a3129435699078ebdf695894a446c62c6a74e2e9256668373910521f29bff2",
+    "docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/customresourcedefinition-apiextensions-v1.json": "df8a2947181c208eb33d92fa1424d6699e7a48b5f31ab0d6e8feaad2df53ef57"
   },
   "profileDigests": {
-    "profile-kubeclaw-buster-A.json": "910afad793b1712ca19c0195446099d377cfa4fe737750c7aa8172aabeb1247a",
-    "profile-kubeclaw-buster-B.json": "ed1a51772c116145c61676d6b4e01236161ce927f3bca3381269ecbc38bba6a6",
+    "profile-kubeclaw-buster-A.json": "4ae411937a151b7fc6c1855f4bfad0a220b3a01fc9d3cf1bb0652c0f2ece6534",
+    "profile-kubeclaw-buster-B.json": "6fba3b9a7a8a4132722df5acc5b0364ad3c242fd035a94e4658e1ef0b44f7de1",
     "profile-kubeclaw-A.json": "69ad21550d02c9564d5a5da73c026caa78428b0bef6294b74250ae8e21f9a796",
+    "profile-kubeclaw-buster-partial-overlay.json": "7b6a21a6b986f3e94279390ca3352efac0fe9d3218ed31829433d1e104d92bc9",
     "profile-prism-B.json": "9dd050f2b2ab354a595aed98154061d294dea9d9cd586820e16cf34b78f0a86d",
     "profile-prism-A.json": "ebd70730b33a4140c69aac20c0baa6ecc7607a7950cd005e4258be958261c418",
     "profile-ops-pod-A.json": "159424e5b2b200e496adae930a43dd678d78798fe80ab66fd7def595fa74c6c6",
@@ -4759,12 +5051,14 @@
         "containerResources": {
           "kubeclaw": {
             "limits": {
-              "cpu": "1",
-              "memory": "1Gi"
+              "cpu": "3",
+              "ephemeral-storage": "2Gi",
+              "memory": "3Gi"
             },
             "requests": {
-              "cpu": "100m",
-              "memory": "128Mi"
+              "cpu": "300m",
+              "ephemeral-storage": "1Gi",
+              "memory": "384Mi"
             }
           },
           "buster-v2-runtime": {
@@ -5077,12 +5371,14 @@
         "containerResources": {
           "kubeclaw": {
             "limits": {
-              "cpu": "2",
-              "memory": "2Gi"
+              "cpu": "6",
+              "ephemeral-storage": "4Gi",
+              "memory": "6Gi"
             },
             "requests": {
-              "cpu": "200m",
-              "memory": "256Mi"
+              "cpu": "600m",
+              "ephemeral-storage": "2Gi",
+              "memory": "768Mi"
             }
           },
           "buster-v2-runtime": {
@@ -5333,8 +5629,7 @@
     ]
   },
   "resultCounts": {
-    "passed": 23,
-    "failed": 2
+    "passed": 29
   },
   "implementationCases": "remain not-run; live selected apiserver/version/feature gates/Secret revisions/CSI/node admission prerequisites pending; no credential values generated or logged"
 }

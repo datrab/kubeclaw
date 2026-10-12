@@ -64,7 +64,7 @@ definitions = {
     'IC0-006': 'Independent finding: actual suite and execution prerequisites',
     'ICD-001': 'Independent Core finding: const-only operator fields do not close requested tunability',
     'ICD-002': 'Independent Core finding: active/historical case semantics and exact executable proposals',
-    'ICD-003': 'Independent Core finding: additional productive registration/health/trust/progress/log/cancellation contracts',
+    'ICD-003': 'Independent Core finding: 55 productive-path registration/health/progress/log and 20 public-contract-only trust/cancellation coordinates',
     'ICD-004': 'Independent Core finding: all six actual retention caller and phase/projection links'
 }
 identity = {
@@ -135,19 +135,57 @@ for group, name in fragments:
             gaps.append({'fragment':group,'detail':{'id':'GAP-CASE-REFINEMENT', 'caseId':cid}})
             continue
         case = cases[cid]
+        # One canonical current specification. Keep the former generic fields
+        # historical rather than leaving a conflicting oracle active beside the
+        # refined observer. Original requirements and caller chains are retained.
+        case['historicalCanonicalSpecification'] = dict(case)
         case['sourceBoundaryRefinement'] = refinement
         case['inputProfile'] = refinement.get('completeProfiles')
+        case['inputConfigProfile'] = case['inputProfile']
         case['priorState'] = refinement.get('priorState',case.get('priorState'))
-        case['observerMethod'] = refinement.get('observer',case.get('observerMethod'))
-        case['specificationStatus'] = 'refined-witness-harness-review-open'
+        observer = refinement.get('observer',{})
+        case['observerMethod'] = observer
+        case['action'] = observer.get('action')
+        case['expectedEffectOrRejectingBoundary'] = observer.get('boundary')
+        case['exactProductiveBoundary'] = refinement.get('exactProductiveBoundary')
+        case['lifecycle'] = refinement.get('lifecycle')
+        case['proposedInvocation'] = refinement.get('proposedInvocation')
+        case['command'] = refinement.get('proposedTestCommand')
+        # These generic aliases are archived above, not competing current inputs
+        # or claims that the future command has already executed.
+        case.pop('actualTestCommand',None)
+        case.pop('proposedTest',None)
+        case['specificationStatus'] = 'canonical-refined-proposed-specification-review-open'
 
-gaps.append({'fragment':'independent-core-domain','detail':{
-    'id':'GAP-INDEPENDENT-CORE-RECHECK',
-    'findingIds':['ICD-001','ICD-002','ICD-003','ICD-004'],
-    'report':'docs/review/remediation/independent-config-c0-core-domain-a07de567.md',
-    'reason':'Fresh bounded review NOT ACCEPTED; corrections and independent recheck pending. Definition reproductions do not waive the findings.'}})
+review_report = remediation/'independent-config-c0-core-final-recheck-40cf24e7.md'
+review_sha = '7ee9787b76d948892fdd088b5aa1e3099075c7cad9ff375b7bbae4a7bf67de3b'
+bounded_review = {
+    'report':str(review_report.relative_to(root)), 'sha256':review_sha,
+    'scope':'ICD-001–004 definition corrections and RCORE-001/002 canonical-case/gap integrity; NOT global C0 or runtime acceptance',
+    'status':'independently-verified-corrected', 'globalC0Accepted':False,
+    'rowOrRuntimeAcceptanceInferred':False,
+}
+if not review_report.is_file() or digest(review_report) != review_sha:
+    raise ValueError('Bounded review report identity drift; do not infer corrective acceptance')
+# The raw component fragment keeps its historical review-pending receipt.
+# Only the exact reviewed corrective gap is resolved in the current projection;
+# every unrelated semantic/candidate/implementation gap remains open.
+resolved_correction_gaps = []
+remaining_gaps = []
+for gap in gaps:
+    if gap.get('detail',{}).get('id') == 'CMP-ICD-MATERIAL-RECHECK':
+        resolved_correction_gaps.append({'previous':gap,'reviewDisposition':bounded_review})
+    else:
+        remaining_gaps.append(gap)
+gaps = remaining_gaps
+resolved_correction_gaps.append({
+    'previousGapId':'GAP-INDEPENDENT-CORE-RECHECK',
+    'findingIds':['ICD-001','ICD-002','ICD-003','ICD-004','RCORE-001','RCORE-002'],
+    'reviewDisposition':bounded_review})
 inventory = {'schemaVersion':1,'status':'in-progress-not-C0-accepted','identity':identity,
              'inputFragments':inputs,'rows':rows,'sources':list(sources.values()),'gaps':gaps,
+             'boundedReviewDispositions':[bounded_review],
+             'resolvedCorrectionGaps':resolved_correction_gaps,
              'candidateLedger':'docs/review/evidence/config-acceptance/author/candidate-ledger.json',
              'sourceBoundary':'docs/review/evidence/config-acceptance/author/source-boundary.json'}
 matrix = {'schemaVersion':1,'status':'in-progress-not-approval-ready','identity':identity,
