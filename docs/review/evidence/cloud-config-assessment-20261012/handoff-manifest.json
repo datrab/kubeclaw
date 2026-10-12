@@ -1,25 +1,22 @@
 {
   "sourceBase": "4b4684667c2dc27d01583fbec395c94d9f7a0456",
+  "previousHandoff": "a67d9a25c11e6c396c1372f4cca5534f0625117a",
   "branch": "codex/cloud-config-handoff-20261012",
   "handoffGoal": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
-  "scope": "all current handoff document/evidence changes; runtime and tests unchanged",
+  "scope": "all current handoff documents/evidence, no runtime or test changes",
   "currentState": {
     "C0": "open, authorized investigation",
     "C1-C6": "not approved, not implemented",
     "centralTargetName": "pipeline.config.json",
     "workflowDocument": "pipeline.json",
-    "runtimeName": "swarm.config.json until approved migration"
+    "runtimeName": "swarm.config.json until approved migration",
+    "AGENTS": "disabled in user OpenClaw, root file removed, goal is self-contained"
   },
   "files": [
     {
-      "path": "AGENTS.md",
-      "sha256": "c43d8c194f9335d16a442a6712b601fc5461d1826c4cbf0e6d8f19ef9846058e",
-      "bytes": 3601
-    },
-    {
       "path": "docs/review/evidence/cloud-config-assessment-20261012/README.md",
-      "sha256": "4eadeafcc52307de4db584fe7f7bda28378310d0bfa42863f13f1db99c93ec31",
-      "bytes": 2521
+      "sha256": "c0d96d47d742e2710b4f69c6fe341de4c34e77a08e3e6010ade299eb6a5601b2",
+      "bytes": 3345
     },
     {
       "path": "docs/review/evidence/cloud-config-assessment-20261012/collect.py",
@@ -37,9 +34,19 @@
       "bytes": 387006
     },
     {
-      "path": "docs/review/evidence/cloud-config-assessment-20261012/handoff-validation.json",
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/handoff-manifest-a67d9a25.json",
+      "sha256": "ee9ee89eb3a2ec99ccda5c62742a0db3c822d19e1e36e3b23cc7942c2d6a7764",
+      "bytes": 4633
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/handoff-validation-a67d9a25.json",
       "sha256": "bcdff3dcabe2c809d5f88cca62c6a1021a3ae68b3ff4e9cc3f98371b063ec3d6",
       "bytes": 1647
+    },
+    {
+      "path": "docs/review/evidence/cloud-config-assessment-20261012/handoff-validation.json",
+      "sha256": "ac9acfd81b2f7adaded9f56239ca1dbf39b40230b40088ad713a3bc279b2e4f8",
+      "bytes": 1066
     },
     {
       "path": "docs/review/evidence/cloud-config-assessment-20261012/npm-ci.log",
@@ -68,8 +75,8 @@
     },
     {
       "path": "docs/review/remediation/CLOUD-CONFIG-TASK.md",
-      "sha256": "bdae34f2a2f17f5e15c9b8d352a07f1f145983ddb952ac0c463c6875dd95af95",
-      "bytes": 11328
+      "sha256": "db7fad71a5139cfe1a64bd3a382d5b2980d845e6b03b13b88252d89979b18662",
+      "bytes": 11491
     },
     {
       "path": "docs/review/remediation/CLOUD-READY.md",
@@ -78,13 +85,13 @@
     },
     {
       "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
-      "sha256": "edb7c3013e1337973b7ac0187d7bfb24085f49892e5fc4a2b7b2b2dd7e6b0916",
-      "bytes": 19045
+      "sha256": "da5177f8046717551202fb64f178be380a01642afb20c7a059e0b58864b7792a",
+      "bytes": 19298
     },
     {
       "path": "docs/review/remediation/cloud-config-assessment-20261012.md",
-      "sha256": "bff1bef1bf82e8b409ec465ce438c7dc20283f9a87c1ea5fd20c8bf54e95aa10",
-      "bytes": 50344
+      "sha256": "a4a0df70260678ea8407744bf7a1b266b8158a387a254d9196271dfaf95d5958",
+      "bytes": 50430
     },
     {
       "path": "docs/review/remediation/config-definition-20261012.md",
@@ -93,8 +100,8 @@
     },
     {
       "path": "docs/review/remediation/decisions.md",
-      "sha256": "54334d80235d6716e6af5b06e72d114fc3ec01af1b66a449a82a5b1562cd3e34",
-      "bytes": 28277
+      "sha256": "b4d9b29911643d08fc6ef439b88dec4ef3e6a4f355ea591ff3f6db9e3f152d1b",
+      "bytes": 28691
     },
     {
       "path": "docs/review/remediation/implementation-order-20261012.md",
@@ -107,11 +114,23 @@
       "bytes": 11051
     },
     {
+      "path": "docs/review/remediation/independent-goal-without-agents-20261012.md",
+      "sha256": "fdd78cb30dafcedc1204a53fce30d187d0f8301d1ca6015021a729a3b8cb5a6a",
+      "bytes": 8773
+    },
+    {
       "path": "docs/review/remediation/independent-openclaw-handoff-20261012.md",
       "sha256": "7191bd4e29e11fbb6fed80b04c9f224ea71481bdbe3b9710c839d27c6c8b2a82",
       "bytes": 12688
     }
   ],
-  "selfIdentity": "Provided by enclosing Git commit, not self-referential hash",
-  "review": "docs/review/remediation/independent-openclaw-handoff-20261012.md"
+  "removedSincePreviousHandoff": [
+    {
+      "path": "AGENTS.md",
+      "reason": "user disabled AGENTS loading; all required task instructions are in goal and explicit references",
+      "historicalBytes": "git show a67d9a25c11e6c396c1372f4cca5534f0625117a:AGENTS.md"
+    }
+  ],
+  "selfIdentity": "provided by enclosing Git commit; no self-referential hash",
+  "review": "docs/review/remediation/independent-goal-without-agents-20261012.md"
 }

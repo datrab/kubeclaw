@@ -368,3 +368,9 @@ Diese Kriterien machen Abschlussbehauptungen überprüfbar; sie behaupten keinen
 unfehlbaren Schutz gegen Fälschung. Die Übergabe umfasst keine Deployments,
 produktiven Hostaktionen, bezahlten Evalkampagnen, vorgezogenen Test-/Worker-
 Refactorings oder automatische Findingpromotionen.
+
+**OpenClaw-Klarstellung:** Der Auftraggeber hat AGENTS-Laden in OpenClaw deaktiviert.
+Die zunächst zusätzlich angelegte Root-AGENTS.md wurde deshalb wieder entfernt.
+OPENCLAW-CONFIG-GOAL.md enthält den vollständigen Auftrag einschließlich aller
+Prüf-/Codequalitätsregeln eigenständig. AGENTS-Laden wird weder vorausgesetzt
+noch aktiviert; die Abnahmekriterien und Autorisierungsgrenzen bleiben identisch.

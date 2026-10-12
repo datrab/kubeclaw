@@ -23,8 +23,10 @@ Frischer vollständiger Git-Clone über HTTPS, gewünschter Branch, sauberer
 Ausgangsbaum. `cc02012610b6e9e20a3155577140e8914f33ddf7` ist verfügbar und
 Vorfahre; seitdem ausschließlich `CLOUD-CONFIG-TASK.md` hinzugefügt.
 GitHub-Connector liest Auftragsdatei und Übergabe erfolgreich. Zu Beginn keine
-`AGENTS.md` im Checkout; für die spätere OpenClaw-Übergabe wurde eine Root-
-`AGENTS.md` mit den aktuellen CONFIG-Regeln ergänzt. Quellcode, Tests, Lockfile, Übergabedokumente und ausgewählte
+`AGENTS.md` im Checkout. Eine später ergänzte Root-Datei wurde nach der
+Klarstellung des Auftraggebers wieder entfernt: OpenClaw lädt AGENTS nicht.
+Alle CONFIG-Regeln stehen eigenständig in OPENCLAW-CONFIG-GOAL.md.
+Quellcode, Tests, Lockfile, Übergabedokumente und ausgewählte
 Originalbelege sind vorhanden. Git, Node 24.19.0, npm 11.9.0, Python und Docker
 sind verfügbar; Docker wurde nicht benutzt. `npm ci --ignore-scripts --no-audit
 --no-fund` aus Root-Lockfile erfolgreich. Install-Skripte wurden nicht ausgeführt.

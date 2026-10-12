@@ -46,7 +46,7 @@ Lies insbesondere:
 - [independent-config-definition-20261012.md](independent-config-definition-20261012.md)
 - Die dort referenzierten Abnahmekriterien und relevanten Originalquellen
 
-Beachte vorhandene AGENTS.md-Anweisungen. Die Dokumentation beschreibt teilweise historische Stände. Prüfe für aktuelle Aussagen die tatsächlichen Implementierungen und Aufrufketten.
+Dieser Auftrag ist über OPENCLAW-CONFIG-GOAL.md eigenständig ausführbar; der Auftraggeber hat AGENTS-Laden in OpenClaw deaktiviert. Aktiviere es nicht und mache keine AGENTS.md-Datei zur Voraussetzung. Die Dokumentation beschreibt teilweise historische Stände. Prüfe für aktuelle Aussagen die tatsächlichen Implementierungen und Aufrufketten.
 
 ## 3. Ziel und bereits bestätigte Entscheidungen
 

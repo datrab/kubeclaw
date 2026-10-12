@@ -1,0 +1,29 @@
+{
+  "observedAtUtc": "2026-10-12T18:35:43.699886+00:00",
+  "sourceBase": "4b4684667c2dc27d01583fbec395c94d9f7a0456",
+  "scope": "documentation/evidence only, not C0 completion or implementation acceptance",
+  "checks": {
+    "allChangedPathsDocumentationOrEvidence": true,
+    "localMarkdownFileTargetsExist": true,
+    "allNewChangedJsonParses": true,
+    "independentReportFinalDocumentDigestsMatch": true,
+    "independentReportReadmeDigestMatches": true,
+    "originalRawLogDigestsMatch": true,
+    "actualRuntimeEntryStillSwarm": true,
+    "targetRenameNotImplemented": true,
+    "registerConsistency": "passed after D21/D22",
+    "gitDiffWhitespace": "passed for authored documentation/evidence code/JSON; raw logs checked separately and preserved byte-for-byte",
+    "rawLogsWhitespace": "trailing whitespace emitted by test runner is retained; whole-diff whitespace check reports those raw log lines, not a clean global check"
+  },
+  "limits": [
+    "No Markdown anchor resolver or execution of future goal examples",
+    "No runtime/config-suite rerun for documentation edits",
+    "Manifest generation verified mechanically by main agent, not new semantic subagent acceptance",
+    "Remote confirmation occurs after commit/push and is not implied here"
+  ],
+  "preliminaryValidationFailure": {
+    "reason": "main-agent validation initially compared a preserved historical reviewer hash for config-definition instead of the final readback hash",
+    "resolution": "verify final independent addendum identity; preserve historical reviewer evidence; include originally Git-ignored raw logs explicitly",
+    "noPassFromFailure": true
+  }
+}

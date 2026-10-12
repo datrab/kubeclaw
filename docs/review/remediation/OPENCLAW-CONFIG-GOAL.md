@@ -2,7 +2,10 @@
 
 Current handoff: 12 October 2026, `datrab/kubeclaw`, branch
 `codex/cloud-config-handoff-20261012`. This file is the current autonomous task
-entry and does not require the previous chat. Read repository `AGENTS.md` first.
+entry and does not require the previous chat or `AGENTS.md`. The user has disabled
+AGENTS loading in OpenClaw. All task rules, authorization, code-quality requirements
+and acceptance gates are contained in this document and its explicit references.
+Do not enable AGENTS loading or require a second instruction entry to run this goal.
 
 ## Goal and current authorization
 
