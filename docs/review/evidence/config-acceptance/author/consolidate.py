@@ -61,7 +61,11 @@ definitions = {
     'IC0-003': 'Independent finding: actual run-lived adapter activation',
     'IC0-004': 'Independent finding: exact complete field-case specification',
     'IC0-005': 'Independent finding: final identity/integrity freeze and recheck',
-    'IC0-006': 'Independent finding: actual suite and execution prerequisites'
+    'IC0-006': 'Independent finding: actual suite and execution prerequisites',
+    'ICD-001': 'Independent Core finding: const-only operator fields do not close requested tunability',
+    'ICD-002': 'Independent Core finding: active/historical case semantics and exact executable proposals',
+    'ICD-003': 'Independent Core finding: additional productive registration/health/trust/progress/log/cancellation contracts',
+    'ICD-004': 'Independent Core finding: all six actual retention caller and phase/projection links'
 }
 identity = {
     'sourceCommit': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
@@ -69,7 +73,7 @@ identity = {
     'method': 'fragment consolidation; no semantic approval inferred'
 }
 rows, gaps, sources, inputs, cases = [], [], {}, [], {}
-fragments = [('components','semantic-fragment.json'),('runtime','inventory-fragment.json'),('delivery','inventory-fragment.json'),('author','main-fragment.json')]
+fragments = [('components','semantic-fragment.json'),('components','residual-fragment.json'),('runtime','inventory-fragment.json'),('delivery','inventory-fragment.json'),('author','main-fragment.json')]
 for group, name in fragments:
     p = base/group/name
     if not p.exists():
@@ -108,14 +112,46 @@ for group, name in fragments:
             case['requirementIds'] = sorted(set(case['requirementIds']+row['requirementIds']))
     for case in fragment.get('cases',[]):
         existing = cases.get(case['id'],{})
-        cases[case['id']] = {**existing,**case}
+        merged = {**existing,**case}
+        # Preserve fragment vocabulary but normalize the mandatory root contract.
+        # Author "pending" is not an independent reviewer confirmation.
+        aliases = {'inputProfile':'inputConfigProfile','command':'actualTestCommand',
+                   'result':'actualResult','sourceIdentity':'identities',
+                   'toolDependencyImageConfigIdentities':'identities'}
+        for target, original in aliases.items():
+            if target not in case and original in case:
+                merged[target] = case[original]
+        if case.get('sourceDigests') and not case.get('sourceIdentity'):
+            merged['sourceIdentity'] = {**identity, 'sources':[
+                {'path':name,'sha256':sha} for name,sha in case['sourceDigests'].items()]}
+        merged['phase'] = case.get('phase','C0' if '-C0-' in case['id'] else 'implementation-proposal')
+        merged['reviewerConfirmation'] = None
+        cases[case['id']] = merged
+    # Refined witnesses supersede generic EFFECT wording without overwriting the
+    # historical fragment. Their missing real harness/domain stays explicit.
+    for refinement in fragment.get('caseRefinements',[]):
+        cid = refinement.get('replacementForCaseId')
+        if cid not in cases:
+            gaps.append({'fragment':group,'detail':{'id':'GAP-CASE-REFINEMENT', 'caseId':cid}})
+            continue
+        case = cases[cid]
+        case['sourceBoundaryRefinement'] = refinement
+        case['inputProfile'] = refinement.get('completeProfiles')
+        case['priorState'] = refinement.get('priorState',case.get('priorState'))
+        case['observerMethod'] = refinement.get('observer',case.get('observerMethod'))
+        case['specificationStatus'] = 'refined-witness-harness-review-open'
 
+gaps.append({'fragment':'independent-core-domain','detail':{
+    'id':'GAP-INDEPENDENT-CORE-RECHECK',
+    'findingIds':['ICD-001','ICD-002','ICD-003','ICD-004'],
+    'report':'docs/review/remediation/independent-config-c0-core-domain-a07de567.md',
+    'reason':'Fresh bounded review NOT ACCEPTED; corrections and independent recheck pending. Definition reproductions do not waive the findings.'}})
 inventory = {'schemaVersion':1,'status':'in-progress-not-C0-accepted','identity':identity,
              'inputFragments':inputs,'rows':rows,'sources':list(sources.values()),'gaps':gaps,
              'candidateLedger':'docs/review/evidence/config-acceptance/author/candidate-ledger.json',
              'sourceBoundary':'docs/review/evidence/config-acceptance/author/source-boundary.json'}
 matrix = {'schemaVersion':1,'status':'in-progress-not-approval-ready','identity':identity,
-          'requirements':[{'id':k,'description':v,'source':'docs/review/remediation/independent-config-c0-9452d355.md' if k.startswith('IC0-') else 'docs/review/remediation/OPENCLAW-CONFIG-GOAL.md' if k.startswith(('C0-','F-')) else 'docs/review/remediation/acceptance-20260920.md' if k.startswith(('A','F')) else 'docs/review/remediation/decisions.md'} for k,v in definitions.items()],
+          'requirements':[{'id':k,'description':v,'source':'docs/review/remediation/independent-config-c0-core-domain-a07de567.md' if k.startswith('ICD-') else 'docs/review/remediation/independent-config-c0-9452d355.md' if k.startswith('IC0-') else 'docs/review/remediation/OPENCLAW-CONFIG-GOAL.md' if k.startswith(('C0-','F-')) else 'docs/review/remediation/acceptance-20260920.md' if k.startswith(('A','F')) else 'docs/review/remediation/decisions.md'} for k,v in definitions.items()],
           'cases':list(cases.values()),'acceptance':{k:'not-run' for k in ['C0-A','C0-B','C0-C','C0-D','C0-E']},
           'implementationAuthorization':None,
           'historicalEvidence':'docs/review/evidence/cloud-config-assessment-20261012/verification.json',

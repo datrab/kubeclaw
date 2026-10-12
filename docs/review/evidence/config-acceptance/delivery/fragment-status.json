@@ -1,18 +1,24 @@
 {
-  "rows": 762,
-  "sources": 116,
+  "rows": 801,
+  "sources": 203,
   "duplicateIds": 0,
   "statuses": {
-    "source-traced": 133,
-    "source-traced-downstream-validation-open": 9,
-    "source-traced-validation-expansion-open": 122,
-    "source-traced-external-validator-blocked": 74,
+    "source-traced": 318,
+    "source-traced-validation-expansion-open": 128,
+    "source-traced-pinned-consumer": 69,
+    "source-traced-declared-unused": 1,
+    "source-traced-external-validator-blocked": 5,
     "source-traced-buildstep-domain-open": 86,
-    "source-traced-template-domains-open": 338
+    "source-traced-template-domains-open": 188,
+    "source-traced-k8s-validation-open": 5,
+    "source-traced-external-tailnet-reader-open": 1
   },
-  "pendingSourceCount": 261,
-  "openRowCount": 629,
-  "sourceCommit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
-  "sourceTree": "89fa8e4d683cf442deb189d60ce8b7cc1ff05327",
-  "acceptance": "not complete; no C1\u2013C6 implementation"
+  "openSemanticRows": 413,
+  "caseSpecifications": 100,
+  "caseResults": {
+    "not-run": 100
+  },
+  "danglingCaseIds": [],
+  "acceptance": "C0 INCOMPLETE; static source-traced statuses are not independent acceptance or runtime PASS",
+  "requiredRemaining": "field domains/dispositions across remaining chart/ARG/runtime/script surfaces; exact case harness/profile gaps; C0 reviewer; no implementation approval"
 }

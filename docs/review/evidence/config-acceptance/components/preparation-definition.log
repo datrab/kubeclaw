@@ -1,0 +1,240 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/components/check-preparation-definition.mjs",
+  "scope": "C0 direct real producer/contract/decoder/cleanup-chain source-definition checks; synthetic effects/identities; NO live root/FS source deletion, child/kernel/database/config runtime activation",
+  "identities": {
+    "head": "a07de5673e24ba99109833120d94417ebb0fc407",
+    "tree": "583a342afd982242d17788fc2d64bbe8b7fca7ef",
+    "node": "v24.21.0",
+    "files": {
+      "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts": "837f2b0c6acf2ab0afb56e6a54857fefc15272f8c5c026a3c796e4fd55d9e166",
+      "skills/buster/engine/test-gates/preparation-cleanup-validation.ts": "8cc3b8d59fb38bcb04b6549a05bb7c95f153f7f603405724f84a9385a45ce134",
+      "skills/buster/engine/test-gates/preparation-cleanup-binding.ts": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901",
+      "skills/buster/engine/test-gates/preparation-host.ts": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+      "skills/buster/engine/test-gates/preparation-historical-host.ts": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+      "skills/buster/engine/test-gates/preparation-cleanup-host.ts": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+      "skills/buster/engine/test-gates/preparation-native-phase.ts": "20362a6d9a4147be607c1006cd42a33465d5b56b7df5acfef04562009abba179",
+      "skills/buster/engine/test-gates/preparation-cleanup-execution.ts": "7f68045db88cfea003fb204b06c61b5cef0d48ff0bb416fa060dceeb33249365",
+      "skills/buster/engine/test-gates/preparation-header.ts": "921c13b2285ce3293ec2c2c75a0e42f576bb11300d527b7dd9640a270136f167",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "skills/worker/core/worker/native-result.ts": "11c8074a973fec8f764e64668e29c7d4907a5b9e605b6bad04cbfa0454d318bd",
+      "skills/worker/core/worker/native-cleanup-reconciliation.ts": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "skills/worker/core/worker/log-decoder.ts": "7f777b5cd5f9544c6eb2f5933613d8d8379633742edf45cd235428805e7dea88",
+      "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "skills/worker/core/worker/native-worker-process.ts": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3",
+      "docs/review/evidence/config-acceptance/components/check-preparation-definition.mjs": "2969bf7bb4a19d843cd5e0c0fea098af7670f419f932ec6700a4617890fe9638",
+      "charts/kubeclaw/files/config/buster-engine.config.json": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+      "node_modules/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "node_modules/ajv-formats/package.json": "402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69"
+    },
+    "sourceDigests": {
+      "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts": "837f2b0c6acf2ab0afb56e6a54857fefc15272f8c5c026a3c796e4fd55d9e166",
+      "skills/buster/engine/test-gates/preparation-cleanup-validation.ts": "8cc3b8d59fb38bcb04b6549a05bb7c95f153f7f603405724f84a9385a45ce134",
+      "skills/buster/engine/test-gates/preparation-cleanup-binding.ts": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901",
+      "skills/buster/engine/test-gates/preparation-host.ts": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+      "skills/buster/engine/test-gates/preparation-historical-host.ts": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+      "skills/buster/engine/test-gates/preparation-cleanup-host.ts": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+      "skills/buster/engine/test-gates/preparation-native-phase.ts": "20362a6d9a4147be607c1006cd42a33465d5b56b7df5acfef04562009abba179",
+      "skills/buster/engine/test-gates/preparation-cleanup-execution.ts": "7f68045db88cfea003fb204b06c61b5cef0d48ff0bb416fa060dceeb33249365",
+      "skills/buster/engine/test-gates/preparation-header.ts": "921c13b2285ce3293ec2c2c75a0e42f576bb11300d527b7dd9640a270136f167",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "skills/worker/core/worker/native-result.ts": "11c8074a973fec8f764e64668e29c7d4907a5b9e605b6bad04cbfa0454d318bd",
+      "skills/worker/core/worker/native-cleanup-reconciliation.ts": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "skills/worker/core/worker/log-decoder.ts": "7f777b5cd5f9544c6eb2f5933613d8d8379633742edf45cd235428805e7dea88",
+      "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "skills/worker/core/worker/native-worker-process.ts": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3"
+    },
+    "testDigests": {
+      "docs/review/evidence/config-acceptance/components/check-preparation-definition.mjs": "2969bf7bb4a19d843cd5e0c0fea098af7670f419f932ec6700a4617890fe9638"
+    },
+    "config": {
+      "author": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "digest": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "preparationSettings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 120000,
+          "memoryBytes": 8589934592,
+          "tasks": 64
+        },
+        "timeoutMs": 300000,
+        "cleanupTimeoutMs": 10000,
+        "maximumActivePreparations": 2,
+        "maximumPendingAdmissions": 16,
+        "maximumRequestBytes": 100663296,
+        "maximumArchiveBytes": 67108864,
+        "maximumExtractedBytes": 536870912,
+        "maximumHeaderBytes": 3145728,
+        "maximumSourceBytes": 1073741824,
+        "maximumMetadataBytes": 67108864,
+        "maximumRecords": 10000,
+        "maximumOwnershipBytes": 16777216,
+        "maximumJournalBytes": 268435456,
+        "maximumInputBytes": 65536,
+        "maximumOutputBytes": 8388608,
+        "maximumResultBytes": 4194304,
+        "pollIntervalMs": 25,
+        "drainTimeoutMs": 5000,
+        "closeTimeoutMs": 10000,
+        "tarTimeoutMs": 120000,
+        "maximumArchiveEntries": 200000,
+        "maximumListingLineBytes": 1048576,
+        "maximumTarStderrBytes": 65536,
+        "maximumSourceEntries": 400014,
+        "sourceEntryReservationBytes": 256,
+        "maximumOpenFiles": 64
+      }
+    },
+    "image": "synthetic definition content digest sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb; not deployed image"
+  },
+  "results": [
+    {
+      "id": "CMP-C0-PREP-logBytes-ZERO",
+      "result": "passed",
+      "observed": {
+        "ok": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "CMP-C0-PREP-logBytes-NEGATIVE",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "[{\"instancePath\":\"/limits/logBytes\",\"schemaPath\":\"#/$defs/workerAttemptLimits/properties/logBytes/minimum\",\"keyword\":\"minimum\",\"params\":{\"comparison\":\">=\",\"limit\":0},\"message\":\"must be >= 0\"}]"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-PREP-evidenceBytes-ZERO",
+      "result": "passed",
+      "observed": {
+        "ok": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "CMP-C0-PREP-evidenceBytes-NEGATIVE",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "[{\"instancePath\":\"/limits/evidenceBytes\",\"schemaPath\":\"#/$defs/workerAttemptLimits/properties/evidenceBytes/minimum\",\"keyword\":\"minimum\",\"params\":{\"comparison\":\">=\",\"limit\":0},\"message\":\"must be >= 0\"}]"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-PREP-evidenceFiles-ZERO",
+      "result": "passed",
+      "observed": {
+        "ok": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "CMP-C0-PREP-evidenceFiles-NEGATIVE",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "[{\"instancePath\":\"/limits/evidenceFiles\",\"schemaPath\":\"#/$defs/workerAttemptLimits/properties/evidenceFiles/minimum\",\"keyword\":\"minimum\",\"params\":{\"comparison\":\">=\",\"limit\":0},\"message\":\"must be >= 0\"}]"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-PREP-LOG-DECODER-ZERO",
+      "result": "passed",
+      "observed": "real Core UTF8 byte counter rejects one byte under accepted zero"
+    },
+    {
+      "id": "CMP-C0-PREP-LOG-DECODER-ONE",
+      "result": "passed",
+      "observed": "one byte accepted; latent counter check, not current preparation logging EFFECT"
+    },
+    {
+      "id": "CMP-C0-PREP-LOG-WIRE-MAX",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "[{\"instancePath\":\"/limits/logBytes\",\"schemaPath\":\"#/$defs/workerAttemptLimits/properties/logBytes/maximum\",\"keyword\":\"maximum\",\"params\":{\"comparison\":\"<=\",\"limit\":16777216},\"message\":\"must be <= 16777216\"}]"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-PREP-CLEANUP-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "originalClaim": {
+          "schemaVersion": "attempt-claim.v1",
+          "claimId": "claim-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "attemptId": "prepare-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation": 1,
+          "workerId": "buster-preparation",
+          "claimedAt": "2026-10-12T20:23:49.919Z",
+          "expiresAt": "2026-10-12T20:30:09.919Z"
+        },
+        "cleanupClaim": {
+          "schemaVersion": "attempt-claim.v1",
+          "claimId": "claim-ea48d28fd87291d2bf9fe408470a4659",
+          "attemptId": "prepare-ea48d28fd87291d2bf9fe408470a4659",
+          "generation": 1,
+          "workerId": "buster-preparation",
+          "claimedAt": "2026-10-12T20:23:49.974Z",
+          "expiresAt": "2026-10-12T20:30:09.974Z"
+        },
+        "originalEffect": {
+          "reconciles": {
+            "envelopeDigest": "sha256:008da883f3f914667d78abaf364476a0f1e30964220995e83ea78a2637b3a590",
+            "attemptId": "prepare-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "attemptSpecDigest": "sha256:f77991b96f83b470ee0265389139a3306abda56ee92e068fdf1cbc0cf0dec1d8",
+            "profileDigest": "sha256:1ffc8721cc8401bb39928508f8947ed3fdfc6a9cef00abb498045efceec3f123",
+            "claimId": "claim-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "claimGeneration": 1,
+            "workerId": "buster-preparation",
+            "resultDigest": "sha256:e7fd91546e3237a9803ca11bb03cf9c047b66b20fc3c7caf20ebcd69c8e1ad41",
+            "receipt": {
+              "receiptId": "receipt:32c01eeb-04db-49c7-82fd-3b57343f498d",
+              "receiptDigest": "sha256:dca87482728f31e11918b970f3f1d4cea44c14e988d7829b3fd93a88c45b03f1"
+            }
+          },
+          "effectsDigest": "sha256:be7a64406ddb7e202a3d14a45d400f4303485dee7651c98f87f6ecc62ee18a1d"
+        }
+      }
+    },
+    {
+      "id": "CMP-C0-PREP-CLEANUP-GATE",
+      "result": "passed",
+      "observed": "changed effect/gate rejected by actual durable chain validator"
+    },
+    {
+      "id": "CMP-C0-PREP-CLEANUP-PREDECESSOR",
+      "result": "passed",
+      "observed": "dangling predecessor pointer rejected"
+    },
+    {
+      "id": "CMP-C0-PREP-CLEANUP-CURRENT-PROJECTION-GAP",
+      "result": "passed",
+      "observed": "current chain accepts a different otherwise-valid command setting; future durable generation projection must reject before command construction (not an existing CONFIG binding PASS)"
+    },
+    {
+      "id": "CMP-C0-PREP-COMPLETION-SOURCE",
+      "result": "passed",
+      "observed": "three exact host definitions => actual executor required completion phases4, current allowance8 is extra role headroom; source inspection only, not timer/kernel execution"
+    }
+  ],
+  "passed": 14,
+  "failed": 0
+}

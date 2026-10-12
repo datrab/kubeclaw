@@ -1,0 +1,18 @@
+{
+  "head": "a07de5673e24ba99109833120d94417ebb0fc407",
+  "scope": "evidence-only child output identity, no commit or acceptance",
+  "files": {
+    "docs/review/evidence/config-acceptance/components/schema-semantics.py": "6a4fb49d40f265fa846bcc92ba7c1821643992fae2194270cf5a498b3c818515",
+    "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json": "2f29b9f4c6f6355a124ab4a0f8b365408a3caf9a661fdf8b481e37fd77a3e5f8",
+    "docs/review/evidence/config-acceptance/components/schema-semantic-source-read.log": "c1139a05eb2aab19b58382e2d33c5c936c059eef9cf10ba63625f67f44f7f7de",
+    "docs/review/evidence/config-acceptance/components/schema-definition-validation-attempt4.log": "2658c815c129c7615b8fd1b8fdc9ad300bd68452b67ebd7e96f303ea446fe5a1",
+    "docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs": "1b48ff68f9eb0e218182b7b86c7782855d0a81ec0c8b9dc4b4446ed806d98521",
+    "docs/review/evidence/config-acceptance/components/check-schema-closure.py": "ee08bc9f462c81179c958d169ae8588014d13fd242e6de2403792da63c2fe9d4",
+    "docs/review/evidence/config-acceptance/components/schema-closure-integrity-final.log": "8bee3380710c7b947cb6ffcc39d4c7abac2d41571c7c68030662f2d7d4d4ec51",
+    "docs/review/evidence/config-acceptance/components/supported-domain-corrections.json": "89240eb9cf49e03faddcc43365188d61cc0880b19724547304f0a06a05a16ed7",
+    "docs/review/evidence/config-acceptance/components/residual-fragment.json": "72e008e977cc8553ee2866a39a06fe7be46e02f266a20782d419dbc3e0d45b87",
+    "docs/review/evidence/config-acceptance/components/residual-check-schema-closure-published.log": "41556718682f57c90165f4584066093004fe6e91d2c7b42f29f9cce4c82e2e18",
+    "docs/review/evidence/config-acceptance/components/RESIDUAL.md": "af9be6e457dd8ab0954d4be57da4dce88a8676396111cef78c73879f4f78be15",
+    "docs/review/evidence/config-acceptance/components/schema-definition-setup-observations.md": "c42ea6554d4199716d341ef94861c55c7ce3384221707f28268d3dcd7d3fc436"
+  }
+}

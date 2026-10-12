@@ -17,6 +17,11 @@ No production source, original tests or historical raw evidence is changed here.
   identities and raw failed attempts. Historical verification remains separate.
 - `independent/` and the independent report under remediation are reviewer-owned
   evidence. Author summaries do not substitute for independent source enumeration.
+- `independent-core-domain/` binds the newer bounded Core challenge. Its
+  [report](../../remediation/independent-config-c0-core-domain-a07de567.md) is
+  **NOT ACCEPTED** (ICD-001–004), even though its safe definition reproductions
+  pass. Numeric const-only policies do not close tunability; active/historical
+  case conflicts, additional productive schemas and retention caller links remain.
 
 From repo root:
 
@@ -59,3 +64,27 @@ superseded observations without rewriting historical failures. Correct reviewer
 findings, regenerate consolidation, freeze exact application/test/evidence bytes,
 then have a fresh independent reviewer confirm the whole C0 gate. Only then is
 the bounded C1 package ready for the user's implementation decision.
+
+## Fourth incremental checkpoint
+
+The stable fragments consolidate to 2,299 rows and 3,918 distinct case IDs. These
+are bookkeeping counts, not semantic coverage. The structural integrity check
+has zero errors; the strict completion check rejects 71,035 open obligations.
+Raw outputs are `author/*-checkpoint-4.log`; prior failed/drift outputs remain.
+`author/checkpoint-4-identities-final.json` records content identities and the exact
+compressed dirty patch before publication; decompression restores its original
+bytes. No productive source or existing test delta is included.
+The earlier snapshot is retained. Whitespace diagnostics on exact captured Helm
+streams/render files and two acquired upstream source files are preserved in
+`author/checkpoint-4-whitespace-initial.log`. Scoped evidence attributes preserve
+their bytes; authored scripts/JSON/Markdown remain checked. The final whitespace
+log is empty (exit zero), not a runtime or semantic acceptance result.
+
+Delivery's current Kubernetes-boundary observations include 23 passed and two
+failed definition checks; the Buster whole-document checks collect 21 resources,
+validate 18 and fail three missing CRD/admission-policy schemas, with zero skips.
+The 120 resource projection comparisons are separate observations, not API or
+live scheduling proof. Reader-version pins do not prove deployed API identity.
+Runtime's 935 passed records are C0 source/definition checks; its 2,426 future
+cases remain not-run and all rows remain `c0Closed=false`. No global C0 or later
+gate follows from these counts or the absence of integrity errors.

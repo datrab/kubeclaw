@@ -1,0 +1,59 @@
+{
+  "images": {
+    "control": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "studio": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "worker": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "ingestion": {
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "postgresql": {
+    "existingSecret": "prism-postgresql-auth"
+  },
+  "worker": {
+    "native": {
+      "nodeName": "native-render-test",
+      "namespace": "default",
+      "policyDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "studio": {
+    "replicas": 2
+  },
+  "ingestion": {
+    "enabled": true,
+    "replicas": 2,
+    "quarantineTtlMs": 120000,
+    "resources": {
+      "requests": {
+        "cpu": "250m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "backup": {
+    "schedule": "0 1 * * *",
+    "verificationSchedule": "0 2 * * 0",
+    "databaseProofSchedule": "0 3 * * 0",
+    "maximumBytes": "42949672960",
+    "maximumRetainedBytes": "53687091200",
+    "maximumDurationSeconds": 1800
+  },
+  "artifactStorage": {
+    "storage": "200Gi",
+    "storageClass": "delivery-test"
+  },
+  "tailscale": {
+    "enabled": false
+  }
+}

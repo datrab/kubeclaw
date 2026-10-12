@@ -1,0 +1,32 @@
+{
+  "package": "acpx",
+  "version": "0.16.0",
+  "dist": {
+    "shasum": "37f5483ad49eb86ba16fe70518b5afd4c25f5422",
+    "tarball": "https://registry.npmjs.org/acpx/-/acpx-0.16.0.tgz",
+    "fileCount": 34,
+    "integrity": "sha512-HvCmlNc9JHUbAZfnk/m46RXV6WNLBM6zGZYWsHpcFaHFT4tShFbsb8qoh7J+nGc8aAYDqHiJEZggCRGIeXYUvQ==",
+    "signatures": [
+      {
+        "sig": "MEYCIQC/m+v5D4qtIs7X6BA65JGxZzfyBfgUQwyeGL5TAtV5ogIhALiywp+tfMyxEWRznLO2its9JPMI1/SPg43avWBaozij",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+      },
+      {
+        "sig": "MEUCIALuV7mOaJTHNViHsvu3+bHjlxGrNzvZuJ9ilV8c49XCAiEA5DZnmKLuEqNzskbyggLG+af9SI0Q8tlavhfaxmu0WEk=",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+      }
+    ],
+    "attestations": {
+      "url": "https://registry.npmjs.org/-/npm/v1/attestations/acpx@0.16.0",
+      "provenance": {
+        "predicateType": "https://slsa.dev/provenance/v1"
+      }
+    },
+    "unpackedSize": 2384165
+  },
+  "archiveSha256": "1b95bf88ee1a4649a28a96d5ddbeac31cb06c1b6de063b516089436952e87fa7",
+  "integrityVerified": "sha512-HvCmlNc9JHUbAZfnk/m46RXV6WNLBM6zGZYWsHpcFaHFT4tShFbsb8qoh7J+nGc8aAYDqHiJEZggCRGIeXYUvQ==",
+  "extractedRoot": "/tmp/kubeclaw-c0-delivery-acpx-runtime-0.16.0/package",
+  "lifecycleScriptsExecuted": false,
+  "dependenciesInstalled": false
+}

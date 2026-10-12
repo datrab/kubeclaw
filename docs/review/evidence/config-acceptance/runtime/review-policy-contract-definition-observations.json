@@ -1,0 +1,4387 @@
+{
+  "caseId": "RT-C0-REVIEW-PRODUCTIVE-CONTRACT-DEFINITION",
+  "command": "node docs/review/evidence/config-acceptance/runtime/validate-review-policy-contracts.mjs",
+  "node": "v24.21.0",
+  "inputSha256": "cb19b255b2907306b3cc2422466462e2be84d897a518b8dc214b968bce5cbcd7",
+  "sourceDigests": {
+    "skills/nova/plugins/review/src/review-policy-parser.ts": "24c402161c2cf73a99969cd61c9f040d7598f9243327cd61325213f2b13bcbfb"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/validate-review-policy-contracts.mjs": "733a404933f191373bbd65b9e5c00ba801c65f525bf7409d67797eae34d01f8c"
+  },
+  "observations": [
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SCHEMAVERSION",
+      "field": "schemaVersion",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-PROFILE",
+      "field": "profile",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-BLOCKING-PRIORITIES",
+      "field": "blocking.priorities",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-BLOCKING-CATEGORIES",
+      "field": "blocking.categories",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "field": "blocking.requireIntroducedByDiff",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "field": "blocking.requireDirectEvidence",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXPROPOSALS",
+      "field": "limits.maxProposals",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXROOTCAUSES",
+      "field": "limits.maxRootCauses",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINSTANCESPERCLUSTER",
+      "field": "limits.maxInstancesPerCluster",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXBUNDLEBYTES",
+      "field": "limits.maxBundleBytes",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTFILES",
+      "field": "limits.maxContextFiles",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINITIALCONTEXTFILES",
+      "field": "limits.maxInitialContextFiles",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTFILEBYTES",
+      "field": "limits.maxContextFileBytes",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTBYTES",
+      "field": "limits.maxContextBytes",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINITIALCONTEXTBYTES",
+      "field": "limits.maxInitialContextBytes",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXDEPENDENCYDEPTH",
+      "field": "limits.maxDependencyDepth",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXEXPANSIONFILES",
+      "field": "limits.maxExpansionFiles",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXADVISORIES",
+      "field": "limits.maxAdvisories",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SCOPE-OUTSIDESCOPE",
+      "field": "scope.outsideScope",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SCOPE-UNKNOWNSCOPE",
+      "field": "scope.unknownScope",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SCOPE-RETAINPREEXISTING",
+      "field": "scope.retainPreExisting",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-VERIFICATION-SEMANTICVERIFIER",
+      "field": "verification.semanticVerifier",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "field": "verification.insufficientFindingEvidence",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "field": "verification.unverifiedRequirement",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-ENABLED",
+      "field": "simplification.enabled",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-REGISTRYVERSION",
+      "field": "simplification.registryVersion",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-ENABLEDRULES",
+      "field": "simplification.enabledRules",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "field": "simplification.maxRecommendations",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "field": "simplification.minimumConfidence",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P0",
+      "field": "ranking.priorityWeights.P0",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P1",
+      "field": "ranking.priorityWeights.P1",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P2",
+      "field": "ranking.priorityWeights.P2",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P3",
+      "field": "ranking.priorityWeights.P3",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "field": "ranking.categoryWeights.correctness",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "field": "ranking.categoryWeights.security",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "field": "ranking.categoryWeights.contract",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "field": "ranking.categoryWeights.architecture",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "field": "ranking.categoryWeights.simplification",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-INTRODUCEDBYDIFFBONUS",
+      "field": "ranking.introducedByDiffBonus",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-DIRECTEVIDENCEBONUS",
+      "field": "ranking.directEvidenceBonus",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-FOLLOWUP-RETAINEDPRIORITIES",
+      "field": "followUp.retainedPriorities",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-FOLLOWUP-MAXITEMS",
+      "field": "followUp.maxItems",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-MAXREPAIRCYCLES",
+      "field": "governor.maxRepairCycles",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "field": "governor.fileGrowthMultiplier",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "field": "governor.nonTestLocGrowthMultiplier",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "field": "governor.absoluteFileAllowance",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "field": "governor.absoluteNonTestLocAllowance",
+      "profile": "gate",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SCHEMAVERSION",
+      "field": "schemaVersion",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-PROFILE",
+      "field": "profile",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-BLOCKING-PRIORITIES",
+      "field": "blocking.priorities",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-BLOCKING-CATEGORIES",
+      "field": "blocking.categories",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "field": "blocking.requireIntroducedByDiff",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "field": "blocking.requireDirectEvidence",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXPROPOSALS",
+      "field": "limits.maxProposals",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXROOTCAUSES",
+      "field": "limits.maxRootCauses",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINSTANCESPERCLUSTER",
+      "field": "limits.maxInstancesPerCluster",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXBUNDLEBYTES",
+      "field": "limits.maxBundleBytes",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTFILES",
+      "field": "limits.maxContextFiles",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINITIALCONTEXTFILES",
+      "field": "limits.maxInitialContextFiles",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTFILEBYTES",
+      "field": "limits.maxContextFileBytes",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTBYTES",
+      "field": "limits.maxContextBytes",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINITIALCONTEXTBYTES",
+      "field": "limits.maxInitialContextBytes",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXDEPENDENCYDEPTH",
+      "field": "limits.maxDependencyDepth",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXEXPANSIONFILES",
+      "field": "limits.maxExpansionFiles",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXADVISORIES",
+      "field": "limits.maxAdvisories",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SCOPE-OUTSIDESCOPE",
+      "field": "scope.outsideScope",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SCOPE-UNKNOWNSCOPE",
+      "field": "scope.unknownScope",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SCOPE-RETAINPREEXISTING",
+      "field": "scope.retainPreExisting",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-VERIFICATION-SEMANTICVERIFIER",
+      "field": "verification.semanticVerifier",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "field": "verification.insufficientFindingEvidence",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "field": "verification.unverifiedRequirement",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-ENABLED",
+      "field": "simplification.enabled",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-REGISTRYVERSION",
+      "field": "simplification.registryVersion",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-ENABLEDRULES",
+      "field": "simplification.enabledRules",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "field": "simplification.maxRecommendations",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "field": "simplification.minimumConfidence",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P0",
+      "field": "ranking.priorityWeights.P0",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P1",
+      "field": "ranking.priorityWeights.P1",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P2",
+      "field": "ranking.priorityWeights.P2",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P3",
+      "field": "ranking.priorityWeights.P3",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "field": "ranking.categoryWeights.correctness",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "field": "ranking.categoryWeights.security",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "field": "ranking.categoryWeights.contract",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "field": "ranking.categoryWeights.architecture",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "field": "ranking.categoryWeights.simplification",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-INTRODUCEDBYDIFFBONUS",
+      "field": "ranking.introducedByDiffBonus",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-DIRECTEVIDENCEBONUS",
+      "field": "ranking.directEvidenceBonus",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-FOLLOWUP-RETAINEDPRIORITIES",
+      "field": "followUp.retainedPriorities",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-FOLLOWUP-MAXITEMS",
+      "field": "followUp.maxItems",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-MAXREPAIRCYCLES",
+      "field": "governor.maxRepairCycles",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "field": "governor.fileGrowthMultiplier",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "field": "governor.nonTestLocGrowthMultiplier",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "field": "governor.absoluteFileAllowance",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "field": "governor.absoluteNonTestLocAllowance",
+      "profile": "lean",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SCHEMAVERSION",
+      "field": "schemaVersion",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-PROFILE",
+      "field": "profile",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-BLOCKING-PRIORITIES",
+      "field": "blocking.priorities",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-BLOCKING-CATEGORIES",
+      "field": "blocking.categories",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "field": "blocking.requireIntroducedByDiff",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "field": "blocking.requireDirectEvidence",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXPROPOSALS",
+      "field": "limits.maxProposals",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXROOTCAUSES",
+      "field": "limits.maxRootCauses",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINSTANCESPERCLUSTER",
+      "field": "limits.maxInstancesPerCluster",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXBUNDLEBYTES",
+      "field": "limits.maxBundleBytes",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTFILES",
+      "field": "limits.maxContextFiles",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINITIALCONTEXTFILES",
+      "field": "limits.maxInitialContextFiles",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTFILEBYTES",
+      "field": "limits.maxContextFileBytes",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTBYTES",
+      "field": "limits.maxContextBytes",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINITIALCONTEXTBYTES",
+      "field": "limits.maxInitialContextBytes",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXDEPENDENCYDEPTH",
+      "field": "limits.maxDependencyDepth",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXEXPANSIONFILES",
+      "field": "limits.maxExpansionFiles",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXADVISORIES",
+      "field": "limits.maxAdvisories",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SCOPE-OUTSIDESCOPE",
+      "field": "scope.outsideScope",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SCOPE-UNKNOWNSCOPE",
+      "field": "scope.unknownScope",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SCOPE-RETAINPREEXISTING",
+      "field": "scope.retainPreExisting",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-SEMANTICVERIFIER",
+      "field": "verification.semanticVerifier",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "field": "verification.insufficientFindingEvidence",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "field": "verification.unverifiedRequirement",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-ENABLED",
+      "field": "simplification.enabled",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-REGISTRYVERSION",
+      "field": "simplification.registryVersion",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-ENABLEDRULES",
+      "field": "simplification.enabledRules",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "field": "simplification.maxRecommendations",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "field": "simplification.minimumConfidence",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P0",
+      "field": "ranking.priorityWeights.P0",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P1",
+      "field": "ranking.priorityWeights.P1",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P2",
+      "field": "ranking.priorityWeights.P2",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P3",
+      "field": "ranking.priorityWeights.P3",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "field": "ranking.categoryWeights.correctness",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "field": "ranking.categoryWeights.security",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "field": "ranking.categoryWeights.contract",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "field": "ranking.categoryWeights.architecture",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "field": "ranking.categoryWeights.simplification",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-INTRODUCEDBYDIFFBONUS",
+      "field": "ranking.introducedByDiffBonus",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-DIRECTEVIDENCEBONUS",
+      "field": "ranking.directEvidenceBonus",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-FOLLOWUP-RETAINEDPRIORITIES",
+      "field": "followUp.retainedPriorities",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-FOLLOWUP-MAXITEMS",
+      "field": "followUp.maxItems",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-MAXREPAIRCYCLES",
+      "field": "governor.maxRepairCycles",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "field": "governor.fileGrowthMultiplier",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "field": "governor.nonTestLocGrowthMultiplier",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "field": "governor.absoluteFileAllowance",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "field": "governor.absoluteNonTestLocAllowance",
+      "profile": "audit",
+      "profileA": "passed",
+      "profileB": "passed",
+      "preserved": "passed",
+      "stageBoundaries": [
+        {
+          "schema": "skills/nova/plugins/review/schemas/config.schema.json",
+          "schemaSha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        },
+        {
+          "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+          "schemaSha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+          "completePreservedAandB": [
+            "passed",
+            "passed",
+            "passed"
+          ]
+        }
+      ],
+      "productiveReaderIdentityErrors": [],
+      "result": "passed",
+      "limitation": "actual complete-policy cross-relation parser and source reader identities; no actual stage/model/cache/governor effect run"
+    }
+  ],
+  "result": "passed",
+  "reviewerConfirmation": "pending"
+}

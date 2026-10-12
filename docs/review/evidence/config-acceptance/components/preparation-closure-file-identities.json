@@ -1,0 +1,17 @@
+{
+  "head": "a07de5673e24ba99109833120d94417ebb0fc407",
+  "scope": "evidence-only final child snapshot; C0 unaccepted",
+  "files": {
+    "docs/review/evidence/config-acceptance/components/RESIDUAL.md": "51bf27e472f3ae05191b215d9e15a4ddbeb255bdd9ed0301b4086bb1890cd918",
+    "docs/review/evidence/config-acceptance/components/residual-fragment.json": "894bd4c05915bd81716fdcb29b190f536e5955fe7f448cbd5c0678ebddbb845c",
+    "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json": "4f0198b6b24d25cc41a892df4d720562d6d138cbaadb6c8e0784e8edc7c59100",
+    "docs/review/evidence/config-acceptance/components/preparation-cleanup-binding-definition.md": "8ec11af88c112e50bfd771270410039a3a0b69c2124df0bb1bd1d93c0e09b42d",
+    "docs/review/evidence/config-acceptance/components/preparation-policy-binding.json": "9e10e047b5fe43c020c658e72119b5f879bea3625358a1389006e28397e26bdf",
+    "docs/review/evidence/config-acceptance/components/preparation-policy-binding.py": "ec590d30bdb7c7cb30212d0fdb37a2a8d48aefc630d77863be3f1cb33793255f",
+    "docs/review/evidence/config-acceptance/components/check-preparation-definition.mjs": "2969bf7bb4a19d843cd5e0c0fea098af7670f419f932ec6700a4617890fe9638",
+    "docs/review/evidence/config-acceptance/components/preparation-definition.log": "c153a9b2ff94230227bca178a4541873dd06ca22b710c17b68ff4035b32619ed",
+    "docs/review/evidence/config-acceptance/components/preparation-policy-source-read.log": "7235887d8c1ee86ff730bf996d472af72639042fbd3277b2e7d40d9a1b9da1e8",
+    "docs/review/evidence/config-acceptance/components/schema-closure-integrity-preparation.log": "8bee3380710c7b947cb6ffcc39d4c7abac2d41571c7c68030662f2d7d4d4ec51",
+    "docs/review/evidence/config-acceptance/components/residual-check-preparation-final.log": "9496104fdd1fec0a058f9863fab1cd10a40b5fecb74d94c9e25cec714e974870"
+  }
+}

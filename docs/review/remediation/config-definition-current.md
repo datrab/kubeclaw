@@ -27,6 +27,12 @@ inputs. A schema-location row with an unresolved consumer is explicitly open.
 Complete acceptance requires source dispositions, field contracts and a fresh
 independent reviewer, not counts or successful integrity checks alone.
 
+The WorkerCore residual fragment is now included in consolidation separately
+from its original component checkpoint. Refined consumer witnesses are retained
+alongside original cases; `pending` author review markers normalize to no reviewer
+confirmation. Actual complete-profile definition checks are recorded as C0
+observations, never converted into C1 behavioral acceptance.
+
 ## Confirmed goals versus proposed mechanisms
 
 Confirmed: evolve existing `swarm.config.json` to **`pipeline.config.json`**;
@@ -135,6 +141,77 @@ or revoked ref blocks its consumer explicitly; no substitution with latest.
 External installed-plugin roster, actual deployed Nova profile, operator host
 capacity and other-session approved test standard remain separately requested
 inputs at their affected later boundaries; none excuses skipping repo-based C0.
+
+### Prism external-agent boundary
+
+`claimAgentJob` creates the V2 launcher envelope inside the database claim
+transaction and persists it before external action. `AgentJobRunner` executes
+that stored envelope; its later `agentAttempt` call recomputes only the installed
+local launcher profile for compatibility. It must not reload accepted limits.
+The native deterministic Prism V3 engine and this external CLI launcher have
+different profile/resource contracts. Launcher CPU, memory and process-tree
+observations are explicitly unavailable, with unrequested budgets; no complete
+remote gateway accounting is established by local process closure.
+
+Current launcher timeout is fixed at 900000 ms in the envelope and separately
+900 seconds in CLI arguments. The target CLI argument is a validated projection
+of the same authoritative policy, not a second editable timeout. Claim lifetime
+is currently 16 minutes in SQL; termination grace is separately 1000 ms. Their
+coupled supported domains and exact proposed implementation harness remain open.
+Expired/uncertain running jobs require NeedsNova reconciliation and are never
+requeued as accepted work. The actual no-dispatch
+[definition check](../evidence/config-acceptance/author/check-agent-definition.mjs)
+records current V2 validation, profile/attempt digests, explicit unavailable
+measurements and missing-budget/wrong-unit rejection. It proves neither alternate
+profile behavior nor authoritative external success.
+
+### Buster source-cleanup module
+
+The [preparation/cleanup definition](../evidence/config-acceptance/components/preparation-cleanup-binding-definition.md)
+specifies one cleanup module per original preparation effect. Its first eligible
+unbound admission may select B (fixed Eval retains A); the fsynced cleanup
+association then pins the complete generation and projection. A cleanup retry
+receives a fresh claim/attempt under that same module generation, preserving the
+original failed result/effect and predecessor history. It does not renew the
+original claim or reset run budgets. `workerAttemptSpecDigest` excludes the claim;
+full-envelope identity and separate claim/result validators must remain intact.
+
+Current preparation quotas of one log byte, one evidence byte and one evidence
+file are dormant operator ceilings, not protocol constants: all three productive
+hosts explicitly disable log retention, emit no evidence and have no collection
+hooks. Their target authors preserve selected values; empty output under two
+different quotas cannot prove F-EFFECT. The current phase allowance of eight is
+operator headroom; the proposed relation derives from actual completion hooks and
+native timer validation, not an arbitrary bound. Four sole Buster policy rows and
+14 actual definition observations are retained separately from future C3/C5 cases.
+The existing chain can accept a valid but changed association setting without
+proving generation-projection equality; rejecting this before command construction
+is an explicit proposed C5 obligation, not a current-code acceptance claim.
+
+### Core domain-preservation limit
+
+The [Core domain evidence](../evidence/config-acceptance/components/core-policy-domains.md)
+defines twelve proposed required numeric fields at their existing values and
+the already-supported per-instance retention boolean. The numeric const-only
+proposal removes no operator-author obligation and proves no wider tunability.
+Historical alternate numeric profiles are explicitly unsupported under that
+preserving proposal; their original EFFECT case IDs remain retained and unpassed.
+Whether that proposal satisfies the full configurable-behavior requirement is
+still a C0 definition/review question, not an author waiver of F-EFFECT or permission
+to relabel operator policies as protocol constants. Actual local source/definition
+checks cover parser/FD/state/journal boundaries; genuine emitter/kernel and
+approved config-projection behavior remain separate cases.
+
+The [fresh independent Core challenge](independent-config-c0-core-domain-a07de567.md)
+has now rejected this bounded definition: ICD-001 requires actual justified
+tunability or an independently valid invariant reason; preservation alone does
+not close D17/D20/F-EFFECT. ICD-002 requires unambiguous active versus historical
+case dispositions and exact proposed commands. ICD-003 identifies 85 additional
+productive registration/health/trust/progress/log/cancellation schema coordinates;
+ICD-004 requires all six actual retention instance projections, including the
+Prism agent. Its safe reproductions passed only source/definition checks. These
+findings remain open for author correction and independent recheck; no scope
+reduction or new user approval is inferred.
 
 ## C1 proposal boundaries — not yet ready for approval
 

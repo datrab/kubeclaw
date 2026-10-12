@@ -1,0 +1,21 @@
+{
+  "head": "a07de5673e24ba99109833120d94417ebb0fc407",
+  "scope": "stable evidence-only Core domain batch; C0 not accepted",
+  "files": {
+    "docs/review/evidence/config-acceptance/components/RESIDUAL.md": "00405548cd7889a7875b3a09b51c358d81fc2cacafb6edaee7acdb018ff1716a",
+    "docs/review/evidence/config-acceptance/components/residual-fragment.json": "63cc04df1b8847daeee033b723990350cb84bc7a5f8703ae245412016642135a",
+    "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json": "752e3224938f8313b8a70afd1bd7b758ce878442809c8de0de1594fec5bda319",
+    "docs/review/evidence/config-acceptance/components/core-policy-domains.md": "c6b1f0225947e1cd9b8b3429caa0e65dcad40eec5f35834bc03e408200cf7896",
+    "docs/review/evidence/config-acceptance/components/core-policy-domains.py": "062c7fbc8d5c2837f856f0a925eed9319bcf60f92eaab3a1ae68e010010a5027",
+    "docs/review/evidence/config-acceptance/components/core-policy-domain-closure.json": "c99a4966ba2fb77e0e83bb055b02b83f7b7c3bdc1603f04024b133227fdd4645",
+    "docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs": "c98b0607637d10dd1e1bf589f19111f067debefdbcaa9b11d43dcf8b2b9cbb89",
+    "docs/review/evidence/config-acceptance/components/core-domain-definition-attempt2.log": "589a9c0895490fe913012d6e8b961cbfa8466c68f9a86b8266778e209ee1b7e8",
+    "docs/review/evidence/config-acceptance/components/core-domain-definition-attempt1.log": "19a737225f7792d6d0a8673237ae177f1c0bfc670f06570446f524e637865933",
+    "docs/review/evidence/config-acceptance/components/core-domain-definition-attempt1-script.snapshot.mjs": "23b8781a29edccdbea4f96cfc7ace58c0a89f6f94fae5ee2ef7e28a92328c998",
+    "docs/review/evidence/config-acceptance/components/core-domain-source-read.log": "3879caf8385a1b325a35a8412937ea762fac258d6d0a5d4a0dff3ef1078b674e",
+    "docs/review/evidence/config-acceptance/components/check-core-domain-closure.py": "92f06be293908fd65fdf6ba007ce5a32de89b56ff5708bd9b42564f24ac1f6dc",
+    "docs/review/evidence/config-acceptance/components/core-domain-integrity.log": "57dc24e832ff0cbfb077ddafdab4beee1911b258dee44d0db750e3cd0c3fe356",
+    "docs/review/evidence/config-acceptance/components/residual-check-core-domains.log": "50405145d11d70932789fd1ba41eedaf0e648faffd57e9157934841be64020d1",
+    "docs/review/evidence/config-acceptance/components/schema-check-core-domains.log": "8bee3380710c7b947cb6ffcc39d4c7abac2d41571c7c68030662f2d7d4d4ec51"
+  }
+}

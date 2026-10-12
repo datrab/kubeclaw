@@ -1,0 +1,17 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs:6
+function materialize(v){if(typeof v==='string')return v.replace(/\$\{([^}]+)\}/g,(_,key)=>{if(!Object.hasOwn(variables,key))throw Error('undeclared variable '+key);return variables[key];});if(Array.isArray(v))return v.map(materialize);if(v&&typeof v==='object')return Object.fromEntries(Object.entries(v).map(([k,x])=>[k,materialize(x)]));return v;}
+                                                                                                                                  ^
+
+Error: undeclared variable VALID_INSTALLED_MODEL_A
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs:6:131
+    at String.replace (<anonymous>)
+    at materialize (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs:6:57)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs:6:322
+    at Array.map (<anonymous>)
+    at materialize (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs:6:306)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs:6:322
+    at Array.map (<anonymous>)
+    at materialize (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs:6:306)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs:6:322
+
+Node.js v24.21.0

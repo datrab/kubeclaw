@@ -1,0 +1,2356 @@
+{
+  "caseId": "RT-C0-REVIEW-POLICY-DEFINITION",
+  "scope": "C0 parser/precedence definition observations only; no plugin review execution, actual verdict change or migrated-author acceptance",
+  "command": "node docs/review/evidence/config-acceptance/runtime/review-policy-definition.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/nova/plugins/review/src/review-policy-profiles.ts": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67",
+    "skills/nova/plugins/review/src/review-policy-parser.ts": "24c402161c2cf73a99969cd61c9f040d7598f9243327cd61325213f2b13bcbfb",
+    "skills/nova/plugins/review/src/review-policy-resolver.ts": "c05b626889142e5cf8bd8b9c30446c9bef87b3a7ac5d9dd10799ff769c9dc0ad",
+    "skills/nova/plugins/review/src/review-policy-contract.ts": "3dd3337e85c6e27f0b8ad1cf953448468bc67c22b927c4f09f7cdf008b6e70a2",
+    "skills/nova/plugins/review/src/review-hard-limits.ts": "93009f0054d57f2f02aef50a146aa3d146595640d2ee5f07220d1889ef0ea04d",
+    "skills/nova/plugins/review/src/stage.ts": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+    "skills/nova/plugins/review/src/repository-audit-stage.ts": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/review-policy-definition.mjs": "28e3e615500cec06b5fe487aa41eef7202dfbfbe3f1439f21da854127ef0e96b"
+  },
+  "observations": [
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SCHEMAVERSION",
+      "profile": "gate",
+      "path": "gate.schemaVersion",
+      "current": "review-policy.v2",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "review policy is missing field(s): schemaVersion"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "review policy schemaVersion is invalid"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-PROFILE",
+      "profile": "gate",
+      "path": "gate.profile",
+      "current": "gate",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "review policy is missing field(s): profile"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "profile must be a stable identifier"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-BLOCKING-PRIORITIES",
+      "profile": "gate",
+      "path": "gate.blocking.priorities",
+      "current": [
+        "P0"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): priorities"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.priorities must contain 1-4 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-BLOCKING-CATEGORIES",
+      "profile": "gate",
+      "path": "gate.blocking.categories",
+      "current": [
+        "correctness",
+        "security",
+        "contract"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): categories"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.categories must contain 1-5 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "profile": "gate",
+      "path": "gate.blocking.requireIntroducedByDiff",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): requireIntroducedByDiff"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.requireIntroducedByDiff must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "profile": "gate",
+      "path": "gate.blocking.requireDirectEvidence",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): requireDirectEvidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.requireDirectEvidence must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXPROPOSALS",
+      "profile": "gate",
+      "path": "gate.limits.maxProposals",
+      "current": 64,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxProposals"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxProposals must be an integer from 1 to 128"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXROOTCAUSES",
+      "profile": "gate",
+      "path": "gate.limits.maxRootCauses",
+      "current": 5,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxRootCauses"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxRootCauses must be an integer from 1 to 20"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINSTANCESPERCLUSTER",
+      "profile": "gate",
+      "path": "gate.limits.maxInstancesPerCluster",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInstancesPerCluster"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInstancesPerCluster must be an integer from 1 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXBUNDLEBYTES",
+      "profile": "gate",
+      "path": "gate.limits.maxBundleBytes",
+      "current": 4194304,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxBundleBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxBundleBytes must be an integer from 1024 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTFILES",
+      "profile": "gate",
+      "path": "gate.limits.maxContextFiles",
+      "current": 48,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextFiles must be an integer from 1 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINITIALCONTEXTFILES",
+      "profile": "gate",
+      "path": "gate.limits.maxInitialContextFiles",
+      "current": 40,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInitialContextFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInitialContextFiles must be an integer from 1 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTFILEBYTES",
+      "profile": "gate",
+      "path": "gate.limits.maxContextFileBytes",
+      "current": 524288,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextFileBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextFileBytes must be an integer from 1 to 2097152"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXCONTEXTBYTES",
+      "profile": "gate",
+      "path": "gate.limits.maxContextBytes",
+      "current": 3145728,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextBytes must be an integer from 1 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXINITIALCONTEXTBYTES",
+      "profile": "gate",
+      "path": "gate.limits.maxInitialContextBytes",
+      "current": 2097152,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInitialContextBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInitialContextBytes must be an integer from 1 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXDEPENDENCYDEPTH",
+      "profile": "gate",
+      "path": "gate.limits.maxDependencyDepth",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxDependencyDepth"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxDependencyDepth must be an integer from 0 to 8"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXEXPANSIONFILES",
+      "profile": "gate",
+      "path": "gate.limits.maxExpansionFiles",
+      "current": 8,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxExpansionFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxExpansionFiles must be an integer from 1 to 16"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-LIMITS-MAXADVISORIES",
+      "profile": "gate",
+      "path": "gate.limits.maxAdvisories",
+      "current": 0,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxAdvisories"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxAdvisories must be an integer from 0 to 100"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SCOPE-OUTSIDESCOPE",
+      "profile": "gate",
+      "path": "gate.scope.outsideScope",
+      "current": "orchestrator_required",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): outsideScope"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.outsideScope must be one of follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SCOPE-UNKNOWNSCOPE",
+      "profile": "gate",
+      "path": "gate.scope.unknownScope",
+      "current": "blocked",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): unknownScope"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.unknownScope must be one of blocked, follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SCOPE-RETAINPREEXISTING",
+      "profile": "gate",
+      "path": "gate.scope.retainPreExisting",
+      "current": false,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): retainPreExisting"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.retainPreExisting must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-VERIFICATION-SEMANTICVERIFIER",
+      "profile": "gate",
+      "path": "gate.verification.semanticVerifier",
+      "current": "p0-only",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): semanticVerifier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.semanticVerifier must be one of disabled, p0-only, all-blockers"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "profile": "gate",
+      "path": "gate.verification.insufficientFindingEvidence",
+      "current": "orchestrator_required",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): insufficientFindingEvidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.insufficientFindingEvidence must be one of reject, follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "profile": "gate",
+      "path": "gate.verification.unverifiedRequirement",
+      "current": "blocked",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): unverifiedRequirement"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.unverifiedRequirement must be one of blocked, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-ENABLED",
+      "profile": "gate",
+      "path": "gate.simplification.enabled",
+      "current": false,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): enabled"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.enabled must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-REGISTRYVERSION",
+      "profile": "gate",
+      "path": "gate.simplification.registryVersion",
+      "current": "simplification-rules.v1",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): registryVersion"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.registryVersion must be one of simplification-rules.v1"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-ENABLEDRULES",
+      "profile": "gate",
+      "path": "gate.simplification.enabledRules",
+      "current": [],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): enabledRules"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.enabledRules must contain 0-8 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "profile": "gate",
+      "path": "gate.simplification.maxRecommendations",
+      "current": 0,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): maxRecommendations"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.maxRecommendations must be an integer from 0 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "profile": "gate",
+      "path": "gate.simplification.minimumConfidence",
+      "current": "high",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): minimumConfidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.minimumConfidence must be one of high, medium, low"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P0",
+      "profile": "gate",
+      "path": "gate.ranking.priorityWeights.P0",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P0 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P1",
+      "profile": "gate",
+      "path": "gate.ranking.priorityWeights.P1",
+      "current": 500,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P1 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P2",
+      "profile": "gate",
+      "path": "gate.ranking.priorityWeights.P2",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P2 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-PRIORITYWEIGHTS-P3",
+      "profile": "gate",
+      "path": "gate.ranking.priorityWeights.P3",
+      "current": 10,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P3 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "profile": "gate",
+      "path": "gate.ranking.categoryWeights.correctness",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.correctness must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "profile": "gate",
+      "path": "gate.ranking.categoryWeights.security",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.security must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "profile": "gate",
+      "path": "gate.ranking.categoryWeights.contract",
+      "current": 900,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.contract must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "profile": "gate",
+      "path": "gate.ranking.categoryWeights.architecture",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.architecture must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "profile": "gate",
+      "path": "gate.ranking.categoryWeights.simplification",
+      "current": 10,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.simplification must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-INTRODUCEDBYDIFFBONUS",
+      "profile": "gate",
+      "path": "gate.ranking.introducedByDiffBonus",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking is missing field(s): introducedByDiffBonus"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.introducedByDiffBonus must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-RANKING-DIRECTEVIDENCEBONUS",
+      "profile": "gate",
+      "path": "gate.ranking.directEvidenceBonus",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking is missing field(s): directEvidenceBonus"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.directEvidenceBonus must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-FOLLOWUP-RETAINEDPRIORITIES",
+      "profile": "gate",
+      "path": "gate.followUp.retainedPriorities",
+      "current": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "followUp is missing field(s): retainedPriorities"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "followUp.retainedPriorities must contain 0-4 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-FOLLOWUP-MAXITEMS",
+      "profile": "gate",
+      "path": "gate.followUp.maxItems",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "followUp is missing field(s): maxItems"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "followUp.maxItems must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-MAXREPAIRCYCLES",
+      "profile": "gate",
+      "path": "gate.governor.maxRepairCycles",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): maxRepairCycles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.maxRepairCycles must be an integer from 0 to 8"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "profile": "gate",
+      "path": "gate.governor.fileGrowthMultiplier",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): fileGrowthMultiplier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.fileGrowthMultiplier must be an integer from 1 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "profile": "gate",
+      "path": "gate.governor.nonTestLocGrowthMultiplier",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): nonTestLocGrowthMultiplier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.nonTestLocGrowthMultiplier must be an integer from 1 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "profile": "gate",
+      "path": "gate.governor.absoluteFileAllowance",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): absoluteFileAllowance"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.absoluteFileAllowance must be an integer from 0 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-GATE-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "profile": "gate",
+      "path": "gate.governor.absoluteNonTestLocAllowance",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): absoluteNonTestLocAllowance"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.absoluteNonTestLocAllowance must be an integer from 0 to 1000000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SCHEMAVERSION",
+      "profile": "lean",
+      "path": "lean.schemaVersion",
+      "current": "review-policy.v2",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "review policy is missing field(s): schemaVersion"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "review policy schemaVersion is invalid"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-PROFILE",
+      "profile": "lean",
+      "path": "lean.profile",
+      "current": "lean",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "review policy is missing field(s): profile"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "profile must be a stable identifier"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-BLOCKING-PRIORITIES",
+      "profile": "lean",
+      "path": "lean.blocking.priorities",
+      "current": [
+        "P0"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): priorities"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.priorities must contain 1-4 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-BLOCKING-CATEGORIES",
+      "profile": "lean",
+      "path": "lean.blocking.categories",
+      "current": [
+        "correctness",
+        "security",
+        "contract"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): categories"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.categories must contain 1-5 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "profile": "lean",
+      "path": "lean.blocking.requireIntroducedByDiff",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): requireIntroducedByDiff"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.requireIntroducedByDiff must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "profile": "lean",
+      "path": "lean.blocking.requireDirectEvidence",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): requireDirectEvidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.requireDirectEvidence must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXPROPOSALS",
+      "profile": "lean",
+      "path": "lean.limits.maxProposals",
+      "current": 64,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxProposals"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxProposals must be an integer from 1 to 128"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXROOTCAUSES",
+      "profile": "lean",
+      "path": "lean.limits.maxRootCauses",
+      "current": 5,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxRootCauses"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxRootCauses must be an integer from 1 to 20"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINSTANCESPERCLUSTER",
+      "profile": "lean",
+      "path": "lean.limits.maxInstancesPerCluster",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInstancesPerCluster"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInstancesPerCluster must be an integer from 1 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXBUNDLEBYTES",
+      "profile": "lean",
+      "path": "lean.limits.maxBundleBytes",
+      "current": 6291456,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxBundleBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxBundleBytes must be an integer from 1024 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTFILES",
+      "profile": "lean",
+      "path": "lean.limits.maxContextFiles",
+      "current": 64,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextFiles must be an integer from 1 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINITIALCONTEXTFILES",
+      "profile": "lean",
+      "path": "lean.limits.maxInitialContextFiles",
+      "current": 52,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInitialContextFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInitialContextFiles must be an integer from 1 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTFILEBYTES",
+      "profile": "lean",
+      "path": "lean.limits.maxContextFileBytes",
+      "current": 786432,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextFileBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextFileBytes must be an integer from 1 to 2097152"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXCONTEXTBYTES",
+      "profile": "lean",
+      "path": "lean.limits.maxContextBytes",
+      "current": 5242880,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextBytes must be an integer from 1 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXINITIALCONTEXTBYTES",
+      "profile": "lean",
+      "path": "lean.limits.maxInitialContextBytes",
+      "current": 4194304,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInitialContextBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInitialContextBytes must be an integer from 1 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXDEPENDENCYDEPTH",
+      "profile": "lean",
+      "path": "lean.limits.maxDependencyDepth",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxDependencyDepth"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxDependencyDepth must be an integer from 0 to 8"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXEXPANSIONFILES",
+      "profile": "lean",
+      "path": "lean.limits.maxExpansionFiles",
+      "current": 12,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxExpansionFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxExpansionFiles must be an integer from 1 to 16"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-LIMITS-MAXADVISORIES",
+      "profile": "lean",
+      "path": "lean.limits.maxAdvisories",
+      "current": 3,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxAdvisories"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxAdvisories must be an integer from 0 to 100"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SCOPE-OUTSIDESCOPE",
+      "profile": "lean",
+      "path": "lean.scope.outsideScope",
+      "current": "follow_up",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): outsideScope"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.outsideScope must be one of follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SCOPE-UNKNOWNSCOPE",
+      "profile": "lean",
+      "path": "lean.scope.unknownScope",
+      "current": "blocked",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): unknownScope"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.unknownScope must be one of blocked, follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SCOPE-RETAINPREEXISTING",
+      "profile": "lean",
+      "path": "lean.scope.retainPreExisting",
+      "current": false,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): retainPreExisting"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.retainPreExisting must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-VERIFICATION-SEMANTICVERIFIER",
+      "profile": "lean",
+      "path": "lean.verification.semanticVerifier",
+      "current": "p0-only",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): semanticVerifier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.semanticVerifier must be one of disabled, p0-only, all-blockers"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "profile": "lean",
+      "path": "lean.verification.insufficientFindingEvidence",
+      "current": "follow_up",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): insufficientFindingEvidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.insufficientFindingEvidence must be one of reject, follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "profile": "lean",
+      "path": "lean.verification.unverifiedRequirement",
+      "current": "blocked",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): unverifiedRequirement"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.unverifiedRequirement must be one of blocked, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-ENABLED",
+      "profile": "lean",
+      "path": "lean.simplification.enabled",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): enabled"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.enabled must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-REGISTRYVERSION",
+      "profile": "lean",
+      "path": "lean.simplification.registryVersion",
+      "current": "simplification-rules.v1",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): registryVersion"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.registryVersion must be one of simplification-rules.v1"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-ENABLEDRULES",
+      "profile": "lean",
+      "path": "lean.simplification.enabledRules",
+      "current": [
+        "SIM001",
+        "SIM002",
+        "SIM003",
+        "SIM004",
+        "SIM005",
+        "SIM006",
+        "SIM007",
+        "SIM008"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): enabledRules"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.enabledRules must contain 0-8 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "profile": "lean",
+      "path": "lean.simplification.maxRecommendations",
+      "current": 3,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): maxRecommendations"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.maxRecommendations must be an integer from 0 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "profile": "lean",
+      "path": "lean.simplification.minimumConfidence",
+      "current": "high",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): minimumConfidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.minimumConfidence must be one of high, medium, low"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P0",
+      "profile": "lean",
+      "path": "lean.ranking.priorityWeights.P0",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P0 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P1",
+      "profile": "lean",
+      "path": "lean.ranking.priorityWeights.P1",
+      "current": 500,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P1 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P2",
+      "profile": "lean",
+      "path": "lean.ranking.priorityWeights.P2",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P2 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-PRIORITYWEIGHTS-P3",
+      "profile": "lean",
+      "path": "lean.ranking.priorityWeights.P3",
+      "current": 10,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P3 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "profile": "lean",
+      "path": "lean.ranking.categoryWeights.correctness",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.correctness must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "profile": "lean",
+      "path": "lean.ranking.categoryWeights.security",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.security must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "profile": "lean",
+      "path": "lean.ranking.categoryWeights.contract",
+      "current": 900,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.contract must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "profile": "lean",
+      "path": "lean.ranking.categoryWeights.architecture",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.architecture must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "profile": "lean",
+      "path": "lean.ranking.categoryWeights.simplification",
+      "current": 10,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.simplification must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-INTRODUCEDBYDIFFBONUS",
+      "profile": "lean",
+      "path": "lean.ranking.introducedByDiffBonus",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking is missing field(s): introducedByDiffBonus"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.introducedByDiffBonus must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-RANKING-DIRECTEVIDENCEBONUS",
+      "profile": "lean",
+      "path": "lean.ranking.directEvidenceBonus",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking is missing field(s): directEvidenceBonus"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.directEvidenceBonus must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-FOLLOWUP-RETAINEDPRIORITIES",
+      "profile": "lean",
+      "path": "lean.followUp.retainedPriorities",
+      "current": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "followUp is missing field(s): retainedPriorities"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "followUp.retainedPriorities must contain 0-4 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-FOLLOWUP-MAXITEMS",
+      "profile": "lean",
+      "path": "lean.followUp.maxItems",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "followUp is missing field(s): maxItems"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "followUp.maxItems must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-MAXREPAIRCYCLES",
+      "profile": "lean",
+      "path": "lean.governor.maxRepairCycles",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): maxRepairCycles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.maxRepairCycles must be an integer from 0 to 8"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "profile": "lean",
+      "path": "lean.governor.fileGrowthMultiplier",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): fileGrowthMultiplier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.fileGrowthMultiplier must be an integer from 1 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "profile": "lean",
+      "path": "lean.governor.nonTestLocGrowthMultiplier",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): nonTestLocGrowthMultiplier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.nonTestLocGrowthMultiplier must be an integer from 1 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "profile": "lean",
+      "path": "lean.governor.absoluteFileAllowance",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): absoluteFileAllowance"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.absoluteFileAllowance must be an integer from 0 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-LEAN-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "profile": "lean",
+      "path": "lean.governor.absoluteNonTestLocAllowance",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): absoluteNonTestLocAllowance"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.absoluteNonTestLocAllowance must be an integer from 0 to 1000000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SCHEMAVERSION",
+      "profile": "audit",
+      "path": "audit.schemaVersion",
+      "current": "review-policy.v2",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "review policy is missing field(s): schemaVersion"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "review policy schemaVersion is invalid"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-PROFILE",
+      "profile": "audit",
+      "path": "audit.profile",
+      "current": "audit",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "review policy is missing field(s): profile"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "profile must be a stable identifier"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-BLOCKING-PRIORITIES",
+      "profile": "audit",
+      "path": "audit.blocking.priorities",
+      "current": [
+        "P0"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): priorities"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.priorities must contain 1-4 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-BLOCKING-CATEGORIES",
+      "profile": "audit",
+      "path": "audit.blocking.categories",
+      "current": [
+        "correctness",
+        "security",
+        "contract"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): categories"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.categories must contain 1-5 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-BLOCKING-REQUIREINTRODUCEDBYDIFF",
+      "profile": "audit",
+      "path": "audit.blocking.requireIntroducedByDiff",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): requireIntroducedByDiff"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.requireIntroducedByDiff must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-BLOCKING-REQUIREDIRECTEVIDENCE",
+      "profile": "audit",
+      "path": "audit.blocking.requireDirectEvidence",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "blocking is missing field(s): requireDirectEvidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "blocking.requireDirectEvidence must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXPROPOSALS",
+      "profile": "audit",
+      "path": "audit.limits.maxProposals",
+      "current": 128,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxProposals"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxProposals must be an integer from 1 to 128"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXROOTCAUSES",
+      "profile": "audit",
+      "path": "audit.limits.maxRootCauses",
+      "current": 20,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxRootCauses"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxRootCauses must be an integer from 1 to 20"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINSTANCESPERCLUSTER",
+      "profile": "audit",
+      "path": "audit.limits.maxInstancesPerCluster",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInstancesPerCluster"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInstancesPerCluster must be an integer from 1 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXBUNDLEBYTES",
+      "profile": "audit",
+      "path": "audit.limits.maxBundleBytes",
+      "current": 16777216,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxBundleBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxBundleBytes must be an integer from 1024 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTFILES",
+      "profile": "audit",
+      "path": "audit.limits.maxContextFiles",
+      "current": 256,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextFiles must be an integer from 1 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINITIALCONTEXTFILES",
+      "profile": "audit",
+      "path": "audit.limits.maxInitialContextFiles",
+      "current": 240,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInitialContextFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInitialContextFiles must be an integer from 1 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTFILEBYTES",
+      "profile": "audit",
+      "path": "audit.limits.maxContextFileBytes",
+      "current": 2097152,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextFileBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextFileBytes must be an integer from 1 to 2097152"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXCONTEXTBYTES",
+      "profile": "audit",
+      "path": "audit.limits.maxContextBytes",
+      "current": 14680064,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxContextBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxContextBytes must be an integer from 1 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXINITIALCONTEXTBYTES",
+      "profile": "audit",
+      "path": "audit.limits.maxInitialContextBytes",
+      "current": 12582912,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxInitialContextBytes"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxInitialContextBytes must be an integer from 1 to 16777216"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXDEPENDENCYDEPTH",
+      "profile": "audit",
+      "path": "audit.limits.maxDependencyDepth",
+      "current": 8,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxDependencyDepth"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxDependencyDepth must be an integer from 0 to 8"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXEXPANSIONFILES",
+      "profile": "audit",
+      "path": "audit.limits.maxExpansionFiles",
+      "current": 16,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxExpansionFiles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxExpansionFiles must be an integer from 1 to 16"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-LIMITS-MAXADVISORIES",
+      "profile": "audit",
+      "path": "audit.limits.maxAdvisories",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "limits is missing field(s): maxAdvisories"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "limits.maxAdvisories must be an integer from 0 to 100"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SCOPE-OUTSIDESCOPE",
+      "profile": "audit",
+      "path": "audit.scope.outsideScope",
+      "current": "follow_up",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): outsideScope"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.outsideScope must be one of follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SCOPE-UNKNOWNSCOPE",
+      "profile": "audit",
+      "path": "audit.scope.unknownScope",
+      "current": "follow_up",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): unknownScope"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.unknownScope must be one of blocked, follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SCOPE-RETAINPREEXISTING",
+      "profile": "audit",
+      "path": "audit.scope.retainPreExisting",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "scope is missing field(s): retainPreExisting"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "scope.retainPreExisting must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-SEMANTICVERIFIER",
+      "profile": "audit",
+      "path": "audit.verification.semanticVerifier",
+      "current": "all-blockers",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): semanticVerifier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.semanticVerifier must be one of disabled, p0-only, all-blockers"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-INSUFFICIENTFINDINGEVIDENCE",
+      "profile": "audit",
+      "path": "audit.verification.insufficientFindingEvidence",
+      "current": "follow_up",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): insufficientFindingEvidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.insufficientFindingEvidence must be one of reject, follow_up, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-VERIFICATION-UNVERIFIEDREQUIREMENT",
+      "profile": "audit",
+      "path": "audit.verification.unverifiedRequirement",
+      "current": "orchestrator_required",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "verification is missing field(s): unverifiedRequirement"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "verification.unverifiedRequirement must be one of blocked, orchestrator_required"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-ENABLED",
+      "profile": "audit",
+      "path": "audit.simplification.enabled",
+      "current": true,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): enabled"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.enabled must be boolean"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-REGISTRYVERSION",
+      "profile": "audit",
+      "path": "audit.simplification.registryVersion",
+      "current": "simplification-rules.v1",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): registryVersion"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.registryVersion must be one of simplification-rules.v1"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-ENABLEDRULES",
+      "profile": "audit",
+      "path": "audit.simplification.enabledRules",
+      "current": [
+        "SIM001",
+        "SIM002",
+        "SIM003",
+        "SIM004",
+        "SIM005",
+        "SIM006",
+        "SIM007",
+        "SIM008"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): enabledRules"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.enabledRules must contain 0-8 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-MAXRECOMMENDATIONS",
+      "profile": "audit",
+      "path": "audit.simplification.maxRecommendations",
+      "current": 10,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): maxRecommendations"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.maxRecommendations must be an integer from 0 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-SIMPLIFICATION-MINIMUMCONFIDENCE",
+      "profile": "audit",
+      "path": "audit.simplification.minimumConfidence",
+      "current": "medium",
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "simplification is missing field(s): minimumConfidence"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "simplification.minimumConfidence must be one of high, medium, low"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P0",
+      "profile": "audit",
+      "path": "audit.ranking.priorityWeights.P0",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P0 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P1",
+      "profile": "audit",
+      "path": "audit.ranking.priorityWeights.P1",
+      "current": 500,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P1 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P2",
+      "profile": "audit",
+      "path": "audit.ranking.priorityWeights.P2",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P2 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-PRIORITYWEIGHTS-P3",
+      "profile": "audit",
+      "path": "audit.ranking.priorityWeights.P3",
+      "current": 10,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.priorityWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.priorityWeights.P3 must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-CORRECTNESS",
+      "profile": "audit",
+      "path": "audit.ranking.categoryWeights.correctness",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.correctness must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-SECURITY",
+      "profile": "audit",
+      "path": "audit.ranking.categoryWeights.security",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.security must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-CONTRACT",
+      "profile": "audit",
+      "path": "audit.ranking.categoryWeights.contract",
+      "current": 900,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.contract must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-ARCHITECTURE",
+      "profile": "audit",
+      "path": "audit.ranking.categoryWeights.architecture",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.architecture must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-CATEGORYWEIGHTS-SIMPLIFICATION",
+      "profile": "audit",
+      "path": "audit.ranking.categoryWeights.simplification",
+      "current": 10,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking.categoryWeights must define every canonical key exactly once"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.categoryWeights.simplification must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-INTRODUCEDBYDIFFBONUS",
+      "profile": "audit",
+      "path": "audit.ranking.introducedByDiffBonus",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking is missing field(s): introducedByDiffBonus"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.introducedByDiffBonus must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-RANKING-DIRECTEVIDENCEBONUS",
+      "profile": "audit",
+      "path": "audit.ranking.directEvidenceBonus",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "ranking is missing field(s): directEvidenceBonus"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "ranking.directEvidenceBonus must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-FOLLOWUP-RETAINEDPRIORITIES",
+      "profile": "audit",
+      "path": "audit.followUp.retainedPriorities",
+      "current": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "followUp is missing field(s): retainedPriorities"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "followUp.retainedPriorities must contain 0-4 items"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-FOLLOWUP-MAXITEMS",
+      "profile": "audit",
+      "path": "audit.followUp.maxItems",
+      "current": 1000,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "followUp is missing field(s): maxItems"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "followUp.maxItems must be an integer from 0 to 1000"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-MAXREPAIRCYCLES",
+      "profile": "audit",
+      "path": "audit.governor.maxRepairCycles",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): maxRepairCycles"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.maxRepairCycles must be an integer from 0 to 8"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-FILEGROWTHMULTIPLIER",
+      "profile": "audit",
+      "path": "audit.governor.fileGrowthMultiplier",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): fileGrowthMultiplier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.fileGrowthMultiplier must be an integer from 1 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-NONTESTLOCGROWTHMULTIPLIER",
+      "profile": "audit",
+      "path": "audit.governor.nonTestLocGrowthMultiplier",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): nonTestLocGrowthMultiplier"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.nonTestLocGrowthMultiplier must be an integer from 1 to 10"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-ABSOLUTEFILEALLOWANCE",
+      "profile": "audit",
+      "path": "audit.governor.absoluteFileAllowance",
+      "current": 2,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): absoluteFileAllowance"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.absoluteFileAllowance must be an integer from 0 to 256"
+      },
+      "result": "passed"
+    },
+    {
+      "setting": "RT-REVIEW-POLICY-AUDIT-GOVERNOR-ABSOLUTENONTESTLOCALLOWANCE",
+      "profile": "audit",
+      "path": "audit.governor.absoluteNonTestLocAllowance",
+      "current": 100,
+      "positive": true,
+      "missing": {
+        "ok": false,
+        "error": "governor is missing field(s): absoluteNonTestLocAllowance"
+      },
+      "invalid": {
+        "ok": false,
+        "error": "governor.absoluteNonTestLocAllowance must be an integer from 0 to 1000000"
+      },
+      "result": "passed"
+    }
+  ],
+  "authority": [
+    {
+      "label": "invalid built-in is not hidden by valid settings-file",
+      "result": "passed",
+      "actual": "first invalid candidate rejects"
+    },
+    {
+      "label": "productive stage supported settings-file overrides built-in",
+      "result": "passed",
+      "actual": {
+        "selectedSource": "settings_file",
+        "sources": [
+          {
+            "kind": "built_in",
+            "digest": "sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37"
+          },
+          {
+            "kind": "settings_file",
+            "digest": "sha256:6e5ebe5e2d895aeea96acf75b313e2e54efc18ef5d83771e9e13634f7acb34c1"
+          }
+        ]
+      }
+    },
+    {
+      "label": "API-only unauthorized run override rejects",
+      "result": "passed",
+      "actual": "API observation, not established productive stage caller"
+    }
+  ],
+  "result": "passed",
+  "reviewerConfirmation": "pending"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "bounded incremental C0 progress; NOT semantic completion or acceptance",
+  "rows": 1221,
+  "cases": 3361,
+  "results": {
+    "not-run": 2426,
+    "passed": 935
+  },
+  "actualSourceDefinitionCases": 935,
+  "commonConcreteFutureCases": 460,
+  "compilerRowsRefined": 20,
+  "reviewPolicyDefinitionRowsRefined": 141,
+  "reviewProductiveProfileContracts": 141,
+  "reviewPolicySchemaEffectiveConstraintRows": 186,
+  "reviewRegistrationReadRows": 17,
+  "revalidationAcceptedUnusedRows": 94,
+  "allC0ClosedFalse": true,
+  "integrityErrors": []
+}
+missingCaseLinks 0 danglingSettings 0

@@ -1,0 +1,310 @@
+{
+  "caseId": "RT-C0-COMMON-CURRENT-SCHEMA-DEFINITION",
+  "scope": "local C0 definition only; does not activate plugins, launch children, create roots, contact fixtures or prove selected operator values",
+  "command": "node docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.mjs",
+  "node": "v24.21.0",
+  "validatorSha256": "124a8ed3e3a0e72e6632eecd2eb403293e4e2a5ceb7aa1b7adbc5fac26532d3a",
+  "inputSha256": "5570fb0b228360abb92ab9f99cb38c7eecce89051a56dded8db2658319b024da",
+  "variables": {
+    "VALID_INSTALLED_MODEL_A": "definition-only/not-real-installed-model",
+    "CASE_ROOT": "/tmp/c0-definition-only",
+    "REAL_GIT_EXECUTABLE": "/usr/bin/git",
+    "NODE_EXECUTABLE": "/usr/bin/node",
+    "HTTP_FIXTURE_ORIGIN": "http://127.0.0.1:19001",
+    "HTTP_FIXTURE_ORIGIN_B": "http://127.0.0.1:19002",
+    "REDIS_FIXTURE_URL": "redis://127.0.0.1:19003"
+  },
+  "observations": [
+    {
+      "plugin": "artifact-store",
+      "schemaPath": "skills/common/plugins/artifact-store/schemas/config.schema.json",
+      "schemaSha256": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+      "profile": {
+        "artifactRoot": "/tmp/c0-definition-only/artifact",
+        "maxArtifactBytes": 16777216,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456
+      },
+      "profileSha256": "a520aad3ae65cbe43d9d62daf5fba08c406a55ac092be5e5d8cb23f224e16893",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "state-store",
+      "schemaPath": "skills/common/plugins/state-store/schemas/config.schema.json",
+      "schemaSha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "profile": {
+        "root": "/tmp/c0-definition-only/state",
+        "maxEntryBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456
+      },
+      "profileSha256": "491b1992b87c71bfd4d60353e26265b3183d6efbde72608a2031f463ba8a58d6",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "telemetry-store",
+      "schemaPath": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+      "schemaSha256": "2b0186fbdf59b80a4c247cfd9622e88c8d3d2bec986e75647e1a178e777bf3c8",
+      "profile": {
+        "root": "/tmp/c0-definition-only/telemetry",
+        "maxRecordBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456
+      },
+      "profileSha256": "788ca0c3e0373dd90c5b11d244b86cf73a0746af64381814e620c98feae8fc40",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "wait-store",
+      "schemaPath": "skills/common/plugins/wait-store/schemas/config.schema.json",
+      "schemaSha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "profile": {
+        "root": "/tmp/c0-definition-only/wait",
+        "maxEntryBytes": 1048576,
+        "maximumRecords": 100000,
+        "maximumStoreBytes": 268435456
+      },
+      "profileSha256": "535b749b8588dc5ab4b8c48c58e4f3cd4ceebcb6aa07188204f93ba8b63ac011",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "network-http",
+      "schemaPath": "skills/common/plugins/network-http/schemas/config.schema.json",
+      "schemaSha256": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+      "profile": {
+        "allowedOrigins": [
+          "http://127.0.0.1:19001",
+          "http://127.0.0.1:19002"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key",
+          "authorization",
+          "x-kubeclaw-signature",
+          "x-kubeclaw-target",
+          "x-case"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      },
+      "profileSha256": "16bfeba749bdbf55093d739f269bd59092143f475d15b95a67382d3b380c9675",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "command-runner",
+      "schemaPath": "skills/common/plugins/command-runner/schemas/config.schema.json",
+      "schemaSha256": "489dac2930cb42ad50dcd8174928471ecdd9b5be25354916aaa3813bed50e2b6",
+      "profile": {
+        "allowedExecutables": [
+          "/tmp/c0-definition-only/bin/case-child"
+        ],
+        "executableCatalog": {
+          "case-child": "/tmp/c0-definition-only/bin/case-child"
+        },
+        "allowedWorkingRoots": [
+          "/tmp/c0-definition-only/work"
+        ],
+        "maxOutputBytes": 1048576,
+        "maxExecutionMs": 30000,
+        "terminationGraceMs": 1000
+      },
+      "profileSha256": "56bc3265986453a0fad4cc155569956483c16d61f1d72406a06aa02d350ea007",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "git-workspace",
+      "schemaPath": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "schemaSha256": "74c9d8c0287172334bd345b52d95de103c38559884d518d2d6f5b0cbb327505a",
+      "profile": {
+        "allowedRepositoryRoots": [
+          "/tmp/c0-definition-only/repo"
+        ],
+        "workspaceRoot": "/tmp/c0-definition-only/worktrees",
+        "gitExecutable": "/usr/bin/git",
+        "authorName": "Case Author",
+        "authorEmail": "case@example.invalid",
+        "maxExecutionMs": 30000,
+        "maxOutputBytes": 1048576,
+        "terminationGraceMs": 1000
+      },
+      "profileSha256": "9450e60ff3da4b79496ff485f510f2be99fc8c83b55dc4a8100e7e3a9bbe554d",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "redis-transport",
+      "schemaPath": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "schemaSha256": "eecab538d12754deef07c9e1ff456f7fb9e27612dda944ed671877e80a021875",
+      "profile": {
+        "url": "redis://127.0.0.1:19003",
+        "passwordSecret": "case.redis.password",
+        "streamPrefix": "case:events",
+        "maxLen": 100000,
+        "dedupTtlMs": 86400000,
+        "timeoutMs": 30000
+      },
+      "profileSha256": "24bcc35fed1e92b21b18552d876675d7fefacb6e02b40357207d718c5e61c4d0",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "secret-resolver",
+      "schemaPath": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+      "schemaSha256": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629",
+      "profile": {
+        "environment": {
+          "case.secret": "CASE_SECRET_A"
+        }
+      },
+      "profileSha256": "45f7989e30a809219f75352f0dd31af53f3b65ace1ef6cb0334d5a808ff7b70a",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "transport-publisher",
+      "schemaPath": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "schemaSha256": "31dccf98f7921ed10af125417de5e913a899ad39eca6efc6386d28c7d64fdc8e",
+      "profile": {
+        "deliveryRoot": "/tmp/c0-definition-only/transport",
+        "maximumDeliveryRecords": 100000,
+        "maximumDeliveryBytes": 268435456,
+        "targets": {
+          "case-target": {
+            "endpoint": "http://127.0.0.1:19001/publish",
+            "signingSecret": "case.signing",
+            "maxPayloadBytes": 262144
+          }
+        }
+      },
+      "profileSha256": "3d1b50fbf51b89104aa2d3bcda7bf6b4cbd9935cc8e49920d2c873626f764817",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "operator-messaging",
+      "schemaPath": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+      "schemaSha256": "4054963cbfc17820e7f11be45ed3bf087d09d16ffc9f2dd14953358637f7ebd4",
+      "profile": {
+        "deliveryRoot": "/tmp/c0-definition-only/operator",
+        "maximumDeliveryRecords": 100000,
+        "maximumDeliveryBytes": 268435456,
+        "targets": {
+          "case-target": {
+            "endpoint": "http://127.0.0.1:19001/publish",
+            "tokenSecret": "case.signing",
+            "maxPayloadBytes": 65536,
+            "format": "json"
+          }
+        }
+      },
+      "profileSha256": "d66ccb7089504b2117f7d6e56700c7a282015bddea5d23b5c08ac1bbb7a5c952",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "notification-observer",
+      "schemaPath": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+      "schemaSha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3",
+      "profile": {
+        "target": "case-target",
+        "pipelineLabel": "Case Pipeline",
+        "modelLabel": "Case Model",
+        "stageLabels": {
+          "stage:case": "Case Stage"
+        },
+        "maxMessageChars": 8192,
+        "suppressEventTypes": []
+      },
+      "profileSha256": "82c2b5d3311537531a1c7ed4d0d617539eaf842fc01952b213df61075ed9a93d",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "openclaw-agent-events",
+      "schemaPath": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+      "schemaSha256": "d3e3295509aaa3d9c1c13fe1fca014058b36ae860621140025cd64734c5834fe",
+      "profile": {
+        "hooks": [
+          "agent_end",
+          "llm_input"
+        ],
+        "maxQueueEvents": 256,
+        "maxQueueBytes": 1048576,
+        "drainTimeoutMs": 5000
+      },
+      "profileSha256": "45212b6e10ff71602b2bdb17de4907ecef2ab8ef89d80cb3c200280489c4e15f",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "runtime-dispatch:runtime",
+      "schemaPath": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "schemaSha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "profile": {
+        "targets": {
+          "case-target": {
+            "endpoint": "http://127.0.0.1:19001/runtime",
+            "authentication": "hmac",
+            "tokenSecret": "case.runtime.hmac",
+            "maxRequestBytes": 1048576,
+            "maxResponseBytes": 1048576
+          }
+        }
+      },
+      "profileSha256": "e03afdbe63ee15b4752b395a1625cf946b24d519bf77262a77ccfcf5e724f10b",
+      "currentSchemaResult": "passed",
+      "errors": null
+    },
+    {
+      "plugin": "runtime-dispatch:openclaw",
+      "schemaPath": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "schemaSha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+      "profile": {
+        "targets": {
+          "case-target": {
+            "endpoint": "http://127.0.0.1:19001/tools/invoke",
+            "tokenSecret": "case.gateway.token",
+            "runtime": "subagent",
+            "agentId": "codex",
+            "agentRole": "case-role",
+            "model": "definition-only/not-real-installed-model",
+            "thinking": "high",
+            "controllerSessionKey": "agent:codex:case-controller",
+            "collectorMode": false,
+            "spawnIntervalMs": 1500,
+            "tokenizerEncoding": "o200k_base",
+            "maxPromptBytes": 900000,
+            "maxInputTokens": 120000,
+            "maxOutputTokens": 6000,
+            "maxContextTokens": 128000,
+            "cwd": "/tmp/c0-definition-only/repo",
+            "repositoryRoot": "/tmp/c0-definition-only/repo",
+            "workspaceRoot": "/tmp/c0-definition-only/worktrees",
+            "pollMs": 1000,
+            "maxPollMs": 15000,
+            "maxPolls": 1800,
+            "sessionTimeoutMs": 1800000,
+            "resultPathPrefix": "results/case"
+          }
+        }
+      },
+      "profileSha256": "409572fbc54576fb255cde3acb6a6c3f61749b69ede9f4ffff67ab4d0c6aab53",
+      "currentSchemaResult": "passed",
+      "errors": null
+    }
+  ],
+  "result": "passed",
+  "reviewerConfirmation": "pending"
+}

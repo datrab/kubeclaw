@@ -1,0 +1,567 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/validate-common-profiles.mjs",
+  "node": "v24.21.0",
+  "validatorSha256": "614bbfa845fe9a647c8de11a18770dc43f3b88913151404ba26d8ce88b7f85be",
+  "observations": [
+    {
+      "plugin": "artifact-store",
+      "schemaPath": "skills/common/plugins/artifact-store/schemas/config.schema.json",
+      "schemaSha256": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+      "profileSha256": "cd8b68fe6bcf20532d6c477cff17ea4ae2ac898be8c13d366196014322106891",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "maximumRecordBytes"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "state-store",
+      "schemaPath": "skills/common/plugins/state-store/schemas/config.schema.json",
+      "schemaSha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "profileSha256": "542661330310a4ad89dfa9cdbe4b831015dbe78e7d08ff60266ee9e4d9ee7609",
+      "currentSchemaResult": "passed",
+      "errors": null,
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "telemetry-store",
+      "schemaPath": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+      "schemaSha256": "2b0186fbdf59b80a4c247cfd9622e88c8d3d2bec986e75647e1a178e777bf3c8",
+      "profileSha256": "74b593e0359275a56611e19e48df7cfa8b003082ce2c8dc3abd8e2e7bea1f6d1",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "jsonMaximumDepth"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "jsonMaximumNodes"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "wait-store",
+      "schemaPath": "skills/common/plugins/wait-store/schemas/config.schema.json",
+      "schemaSha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "profileSha256": "36d92aa0a659d2e3f2cbe2847d07aada1d836680e9ef9f4a060d50e6d57bef17",
+      "currentSchemaResult": "passed",
+      "errors": null,
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "network-http",
+      "schemaPath": "skills/common/plugins/network-http/schemas/config.schema.json",
+      "schemaSha256": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+      "profileSha256": "a157f86f57b142ec02966fb65925f933c0609986f5ea5872a771f851b1e9d9c0",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "/allowedOrigins/0",
+          "schemaPath": "#/properties/allowedOrigins/items/format",
+          "keyword": "format",
+          "params": {
+            "format": "uri"
+          },
+          "message": "must match format \"uri\""
+        },
+        {
+          "instancePath": "/allowedOrigins/1",
+          "schemaPath": "#/properties/allowedOrigins/items/format",
+          "keyword": "format",
+          "params": {
+            "format": "uri"
+          },
+          "message": "must match format \"uri\""
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "command-runner",
+      "schemaPath": "skills/common/plugins/command-runner/schemas/config.schema.json",
+      "schemaSha256": "489dac2930cb42ad50dcd8174928471ecdd9b5be25354916aaa3813bed50e2b6",
+      "profileSha256": "9dad054972a0ba570f928fc2dc8e3f7c63a9db0783e8f37b5a4dca28bd9f1126",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "maximumProcesses"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "memoryBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "cpuMillis"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "openFiles"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "git-workspace",
+      "schemaPath": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "schemaSha256": "74c9d8c0287172334bd345b52d95de103c38559884d518d2d6f5b0cbb327505a",
+      "profileSha256": "ee7aa272dff405d8970515aeba9cd2e34268a70e9a2fc2df02d02de49383b4d3",
+      "currentSchemaResult": "passed",
+      "errors": null,
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "redis-transport",
+      "schemaPath": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "schemaSha256": "eecab538d12754deef07c9e1ff456f7fb9e27612dda944ed671877e80a021875",
+      "profileSha256": "14b6794c19162b5ee4116257c8e6df672121b92d0884c95f24e40681fcd4ad85",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "maximumPayloadBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "maximumBulkReplyBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "maximumReplyHeaderBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "/url",
+          "schemaPath": "#/properties/url/pattern",
+          "keyword": "pattern",
+          "params": {
+            "pattern": "^rediss?://[^/@:]+:[0-9]+$"
+          },
+          "message": "must match pattern \"^rediss?://[^/@:]+:[0-9]+$\""
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "secret-resolver",
+      "schemaPath": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+      "schemaSha256": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629",
+      "profileSha256": "45f7989e30a809219f75352f0dd31af53f3b65ace1ef6cb0334d5a808ff7b70a",
+      "currentSchemaResult": "passed",
+      "errors": null,
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "transport-publisher",
+      "schemaPath": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "schemaSha256": "31dccf98f7921ed10af125417de5e913a899ad39eca6efc6386d28c7d64fdc8e",
+      "profileSha256": "2b4013cda650cee8943f3243b8349d44d4be54b6af696a086f755b9fa40046af",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "terminalReservationBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "deliveryMetadataAllowanceBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "jsonMaximumDepth"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "/targets/case-target/endpoint",
+          "schemaPath": "#/properties/targets/additionalProperties/properties/endpoint/pattern",
+          "keyword": "pattern",
+          "params": {
+            "pattern": "^https?://"
+          },
+          "message": "must match pattern \"^https?://\""
+        },
+        {
+          "instancePath": "/targets/case-target/endpoint",
+          "schemaPath": "#/properties/targets/additionalProperties/properties/endpoint/format",
+          "keyword": "format",
+          "params": {
+            "format": "uri"
+          },
+          "message": "must match format \"uri\""
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "operator-messaging",
+      "schemaPath": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+      "schemaSha256": "4054963cbfc17820e7f11be45ed3bf087d09d16ffc9f2dd14953358637f7ebd4",
+      "profileSha256": "9a86199ff31504a6a28c72b0cca4db31ef2887d4cb3be07e7b998bc1accbb634",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "terminalReservationBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "deliveryMetadataAllowanceBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "jsonMaximumDepth"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "jsonMaximumContainerEntries"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "/targets/case-target",
+          "schemaPath": "#/properties/targets/patternProperties/%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "receiptMode"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "/targets/case-target/endpoint",
+          "schemaPath": "#/properties/targets/patternProperties/%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24/properties/endpoint/pattern",
+          "keyword": "pattern",
+          "params": {
+            "pattern": "^https?://"
+          },
+          "message": "must match pattern \"^https?://\""
+        },
+        {
+          "instancePath": "/targets/case-target/endpoint",
+          "schemaPath": "#/properties/targets/patternProperties/%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24/properties/endpoint/format",
+          "keyword": "format",
+          "params": {
+            "format": "uri"
+          },
+          "message": "must match format \"uri\""
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "notification-observer",
+      "schemaPath": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+      "schemaSha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3",
+      "profileSha256": "da6c733b71620a55df7c77c66d79824c8587b6b80eff67550f8ee1357d28b2d8",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "presentationFallbackMode"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "unknownSeverity"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "openclaw-agent-events",
+      "schemaPath": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+      "schemaSha256": "d3e3295509aaa3d9c1c13fe1fca014058b36ae860621140025cd64734c5834fe",
+      "profileSha256": "cc3d44da7928b53b8388f6c02e4c1b106329f4435fa1888e8b0539822c556106",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "observedFieldsMaximum"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "observedFieldNameCharacters"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "identityCharactersMaximum"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "runtime-dispatch:runtime",
+      "schemaPath": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "schemaSha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "profileSha256": "5c82ecbb67079208c2cf29d14fcef98ffd194dc15530f613b9d15a1dc0ab906c",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "jsonMaximumDepth"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "jsonMaximumContainerEntries"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "jsonKeyCharactersMaximum"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "/targets/case-target/endpoint",
+          "schemaPath": "#/properties/targets/additionalProperties/properties/endpoint/format",
+          "keyword": "format",
+          "params": {
+            "format": "uri"
+          },
+          "message": "must match format \"uri\""
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    },
+    {
+      "plugin": "runtime-dispatch:openclaw",
+      "schemaPath": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "schemaSha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+      "profileSha256": "eda05798b451a2605eab0d90aa76a1e573df74440fb600501004363988cc6845",
+      "currentSchemaResult": "failed",
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "sessionListCacheMs"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "collectorWaitSeconds"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "recentListMinimumMinutes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "recentListMarginMinutes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "pollExponentialMaximumPower"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "cleanupPollMs"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "maximumResultBytes"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "/targets/case-target",
+          "schemaPath": "#/properties/targets/additionalProperties/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "resultMode"
+          },
+          "message": "must NOT have additional properties"
+        },
+        {
+          "instancePath": "/targets/case-target/endpoint",
+          "schemaPath": "#/properties/targets/additionalProperties/properties/endpoint/format",
+          "keyword": "format",
+          "params": {
+            "format": "uri"
+          },
+          "message": "must match format \"uri\""
+        },
+        {
+          "instancePath": "/targets/case-target/cwd",
+          "schemaPath": "#/properties/targets/additionalProperties/properties/cwd/pattern",
+          "keyword": "pattern",
+          "params": {
+            "pattern": "^/"
+          },
+          "message": "must match pattern \"^/\""
+        },
+        {
+          "instancePath": "/targets/case-target/repositoryRoot",
+          "schemaPath": "#/properties/targets/additionalProperties/properties/repositoryRoot/pattern",
+          "keyword": "pattern",
+          "params": {
+            "pattern": "^/"
+          },
+          "message": "must match pattern \"^/\""
+        },
+        {
+          "instancePath": "/targets/case-target/workspaceRoot",
+          "schemaPath": "#/properties/targets/additionalProperties/properties/workspaceRoot/pattern",
+          "keyword": "pattern",
+          "params": {
+            "pattern": "^/"
+          },
+          "message": "must match pattern \"^/\""
+        }
+      ],
+      "meaning": "C0 definition check of proposed profile against CURRENT schema only; schema acceptance is not consumer/target acceptance. Placeholder path/URI variables not materialized."
+    }
+  ]
+}

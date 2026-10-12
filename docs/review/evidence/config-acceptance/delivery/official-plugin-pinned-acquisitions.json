@@ -1,0 +1,68 @@
+[
+  {
+    "package": "@openclaw/discord",
+    "version": "2026.9.5",
+    "dist": {
+      "shasum": "66482936332af7f9258f975f75cc9ee3ceef386b",
+      "tarball": "https://registry.npmjs.org/@openclaw/discord/-/discord-2026.9.5.tgz",
+      "fileCount": 5998,
+      "integrity": "sha512-kPEbPiYAnJqxqLHqBnZCr3zowsxzboW0Q7ZdqX52X7IENLrU4CBdK4+ndqzQf+255ilffrYBTDrHBg8a137cgQ==",
+      "signatures": [
+        {
+          "sig": "MEQCICfB2iK0xTrmueArUcTvspopIA7iSsaz6cRCLXGuDejOAiBU9KNoXK2cX9eL2uI6tGVoKF32AADZD2u+tR+AEhwakA==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEUCIQC5TH0E8xZh4iOw72KPRlOc6MmJGqLvmKToTrxymgOsewIgE4DodeWjng9wwIfqDBnzMSJnMPGh6X4zRQndFI82pVc=",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "attestations": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@openclaw%2fdiscord@2026.9.5",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "unpackedSize": 50658305
+    },
+    "archiveSha256": "4759c1f5ac1feb9b6ebb78f6dd3f3f65fb8080c29d06d126c30c9a5027abc008",
+    "integrityVerified": "sha512-kPEbPiYAnJqxqLHqBnZCr3zowsxzboW0Q7ZdqX52X7IENLrU4CBdK4+ndqzQf+255ilffrYBTDrHBg8a137cgQ==",
+    "extractedRoot": "/tmp/kubeclaw-c0-delivery-discord-2026.9.5/package",
+    "extractedFiles": 5998,
+    "lifecycleScriptsExecuted": false,
+    "dependenciesInstalled": false
+  },
+  {
+    "package": "@openclaw/acpx",
+    "version": "2026.9.5",
+    "dist": {
+      "shasum": "29ea86747bd1041546457d3ff9bacbf02fbaf9cf",
+      "tarball": "https://registry.npmjs.org/@openclaw/acpx/-/acpx-2026.9.5.tgz",
+      "fileCount": 23,
+      "integrity": "sha512-eG7RMceb1wwpHUtq60rrfUVnTssfRKl9neKCCMF5IOrkJfp8HkRS91O2jZ99325dRiaLixE2l1pbLSPg5Uh8MA==",
+      "signatures": [
+        {
+          "sig": "MEQCIH7SiGDDSbKtGiYBi/drpSVQBEK+KdeMKaxcLofIPXeIAiAFEKu59o7qZUI1+KFI3nVjoYrDmqCavavgdB0oYLyJBA==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        },
+        {
+          "sig": "MEQCIBarR2nL3lrcrCVSg44u4H0gwkerJqHIHJ1H9cNgKR+mAiBuCYBVYh36YisOrl/XDFPC+Q/fOMiVZutMqxKV/LMmNg==",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "attestations": {
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@openclaw%2facpx@2026.9.5",
+        "provenance": {
+          "predicateType": "https://slsa.dev/provenance/v1"
+        }
+      },
+      "unpackedSize": 279505
+    },
+    "archiveSha256": "729583f68ea332550ed3ea9c9617fecfc3510d66539e18c937379a986eb938d9",
+    "integrityVerified": "sha512-eG7RMceb1wwpHUtq60rrfUVnTssfRKl9neKCCMF5IOrkJfp8HkRS91O2jZ99325dRiaLixE2l1pbLSPg5Uh8MA==",
+    "extractedRoot": "/tmp/kubeclaw-c0-delivery-acpx-2026.9.5/package",
+    "extractedFiles": 23,
+    "lifecycleScriptsExecuted": false,
+    "dependenciesInstalled": false
+  }
+]

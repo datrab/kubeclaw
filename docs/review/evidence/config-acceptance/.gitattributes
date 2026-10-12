@@ -3,3 +3,11 @@
 *.patch -whitespace
 *.log -whitespace
 *.txt -whitespace
+# Exact captured command streams/render output and acquired upstream source.
+# These are evidence bytes, not authored implementation files; do not trim them.
+*.stdout -whitespace
+*.stderr -whitespace
+delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-*.yaml -whitespace
+delivery/snapshots/*/raw/DLV-C0-BOUNDARY-RENDER-*.yaml -whitespace
+delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs -whitespace
+delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs -whitespace

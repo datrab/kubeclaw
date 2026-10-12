@@ -1,0 +1,698 @@
+{
+  "scope": "actual C0 current Chart full-profile render/package/source-definition observation only; no Kubernetes admission/image pull/runtime/config migration acceptance",
+  "records": [
+    {
+      "id": "DLV-C0-PRISM-RENDER-A",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json"
+      ],
+      "exit": 0,
+      "expectation": "accept",
+      "diagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-RENDER-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-RENDER-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-RENDER-B",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-B.json"
+      ],
+      "exit": 0,
+      "expectation": "accept",
+      "diagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-RENDER-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-RENDER-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-REJECT-CONTROL-REPLICAS",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set",
+        "control.replicas=2"
+      ],
+      "exit": 1,
+      "expectation": "reject",
+      "diagnostic": "control.replicas must be 1",
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-CONTROL-REPLICAS.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-CONTROL-REPLICAS.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-REJECT-WORKER-REPLICAS",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set",
+        "worker.replicas=2"
+      ],
+      "exit": 1,
+      "expectation": "reject",
+      "diagnostic": "native Prism requires one worker",
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-WORKER-REPLICAS.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-WORKER-REPLICAS.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-REJECT-NATIVE-NAMESPACE",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set",
+        "worker.native.namespace=wrong"
+      ],
+      "exit": 1,
+      "expectation": "reject",
+      "diagnostic": "native Prism requires one worker",
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-NATIVE-NAMESPACE.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-NATIVE-NAMESPACE.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-REJECT-NATIVE-DIGEST",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set",
+        "worker.native.policyDigest=bad"
+      ],
+      "exit": 1,
+      "expectation": "reject",
+      "diagnostic": "native Prism requires one worker",
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-NATIVE-DIGEST.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-NATIVE-DIGEST.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-REJECT-IMAGE-DIGEST",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set",
+        "images.control.digest=bad"
+      ],
+      "exit": 1,
+      "expectation": "reject",
+      "diagnostic": "Prism image digest must be sha256",
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-IMAGE-DIGEST.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-IMAGE-DIGEST.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-REJECT-INGESTION-MISSING-SIZE",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set",
+        "ingestion.enabled=true"
+      ],
+      "exit": 1,
+      "expectation": "reject",
+      "diagnostic": "ingestion.resources.requests.cpu requires operator sizing",
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-INGESTION-MISSING-SIZE.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-INGESTION-MISSING-SIZE.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-REJECT-WORKER-GRACE",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set",
+        "worker.terminationGracePeriodSeconds=1"
+      ],
+      "exit": 1,
+      "expectation": "reject",
+      "diagnostic": "worker shutdown must cover native close",
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-WORKER-GRACE.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-REJECT-WORKER-GRACE.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-NATIVE-PERMISSIVE-UNKNOWN-KEY",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set-string",
+        "deliveryUnknownField=true"
+      ],
+      "exit": 1,
+      "expectation": "accept",
+      "diagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-NATIVE-PERMISSIVE-UNKNOWN-KEY.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-NATIVE-PERMISSIVE-UNKNOWN-KEY.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-NATIVE-PERMISSIVE-INGESTION-TTL-STRING",
+      "command": [
+        "helm",
+        "template",
+        "prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/profile-A.json",
+        "--set-string",
+        "ingestion.quarantineTtlMs=bad"
+      ],
+      "exit": 1,
+      "expectation": "accept",
+      "diagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-NATIVE-PERMISSIVE-INGESTION-TTL-STRING.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-NATIVE-PERMISSIVE-INGESTION-TTL-STRING.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-PRISM-PACKAGE",
+      "command": [
+        "helm",
+        "package",
+        "charts/prism",
+        "--destination",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition"
+      ],
+      "exit": 0,
+      "expectation": "accept",
+      "diagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-PACKAGE.stdout",
+        "docs/review/evidence/config-acceptance/delivery/prism-chart-definition/DLV-C0-PRISM-PACKAGE.stderr"
+      ]
+    }
+  ],
+  "tools": {
+    "helm": "v3.18.4+gd80839c",
+    "node": "v24.21.0",
+    "jsYaml": "4.3.1"
+  },
+  "sourceAndCommandDigests": {
+    "charts/prism/values.yaml": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+    "charts/prism/ci-values.yaml": "ab6d6dad564f99e90c2a9ec4260bc55640aa7e6bb39300922500f3e346cc290b",
+    "charts/prism/templates/_product-decisions.tpl": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+    "charts/prism/templates/backup-storage-check.yaml": "706c9868b2e6aab791a28d129a62b4c07718c67130d202819d8d8e00ae5e07fc",
+    "charts/prism/templates/_swarm-bundle.tpl": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+    "charts/prism/templates/networkpolicy.yaml": "75d2770a9d4a008cc10f6e506717ba8832e52d27ac2bd583bfee57dbd76eaa9f",
+    "charts/prism/templates/_swarm-config.tpl": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a",
+    "charts/prism/templates/serviceaccounts.yaml": "314f1d925e667fc98e5000486599431ea2ce7e189f420576378264c10e0f02be",
+    "charts/prism/templates/configmap-swarm-config.yaml": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6",
+    "charts/prism/templates/configmap-worker-trust.yaml": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+    "charts/prism/templates/jobs.yaml": "9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c",
+    "charts/prism/templates/ingestion.yaml": "73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98",
+    "charts/prism/templates/services.yaml": "abae201f362dacc4e4422c8867d57113483eb443d5cf964e2a65996bf9683a85",
+    "charts/prism/templates/_helpers.tpl": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49",
+    "charts/prism/templates/workloads.yaml": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+    "charts/prism/templates/postgresql.yaml": "e81248bfa623695e0e79f36ddf347ad75a1d7bc449a4250287a96a80e17742c1",
+    "charts/prism/templates/product-decisions-networkpolicy.yaml": "1a0764020a197daa59c240b2292e3317bedd9695817a2a48c819dcb344e88c7c",
+    "charts/prism/templates/_worker-trust-readiness.tpl": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+    "charts/prism/templates/backup.yaml": "c7fdc0b9524672ae49179eb258f0144c09774a56b5eb74a31f1a597ff2e88e9e",
+    "charts/prism/files/prism-backup.sh": "4a0209b0ec2c7b68811d856c85b9519d0ea12151e5e17409ba963e4fda961bef",
+    "docs/review/evidence/config-acceptance/delivery/run-prism-chart-definition.py": "1e6f4128c1f43b35a816d433eb7ae9711d5293f14f4d57cef7e07aef1d580b17"
+  },
+  "profileDigests": {
+    "A": "6eeb2170c4bb917df1c5132b9a778177c82be12cbc1a4ec995f77e108cb8d5e0",
+    "B": "eda286b2da2f7c0b16d5b34cc0df187f0c9ed18637f2c411b46df328ada0b565"
+  },
+  "packageMembers": [
+    {
+      "member": "prism/files/config/swarm.config.json",
+      "actualSha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+      "sourcePath": "charts/prism/files/config/swarm.config.json",
+      "sourceSha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+      "bytesEqual": true
+    },
+    {
+      "member": "prism/files/config/prism-control.config.json",
+      "actualSha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "sourcePath": "charts/prism/files/config/prism-control.config.json",
+      "sourceSha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "bytesEqual": true
+    },
+    {
+      "member": "prism/files/config/prism-studio.config.json",
+      "actualSha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "sourcePath": "charts/prism/files/config/prism-studio.config.json",
+      "sourceSha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "bytesEqual": true
+    },
+    {
+      "member": "prism/files/config/prism-worker.config.json",
+      "actualSha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "sourcePath": "charts/prism/files/config/prism-worker.config.json",
+      "sourceSha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "bytesEqual": true
+    },
+    {
+      "member": "prism/files/config/prism-execution.config.json",
+      "actualSha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "sourcePath": "charts/prism/files/config/prism-execution.config.json",
+      "sourceSha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "bytesEqual": true
+    },
+    {
+      "member": "prism/files/config/buster-engine.config.json",
+      "actualSha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "sourcePath": "charts/prism/files/config/buster-engine.config.json",
+      "sourceSha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "bytesEqual": true
+    },
+    {
+      "member": "prism/files/config/worker-core.config.json",
+      "actualSha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+      "sourcePath": "charts/prism/files/config/worker-core.config.json",
+      "sourceSha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+      "bytesEqual": true
+    },
+    {
+      "member": "prism/files/config/swarm.schema.json",
+      "actualSha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+      "sourcePath": "charts/prism/files/config/swarm.schema.json",
+      "sourceSha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+      "bytesEqual": true
+    },
+    {
+      "member": "prism/files/config/swarm-components.schema.json",
+      "actualSha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "sourcePath": "charts/prism/files/config/swarm-components.schema.json",
+      "sourceSha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "bytesEqual": true
+    }
+  ],
+  "packageSha256": "6e3d6b81343a6214c81bdfa712cfc0f28862e6aad4371ed6b9a6da5b5ba6e38a",
+  "fieldWitnesses": {
+    "A": {
+      "studioReplicas": 1,
+      "controlImage": "ghcr.io/datrab/kubeclaw-prism-control@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ingestionPresent": false,
+      "cron": {
+        "prism-backup": {
+          "schedule": "0 2 * * *",
+          "activeDeadlineSeconds": 3630,
+          "env": [
+            {
+              "name": "BACKUP_ROOT",
+              "value": "/backups"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_BYTES",
+              "value": "85899345920"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_RETAINED_BYTES",
+              "value": "96636764160"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_DURATION_SECONDS",
+              "value": "3600"
+            },
+            {
+              "name": "ARTIFACT_ROOT",
+              "value": "/artifacts"
+            },
+            {
+              "name": "PRISM_BACKUP_IMAGE",
+              "value": "ghcr.io/datrab/kubeclaw-prism-control@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "name": "PGCONNECT_TIMEOUT",
+              "value": "15"
+            },
+            {
+              "name": "PGHOST",
+              "value": "prism-postgresql"
+            },
+            {
+              "name": "PGDATABASE",
+              "value": "prism"
+            },
+            {
+              "name": "PGUSER",
+              "value": "postgres"
+            },
+            {
+              "name": "PGPASSWORD",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "prism-postgresql-auth",
+                  "key": "password"
+                }
+              }
+            }
+          ]
+        },
+        "prism-backup-verification": {
+          "schedule": "0 3 * * 0",
+          "activeDeadlineSeconds": 3630,
+          "env": [
+            {
+              "name": "BACKUP_ROOT",
+              "value": "/backups"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_BYTES",
+              "value": "85899345920"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_RETAINED_BYTES",
+              "value": "96636764160"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_DURATION_SECONDS",
+              "value": "3600"
+            }
+          ]
+        },
+        "prism-restore-proof": {
+          "schedule": "0 4 * * 0",
+          "activeDeadlineSeconds": 3630,
+          "env": [
+            {
+              "name": "BACKUP_ROOT",
+              "value": "/backups"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_BYTES",
+              "value": "85899345920"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_RETAINED_BYTES",
+              "value": "96636764160"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_DURATION_SECONDS",
+              "value": "3600"
+            },
+            {
+              "name": "PGCONNECT_TIMEOUT",
+              "value": "15"
+            },
+            {
+              "name": "PGHOST",
+              "value": "prism-postgresql"
+            },
+            {
+              "name": "PGDATABASE",
+              "value": "prism"
+            },
+            {
+              "name": "PGUSER",
+              "value": "postgres"
+            },
+            {
+              "name": "PGPASSWORD",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "prism-postgresql-auth",
+                  "key": "password"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "artifacts": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "100Gi"
+          }
+        }
+      },
+      "tailscaleIngressPresent": true
+    },
+    "B": {
+      "studioReplicas": 2,
+      "controlImage": "ghcr.io/datrab/kubeclaw-prism-control@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "ingestionPresent": true,
+      "cron": {
+        "prism-backup": {
+          "schedule": "0 1 * * *",
+          "activeDeadlineSeconds": 1830,
+          "env": [
+            {
+              "name": "BACKUP_ROOT",
+              "value": "/backups"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_BYTES",
+              "value": "42949672960"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_RETAINED_BYTES",
+              "value": "53687091200"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_DURATION_SECONDS",
+              "value": "1800"
+            },
+            {
+              "name": "ARTIFACT_ROOT",
+              "value": "/artifacts"
+            },
+            {
+              "name": "PRISM_BACKUP_IMAGE",
+              "value": "ghcr.io/datrab/kubeclaw-prism-control@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            {
+              "name": "PGCONNECT_TIMEOUT",
+              "value": "15"
+            },
+            {
+              "name": "PGHOST",
+              "value": "prism-postgresql"
+            },
+            {
+              "name": "PGDATABASE",
+              "value": "prism"
+            },
+            {
+              "name": "PGUSER",
+              "value": "postgres"
+            },
+            {
+              "name": "PGPASSWORD",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "prism-postgresql-auth",
+                  "key": "password"
+                }
+              }
+            }
+          ]
+        },
+        "prism-backup-verification": {
+          "schedule": "0 2 * * 0",
+          "activeDeadlineSeconds": 1830,
+          "env": [
+            {
+              "name": "BACKUP_ROOT",
+              "value": "/backups"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_BYTES",
+              "value": "42949672960"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_RETAINED_BYTES",
+              "value": "53687091200"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_DURATION_SECONDS",
+              "value": "1800"
+            }
+          ]
+        },
+        "prism-restore-proof": {
+          "schedule": "0 3 * * 0",
+          "activeDeadlineSeconds": 1830,
+          "env": [
+            {
+              "name": "BACKUP_ROOT",
+              "value": "/backups"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_BYTES",
+              "value": "42949672960"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_RETAINED_BYTES",
+              "value": "53687091200"
+            },
+            {
+              "name": "BACKUP_MAXIMUM_DURATION_SECONDS",
+              "value": "1800"
+            },
+            {
+              "name": "PGCONNECT_TIMEOUT",
+              "value": "15"
+            },
+            {
+              "name": "PGHOST",
+              "value": "prism-postgresql"
+            },
+            {
+              "name": "PGDATABASE",
+              "value": "prism"
+            },
+            {
+              "name": "PGUSER",
+              "value": "postgres"
+            },
+            {
+              "name": "PGPASSWORD",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "prism-postgresql-auth",
+                  "key": "password"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "artifacts": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "storageClassName": "delivery-test",
+        "resources": {
+          "requests": {
+            "storage": "200Gi"
+          }
+        }
+      },
+      "tailscaleIngressPresent": false,
+      "ingestion": {
+        "replicas": 2,
+        "resources": {
+          "requests": {
+            "cpu": "250m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "1Gi"
+          }
+        },
+        "env": [
+          {
+            "name": "PORT",
+            "value": "8080"
+          },
+          {
+            "name": "PRISM_INGESTION_SECRET",
+            "valueFrom": {
+              "secretKeyRef": {
+                "name": "prism-runtime",
+                "key": "ingestion-secret"
+              }
+            }
+          },
+          {
+            "name": "PRISM_QUARANTINE_ROOT",
+            "value": "/quarantine"
+          },
+          {
+            "name": "PRISM_QUARANTINE_TTL_MS",
+            "value": "120000"
+          }
+        ]
+      }
+    }
+  },
+  "resultCounts": {
+    "passed": 6,
+    "failed": 6
+  },
+  "implementationCases": "all existing proposed DLV-CASE/DLV-GW-FIELD cases remain not-run; fresh review pending"
+}

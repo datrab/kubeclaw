@@ -1,0 +1,10 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2281,
+  "cases": 2146,
+  "errorCount": 1,
+  "errors": [
+    "fragment: content drift docs/review/evidence/config-acceptance/components/residual-fragment.json"
+  ]
+}

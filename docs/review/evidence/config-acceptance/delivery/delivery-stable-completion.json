@@ -1,0 +1,74 @@
+{
+  "authorTask": "/root/delivery_closure",
+  "scope": "owned delivery evidence directory only; current batch stable at completion; no production/test edits, commits, deployment or acceptance by this child",
+  "completedAtUtc": "2026-10-12T20:55:21.623322+00:00",
+  "headCommit": "a07de5673e24ba99109833120d94417ebb0fc407",
+  "headTree": "583a342afd982242d17788fc2d64bbe8b7fca7ef",
+  "branch": "codex/config-c0-semantic-inventory-20261012",
+  "parentCheckpointObligation": "parent owns full dirty patch/untracked source identities, consolidation, independent NOT ACCEPTED report and authorized commit/push. Child will not mutate after this receipt.",
+  "artifacts": [
+    "refine-kubernetes-boundaries.py",
+    "acquire-kubernetes-sources.py",
+    "kubernetes-source-acquisitions.json",
+    "kubernetes-boundary-source-observations.json",
+    "run-kubernetes-boundary-definition.py",
+    "kubernetes-boundary-definition.json",
+    "kubernetes-boundary-definition/",
+    "c0-kubernetes-boundary-cases.json",
+    "gateway-resource-overlay-dispositions.json",
+    "inventory-fragment.json",
+    "proposed-cases.json",
+    "fragment-status.json",
+    "open-row-backlog.json",
+    "delivery-surface-dispositions.json",
+    "semantic-closure-verification.json",
+    "semantic-closure-verification.txt",
+    "snapshots/kubernetes-boundary-*",
+    "README.md"
+  ],
+  "definitionObservations": {
+    "passed": 23,
+    "failed": 2
+  },
+  "resourceProjectionComparisons": {
+    "passed": 120
+  },
+  "implementationCases": {
+    "count": 100,
+    "results": {
+      "not-run": 100
+    }
+  },
+  "remainingSemanticRows": 413,
+  "remainingExactGaps": [
+    {
+      "gap": "Buster whole-document strict offline schema input",
+      "details": "CRD, ValidatingAdmissionPolicy and ValidatingAdmissionPolicyBinding schemas missing in local pinned subset; current two Buster cases failed (21collected,18valid,3errors,0skips). CRD requested pinned schema returned404. No skip/permissive replacement."
+    },
+    {
+      "gap": "actual API/runtime identity",
+      "details": "repo has no Go Kubernetes client deps; Charts no kubeVersion; selected kubectl/Nova schema pins not deployed server identity. Need actual supported API/version/feature gates, node CFS/CPUManager/MemoryQoS/admission capacity, LimitRange/quota, CSI/StorageClass/state and Secret UID/revision contracts for runtime cases."
+    },
+    {
+      "gap": "Buster gateway resource overlay members",
+      "settingIds": [
+        "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-CPU",
+        "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-MEMORY",
+        "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-REQUESTS-EPHEMERAL-STORAGE",
+        "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-CPU",
+        "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-MEMORY",
+        "DLV-CHART-KUBECLAW-GATEWAY-RESOURCES-LIMITS-EPHEMERAL-STORAGE"
+      ],
+      "details": "six actual operator overlay members including ephemeral-storage newly enumerated OPEN; exact reader/runtime/default precedence cases still needed. Header alias not independent author."
+    },
+    {
+      "gap": "other inventory",
+      "details": "remaining generated runtime/platform fields, Docker ARG/download/platform semantics, nonbatch Chart dynamic maps/literals/trust/network/Cilium/Tailscale/Codex readers, script/host/CI/role/release inputs and implicit native policies remain in exact open-row/source candidate queues."
+    },
+    {
+      "gap": "case/review closure",
+      "details": "all100proposed implementation cases not-run, field harness/valid external profiles/live prerequisites and fresh independent semantic recheck pending; current-source observations cannot accept C0 or C1."
+    }
+  ],
+  "checks": "current static SHA256/ID/link consistency passed with no issues; Python scripts parse and Node collector syntax passes; all raw failed observations retained; C0 remains incomplete"
+}

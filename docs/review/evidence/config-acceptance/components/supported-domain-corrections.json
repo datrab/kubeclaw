@@ -1,0 +1,220 @@
+[
+  {
+    "id": "CMP-WCORE-INPUT-BYTES",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 16777216,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "WorkerAttemptExecutor.constructor -> preflightJson WORKER_ATTEMPT_INPUT_BYTE_LIMIT before clone/contract/effect"
+    }
+  },
+  {
+    "id": "CMP-WCORE-JSON-NODES",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 100000,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "preflightJson rejects WORKER_ATTEMPT_INPUT_NODE_LIMIT / WORKER_RESULT_NODE_LIMIT before clone/hash"
+    }
+  },
+  {
+    "id": "CMP-WCORE-JSON-DEPTH",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 64,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "preflightJson rejects *_DEPTH_LIMIT when current.depth>64"
+    }
+  },
+  {
+    "id": "CMP-WCORE-LOG-PARTS",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 10000,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "WorkerAttemptExecutor.log -> WORKER_LOG_LIMIT once count>=MAX before creating next part"
+    }
+  },
+  {
+    "id": "CMP-WCORE-RETAIN-LOGS",
+    "previousUnsupportedProposal": {
+      "type": "boolean",
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "boolean",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": true,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "Absent or true retains logs; false still enforces decode/byte count but emits no retained part/fullLog"
+    }
+  },
+  {
+    "id": "CMP-WCORE-DRAIN-POLL-MS",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 10,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "terminateAndDrain cgroup.kill/populated loop -> WORKER_NATIVE_DRAIN_TIMEOUT at absolute deadline"
+    }
+  },
+  {
+    "id": "CMP-WCORE-POOL-FILE-BYTES",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 65536,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "WORKER_NATIVE_POOL_POLICY_NOT_TRUSTED before JSON parse"
+    }
+  },
+  {
+    "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 4096,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "WORKER_NATIVE_RUNTIME_IDENTITY_NOT_TRUSTED before parse/kernel compare"
+    }
+  },
+  {
+    "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 128,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "WORKER_NATIVE_NODE_IDENTITY_NOT_TRUSTED before trim/UUID parse"
+    }
+  },
+  {
+    "id": "CMP-WCORE-JOURNAL-RECORD-BYTES",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 65536,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "FileDurableRecordStore.maximumRecordBytes + futureRecordBytes -> WORKER_NATIVE_JOURNAL_METADATA_CAPACITY_EXCEEDED"
+    }
+  },
+  {
+    "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 4096,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "validateProcess signal/fault -> WORKER_NATIVE_JOURNAL_FAULT_INVALID; futurePayload reserves maximum string"
+    }
+  },
+  {
+    "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "currentConfigurability": "Fixed code literal/implicit option default; numeric adjustable domain above is proposed, not a currently supported CONFIG schema."
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 4096,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "diagnosis clips4096; validateDiagnosis -> WORKER_OWNERSHIP_DIAGNOSIS_INVALID; terminal metadata reservation"
+    }
+  },
+  {
+    "id": "CMP-WCORE-LOCK-STRIPES",
+    "previousUnsupportedProposal": {
+      "type": "integer",
+      "current": "fixed2 literal, not CONFIG configurable",
+      "proposal": "positive bounded hex prefix/suffix width with capacity/recovery contract; exact safe domain to freeze before C3 approval"
+    },
+    "correctedSupportedDomain": {
+      "type": "integer",
+      "currentConfigurability": "Fixed literal/current implicit option default only; no current CONFIG schema accepts this field.",
+      "currentObservedValue": 2,
+      "proposedAdjustableDomain": null,
+      "definitionBoundary": "No universal positive-safe-integer/signed-timer domain proves memory, recursive stack, file-buffer or retained-record safety. Freeze supported ranges/relations from actual implementation before C3/C4 package approval; no invented limits.",
+      "sourceContract": "Digest-derived routing gives same claim same fence across processes; bounds rejected request lock metadata. If changed, versioned concurrency/recovery migration required."
+    }
+  }
+]
